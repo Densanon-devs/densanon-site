@@ -492,22 +492,42 @@
 
       // Also send to Google Sheet if configured
       if (GOOGLE_SHEET_URL) {
-        fetch(GOOGLE_SHEET_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            timestamp: new Date().toISOString(),
-            tier: q.tier,
-            pages: q.pages,
-            pageType: q.pageType,
-            features: q.features,
-            support: q.support,
-            points: q.points,
-            upfront: q.upfront,
-            monthly: q.monthly
-          })
-        }).catch(() => {});
+        const formData = new FormData();
+        const payload = {
+          timestamp: new Date().toISOString(),
+          tier: q.tier,
+          pages: q.pages,
+          pageType: q.pageType,
+          features: q.features,
+          support: q.support,
+          points: q.points,
+          upfront: q.upfront,
+          monthly: q.monthly
+        };
+        formData.append('data', JSON.stringify(payload));
+
+        // Use a hidden iframe to avoid CORS/redirect issues
+        let iframe = document.getElementById('sheetFrame');
+        if (!iframe) {
+          iframe = document.createElement('iframe');
+          iframe.id = 'sheetFrame';
+          iframe.name = 'sheetFrame';
+          iframe.style.display = 'none';
+          document.body.appendChild(iframe);
+        }
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = GOOGLE_SHEET_URL;
+        form.target = 'sheetFrame';
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'data';
+        input.value = JSON.stringify(payload);
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
+        form.remove();
       }
 
       // Show confirmation toast
