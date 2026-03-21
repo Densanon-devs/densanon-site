@@ -138,7 +138,7 @@
 
 .calc-layout {
   display: grid;
-  grid-template-columns: 1fr 340px;
+  grid-template-columns: 1fr 1fr;
   gap: 32px;
   align-items: start;
 }
@@ -236,26 +236,90 @@
   accent-color: var(--color-primary);
 }
 
-/* Result card */
+/* Points summary */
+.points-summary {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+}
+
+.points-display {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.points-label {
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.points-breakdown {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+.calc-hint {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+  margin-top: -4px;
+}
+
+/* Result cards */
 .calc-result {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   position: sticky;
   top: 100px;
 }
 
 .result-card {
   background: var(--color-surface);
-  border: 2px solid var(--color-primary);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  padding: 32px;
+  padding: 24px;
   text-align: center;
+  transition: border-color 0.2s;
+}
+
+.result-card:hover {
+  border-color: var(--color-primary);
+}
+
+.result-card.tier-highlight {
+  border: 2px solid var(--color-primary);
   box-shadow: 0 0 30px rgba(229, 62, 62, 0.12);
+  position: relative;
+}
+
+.tier-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(52, 211, 153, 0.12);
+  color: var(--color-accent-green);
+  margin-bottom: 8px;
+}
+
+.tier-desc {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 16px;
 }
 
 .result-card h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-text-muted);
-  margin-bottom: 20px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
 
 .result-monthly {
@@ -274,36 +338,45 @@
 }
 
 .result-price {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 800;
   color: var(--color-text);
 }
 
 .result-per {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--color-text-muted);
 }
 
-.result-onetime {
+.result-row {
   display: flex;
   align-items: baseline;
-  justify-content: center;
-  gap: 8px;
-  padding-top: 12px;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.result-row.main-price {
+  padding: 10px 0;
   border-top: 1px solid var(--color-border);
-  margin-top: 12px;
+  margin-top: 4px;
+}
+
+.result-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
 }
 
 .result-price-secondary {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-accent-orange);
+  color: var(--color-text);
 }
 
 .result-note {
   font-size: 0.82rem;
   color: var(--color-text-muted);
-  margin: 16px 0 20px;
+  margin: 12px 0 16px;
 }
 
 .btn-full {
