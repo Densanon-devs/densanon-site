@@ -214,7 +214,7 @@
                 <span class="result-per">/mo</span>
               </div>
               <div class="result-note">Includes hosting, updates, and support.</div>
-              <a href="mailto:admin@densanon.com?subject=Quote - Managed Plan" class="btn btn-primary btn-full">Get Started</a>
+              <button onclick="submitQuote('Managed')" class="btn btn-primary btn-full">Get Started</button>
             </div>
 
             <div class="result-card">
@@ -229,7 +229,7 @@
                 <span class="result-price-secondary" id="hybridMonthly">$38</span>
                 <span class="result-per">/mo</span>
               </div>
-              <a href="mailto:admin@densanon.com?subject=Quote - Hybrid Plan" class="btn btn-outline btn-full">Get Quote</a>
+              <button onclick="submitQuote('Hybrid')" class="btn btn-outline btn-full">Get Quote</button>
             </div>
 
             <div class="result-card">
@@ -245,7 +245,7 @@
                 <span class="result-per">/mo</span>
               </div>
               <div class="result-note" id="ownershipNote">No ongoing fees required.</div>
-              <a href="mailto:admin@densanon.com?subject=Quote - Ownership" class="btn btn-outline btn-full">Get Quote</a>
+              <button onclick="submitQuote('Ownership')" class="btn btn-outline btn-full">Get Quote</button>
             </div>
           </div>
         </div>
@@ -428,6 +428,102 @@
         supportRow.style.display = 'none';
         ownershipNote.textContent = 'No ongoing fees required.';
       }
+    }
+
+    /* ==============================
+       QUOTE SUBMISSION
+       Sends quote via email + Google Sheet
+    ============================== */
+    // SET THIS after creating your Google Apps Script web app
+    const GOOGLE_SHEET_URL = '';  // Paste your Apps Script URL here
+
+    function getQuoteSummary(tier) {
+      const pages = document.getElementById('pageCount').value;
+      const pageType = document.querySelector('input[name="pageType"]:checked').parentElement.querySelector('span').textContent;
+      const features = [...document.querySelectorAll('.checkbox-group input:checked')]
+        .map(el => el.parentElement.querySelector('span').textContent);
+      const support = document.querySelector('input[name="support"]:checked').parentElement.querySelector('span').textContent;
+      const points = document.getElementById('totalPoints').textContent;
+
+      const pricing = {
+        Managed: { upfront: '$0', monthly: document.getElementById('managedMonthly').textContent + '/mo' },
+        Hybrid: { upfront: document.getElementById('hybridUpfront').textContent, monthly: document.getElementById('hybridMonthly').textContent + '/mo' },
+        Ownership: { upfront: document.getElementById('ownershipPrice').textContent, monthly: document.getElementById('ownershipSupportRow').style.display !== 'none' ? document.getElementById('ownershipSupport').textContent + '/mo support' : 'No monthly' }
+      };
+
+      return {
+        tier,
+        pages,
+        pageType,
+        features: features.length ? features.join(', ') : 'None',
+        support,
+        points,
+        upfront: pricing[tier].upfront,
+        monthly: pricing[tier].monthly
+      };
+    }
+
+    function submitQuote(tier) {
+      const q = getQuoteSummary(tier);
+
+      // Build email body
+      const body = [
+        'Hi, I\'d like to request a quote for a website.',
+        '',
+        'Selected Tier: ' + q.tier,
+        'Pages: ' + q.pages + ' (' + q.pageType + ')',
+        'Features: ' + q.features,
+        'Support: ' + q.support,
+        'Total Points: ' + q.points,
+        '',
+        'Estimated Pricing:',
+        '  Upfront: ' + q.upfront,
+        '  Monthly: ' + q.monthly,
+        '',
+        'Please reach out to confirm details and get started.',
+        'Thank you!'
+      ].join('\n');
+
+      const subject = encodeURIComponent('Quote Request - ' + q.tier + ' Plan');
+      const emailBody = encodeURIComponent(body);
+
+      // Open mailto with full quote details
+      window.location.href = 'mailto:admin@densanon.com?subject=' + subject + '&body=' + emailBody;
+
+      // Also send to Google Sheet if configured
+      if (GOOGLE_SHEET_URL) {
+        fetch(GOOGLE_SHEET_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            timestamp: new Date().toISOString(),
+            tier: q.tier,
+            pages: q.pages,
+            pageType: q.pageType,
+            features: q.features,
+            support: q.support,
+            points: q.points,
+            upfront: q.upfront,
+            monthly: q.monthly
+          })
+        }).catch(() => {});
+      }
+
+      // Show confirmation toast
+      showToast('Quote sent! Check your email app to finish sending.');
+    }
+
+    function showToast(message) {
+      let toast = document.getElementById('toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 4000);
     }
 
     // Page count slider
