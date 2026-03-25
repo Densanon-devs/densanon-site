@@ -315,7 +315,11 @@
           <div class="calc-group" id="featuresWebsite">
             <label class="calc-label">Website Features</label>
             <div class="checkbox-group">
-              <label class="checkbox-option"><input type="checkbox" data-pts="2" class="feat-cb"> <span>Additional Page (2 pts each)</span></label>
+              <label class="checkbox-option page-count-option">
+                <span>Additional Pages (2 pts each)</span>
+                <input type="number" id="pageCount" min="0" max="99" value="0" class="page-count-input">
+                <span class="page-count-pts" id="pageCountPts">0 pts</span>
+              </label>
               <label class="checkbox-option"><input type="checkbox" data-pts="3" class="feat-cb"> <span>Contact Form (3 pts)</span></label>
               <label class="checkbox-option"><input type="checkbox" data-pts="4" class="feat-cb"> <span>Blog / Content Section (4 pts)</span></label>
               <label class="checkbox-option"><input type="checkbox" data-pts="3" class="feat-cb"> <span>SEO Setup (3 pts)</span></label>
@@ -676,6 +680,18 @@
       document.getElementById('calculator').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
+    /* PAGE COUNT INPUT — live point display */
+    (function() {
+      const input = document.getElementById('pageCount');
+      const display = document.getElementById('pageCountPts');
+      if (input && display) {
+        input.addEventListener('input', function() {
+          const n = Math.max(0, parseInt(this.value) || 0);
+          display.textContent = (n * 2) + ' pts';
+        });
+      }
+    })();
+
     /* SHOW/HIDE FORMAT-SPECIFIC FEATURES */
     function updateFeatureSets() {
       const format = document.querySelector('input[name="format"]:checked').value;
@@ -700,8 +716,14 @@
       const fmtData = PRICING.formatModifiers[format];
       const rule = PRICING.calcRules[solution];
 
-      // Total points = foundation + selected features
+      // Total points = foundation + page count + selected features
       let points = PRICING.foundationPoints;
+
+      // Additional pages (number input, 2 pts each)
+      const pageCountInput = document.getElementById('pageCount');
+      const pageCount = Math.max(0, parseInt(pageCountInput.value) || 0);
+      points += pageCount * 2;
+
       document.querySelectorAll('.feat-cb:checked').forEach(cb => {
         // Only count checkboxes in visible groups
         const group = cb.closest('.calc-group');
@@ -784,6 +806,8 @@
       const multiplier = document.getElementById('summMultiplier').textContent;
 
       const features = [];
+      const pc = parseInt(document.getElementById('pageCount').value) || 0;
+      if (pc > 0) features.push('Additional Pages x' + pc + ' (' + (pc * 2) + ' pts)');
       document.querySelectorAll('.feat-cb:checked').forEach(cb => {
         const group = cb.closest('.calc-group');
         if (group && group.style.display !== 'none') {
