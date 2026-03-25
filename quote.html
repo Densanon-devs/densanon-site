@@ -598,6 +598,7 @@
       pointOneTime: 75,
       pointMonthly: 4,
       foundationPoints: 21,  // 6 + 3 + 2 + 2 + 8 (4 core pages)
+      corePagePoints: 8,    // 4 core pages excluded from Managed tier
 
       solutionMultipliers: {
         presence:   { name: 'Business Presence',       mult: 0.7  },
@@ -735,19 +736,23 @@
 
       const multiplier = solData.mult * fmtData.mod;
 
+      // Managed tier excludes core page points (4 pages)
+      const managedPoints = points - PRICING.corePagePoints;
+
       // Calculate prices
       let totalPrice = Math.round(points * PRICING.pointOneTime * multiplier);
-      let monthlyPrice = Math.round(points * PRICING.pointMonthly * multiplier);
+      let monthlyFull = Math.round(points * PRICING.pointMonthly * multiplier);
+      let managedMonthly = Math.round(managedPoints * PRICING.pointMonthly * multiplier);
 
       // Enforce minimums
       const min = PRICING.minimums[format] || 500;
       if (totalPrice < min) totalPrice = min;
-      // Scale monthly proportionally if minimum was applied
       const minMonthly = Math.round(min * (PRICING.pointMonthly / PRICING.pointOneTime));
-      if (monthlyPrice < minMonthly) monthlyPrice = minMonthly;
+      if (monthlyFull < minMonthly) monthlyFull = minMonthly;
+      if (managedMonthly < minMonthly) managedMonthly = minMonthly;
 
       const hybridUpfront = Math.round(totalPrice * PRICING.hybridUpfrontRate);
-      const hybridMonthly = Math.round(monthlyPrice * PRICING.hybridMonthlyRate);
+      const hybridMonthly = Math.round(monthlyFull * PRICING.hybridMonthlyRate);
       const supportMonthly = PRICING.support[support] || 0;
 
       // Update summary bar
@@ -776,7 +781,7 @@
       }
 
       // Update tier cards
-      document.getElementById('managedMonthly').textContent = '$' + monthlyPrice.toLocaleString();
+      document.getElementById('managedMonthly').textContent = '$' + managedMonthly.toLocaleString();
       document.getElementById('hybridUpfront').textContent = '$' + hybridUpfront.toLocaleString();
       document.getElementById('hybridMonthly').textContent = '$' + hybridMonthly.toLocaleString();
       document.getElementById('ownershipPrice').textContent = '$' + totalPrice.toLocaleString();
