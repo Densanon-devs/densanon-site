@@ -112,6 +112,7 @@
           <div class="wizard-step" data-step="2"><span>2</span> Format</div>
           <div class="wizard-step" data-step="3"><span>3</span> Features</div>
           <div class="wizard-step" data-step="4"><span>4</span> Pricing</div>
+          <div class="wizard-step" data-step="5"><span>5</span> Contact</div>
         </div>
 
         <!-- STEP 1: SOLUTION FAMILY -->
@@ -447,7 +448,7 @@
                 <span class="result-per">/mo</span>
               </div>
               <div class="result-note">Includes hosting, updates, and support.</div>
-              <button onclick="submitQuote('Managed')" class="btn btn-primary btn-full">Get Started</button>
+              <button onclick="selectTierAndContinue('Managed')" class="btn btn-primary btn-full">Get Started</button>
             </div>
 
             <div class="result-card">
@@ -462,7 +463,7 @@
                 <span class="result-price-secondary" id="hybridMonthly">$22</span>
                 <span class="result-per">/mo</span>
               </div>
-              <button onclick="submitQuote('Hybrid')" class="btn btn-outline btn-full">Get Quote</button>
+              <button onclick="selectTierAndContinue('Hybrid')" class="btn btn-outline btn-full">Get Quote</button>
             </div>
 
             <div class="result-card">
@@ -478,13 +479,64 @@
                 <span class="result-per">/mo</span>
               </div>
               <div class="result-note" id="ownershipNote">No ongoing fees required.</div>
-              <button onclick="submitQuote('Ownership')" class="btn btn-outline btn-full">Get Quote</button>
+              <button onclick="selectTierAndContinue('Ownership')" class="btn btn-outline btn-full">Get Quote</button>
             </div>
           </div>
 
           <div class="wizard-nav">
             <button class="btn btn-outline" onclick="goToStep(3)">Back: Adjust Features</button>
             <div></div>
+          </div>
+        </div>
+
+        <!-- STEP 5: CONTACT FORM -->
+        <div class="wizard-panel" id="step5">
+          <h3>Your Contact Information</h3>
+
+          <!-- Selected tier recap -->
+          <div class="selected-tier-recap" id="tierRecap">
+            <span class="recap-label">Selected Plan</span>
+            <span class="recap-tier" id="recapTier">Managed</span>
+            <span class="recap-price" id="recapPrice"></span>
+          </div>
+
+          <!-- Contact form -->
+          <div id="contactFormWrap">
+            <div class="contact-form-grid">
+              <div class="form-group">
+                <label class="form-label" for="contactName">Full Name <span class="required">*</span></label>
+                <input type="text" id="contactName" class="form-input" placeholder="Jane Smith">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="contactBusiness">Business Name <span class="required">*</span></label>
+                <input type="text" id="contactBusiness" class="form-input" placeholder="Acme Co.">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="contactEmail">Email Address <span class="required">*</span></label>
+                <input type="email" id="contactEmail" class="form-input" placeholder="jane@acme.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="contactPhone">Phone Number <span class="optional">(optional)</span></label>
+                <input type="tel" id="contactPhone" class="form-input" placeholder="(555) 000-0000">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contactProject">Tell us about your project <span class="optional">(optional)</span></label>
+              <textarea id="contactProject" class="form-input form-textarea" placeholder="What problem are you trying to solve? Any specific features or goals in mind?"></textarea>
+            </div>
+            <div id="formError" class="form-error" style="display:none;"></div>
+            <div class="wizard-nav">
+              <button class="btn btn-outline" onclick="goToStep(4)">Back: Adjust Plan</button>
+              <button class="btn btn-primary" onclick="submitContactForm()">Submit Quote Request</button>
+            </div>
+          </div>
+
+          <!-- Confirmation message -->
+          <div id="contactConfirm" class="confirm-message" style="display:none;">
+            <div class="confirm-icon">&#10003;</div>
+            <h3 id="confirmTitle">Thanks! We've received your quote request.</h3>
+            <p id="confirmBody">We'll review your project details and get back to you within 24 hours.</p>
+            <a href="index.html" class="btn btn-primary">Back to Home</a>
           </div>
         </div>
 
@@ -649,6 +701,7 @@
     };
 
     let currentStep = 1;
+    let selectedTier = null;
 
     /* WIZARD NAVIGATION */
     function goToStep(step) {
@@ -656,6 +709,8 @@
       if (step === 3) updateFeatureSets();
       // Calculate when entering step 4
       if (step === 4) calculateQuote();
+      // Update tier recap when entering step 5
+      if (step === 5) updateTierRecap();
 
       document.querySelectorAll('.wizard-panel').forEach(p => p.classList.remove('active'));
       document.getElementById('step' + step).classList.add('active');
@@ -668,6 +723,22 @@
 
       currentStep = step;
       document.getElementById('calculator').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function selectTierAndContinue(tier) {
+      selectedTier = tier;
+      goToStep(5);
+    }
+
+    function updateTierRecap() {
+      if (!selectedTier) return;
+      document.getElementById('recapTier').textContent = selectedTier;
+      const prices = {
+        Managed:   document.getElementById('managedMonthly').textContent + '/mo · $0 upfront',
+        Hybrid:    document.getElementById('hybridMonthly').textContent + '/mo · ' + document.getElementById('hybridUpfront').textContent + ' upfront',
+        Ownership: document.getElementById('ownershipPrice').textContent + ' one-time'
+      };
+      document.getElementById('recapPrice').textContent = prices[selectedTier] || '';
     }
 
     /* PAGE COUNT INPUT — live point display */
@@ -887,6 +958,79 @@
       }
 
       showToast('Quote sent! Check your email app to finish sending.');
+    }
+
+    function submitContactForm() {
+      const name     = document.getElementById('contactName').value.trim();
+      const business = document.getElementById('contactBusiness').value.trim();
+      const email    = document.getElementById('contactEmail').value.trim();
+      const phone    = document.getElementById('contactPhone').value.trim();
+      const project  = document.getElementById('contactProject').value.trim();
+      const errEl    = document.getElementById('formError');
+
+      if (!name || !business || !email) {
+        errEl.textContent = 'Please fill in all required fields (Full Name, Business Name, Email).';
+        errEl.style.display = '';
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errEl.textContent = 'Please enter a valid email address.';
+        errEl.style.display = '';
+        return;
+      }
+      errEl.style.display = 'none';
+
+      const q = getQuoteSummary(selectedTier || 'Managed');
+      const payload = {
+        timestamp:           new Date().toISOString(),
+        name,
+        business,
+        email,
+        phone:               phone || '',
+        project_description: project || '',
+        tier:                q.tier,
+        solution:            q.solution,
+        format:              q.format,
+        features:            q.features,
+        support:             q.support,
+        points:              q.points,
+        multiplier:          q.multiplier,
+        upfront:             q.upfront,
+        monthly:             q.monthly
+      };
+
+      if (GOOGLE_SHEET_URL) {
+        let iframe = document.getElementById('sheetFrame');
+        if (!iframe) {
+          iframe = document.createElement('iframe');
+          iframe.id = 'sheetFrame';
+          iframe.name = 'sheetFrame';
+          iframe.style.display = 'none';
+          document.body.appendChild(iframe);
+        }
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = GOOGLE_SHEET_URL;
+        form.target = 'sheetFrame';
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'data';
+        input.value = JSON.stringify(payload);
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
+        form.remove();
+      }
+
+      document.getElementById('contactFormWrap').style.display = 'none';
+      document.getElementById('tierRecap').style.display = 'none';
+      const confirmEl = document.getElementById('contactConfirm');
+      document.getElementById('confirmTitle').textContent =
+        'Thanks ' + name + '! We\u2019ve received your quote request for ' + business + '.';
+      document.getElementById('confirmBody').textContent =
+        'We\u2019ll review your project details and get back to you within 24 hours.';
+      confirmEl.style.display = 'block';
+      document.getElementById('calculator').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function showToast(message) {
