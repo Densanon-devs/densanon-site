@@ -90,6 +90,81 @@ a:hover {
   color: var(--color-text);
 }
 
+/* Nav dropdown (Resources) */
+.nav-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav-dropdown-toggle {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s;
+  font-family: inherit;
+  line-height: 1.6;
+}
+
+.nav-dropdown-toggle:hover,
+.nav-dropdown-toggle.active {
+  color: var(--color-text);
+}
+
+.nav-dropdown-arrow {
+  font-size: 0.6rem;
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.nav-dropdown:hover .nav-dropdown-arrow,
+.nav-dropdown.open .nav-dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+  min-width: 152px;
+  z-index: 200;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown.open .nav-dropdown-menu {
+  display: flex;
+}
+
+.nav-dropdown-menu a {
+  padding: 10px 16px;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.nav-dropdown-menu a:hover,
+.nav-dropdown-menu a.active {
+  background: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
 /* Hero */
 .hero {
   text-align: center;
@@ -440,8 +515,43 @@ section h2 span {
     border-bottom: 1px solid var(--color-border);
   }
 
-  .site-nav a:last-child {
+  .site-nav > a:last-child {
     border-bottom: none;
+  }
+
+  /* Dropdown in mobile — inline expanded sub-items */
+  .nav-dropdown {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .nav-dropdown-toggle {
+    padding: 14px 24px;
+    font-size: 0.95rem;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav-dropdown.open .nav-dropdown-toggle {
+    border-bottom: none;
+  }
+
+  .nav-dropdown-menu {
+    position: static;
+    transform: none;
+    background: var(--color-bg);
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    min-width: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .nav-dropdown-menu a {
+    padding: 12px 24px 12px 40px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--color-border);
   }
 
   .footer-grid {

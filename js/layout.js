@@ -9,6 +9,13 @@
     '    <nav class="site-nav" id="siteNav">',
     '      <a href="/services.html">Services</a>',
     '      <a href="/#products">Products</a>',
+    '      <div class="nav-dropdown" id="resourcesDropdown">',
+    '        <button class="nav-dropdown-toggle" id="resourcesToggle" aria-haspopup="true" aria-expanded="false">Resources <span class="nav-dropdown-arrow">&#9660;</span></button>',
+    '        <div class="nav-dropdown-menu" id="resourcesMenu">',
+    '          <a href="/ai-digest.html">AI Digest</a>',
+    '          <a href="https://toolkit.densanon.com">Toolkit</a>',
+    '        </div>',
+    '      </div>',
     '      <a href="/quote.html">Quote</a>',
     '      <a href="/#contact">Contact</a>',
     '    </nav>',
@@ -28,6 +35,8 @@
     '        <h4>Quick Links</h4>',
     '        <a href="/">Home</a>',
     '        <a href="/services.html">Services</a>',
+    '        <a href="/ai-digest.html">AI Digest</a>',
+    '        <a href="https://toolkit.densanon.com">Toolkit</a>',
     '        <a href="/quote.html">Quote</a>',
     '        <a href="/#contact">Contact</a>',
     '      </div>',
@@ -72,6 +81,23 @@
     });
   }
 
+  // Resources dropdown — click toggles for mobile; hover handled by CSS on desktop
+  var resourcesDropdown = document.getElementById('resourcesDropdown');
+  var resourcesToggle = document.getElementById('resourcesToggle');
+  if (resourcesDropdown && resourcesToggle) {
+    resourcesToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var isOpen = resourcesDropdown.classList.toggle('open');
+      resourcesToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function () {
+      resourcesDropdown.classList.remove('open');
+      resourcesToggle.setAttribute('aria-expanded', 'false');
+    });
+  }
+
   // Active nav link highlighting
   var pathname = window.location.pathname;
   if (pathname === '/index.html') pathname = '/';
@@ -85,6 +111,12 @@
     } catch (e) {}
     if (linkPath === pathname) {
       a.classList.add('active');
+      // Also highlight the parent dropdown toggle when a sub-link is active
+      var dropdown = a.closest('.nav-dropdown');
+      if (dropdown) {
+        var toggle = dropdown.querySelector('.nav-dropdown-toggle');
+        if (toggle) toggle.classList.add('active');
+      }
     }
   });
 })();
