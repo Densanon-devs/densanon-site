@@ -47,7 +47,7 @@
     '      <div class="footer-contact">',
     '        <h4>Contact</h4>',
     '        <p><a href="tel:+12086609798">(208) 660-9798</a></p>',
-    '        <p><a href="mailto:densanon@gmail.com">densanon@gmail.com</a></p>',
+    '        <p><a href="mailto:admin@densanon.com">admin@densanon.com</a></p>',
     '        <p>Post Falls, Idaho</p>',
     '      </div>',
     '    </div>',
