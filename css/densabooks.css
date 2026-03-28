@@ -297,6 +297,97 @@
   background: var(--color-primary);
 }
 
+/* Demo Access section */
+.db-demo-access {
+  border-top: 1px solid var(--color-border);
+  padding: 60px 0;
+}
+
+.demo-access-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+}
+
+.demo-access-header {
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-right: 1px solid var(--color-border);
+}
+
+.demo-access-header h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.demo-access-header p {
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  flex-grow: 1;
+}
+
+.demo-access-accounts {
+  padding: 0;
+  overflow-x: auto;
+}
+
+.demo-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.demo-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.demo-table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.demo-table tr:last-child td {
+  border-bottom: none;
+}
+
+.demo-table code {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  color: var(--color-text);
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.role-admin { background: rgba(229, 62, 62, 0.12); color: var(--color-primary); }
+.role-controller { background: rgba(251, 146, 60, 0.12); color: var(--color-accent-orange); }
+.role-accountant { background: rgba(59, 130, 246, 0.12); color: #60a5fa; }
+.role-bookkeeper { background: rgba(52, 211, 153, 0.12); color: var(--color-accent-green); }
+.role-viewer { background: rgba(156, 163, 175, 0.12); color: var(--color-text-muted); }
+
 /* Pricing section */
 .db-pricing {
   border-top: 1px solid var(--color-border);
@@ -317,15 +408,170 @@
 .db-pricing > .container > p {
   color: var(--color-text-muted);
   font-size: 1.05rem;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
   max-width: 600px;
 }
 
+/* Pricing tabs */
+.pricing-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 4px;
+  width: fit-content;
+  margin-bottom: 32px;
+}
+
+.pricing-tab {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.pricing-tab:hover {
+  color: var(--color-text);
+}
+
+.pricing-tab.active {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+/* Pricing panels */
+.pricing-panel {
+  display: none;
+}
+
+.pricing-panel.active {
+  display: block;
+}
+
+/* Model info bar */
+.pricing-model-info {
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.pricing-model-info p {
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.model-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(229, 62, 62, 0.12);
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+/* Billing toggle */
+.billing-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.billing-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-text);
+  transition: opacity 0.2s;
+}
+
+#label-yearly {
+  opacity: 0.5;
+}
+
+.save-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: rgba(52, 211, 153, 0.12);
+  color: var(--color-accent-green);
+  margin-left: 4px;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-border);
+  border-radius: 24px;
+  transition: 0.2s;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: var(--color-primary);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
+/* Pricing grid */
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   align-items: start;
+}
+
+.pricing-grid-single {
+  grid-template-columns: 1fr;
+  max-width: 360px;
+  margin: 0 auto;
 }
 
 .pricing-card {
@@ -376,6 +622,7 @@
   font-weight: 800;
   color: var(--color-text);
   letter-spacing: -1px;
+  transition: none;
 }
 
 .pricing-term {
@@ -440,6 +687,45 @@
   margin-right: auto;
 }
 
+/* Pricing comparison */
+.pricing-comparison {
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-border);
+}
+
+.pricing-comparison h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.comparison-item {
+  padding: 20px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.comparison-item h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--color-primary);
+}
+
+.comparison-item p {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
 /* CTA section */
 .db-cta {
   border-top: 1px solid var(--color-border);
@@ -476,6 +762,26 @@
 }
 
 /* Responsive */
+@media (max-width: 768px) {
+  .demo-access-card {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-access-header {
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .pricing-model-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 640px) {
   .db-hero h1 {
     font-size: 2rem;
@@ -497,11 +803,16 @@
     grid-template-columns: 1fr;
   }
 
+  .pricing-grid-single {
+    max-width: 100%;
+  }
+
   .db-features,
   .db-modules,
   .db-tech,
   .db-pricing,
-  .db-cta {
+  .db-cta,
+  .db-demo-access {
     padding: 50px 0;
   }
 
@@ -509,5 +820,20 @@
   .db-cta-buttons {
     flex-direction: column;
     align-items: center;
+  }
+
+  .pricing-tabs {
+    width: 100%;
+  }
+
+  .pricing-tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 12px;
+  }
+
+  .demo-table th:nth-child(4),
+  .demo-table td:nth-child(4) {
+    display: none;
   }
 }

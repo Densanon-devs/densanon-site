@@ -51,6 +51,63 @@
       </div>
     </section>
 
+    <!-- DEMO ACCESS -->
+    <section class="db-demo-access">
+      <div class="container">
+        <div class="demo-access-card">
+          <div class="demo-access-header">
+            <h3>Try the Live Demo</h3>
+            <p>Explore DensaBooks with pre-loaded sample data. Each account shows a different role and access level.</p>
+            <a href="https://demo.densanon.com" target="_blank" class="btn btn-primary">Launch Demo</a>
+          </div>
+          <div class="demo-access-accounts">
+            <table class="demo-table">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Password</th>
+                  <th>Role</th>
+                  <th>Access</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>admin</code></td>
+                  <td><code>admin1234567</code></td>
+                  <td><span class="role-badge role-admin">Admin</span></td>
+                  <td>Full access — all entities</td>
+                </tr>
+                <tr>
+                  <td><code>controller</code></td>
+                  <td><code>demo1234567</code></td>
+                  <td><span class="role-badge role-controller">Controller</span></td>
+                  <td>HQ &amp; US controller, EU viewer</td>
+                </tr>
+                <tr>
+                  <td><code>accountant</code></td>
+                  <td><code>demo1234567</code></td>
+                  <td><span class="role-badge role-accountant">Accountant</span></td>
+                  <td>US accountant, EU viewer</td>
+                </tr>
+                <tr>
+                  <td><code>bookkeeper</code></td>
+                  <td><code>demo1234567</code></td>
+                  <td><span class="role-badge role-bookkeeper">Bookkeeper</span></td>
+                  <td>US bookkeeper</td>
+                </tr>
+                <tr>
+                  <td><code>viewer</code></td>
+                  <td><code>demo1234567</code></td>
+                  <td><span class="role-badge role-viewer">Viewer</span></td>
+                  <td>Read-only access</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- FEATURES -->
     <section id="features" class="db-features">
       <div class="container">
@@ -262,65 +319,201 @@
     <!-- PRICING -->
     <section id="pricing" class="db-pricing">
       <div class="container">
-        <h2>Choose Your <span>License</span></h2>
-        <p>Self-hosted on your infrastructure. One-time purchase with optional annual renewal for updates and support.</p>
-        <div class="pricing-grid">
+        <h2>Choose Your <span>Plan</span></h2>
+        <p>Three ways to run DensaBooks. Pick the deployment model that fits your needs.</p>
 
-          <div class="pricing-card">
-            <div class="pricing-tier">Standard</div>
-            <div class="pricing-price">$2,000</div>
-            <div class="pricing-term">one-time license</div>
-            <ul class="pricing-features">
-              <li class="included">1 Entity</li>
-              <li class="included">Core + General Ledger</li>
-              <li class="included">Accounts Payable</li>
-              <li class="included">Accounts Receivable</li>
-              <li class="excluded">Intercompany</li>
-              <li class="excluded">Consolidation</li>
-              <li class="included">Email support</li>
-              <li class="included">1 year of updates</li>
-            </ul>
-            <a href="mailto:admin@densanon.com?subject=DensaBooks%20Standard%20License" class="btn btn-outline pricing-btn">Get Standard</a>
-          </div>
-
-          <div class="pricing-card popular">
-            <div class="pricing-popular-badge">Most Popular</div>
-            <div class="pricing-tier">Professional</div>
-            <div class="pricing-price">$5,500</div>
-            <div class="pricing-term">one-time license</div>
-            <ul class="pricing-features">
-              <li class="included">Up to 5 Entities</li>
-              <li class="included">Core + General Ledger</li>
-              <li class="included">Accounts Payable</li>
-              <li class="included">Accounts Receivable</li>
-              <li class="included">Intercompany</li>
-              <li class="excluded">Consolidation</li>
-              <li class="included">Priority email support</li>
-              <li class="included">1 year of updates</li>
-            </ul>
-            <a href="mailto:admin@densanon.com?subject=DensaBooks%20Professional%20License" class="btn btn-primary pricing-btn">Get Professional</a>
-          </div>
-
-          <div class="pricing-card">
-            <div class="pricing-tier">Enterprise</div>
-            <div class="pricing-price">$12,000</div>
-            <div class="pricing-term">one-time license</div>
-            <ul class="pricing-features">
-              <li class="included">Unlimited Entities</li>
-              <li class="included">Core + General Ledger</li>
-              <li class="included">Accounts Payable</li>
-              <li class="included">Accounts Receivable</li>
-              <li class="included">Intercompany</li>
-              <li class="included">Consolidation</li>
-              <li class="included">Dedicated support</li>
-              <li class="included">1 year of updates</li>
-            </ul>
-            <a href="mailto:admin@densanon.com?subject=DensaBooks%20Enterprise%20License" class="btn btn-outline pricing-btn">Get Enterprise</a>
-          </div>
-
+        <!-- Deployment model tabs -->
+        <div class="pricing-tabs">
+          <button class="pricing-tab active" data-tab="cloud">Cloud</button>
+          <button class="pricing-tab" data-tab="self-hosted">Self-Hosted</button>
+          <button class="pricing-tab" data-tab="desktop">Desktop</button>
         </div>
-        <p class="pricing-note">All licenses include Docker-based deployment, setup documentation, and your license key. One-time purchase — no recurring fees.</p>
-        <p class="pricing-note"><a href="https://demo.densanon.com" target="_blank" style="color:#2563eb;text-decoration:underline">Try the live demo</a> to see DensaBooks in action before you buy.</p>
+
+        <!-- CLOUD PANEL -->
+        <div class="pricing-panel active" id="panel-cloud">
+          <div class="pricing-model-info">
+            <span class="model-badge">We host it</span>
+            <p>Fully managed by Densanon. We handle hosting, backups, and updates. Subscribe monthly or save with an annual plan.</p>
+            <div class="billing-toggle">
+              <span class="billing-label" id="label-monthly">Monthly</span>
+              <label class="toggle-switch">
+                <input type="checkbox" id="billing-toggle">
+                <span class="toggle-slider"></span>
+              </label>
+              <span class="billing-label" id="label-yearly">Yearly <span class="save-badge">Save 17%</span></span>
+            </div>
+          </div>
+
+          <div class="pricing-grid">
+            <div class="pricing-card">
+              <div class="pricing-tier">Starter</div>
+              <div class="pricing-price" data-monthly="$19" data-yearly="$190">$19</div>
+              <div class="pricing-term" data-monthly="/month" data-yearly="/year">/month</div>
+              <ul class="pricing-features">
+                <li class="included">1 Entity</li>
+                <li class="included">Up to 3 Users</li>
+                <li class="included">Core + General Ledger</li>
+                <li class="included">Accounts Payable</li>
+                <li class="included">Accounts Receivable</li>
+                <li class="excluded">Intercompany</li>
+                <li class="excluded">Consolidation</li>
+                <li class="included">Email support</li>
+              </ul>
+              <a href="mailto:admin@densanon.com?subject=DensaBooks%20Cloud%20Starter" class="btn btn-outline pricing-btn">Get Started</a>
+            </div>
+
+            <div class="pricing-card popular">
+              <div class="pricing-popular-badge">Most Popular</div>
+              <div class="pricing-tier">Professional</div>
+              <div class="pricing-price" data-monthly="$49" data-yearly="$490">$49</div>
+              <div class="pricing-term" data-monthly="/month" data-yearly="/year">/month</div>
+              <ul class="pricing-features">
+                <li class="included">Up to 5 Entities</li>
+                <li class="included">Up to 10 Users</li>
+                <li class="included">All Modules</li>
+                <li class="included">Accounts Payable</li>
+                <li class="included">Accounts Receivable</li>
+                <li class="included">Intercompany</li>
+                <li class="excluded">Consolidation</li>
+                <li class="included">Priority support</li>
+              </ul>
+              <a href="mailto:admin@densanon.com?subject=DensaBooks%20Cloud%20Professional" class="btn btn-primary pricing-btn">Get Professional</a>
+            </div>
+
+            <div class="pricing-card">
+              <div class="pricing-tier">Enterprise</div>
+              <div class="pricing-price" data-monthly="$99" data-yearly="$990">$99</div>
+              <div class="pricing-term" data-monthly="/month" data-yearly="/year">/month</div>
+              <ul class="pricing-features">
+                <li class="included">Unlimited Entities</li>
+                <li class="included">Unlimited Users</li>
+                <li class="included">All Modules</li>
+                <li class="included">Accounts Payable</li>
+                <li class="included">Accounts Receivable</li>
+                <li class="included">Intercompany</li>
+                <li class="included">Consolidation</li>
+                <li class="included">Dedicated support</li>
+              </ul>
+              <a href="mailto:admin@densanon.com?subject=DensaBooks%20Cloud%20Enterprise" class="btn btn-outline pricing-btn">Get Enterprise</a>
+            </div>
+          </div>
+          <p class="pricing-note">Cancel anytime. No setup fees. All plans include automatic backups and updates.</p>
+        </div>
+
+        <!-- SELF-HOSTED PANEL -->
+        <div class="pricing-panel" id="panel-self-hosted">
+          <div class="pricing-model-info">
+            <span class="model-badge">You host it</span>
+            <p>One-time license. Deploy on your own infrastructure with Docker. Full control over your data and environment. No recurring fees.</p>
+          </div>
+
+          <div class="pricing-grid">
+            <div class="pricing-card">
+              <div class="pricing-tier">Standard</div>
+              <div class="pricing-price">$2,000</div>
+              <div class="pricing-term">one-time license</div>
+              <ul class="pricing-features">
+                <li class="included">1 Entity</li>
+                <li class="included">Unlimited Users</li>
+                <li class="included">Core + General Ledger</li>
+                <li class="included">Accounts Payable</li>
+                <li class="included">Accounts Receivable</li>
+                <li class="excluded">Intercompany</li>
+                <li class="excluded">Consolidation</li>
+                <li class="included">Email support</li>
+                <li class="included">1 year of updates</li>
+              </ul>
+              <a href="mailto:admin@densanon.com?subject=DensaBooks%20Self-Hosted%20Standard" class="btn btn-outline pricing-btn">Get Standard</a>
+            </div>
+
+            <div class="pricing-card popular">
+              <div class="pricing-popular-badge">Best Value</div>
+              <div class="pricing-tier">Professional</div>
+              <div class="pricing-price">$5,500</div>
+              <div class="pricing-term">one-time license</div>
+              <ul class="pricing-features">
+                <li class="included">Up to 5 Entities</li>
+                <li class="included">Unlimited Users</li>
+                <li class="included">Core + General Ledger</li>
+                <li class="included">Accounts Payable</li>
+                <li class="included">Accounts Receivable</li>
+                <li class="included">Intercompany</li>
+                <li class="excluded">Consolidation</li>
+                <li class="included">Priority support</li>
+                <li class="included">1 year of updates</li>
+              </ul>
+              <a href="mailto:admin@densanon.com?subject=DensaBooks%20Self-Hosted%20Professional" class="btn btn-primary pricing-btn">Get Professional</a>
+            </div>
+
+            <div class="pricing-card">
+              <div class="pricing-tier">Enterprise</div>
+              <div class="pricing-price">$12,000</div>
+              <div class="pricing-term">one-time license</div>
+              <ul class="pricing-features">
+                <li class="included">Unlimited Entities</li>
+                <li class="included">Unlimited Users</li>
+                <li class="included">All Modules</li>
+                <li class="included">Accounts Payable</li>
+                <li class="included">Accounts Receivable</li>
+                <li class="included">Intercompany</li>
+                <li class="included">Consolidation</li>
+                <li class="included">Dedicated support</li>
+                <li class="included">1 year of updates</li>
+              </ul>
+              <a href="mailto:admin@densanon.com?subject=DensaBooks%20Self-Hosted%20Enterprise" class="btn btn-outline pricing-btn">Get Enterprise</a>
+            </div>
+          </div>
+          <p class="pricing-note">Includes Docker deployment package, setup scripts, desktop installers, license key, and user manual. Optional annual renewal for continued updates.</p>
+        </div>
+
+        <!-- DESKTOP PANEL -->
+        <div class="pricing-panel" id="panel-desktop">
+          <div class="pricing-model-info">
+            <span class="model-badge">Runs on your device</span>
+            <p>No server required. DensaBooks runs entirely on a single computer with a local database. Your data never leaves your machine.</p>
+          </div>
+
+          <div class="pricing-grid pricing-grid-single">
+            <div class="pricing-card popular">
+              <div class="pricing-popular-badge">Coming Soon</div>
+              <div class="pricing-tier">Desktop Edition</div>
+              <div class="pricing-price">$149</div>
+              <div class="pricing-term">one-time purchase</div>
+              <ul class="pricing-features">
+                <li class="included">Single User</li>
+                <li class="included">1 Entity</li>
+                <li class="included">All Modules Included</li>
+                <li class="included">Local Database (no server)</li>
+                <li class="included">Windows, macOS, Linux</li>
+                <li class="included">Offline Capable</li>
+                <li class="included">Email support</li>
+                <li class="included">1 year of updates</li>
+              </ul>
+              <a href="mailto:admin@densanon.com?subject=DensaBooks%20Desktop%20-%20Waitlist" class="btn btn-outline pricing-btn">Join Waitlist</a>
+            </div>
+          </div>
+          <p class="pricing-note">Perfect for freelancers and solo practitioners who want full accounting power without hosting infrastructure.</p>
+        </div>
+
+        <!-- COMPARISON -->
+        <div class="pricing-comparison">
+          <h3>Which deployment is right for you?</h3>
+          <div class="comparison-grid">
+            <div class="comparison-item">
+              <h4>Cloud</h4>
+              <p>Best for teams that want zero maintenance. We handle everything — you just log in and work. Monthly or yearly subscription.</p>
+            </div>
+            <div class="comparison-item">
+              <h4>Self-Hosted</h4>
+              <p>Best for organizations that need full data control. One-time purchase, deploy on your servers with Docker. You own the infrastructure.</p>
+            </div>
+            <div class="comparison-item">
+              <h4>Desktop</h4>
+              <p>Best for solo users who want privacy and simplicity. Runs on one device, no internet required. One-time purchase.</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -341,6 +534,35 @@
   <div id="site-footer"></div>
 
   <script src="js/layout.js"></script>
+
+  <script>
+    // Pricing tabs
+    document.querySelectorAll('.pricing-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.pricing-tab').forEach(function(t) { t.classList.remove('active'); });
+        document.querySelectorAll('.pricing-panel').forEach(function(p) { p.classList.remove('active'); });
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Billing toggle (monthly/yearly)
+    var billingToggle = document.getElementById('billing-toggle');
+    if (billingToggle) {
+      billingToggle.addEventListener('change', function() {
+        var isYearly = billingToggle.checked;
+        var mode = isYearly ? 'yearly' : 'monthly';
+        document.querySelectorAll('#panel-cloud .pricing-price[data-monthly]').forEach(function(el) {
+          el.textContent = el.dataset[mode];
+        });
+        document.querySelectorAll('#panel-cloud .pricing-term[data-monthly]').forEach(function(el) {
+          el.textContent = el.dataset[mode];
+        });
+        document.getElementById('label-monthly').style.opacity = isYearly ? '0.5' : '1';
+        document.getElementById('label-yearly').style.opacity = isYearly ? '1' : '0.5';
+      });
+    }
+  </script>
 
 </body>
 </html>
