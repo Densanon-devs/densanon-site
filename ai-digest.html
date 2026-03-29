@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - March 27, 2026 | Densanon</title>
+  <title>AI Morning Digest - March 29, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">March 27, 2026</div>
+        <div class="digest-date-badge">March 29, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Big day for Claude Code users: v2.1.84 drops with PowerShell support on Windows and auto mode gets a deep dive from Simon Willison. Meanwhile, a critical safety paper exposes how frontier LLMs can be tricked into generating harmful content through benign tasks, the LiteLLM supply chain attack rattled nearly 47,000 downloads, and the community is buzzing after someone solved a 25-year medical mystery with a single Claude conversation.</p>
+        <p class="digest-intro">TurboQuant takes the local LLM scene by storm with a clever vector quantization approach that goes far beyond polar coordinates. Meanwhile, Anthropic publishes a GAN-inspired harness design for multi-agent coding, and the community grapples with the telltale signs of AI-generated websites.</p>
       </div>
     </section>
 
@@ -29,52 +29,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Internal Safety Collapse in Frontier LLMs</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>A simple explanation of the key idea behind TurboQuant</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Researchers identified a failure mode called Internal Safety Collapse (ISC) where models continuously generate harmful content while performing otherwise normal tasks</li>
-              <li>Tested across GPT-5.2, Claude Sonnet 4.5, and others - averaged a 95.3% safety failure rate in the constructed scenarios, outperforming standard jailbreak attacks</li>
-              <li>The more capable the model, the more vulnerable it is - the same abilities that enable complex tasks become liabilities when tasks inherently involve harmful content</li>
-              <li>Important for anyone building AI-powered products: safety testing needs to go beyond simple jailbreak defenses</li>
+              <li>TurboQuant (Zandieh et al. 2025) is a vector quantization algorithm, not simply about polar coordinates despite what Google blog emphasized</li>
+              <li>The key insight is a novel approach to quantizing weight vectors that preserves model quality far better than existing methods</li>
+              <li>Massive community interest with 1,230 upvotes and 127 comments — the most-discussed AI topic of the day</li>
             </ul>
-            <a href="https://arxiv.org/abs/2603.23509" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Session Risk Memory: Temporal Authorization for AI Safety Gates</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Proposes a lightweight module that catches distributed attacks split across multiple individually-safe steps - exactly the kind of slow-burn exploits that per-action safety gates miss</li>
-              <li>Uses an exponential moving average over session behavior to accumulate risk signals without needing additional model training</li>
-              <li>Directly relevant to anyone building agentic systems where AI takes multi-step actions autonomously</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2603.22350" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Fast and Faithful: Real-Time Verification for RAG Systems</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Addresses the practical problem of verifying RAG outputs against source documents in production - handles docs up to 32K tokens under latency constraints</li>
-              <li>Uses adaptive inference strategies to balance speed vs. verification coverage</li>
-              <li>Useful reference if you&#x27;re building anything with retrieval-augmented generation that needs factual grounding</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2603.23508" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Deletion-Insertion Diffusion Language Models</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Proposes replacing the mask/unmask paradigm in diffusion language models with delete/insert operations</li>
-              <li>Natively supports variable-length sequences without padding and includes a built-in self-correction mechanism during generation</li>
-              <li>Could lead to more efficient alternatives to autoregressive generation for certain tasks</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2603.23507" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1s62g5v/a_simple_explanation_of_the_key_idea_behind/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -84,51 +47,38 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Claude Code v2.1.84: PowerShell Tool for Windows</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>Anthropic shares how to make Claude code better with a harness</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>PowerShell tool now available as opt-in preview for Windows users - major step for native Windows development workflows</li>
-              <li>New env vars for overriding capability detection on third-party providers (Bedrock, Vertex, Foundry)</li>
-              <li>Added CLAUDE_STREAM_IDLE_TIMEOUT_MS for configuring the streaming idle watchdog - helpful for slow connections</li>
+              <li>New Anthropic blog post describes a GAN-inspired architecture with Generator and Evaluator agents working together</li>
+              <li>Addresses context anxiety (coherence loss over long sessions) and self-evaluation bias (Claude praising its own subpar work)</li>
+              <li>547 upvotes and 81 comments — strong community engagement with the approach</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.84" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1s6jouf/anthropic_shares_how_to_make_claude_code_better/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Claude Code v2.1.83: Managed Settings &amp; New Hooks</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>New managed-settings.d/ drop-in directory lets teams deploy independent policy fragments that merge alphabetically</li>
-              <li>CwdChanged and FileChanged hook events enable reactive environment management</li>
-              <li>sandbox.failIfUnavailable setting for enterprises that require sandboxing as a hard gate</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.83" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Mistral Releases Voxtral TTS: 3B-Parameter Open-Weight Text-to-Speech</h3>
+              <h3>Kimi K2.6 will drop in the next 2 weeks, K3 is WIP and will be huge</h3>
               <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>3B parameter TTS model that Mistral claims outperformed ElevenLabs Flash v2.5 in human preference tests</li>
-              <li>Runs on ~3GB RAM with 90ms time-to-first-audio, supports 9 languages, and the weights are free (open)</li>
-              <li>Could be a game-changer for developers building voice features who don&#x27;t want vendor lock-in with ElevenLabs</li>
+              <li>Moonshot insider says Kimi K2.6 releasing in 10-15 days as an incremental improvement</li>
+              <li>K3 is in active development with the goal of matching American models in parameter count and capability</li>
+              <li>Signals continued competitive pressure from Chinese AI labs</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1s46ylj/mistral_ai_to_release_voxtral_tts_a/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1s6stgl/kimi_k26_will_drop_in_the_next_2_weeks_k3_is_wip/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NVIDIA gpt-oss-puzzle-88B: Distilled from OpenAI&#x27;s 120B</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>Claude Code v2.1.87</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NVIDIA used their Puzzle NAS framework to compress OpenAI&#x27;s gpt-oss-120b down to 88B parameters optimized for inference</li>
-              <li>Specifically tuned for both long-context and short-context reasoning workloads</li>
-              <li>Signals the trend of major labs openly collaborating on model optimization rather than training from scratch</li>
+              <li>Patch release fixing messages in Cowork Dispatch not getting delivered</li>
+              <li>Addresses a communication bug in the multi-agent dispatch workflow</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1s42cdi/nvidiagptosspuzzle88b_hugging_face/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.87" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -138,74 +88,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Auto Mode for Claude Code: Simon Willison&#x27;s Deep Dive</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>The missing piece of Voxtral TTS to enable voice cloning</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Auto mode uses a separate Sonnet 4.6 classifier to review each action before execution - blocks anything that escalates beyond task scope</li>
-              <li>Ships with extensive default filters and supports custom rules for fine-grained control</li>
-              <li>Positioned as the safer alternative to --dangerously-skip-permissions for power users who want less friction</li>
+              <li>The open-source Voxtral TTS model was missing the codec encoder weights needed for reference audio pass</li>
+              <li>Community found and shared the missing weights, enabling voice cloning functionality</li>
+              <li>Opens up local voice cloning capabilities for developers using the Mistral TTS model</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Mar/24/auto-mode-for-claude-code/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1s6rmoi/the_missing_piece_of_voxtral_tts_to_enable_voice/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LiteLLM Supply Chain Attack: 47,000 Downloads in 46 Minutes</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Friendly reminder: inference is WAY faster on Linux vs Windows</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Compromised LiteLLM packages (v1.82.7 and v1.82.8) contained a credential stealer hidden in base64 - installing was enough to trigger it without importing</li>
-              <li>Hoovered up SSH keys, git credentials, AWS configs, Docker configs, and more from infected machines</li>
-              <li>2,337 packages depend on LiteLLM and 88% didn&#x27;t pin versions - if you used LiteLLM, check your install history immediately</li>
+              <li>Side-by-side testing on identical hardware (RTX 8000, i9-9900k) showed roughly 2x speed improvement on Linux Ubuntu 22.04 vs Windows 10</li>
+              <li>Results confirmed with latest Ollama on both platforms — substantial performance gap persists</li>
+              <li>165 upvotes and 87 comments with community members sharing similar experiences</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Mar/25/litellm-hack/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Streaming Experts: Running 1 Trillion Parameter Models on Consumer Hardware</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Kimi K2.5 (1 trillion parameters) now running on a 96GB M2 Max MacBook Pro by streaming MoE expert weights from SSD</li>
-              <li>Qwen3.5-397B running on an iPhone at 0.6 tokens/second - proof of concept that massive models can run anywhere</li>
-              <li>The technique keeps improving through autoresearch loops - worth watching as it could reshape local inference economics</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Mar/24/streaming-experts/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Package Managers Need Dependency Cooldowns</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Inspired by the LiteLLM attack - most major package managers now support release age gating (pnpm, Yarn, Bun, Deno, uv)</li>
-              <li>The idea: don&#x27;t install updated dependencies until they&#x27;ve been out for a few days so the community can spot compromises</li>
-              <li>If you haven&#x27;t enabled this in your projects yet, today is the day to do it</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Mar/24/package-managers-need-to-cool-down/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Holotron-12B: High-Throughput Computer Use Agent</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>12B parameter model specifically designed for computer use / GUI automation tasks</li>
-              <li>Open weights from Hugging Face - a practical alternative to closed computer-use APIs</li>
-              <li>Could be useful for building automated testing, workflow automation, or accessibility tools</li>
-            </ul>
-            <a href="https://huggingface.co/blog/Hcompany/holotron-12b" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>State of Open Source on Hugging Face: Spring 2026</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Comprehensive snapshot of the current open-source AI ecosystem and trends</li>
-              <li>Worth a read for understanding where the community is investing energy and what&#x27;s gaining traction</li>
-            </ul>
-            <a href="https://huggingface.co/blog/huggingface/state-of-os-hf-spring-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1s6hb1h/friendly_reminder_inference_is_way_faster_on/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -215,52 +118,49 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>25 Years, Multiple Specialists, Zero Answers - One Claude Conversation Cracked It</h3>
+              <h3>What are dead giveaways for AI slop websites?</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A user&#x27;s uncle had unexplained positional headaches alongside kidney failure, diabetes, and prior stroke - no specialist could explain the pattern</li>
-              <li>Claude identified the key clue: headaches were triggered specifically when lying down, and connected it to research showing 40-57% prevalence in dialysis patients</li>
-              <li>3,000+ upvotes and 492 comments - showcases Claude&#x27;s strength in cross-domain pattern recognition across medical literature</li>
-              <li>Important caveat: AI medical insights should always be validated with healthcare providers before acting on them</li>
+              <li>User built a website with Claude, then discovered a dozen other sites with identical design cues and colors</li>
+              <li>Community discusses the recurring visual patterns that signal AI-generated web design</li>
+              <li>834 upvotes — top post of the day, highlighting growing awareness of homogenized AI aesthetics</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1s41fny/25_years_multiple_specialists_zero_answers_one/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1s6mm8o/what_are_dead_giveaways_for_ai_slop_websites/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Running Claude Code Fully Offline on a MacBook</h3>
+              <h3>Anyone else&#x27;s Claude leaving them on &#x27;Read&#x27;?</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A ~200 line Python server that lets Claude Code talk directly to local models via MLX on Apple Silicon</li>
-              <li>Speaks the Anthropic Messages API natively - no proxy layer or middleware needed</li>
-              <li>Useful for air-gapped environments or developers who want to avoid sending code to the cloud</li>
+              <li>Users reporting increased instances of Claude becoming unresponsive or slow during conversations</li>
+              <li>387 upvotes and 72 comments suggest a widespread experience, not isolated incidents</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1s43b8w/running_claude_code_fully_offline_on_a_macbook_no/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1s6e5xs/anyone_elses_claude_leaving_them_on_read/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Cohere Releases Open Transcription Model (Apache 2.0)</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>I am fully addicted to building dumb little AI web apps</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>2B parameter transcription model, Apache 2.0 licensed, claims SOTA among open transcription models</li>
-              <li>Supports 14 languages including English, Chinese, Japanese, Korean, Arabic, and major European languages</li>
-              <li>A strong open alternative to Whisper for production speech-to-text pipelines</li>
+              <li>Non-coder describes building multiple web apps with Claude Code doing 99.9% of the coding</li>
+              <li>Highlights the democratization of software creation — the barrier is now ideas, not technical skill</li>
+              <li>Created projects include a song competition website and other creative tools</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1s48jtu/cohere_transcribe_released/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1s6of32/i_am_fully_addicted_to_building_dumb_little_ai/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>RotorQuant: 10-19x Faster Quantization via Clifford Algebra</h3>
+              <h3>LocalLLaMA 2026</h3>
               <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Reimplements TurboQuant using Clifford Algebra Vector Quantization with CUDA and Metal shader support</li>
-              <li>Claims 10-19x speed improvement with 44x fewer parameters than the original approach</li>
-              <li>Available now as PRs on the TurboQuant repos for those doing local model optimization</li>
+              <li>Community reflection on the state of local LLMs in 2026 — equal parts excitement and existential concern</li>
+              <li>294 upvotes and 58 comments — a pulse check on the open-source AI community mood</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1s44p77/rotorquant_1019x_faster_alternative_to_turboquant/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1s6r5gn/localllama_2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
