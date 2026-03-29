@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - March 27, 2026 | Densanon</title>
+  <title>Computation Morning Digest - March 29, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">March 27, 2026</div>
+        <div class="digest-date-badge">March 29, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">AMD officially launches the Ryzen 9 9950X3D2 with dual 3D V-Cache for the first time, Intel Arrow Lake Refresh lands in stores, and US senators push the Chip Security Act to track every exported AI GPU. Meanwhile Ubuntu 26.04 LTS beta ships with Linux 7.0 and GNOME 50, Google accelerates its quantum-safe encryption deadline to 2029, and SemiAnalysis maps the HBM memory wall every data center is about to hit.</p>
+        <p class="digest-intro">Tokyo tests data centers under railway overpasses, NTT develops 4x-capacity optical fiber for undersea cables, and GPUHammer demonstrates the first Rowhammer attack on GPU GDDR6 memory — dropping AI model accuracy from 80% to 0.1% with a single bit flip. Plus, Google opens early access to its Willow quantum processor.</p>
       </div>
     </section>
 
@@ -29,117 +29,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD Makes the Flagship Ryzen 9 9950X3D2 Official — First Dual-Cache X3D CPU</h3>
+              <h3>Tokyo consortium tests placing data centers under railway overpasses</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Ryzen 9 9950X3D2 is the first AMD processor to stack 3D V-Cache on both CCDs simultaneously, yielding 208MB total cache with a 200W TDP.</li>
-              <li>AMD promises modest but real gains in gaming, rendering, and content creation over the single-CCD 9950X3D — targeted at workstation and prosumer buyers.</li>
-              <li>Arriving April 2026; no pricing confirmed yet, but dual-cache stacking marks a meaningful architectural shift for AMD&#x27;s high-end desktop line.</li>
+              <li>Modular container-sized data center units deployed without constructing a full building</li>
+              <li>Passing trains introduce severe thermal and vibration challenges that must be engineered around</li>
+              <li>Creative use of underutilized urban infrastructure for edge computing capacity</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/amd-makes-the-flagship-ryzen-9-9950x3d2-official-first-dual-cache-x3d-cpu-arrives-in-april-with-208mb-cache-200w-tdp-promising-modest-performance-gains" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/tokyu-group-to-test-modular-data-centers-under-tokyo-railway-overpasses" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel Arrow Lake Refresh: Core Ultra 5 250K Plus and Core Ultra 7 270K Plus Now Available</h3>
+              <h3>Japanese firm develops optical fiber with 4x traffic capacity</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel&#x27;s Arrow Lake Refresh &#x27;Plus&#x27; CPUs are now on shelves starting at $219, offering performance boosts over standard Arrow Lake without a platform change.</li>
-              <li>Intel simultaneously confirmed the flagship Core Ultra 9 290K Plus and a potential KS &#x27;Special Edition&#x27; are both cancelled — the refresh tops out at the 270K Plus.</li>
-              <li>For buyers who skipped Arrow Lake, the Plus lineup represents the best value the socket will ever see before Intel&#x27;s next platform.</li>
+              <li>NTT multicore optical fiber (MCF) quadruples capacity while maintaining existing cable diameter</li>
+              <li>Compatible with current infrastructure — potential for undersea cable deployment</li>
+              <li>Could dramatically increase global bandwidth without new physical conduit</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/where-to-buy-intels-core-ultra-5-250k-plus-and-core-ultra-7-270k-plus-grab-these-impressive-arrow-lake-refresh-cpus-from-these-retailers-starting-from-usd219" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/peripherals/cables-connectors/japanese-firm-develops-optical-fiber-with-4x-traffic-capacity-could-be-used-for-undersea-cables-mcf-retains-the-same-diameter-and-works-with-existing-infrastructure" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Ubuntu 26.04 LTS Beta Released: Linux 7.0 + GNOME 50 + Mesa 26.0</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Ubuntu 26.04 LTS beta ships with Linux kernel 7.0, GNOME 50, and Mesa 26.0 — a generational stack upgrade for what will be a 5-year LTS release.</li>
-              <li>The release continues Ubuntu&#x27;s pivot to Rust-based system components: ntpd-rs is replacing the NTP daemon for time synchronization.</li>
-              <li>Final release is scheduled for April 23, 2026; hardware teams should start validation now given the LTS support window.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Ubuntu-26.04-Beta" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Open-Source Nouveau vs. NVIDIA Linux Driver: How Far NVK Has Come with Linux 7.0</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Fresh benchmarks show the fully open-source Nouveau + Mesa NVK Vulkan stack has made significant strides since Linux 6.17, closing the gap with NVIDIA&#x27;s proprietary driver.</li>
-              <li>Intel Xe graphics driver in Linux 7.1 is adding Transparent Hugepage support for Shared Virtual Memory (SVM), a major compute performance win for GPU workloads.</li>
-              <li>The open-source NVIDIA driver stack is now viable for many compute use cases — a milestone that changes the calculus for Linux-first data center and edge deployments.</li>
-            </ul>
-            <a href="https://www.phoronix.com/review/linux-70-nouveau" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Industry &amp; HPC</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>US Senators Call for Halt to Nvidia GPU Exports Amid Super Micro Smuggling Scandal</h3>
+              <h3>Intel Arrow Lake Refresh CPU prices shot up 17% above MSRP within 48 hours</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>US senators are pressing for a halt to Nvidia GPU exports to China as fallout from Super Micro&#x27;s AI chip smuggling scandal widens; Super Micro shareholders have also filed a securities fraud lawsuit.</li>
-              <li>The Foreign Affairs Committee is advancing the Chip Security Act, which would mandate location-tracking hardware in all exported AI accelerators — a significant supply-chain surveillance mechanism.</li>
-              <li>This could directly constrain Nvidia&#x27;s roadmap for China-compliant SKUs and reshape the entire AI chip export compliance landscape.</li>
+              <li>Core Ultra 200S Plus series received strong reviews for price-to-performance ratio</li>
+              <li>Dynamic pricing by retailers quickly eroded the value proposition</li>
+              <li>Highlights the gap between MSRP marketing and real-world availability pricing</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/us-senators-call-for-a-halt-to-nvidia-gpu-exports-in-the-wake-of-the-super-micro-scandal-looming-chip-security-act-may-put-a-wrench-into-huangs-china-ambitions" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/intel-arrow-lake-refresh-cpu-prices-shot-up-to-17-percent-above-msrp-just-48-hours-after-launch-dynamic-pricing-trumps-manufacturers-recommended-pricing" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>xAI&#x27;s Colossus 2: The First Gigawatt Data Center in the World</h3>
-              <span class="digest-source">SemiAnalysis</span>
+              <h3>Samsung 2nm GAA efficiency disappoints</h3>
+              <span class="digest-source">Reddit r/hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>SemiAnalysis details xAI&#x27;s Colossus 2 as the first data center in history to cross 1 gigawatt of power draw — a scale previously confined to national grid infrastructure.</li>
-              <li>The build uses a unique reinforcement learning training architecture and marks a new era of hyperscale compute where power delivery, not silicon, is the binding constraint.</li>
-              <li>At this power scale, data center design converges with utility planning; this has cascading implications for grid stability, cooling, and where future AI clusters can physically be built.</li>
+              <li>Samsung gate-all-around 2nm process showing significantly worse power efficiency than TSMC silicon</li>
+              <li>40% higher peak power consumption vs Snapdragon raises questions about Samsung foundry competitiveness</li>
+              <li>Node shrink alone is not guaranteeing efficiency gains — process maturity matters</li>
             </ul>
-            <a href="https://semianalysis.com/feed/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/hardware/comments/1s66i17/samsungs_2nm_gaa_efficiency_disappoints_as_exynos/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Scaling the Memory Wall: The Rise and Roadmap of HBM</h3>
-              <span class="digest-source">SemiAnalysis</span>
+              <h3>Samsung BM9K1 PCIe 5.0 QLC SSD migrates its controller to RISC-V</h3>
+              <span class="digest-source">Reddit r/hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>SemiAnalysis traces how HBM has become the single most capacity-constrained component in AI infrastructure, with demand consistently outpacing Samsung and SK Hynix production ramps.</li>
-              <li>Server DRAM margins have already crossed 80% as HBM supply tightness spills into adjacent memory markets — a structural dynamic unlikely to resolve before 2027.</li>
-              <li>The piece maps the HBM3E and HBM4 roadmap and argues that memory bandwidth, not compute FLOPS, will define the ceiling on AI model scale for the next two years.</li>
+              <li>Samsung moving SSD controllers from Arm to RISC-V architecture</li>
+              <li>Signals growing RISC-V adoption in production storage hardware</li>
+              <li>PCIe 5.0 QLC combination targets data center capacity workloads</li>
             </ul>
-            <a href="https://semianalysis.com/feed/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Arm Comes Full Circle With Homegrown, AI-Tuned Server CPU</h3>
-              <span class="digest-source">Next Platform</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Arm has designed its own data center CPU optimized for AI inference workloads — a significant shift from its historical role as an IP licensor to becoming a direct silicon competitor.</li>
-              <li>The chip is positioned against both x86 server CPUs and custom silicon from AWS Graviton and Ampere, raising questions about Arm&#x27;s relationships with its own licensees.</li>
-              <li>HPCwire separately notes Arm&#x27;s new CPU already shows competitive inference throughput benchmarks against Xeon, making it a credible option for inference-heavy cloud workloads.</li>
-            </ul>
-            <a href="https://www.nextplatform.com/feed/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>IBM Unrolls Blueprint for Quantum-Classical HPC Computing</h3>
-              <span class="digest-source">Next Platform</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>IBM has published a detailed roadmap for integrating quantum processors directly into classical HPC workflows, targeting simulation of real magnetic materials as an early proof-of-concept.</li>
-              <li>The blueprint defines a hybrid execution model where quantum co-processors handle specific intractable problem subsets while classical CPUs manage orchestration and pre/post-processing.</li>
-              <li>This is the most concrete near-term integration plan from any major vendor — relevant for national labs, pharmaceutical simulation, and materials science teams planning next-gen HPC.</li>
-            </ul>
-            <a href="https://www.nextplatform.com/feed/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/hardware/comments/1s6laj1/samsung_bm9k1_pcie_50_qlc_ssd_migrates_its/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -149,93 +95,122 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Majorana Qubits Decoded in Quantum Computing Breakthrough</h3>
-              <span class="digest-source">ScienceDaily Quantum Computing</span>
+              <h3>GPUHammer: First Rowhammer attack demonstrated on GPU GDDR6 memory</h3>
+              <span class="digest-source">Reddit r/hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Researchers have successfully decoded Majorana qubits — topological quantum bits long theorized to be inherently more stable and error-resistant than conventional superconducting qubits.</li>
-              <li>The result is significant because Majorana-based systems could dramatically reduce the overhead of quantum error correction, one of the primary barriers to practical quantum computing.</li>
-              <li>Separately, scientists report quantum tech has reached its &#x27;transistor moment&#x27; — the point where the underlying physics is understood well enough that engineering and manufacturing scale becomes the primary challenge.</li>
+              <li>First successful Rowhammer attack on GPU memory (NVIDIA RTX A6000 with GDDR6)</li>
+              <li>A single bit flip dropped AI model accuracy from 80% to 0.1%</li>
+              <li>Opens a new attack surface for AI systems relying on GPU computation integrity</li>
             </ul>
-            <a href="https://www.sciencedaily.com/rss/computers_math/quantum_computers.xml" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/hardware/comments/1s6al2b/gpuhammer_first_rowhammer_attack_demonstrated_on/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LLM Inference at the Edge: Mobile, NPU, and GPU Performance Efficiency</h3>
-              <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>New arXiv paper benchmarks LLM inference across mobile SoC NPUs and discrete GPUs, finding that NPU efficiency advantages diminish rapidly for models above 7B parameters.</li>
-              <li>A companion paper on energy-efficient software-hardware co-design for ML proposes compiler-directed fine-grained power orchestration (PowerFlow-DNN) to cut inference energy on heterogeneous hardware.</li>
-              <li>These results have direct implications for on-device AI deployment strategies: smaller quantized models on NPUs, larger models need dedicated GPU inference infrastructure.</li>
-            </ul>
-            <a href="https://rss.arxiv.org/rss/cs.AR+cs.DC+cs.PF" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Google Shortens Timeline for Quantum-Safe Encryption Transition to 2029</h3>
+              <h3>Google opens early access to Willow quantum processor</h3>
               <span class="digest-source">The Quantum Insider</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Google has accelerated its internal deadline for migrating to post-quantum cryptography to 2029, citing faster-than-expected progress in quantum hardware — consistent with their earlier &#x27;Willow&#x27; announcements.</li>
-              <li>The Hacker News community simultaneously surfaced a warning that quantum computers could be capable of breaking current RSA encryption by 2029, adding urgency for enterprise security teams.</li>
-              <li>NIST&#x27;s post-quantum standards are now finalized; organizations still running RSA-2048 or ECC should treat 2029 as a hard deadline for migration, not a planning horizon.</li>
+              <li>Google inviting external experimental proposals for limited access to Willow</li>
+              <li>Part of an accelerating push toward quantum commercialization</li>
+              <li>Shortening timeline for post-quantum security adoption</li>
             </ul>
-            <a href="https://thequantuminsider.com/feed/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://thequantuminsider.com/2026/03/28/google-opens-early-access-to-willow-quantum-processor-invites-experimental-proposals/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Scientists Used 7,000 GPUs to Simulate a Tiny Quantum Chip in Extreme Detail</h3>
-              <span class="digest-source">ScienceDaily Quantum Computing</span>
+              <h3>Chinese researchers demonstrate logical operations on silicon quantum processor</h3>
+              <span class="digest-source">The Quantum Insider</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A team deployed 7,000 GPUs to classically simulate a small quantum chip at high fidelity, establishing a new benchmark for how much classical compute is needed to emulate quantum systems.</li>
-              <li>The simulation validates that classical supercomputers can still keep pace with small quantum chips — but the resource requirements scale exponentially, confirming quantum advantage is real for larger circuits.</li>
-              <li>This kind of classical verification is critical for debugging and benchmarking quantum hardware before deploying on systems too large to simulate.</li>
+              <li>Universal logical operations demonstrated on silicon-based quantum processor</li>
+              <li>Error-corrected quantum computing compatible with existing semiconductor manufacturing</li>
+              <li>Silicon-based approach could leverage existing fab infrastructure for scaling</li>
             </ul>
-            <a href="https://www.sciencedaily.com/rss/computers_math/quantum_computers.xml" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://thequantuminsider.com/2026/03/28/chinese-researchers-demonstrate-logical-operations-on-silicon-quantum-processor/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
+        <h2 class="digest-section-title">Industry &amp; HPC</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>$500 GPU Outperforms Claude Sonnet on Coding Benchmarks</h3>
-              <span class="digest-source">Hacker News Computation</span>
+              <h3>Anthropic struggling with Chinese competition, its own safety obsession</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A community benchmark shows a consumer $500 GPU running a locally-hosted model outperforming Claude Sonnet on coding-specific tasks — reigniting the local vs. cloud inference debate.</li>
-              <li>The result is context-dependent (coding benchmarks favor models trained heavily on code), but it highlights how rapidly local inference quality is catching up with hosted frontier models.</li>
-              <li>For compute-constrained or privacy-sensitive workloads, the case for on-premise inference is stronger than ever — especially as open-weight models improve.</li>
+              <li>Anthropic reportedly planning to go public as soon as Q4 2026</li>
+              <li>Recently resisted US Defense Department demands to soften model safeguards</li>
+              <li>Facing headwinds from Chinese AI competition while maintaining safety-first positioning</li>
             </ul>
-            <a href="https://hnrss.org/newest?q=GPU+OR+CPU+OR+quantum+OR+semiconductor+OR+TSMC+OR+NVIDIA" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://go.theregister.com/feed/www.theregister.com/2026/03/28/miss_anthropic_not_those_who/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Most GPU Clusters Are Economically Misconfigured</h3>
-              <span class="digest-source">Hacker News Computation</span>
+              <h3>The first thing vibe coding builds is confidence</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A widely-discussed piece argues that the majority of GPU clusters are configured for peak theoretical throughput rather than total-cost-optimized utilization, leaving significant money on the table.</li>
-              <li>The analysis covers storage I/O bottlenecks, interconnect underutilization, and checkpoint overhead as the primary culprits — issues that compound at scale.</li>
-              <li>Takeaway for teams running training clusters: profiling actual GPU utilization vs. theoretical MFU is the first step; most clusters are running at 30-50% effective utilization without knowing it.</li>
+              <li>Secret CEO column argues vibe coding&#x27;s real value is building confidence in non-developers</li>
+              <li>Developers should be confident it won&#x27;t kill the craft</li>
+              <li>Draws analogy to how democratizing tools reshape industries without destroying expertise</li>
             </ul>
-            <a href="https://hnrss.org/newest?q=GPU+OR+CPU+OR+quantum+OR+semiconductor+OR+TSMC+OR+NVIDIA" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://go.theregister.com/feed/www.theregister.com/2026/03/29/secret_ceo_column_vibe_coding/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Samsung and SK Hynix Drive Server DRAM Margins Past 80% Amid Korea Supply Pressures</h3>
+              <h3>An interview with Arm CEO Rene Haas about selling chips</h3>
               <span class="digest-source">Reddit r/hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Samsung and SK Hynix have pushed server DRAM gross margins above 80%, a historically rare level driven by sustained AI infrastructure demand and constrained HBM production.</li>
-              <li>Korean supply-side pressures — including talent, fab capacity, and geopolitical risk — mean these margins may persist longer than a typical memory cycle.</li>
-              <li>For data center buyers, this signals continued high DRAM pricing through at least 2026; budget models should assume no significant memory cost relief this year.</li>
+              <li>Stratechery deep-dive with Arm CEO on evolving business model</li>
+              <li>Discussion covers Arm&#x27;s shift from licensing to potentially selling its own chips</li>
+              <li>Strategic implications for the entire semiconductor ecosystem</li>
             </ul>
-            <a href="https://www.reddit.com/r/hardware/.rss" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/hardware/comments/1s6l3zk/stratecherry_an_interview_with_arm_ceo_rene_haas/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Software &amp; Systems</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Nginx 1.29.7 delivers Multipath TCP support</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Multipath TCP support lands in Nginx mainline</li>
+              <li>Also fixes buffer overflow vulnerabilities in the 1.28.3 stable release</li>
+              <li>Significant for high-availability and mobile connectivity use cases</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Nginx-1.29.7-Multipath-TCP" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Many EXT4 fixes lined up for Linux 7.0-rc6</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Substantial batch of EXT4 file-system fixes heading into Linux 7.0-rc6</li>
+              <li>Linux 7.0 release approaching with continued focus on filesystem reliability</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.0-rc6-EXT4-Fixes" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AMD introduces GAIA Agent UI for privacy-first local AI agents</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>GAIA 0.17 introduces Agent UI for running local AI agents on Ryzen AI hardware</li>
+              <li>AMD continuing to build out its local AI ecosystem for on-device inference</li>
+              <li>Positions Ryzen AI as an on-device inference platform with a user-friendly interface</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/AMD-GAIA-0.17-Agent-UI" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
