@@ -62,9 +62,12 @@ def main():
     with open(pending_path, "w", encoding="utf-8") as f:
         json.dump(pending_data, f, indent=2, ensure_ascii=False)
 
-    # Save seen database
-    save_seen(seen_db_path, seen_db)
-    print(f"Seen database updated ({len(seen_db)} total entries)")
+    # Save seen database to staging file — deploy_digest.py promotes it to the
+    # real seen_articles.json after successfully rendering the HTML.  This
+    # prevents marking articles as "seen" when the digest was never generated.
+    staged_path = seen_db_path.replace(".json", "_staged.json")
+    save_seen(staged_path, seen_db)
+    print(f"Seen database staged ({len(seen_db)} total entries)")
 
     print(f"\nPending digest saved: {len(new_articles)} new articles")
     print(f"File: {pending_path}")

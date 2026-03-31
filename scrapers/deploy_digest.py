@@ -4,6 +4,7 @@ Does NOT perform git operations — the caller handles commit/push."""
 
 import json
 import os
+import shutil
 import sys
 from datetime import datetime, timezone
 
@@ -48,6 +49,13 @@ def main():
     print(f"Writing digest to {output_path}")
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html_content)
+
+    # Promote staged seen DB now that the digest was successfully rendered
+    seen_db_path = os.path.join(SCRIPT_DIR, config["seen_db_path"])
+    staged_path = seen_db_path.replace(".json", "_staged.json")
+    if os.path.exists(staged_path):
+        shutil.move(staged_path, seen_db_path)
+        print(f"Seen database promoted: {seen_db_path}")
 
     print(f"{config['digest_name']} digest rendered successfully.")
 
