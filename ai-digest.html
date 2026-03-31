@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - March 30, 2026 | Densanon</title>
+  <title>AI Morning Digest - March 31, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">March 30, 2026</div>
+        <div class="digest-date-badge">March 31, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">TurboQuant takes the local LLM scene by storm with a clever vector quantization approach that goes far beyond polar coordinates. Meanwhile, Anthropic publishes a GAN-inspired harness design for multi-agent coding, and the community grapples with the telltale signs of AI-generated websites.</p>
+        <p class="digest-intro">Today&#x27;s big story is the accidental leak of Claude Code&#x27;s full source through a .map file in its npm package — the r/LocalLLaMA thread hit over 1,300 upvotes and spawned a viral deep-dive uncovering easter eggs like a hidden ASCII pet system and a full gacha rarity engine. Meanwhile, llama.cpp quietly crossed 100,000 GitHub stars, and a new open-source project called Phantom lets Claude run persistently on its own VM with vector memory — hinting at where always-on AI agents are headed.</p>
       </div>
     </section>
 
@@ -29,56 +29,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A simple explanation of the key idea behind TurboQuant</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>The Cognitive Divergence: AI Context Windows, Human Attention Decline, and the Delegation Feedback Loop</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>TurboQuant (Zandieh et al. 2025) is a vector quantization algorithm, not simply about polar coordinates despite what Google blog emphasized</li>
-              <li>The key insight is a novel approach to quantizing weight vectors that preserves model quality far better than existing methods</li>
-              <li>Massive community interest with 1,230 upvotes and 127 comments — the most-discussed AI topic of the day</li>
+              <li>LLM context windows have grown from 512 tokens in 2017 to 2,000,000 by 2026 — a ~3,900x increase — while estimated human effective reading span has shrunk from ~16,000 tokens to ~1,800 tokens over the same period.</li>
+              <li>The authors argue this creates a self-reinforcing &#x27;Cognitive Divergence&#x27;: as AI handles more context, humans practice sustained attention less, which makes them more dependent on AI delegation.</li>
+              <li>The ratio of AI-to-human context capacity went from near parity at ChatGPT&#x27;s launch to massively asymmetric today, with real implications for how we design human-AI collaboration.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1s62g5v/a_simple_explanation_of_the_key_idea_behind/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Anthropic shares how to make Claude code better with a harness</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>New Anthropic blog post describes a GAN-inspired architecture with Generator and Evaluator agents working together</li>
-              <li>Addresses context anxiety (coherence loss over long sessions) and self-evaluation bias (Claude praising its own subpar work)</li>
-              <li>547 upvotes and 81 comments — strong community engagement with the approach</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1s6jouf/anthropic_shares_how_to_make_claude_code_better/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2603.26707" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Kimi K2.6 will drop in the next 2 weeks, K3 is WIP and will be huge</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>LogicDiff: Logic-Guided Denoising Improves Reasoning in Masked Diffusion Language Models</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Moonshot insider says Kimi K2.6 releasing in 10-15 days as an incremental improvement</li>
-              <li>K3 is in active development with the goal of matching American models in parameter count and capability</li>
-              <li>Signals continued competitive pressure from Chinese AI labs</li>
+              <li>Standard masked diffusion models defer high-entropy logical connectives (e.g., &#x27;therefore&#x27;, &#x27;if&#x27;) until late in the denoising process — exactly the wrong order for building valid reasoning chains.</li>
+              <li>LogicDiff fixes this at inference time with a lightweight 4.2M-parameter classification head that predicts logical roles (premise, connective, derived step, conclusion) and enforces dependency-ordered unmasking.</li>
+              <li>No base model weights are changed; the fix achieves 98.4% role-prediction accuracy and meaningfully improves reasoning benchmarks on existing MDLMs.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1s6stgl/kimi_k26_will_drop_in_the_next_2_weeks_k3_is_wip/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Claude Code v2.1.87</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Patch release fixing messages in Cowork Dispatch not getting delivered</li>
-              <li>Addresses a communication bug in the multi-agent dispatch workflow</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.87" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2603.26771" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -88,27 +59,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The missing piece of Voxtral TTS to enable voice cloning</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>anthropics/claude-code: v2.1.88</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The open-source Voxtral TTS model was missing the codec encoder weights needed for reference audio pass</li>
-              <li>Community found and shared the missing weights, enabling voice cloning functionality</li>
-              <li>Opens up local voice cloning capabilities for developers using the Mistral TTS model</li>
+              <li>New CLAUDE_CODE_NO_FLICKER=1 env var enables flicker-free alt-screen rendering with virtualized scrollback — a quality-of-life fix for heavy terminal users.</li>
+              <li>A new PermissionDenied hook fires after auto-mode classifier denials; returning {retry: true} lets the model retry the action, giving developers finer-grained control over permission flows.</li>
+              <li>Bug fixes address prompt cache misses in long sessions caused by tool schema bytes changing mid-session, and nested CLAUDE.md files being re-injected repeatedly.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1s6rmoi/the_missing_piece_of_voxtral_tts_to_enable_voice/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.88" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Friendly reminder: inference is WAY faster on Linux vs Windows</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>anthropics/claude-agent-sdk-typescript: v0.2.88</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Side-by-side testing on identical hardware (RTX 8000, i9-9900k) showed roughly 2x speed improvement on Linux Ubuntu 22.04 vs Windows 10</li>
-              <li>Results confirmed with latest Ollama on both platforms — substantial performance gap persists</li>
-              <li>165 upvotes and 87 comments with community members sharing similar experiences</li>
+              <li>getSessionMessages() gains an includeSystemMessages option so callers can optionally surface system-level messages alongside conversation history.</li>
+              <li>New includeHookEvents option exposes hook lifecycle events (hook_started, hook_progress, hook_response) for all hook types — useful for building observable agent pipelines.</li>
+              <li>Error result messages now correctly set is_error: true with descriptive text, fixing a silent failure mode when agents hit turn or budget limits.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1s6hb1h/friendly_reminder_inference_is_way_faster_on/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.88" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Quoting Georgi Gerganov</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The creator of llama.cpp warns that local models used in coding agents are &#x27;broken in some subtle way&#x27; far more often than users realize — problems span chat templates, prompt construction, and inference bugs.</li>
+              <li>The fragility comes from the full stack being developed by different parties: client, harness, model, and inference backend often don&#x27;t interoperate cleanly.</li>
+              <li>Key takeaway for builders: treat local coding agent results with skepticism and test end-to-end rather than trusting benchmark numbers alone.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Mar/30/georgi-gerganov/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -118,49 +101,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>What are dead giveaways for AI slop websites?</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>User built a website with Claude, then discovered a dozen other sites with identical design cues and colors</li>
-              <li>Community discusses the recurring visual patterns that signal AI-generated web design</li>
-              <li>834 upvotes — top post of the day, highlighting growing awareness of homogenized AI aesthetics</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1s6mm8o/what_are_dead_giveaways_for_ai_slop_websites/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Anyone else&#x27;s Claude leaving them on &#x27;Read&#x27;?</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Users reporting increased instances of Claude becoming unresponsive or slow during conversations</li>
-              <li>387 upvotes and 72 comments suggest a widespread experience, not isolated incidents</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1s6e5xs/anyone_elses_claude_leaving_them_on_read/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>I am fully addicted to building dumb little AI web apps</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Non-coder describes building multiple web apps with Claude Code doing 99.9% of the coding</li>
-              <li>Highlights the democratization of software creation — the barrier is now ideas, not technical skill</li>
-              <li>Created projects include a song competition website and other creative tools</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1s6of32/i_am_fully_addicted_to_building_dumb_little_ai/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>LocalLLaMA 2026</h3>
+              <h3>Claude code source code has been leaked via a map file in their npm registry</h3>
               <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Community reflection on the state of local LLMs in 2026 — equal parts excitement and existential concern</li>
-              <li>294 upvotes and 58 comments — a pulse check on the open-source AI community mood</li>
+              <li>Claude Code&#x27;s full source code was inadvertently exposed through a JavaScript .map file bundled in the public npm package — a build pipeline oversight that made the minified code fully reversible.</li>
+              <li>The post topped r/LocalLLaMA with 1,361 upvotes and 268 comments, making it the highest-engagement AI story of the day across tracked communities.</li>
+              <li>The incident is a reminder that .map files in production npm packages can expose proprietary source; always strip or server-gate source maps before publishing.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1s6r5gn/localllama_2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1s8ijfb/claude_code_source_code_has_been_leaked_via_a_map/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>i dug through claude code&#x27;s leaked source and anthropic&#x27;s codebase is absolutely unhinged</h3>
+              <span class="digest-source">r/ClaudeAI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A community member&#x27;s deep-dive into the leaked source uncovered a full hidden pet system (/buddy) — 18 ASCII species including duck, capybara, dragon, and &#x27;chonk&#x27;, with a gacha rarity system tied to your user ID.</li>
+              <li>Other discoveries included a Vim easter egg, hidden operator-level flags, and extensive internal tooling that suggests Claude Code is far more configurable than the public docs reveal.</li>
+              <li>The post is partly absurd fun but also highlights how much undocumented surface area exists in the tool — expect community-driven documentation to emerge quickly.</li>
+            </ul>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1s8lkkm/i_dug_through_claude_codes_leaked_source_and/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>I gave Claude its own computer and let it run 24/7. Here&#x27;s what it built.</h3>
+              <span class="digest-source">r/ClaudeAI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Phantom is a new open-source project that wraps Claude (Opus 4.6 via the Agent SDK) with persistent vector memory and a self-evolution engine, running continuously on a dedicated VM or Docker Compose stack.</li>
+              <li>Users interact with the persistent agent over Slack; the agent retains context across sessions and can autonomously take actions between conversations.</li>
+              <li>The project hit 1,149 upvotes and signals growing community interest in always-on, stateful AI agents as a distinct category from session-based chat.</li>
+            </ul>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1s84l18/i_gave_claude_its_own_computer_and_let_it_run_247/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>llama.cpp at 100k stars</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>llama.cpp crossed 100,000 GitHub stars, cementing its status as the de facto runtime for local LLM inference.</li>
+              <li>The milestone was acknowledged by creator Georgi Gerganov on X, generating significant community celebration given the project&#x27;s outsized influence on the local AI ecosystem.</li>
+              <li>From a standing start in early 2023, llama.cpp has become foundational infrastructure — used directly or as a dependency in dozens of popular local AI tools.</li>
+            </ul>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1s7z7hj/llamacpp_at_100k_stars/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>heads up: axios@1.14.1 is compromised. if you vibe code with claude, check your lockfiles.</h3>
+              <span class="digest-source">r/ClaudeAI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>axios version 1.14.1 was found to silently install plain-crypto-js@4.2.1, an obfuscated remote access trojan dropper — npm has since pulled the package.</li>
+              <li>The attack specifically targets &#x27;vibe coding&#x27; workflows where developers let AI write and install dependencies without reviewing package.json diffs or lockfiles.</li>
+              <li>Action required: if you ran npm install today on a project using axios, audit your lockfile for plain-crypto-js and treat the machine as potentially compromised.</li>
+            </ul>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1s8h27r/heads_up_axios1141_is_compromised_if_you_vibe/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
