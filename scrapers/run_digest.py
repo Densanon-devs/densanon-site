@@ -45,10 +45,19 @@ def main():
     # Step 3: Save pending digest for Claude Code to process
     print("\n[3/3] Saving pending digest...")
     pending_path = os.path.join(SCRIPT_DIR, digest_id, "pending_digest.json")
+
+    # Cap articles and trim summaries to keep pending file manageable for the remote agent
+    max_pending = config.get("max_pending_articles", 20)
+    trimmed = new_articles[:max_pending]
+    for art in trimmed:
+        if art.get("summary") and len(art["summary"]) > 300:
+            art["summary"] = art["summary"][:300] + "..."
+
     pending_data = {
         "fetched_at": datetime.now(timezone.utc).isoformat(),
-        "article_count": len(new_articles),
-        "articles": new_articles
+        "article_count": len(trimmed),
+        "total_new": len(new_articles),
+        "articles": trimmed
     }
     with open(pending_path, "w", encoding="utf-8") as f:
         json.dump(pending_data, f, indent=2, ensure_ascii=False)
