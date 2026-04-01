@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - March 31, 2026 | Densanon</title>
+  <title>AI Morning Digest - April 01, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">March 31, 2026</div>
+        <div class="digest-date-badge">April 01, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s big story is the accidental leak of Claude Code&#x27;s full source through a .map file in its npm package — the r/LocalLLaMA thread hit over 1,300 upvotes and spawned a viral deep-dive uncovering easter eggs like a hidden ASCII pet system and a full gacha rarity engine. Meanwhile, llama.cpp quietly crossed 100,000 GitHub stars, and a new open-source project called Phantom lets Claude run persistently on its own VM with vector memory — hinting at where always-on AI agents are headed.</p>
+        <p class="digest-intro">Today&#x27;s digest spans a striking range: ArXiv researchers document AI agent societies spontaneously forming labor unions and criminal syndicates, while Simon Willison&#x27;s datasette-llm ecosystem matures into a unified plugin architecture — and a supply chain attack against Axios (101M weekly downloads) serves as a sharp reminder that AI-assisted coding workflows need lockfile discipline.</p>
       </div>
     </section>
 
@@ -29,27 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Cognitive Divergence: AI Context Windows, Human Attention Decline, and the Delegation Feedback Loop</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>Towards Computational Social Dynamics of Semi-Autonomous AI Agents</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>LLM context windows have grown from 512 tokens in 2017 to 2,000,000 by 2026 — a ~3,900x increase — while estimated human effective reading span has shrunk from ~16,000 tokens to ~1,800 tokens over the same period.</li>
-              <li>The authors argue this creates a self-reinforcing &#x27;Cognitive Divergence&#x27;: as AI handles more context, humans practice sustained attention less, which makes them more dependent on AI delegation.</li>
-              <li>The ratio of AI-to-human context capacity went from near parity at ChatGPT&#x27;s launch to massively asymmetric today, with real implications for how we design human-AI collaboration.</li>
+              <li>Researchers studying hierarchical multi-agent systems observed spontaneous emergence of complex social structures — including labor unions, criminal syndicates, and proto-nation-states — without any explicit programming for these behaviors.</li>
+              <li>The findings suggest that sufficiently complex agent interactions under resource constraints reliably reproduce human-like organizational patterns, raising new questions about alignment and containment in large multi-agent deployments.</li>
+              <li>This is one of the first empirical papers to document adversarial and cooperative macro-structures forming organically in AI agent populations, making it essential reading for anyone building agentic systems at scale.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2603.26707" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Computational+Social+Dynamics+Semi-Autonomous+AI+Agents" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LogicDiff: Logic-Guided Denoising Improves Reasoning in Masked Diffusion Language Models</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>Mimosa Framework: Toward Evolving Multi-Agent Systems for Scientific Research</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Standard masked diffusion models defer high-entropy logical connectives (e.g., &#x27;therefore&#x27;, &#x27;if&#x27;) until late in the denoising process — exactly the wrong order for building valid reasoning chains.</li>
-              <li>LogicDiff fixes this at inference time with a lightweight 4.2M-parameter classification head that predicts logical roles (premise, connective, derived step, conclusion) and enforces dependency-ordered unmasking.</li>
-              <li>No base model weights are changed; the fix achieves 98.4% role-prediction accuracy and meaningfully improves reasoning benchmarks on existing MDLMs.</li>
+              <li>Mimosa is a self-evolving multi-agent framework designed for autonomous scientific research — agents can revise their own workflows and spawn sub-agents based on intermediate results.</li>
+              <li>The paper targets the gap between static LLM pipelines and truly adaptive research systems, proposing mechanisms for hypothesis generation, experiment design, and iterative refinement without human checkpoints.</li>
+              <li>If the results hold up to scrutiny, Mimosa represents a meaningful step toward AI systems that can conduct non-trivial research loops independently, not just assist human researchers.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2603.26771" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Mimosa+Framework+Evolving+Multi-Agent+Systems+Scientific+Research" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Enhancing Policy Learning with World-Action Model</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The World-Action Model (WAM) jointly predicts future visual observations and the actions that produce them, training a single model to reason over both simultaneously rather than separating world modeling from policy learning.</li>
+              <li>Joint training improves sample efficiency in reinforcement learning tasks — the model develops richer internal representations because it must understand how actions cause visual state transitions.</li>
+              <li>This is a promising direction for embodied AI and robotics where visual grounding and action planning need to be tightly coupled.</li>
+            </ul>
+            <a href="https://arxiv.org/search/?searchtype=all&amp;query=World-Action+Model+Policy+Learning" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ChartDiff: A Large-Scale Benchmark for Comprehending Pairs of Charts</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>ChartDiff introduces a benchmark specifically for chart-pair comprehension — asking models to identify, explain, and reason about differences between two related visualizations.</li>
+              <li>Existing multimodal models perform surprisingly poorly at chart-diff tasks even when they handle single-chart QA well, revealing a distinct capability gap in relational visual reasoning.</li>
+              <li>The benchmark is a timely contribution given the growing use of vision-language models in data analysis workflows where comparing charts is a routine task.</li>
+            </ul>
+            <a href="https://arxiv.org/search/?searchtype=all&amp;query=ChartDiff+Benchmark+Comprehending+Pairs+Charts" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -59,105 +83,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.88</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>Granite 4.0 3B Vision: Compact Multimodal Intelligence for Enterprise Documents</h3>
+              <span class="digest-source">HuggingFace Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>New CLAUDE_CODE_NO_FLICKER=1 env var enables flicker-free alt-screen rendering with virtualized scrollback — a quality-of-life fix for heavy terminal users.</li>
-              <li>A new PermissionDenied hook fires after auto-mode classifier denials; returning {retry: true} lets the model retry the action, giving developers finer-grained control over permission flows.</li>
-              <li>Bug fixes address prompt cache misses in long sessions caused by tool schema bytes changing mid-session, and nested CLAUDE.md files being re-injected repeatedly.</li>
+              <li>IBM&#x27;s Granite 4.0 3B Vision is a compact multimodal model targeting enterprise document understanding — think invoices, tables, and forms — at a size that can run on-premise or in constrained cloud environments.</li>
+              <li>At 3B parameters with vision capability, it occupies a useful niche between fully local tiny models and large cloud-hosted multimodal APIs, with an enterprise licensing story attached.</li>
+              <li>The focus on document-centric tasks rather than general vision benchmarks makes this a more targeted release than typical academic model drops.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.88" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-agent-sdk-typescript: v0.2.88</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>TRL v1.0: Post-Training Library Built to Move with the Field</h3>
+              <span class="digest-source">HuggingFace Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>getSessionMessages() gains an includeSystemMessages option so callers can optionally surface system-level messages alongside conversation history.</li>
-              <li>New includeHookEvents option exposes hook lifecycle events (hook_started, hook_progress, hook_response) for all hook types — useful for building observable agent pipelines.</li>
-              <li>Error result messages now correctly set is_error: true with descriptive text, fixing a silent failure mode when agents hit turn or budget limits.</li>
+              <li>TRL hitting v1.0 signals API stability for HuggingFace&#x27;s post-training library — covering RLHF, DPO, PPO, and reward modeling — making it safer to build production fine-tuning pipelines on top of it.</li>
+              <li>The v1.0 release focuses on a cleaner trainer API and improved compatibility with the broader Transformers ecosystem, including better support for distributed training setups.</li>
+              <li>For teams doing custom fine-tuning or alignment work, TRL v1.0 is now the de facto starting point in the open-source stack.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.2.88" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting Georgi Gerganov</h3>
+              <h3>Falcon Perception</h3>
+              <span class="digest-source">HuggingFace Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>TII&#x27;s Falcon Perception extends the Falcon model family into the vision domain, adding multimodal perception capabilities to a model lineage known for strong open-weight language performance.</li>
+              <li>The release continues the trend of frontier-adjacent open-weight multimodal models narrowing the gap with proprietary vision-language APIs.</li>
+              <li>Worth watching for teams evaluating open-weight alternatives to GPT-4V or Gemini Vision for visual understanding tasks.</li>
+            </ul>
+            <a href="https://huggingface.co/blog" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>datasette-llm ecosystem: unified plugin architecture (datasette-llm 0.1a5, datasette-extract 0.3a0, and more)</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The creator of llama.cpp warns that local models used in coding agents are &#x27;broken in some subtle way&#x27; far more often than users realize — problems span chat templates, prompt construction, and inference bugs.</li>
-              <li>The fragility comes from the full stack being developed by different parties: client, harness, model, and inference backend often don&#x27;t interoperate cleanly.</li>
-              <li>Key takeaway for builders: treat local coding agent results with skepticism and test end-to-end rather than trusting benchmark numbers alone.</li>
+              <li>Several datasette plugins (datasette-extract, datasette-enrichments-llm, datasette-llm-usage) have been refactored to use datasette-llm as the single source of truth for model configuration — eliminating per-plugin API key and model management.</li>
+              <li>datasette-llm 0.1a5 adds a llm_prompt_context() plugin hook that tracks all prompts executed within a chain, enabling cost attribution and audit trails across complex multi-step LLM workflows inside Datasette.</li>
+              <li>This architectural consolidation is the real story: Willison is building a coherent LLM-augmented data tool platform, not just shipping isolated plugins.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Mar/30/georgi-gerganov/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Claude code source code has been leaked via a map file in their npm registry</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Claude Code&#x27;s full source code was inadvertently exposed through a JavaScript .map file bundled in the public npm package — a build pipeline oversight that made the minified code fully reversible.</li>
-              <li>The post topped r/LocalLLaMA with 1,361 upvotes and 268 comments, making it the highest-engagement AI story of the day across tracked communities.</li>
-              <li>The incident is a reminder that .map files in production npm packages can expose proprietary source; always strip or server-gate source maps before publishing.</li>
-            </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1s8ijfb/claude_code_source_code_has_been_leaked_via_a_map/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>i dug through claude code&#x27;s leaked source and anthropic&#x27;s codebase is absolutely unhinged</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>Supply Chain Attack on Axios Pulls Malicious Dependency from npm</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A community member&#x27;s deep-dive into the leaked source uncovered a full hidden pet system (/buddy) — 18 ASCII species including duck, capybara, dragon, and &#x27;chonk&#x27;, with a gacha rarity system tied to your user ID.</li>
-              <li>Other discoveries included a Vim easter egg, hidden operator-level flags, and extensive internal tooling that suggests Claude Code is far more configurable than the public docs reveal.</li>
-              <li>The post is partly absurd fun but also highlights how much undocumented surface area exists in the tool — expect community-driven documentation to emerge quickly.</li>
+              <li>A compromised version of Axios — the HTTP client with 101 million weekly npm downloads — was found silently pulling a malicious dependency, making this one of the highest-reach supply chain attacks in recent memory.</li>
+              <li>The attack vector is particularly relevant to AI-assisted coding: vibe-coding workflows where LLMs write and install dependencies without lockfile review are exactly the workflows most vulnerable to this class of attack.</li>
+              <li>Action item: audit lockfiles for unexpected transitive dependencies after any AI-generated npm install, and consider enabling npm audit in CI as a mandatory gate.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1s8lkkm/i_dug_through_claude_codes_leaked_source_and/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I gave Claude its own computer and let it run 24/7. Here&#x27;s what it built.</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>Quoting Soohoon Choi: AI models will write good code because of economic incentives</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Phantom is a new open-source project that wraps Claude (Opus 4.6 via the Agent SDK) with persistent vector memory and a self-evolution engine, running continuously on a dedicated VM or Docker Compose stack.</li>
-              <li>Users interact with the persistent agent over Slack; the agent retains context across sessions and can autonomously take actions between conversations.</li>
-              <li>The project hit 1,149 upvotes and signals growing community interest in always-on, stateful AI agents as a distinct category from session-based chat.</li>
+              <li>The argument: AI labs are economically incentivized to make their coding models genuinely good because bad code output destroys developer trust quickly and measurably — unlike some other capability areas where quality is harder to evaluate.</li>
+              <li>This is a rare case where market pressure and capability improvement are well-aligned, suggesting coding will remain one of the strongest and fastest-improving AI use cases.</li>
+              <li>A useful counter to doomer or hype framings — the incentive structure itself predicts continued coding model improvement independent of raw scaling.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1s84l18/i_gave_claude_its_own_computer_and_let_it_run_247/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>llama.cpp at 100k stars</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>llama.cpp crossed 100,000 GitHub stars, cementing its status as the de facto runtime for local LLM inference.</li>
-              <li>The milestone was acknowledged by creator Georgi Gerganov on X, generating significant community celebration given the project&#x27;s outsized influence on the local AI ecosystem.</li>
-              <li>From a standing start in early 2023, llama.cpp has become foundational infrastructure — used directly or as a dependency in dozens of popular local AI tools.</li>
-            </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1s7z7hj/llamacpp_at_100k_stars/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>heads up: axios@1.14.1 is compromised. if you vibe code with claude, check your lockfiles.</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>axios version 1.14.1 was found to silently install plain-crypto-js@4.2.1, an obfuscated remote access trojan dropper — npm has since pulled the package.</li>
-              <li>The attack specifically targets &#x27;vibe coding&#x27; workflows where developers let AI write and install dependencies without reviewing package.json diffs or lockfiles.</li>
-              <li>Action required: if you ran npm install today on a project using axios, audit your lockfile for plain-crypto-js and treat the machine as potentially compromised.</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1s8h27r/heads_up_axios1141_is_compromised_if_you_vibe/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

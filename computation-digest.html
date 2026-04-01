@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - March 31, 2026 | Densanon</title>
+  <title>Computation Morning Digest - April 01, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">March 31, 2026</div>
+        <div class="digest-date-badge">April 01, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Google&#x27;s quantum AI team dropped a white paper disclosing that breaking elliptic-curve cryptocurrency encryption may require far fewer quantum resources than previously thought, accelerating urgency around post-quantum migration. On the security front, the Axios npm package — downloaded over 100 million times a week — was briefly backdoored with a cross-platform RAT after a maintainer account was hijacked, marking one of the most impactful supply-chain attacks on record. Meanwhile the ISO C++ committee approved C++26 with Contracts included despite pushback from Bjarne Stroustrup himself, and the PC market is bracing for a 13% sales contraction in 2026 as AI-driven memory price hikes bite.</p>
+        <p class="digest-intro">Arm&#x27;s 136-core AGI CPU enters China&#x27;s market just as a memory squeeze drives Raspberry Pi prices up again and PC component costs surge industry-wide. Meanwhile, the Linux kernel pushes toward a Rust 1.85 baseline and Apple marks a half-century since the hobbyist computers that started it all.</p>
       </div>
     </section>
 
@@ -29,51 +29,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Modder gets Intel&#x27;s OEM-only &#x27;Bartlett Lake&#x27; CPU to post on a regular Asus Z790 motherboard — BIOS was edited by Claude AI to make Core Ultra 9 273QPE boot</h3>
+              <h3>Arm to sell its new AGI CPU in China</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An enthusiast used Claude to surgically modify a Z790 BIOS so it recognizes the OEM-exclusive Core Ultra 9 273QPE (Bartlett Lake) and can POST.</li>
-              <li>The chip made it through POST but is still hitting downstream error codes, showing how far AI-assisted low-level hacking has progressed.</li>
-              <li>Bartlett Lake targets embedded/OEM markets, so getting it running on consumer motherboards is both a reverse-engineering milestone and a proof of AI utility for BIOS modding.</li>
+              <li>Arm&#x27;s 136-core Neoverse V3-based AGI processor appears to be eligible for sale to Chinese customers, a notable move given ongoing export-control pressures on AI hardware.</li>
+              <li>The chip is purpose-built for agentic AI workloads — high core count and Neoverse V3 architecture target the memory-bandwidth and parallel-dispatch demands of inference-heavy pipelines.</li>
+              <li>If the sales go through, it gives Chinese cloud and HPC operators a high-core-count CPU option at a time when access to leading AI silicon is increasingly restricted.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/modder-gets-intels-oem-only-bartlett-lake-cpu-to-post-on-a-regular-asus-z790-motherboard-bios-was-edited-by-claude-ai-to-make-core-ultra-9-273qpe-boot" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>US PC sales grow by 3% in late 2025 as companies and consumers scrambled to replace Windows 10 — 2026 forecast sees 13% drop as storage and memory prices expected to climb another 60%</h3>
+              <h3>PC makers report surging prices across different components</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A Windows 10 EOL-driven refresh and holiday sales pushed Q4 2025 US PC shipments up 3%, but that tailwind is exhausted.</li>
-              <li>Omdia projects a 13% market contraction in 2026 as AI-fueled chip shortages push DRAM and NAND prices up roughly 60%.</li>
-              <li>Enterprise and consumer buyers who already upgraded are unlikely to refresh again soon, compounding the demand hole.</li>
+              <li>Cost increases are spreading beyond memory and processors to PCBs, plastics, and other structural components, suggesting the inflationary wave is supply-chain-wide rather than chip-specific.</li>
+              <li>Manufacturers are warning that bill-of-materials creep will be difficult to absorb without passing costs to consumers, compounding the PC market headwinds already forecast for 2026.</li>
+              <li>The breadth of affected components points to tariff pressure and AI-driven raw-materials competition as compounding drivers alongside the ongoing DRAM shortage.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/us-pc-sales-grow-by-3-percent-in-late-2025-as-companies-and-consumers-scrambled-to-replace-windows-10-2026-forecast-sees-13-percent-drop-as-storage-and-memory-prices-expected-to-climb-another-60-percent" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Meta Optimizing /proc/interrupts Reading As It&#x27;s Too Costly At Scale: 29% Speedup</h3>
+              <h3>Raspberry Pi 4 3GB Launches, Prices Go Up Again Due To RAM</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>At Meta&#x27;s fleet scale, frequent monitoring reads of /proc/interrupts add up to a measurable CPU overhead, prompting a dedicated kernel patch.</li>
-              <li>The proposed optimization delivers a 29% speedup in interrupt-file read time, illustrating how hyperscalers surface and upstream even micro-level kernel inefficiencies.</li>
-              <li>The work is an example of Meta&#x27;s ongoing investment in mainline Linux performance patches that benefit the broader server ecosystem.</li>
+              <li>Raspberry Pi has raised prices again, directly citing continued memory cost increases — the same DRAM squeeze hitting the broader PC market is now squeezing the single-board-computer segment.</li>
+              <li>The new 3GB Pi 4 variant fills a gap between the 2GB and 4GB SKUs but arrives at a higher price point than the equivalent tier cost a year ago.</li>
+              <li>For hobbyists and embedded developers, repeated Raspberry Pi price hikes are eroding the board&#x27;s traditional cost advantage over more capable alternatives like the Orange Pi or Milk-V.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Meta-Optimizing-Proc-Interrupts" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD Sends Out Linux Patches For Their Next-Gen AIE4 NPU</h3>
+              <h3>KDE Linux Hardening OS Against Updates Making Systems Unbootable</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMD submitted initial AMDXDNA driver patches for the AIE4, the successor to the AIE2 NPU found in current Ryzen AI silicon.</li>
-              <li>SR-IOV support is included from the start, signaling the AIE4 is designed with virtualized and multi-tenant AI workloads in mind.</li>
-              <li>Early upstreaming of the driver means AIE4-equipped hardware should have day-one Linux compute support when it ships.</li>
+              <li>KDE is implementing additional safeguards after atomic/transactional update strategies didn&#x27;t fully prevent bad updates from breaking boot on some systems.</li>
+              <li>The hardening work focuses on pre-flight checks and rollback guarantees — ensuring that an interrupted or broken update can always be recovered without manual intervention.</li>
+              <li>This is a desktop-Linux reliability story with real enterprise relevance: bootability guarantees are a prerequisite for broader Linux adoption in managed fleets.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-AIE4-NPU-AMDXDNA" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux Kernel&#x27;s Minimum Rust Version Supported Prepares For Rust 1.85 Baseline</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The Rust-for-Linux team is preparing to raise the minimum supported Rust version to 1.85, which enables use of more modern language features in kernel drivers and subsystems.</li>
+              <li>Raising the baseline periodically is necessary to let kernel Rust code use stabilized APIs and avoid accumulating technical debt from working around language gaps.</li>
+              <li>The move signals the Rust-in-kernel effort is maturing: version floors only get raised when there is enough downstream adoption confidence to absorb the update requirement.</li>
+            </ul>
+            <a href="https://www.phoronix.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>New Patches Allow Building Linux IPv6-Only, Option To Deprecate &#x27;Legacy&#x27; IPv4</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>New kernel patches introduce a build-time option to compile Linux with IPv6 only, allowing operators to shed IPv4 code for embedded, container, or future-network deployments where it is not needed.</li>
+              <li>Marking IPv4 as &#x27;legacy&#x27; in kernel terms is a significant philosophical step — it formalizes the idea that IPv4 is no longer the assumed default protocol.</li>
+              <li>For IoT and hyperscale operators already running dual-stack or IPv6-only internally, an IPv6-only kernel build could reduce attack surface and binary size simultaneously.</li>
+            </ul>
+            <a href="https://www.phoronix.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -83,105 +107,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Supply chain blast: Top npm package backdoored to drop dirty RAT on dev machines</h3>
-              <span class="digest-source">The Register</span>
+              <h3>Oracle believed to have cut 10,000 positions across multiple divisions</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Attackers hijacked a lead Axios maintainer&#x27;s npm account on March 30 and published two trojanized releases containing a cross-platform remote-access trojan.</li>
-              <li>Axios sees over 100 million weekly downloads, making this one of the highest-blast-radius supply-chain attacks the npm ecosystem has seen.</li>
-              <li>The incident renews pressure for mandatory MFA enforcement and cryptographic signing on all npm package releases.</li>
+              <li>Oracle is reported to have eliminated roughly 10,000 roles across multiple divisions, with the stated rationale being reallocation of capital toward data-center expansion.</li>
+              <li>The cuts fit a pattern seen across large tech firms: reducing human headcount to fund AI infrastructure capex, effectively trading labor costs for compute capacity.</li>
+              <li>Oracle&#x27;s aggressive data-center build-out positions it as a major cloud AI infrastructure player — the layoffs signal the company is betting heavily on that future over its legacy software business.</li>
             </ul>
-            <a href="https://go.theregister.com/feed/www.theregister.com/2026/03/31/axios_npm_backdoor_rat/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Contracts are in C++26 despite disagreement over their value</h3>
-              <span class="digest-source">The Register</span>
+              <h3>Apple turns 50</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ISO WG21 voted to include Contracts in the finalized C++26 standard, which committee member Herb Sutter calls the most compelling C++ release since C++11.</li>
-              <li>C++ inventor Bjarne Stroustrup publicly opposed the Contracts feature, arguing it is neither minimal nor viable in its current form.</li>
-              <li>C++26 also ships a broad set of library and language improvements; the Contracts debate may continue to shape how the feature is actually adopted in practice.</li>
+              <li>Apple was founded on April 1, 1976 — 50 years ago today — when Steve Jobs, Steve Wozniak, and Ronald Wayne incorporated around hobbyist home computers.</li>
+              <li>The company&#x27;s arc from the Apple I kit computer to the world&#x27;s most valuable publicly traded company is one of the most dramatic trajectories in technology history.</li>
+              <li>Apple&#x27;s early bets on vertical integration, custom silicon, and closed ecosystems — controversial at the time — now define the dominant model for consumer technology platforms.</li>
             </ul>
-            <a href="https://go.theregister.com/feed/www.theregister.com/2026/03/31/cplusplus26_approved/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Arm says agentic AI needs a new kind of CPU. Intel&#x27;s DC chief isn&#x27;t buying it</h3>
-              <span class="digest-source">The Register</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Arm and Nvidia have each unveiled CPUs they claim are purpose-built for running AI agents, citing latency and memory-bandwidth requirements unique to agentic workloads.</li>
-              <li>Intel&#x27;s data-center leadership is pushing back, arguing that existing high-core-count server CPUs already cover agentic inference needs without dedicated silicon.</li>
-              <li>The debate reflects a broader architectural split: whether AI agents will run on heterogeneous, specialized hardware or remain on general-purpose server silicon.</li>
-            </ul>
-            <a href="https://go.theregister.com/feed/www.theregister.com/2026/03/31/intel_arm_agi_cpu/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>NVIDIA AI Ecosystem Expands as Marvell Joins Forces Through NVLink Fusion</h3>
-              <span class="digest-source">HPCwire</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Marvell is joining the NVLink Fusion program, enabling its custom silicon to connect directly into NVIDIA&#x27;s AI factory infrastructure alongside NVIDIA GPUs.</li>
-              <li>The partnership includes silicon photonics collaboration, pointing toward future high-bandwidth, low-latency interconnects for next-gen AI clusters.</li>
-              <li>This deepens NVIDIA&#x27;s ecosystem lock-in strategy: by opening NVLink to third-party silicon, they become the connective tissue of the entire AI hardware stack.</li>
-            </ul>
-            <a href="https://www.hpcwire.com/off-the-wire/nvidia-ai-ecosystem-expands-as-marvell-joins-forces-through-nvlink-fusion/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Big Changes In Store for Data Center Power and Cooling, Thanks to AI Boom</h3>
-              <span class="digest-source">HPCwire</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Schneider Electric&#x27;s data-center division has shifted from celebrating 2–5 MW deals to negotiating gigawatt-scale contracts driven by AI infrastructure demand.</li>
-              <li>The power and cooling requirements of AI clusters are forcing a redesign of facility architecture — liquid cooling, on-site generation, and new grid interconnect strategies are all accelerating.</li>
-              <li>Capacity constraints on transformers, cooling equipment, and grid connections are becoming as binding as chip supply in determining AI deployment timelines.</li>
-            </ul>
-            <a href="https://www.hpcwire.com/2026/03/30/big-changes-in-store-for-data-center-power-and-cooling-thanks-to-ai-boom/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Google Suggests Quantum Attacks on Cryptocurrency Encryption May Require Fewer Resources</h3>
-              <span class="digest-source">The Quantum Insider</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A Google Quantum AI white paper released March 30 shows improved quantum algorithm compilation techniques that lower the resource threshold for breaking elliptic-curve cryptography.</li>
-              <li>Bitcoin and most other cryptocurrencies rely on ECDSA, the specific scheme the paper targets, raising fresh urgency around post-quantum migration timelines.</li>
-              <li>Google disclosed the finding responsibly before the hardware to execute such attacks exists, but the reduced estimate tightens the window the industry has to act.</li>
-            </ul>
-            <a href="https://thequantuminsider.com/2026/03/31/google-suggests-quantum-attacks-on-cryptocurrency-encryption-may-require-fewer-resources/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Oratomic Launches to Build Utility-scale Quantum Computers</h3>
-              <span class="digest-source">The Quantum Insider</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Oratomic was founded by fault-tolerant quantum computing pioneers and is pursuing neutral-atom technology with a mission to reach utility-scale hardware by end of decade.</li>
-              <li>Research conducted with Caltech scientists suggests utility-scale quantum computers may need fewer physical qubits than prior estimates, potentially compressing timelines.</li>
-              <li>The launch adds another well-credentialed team to the neutral-atom race, alongside PasQal and Atom Computing.</li>
-            </ul>
-            <a href="https://thequantuminsider.com/2026/03/31/oratomic-launches-to-build-utility-scale-quantum-computers/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Fast Topology-Aware Lossy Data Compression with Full Preservation of Critical Points and Local Order</h3>
-              <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The proposed Local-Order-Preserving Compressor is the first lossy algorithm to preserve the complete local order of floating-point data (and thus all critical points), not just selected ones.</li>
-              <li>It runs orders of magnitude faster than prior topology-preserving compressors and achieves higher compression ratios than lossless methods.</li>
-              <li>Bit-for-bit reproducibility across CPU and GPU is guaranteed, which matters for large-scale scientific simulations where determinism is required.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2603.26968" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -191,39 +137,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Safeguarding cryptocurrency by disclosing quantum vulnerabilities responsibly</h3>
-              <span class="digest-source">Hacker News Computation</span>
+              <h3>April 1 Linux Patches: Verified Birth Date For File Creation, Block Emacs</h3>
+              <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Google&#x27;s blog post accompanying the quantum crypto white paper is generating heavy Hacker News discussion, currently the highest-scored computation item of the morning.</li>
-              <li>The community response is split between alarm over the reduced resource estimates and cautious optimism that responsible disclosure gives the ecosystem time to prepare.</li>
-              <li>The thread surfaces practical questions about which wallets and protocols have post-quantum migration paths ready today versus which are still in research phases.</li>
+              <li>The annual Linux April Fools patch set is live, including tongue-in-cheek proposals like cryptographically verifying a file&#x27;s &#x27;birth date&#x27; and a kernel-level Emacs block.</li>
+              <li>The tradition of April 1 patches dates back decades in the Linux community and doubles as a low-stakes space for developers to flex humor alongside genuine kernel wizardry.</li>
+              <li>A few past April 1 proposals have actually surfaced real edge cases or sparked legitimate discussion — worth a skim even if none ship.</li>
             </ul>
-            <a href="https://research.google/blog/safeguarding-cryptocurrency-by-disclosing-quantum-vulnerabilities-responsibly/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>OpenAI funding fears hit memory chip prices</h3>
-              <span class="digest-source">Reddit r/hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Uncertainty around OpenAI&#x27;s next funding round is creating downstream jitters in HBM and DRAM spot markets, where AI hyperscalers are the dominant demand driver.</li>
-              <li>Memory-maker share prices have already softened, compounding the ongoing price volatility caused by AI-boom demand and constrained supply.</li>
-              <li>The thread highlights how tightly memory market health is now correlated with the funding and capex plans of a handful of large AI labs.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/hardware/comments/1s8byap/openai_funding_fears_hit_memory_chip_prices/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Silicon quantum computer performs logical operations for the first time</h3>
-              <span class="digest-source">Reddit r/hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A silicon-based quantum processor has demonstrated logical qubit operations for the first time, a key step toward fault-tolerant computation using existing CMOS-compatible fabrication.</li>
-              <li>Silicon spin qubits can in principle be manufactured with conventional chip fabs, giving the approach a potential scale advantage over superconducting or photonic platforms.</li>
-              <li>The milestone aligns with the Semiconductor Engineering paper on GAA-transistor-based qubit readout, suggesting silicon quantum computing research is converging on manufacturable architectures.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/hardware/comments/1s8kzsi/silicon_quantum_computer_performs_logical/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
