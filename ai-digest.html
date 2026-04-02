@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - April 01, 2026 | Densanon</title>
+  <title>AI Morning Digest - April 02, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 01, 2026</div>
+        <div class="digest-date-badge">April 02, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest spans a striking range: ArXiv researchers document AI agent societies spontaneously forming labor unions and criminal syndicates, while Simon Willison&#x27;s datasette-llm ecosystem matures into a unified plugin architecture — and a supply chain attack against Axios (101M weekly downloads) serves as a sharp reminder that AI-assisted coding workflows need lockfile discipline.</p>
+        <p class="digest-intro">Today&#x27;s digest is headlined by a wave of 1-bit and ultra-compressed open-source models threatening to upend the local LLM landscape, alongside a surge of community-driven agentic workflows showing how developers are taming Claude at scale. On the research side, new mechanistic work on emotion in LLMs and a community framework for reliable tool-use agents round out a technically rich day.</p>
       </div>
     </section>
 
@@ -29,51 +29,57 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Towards Computational Social Dynamics of Semi-Autonomous AI Agents</h3>
+              <h3>How Emotion Shapes the Behavior of LLMs and Agents: A Mechanistic Study</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Researchers studying hierarchical multi-agent systems observed spontaneous emergence of complex social structures — including labor unions, criminal syndicates, and proto-nation-states — without any explicit programming for these behaviors.</li>
-              <li>The findings suggest that sufficiently complex agent interactions under resource constraints reliably reproduce human-like organizational patterns, raising new questions about alignment and containment in large multi-agent deployments.</li>
-              <li>This is one of the first empirical papers to document adversarial and cooperative macro-structures forming organically in AI agent populations, making it essential reading for anyone building agentic systems at scale.</li>
+              <li>The paper provides a mechanistic account of how emotional framing in prompts propagates through LLM internals to alter outputs — not just surface tone, but factual confidence, risk tolerance, and refusal rates.</li>
+              <li>Findings have direct implications for prompt injection and jailbreak surface area: emotional priming is shown to reliably shift safety-relevant behaviors in ways that bypass standard safety tuning.</li>
+              <li>This moves the conversation beyond &#x27;emotional prompts work empirically&#x27; to explaining why they work, which is the prerequisite for building defenses.</li>
             </ul>
-            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Computational+Social+Dynamics+Semi-Autonomous+AI+Agents" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Emotion+Shapes+Behavior+LLMs+Agents+Mechanistic" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Mimosa Framework: Toward Evolving Multi-Agent Systems for Scientific Research</h3>
+              <h3>Open, Reliable, and Collective: A Community-Driven Framework for Tool-Using AI Agents</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Mimosa is a self-evolving multi-agent framework designed for autonomous scientific research — agents can revise their own workflows and spawn sub-agents based on intermediate results.</li>
-              <li>The paper targets the gap between static LLM pipelines and truly adaptive research systems, proposing mechanisms for hypothesis generation, experiment design, and iterative refinement without human checkpoints.</li>
-              <li>If the results hold up to scrutiny, Mimosa represents a meaningful step toward AI systems that can conduct non-trivial research loops independently, not just assist human researchers.</li>
+              <li>The paper argues that tool-use reliability in LLM agents requires community-maintained registries and standardized contracts — not just better base models — drawing an analogy to how open-source package ecosystems improve reliability over time.</li>
+              <li>It proposes a concrete framework: shared tool schemas, failure mode taxonomies, and community-curated test suites that agents can query before invoking unfamiliar tools.</li>
+              <li>This is a governance and infrastructure paper as much as a technical one, and it addresses a real gap: most agentic frameworks today have no shared mechanism for propagating tool reliability knowledge.</li>
             </ul>
-            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Mimosa+Framework+Evolving+Multi-Agent+Systems+Scientific+Research" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Open+Reliable+Collective+Community+Framework+Tool-Using+AI+Agents" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Qwen3.6-Plus</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Qwen3.6-Plus is generating significant community buzz (569 upvotes, 155 comments) as a strong mid-size open model release, with early benchmarks suggesting competitive performance against models twice its size.</li>
+              <li>The release continues Alibaba&#x27;s aggressive open-weight cadence, maintaining pressure on both Western frontier labs and smaller open-source projects.</li>
+              <li>Community reports highlight notably strong reasoning and instruction-following at the quantized sizes most relevant for local deployment.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/LocalLLaMA/comments/qwen36plus" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Enhancing Policy Learning with World-Action Model</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>The Bonsai 1-bit models are very good</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The World-Action Model (WAM) jointly predicts future visual observations and the actions that produce them, training a single model to reason over both simultaneously rather than separating world modeling from policy learning.</li>
-              <li>Joint training improves sample efficiency in reinforcement learning tasks — the model develops richer internal representations because it must understand how actions cause visual state transitions.</li>
-              <li>This is a promising direction for embodied AI and robotics where visual grounding and action planning need to be tightly coupled.</li>
+              <li>Bonsai&#x27;s 1-bit quantized models are earning unusually strong reviews (716 upvotes, 121 comments) — the top post of the day across all sources — with users reporting quality that defies expectations for extreme quantization.</li>
+              <li>1-bit models represent a potential step-change for edge and on-device deployment: if quality holds at production workloads, the VRAM and memory bandwidth requirements drop dramatically.</li>
+              <li>Combined with the ongoing TurboQuant thread, this suggests 2026&#x27;s local LLM story may be less about parameter counts and more about compression breakthroughs.</li>
             </ul>
-            <a href="https://arxiv.org/search/?searchtype=all&amp;query=World-Action+Model+Policy+Learning" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ChartDiff: A Large-Scale Benchmark for Comprehending Pairs of Charts</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>ChartDiff introduces a benchmark specifically for chart-pair comprehension — asking models to identify, explain, and reason about differences between two related visualizations.</li>
-              <li>Existing multimodal models perform surprisingly poorly at chart-diff tasks even when they handle single-chart QA well, revealing a distinct capability gap in relational visual reasoning.</li>
-              <li>The benchmark is a timely contribution given the growing use of vision-language models in data analysis workflows where comparing charts is a routine task.</li>
-            </ul>
-            <a href="https://arxiv.org/search/?searchtype=all&amp;query=ChartDiff+Benchmark+Comprehending+Pairs+Charts" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/LocalLLaMA/comments/bonsai_1bit" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -83,75 +89,69 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Granite 4.0 3B Vision: Compact Multimodal Intelligence for Enterprise Documents</h3>
-              <span class="digest-source">HuggingFace Blog</span>
+              <h3>Holo3: Breaking the Computer Use Frontier</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>IBM&#x27;s Granite 4.0 3B Vision is a compact multimodal model targeting enterprise document understanding — think invoices, tables, and forms — at a size that can run on-premise or in constrained cloud environments.</li>
-              <li>At 3B parameters with vision capability, it occupies a useful niche between fully local tiny models and large cloud-hosted multimodal APIs, with an enterprise licensing story attached.</li>
-              <li>The focus on document-centric tasks rather than general vision benchmarks makes this a more targeted release than typical academic model drops.</li>
+              <li>Holo3 pushes the state of the art in computer use AI — models that can directly control a desktop UI — reporting meaningful gains over prior benchmarks on real-world task completion.</li>
+              <li>The system demonstrates improved robustness on multi-step tasks involving dynamic UIs, which has been a persistent failure mode for earlier computer use approaches.</li>
+              <li>As computer use matures from demo to deployable, Holo3 is a reference point for what the frontier looks like heading into mid-2026.</li>
             </ul>
-            <a href="https://huggingface.co/blog" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/holo3-computer-use" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>TRL v1.0: Post-Training Library Built to Move with the Field</h3>
-              <span class="digest-source">HuggingFace Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>TRL hitting v1.0 signals API stability for HuggingFace&#x27;s post-training library — covering RLHF, DPO, PPO, and reward modeling — making it safer to build production fine-tuning pipelines on top of it.</li>
-              <li>The v1.0 release focuses on a cleaner trainer API and improved compatibility with the broader Transformers ecosystem, including better support for distributed training setups.</li>
-              <li>For teams doing custom fine-tuning or alignment work, TRL v1.0 is now the de facto starting point in the open-source stack.</li>
-            </ul>
-            <a href="https://huggingface.co/blog" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Falcon Perception</h3>
-              <span class="digest-source">HuggingFace Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>TII&#x27;s Falcon Perception extends the Falcon model family into the vision domain, adding multimodal perception capabilities to a model lineage known for strong open-weight language performance.</li>
-              <li>The release continues the trend of frontier-adjacent open-weight multimodal models narrowing the gap with proprietary vision-language APIs.</li>
-              <li>Worth watching for teams evaluating open-weight alternatives to GPT-4V or Gemini Vision for visual understanding tasks.</li>
-            </ul>
-            <a href="https://huggingface.co/blog" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>datasette-llm ecosystem: unified plugin architecture (datasette-llm 0.1a5, datasette-extract 0.3a0, and more)</h3>
+              <h3>March 2026 sponsors-only newsletter</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Several datasette plugins (datasette-extract, datasette-enrichments-llm, datasette-llm-usage) have been refactored to use datasette-llm as the single source of truth for model configuration — eliminating per-plugin API key and model management.</li>
-              <li>datasette-llm 0.1a5 adds a llm_prompt_context() plugin hook that tracks all prompts executed within a chain, enabling cost attribution and audit trails across complex multi-step LLM workflows inside Datasette.</li>
-              <li>This architectural consolidation is the real story: Willison is building a coherent LLM-augmented data tool platform, not just shipping isolated plugins.</li>
+              <li>Willison&#x27;s monthly deep-dive covers agentic engineering patterns that have proved durable in production, MoE streaming optimizations that reduce latency for mixture-of-experts inference, and a curated roundup of notable model releases from March.</li>
+              <li>The agentic patterns section is particularly actionable — covering orchestration failure modes and retry strategies that aren&#x27;t well-documented elsewhere.</li>
+              <li>Worth the subscription for anyone building on top of LLM APIs: this is practitioner-grade synthesis, not pundit commentary.</li>
             </ul>
             <a href="https://simonwillison.net" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Supply Chain Attack on Axios Pulls Malicious Dependency from npm</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>anthropics/claude-code: v2.1.90</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A compromised version of Axios — the HTTP client with 101 million weekly npm downloads — was found silently pulling a malicious dependency, making this one of the highest-reach supply chain attacks in recent memory.</li>
-              <li>The attack vector is particularly relevant to AI-assisted coding: vibe-coding workflows where LLMs write and install dependencies without lockfile review are exactly the workflows most vulnerable to this class of attack.</li>
-              <li>Action item: audit lockfiles for unexpected transitive dependencies after any AI-generated npm install, and consider enabling npm audit in CI as a mandatory gate.</li>
+              <li>v2.1.90 ships the /powerup feature, adding a new interaction mode to Claude Code that the community has been anticipating — early descriptions suggest it enables richer multi-step task delegation within a single session.</li>
+              <li>This is a meaningful release for Claude Code users, not a routine patch — /powerup represents a workflow-level capability addition.</li>
+              <li>The rapid v2.1.x cadence signals continued active development; teams running Claude Code in CI or automated pipelines should track the changelog closely.</li>
             </ul>
-            <a href="https://simonwillison.net" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.90" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>I built a tool that saves ~50K tokens per Claude Code conversation by pre-indexing your codebase</h3>
+              <span class="digest-source">r/ClaudeAI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The tool pre-indexes a codebase into a compact summary format that Claude can consume at conversation start, replacing the expensive per-session file exploration that typically burns the first 30-50K tokens of context.</li>
+              <li>At 331 upvotes and 90 comments, this is clearly solving a real pain point — context window burn from codebase onboarding is one of the most common complaints from Claude Code power users.</li>
+              <li>The approach is model-agnostic in principle; the post includes enough implementation detail to adapt it beyond Claude Code to other agentic coding setups.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/ClaudeAI/comments/codebase_preindex_tool" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting Soohoon Choi: AI models will write good code because of economic incentives</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>I replaced chaotic solo Claude coding with a simple 3-agent team (Architect + Builder + Reviewer)</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The argument: AI labs are economically incentivized to make their coding models genuinely good because bad code output destroys developer trust quickly and measurably — unlike some other capability areas where quality is harder to evaluate.</li>
-              <li>This is a rare case where market pressure and capability improvement are well-aligned, suggesting coding will remain one of the strongest and fastest-improving AI use cases.</li>
-              <li>A useful counter to doomer or hype framings — the incentive structure itself predicts continued coding model improvement independent of raw scaling.</li>
+              <li>The author describes a practical Architect + Builder + Reviewer pattern where each agent has a scoped system prompt and clear handoff criteria — a concrete implementation of multi-agent coding that goes beyond vague &#x27;use multiple agents&#x27; advice.</li>
+              <li>Key finding: the Reviewer agent catches a disproportionate share of bugs and spec deviations that the Builder systematically misses, suggesting role specialization yields real quality gains over a single generalist agent.</li>
+              <li>With 236 upvotes and 67 comments, this workflow is resonating widely — the post is worth reading for the specific prompt structures and coordination mechanics, not just the high-level idea.</li>
             </ul>
-            <a href="https://simonwillison.net" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/ClaudeAI/comments/3agent_team_workflow" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
