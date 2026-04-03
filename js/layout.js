@@ -9,6 +9,7 @@
     '    <nav class="site-nav" id="siteNav">',
     '      <a href="/services.html">Services</a>',
     '      <a href="/#products">Products</a>',
+    '      <a href="/daigest.html">dAIgest</a>',
     '      <div class="nav-dropdown" id="resourcesDropdown">',
     '        <button class="nav-dropdown-toggle" id="resourcesToggle" aria-haspopup="true" aria-expanded="false">Resources <span class="nav-dropdown-arrow">&#9660;</span></button>',
     '        <div class="nav-dropdown-menu" id="resourcesMenu">',
