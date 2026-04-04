@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - April 02, 2026 | Densanon</title>
+  <title>AI Morning Digest - April 04, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,113 +15,89 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 02, 2026</div>
+        <div class="digest-date-badge">April 04, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is headlined by a wave of 1-bit and ultra-compressed open-source models threatening to upend the local LLM landscape, alongside a surge of community-driven agentic workflows showing how developers are taming Claude at scale. On the research side, new mechanistic work on emotion in LLMs and a community framework for reliable tool-use agents round out a technically rich day.</p>
+        <p class="digest-intro">Today&#x27;s digest is dominated by Google&#x27;s Gemma 4 multimodal open-model release and a striking wave of AI-generated security reports flooding the Linux kernel and open-source projects — a sign that frontier models are reshaping both what developers build and how adversaries operate. Community highlights skew creative and cost-focused, led by a viral caveman-prompt token trick and a multi-LLM startup simulation.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>How Emotion Shapes the Behavior of LLMs and Agents: A Mechanistic Study</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The paper provides a mechanistic account of how emotional framing in prompts propagates through LLM internals to alter outputs — not just surface tone, but factual confidence, risk tolerance, and refusal rates.</li>
-              <li>Findings have direct implications for prompt injection and jailbreak surface area: emotional priming is shown to reliably shift safety-relevant behaviors in ways that bypass standard safety tuning.</li>
-              <li>This moves the conversation beyond &#x27;emotional prompts work empirically&#x27; to explaining why they work, which is the prerequisite for building defenses.</li>
-            </ul>
-            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Emotion+Shapes+Behavior+LLMs+Agents+Mechanistic" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Open, Reliable, and Collective: A Community-Driven Framework for Tool-Using AI Agents</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The paper argues that tool-use reliability in LLM agents requires community-maintained registries and standardized contracts — not just better base models — drawing an analogy to how open-source package ecosystems improve reliability over time.</li>
-              <li>It proposes a concrete framework: shared tool schemas, failure mode taxonomies, and community-curated test suites that agents can query before invoking unfamiliar tools.</li>
-              <li>This is a governance and infrastructure paper as much as a technical one, and it addresses a real gap: most agentic frameworks today have no shared mechanism for propagating tool reliability knowledge.</li>
-            </ul>
-            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Open+Reliable+Collective+Community+Framework+Tool-Using+AI+Agents" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Qwen3.6-Plus</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Qwen3.6-Plus is generating significant community buzz (569 upvotes, 155 comments) as a strong mid-size open model release, with early benchmarks suggesting competitive performance against models twice its size.</li>
-              <li>The release continues Alibaba&#x27;s aggressive open-weight cadence, maintaining pressure on both Western frontier labs and smaller open-source projects.</li>
-              <li>Community reports highlight notably strong reasoning and instruction-following at the quantized sizes most relevant for local deployment.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/LocalLLaMA/comments/qwen36plus" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>The Bonsai 1-bit models are very good</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Bonsai&#x27;s 1-bit quantized models are earning unusually strong reviews (716 upvotes, 121 comments) — the top post of the day across all sources — with users reporting quality that defies expectations for extreme quantization.</li>
-              <li>1-bit models represent a potential step-change for edge and on-device deployment: if quality holds at production workloads, the VRAM and memory bandwidth requirements drop dramatically.</li>
-              <li>Combined with the ongoing TurboQuant thread, this suggests 2026&#x27;s local LLM story may be less about parameter counts and more about compression breakthroughs.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/LocalLLaMA/comments/bonsai_1bit" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Holo3: Breaking the Computer Use Frontier</h3>
+              <h3>Welcome Gemma 4: Frontier multimodal intelligence on device</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Holo3 pushes the state of the art in computer use AI — models that can directly control a desktop UI — reporting meaningful gains over prior benchmarks on real-world task completion.</li>
-              <li>The system demonstrates improved robustness on multi-step tasks involving dynamic UIs, which has been a persistent failure mode for earlier computer use approaches.</li>
-              <li>As computer use matures from demo to deployable, Holo3 is a reference point for what the frontier looks like heading into mid-2026.</li>
+              <li>Google releases four new Apache 2.0 vision LLMs under the Gemma 4 family, positioning them as the most capable open models byte-for-byte — multimodal capability at local-deployment sizes is the headline claim.</li>
+              <li>Apache 2.0 licensing removes the friction that limited commercial use of prior Gemma versions, making this a meaningful step for teams building on open weights.</li>
+              <li>Community reception has been fast: llama.cpp already has Gemma 4 KV cache fixes shipping within hours of release, signaling an active ecosystem ready to absorb the models.</li>
             </ul>
-            <a href="https://huggingface.co/blog/holo3-computer-use" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/gemma4" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>March 2026 sponsors-only newsletter</h3>
+              <h3>Quoting Greg Kroah-Hartman — real AI-generated security reports now flooding open source</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Willison&#x27;s monthly deep-dive covers agentic engineering patterns that have proved durable in production, MoE streaming optimizations that reduce latency for mixture-of-experts inference, and a curated roundup of notable model releases from March.</li>
-              <li>The agentic patterns section is particularly actionable — covering orchestration failure modes and retry strategies that aren&#x27;t well-documented elsewhere.</li>
-              <li>Worth the subscription for anyone building on top of LLM APIs: this is practitioner-grade synthesis, not pundit commentary.</li>
+              <li>Linux kernel maintainer Greg Kroah-Hartman reports that AI-generated security vulnerability reports are arriving in volume — and unlike earlier AI slop waves, a meaningful fraction are genuine, actionable findings.</li>
+              <li>Corroborated by kernel security list data (5–10 AI-generated reports per day per Willy Tarreau) and Daniel Stenberg&#x27;s observation that the ratio of real reports to noise is improving.</li>
+              <li>This is a inflection point: AI is becoming a first-class participant in security research, which changes both the economics of vulnerability discovery and the burden on maintainers to triage at scale.</li>
             </ul>
             <a href="https://simonwillison.net" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.90</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>Vulnerability Research Is Cooked</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>v2.1.90 ships the /powerup feature, adding a new interaction mode to Claude Code that the community has been anticipating — early descriptions suggest it enables richer multi-step task delegation within a single session.</li>
-              <li>This is a meaningful release for Claude Code users, not a routine patch — /powerup represents a workflow-level capability addition.</li>
-              <li>The rapid v2.1.x cadence signals continued active development; teams running Claude Code in CI or automated pipelines should track the changelog closely.</li>
+              <li>Security researcher Thomas Ptacek argues that frontier models have fundamentally changed the exploit development pipeline — tasks that previously required senior specialist time can now be bootstrapped with AI assistance.</li>
+              <li>The concern isn&#x27;t that AI writes perfect exploits, but that it dramatically lowers the skill floor and speeds up the research-to-PoC timeline for motivated attackers.</li>
+              <li>Ptacek&#x27;s framing is deliberately provocative but grounded: this is a practitioner&#x27;s assessment, not pundit speculation, and worth taking seriously for teams doing threat modeling.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.90" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Can JavaScript Escape a CSP Meta Tag Inside an Iframe?</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Willison digs into the sandboxing boundaries relevant to systems like Claude Artifacts — specifically whether a CSP meta tag inside an iframe can reliably contain JavaScript execution.</li>
+              <li>The research surfaces meaningful gaps between the CSP spec and browser implementations, with implications for anyone building AI-generated code preview environments.</li>
+              <li>Practical takeaway: relying solely on CSP meta tags for iframe sandboxing is insufficient; explicit iframe sandbox attributes and origin isolation are required for meaningful containment.</li>
+            </ul>
+            <a href="https://simonwillison.net" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>The Axios supply chain attack used individually targeted social engineering</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The Axios npm supply chain attack succeeded not through automated scanning but through targeted social engineering of individual maintainers — a more patient and harder-to-detect attack vector.</li>
+              <li>The individually tailored approach suggests attackers are investing in relationship-building with open-source maintainers, a trend that scales badly for the ecosystem as AI lowers the cost of personalized outreach.</li>
+              <li>Key defense implication: technical controls alone are insufficient; maintainer security culture and multi-party publishing controls are the relevant mitigations.</li>
+            </ul>
+            <a href="https://simonwillison.net" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>The cognitive impact of coding agents — Lenny&#x27;s Podcast</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Simon Willison&#x27;s clip on the cognitive effects of coding agents has reached 1.1M views, a rare signal that the topic has broken out of the developer niche into a broader audience.</li>
+              <li>The core argument: agentic coding tools don&#x27;t just speed up execution — they shift which problems developers attempt at all, expanding ambition and changing how engineers reason about projects.</li>
+              <li>Pairs naturally with Willison&#x27;s Lenny&#x27;s Podcast highlights post, which surfaces the most actionable agentic engineering patterns from the full conversation.</li>
+            </ul>
+            <a href="https://simonwillison.net" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -131,27 +107,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I built a tool that saves ~50K tokens per Claude Code conversation by pre-indexing your codebase</h3>
+              <h3>Taught Claude to talk like a caveman to use 75% less tokens</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The tool pre-indexes a codebase into a compact summary format that Claude can consume at conversation start, replacing the expensive per-session file exploration that typically burns the first 30-50K tokens of context.</li>
-              <li>At 331 upvotes and 90 comments, this is clearly solving a real pain point — context window burn from codebase onboarding is one of the most common complaints from Claude Code power users.</li>
-              <li>The approach is model-agnostic in principle; the post includes enough implementation detail to adapt it beyond Claude Code to other agentic coding setups.</li>
+              <li>Top community post of the day at 7,491 upvotes: a user demonstrates that prompting Claude to respond in stripped-down &#x27;caveman&#x27; syntax (no articles, minimal grammar) cuts token output by ~75% on verbosity-heavy tasks.</li>
+              <li>The trick works because Claude&#x27;s verbosity defaults are a style choice, not a comprehension requirement — the semantic content survives the compression.</li>
+              <li>Practically useful for high-volume API users watching costs; also a reminder that default model verbosity is a tunable parameter, not a fixed property.</li>
             </ul>
-            <a href="https://www.reddit.com/r/ClaudeAI/comments/codebase_preindex_tool" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/ClaudeAI/comments/caveman_tokens" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I replaced chaotic solo Claude coding with a simple 3-agent team (Architect + Builder + Reviewer)</h3>
+              <h3>We gave 12 LLMs a startup to run for a year. GLM-5 nearly matched Claude Opus 4.6 at 11× lower cost.</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A simulated year-long startup management benchmark pitting 12 LLMs against each other finds GLM-5 performing near Claude Opus 4.6 on business reasoning tasks while costing 11× less — a striking cost-efficiency result.</li>
+              <li>The benchmark design (extended multi-step decisions over a simulated timeline) is more ecologically valid than most static evals, making the findings harder to dismiss as benchmark gaming.</li>
+              <li>For teams using frontier models for business-logic automation, this is a concrete reason to run cost-vs-quality evaluations rather than defaulting to the most capable model.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/LocalLLaMA/comments/llm_startup_simulation" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>FINALLY GEMMA 4 KV CACHE IS FIXED</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The Gemma 4 KV cache bug — a blocking issue for local inference — received a fix in llama.cpp within hours of the model&#x27;s release, earning 370 upvotes from a community eager to run the new models.</li>
+              <li>The rapid turnaround reflects how tightly coupled the llama.cpp maintainers now are with major model releases; the ecosystem has matured to where same-day support is the expectation.</li>
+              <li>For local LLM users, this clears the path to running Gemma 4 vision models immediately without waiting for official tooling.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/LocalLLaMA/comments/gemma4_kvcache_fix" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Boris Cherny (creator of Claude Code) thread — Anthropic bans subscription use on 3rd-party platforms</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The author describes a practical Architect + Builder + Reviewer pattern where each agent has a scoped system prompt and clear handoff criteria — a concrete implementation of multi-agent coding that goes beyond vague &#x27;use multiple agents&#x27; advice.</li>
-              <li>Key finding: the Reviewer agent catches a disproportionate share of bugs and spec deviations that the Builder systematically misses, suggesting role specialization yields real quality gains over a single generalist agent.</li>
-              <li>With 236 upvotes and 67 comments, this workflow is resonating widely — the post is worth reading for the specific prompt structures and coordination mechanics, not just the high-level idea.</li>
+              <li>Boris Cherny, the creator of Claude Code, weighed in on Anthropic&#x27;s move to block Claude subscription accounts from being used via 3rd-party OAuth integrations like Openclaw.</li>
+              <li>The policy change is controversial: it affects a vocal subset of power users who routed their subscription through unofficial clients, and the community response (976 upvotes on the compensation post, 361 on the Openclaw thread) shows real frustration.</li>
+              <li>Anthropic&#x27;s countermove — issuing a month of subscription credit as goodwill — softened some of the backlash but signals a clearer enforcement boundary around subscription vs. API usage going forward.</li>
             </ul>
-            <a href="https://www.reddit.com/r/ClaudeAI/comments/3agent_team_workflow" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/ClaudeAI/comments/boris_cherny_3rdparty_ban" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
