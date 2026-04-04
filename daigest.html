@@ -164,6 +164,78 @@
       margin-top: 6px;
     }
 
+    .daigest-pricing {
+      padding: 60px 0;
+      border-top: 1px solid var(--color-border);
+    }
+    .daigest-pricing h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+    .daigest-pricing > .container > p {
+      text-align: center;
+      color: var(--color-text-muted);
+      margin-bottom: 36px;
+      font-size: 1.05rem;
+    }
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .price-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+    }
+    .price-card.featured {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 24px rgba(229, 62, 62, 0.15);
+    }
+    .price-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .price-amount {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .price-amount .once {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--color-text-muted);
+    }
+    .price-features {
+      list-style: none;
+      margin: 20px 0 24px;
+    }
+    .price-features li {
+      padding: 6px 0;
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+    }
+    .price-features li::before {
+      margin-right: 8px;
+      font-weight: 700;
+    }
+    .price-features .included::before {
+      content: '\2713';
+      color: var(--color-accent-green);
+    }
+    .price-features .locked::before {
+      content: '\2717';
+      color: #666;
+    }
+    .price-card .btn {
+      display: block;
+      text-align: center;
+    }
+
     .daigest-download {
       padding: 80px 0;
       border-top: 1px solid var(--color-border);
@@ -212,8 +284,9 @@
         <div class="daigest-cta">
           <a href="#download" class="btn btn-primary">Download for Android</a>
           <a href="#see-it" class="btn btn-outline">See it in action</a>
+          <a href="#pricing" class="btn btn-outline">Go Pro</a>
         </div>
-        <p class="daigest-note">Free &middot; No account required &middot; Runs entirely on your phone</p>
+        <p class="daigest-note">Free tier available &middot; No account required &middot; Runs entirely on your phone</p>
       </div>
     </section>
 
@@ -302,6 +375,40 @@
             Game Dev Digest
             <span>Industry, engines, techniques</span>
           </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="daigest-pricing" id="pricing">
+      <div class="container">
+        <h2>Free vs <span>Pro</span></h2>
+        <p>Everything runs on your device. Pro simply unlocks the limits.</p>
+        <div class="pricing-cards">
+          <div class="price-card">
+            <h3>Free</h3>
+            <div class="price-amount">$0</div>
+            <ul class="price-features">
+              <li class="included">Up to 2 digests</li>
+              <li class="included">Manual updates</li>
+              <li class="included">Curated model list</li>
+              <li class="included">On-device AI</li>
+              <li class="included">Fully private</li>
+            </ul>
+            <a href="#download" class="btn btn-outline">Download Free</a>
+          </div>
+          <div class="price-card featured">
+            <h3>Pro</h3>
+            <div class="price-amount">$9.99 <span class="once">one-time</span></div>
+            <ul class="price-features">
+              <li class="included">Unlimited digests</li>
+              <li class="included">Scheduled updates</li>
+              <li class="included">HuggingFace model search</li>
+              <li class="included">On-device AI</li>
+              <li class="included">Fully private</li>
+            </ul>
+            <a href="https://buy.stripe.com/test_7sYaEZedV4ZDe5z9sDdMI00" class="btn btn-primary" id="buy-pro-btn">Buy Pro License</a>
+          </div>
         </div>
       </div>
     </section>
