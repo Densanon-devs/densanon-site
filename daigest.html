@@ -419,9 +419,11 @@
         <div class="download-badge">Android</div>
         <h2>Get d<span>AI</span>gest</h2>
         <p>Download the APK directly. No Play Store account needed. Install, grab a model, and start curating.</p>
-        <a href="https://github.com/Densanon-devs/densanon-site/releases/latest/download/app-release.apk" class="btn btn-primary">Download APK</a>
+        <a href="https://github.com/Densanon-devs/densanon-site/releases/latest/download/app-release.apk" class="btn btn-primary" id="download-apk-btn">Download APK</a>
         <p class="download-details">
           ~152 MB &middot; Android 8+ &middot; Requires ~500 MB storage for the smallest model
+        </p>
+        <p id="download-count" style="margin-top: 16px; font-size: 0.95rem; color: var(--color-text-muted);">
         </p>
         <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--color-border);">
           <div class="download-badge" style="background: var(--color-text-muted);">iOS</div>
@@ -435,5 +437,38 @@
 
   <div id="site-footer"></div>
   <script src="js/layout.js"></script>
+  <script>
+    (function () {
+      var el = document.getElementById('download-count');
+      var CACHE_KEY = 'daigest_dl_count';
+      var CACHE_TTL = 3600000; // refresh once per hour
+
+      function show(count) {
+        if (count > 0) el.textContent = count.toLocaleString() + ' downloads';
+      }
+
+      // Show cached count immediately so it's never blank
+      var cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+      if (cached) show(cached.count);
+
+      // Refresh from API if cache is stale or missing
+      if (!cached || Date.now() - cached.ts > CACHE_TTL) {
+        fetch('https://api.github.com/repos/densanon-devs/densanon-site/releases')
+          .then(function (r) { return r.json(); })
+          .then(function (releases) {
+            if (!Array.isArray(releases)) return;
+            var total = 0;
+            releases.forEach(function (release) {
+              release.assets.forEach(function (asset) {
+                total += asset.download_count;
+              });
+            });
+            localStorage.setItem(CACHE_KEY, JSON.stringify({ count: total, ts: Date.now() }));
+            show(total);
+          })
+          .catch(function () { /* cached value already shown */ });
+      }
+    })();
+  </script>
 </body>
 </html>
