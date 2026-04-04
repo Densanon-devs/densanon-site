@@ -8,8 +8,13 @@
     '    </button>',
     '    <nav class="site-nav" id="siteNav">',
     '      <a href="/services.html">Services</a>',
-    '      <a href="/#products">Products</a>',
-    '      <a href="/daigest.html">dAIgest</a>',
+    '      <div class="nav-dropdown" id="productsDropdown">',
+    '        <button class="nav-dropdown-toggle" id="productsToggle" aria-haspopup="true" aria-expanded="false">Products <span class="nav-dropdown-arrow">&#9660;</span></button>',
+    '        <div class="nav-dropdown-menu" id="productsMenu">',
+    '          <a href="/daigest.html">dAIgest</a>',
+    '          <a href="/densabooks.html">DensaBooks</a>',
+    '        </div>',
+    '      </div>',
     '      <div class="nav-dropdown" id="resourcesDropdown">',
     '        <button class="nav-dropdown-toggle" id="resourcesToggle" aria-haspopup="true" aria-expanded="false">Resources <span class="nav-dropdown-arrow">&#9660;</span></button>',
     '        <div class="nav-dropdown-menu" id="resourcesMenu">',
@@ -39,6 +44,8 @@
     '        <h4>Quick Links</h4>',
     '        <a href="/">Home</a>',
     '        <a href="/services.html">Services</a>',
+    '        <a href="/daigest.html">dAIgest</a>',
+    '        <a href="/densabooks.html">DensaBooks</a>',
     '        <a href="/ai-digest.html">AI Digest</a>',
     '        <a href="/robotics-digest.html">Robotics Digest</a>',
     '        <a href="/computation-digest.html">Computation Digest</a>',
@@ -88,22 +95,41 @@
     });
   }
 
-  // Resources dropdown — click toggles for mobile; hover handled by CSS on desktop
-  var resourcesDropdown = document.getElementById('resourcesDropdown');
-  var resourcesToggle = document.getElementById('resourcesToggle');
-  if (resourcesDropdown && resourcesToggle) {
-    resourcesToggle.addEventListener('click', function (e) {
-      e.stopPropagation();
-      var isOpen = resourcesDropdown.classList.toggle('open');
-      resourcesToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
+  // Dropdown toggles — click for mobile; hover handled by CSS on desktop
+  var dropdowns = [
+    { dropdown: 'productsDropdown', toggle: 'productsToggle' },
+    { dropdown: 'resourcesDropdown', toggle: 'resourcesToggle' },
+  ];
 
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function () {
-      resourcesDropdown.classList.remove('open');
-      resourcesToggle.setAttribute('aria-expanded', 'false');
+  dropdowns.forEach(function (cfg) {
+    var dd = document.getElementById(cfg.dropdown);
+    var btn = document.getElementById(cfg.toggle);
+    if (!dd || !btn) return;
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      // Close the other dropdown(s)
+      dropdowns.forEach(function (other) {
+        if (other.dropdown === cfg.dropdown) return;
+        var otherDd = document.getElementById(other.dropdown);
+        var otherBtn = document.getElementById(other.toggle);
+        if (otherDd) otherDd.classList.remove('open');
+        if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+      });
+      var isOpen = dd.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
-  }
+  });
+
+  // Close all dropdowns when clicking outside
+  document.addEventListener('click', function () {
+    dropdowns.forEach(function (cfg) {
+      var dd = document.getElementById(cfg.dropdown);
+      var btn = document.getElementById(cfg.toggle);
+      if (dd) dd.classList.remove('open');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    });
+  });
 
   // Active nav link highlighting
   var pathname = window.location.pathname;
