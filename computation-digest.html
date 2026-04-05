@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - April 04, 2026 | Densanon</title>
+  <title>Computation Morning Digest - April 05, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 04, 2026</div>
+        <div class="digest-date-badge">April 05, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Security researchers expose a new class of GPU memory attacks while the modding community continues to push hardware beyond its intended limits — from Claude-assisted BIOS rewrites to Win 3.1 on Ryzen 9. On the open-source front, Redox OS lands a new scheduler, AMD openSIL advances on AM5, and Gentoo ships an experimental GNU/Hurd image.</p>
+        <p class="digest-intro">Intel&#x27;s Nova Lake gets a core count bump to 44, Nvidia bets on photonics for 1000+ GPU racks, and RPCS3 cracks the Cell Broadband Engine — while a hobbyist squeezes 250% more integer throughput from a 1978 CPU and Linux 7.1 unlocks Zen 6 AVX-512 for guests.</p>
       </div>
     </section>
 
@@ -29,135 +29,117 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>New &#x27;GeForge&#x27; and &#x27;GDDRHammer&#x27; attacks can fully infiltrate your system through Nvidia&#x27;s GPU memory</h3>
+              <h3>Intel&#x27;s upcoming 42-core Nova Lake SKU allegedly upgraded to 44 cores</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GeForge and GDDRHammer are rowhammer-style attacks that exploit bit-flip vulnerabilities in GDDR6/6X VRAM, allowing attackers to escalate privileges or escape sandboxed environments via the GPU.</li>
-              <li>Unlike DRAM rowhammer mitigations, VRAM lacks equivalent ECC protections in consumer cards, making the attack surface difficult to patch without hardware-level changes.</li>
-              <li>The research has immediate implications for cloud GPU tenants sharing physical hardware — multi-tenant GPU environments may need isolation guarantees analogous to those already applied to CPU memory.</li>
+              <li>The top Nova Lake-S SKU has reportedly grown from 42 to 44 cores via a dual-tile config pairing an 8P+12E tile arrangement, giving Intel a stronger high-core-count answer to AMD&#x27;s Zen 5 desktop lineup.</li>
+              <li>The freed-up 6P+12E tile configurations are expected to trickle down as locked BLLC (below-the-line) variants, extending Nova Lake coverage into the mid-range.</li>
+              <li>A 44-core desktop SKU would be Intel&#x27;s highest core count on a consumer platform, raising the ceiling for prosumer and workstation workloads without requiring a HEDT platform.</li>
             </ul>
-            <a href="https://www.tomshardware.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/intels-upcoming-42-core-nova-lake-sku-allegedly-upgraded-to-44-cores-new-config-frees-up-6p-12e-tiles-that-could-trickle-down-as-locked-bllc-variants" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Modder uses Claude AI to rewrite BIOS so they can boot unsupported 12 P-core Bartlett Lake CPU in Windows on a Z790 motherboard</h3>
+              <h3>Nvidia Pascal GPUs debuted 10 years ago today</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A modder leveraged Claude to navigate and patch BIOS microcode tables, enabling an unsupported 12 P-core Bartlett Lake engineering sample to POST and boot Windows on a Z790 board.</li>
-              <li>The project demonstrates AI-assisted low-level firmware hacking as a practical workflow — Claude helped interpret UEFI structures that would have taken far longer to reverse manually.</li>
-              <li>Bartlett Lake is Intel&#x27;s enthusiast refresh targeting users who want high core-count configs outside the standard SKU lineup, and community patches like this may precede or pressure official support.</li>
+              <li>Pascal launched on April 5, 2016 with the Tesla P100, introducing TSMC 16nm FinFET to Nvidia&#x27;s datacenter and consumer GPU lines — the first major node shrink since Maxwell on 28nm.</li>
+              <li>The GTX 1080 Ti became one of the most long-lived enthusiast GPUs in history, remaining competitive well into the Turing generation and serving as the benchmark baseline for years.</li>
+              <li>Pascal&#x27;s HBM2 debut on the P100 and NVLink interconnect were the architectural seeds of the datacenter GPU strategy that Nvidia now dominates with Hopper and Blackwell.</li>
             </ul>
-            <a href="https://www.tomshardware.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/gpus/nvidia-pascal-gpus-debuted-10-years-ago-today-best-known-for-the-gtx-1060-and-gtx-1080-ti-architecture-kicked-off-with-the-tesla-p100" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel&#x27;s potent 18-core Core Ultra 5 250KF Plus CPU lands at retail for under $200</h3>
+              <h3>PlayStation 3 emulator makes Cell CPU &#x27;breakthrough&#x27;</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Core Ultra 5 250KF Plus brings 12 P-cores and 6 E-cores (18 total) to the sub-$200 price bracket, a notable value jump for Intel&#x27;s Arrow Lake lineup.</li>
-              <li>Dropping a competitive high-core-count chip under $200 is a direct pressure move against AMD&#x27;s Ryzen 7 9700X, which has held the mid-range performance crown at similar prices.</li>
-              <li>The &#x27;KF&#x27; suffix means no integrated graphics and an unlocked multiplier — positioning this squarely at budget-conscious builders pairing it with a discrete GPU.</li>
+              <li>RPCS3 developers have achieved a significant Cell Broadband Engine emulation breakthrough that improves performance across all PS3 titles, not just specific games.</li>
+              <li>The Cell BE&#x27;s heterogeneous SPU architecture — eight independent Synergistic Processing Units managed by a Power PC core — has made it one of the most technically challenging CPUs ever emulated.</li>
+              <li>The improvement has broad implications for PS3 preservation: previously unplayable or severely degraded titles move closer to playable, and it demonstrates how much untapped headroom remained in the emulator&#x27;s SPU dispatch path.</li>
             </ul>
-            <a href="https://www.tomshardware.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/video-games/playstation/rpcs3-ps3-emulator-gets-cell-cpu-breakthrough-that-improves-performance-in-all-games" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AWS Engineer Reports PostgreSQL Performance Halved By Linux 7.0, But A Fix May Not Be Easy</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Hobbyist builds a homebrew Intel 8086 ISA accelerator card</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An AWS engineer documented a ~50% throughput regression in PostgreSQL workloads after upgrading to Linux 7.0, traced to changes in memory management and scheduler behavior introduced in the new kernel.</li>
-              <li>The regression is particularly sharp on high-connection OLTP workloads, the exact profile of most cloud database deployments — making this a critical issue for managed PostgreSQL services.</li>
-              <li>Kernel maintainers have acknowledged the report, but the interaction between PostgreSQL&#x27;s locking model and the new kernel paths is complex enough that a clean fix may require coordination across multiple subsystems.</li>
+              <li>A maker engineered a custom ISA accelerator card that slots into 8086-class systems and offloads integer multiplication to dedicated hardware, delivering a 250% throughput improvement on an operation that was notoriously slow on the original 8086.</li>
+              <li>The 8086&#x27;s multiply instruction took 70–160 clock cycles depending on operand size; dedicated co-processor logic on modern FPGAs or ASICs can collapse this to a handful of cycles, and this project bridges that gap for real vintage hardware.</li>
+              <li>The project is fully documented and represents a growing trend of FPGA-backed ISA expansion cards that extend classic PC hardware beyond its original design constraints.</li>
             </ul>
-            <a href="https://www.phoronix.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/hobbyist-builds-a-homebrew-intel-8086-isa-accelerator-card-makers-project-improves-integer-multiplication-on-these-retro-systems-by-250-percent" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>3mdeb Makes Progress Bringing AMD openSIL + Coreboot To Ryzen AM5 Motherboard</h3>
+              <h3>Linux 7.1 To Expose AMD Zen 6&#x27;s AVX-512 BMM For Guest VMs</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>3mdeb has achieved early boot milestones using AMD&#x27;s open-source openSIL firmware initialization library paired with coreboot on an AM5 platform — a meaningful step toward fully open firmware on modern AMD desktop hardware.</li>
-              <li>openSIL replaces the traditionally opaque AGESA blob with an inspectable, community-auditable codebase, which matters for security-sensitive deployments and long-term hardware maintainability.</li>
-              <li>AM5 support in coreboot would be a landmark given the platform&#x27;s longevity — AMD has committed to AM5 through at least 2027, giving open firmware efforts a stable target.</li>
+              <li>Linux 7.1 will expose AMD Zen 6&#x27;s AVX-512 BMM (Bit Manipulation Matrix) extension to KVM guests, making a new class of bit-manipulation acceleration available to virtualized workloads.</li>
+              <li>AVX-512 BMM accelerates sparse matrix and bitfield operations that appear in compression, cryptography, and certain ML inference pipelines — guest VMs running these workloads on Zen 6 hosts will benefit without requiring passthrough.</li>
+              <li>The patch continues Linux&#x27;s practice of rapidly surfacing new x86 ISA extensions to hypervisor guests, keeping virtualized environments close to bare-metal capability parity on new silicon.</li>
             </ul>
-            <a href="https://www.phoronix.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.1-KVM-AVX-512-BMM" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Redox OS Introducing New CPU Scheduler For ~1.5x Performance In Heavy Tasks</h3>
+              <h3>Mesa 26.1 Makes It Easier To &#x27;Fake&#x27; A GPU Reset Using LLVMpipe</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Redox OS is landing a redesigned CPU scheduler that delivers roughly 1.5x throughput improvement on compute-heavy workloads — a significant gain for a microkernel OS still maturing its systems software.</li>
-              <li>The new scheduler adopts a work-stealing design more aligned with what Linux and modern RTOSes use, addressing Redox&#x27;s historical weakness under multi-threaded load.</li>
-              <li>Performance parity with Linux remains distant, but consistent 1.5x jumps from scheduler work signal that Redox is now past proof-of-concept and into serious systems optimization territory.</li>
+              <li>Mesa 26.1 adds a mechanism to simulate GPU reset events using LLVMpipe, allowing compositor and display server developers to test GPU recovery paths without triggering real hardware resets.</li>
+              <li>GPU reset handling is notoriously difficult to test because real resets are rare, hardware-dependent, and destructive — a software-controllable fake reset lowers the barrier to robust recovery code.</li>
+              <li>The addition benefits Wayland compositor developers in particular, where GPU reset handling has been an underspecified and undertested code path across multiple compositors.</li>
             </ul>
-            <a href="https://www.phoronix.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Mesa-26.1-Fake-GPU-Reset" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>CachyOS Delivers More Performance Out Of Intel Panther Lake</h3>
+              <h3>hid-omg-detect: Linux Driver In Development To Detect Malicious HID Devices</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>CachyOS, known for its aggressive kernel and compiler tuning, is extracting measurable additional performance from Intel&#x27;s Panther Lake platform beyond what stock kernel configurations deliver.</li>
-              <li>The gains come from a combination of profile-guided optimization, custom CPU frequency schedules, and scheduler patches tailored to Panther Lake&#x27;s hybrid core topology.</li>
-              <li>CachyOS continues to serve as a practical benchmark for what upstream Linux leaves on the table — and its findings frequently inform later patches that land in mainline.</li>
+              <li>A new Linux kernel driver, hid-omg-detect, is being developed to identify O.MG Cable-style malicious HID devices that masquerade as keyboards or mice to inject arbitrary input.</li>
+              <li>HID-based attack vectors are particularly dangerous because USB HID is inherently trusted by the OS — this driver adds a detection layer that can flag anomalous device behavior indicative of an implant.</li>
+              <li>Targeting O.MG and similar red-team hardware at the kernel level is a meaningful shift toward supply chain and physical access security being handled in-kernel rather than relying solely on endpoint agents.</li>
             </ul>
-            <a href="https://www.phoronix.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/hid-omg-detect-Malicious-HID" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <h2 class="digest-section-title">Industry &amp; HPC</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Researchers 3D print robot the size of a single-cell organism</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>How Nvidia learned to embrace the light in its quest for scale</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Researchers have 3D printed a functional microrobot at the scale of a single-cell organism, pushing the boundary of what additive manufacturing can produce at the microscale.</li>
-              <li>Achieving locomotion and basic actuation at this size requires novel material choices and fabrication techniques that differ fundamentally from macro-scale robotics.</li>
-              <li>Potential applications span targeted drug delivery, microsurgery, and environmental sensing — areas where sub-millimeter autonomous devices have long been a research goal but manufacturing constraints have blocked progress.</li>
+              <li>Nvidia is investing heavily in photonic interconnects to solve the bandwidth and power bottlenecks that copper NVLink hits at rack scale — optical links enable scale-up topologies across 1000+ GPU clusters without the signal integrity limits of copper.</li>
+              <li>The shift from copper to silicon photonics for GPU-to-GPU communication represents a fundamental change in how AI supercomputer racks are architected, with Nvidia positioning its internal photonics efforts as a competitive moat.</li>
+              <li>Optical scale-up also reduces cooling complexity at the interconnect layer, a non-trivial benefit as power density in AI training clusters continues to push past 100kW per rack.</li>
             </ul>
-            <a href="https://www.tomshardware.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Enthusiast installs Win 3.1X on bare metal Ryzen 9 9900X and RTX 5060 Ti system</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A hardware enthusiast got Windows 3.1x running directly on a Ryzen 9 9900X and RTX 5060 Ti — not in a VM — requiring custom bootloaders and real-mode compatibility shims to bridge 33 years of x86 evolution.</li>
-              <li>The project is a showcase of how much backward compatibility Intel and AMD have quietly maintained in x86: real-mode execution paths introduced in the 286 era still function on the latest silicon.</li>
-              <li>Beyond the spectacle, the build surfaces useful documentation about x86 boot modes and legacy BIOS initialization that benefits firmware developers and OS historians.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://go.theregister.com/feed/www.theregister.com/2026/04/05/nvidia_optical_scale_up/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Gentoo Releases Experimental Images Using GNU/Hurd</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>AI agents promise to &#x27;run the business,&#x27; but who is liable if things go wrong?</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Gentoo has shipped experimental installation images running GNU/Hurd as the kernel — making it one of the most accessible ways to try the decades-old GNU microkernel project on real hardware.</li>
-              <li>GNU/Hurd has been perpetually &#x27;almost ready&#x27; since the early 1990s; Gentoo&#x27;s involvement brings modern packaging infrastructure and a wider testing audience to a project that has historically struggled with distribution.</li>
-              <li>Hurd&#x27;s translator-based virtual filesystem model remains architecturally interesting for OS researchers, and Gentoo&#x27;s image lowers the barrier to experimenting with it significantly.</li>
+              <li>As autonomous AI agents are deployed to execute contracts, manage inventory, and make financial decisions, liability frameworks have not kept pace — current tort and contract law struggles to assign responsibility when an agent causes harm.</li>
+              <li>The ambiguity falls across a three-way split between the model vendor, the deploying enterprise, and the end user, with no clear legal precedent establishing which party bears ultimate accountability for agentic errors.</li>
+              <li>Regulators in the EU and US are beginning to address agent liability explicitly, but legal clarity is likely years away — enterprises deploying autonomous agents today are operating in a largely uncharted liability landscape.</li>
             </ul>
-            <a href="https://www.phoronix.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://go.theregister.com/feed/www.theregister.com/2026/04/05/ai_agents_liability/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

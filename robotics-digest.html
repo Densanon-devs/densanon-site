@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - April 04, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - April 05, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,77 +15,125 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 04, 2026</div>
+        <div class="digest-date-badge">April 05, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest centers on the humanoid moment arriving in earnest — Gill Pratt says so, Digit can dance to prove it, and Sanctuary AI&#x27;s zero-shot hand shows the dexterity gap is closing — while the community digs into hard truths about dataset quality, simulation frustrations, and the quiet influence of Chinese hardware inside American robots.</p>
+        <p class="digest-intro">Today&#x27;s digest spans artificial muscle breakthroughs that let robots lift 100x their weight, Boston Dynamics research on how humans perceive robots, open-source drone simulation tooling for VLA research, and a new suite of hardware engineering tools — plus a look at robots entering sensitive environments.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>US researchers create pneumatic artificial muscles that let robots carry 100x their own weight</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Air-powered artificial muscles achieve a payload-to-weight ratio of 100:1, a figure that would dramatically change the calculus for load-bearing robot designs in logistics and construction.</li>
+              <li>Pneumatic actuation offers inherent compliance and shock absorption compared to rigid electric motors, making these muscles well-suited for environments where robots physically interact with people or fragile goods.</li>
+              <li>The key challenge ahead is energy density — pneumatic systems require compressors or pressurized tanks, so integration into untethered mobile robots will need further engineering work.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1sci5uh/us_researchers_create_pneumatic_artificial/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Truckloads of food are being wasted because computers won&#x27;t approve them</h3>
+              <span class="digest-source">ScienceDaily Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Digital approval systems in food supply chains are failing at scale — outdated databases and connectivity gaps are causing automated rejections of perfectly safe loads, resulting in significant food waste.</li>
+              <li>The finding highlights a real cost of brittle automation: systems with no graceful degradation can cause worse outcomes than no automation at all when they fail.</li>
+              <li>A cautionary case study for robotics and automation designers — reliability and fallback behavior in mission-critical pipelines are as important as peak performance.</li>
+            </ul>
+            <a href="https://www.sciencedaily.com/releases/2026/04/260403224505.htm" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Gill Pratt Says Humanoid Robots&#x27; Moment Is Finally Here</h3>
-              <span class="digest-source">IEEE Spectrum</span>
+              <h3>Studying Human Attitudes Towards Robots Through Experience</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Toyota Research Institute&#x27;s chief scientist — one of the most measured voices in robotics — publicly declares that humanoid robots have crossed a threshold from research curiosity to practical deployment.</li>
-              <li>Pratt points to convergence of better actuators, imitation learning, and foundation models as the trifecta that finally makes the economics viable.</li>
-              <li>A signal worth tracking: when a historically cautious expert upgrades their timeline, it shifts industry expectations and capital allocation.</li>
+              <li>Boston Dynamics research explores how direct interaction with Spot shifts human attitudes — people who have hands-on experience with robots report meaningfully different comfort and trust levels than those who have only seen them in media.</li>
+              <li>Understanding perception is as important as improving performance for widespread adoption: public attitudes are a deployment bottleneck that no amount of hardware optimization can solve alone.</li>
+              <li>The study points toward experience-based outreach — demos, public deployments, and accessible platforms — as a practical lever for normalizing robot presence in everyday environments.</li>
             </ul>
-            <a href="https://spectrum.ieee.org" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://spectrum.ieee.org/boston-dynamics-spot-interaction" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Video Friday: Digit Learns to Dance — Virtually Overnight</h3>
-              <span class="digest-source">IEEE Spectrum</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Agility Robotics&#x27; Digit acquired a new dance routine in under 24 hours using simulation-to-real transfer, demonstrating how fast skill acquisition has become with modern training pipelines.</li>
-              <li>The speed of the demo underscores a shift: the bottleneck is no longer months of hardware tuning but hours of policy generation.</li>
-              <li>Fluid, whole-body movement like this also serves as a proxy for general dexterity — if it can dance, the underlying motor control is getting genuinely capable.</li>
-            </ul>
-            <a href="https://spectrum.ieee.org" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Generalist Introduces GEN-1 General-Purpose Model for Physical AI</h3>
+              <h3>NORD Drivesystems launches industrial gear units for the mining industry</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Generalist&#x27;s GEN-1 is pitched as a foundation model for physical AI — trained to generalize across diverse manipulation tasks rather than being fine-tuned per task.</li>
-              <li>If the cross-task generalization claims hold at hardware validation, it would meaningfully compress the deployment effort for new robotic applications.</li>
-              <li>Enters a competitive field alongside Pi0, RT-2, and others — the race for a true general-purpose physical AI model is now crowded and fast-moving.</li>
+              <li>The MAXXDRIVE series features a one-piece UNICASE housing that eliminates the seams and joints where traditional multi-piece housings fail under extreme vibration and contamination in mining environments.</li>
+              <li>Purpose-built industrial drivetrain hardware for harsh environments remains an active product category — general-purpose actuators still can&#x27;t match the reliability of application-specific designs for demanding field conditions.</li>
+              <li>Mining automation is an underreported but high-ROI sector for industrial robotics, where labor costs are high, conditions are dangerous, and uptime requirements are extreme.</li>
             </ul>
-            <a href="https://www.therobotreport.com" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/nord-drivesystems-launches-industrial-gear-units-for-the-mining-industry/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AES Maximo Robot Installs 100 Megawatts of Solar Capacity</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Robots are starting to enter one of the most sensitive environments we have</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AES Energy&#x27;s Maximo robot has now autonomously installed 100 MW of solar panels in the field — a concrete scale milestone for industrial outdoor robotics.</li>
-              <li>The solar installation domain is a strong fit for robotics: repetitive, structured, and labor-constrained, with measurable ROI that justifies deployment cost.</li>
-              <li>Proof that purpose-built field robots can graduate from pilot programs to genuine infrastructure-scale deployment in capital-intensive sectors.</li>
+              <li>Robots are beginning deployment in high-stakes sensitive environments — likely healthcare, childcare, or secure facilities — where the tolerance for errors or intrusive behavior is extremely low.</li>
+              <li>Entry into sensitive environments marks a meaningful maturity milestone: it signals that reliability, safety certification, and social acceptability have reached a deployable threshold.</li>
+              <li>These early deployments will set precedents for regulation and public expectations, making how they&#x27;re handled now disproportionately influential on the broader trajectory of robot integration.</li>
             </ul>
-            <a href="https://www.therobotreport.com" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1scemxg/robots_are_starting_to_enter_one_of_the_most/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GS-DroneGym: open-source photorealistic drone simulator + benchmark tooling for VLA research</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>GS-DroneGym uses Gaussian Splatting to generate photorealistic simulation environments for drone training, closing the visual realism gap that causes sim-to-real failures in vision-dependent flight policies.</li>
+              <li>Comes packaged with standardized benchmark tooling for Vision-Language-Action (VLA) research — meaning teams can publish comparable results without building their own evaluation infrastructure.</li>
+              <li>Open-source release lowers the barrier for VLA drone research considerably; photorealistic sims with benchmarks have historically been either proprietary or fragmented.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1sckilh/gsdronegym_opensource_photorealistic_drone/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Sanctuary AI&#x27;s Robotic Hand Demonstrates Zero-Shot In-Hand Manipulation</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>MechE.ai — tools for hardware engineers!</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Sanctuary AI&#x27;s hand successfully performs in-hand manipulation of novel objects without any task-specific training — a capability that has historically required extensive fine-tuning.</li>
-              <li>Zero-shot in-hand manipulation is one of the hardest open problems in dexterous robotics; this demo, if reproducible across objects, marks genuine progress.</li>
-              <li>Closes a critical gap for humanoid utility: general manipulation is impossible if every new object shape requires retraining.</li>
+              <li>MechE.ai bundles a 3D print advisor, tolerance analysis, and Design for Manufacturing (DFM) analysis into a single AI-assisted suite aimed at hardware engineers and robotics builders.</li>
+              <li>DFM analysis in particular is a high-value target for AI tooling — catching manufacturing issues before parts are ordered saves time and cost that compounds across iterative robot development cycles.</li>
+              <li>Positioned as a productivity layer on top of existing CAD workflows rather than a replacement, which is the right integration strategy for tools targeting professional hardware engineers.</li>
             </ul>
-            <a href="https://www.therobotreport.com" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1scssod/mecheai_tools_for_hardware_engineers/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Rotation converter with proper frame visualization</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A ROS 2 compatible tool that converts between rotation representations (quaternions, Euler angles, rotation matrices, axis-angle) with live 3D frame visualization to confirm correctness.</li>
+              <li>Frame orientation bugs are a perennial source of hard-to-debug errors in robotics — having a visual confirmation tool that works with ROS 2 natively fills a real gap in the everyday developer workflow.</li>
+              <li>Particularly useful for new robotics engineers who struggle to build intuition for 3D rotation math; the visualization component makes abstract transforms concrete and verifiable.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1scbpdp/rotation_converter_with_proper_frame_visualization/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -95,51 +143,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Under the Skin of America&#x27;s Humanoid Robots: Chinese Technology</h3>
-              <span class="digest-source">WSJ via Hacker News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>WSJ investigation reveals that leading US humanoid robots rely heavily on Chinese-manufactured components — actuators, sensors, and structural parts — raising supply chain and geopolitical risk questions.</li>
-              <li>The dependency is largely invisible to end customers and investors, but becomes a liability if export controls or tariff escalation tightens access to key parts.</li>
-              <li>Frames a tension that the industry will have to resolve: building fully domestic supply chains is expensive and slow, but the current model carries strategic exposure.</li>
-            </ul>
-            <a href="https://news.ycombinator.com" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>The Software-First Robotics Founder</h3>
-              <span class="digest-source">Hacker News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Essay argues the next wave of robotics companies will be founded by software engineers who treat hardware as a commodity layer rather than the core differentiation.</li>
-              <li>The thesis is that modern simulation, off-the-shelf actuators, and foundation models have lowered the hardware bar enough that software execution now determines winners.</li>
-              <li>Provocative framing — though hardware-first founders will push back hard, the argument tracks with how quickly software-centric teams have shipped competitive demos.</li>
-            </ul>
-            <a href="https://news.ycombinator.com" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>I Analyzed Every Public LeRobot Dataset on HuggingFace. Almost Half Would Fail Training.</h3>
+              <h3>Exploring Humanoid Design Inspired by Muji</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Community researcher audited the entire public LeRobot dataset catalog on HuggingFace and found roughly half have quality issues — missing frames, inconsistent labels, or corrupt episodes — that would cause training failures.</li>
-              <li>Critical finding for anyone using open robotics datasets: don&#x27;t assume published data is clean; validation pipelines are essential before any training run.</li>
-              <li>Surfaces a broader problem in the open robotics data ecosystem: collection tooling has outpaced dataset quality standards and documentation norms.</li>
+              <li>A community designer applies Muji&#x27;s minimal, neutral aesthetic to humanoid robot form — the result is a robot that reads as unobtrusive and domestic rather than industrial or uncanny.</li>
+              <li>Design language matters enormously for human-robot acceptance in home and office environments; a robot that blends into everyday spaces will encounter less resistance than one that signals &#x27;machine.&#x27;</li>
+              <li>The project is a useful reminder that the industrial design layer of humanoid robots is as strategically important as the software stack for consumer and enterprise deployment.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Simulation Is a Beautiful Pain in RL</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Community thread surfaces the recurring frustrations of RL-in-sim: contact instability, reward hacking, and environments that are consistent enough to train on but wrong enough to break real-world transfer.</li>
-              <li>Honest practitioner accounts make this a useful gut-check against overly optimistic sim-to-real narratives — the pain points are real and widely shared.</li>
-              <li>Several commenters converge on the same partial solution: tighter sim validation loops and domain randomization tuned to specific hardware rather than generic noise.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1scm3ye/exploring_humanoid_design_inspired_by_muji/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
