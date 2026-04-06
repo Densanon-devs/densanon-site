@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - April 05, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - April 06, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 05, 2026</div>
+        <div class="digest-date-badge">April 06, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest spans artificial muscle breakthroughs that let robots lift 100x their weight, Boston Dynamics research on how humans perceive robots, open-source drone simulation tooling for VLA research, and a new suite of hardware engineering tools — plus a look at robots entering sensitive environments.</p>
+        <p class="digest-intro">Today&#x27;s robotics digest is headlined by a wave of real-world deployments — from a $1499 consumer laundry-folding robot to a guide dog bot serving visually impaired visitors in Singapore — alongside strong research on safer robot policies and the next generation of multi-vendor fleet management.</p>
       </div>
     </section>
 
@@ -29,27 +29,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>US researchers create pneumatic artificial muscles that let robots carry 100x their own weight</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>F2F-AP: Flow-to-Future Asynchronous Policy for Real-time Dynamic Manipulation</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Air-powered artificial muscles achieve a payload-to-weight ratio of 100:1, a figure that would dramatically change the calculus for load-bearing robot designs in logistics and construction.</li>
-              <li>Pneumatic actuation offers inherent compliance and shock absorption compared to rigid electric motors, making these muscles well-suited for environments where robots physically interact with people or fragile goods.</li>
-              <li>The key challenge ahead is energy density — pneumatic systems require compressors or pressurized tanks, so integration into untethered mobile robots will need further engineering work.</li>
+              <li>Asynchronous inference pipelines introduce latency that causes robots to act on stale observations — F2F-AP predicts future states to compensate, keeping manipulation smooth under real-time constraints.</li>
+              <li>The approach decouples perception and action timing without sacrificing trajectory coherence, a practical advance for deploying learned manipulation policies on hardware with limited compute.</li>
+              <li>Addresses one of the most persistent gaps between sim-trained policies and physical robots: the assumption of zero-latency perception rarely holds on real hardware.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1sci5uh/us_researchers_create_pneumatic_artificial/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.02408" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Truckloads of food are being wasted because computers won&#x27;t approve them</h3>
-              <span class="digest-source">ScienceDaily Robotics</span>
+              <h3>Backup-Based Safety Filters: A Comparative Review of Backup CBF, Model Predictive Shielding, and gatekeeper</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Digital approval systems in food supply chains are failing at scale — outdated databases and connectivity gaps are causing automated rejections of perfectly safe loads, resulting in significant food waste.</li>
-              <li>The finding highlights a real cost of brittle automation: systems with no graceful degradation can cause worse outcomes than no automation at all when they fail.</li>
-              <li>A cautionary case study for robotics and automation designers — reliability and fallback behavior in mission-critical pipelines are as important as peak performance.</li>
+              <li>Puts Backup CBF, Model Predictive Shielding, and gatekeeper into a common framework for the first time — enabling apples-to-apples comparison of safety filter trade-offs for a given robot and task.</li>
+              <li>Clarifies when each filter is the right tool: gatekeeper suits discrete fallback scenarios, MPS handles longer horizons, Backup CBF offers tighter continuous-time guarantees.</li>
+              <li>A timely reference as safety filters move from academic proposals to required components in real robot deployments in unstructured environments.</li>
             </ul>
-            <a href="https://www.sciencedaily.com/releases/2026/04/260403224505.htm" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.02401" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Tune to Learn: How Controller Gains Shape Robot Policy Learning</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Gain selection is almost always treated as an engineering afterthought, but this work shows it meaningfully affects what manipulation policies can be learned — not just execution quality.</li>
+              <li>High-stiffness gains that work well for classical control can actively harm policy learning by masking the compliance dynamics the policy needs to generalize across contact scenarios.</li>
+              <li>Practical implication: teams training manipulation policies should co-design controller gains with the learning setup, not tune them independently beforehand.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.02523" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -59,39 +71,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Studying Human Attitudes Towards Robots Through Experience</h3>
-              <span class="digest-source">IEEE Spectrum Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Boston Dynamics research explores how direct interaction with Spot shifts human attitudes — people who have hands-on experience with robots report meaningfully different comfort and trust levels than those who have only seen them in media.</li>
-              <li>Understanding perception is as important as improving performance for widespread adoption: public attitudes are a deployment bottleneck that no amount of hardware optimization can solve alone.</li>
-              <li>The study points toward experience-based outreach — demos, public deployments, and accessible platforms — as a practical lever for normalizing robot presence in everyday environments.</li>
-            </ul>
-            <a href="https://spectrum.ieee.org/boston-dynamics-spot-interaction" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>NORD Drivesystems launches industrial gear units for the mining industry</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The MAXXDRIVE series features a one-piece UNICASE housing that eliminates the seams and joints where traditional multi-piece housings fail under extreme vibration and contamination in mining environments.</li>
-              <li>Purpose-built industrial drivetrain hardware for harsh environments remains an active product category — general-purpose actuators still can&#x27;t match the reliability of application-specific designs for demanding field conditions.</li>
-              <li>Mining automation is an underreported but high-ROI sector for industrial robotics, where labor costs are high, conditions are dangerous, and uptime requirements are extreme.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/nord-drivesystems-launches-industrial-gear-units-for-the-mining-industry/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Robots are starting to enter one of the most sensitive environments we have</h3>
+              <h3>Singapore Gardens by the Bay to offer robot guide dog to help disabled people</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Robots are beginning deployment in high-stakes sensitive environments — likely healthcare, childcare, or secure facilities — where the tolerance for errors or intrusive behavior is extremely low.</li>
-              <li>Entry into sensitive environments marks a meaningful maturity milestone: it signals that reliability, safety certification, and social acceptability have reached a deployable threshold.</li>
-              <li>These early deployments will set precedents for regulation and public expectations, making how they&#x27;re handled now disproportionately influential on the broader trajectory of robot integration.</li>
+              <li>RoamAssist&#x27;s robotic guide dog will be available free-to-rent for visually impaired visitors at Singapore&#x27;s Flower Dome — one of the first live accessibility-focused robot deployments in a public venue.</li>
+              <li>The guided navigation use case sidesteps the uncanny valley entirely: users need reliable wayfinding, not social interaction, making it a well-matched early deployment environment.</li>
+              <li>Signals a maturing of assistive robotics from lab demos to scheduled public service — the free rental model also removes price as a barrier to real-world validation.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1scemxg/robots_are_starting_to_enter_one_of_the_most/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1se0dfq/singapore_gardens_by_the_bay_to_offer_robot_guide/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>News this Week | 10,000 Agibot robot unit milestone and outlook</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Agibot reaching 10,000 deployed units marks a meaningful production scale milestone for a Chinese humanoid robotics firm — moving the conversation from prototypes to fleet management.</li>
+              <li>At this volume, the data flywheel effects become significant: 10K robots in the field generating real-world training data represents a compounding advantage over competitors at lower deployment scale.</li>
+              <li>Context for Western observers: the pace of Chinese humanoid deployment continues to outstrip announcement-to-ship timelines seen from US competitors, a trend worth watching.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1sdzbha/news_this_week_10000_agibot_robot_unit_milestone/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -101,39 +101,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GS-DroneGym: open-source photorealistic drone simulator + benchmark tooling for VLA research</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>Next Generation Open-RMF Roadmap</h3>
+              <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GS-DroneGym uses Gaussian Splatting to generate photorealistic simulation environments for drone training, closing the visual realism gap that causes sim-to-real failures in vision-dependent flight policies.</li>
-              <li>Comes packaged with standardized benchmark tooling for Vision-Language-Action (VLA) research — meaning teams can publish comparable results without building their own evaluation infrastructure.</li>
-              <li>Open-source release lowers the barrier for VLA drone research considerably; photorealistic sims with benchmarks have historically been either proprietary or fragmented.</li>
+              <li>Open-RMF has been coordinating multi-vendor mobile robot fleets since 2018 — the next-gen roadmap addresses the hardest remaining problems: dynamic replanning, richer building infrastructure integration, and broader vendor interoperability.</li>
+              <li>Multi-vendor fleet management is the unsexy but critical layer that makes large-scale robot deployments in airports, hospitals, and warehouses actually work without deadlocks or vendor lock-in.</li>
+              <li>The open-source approach here is strategically important: a neutral coordination layer owned by no single vendor is the only realistic path to broad adoption across competing robot manufacturers.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1sckilh/gsdronegym_opensource_photorealistic_drone/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/next-generation-open-rmf-roadmap/53820" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>MechE.ai — tools for hardware engineers!</h3>
+              <h3>Polka: A unified efficient node for your pointcloud pre-processing</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>MechE.ai bundles a 3D print advisor, tolerance analysis, and Design for Manufacturing (DFM) analysis into a single AI-assisted suite aimed at hardware engineers and robotics builders.</li>
-              <li>DFM analysis in particular is a high-value target for AI tooling — catching manufacturing issues before parts are ordered saves time and cost that compounds across iterative robot development cycles.</li>
-              <li>Positioned as a productivity layer on top of existing CAD workflows rather than a replacement, which is the right integration strategy for tools targeting professional hardware engineers.</li>
+              <li>Polka consolidates common pointcloud preprocessing steps — filtering, downsampling, transformation — into a single ROS node, eliminating the fragmented chain of single-purpose nodes most pipelines rely on.</li>
+              <li>Unified preprocessing reduces latency and configuration surface area, two common pain points in perception pipelines where processing delays compound into navigation and manipulation errors.</li>
+              <li>Drop-in improvement for any ROS-based robot relying on lidar or depth camera data — the kind of practical infrastructure contribution the community consistently benefits from.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1scssod/mecheai_tools_for_hardware_engineers/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Rotation converter with proper frame visualization</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A ROS 2 compatible tool that converts between rotation representations (quaternions, Euler angles, rotation matrices, axis-angle) with live 3D frame visualization to confirm correctness.</li>
-              <li>Frame orientation bugs are a perennial source of hard-to-debug errors in robotics — having a visual confirmation tool that works with ROS 2 natively fills a real gap in the everyday developer workflow.</li>
-              <li>Particularly useful for new robotics engineers who struggle to build intuition for 3D rotation math; the visualization component makes abstract transforms concrete and verifiable.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1scbpdp/rotation_converter_with_proper_frame_visualization/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1sdo3ek/polka_a_unified_efficient_node_for_your/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -143,15 +131,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Exploring Humanoid Design Inspired by Muji</h3>
+              <h3>Autonomous laundry folding robot (ALF-1) advertised at $1499</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A community designer applies Muji&#x27;s minimal, neutral aesthetic to humanoid robot form — the result is a robot that reads as unobtrusive and domestic rather than industrial or uncanny.</li>
-              <li>Design language matters enormously for human-robot acceptance in home and office environments; a robot that blends into everyday spaces will encounter less resistance than one that signals &#x27;machine.&#x27;</li>
-              <li>The project is a useful reminder that the industrial design layer of humanoid robots is as strategically important as the software stack for consumer and enterprise deployment.</li>
+              <li>ALF-1 is targeting $1499 for a consumer laundry-folding robot — if real, that&#x27;s a price point that puts domestic manipulation hardware within reach of early adopters rather than just enterprise buyers.</li>
+              <li>Laundry folding remains one of the canonical hard problems in robot manipulation due to deformable object handling, making any credible consumer product here a technical milestone worth scrutinizing.</li>
+              <li>Community skepticism is warranted but the discussion surfaces the right benchmarks: cycle time, fabric type coverage, and failure recovery are the metrics that will determine whether this is vaporware or viable.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1scm3ye/exploring_humanoid_design_inspired_by_muji/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1sdp8uj/autonomous_laundry_folding_robot_alf1_advertised/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Robot dog takes on security duties in Atlanta</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Atlanta becomes another US city where quadruped robot dogs are handling real security patrol duties — autonomous patrol routes, anomaly detection, and remote operator escalation are the working model.</li>
+              <li>Security is emerging as one of the first commercially sustainable use cases for mobile robots: the ROI math works when robot patrols supplement rather than replace human guards in large facilities.</li>
+              <li>Public reaction to security robots remains a leading indicator for broader urban robot deployment acceptance — Atlanta&#x27;s rollout will generate useful data on community response.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1sd8dlv/robot_dog_takes_on_security_duties_in_atlanta/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Working on something — LLM writes JavaScript to control robot motion</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proof of concept where an LLM generates JavaScript motion sequences on the fly and executes them directly on hardware — skipping the traditional teleoperation or pre-programmed trajectory model entirely.</li>
+              <li>Natural language to executable motion is the holy grail of accessible robotics programming; this rough demo shows the concept is achievable even if latency and reliability need significant work.</li>
+              <li>The JavaScript-as-motion-DSL approach is an interesting choice: it gives the LLM a familiar structured output format and provides a runtime sandbox for execution, a pattern worth watching as it matures.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1se01qr/working_on_something/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

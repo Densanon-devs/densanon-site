@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - April 05, 2026 | Densanon</title>
+  <title>Computation Morning Digest - April 06, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 05, 2026</div>
+        <div class="digest-date-badge">April 06, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Intel&#x27;s Nova Lake gets a core count bump to 44, Nvidia bets on photonics for 1000+ GPU racks, and RPCS3 cracks the Cell Broadband Engine — while a hobbyist squeezes 250% more integer throughput from a 1978 CPU and Linux 7.1 unlocks Zen 6 AVX-512 for guests.</p>
+        <p class="digest-intro">Today&#x27;s digest spans storage physics, living neural compute, and open-source AI hardware — while geopolitics intrudes on data center planning and a 37-year-old CPU finally gets its Linux retirement notice.</p>
       </div>
     </section>
 
@@ -29,87 +29,93 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel&#x27;s upcoming 42-core Nova Lake SKU allegedly upgraded to 44 cores</h3>
+              <h3>WD Innovation Day 2026: roadmap to 60TB ePMR and 100TB HAMR by 2029</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The top Nova Lake-S SKU has reportedly grown from 42 to 44 cores via a dual-tile config pairing an 8P+12E tile arrangement, giving Intel a stronger high-core-count answer to AMD&#x27;s Zen 5 desktop lineup.</li>
-              <li>The freed-up 6P+12E tile configurations are expected to trickle down as locked BLLC (below-the-line) variants, extending Nova Lake coverage into the mid-range.</li>
-              <li>A 44-core desktop SKU would be Intel&#x27;s highest core count on a consumer platform, raising the ceiling for prosumer and workstation workloads without requiring a HEDT platform.</li>
+              <li>WD&#x27;s post-Sandisk-split roadmap commits to 60TB via ePMR in the near term, then an unavoidable physics-driven jump to HAMR to hit 100TB by 2029.</li>
+              <li>HAMR (Heat-Assisted Magnetic Recording) has been in development for over a decade; WD&#x27;s timeline puts it squarely in the mainstream HDD window for AI dataset and archival storage.</li>
+              <li>The 60–100TB density arc will reshape the economics of cold-tier and hyperscale storage, compressing per-terabyte cost significantly over current top-of-line 32–36TB drives.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/intels-upcoming-42-core-nova-lake-sku-allegedly-upgraded-to-44-cores-new-config-frees-up-6p-12e-tiles-that-could-trickle-down-as-locked-bllc-variants" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/hdds/wd-innovation-day-2026-press-q-and-a-transcript-roadmap-plans-to-reach-60tb-with-epmr-and-100tb-via-hamr-by-2029-at-some-point-the-laws-of-physics-will-require-us-to-transition-to-hamr" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Nvidia Pascal GPUs debuted 10 years ago today</h3>
+              <h3>AMD Ryzen 9 9950X3D2 listed around $1,000 at several retailers</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Pascal launched on April 5, 2016 with the Tesla P100, introducing TSMC 16nm FinFET to Nvidia&#x27;s datacenter and consumer GPU lines — the first major node shrink since Maxwell on 28nm.</li>
-              <li>The GTX 1080 Ti became one of the most long-lived enthusiast GPUs in history, remaining competitive well into the Turing generation and serving as the benchmark baseline for years.</li>
-              <li>Pascal&#x27;s HBM2 debut on the P100 and NVLink interconnect were the architectural seeds of the datacenter GPU strategy that Nvidia now dominates with Hopper and Blackwell.</li>
+              <li>Early retail listings put the dual-cache 9950X3D2 near $1,000 USD — roughly double the standard 9950X3D, reflecting the premium for a second stacked V-Cache die.</li>
+              <li>Dual-stack 3D V-Cache doubles the available L3 bandwidth and capacity, a significant uplift for latency-sensitive workloads like game AI, simulation, and in-memory databases.</li>
+              <li>At $1,000 the 9950X3D2 targets prosumers and workstation builders who need maximum cache without jumping to a HEDT platform; it will face immediate scrutiny against Intel Nova Lake timelines.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/gpus/nvidia-pascal-gpus-debuted-10-years-ago-today-best-known-for-the-gtx-1060-and-gtx-1080-ti-architecture-kicked-off-with-the-tesla-p100" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/amds-upcoming-ryzen-9-9950x3d2-listed-around-usd1-000-at-several-retailers-across-canada-and-the-uk-new-flagship-dual-cache-cpu-might-demand-a-hefty-premium" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>PlayStation 3 emulator makes Cell CPU &#x27;breakthrough&#x27;</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>RPCS3 developers have achieved a significant Cell Broadband Engine emulation breakthrough that improves performance across all PS3 titles, not just specific games.</li>
-              <li>The Cell BE&#x27;s heterogeneous SPU architecture — eight independent Synergistic Processing Units managed by a Power PC core — has made it one of the most technically challenging CPUs ever emulated.</li>
-              <li>The improvement has broad implications for PS3 preservation: previously unplayable or severely degraded titles move closer to playable, and it demonstrates how much untapped headroom remained in the emulator&#x27;s SPU dispatch path.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/video-games/playstation/rpcs3-ps3-emulator-gets-cell-cpu-breakthrough-that-improves-performance-in-all-games" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Hobbyist builds a homebrew Intel 8086 ISA accelerator card</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A maker engineered a custom ISA accelerator card that slots into 8086-class systems and offloads integer multiplication to dedicated hardware, delivering a 250% throughput improvement on an operation that was notoriously slow on the original 8086.</li>
-              <li>The 8086&#x27;s multiply instruction took 70–160 clock cycles depending on operand size; dedicated co-processor logic on modern FPGAs or ASICs can collapse this to a handful of cycles, and this project bridges that gap for real vintage hardware.</li>
-              <li>The project is fully documented and represents a growing trend of FPGA-backed ISA expansion cards that extend classic PC hardware beyond its original design constraints.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/hobbyist-builds-a-homebrew-intel-8086-isa-accelerator-card-makers-project-improves-integer-multiplication-on-these-retro-systems-by-250-percent" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux 7.1 To Expose AMD Zen 6&#x27;s AVX-512 BMM For Guest VMs</h3>
+              <h3>Linux 7.1 Expected To Begin Removing i486 CPU Support</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Linux 7.1 will expose AMD Zen 6&#x27;s AVX-512 BMM (Bit Manipulation Matrix) extension to KVM guests, making a new class of bit-manipulation acceleration available to virtualized workloads.</li>
-              <li>AVX-512 BMM accelerates sparse matrix and bitfield operations that appear in compression, cryptography, and certain ML inference pipelines — guest VMs running these workloads on Zen 6 hosts will benefit without requiring passthrough.</li>
-              <li>The patch continues Linux&#x27;s practice of rapidly surfacing new x86 ISA extensions to hypervisor guests, keeping virtualized environments close to bare-metal capability parity on new silicon.</li>
+              <li>A patch queued for the Linux 7.1 merge window starts the formal removal of Intel 486 support — Linus Torvalds confirmed there is &#x27;zero real reason&#x27; to continue maintaining it.</li>
+              <li>The i486 launched in 1989 and lacks key instructions modern Linux relies on, meaning the support layer adds complexity with no practical beneficiaries running upstream kernels.</li>
+              <li>Removing legacy ISA targets allows the kernel to simplify low-level boot paths and memory management code that currently carries i486-specific workarounds.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.1-KVM-AVX-512-BMM" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.1-Phasing-Out-i486" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Mesa 26.1 Makes It Easier To &#x27;Fake&#x27; A GPU Reset Using LLVMpipe</h3>
+              <h3>Tiny Corp Begins Accepting Pre-Orders For Their $10M Exabox</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Mesa 26.1 adds a mechanism to simulate GPU reset events using LLVMpipe, allowing compositor and display server developers to test GPU recovery paths without triggering real hardware resets.</li>
-              <li>GPU reset handling is notoriously difficult to test because real resets are rare, hardware-dependent, and destructive — a software-controllable fake reset lowers the barrier to robust recovery code.</li>
-              <li>The addition benefits Wayland compositor developers in particular, where GPU reset handling has been an underspecified and undertested code path across multiple compositors.</li>
+              <li>Tiny Corp&#x27;s Exabox is an AMD GPU-based, open-source-stack training cluster priced at $10M — aimed at organizations wanting a sovereign alternative to CUDA-locked Nvidia hardware.</li>
+              <li>The system runs on Tinygrad, an MIT-licensed neural network framework, with Tiny Corp&#x27;s own open AMD GPU driver replacing the proprietary ROCm stack.</li>
+              <li>At $10M it competes with cloud-equivalent GPU cluster leases while offering physical control of the hardware and full stack auditability — a key pitch for defense and regulated industries.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Mesa-26.1-Fake-GPU-Reset" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Tiny-Corp-Exabox-Pre-Order" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>hid-omg-detect: Linux Driver In Development To Detect Malicious HID Devices</h3>
+              <h3>Linux 7.0-rc7 Released With Improved Docs For AI Agents, WiFi Driver Performance Fix</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A new Linux kernel driver, hid-omg-detect, is being developed to identify O.MG Cable-style malicious HID devices that masquerade as keyboards or mice to inject arbitrary input.</li>
-              <li>HID-based attack vectors are particularly dangerous because USB HID is inherently trusted by the OS — this driver adds a detection layer that can flag anomalous device behavior indicative of an implant.</li>
-              <li>Targeting O.MG and similar red-team hardware at the kernel level is a meaningful shift toward supply chain and physical access security being handled in-kernel rather than relying solely on endpoint agents.</li>
+              <li>The seventh release candidate for Linux 7.0 lands with new documentation specifically targeting AI coding agents — a notable acknowledgment of agentic tools as first-class kernel contributors.</li>
+              <li>A WiFi driver performance regression fix is included, keeping the RC on track for a stable Linux 7.0 release next week barring new blockers.</li>
+              <li>Adding AI-agent-specific docs reflects that LLM-assisted kernel patch authorship is now common enough to warrant guidance in the official kernel contribution workflow.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/hid-omg-detect-Malicious-HID" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.0-rc7-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Researchers train living rat neurons to perform real-time AI computations</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Japanese researchers used a real-time ML feedback loop to train cultured rat cortical neurons to autonomously generate complex temporal signal patterns on demand.</li>
+              <li>The work demonstrates that biological neural tissue can be trained — not just observed — making it a concrete step toward wet-hardware hybrid computing and brain-machine interfaces.</li>
+              <li>Biological neurons offer power efficiency orders of magnitude beyond silicon; closing the training loop on living tissue is the key barrier this research begins to address.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/researchers-train-living-rat-neurons-to-perform-real-time-ml-computations" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Google Proposes JSIR As A High-Level IR For JavaScript</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Google is proposing JSIR — a high-level intermediate representation for JavaScript — already used internally for code analysis, bytecode-to-JS transpilation, and deobfuscation at production scale.</li>
+              <li>Unlike low-level IRs such as LLVM bitcode, JSIR preserves JavaScript semantics, making it far better suited for security auditing, reverse engineering, and static analysis of JS bundles.</li>
+              <li>A standardized JS IR would benefit the broader tooling ecosystem: bundlers, linters, sanitizers, and AI code analysis tools could all share a common structured representation rather than operating on raw ASTs.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Google-LLVM-JavaScript-IR-JSIR" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -119,27 +125,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How Nvidia learned to embrace the light in its quest for scale</h3>
-              <span class="digest-source">The Register</span>
+              <h3>Iran threatens &#x27;complete and utter annihilation&#x27; of OpenAI&#x27;s $30B Stargate AI data center in Abu Dhabi</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Nvidia is investing heavily in photonic interconnects to solve the bandwidth and power bottlenecks that copper NVLink hits at rack scale — optical links enable scale-up topologies across 1000+ GPU clusters without the signal integrity limits of copper.</li>
-              <li>The shift from copper to silicon photonics for GPU-to-GPU communication represents a fundamental change in how AI supercomputer racks are architected, with Nvidia positioning its internal photonics efforts as a competitive moat.</li>
-              <li>Optical scale-up also reduces cooling complexity at the interconnect layer, a non-trivial benefit as power density in AI training clusters continues to push past 100kW per rack.</li>
+              <li>Iran&#x27;s IRGC publicly named the 1GW Stargate data center in Abu Dhabi as a target, releasing satellite imagery — an explicit escalation of geopolitical risk around AI infrastructure in the Gulf.</li>
+              <li>A 1GW AI facility represents unprecedented concentration of critical compute in a single physical location, making physical security and geographic risk a board-level concern for hyperscalers.</li>
+              <li>The threat underscores emerging tension between AI infrastructure buildout in politically exposed regions and the resilience requirements of mission-critical AI systems.</li>
             </ul>
-            <a href="https://go.theregister.com/feed/www.theregister.com/2026/04/05/nvidia_optical_scale_up/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/iran-threatens-complete-and-utter-annihilation-of-openais-usd30b-stargate-ai-data-center-in-abu-dhabi-regime-posts-video-with-satellite-imagery-of-chatgpt-makers-premier-1gw-data-center" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AI agents promise to &#x27;run the business,&#x27; but who is liable if things go wrong?</h3>
+              <h3>Anthropic sure has a mess on its hands thanks to that Claude Code source leak</h3>
               <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>As autonomous AI agents are deployed to execute contracts, manage inventory, and make financial decisions, liability frameworks have not kept pace — current tort and contract law struggles to assign responsibility when an agent causes harm.</li>
-              <li>The ambiguity falls across a three-way split between the model vendor, the deploying enterprise, and the end user, with no clear legal precedent establishing which party bears ultimate accountability for agentic errors.</li>
-              <li>Regulators in the EU and US are beginning to address agent liability explicitly, but legal clarity is likely years away — enterprises deploying autonomous agents today are operating in a largely uncharted liability landscape.</li>
+              <li>Anthropic accidentally released Claude Code&#x27;s source code ahead of schedule, creating IP exposure and investor optics problems just as IPO preparations are underway.</li>
+              <li>The leak reveals internal implementation details of Anthropic&#x27;s flagship developer product — a significant competitive intelligence windfall for rivals and security researchers alike.</li>
+              <li>The incident raises questions about Anthropic&#x27;s internal release and access controls, arriving at the worst possible moment for a company trying to project enterprise-grade reliability.</li>
             </ul>
-            <a href="https://go.theregister.com/feed/www.theregister.com/2026/04/05/ai_agents_liability/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://go.theregister.com/feed/www.theregister.com/2026/04/06/anthropic_code_leak_kettle_podcast/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>UK confirms drone-killing DragonFire laser weapon for Royal Navy destroyers by 2027</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>DragonFire is confirmed for Royal Navy Type 45 destroyers by 2027 — five years ahead of the original schedule — capable of downing 400mph drones at approximately $13 per shot versus thousands for a missile.</li>
+              <li>The cost-per-shot economics fundamentally change drone defense calculus: saturation drone attacks that exhaust conventional missile magazines become economically non-viable against a directed-energy system.</li>
+              <li>The accelerated UK deployment puts directed-energy weapons into active fleet service ahead of most NATO peers, marking a genuine inflection point for shipborne air defense technology.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/uk-confirms-dragonfire-laser-weapon-for-royal-navy-destroyers-by-2027" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

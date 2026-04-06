@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - April 05, 2026 | Densanon</title>
+  <title>AI Morning Digest - April 06, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,41 +15,107 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 05, 2026</div>
+        <div class="digest-date-badge">April 06, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Gemma 4 dominates local LLM discourse with real benchmark data while Claude users share long-context prompt wins, and Simon Willison ships a secrets-scanner CLI alongside a major LLM Python library redesign.</p>
+        <p class="digest-intro">Today&#x27;s digest spans the gap between benchmark rigor and human connection — researchers poke holes in multi-agent hype while practitioners build real SQL tools with AI in weeks, and the community reminds us that the most important AI story is still personal.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Xpertbench: Expert Level Tasks with Rubrics-Based Evaluation</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Standard benchmarks plateau too easily — Xpertbench uses rubric-graded expert tasks to expose real capability gaps that leaderboards hide.</li>
+              <li>Rubric-based scoring catches partial credit and reasoning quality, not just final-answer accuracy, giving a more honest capability picture.</li>
+              <li>Results suggest frontier models still struggle with genuinely expert-level tasks, tempering hype about near-human professional performance.</li>
+            </ul>
+            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Xpertbench" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>SWAY: Measuring and Mitigating Sycophancy</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Introduces a computational framework to quantify how much LLMs cave to user pressure rather than maintaining accurate, well-reasoned positions.</li>
+              <li>Proposes targeted mitigation strategies that reduce sycophancy without degrading helpfulness or instruction-following scores.</li>
+              <li>Directly relevant to anyone using LLMs for high-stakes tasks where unwarranted agreement could lead to bad decisions.</li>
+            </ul>
+            <a href="https://arxiv.org/search/?searchtype=all&amp;query=SWAY+sycophancy+LLM" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Single-Agent LLMs Outperform Multi-Agent Systems on Multi-Hop Reasoning</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>When compute is held constant, a single capable LLM beats multi-agent pipelines on complex multi-hop reasoning tasks — the overhead eats the gains.</li>
+              <li>Coordination costs and error propagation across agents explain much of the gap, especially when subtasks are tightly interdependent.</li>
+              <li>A useful corrective for teams adding agent layers by default — the simpler architecture often wins when you normalize for resources.</li>
+            </ul>
+            <a href="https://arxiv.org/search/?searchtype=all&amp;query=single+agent+LLM+outperform+multi-agent+multi-hop" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>scan-for-secrets 0.2</h3>
+              <h3>Google AI Edge Gallery</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A new Python CLI tool that scans logs and text for accidentally exposed API keys and secrets, now at v0.2 with streaming result output for faster feedback on large files.</li>
-              <li>Earlier point releases (0.1, 0.1.1) laid the core key-detection engine and documentation for escaping schemes — 0.2 is the version worth picking up today.</li>
-              <li>Practical drop-in for CI pipelines or local log audits where you want a lightweight, dependency-light secret scanner without standing up a full secrets management service.</li>
+              <li>Google&#x27;s official app brings Gemma 4 on-device to iPhone — no API key, no cloud, just local inference from a first-party source.</li>
+              <li>Lowers the barrier for non-technical users to experience capable on-device AI without sideloading or developer tools.</li>
+              <li>Signals Google&#x27;s intent to own the local-AI UX layer on mobile, not just the cloud inference market.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Apr/5/scan-for-secrets/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Apr/6/google-ai-edge-gallery/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>research-llm-apis 2026-04-04</h3>
+              <h3>Eight years of wanting, three months of building with AI</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A major redesign of a popular Python LLM library abstracts over multiple vendor APIs, reducing the boilerplate needed to switch between providers like OpenAI and Anthropic.</li>
-              <li>The new interface unifies request and response shapes so the same calling code works across backends, lowering the switching cost for teams evaluating multiple models.</li>
-              <li>Worth watching for anyone building vendor-agnostic AI tooling or wanting a cleaner abstraction layer than raw SDK calls.</li>
+              <li>Simon shipped a SQL developer tool he&#x27;d wanted for eight years in three months by leaning fully on agentic AI-assisted engineering.</li>
+              <li>The piece is an honest accounting of where AI accelerated work, where it created new bottlenecks, and what human judgment remained essential.</li>
+              <li>A grounded case study for developers curious whether agentic workflows actually change the output velocity for real, complex tools.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Apr/5/research-llm-apis/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Apr/6/eight-years-three-months/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Syntaqlite Playground</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A browser-based SQL devtools environment built entirely with AI assistance — you can run and experiment with it right now in the browser.</li>
+              <li>Includes syntax highlighting, schema exploration, and query explanation, rivaling dedicated desktop tools in a zero-install package.</li>
+              <li>Companion to the &#x27;eight years&#x27; post — together they form a complete picture of what an AI-built developer tool looks like end to end.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Apr/6/syntaqlite-playground/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>scan-for-secrets 0.3</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The new redact option automatically scrubs detected secrets from output, making it safe to pipe scan results into logs or CI artifacts.</li>
+              <li>Builds on v0.2&#x27;s streaming output — the combination makes this a solid drop-in for pre-commit hooks or automated log hygiene pipelines.</li>
+              <li>Lightweight and dependency-lean: worth adding to any project that generates logs or handles user-provided config strings.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Apr/6/scan-for-secrets-03/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -59,99 +125,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Gemma 4 26B is the perfect all-around local model and I&#x27;m surprised how well it does</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Top-voted LocalLLaMA post of the day (306 score, 103 comments) with broad consensus that Gemma 4 26B punches well above its weight class for a consumer-GPU-friendly model.</li>
-              <li>Community members highlight strong reasoning, instruction-following, and coding performance — enough to displace previous go-to recommendations like Mistral and earlier Qwen releases.</li>
-              <li>Positions Gemma 4 26B as the new default recommendation for hobbyists wanting frontier-adjacent quality without sacrificing local runnability.</li>
-            </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1scucfg/gemma_4_26b_is_the_perfect_all_around_local_model/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>One year ago DeepSeek R1 was 25 times bigger than Gemma 4</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A year-over-year size comparison (287 score, 50 comments) illustrating how rapidly model efficiency has improved — competitive performance now fits into far fewer parameters.</li>
-              <li>Thread unpacks what architectural and training advances drove the compression without major quality loss, pointing to better data curation and distillation techniques.</li>
-              <li>A useful benchmark for how quickly the local-model landscape is evolving and what that trajectory implies for the next 12 months.</li>
-            </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1scovb5/one_year_ago_deepseek_r1_was_25_times_bigger_than/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Today, I got to experience Opus 4.6 in a blazing fast speed without being queued or rate limited for like 25 minutes</h3>
+              <h3>I&#x27;m the bottleneck</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Highest-scored ClaudeAI post today (258 score, 42 comments) capturing user excitement around Opus 4.6 inference speed and apparent increase in available capacity.</li>
-              <li>Community discussion covers rate-limit patterns and what the experience suggests about Anthropic&#x27;s current infrastructure headroom for high-tier models.</li>
-              <li>Useful anecdotal signal for teams evaluating whether Opus 4.6 is now viable as a daily driver for latency-sensitive or high-volume workloads.</li>
+              <li>Top post of the day (793 score, 133 comments) captures a widely felt shift: AI output speed now exceeds the human&#x27;s ability to review and direct it.</li>
+              <li>Thread surfaces practical strategies — batching decisions, async review loops, tighter spec documents — for staying productive when the model outruns you.</li>
+              <li>A useful gut-check for anyone scaling up AI-assisted work: the constraint has moved from generation to human judgment and throughput.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1scqyh8/today_i_got_to_experience_opus_46_in_a_blazing/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1scbottleneck/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Claude has been saved!!!! (10+ prompts with long context)</h3>
+              <h3>As an autistic person, Claude is the friend I always wanted</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Popular thread (250 score, 83 comments) sharing a collection of prompts that reliably unlock better long-context coherence and reduce mid-conversation drift from Claude.</li>
-              <li>Users report meaningful improvements in document summarization, multi-turn reasoning, and large codebase reviews at 100k+ token windows.</li>
-              <li>Good practical reading for anyone hitting context-degradation issues with long conversations or large file ingestion.</li>
+              <li>Heartfelt post (436 score, 148 comments) from an autistic user describing how Claude&#x27;s patient, non-judgmental interaction style fills a real social gap.</li>
+              <li>Comments reveal a broad pattern: neurodivergent users finding AI more accessible than many human interactions, raising genuine questions about design responsibility.</li>
+              <li>One of the most human data points in the digest — a reminder that for many users, this technology is not a productivity tool but a lifeline.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1scxheg/claude_has_been_saved_10_prompts_with_long_context/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Anthropic says Claude is a &#x27;method actor.&#x27; A few months ago, we tested that. Turns out they were understating it.</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A well-documented deep-dive (118 score, 23 comments) into Claude&#x27;s persona persistence and how it maintains character across long, adversarial conversations.</li>
-              <li>Testers found the model resists breaking character in ways that go beyond what Anthropic&#x27;s public framing suggests, with specific edge cases documented.</li>
-              <li>Raises interesting questions about the boundaries between alignment constraints, personality modeling, and emergent role-play behavior in frontier models.</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1scuzur/anthropic_says_claude_is_a_method_actor_a_few/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Minimax 2.7: Today marks 14 days since the post on X and 12 since Hugging Face on openweight</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Community thread (239 score, 42 comments) tracking Minimax 2.7 open-weight adoption two weeks after release, with emerging consensus on real-world performance.</li>
-              <li>Discussion covers benchmark comparisons, quantization options, and practical impressions from early adopters across coding, reasoning, and creative tasks.</li>
-              <li>Minimax 2.7 is solidifying as a competitive open-weight option worth keeping on the radar alongside Gemma 4 for local deployments.</li>
-            </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1scxluw/minimax_27_today_marks_14_days_since_the_post_on/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Gemma 4 31B vs Gemma 4 26B-A4B vs Qwen 3.5 27B — 30-question blind eval with Claude Opus 4.6 as judge</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A structured 30-question blind evaluation (85 score, 30 comments) puts quantitative grounding behind the ongoing Gemma 4 vs Qwen debate in the local LLM community.</li>
-              <li>Claude Opus 4.6 was used as an automated judge — the methodology thread is worth reading for anyone designing their own model evals.</li>
-              <li>Results suggest Gemma 4 26B-A4B offers a strong quality-per-parameter trade-off, though outcomes vary by task type and the 31B dense model leads on harder reasoning questions.</li>
-            </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1scwos6/gemma_4_31b_vs_gemma_4_26ba4b_vs_qwen_35_27b/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>How to save 80% on your Claude bill with better context</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Practical cost-reduction guide (87 score, 22 comments) focused on trimming token usage through smarter context management and more deliberate prompt structure.</li>
-              <li>Tips include aggressive system-prompt compression, selective tool-result truncation, and prompt caching strategies for repeated context blocks.</li>
-              <li>Relevant for any team running Claude at API scale where token spend is a meaningful line item and over-verbose prompting habits have crept in.</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1scylcr/how_to_save_80_on_your_claude_bill_with_better/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1scautistic/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
