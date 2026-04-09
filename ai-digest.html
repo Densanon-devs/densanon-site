@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - April 06, 2026 | Densanon</title>
+  <title>AI Morning Digest - April 09, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,137 +15,143 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 06, 2026</div>
+        <div class="digest-date-badge">April 09, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest spans the gap between benchmark rigor and human connection — researchers poke holes in multi-agent hype while practitioners build real SQL tools with AI in weeks, and the community reminds us that the most important AI story is still personal.</p>
+        <p class="digest-intro">Today&#x27;s digest spans two major model announcements — Meta&#x27;s Muse Spark and Z.ai&#x27;s massive open-weights GLM-5.1 — alongside a wave of research sharpening how LLMs reason, confess uncertainty, and apply to high-stakes domains like medicine.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Xpertbench: Expert Level Tasks with Rubrics-Based Evaluation</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Standard benchmarks plateau too easily — Xpertbench uses rubric-graded expert tasks to expose real capability gaps that leaderboards hide.</li>
-              <li>Rubric-based scoring catches partial credit and reasoning quality, not just final-answer accuracy, giving a more honest capability picture.</li>
-              <li>Results suggest frontier models still struggle with genuinely expert-level tasks, tempering hype about near-human professional performance.</li>
-            </ul>
-            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Xpertbench" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>SWAY: Measuring and Mitigating Sycophancy</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Introduces a computational framework to quantify how much LLMs cave to user pressure rather than maintaining accurate, well-reasoned positions.</li>
-              <li>Proposes targeted mitigation strategies that reduce sycophancy without degrading helpfulness or instruction-following scores.</li>
-              <li>Directly relevant to anyone using LLMs for high-stakes tasks where unwarranted agreement could lead to bad decisions.</li>
-            </ul>
-            <a href="https://arxiv.org/search/?searchtype=all&amp;query=SWAY+sycophancy+LLM" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Single-Agent LLMs Outperform Multi-Agent Systems on Multi-Hop Reasoning</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>When compute is held constant, a single capable LLM beats multi-agent pipelines on complex multi-hop reasoning tasks — the overhead eats the gains.</li>
-              <li>Coordination costs and error propagation across agents explain much of the gap, especially when subtasks are tightly interdependent.</li>
-              <li>A useful corrective for teams adding agent layers by default — the simpler architecture often wins when you normalize for resources.</li>
-            </ul>
-            <a href="https://arxiv.org/search/?searchtype=all&amp;query=single+agent+LLM+outperform+multi-agent+multi-hop" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Google AI Edge Gallery</h3>
+              <h3>Meta&#x27;s new model is Muse Spark, and meta.ai chat has some interesting tools</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Google&#x27;s official app brings Gemma 4 on-device to iPhone — no API key, no cloud, just local inference from a first-party source.</li>
-              <li>Lowers the barrier for non-technical users to experience capable on-device AI without sideloading or developer tools.</li>
-              <li>Signals Google&#x27;s intent to own the local-AI UX layer on mobile, not just the cloud inference market.</li>
+              <li>Muse Spark is Meta&#x27;s first model release since Llama 4 a year ago — hosted-only with no open weights, currently in private API preview.</li>
+              <li>The model is accessible today on meta.ai with a Facebook or Instagram login, making it the first Meta flagship locked behind a social login wall.</li>
+              <li>Meta&#x27;s self-reported benchmarks place it competitively, though independent evals are pending given the restricted access.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Apr/6/google-ai-edge-gallery/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Apr/8/muse-spark/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Eight years of wanting, three months of building with AI</h3>
+              <h3>GLM-5.1: Towards Long-Horizon Tasks</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon shipped a SQL developer tool he&#x27;d wanted for eight years in three months by leaning fully on agentic AI-assisted engineering.</li>
-              <li>The piece is an honest accounting of where AI accelerated work, where it created new bottlenecks, and what human judgment remained essential.</li>
-              <li>A grounded case study for developers curious whether agentic workflows actually change the output velocity for real, complex tools.</li>
+              <li>Z.ai released GLM-5.1, a 754B-parameter, 1.51TB MIT-licensed model — one of the largest openly available weight sets to date.</li>
+              <li>The model is already accessible via OpenRouter, lowering the barrier for developers to test frontier-scale open weights without self-hosting.</li>
+              <li>It targets long-horizon task performance, the same architectural focus as its predecessor GLM-5.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Apr/6/eight-years-three-months/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Apr/7/glm-51/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Syntaqlite Playground</h3>
+              <h3>Anthropic&#x27;s Project Glasswing - restricting Claude Mythos to security researchers - sounds necessary to me</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A browser-based SQL devtools environment built entirely with AI assistance — you can run and experiment with it right now in the browser.</li>
-              <li>Includes syntax highlighting, schema exploration, and query explanation, rivaling dedicated desktop tools in a zero-install package.</li>
-              <li>Companion to the &#x27;eight years&#x27; post — together they form a complete picture of what an AI-built developer tool looks like end to end.</li>
+              <li>Anthropic is withholding its new Claude Mythos model from general release, distributing it only to vetted security researchers under Project Glasswing.</li>
+              <li>Mythos is described as a general-purpose model comparable to Claude Opus 4.6, but with capabilities that triggered additional safety review before public launch.</li>
+              <li>The restricted release sets a notable precedent for staged deployment driven by capability risk rather than readiness.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Apr/6/syntaqlite-playground/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Apr/7/project-glasswing/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>scan-for-secrets 0.3</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Safetensors is Joining the PyTorch Foundation</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The new redact option automatically scrubs detected secrets from output, making it safe to pipe scan results into logs or CI artifacts.</li>
-              <li>Builds on v0.2&#x27;s streaming output — the combination makes this a solid drop-in for pre-commit hooks or automated log hygiene pipelines.</li>
-              <li>Lightweight and dependency-lean: worth adding to any project that generates logs or handles user-provided config strings.</li>
+              <li>Safetensors — the format that replaced pickle for safe model weight serialization — is now officially under PyTorch Foundation governance.</li>
+              <li>The move cements it as the de facto standard for sharing model weights, reducing fragmentation across the open-source ML ecosystem.</li>
+              <li>Hugging Face retains active maintainership while governance broadens to include the wider PyTorch community.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Apr/6/scan-for-secrets-03/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/safetensors-joins-pytorch-foundation" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Multimodal Embedding &amp; Reranker Models with Sentence Transformers</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Sentence Transformers now supports multimodal embedding models that encode both text and images into a shared vector space.</li>
+              <li>The update also adds reranker model support, enabling more precise retrieval pipelines without switching libraries.</li>
+              <li>Developers can use a unified API to build cross-modal search and RAG systems with the same tooling already familiar from text-only workflows.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/multimodal-sentence-transformers" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ALTK-Evolve: On-the-Job Learning for AI Agents</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>IBM Research&#x27;s ALTK-Evolve framework enables AI agents to update their tool-use knowledge continuously from real task outcomes, without retraining.</li>
+              <li>The approach targets the gap where agents fail at novel tool combinations not covered in their original training data.</li>
+              <li>Early benchmarks show meaningful gains in multi-step tool-use tasks when agents adapt in-context from their own execution history.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/ibm-research/altk-evolve" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I&#x27;m the bottleneck</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>Hallucination as output-boundary misclassification: a composite abstention architecture for language models</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Top post of the day (793 score, 133 comments) captures a widely felt shift: AI output speed now exceeds the human&#x27;s ability to review and direct it.</li>
-              <li>Thread surfaces practical strategies — batching decisions, async review loops, tighter spec documents — for staying productive when the model outruns you.</li>
-              <li>A useful gut-check for anyone scaling up AI-assisted work: the constraint has moved from generation to human judgment and throughput.</li>
+              <li>The paper reframes hallucination as a misclassification at the model&#x27;s output boundary — the moment it emits internally generated text as if it were grounded evidence.</li>
+              <li>A composite abstention architecture is proposed that intercepts high-uncertainty completions before emission rather than correcting them post-hoc.</li>
+              <li>The approach shows measurable reductions in unsupported claim rate without proportional drops in task completion.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1scbottleneck/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.06195" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>As an autistic person, Claude is the friend I always wanted</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>Training mRNA Language Models Across 25 Species for $165</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Heartfelt post (436 score, 148 comments) from an autistic user describing how Claude&#x27;s patient, non-judgmental interaction style fills a real social gap.</li>
-              <li>Comments reveal a broad pattern: neurodivergent users finding AI more accessible than many human interactions, raising genuine questions about design responsibility.</li>
-              <li>One of the most human data points in the digest — a reminder that for many users, this technology is not a productivity tool but a lifeline.</li>
+              <li>OpenMed trained cross-species mRNA language models spanning 25 organisms for a total compute cost of $165, demonstrating extreme training efficiency.</li>
+              <li>The work makes biological sequence modeling accessible to labs without HPC resources, potentially accelerating biomedical AI research.</li>
+              <li>Models and training code are publicly released, enabling reproducibility and extension to additional species.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1scautistic/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/OpenMed/training-mrna-models-25-species" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Depression Detection at the Point of Care: Automated Analysis of Linguistic Signals from Routine Primary Care Encounters</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Researchers built an NLP system to detect depression from transcribed primary care visit audio, leveraging the spread of digital scribing tools.</li>
+              <li>The model flags linguistic signals — such as reduced expressiveness and topic avoidance — that correlate with clinical depression diagnoses.</li>
+              <li>The approach targets the substantial underdiagnosis rate in primary care without requiring dedicated screening appointments.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.06193" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Pramana: Fine-Tuning Large Language Models for Epistemic Reasoning through Navya-Nyaya</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The paper fine-tunes LLMs using Navya-Nyaya, a classical Indian logic framework, to improve structured epistemic reasoning and reduce hallucination.</li>
+              <li>Apple research cited in the paper found that adding irrelevant context to math problems degraded LLM performance by 65%, underscoring the need for robust inference.</li>
+              <li>Pramana-tuned models show improved ability to distinguish supported from unsupported claims in multi-step reasoning chains.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.04937" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
