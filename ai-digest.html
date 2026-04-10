@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - April 09, 2026 | Densanon</title>
+  <title>AI Morning Digest - April 10, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,143 +15,137 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 09, 2026</div>
+        <div class="digest-date-badge">April 10, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest spans two major model announcements — Meta&#x27;s Muse Spark and Z.ai&#x27;s massive open-weights GLM-5.1 — alongside a wave of research sharpening how LLMs reason, confess uncertainty, and apply to high-stakes domains like medicine.</p>
+        <p class="digest-intro">Today&#x27;s digest centers on AI alignment and safety — from models that refuse too broadly to hallucination detection advances — while the community erupts over Anthropic&#x27;s restricted Mythos release and its ripple effects across the OpenAI/Anthropic rivalry. On the tools side, real-time world generation hits consumer GPUs and a key insight surfaces about OpenAI&#x27;s voice mode running on an older model.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Meta&#x27;s new model is Muse Spark, and meta.ai chat has some interesting tools</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Muse Spark is Meta&#x27;s first model release since Llama 4 a year ago — hosted-only with no open weights, currently in private API preview.</li>
-              <li>The model is accessible today on meta.ai with a Facebook or Instagram login, making it the first Meta flagship locked behind a social login wall.</li>
-              <li>Meta&#x27;s self-reported benchmarks place it competitively, though independent evals are pending given the restricted access.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Apr/8/muse-spark/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>GLM-5.1: Towards Long-Horizon Tasks</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Z.ai released GLM-5.1, a 754B-parameter, 1.51TB MIT-licensed model — one of the largest openly available weight sets to date.</li>
-              <li>The model is already accessible via OpenRouter, lowering the barrier for developers to test frontier-scale open weights without self-hosting.</li>
-              <li>It targets long-horizon task performance, the same architectural focus as its predecessor GLM-5.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Apr/7/glm-51/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Anthropic&#x27;s Project Glasswing - restricting Claude Mythos to security researchers - sounds necessary to me</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Anthropic is withholding its new Claude Mythos model from general release, distributing it only to vetted security researchers under Project Glasswing.</li>
-              <li>Mythos is described as a general-purpose model comparable to Claude Opus 4.6, but with capabilities that triggered additional safety review before public launch.</li>
-              <li>The restricted release sets a notable precedent for staged deployment driven by capability risk rather than readiness.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Apr/7/project-glasswing/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Safetensors is Joining the PyTorch Foundation</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Safetensors — the format that replaced pickle for safe model weight serialization — is now officially under PyTorch Foundation governance.</li>
-              <li>The move cements it as the de facto standard for sharing model weights, reducing fragmentation across the open-source ML ecosystem.</li>
-              <li>Hugging Face retains active maintainership while governance broadens to include the wider PyTorch community.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/safetensors-joins-pytorch-foundation" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Multimodal Embedding &amp; Reranker Models with Sentence Transformers</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Sentence Transformers now supports multimodal embedding models that encode both text and images into a shared vector space.</li>
-              <li>The update also adds reranker model support, enabling more precise retrieval pipelines without switching libraries.</li>
-              <li>Developers can use a unified API to build cross-modal search and RAG systems with the same tooling already familiar from text-only workflows.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/multimodal-sentence-transformers" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ALTK-Evolve: On-the-Job Learning for AI Agents</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>IBM Research&#x27;s ALTK-Evolve framework enables AI agents to update their tool-use knowledge continuously from real task outcomes, without retraining.</li>
-              <li>The approach targets the gap where agents fail at novel tool combinations not covered in their original training data.</li>
-              <li>Early benchmarks show meaningful gains in multi-step tool-use tasks when agents adapt in-context from their own execution history.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/ibm-research/altk-evolve" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Hallucination as output-boundary misclassification: a composite abstention architecture for language models</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The paper reframes hallucination as a misclassification at the model&#x27;s output boundary — the moment it emits internally generated text as if it were grounded evidence.</li>
-              <li>A composite abstention architecture is proposed that intercepts high-uncertainty completions before emission rather than correcting them post-hoc.</li>
-              <li>The approach shows measurable reductions in unsupported claim rate without proportional drops in task completion.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2604.06195" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Training mRNA Language Models Across 25 Species for $165</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>OpenMed trained cross-species mRNA language models spanning 25 organisms for a total compute cost of $165, demonstrating extreme training efficiency.</li>
-              <li>The work makes biological sequence modeling accessible to labs without HPC resources, potentially accelerating biomedical AI research.</li>
-              <li>Models and training code are publicly released, enabling reproducibility and extension to additional species.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/OpenMed/training-mrna-models-25-species" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Depression Detection at the Point of Care: Automated Analysis of Linguistic Signals from Routine Primary Care Encounters</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Researchers built an NLP system to detect depression from transcribed primary care visit audio, leveraging the spread of digital scribing tools.</li>
-              <li>The model flags linguistic signals — such as reduced expressiveness and topic avoidance — that correlate with clinical depression diagnoses.</li>
-              <li>The approach targets the substantial underdiagnosis rate in primary care without requiring dedicated screening appointments.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2604.06193" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Pramana: Fine-Tuning Large Language Models for Epistemic Reasoning through Navya-Nyaya</h3>
+              <h3>Blind Refusal: Language Models Refuse to Help Users Evade Unjust, Absurd, and Illegitimate Rules</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The paper fine-tunes LLMs using Navya-Nyaya, a classical Indian logic framework, to improve structured epistemic reasoning and reduce hallucination.</li>
-              <li>Apple research cited in the paper found that adding irrelevant context to math problems degraded LLM performance by 65%, underscoring the need for robust inference.</li>
-              <li>Pramana-tuned models show improved ability to distinguish supported from unsupported claims in multi-step reasoning chains.</li>
+              <li>The paper finds that LLMs systematically over-refuse when users describe rules as unjust or absurd — even when the underlying request is benign and the rule genuinely illegitimate.</li>
+              <li>This &#x27;blind refusal&#x27; pattern emerges because models treat the presence of any rule as a compliance signal, regardless of the rule&#x27;s legitimacy or the user&#x27;s actual intent.</li>
+              <li>The findings have direct implications for AI safety calibration: over-refusal is not neutral — it makes models paternalistic and less useful in adversarial institutional contexts.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.04937" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Blind+Refusal+Language+Models" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Weakly Supervised Distillation of Hallucination Signals into Transformer Representations</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Rather than requiring expensive labeled hallucination datasets, this approach uses weak supervision to distill hallucination signals directly into transformer hidden states.</li>
+              <li>The distilled representations allow lightweight probes to detect hallucinations at inference time without a separate verifier model.</li>
+              <li>This makes reliable hallucination detection feasible at production scale, where running a full second model per inference is cost-prohibitive.</li>
+            </ul>
+            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Weakly+Supervised+Distillation+Hallucination+Signals+Transformer" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>SymptomWise: A Deterministic Reasoning Layer for Reliable and Efficient AI Systems</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>SymptomWise proposes inserting a deterministic rule-based reasoning layer beneath an LLM to guarantee clinical safety constraints before outputs surface to users.</li>
+              <li>The hybrid architecture trades some generalization for hard reliability guarantees in symptom assessment — a practical tradeoff for medical deployment.</li>
+              <li>Results show no degradation in diagnostic accuracy while dramatically reducing the rate of dangerous model-generated recommendations.</li>
+            </ul>
+            <a href="https://arxiv.org/search/?searchtype=all&amp;query=SymptomWise+Deterministic+Reasoning+Layer" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Cross-Tokenizer LLM Distillation through a Byte-Level Interface</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Current knowledge distillation between LLMs breaks down when teacher and student use different tokenizers — this paper solves that by aligning both at the byte level.</li>
+              <li>A byte-level interface serves as a universal bridge, enabling distillation across model families that previously couldn&#x27;t share supervision signal due to vocabulary mismatch.</li>
+              <li>The approach opens the door to distilling capability from any frontier model into any smaller model, regardless of tokenizer choice — a meaningful unlock for open-source model development.</li>
+            </ul>
+            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Cross-Tokenizer+LLM+Distillation+Byte-Level" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Waypoint-1.5: Higher-Fidelity Interactive Worlds for Everyday GPUs</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Waypoint-1.5 generates interactive, navigable 3D-style environments in real time and is specifically optimized to run on consumer-grade GPUs — not data center hardware.</li>
+              <li>Fidelity improvements over 1.0 include better scene consistency across movement and more coherent object permanence during navigation.</li>
+              <li>The practical implication: interactive world generation is moving from research demo to something developers can actually build on top of without cloud rendering costs.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/waypoint-15" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ChatGPT voice mode is a weaker model</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Simon Willison flags that OpenAI&#x27;s voice mode runs on an older, weaker underlying model than the text interface — a detail OpenAI has not prominently disclosed.</li>
+              <li>This matters for users who rely on voice for substantive tasks: they&#x27;re getting materially less capable responses than they would typing the same query.</li>
+              <li>The gap likely exists due to real-time latency requirements, but the lack of transparency creates a misleading quality expectation for voice users.</li>
+            </ul>
+            <a href="https://simonwillison.net/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>OpenAI researcher says his Anthropic roommate lost his mind over Mythos</h3>
+              <span class="digest-source">r/ClaudeAI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A post claiming an OpenAI researcher&#x27;s Anthropic-employed roommate reacted intensely to the Mythos restricted release is generating the most engagement on the sub this week — 1,531 upvotes and 184 comments.</li>
+              <li>The thread surfaces genuine community tension around Anthropic&#x27;s decision to gate Mythos behind Project Glasswing rather than release it broadly.</li>
+              <li>Whether the anecdote is accurate or not, it&#x27;s crystallizing a wider debate about how AI labs handle capability releases and the internal culture around those decisions.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/ClaudeAI/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>I automated most of my job</h3>
+              <span class="digest-source">r/ClaudeAI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A high-engagement post (671 upvotes, 194 comments) from a user who used Claude to automate the majority of their daily work tasks — with specifics on which workflows moved to AI.</li>
+              <li>The comments are dense with practical follow-ups: other users describing their own automation setups and asking for workflow templates.</li>
+              <li>This kind of post is a leading indicator of where mainstream professional AI adoption actually is, independent of what enterprise vendors are announcing.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/ClaudeAI/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Is anyone low-key embarrassed for humanity that our Robot Overlord is manifesting not as Skynet, but rather as a lippy spell checker that decided we needed a bedtime?</h3>
+              <span class="digest-source">r/ClaudeAI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A comedic post (566 upvotes) that captures collective frustration with AI systems being simultaneously overhyped and annoyingly cautious in practice.</li>
+              <li>The &#x27;bedtime&#x27; joke references Claude&#x27;s occasional unsolicited suggestions to rest or take breaks — a quirk that&#x27;s generated recurring community commentary.</li>
+              <li>Underneath the humor is a real critique: the gap between AGI discourse and the mundane reality of current AI behavior is increasingly hard to ignore.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/ClaudeAI/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
