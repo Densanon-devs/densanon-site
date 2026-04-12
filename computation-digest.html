@@ -17,7 +17,7 @@
       <div class="container">
         <div class="digest-date-badge">April 12, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation digest is headlined by GPU smuggling at scale and a pair of supply chain attacks, while AMD advances its desktop AI agent stack and RISC-V hardware inches closer to mainstream Linux support. Kernel and GPU driver work continues on multiple fronts.</p>
+        <p class="digest-intro">Linux 7.0 ships today with meaningful GPU memory management improvements and new AI hardware keycode support baked in, while the quantum computing stack faces a frank reckoning over the components supply chain needed to make national ambitions real.</p>
       </div>
     </section>
 
@@ -29,63 +29,69 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel Core Ultra 7 270K Plus vs Ryzen 7 9700X</h3>
+              <h3>Valve engineer shocks Linux community with game-changing VRAM hack for 8GB GPUs</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel&#x27;s new Core Ultra 7 270K Plus enters the $300 midrange bracket and goes head-to-head with AMD&#x27;s Ryzen 7 9700X, giving the competitive segment a fresh data point after months of AMD dominance.</li>
-              <li>Performance comparisons at this price tier directly affect workstation buyers and small-scale compute builds where cost-per-core matters most.</li>
-              <li>Results will help clarify whether Intel&#x27;s Arrow Lake refresh is closing the IPC gap in single-threaded and lightly threaded workloads.</li>
+              <li>The fix corrects a fundamental OS scheduler flaw where any background process could silently evict active workload data from VRAM into slower system memory — a real throughput penalty on constrained 8 GB cards.</li>
+              <li>This is a driver-level policy change, not a hardware workaround, so the improvement applies across existing GPU generations without any silicon changes.</li>
+              <li>Systems engineers should note the broader implication: Linux VRAM eviction policy was essentially priority-blind until now, and this patch sets a precedent for workload-aware memory tiering at the driver level.</li>
             </ul>
-            <a href="https://www.tomshardware.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/software/linux/valve-engineer-shocks-linux-community-with-game-changing-vram-hack-for-8gb-gpus-breakthrough-solution-turbocharges-gaming-by-prioritizing-vram-for-games-while-background-tasks-take-a-back-seat" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD&#x27;s GAIA Now Allows Building Custom AI Agents</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Linux 7.0 enables three new AI-specific keys for keyboards — Google authors both the HID spec and the kernel patch</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMD updated its Lemonade SDK underpinning GAIA, transforming it from a demo app into a genuine desktop platform for building and running custom AI agents entirely on local hardware.</li>
-              <li>The shift toward a full agent runtime on consumer AMD GPUs is a direct play for the on-device AI compute market, where Qualcomm and Apple have moved first.</li>
-              <li>Developers can now define agent workflows that run inference locally, bypassing cloud API dependencies — significant for privacy-sensitive and offline use cases.</li>
+              <li>Linux 7.0 merges three new HID keycodes purpose-built for AI agent hardware keys, signaling that dedicated inference-trigger hardware is close enough to ship that kernel ABI is being standardized ahead of devices.</li>
+              <li>Google co-authored both the HID spec and the kernel patch, tying this directly to upcoming Chromebook and Android hardware roadmaps rather than just following the Windows Copilot-key precedent.</li>
+              <li>For chip and firmware teams building next-gen laptop SoCs, this establishes the kernel ABI contract for AI key events before tape-out cycles close.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-GAIA-Custom-AI-Agents" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/software/linux/linux-7-0-adds-three-new-ai-agent-keycodes-for-upcoming-laptops" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD GFX11.7 RDNA 4m Pending For RADV &amp; RadeonSI</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>$27 platypus PCIe adapter converts half-height GPUs into full-height while adding two M.2 slots — thanks to PCIe bifurcation</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A new AMD GPU target — GFX1170, representing the RDNA 4m mobile variant — is pending in both the RADV Vulkan and RadeonSI OpenGL Mesa drivers.</li>
-              <li>RDNA 4m arriving in Mesa this early suggests AMD is on track for a near-term mobile chip launch, likely targeting integrated graphics in next-gen laptop APUs.</li>
-              <li>Open-source driver support landing ahead of hardware release is a positive sign for day-one Linux compatibility on upcoming AMD mobile platforms.</li>
+              <li>The adapter exploits PCIe x16-to-x8+x4+x4 bifurcation to simultaneously host a low-profile GPU and two NVMe drives on a single slot — useful context for anyone designing compact HPC nodes or edge compute builds.</li>
+              <li>At $27 this demonstrates how bifurcation-aware lane splitting can multiply slot utility at near-zero BOM cost, a design lever worth revisiting for dense chassis configurations.</li>
+              <li>The fact that this works without a riser card or external power highlights how much headroom remains in standard PCIe 4.0 link budgets for bandwidth-sharing schemes.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-GFX1170-RDNA4m-Mesa" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/ssds/usd27-platypus-pcie-adapter-converts-half-height-gpus-into-full-height-while-adding-two-m-2-slots-for-ssds-enthusiast-demos-low-profile-rtx-4060-with-two-ssds-thanks-to-pcie-bifurcation" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>White Rabbit meets quantum entanglement</h3>
+              <span class="digest-source">Hacker News Computation</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>CERN&#x27;s White Rabbit protocol — the established standard for sub-nanosecond clock synchronization across large scientific networks — is being integrated with quantum entanglement distribution, a key step toward quantum network timing infrastructure.</li>
+              <li>This convergence is directly relevant to teams designing quantum repeater networks or distributed quantum computing clusters where classical timing precision and quantum coherence must coexist on the same fiber plant.</li>
+              <li>White Rabbit&#x27;s open hardware roots make this a credible reference architecture for academic and national-lab quantum networking deployments that can&#x27;t afford proprietary stacks.</li>
+            </ul>
+            <a href="https://home.cern/news/news/computing/white-rabbit-meets-quantum-entanglement" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>RISC-V BeagleV Ahead SBC to See Working HDMI With Linux 7.1</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>The UK&#x27;s Quantum Ambitions Will Fail Without The Components to Make Them Real</h3>
+              <span class="digest-source">The Quantum Insider</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The BeagleV Ahead, powered by the TH1520 RISC-V SoC, is gaining HDMI display support in the Linux 7.1 mainline kernel — a meaningful milestone for RISC-V desktop usability.</li>
-              <li>Mainline HDMI output removes a major barrier to using RISC-V SBCs as general-purpose development workstations rather than headless nodes.</li>
-              <li>The continued pace of TH1520 upstream patches reflects broader industry investment in making RISC-V hardware viable beyond embedded niches.</li>
+              <li>A successful 2023 live trial of quantum-encrypted communications over standard telecom infrastructure proves the technology layer is maturing — but the photonics and cryogenics supply chain underneath it is not keeping pace.</li>
+              <li>The piece identifies a structural gap between government-funded quantum R&amp;D programs and domestic component manufacturing capacity, a bottleneck that maps directly onto hardware availability risk for any quantum compute deployment.</li>
+              <li>For teams evaluating quantum hardware procurement timelines, this is a useful signal that lead times and single-source supplier risk are likely to worsen before they improve across the UK and EU supply base.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/BeagleV-Ahead-HDMI-Linux-7.1" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>D7VK 1.7 Brings More Improvements For Legacy Direct3D On Vulkan</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>D7VK 1.7 improves translation of legacy Direct3D 3, 5, 6, and 7 APIs over Vulkan, extending the reach of Wine and Proton compatibility for older software on modern GPU hardware.</li>
-              <li>Better legacy D3D coverage matters for archival, research, and emulation use cases where running decade-old GPU workloads on current Vulkan-capable hardware is required.</li>
-              <li>The project continues filling a gap DXVK doesn&#x27;t address, handling the pre-D3D8 era that otherwise has no modern translation path.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/D7VK-1.7" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://thequantuminsider.com/2026/04/12/guest-post-the-uks-quantum-ambitions-will-fail-without-the-components-to-make-them-real/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -95,39 +101,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Chinese Nvidia Cloud Partner procured 300 servers with banned AI GPUs worth $92M</h3>
+              <h3>Many Wonderful Improvements Expected For Linux 7.1, Especially For AMD &amp; Intel</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>With Linux 7.0 shipping today, the 7.1 merge window opens immediately — and the early feature set is heavy with AMD and Intel driver work, making this a critical cycle for anyone tracking platform support for next-gen silicon.</li>
+              <li>HPC teams running EPYC or Xeon workloads should monitor the 7.1 window closely: kernel-side improvements to power management, PCIe, and memory subsystems have historically delivered outsized throughput gains in datacenter deployments.</li>
+              <li>The back-to-back 7.0 release and 7.1 merge window overlap means performance-sensitive clusters will want to benchmark both kernels on the same hardware before committing to a production baseline.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.1-Features-Early-Look" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux lays down the law on AI-generated code — yes to Copilot, no to AI slop, humans take the fall for mistakes</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Sharetronic, an Nvidia cloud partner in China, allegedly procured approximately 300 servers loaded with H100 GPUs worth $92 million in defiance of US export controls.</li>
-              <li>The scale of the violation — nearly 300 full servers — signals that export enforcement gaps remain exploitable, and puts pressure on the Commerce Department to tighten supply chain auditing.</li>
-              <li>H100 availability inside China has direct implications for the AI compute arms race, as restricted access to cutting-edge GPUs is a central pillar of US semiconductor policy.</li>
+              <li>After months of debate, the Linux kernel project settled on a formal policy: AI-assisted code is permissible, but submitters bear full accountability for correctness and license compliance — no &#x27;the AI wrote it&#x27; defense.</li>
+              <li>The explicit rejection of low-quality bulk AI submissions sets a quality floor that is likely to be adopted as a template by other major open-source infrastructure projects.</li>
+              <li>For hardware vendors and driver teams contributing upstream kernel code — AMD, Intel, NVIDIA, Qualcomm — this policy directly governs how AI tooling can be used in their upstream workflows going forward.</li>
             </ul>
-            <a href="https://www.tomshardware.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/software/linux/linux-lays-down-the-law-on-ai-generated-code-yes-to-copilot-no-to-ai-slop-and-humans-take-the-fall-for-mistakes-after-months-of-fierce-debate-torvalds-and-maintainers-come-to-an-agreement" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Salesforce vs ServiceNow in helpdesk battle</h3>
+              <h3>Growing void between enterprise and frontier AI puts open weights models in the spotlight</h3>
               <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Salesforce and ServiceNow are escalating their AI agent competition specifically in enterprise ITSM, each positioning agentic workflows as the core differentiator for helpdesk and IT operations automation.</li>
-              <li>The battle reflects a broader enterprise shift where LLM-backed agents are replacing rule-based ticket routing, with real compute and infrastructure implications for data center workloads.</li>
-              <li>Whichever platform wins ITSM agent share will also win significant inference compute spend, making this a strategic proxy war for cloud and AI workload lock-in.</li>
+              <li>A wave of capable open-weights releases from Google, Microsoft, Alibaba, and NVIDIA is meeting an enterprise market that is actively seeking alternatives to frontier model pricing and data-exposure risk.</li>
+              <li>For HPC and on-prem compute teams, this is the inflection point: open-weights models sufficient for production use cases make local inference infrastructure investment defensible without dependence on external API endpoints.</li>
+              <li>The shift has direct hardware implications — GPU cluster sizing conversations are changing as the capability-per-dollar curve on open-weights inference continues to steepen.</li>
             </ul>
-            <a href="https://www.theregister.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Two supply chain attacks poisoned open source tools</h3>
-              <span class="digest-source">The Register</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Attackers compromised both Trivy (a widely-used container vulnerability scanner) and Axios (the ubiquitous JavaScript HTTP client) via supply chain vectors, injecting malicious code into trusted packages.</li>
-              <li>The dual compromise in a single news cycle underscores that SBOMs and reproducible builds are no longer optional hygiene — they are active defenses against a persistent and escalating threat class.</li>
-              <li>Trivy&#x27;s compromise is particularly ironic: a security scanning tool turned into an attack vector, potentially undermining the very CI/CD pipelines it was meant to protect.</li>
-            </ul>
-            <a href="https://www.theregister.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://go.theregister.com/feed/www.theregister.com/2026/04/12/ai_open_weights_models/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -137,27 +143,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Microsoft Upgrades WSL2 Kernel Against Linux 6.18 LTS</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>CUDA Programming for Nvidia H100s</h3>
+              <span class="digest-source">Hacker News Computation</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Microsoft has rebased the WSL2 kernel on Linux 6.18 LTS, bringing a large batch of upstream driver improvements, security fixes, and performance gains to Windows-native Linux development environments.</li>
-              <li>For developers running compute workloads — containers, ML training scripts, or GPU-accelerated tools — on WSL2, the 6.18 base closes the gap with native Linux distributions significantly.</li>
-              <li>The update reflects Microsoft&#x27;s continued investment in WSL2 as a first-class Linux environment, not just a compatibility shim.</li>
+              <li>A comprehensive practical guide targeting the H100&#x27;s Hopper architecture specifically — covering HBM3 memory access patterns, NVLink topology, and the Transformer Engine&#x27;s FP8 compute paths.</li>
+              <li>With H100 clusters now the de facto standard for serious ML and HPC workloads, low-level CUDA proficiency on Hopper is becoming a baseline expectation rather than a specialized skill.</li>
+              <li>Particularly useful for teams migrating kernels from Ampere: Hopper&#x27;s async warp groups, Tensor Memory Accelerator (TMA), and wgmma instructions require recalibrating tuning intuitions built on A100 experience.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/WSL2-Kernel-Linux-6.18-LTS" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>FSMOUNT_NAMESPACE Coming For Linux 7.1</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The new FSMOUNT_NAMESPACE VFS feature queued for Linux 7.1 gives processes the ability to create private filesystem mount namespaces more flexibly, strengthening container and sandbox isolation primitives.</li>
-              <li>Better namespace granularity directly benefits container runtimes, rootless container tools, and any workload requiring tightly scoped filesystem views without full privilege escalation.</li>
-              <li>This is a low-level kernel primitive that will quietly improve the security posture of orchestration platforms like Kubernetes and Podman once distributions ship 7.1.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/FSMOUNT_NAMESPACE-Linux-7.1" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.freecodecamp.org/news/cuda-programming-for-nvidia-h100s/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
