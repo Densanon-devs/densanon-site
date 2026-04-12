@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - April 10, 2026 | Densanon</title>
+  <title>AI Morning Digest - April 12, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,65 +15,53 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 10, 2026</div>
+        <div class="digest-date-badge">April 12, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest centers on AI alignment and safety — from models that refuse too broadly to hallucination detection advances — while the community erupts over Anthropic&#x27;s restricted Mythos release and its ripple effects across the OpenAI/Anthropic rivalry. On the tools side, real-time world generation hits consumer GPUs and a key insight surfaces about OpenAI&#x27;s voice mode running on an older model.</p>
+        <p class="digest-intro">Today&#x27;s digest is dominated by Anthropic accountability — an AMD AI director&#x27;s data-backed GitHub issue documenting Claude Code regressions is the biggest story of the week, while the community also surfaces a hidden API capacity header that challenges advertised limits. On the tools side, SQLite ships a landmark release and DFlash pushes speculative decoding to 85 tok/s on Apple Silicon.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Blind Refusal: Language Models Refuse to Help Users Evade Unjust, Absurd, and Illegitimate Rules</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>AMD AI directors analysis confirms lobotomization of Claude</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The paper finds that LLMs systematically over-refuse when users describe rules as unjust or absurd — even when the underlying request is benign and the rule genuinely illegitimate.</li>
-              <li>This &#x27;blind refusal&#x27; pattern emerges because models treat the presence of any rule as a compliance signal, regardless of the rule&#x27;s legitimacy or the user&#x27;s actual intent.</li>
-              <li>The findings have direct implications for AI safety calibration: over-refusal is not neutral — it makes models paternalistic and less useful in adversarial institutional contexts.</li>
+              <li>AMD AI director Stella Laurenzo filed a GitHub issue backed by 7,000 Claude Code sessions documenting a measurable quality regression — this is the rare case of a credentialed professional publishing quantified data, not just anecdote.</li>
+              <li>The post is the highest-signal Anthropic criticism in recent memory: 1,743 upvotes and 287 comments, with the thread surfacing corroborating reports from other engineers.</li>
+              <li>The core finding is that Claude Code is producing less reliable, more evasive outputs over time — a pattern that directly matters for anyone building production workflows on top of it.</li>
             </ul>
-            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Blind+Refusal+Language+Models" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/ClaudeAI/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Weakly Supervised Distillation of Hallucination Signals into Transformer Representations</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>Anthropic: Stop shipping. Seriously.</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Rather than requiring expensive labeled hallucination datasets, this approach uses weak supervision to distill hallucination signals directly into transformer hidden states.</li>
-              <li>The distilled representations allow lightweight probes to detect hallucinations at inference time without a separate verifier model.</li>
-              <li>This makes reliable hallucination detection feasible at production scale, where running a full second model per inference is cost-prohibitive.</li>
+              <li>A 1,305-upvote post making the case that Anthropic is prioritizing shipping speed over product quality and service stability — with 227 comments adding developer-specific pain points.</li>
+              <li>The frustration centers on regressions landing in paid tiers without changelogs or acknowledgment, leaving power users to diagnose problems themselves.</li>
+              <li>This post and the AMD director&#x27;s GitHub issue dropped on the same day, amplifying each other and making it the dominant conversation in the Claude community.</li>
             </ul>
-            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Weakly+Supervised+Distillation+Hallucination+Signals+Transformer" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/ClaudeAI/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SymptomWise: A Deterministic Reasoning Layer for Reliable and Efficient AI Systems</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>I set up a transparent API proxy and found Claude&#x27;s hidden fallback-percentage: 0.5 header</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>SymptomWise proposes inserting a deterministic rule-based reasoning layer beneath an LLM to guarantee clinical safety constraints before outputs surface to users.</li>
-              <li>The hybrid architecture trades some generalization for hard reliability guarantees in symptom assessment — a practical tradeoff for medical deployment.</li>
-              <li>Results show no degradation in diagnostic accuracy while dramatically reducing the rate of dangerous model-generated recommendations.</li>
+              <li>A developer running a transparent API proxy claims to have discovered a response header suggesting every plan tier receives only 50% of its advertised capacity under load.</li>
+              <li>If accurate, this would mean rate limits and capacity guarantees are effectively half of what Anthropic documents — a significant undisclosed constraint for production integrations.</li>
+              <li>215 upvotes and 52 comments; the thread includes others attempting to replicate the finding, so treat as a lead worth investigating rather than confirmed fact.</li>
             </ul>
-            <a href="https://arxiv.org/search/?searchtype=all&amp;query=SymptomWise+Deterministic+Reasoning+Layer" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Cross-Tokenizer LLM Distillation through a Byte-Level Interface</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Current knowledge distillation between LLMs breaks down when teacher and student use different tokenizers — this paper solves that by aligning both at the byte level.</li>
-              <li>A byte-level interface serves as a universal bridge, enabling distillation across model families that previously couldn&#x27;t share supervision signal due to vocabulary mismatch.</li>
-              <li>The approach opens the door to distilling capability from any frontier model into any smaller model, regardless of tokenizer choice — a meaningful unlock for open-source model development.</li>
-            </ul>
-            <a href="https://arxiv.org/search/?searchtype=all&amp;query=Cross-Tokenizer+LLM+Distillation+Byte-Level" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/ClaudeAI/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -83,27 +71,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Waypoint-1.5: Higher-Fidelity Interactive Worlds for Everyday GPUs</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Waypoint-1.5 generates interactive, navigable 3D-style environments in real time and is specifically optimized to run on consumer-grade GPUs — not data center hardware.</li>
-              <li>Fidelity improvements over 1.0 include better scene consistency across movement and more coherent object permanence during navigation.</li>
-              <li>The practical implication: interactive world generation is moving from research demo to something developers can actually build on top of without cloud rendering costs.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/waypoint-15" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ChatGPT voice mode is a weaker model</h3>
+              <h3>SQLite 3.53.0 + Query Result Formatter Demo</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon Willison flags that OpenAI&#x27;s voice mode runs on an older, weaker underlying model than the text interface — a detail OpenAI has not prominently disclosed.</li>
-              <li>This matters for users who rely on voice for substantive tasks: they&#x27;re getting materially less capable responses than they would typing the same query.</li>
-              <li>The gap likely exists due to real-time latency requirements, but the lack of transparency creates a misleading quality expectation for voice users.</li>
+              <li>SQLite 3.53.0 lands ALTER TABLE improvements and the ability to add NOT NULL and CHECK constraints to existing columns — long-requested features that close a meaningful gap with other SQL databases.</li>
+              <li>Simon Willison also released a live playground demo for the new Query Result Formatter (QRF) library, running SQLite entirely in the browser via WebAssembly.</li>
+              <li>The QRF demo is immediately useful for sharing formatted query output without standing up any infrastructure — worth bookmarking as a lightweight data presentation tool.</li>
             </ul>
             <a href="https://simonwillison.net/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>DFlash speculative decoding on Apple Silicon: 85 tok/s, 3.3x speedup on Qwen3.5-9B</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>An MLX implementation of block diffusion-based speculative decoding achieves 85 tokens/sec on Apple Silicon with a 3.3x throughput gain over standard autoregressive decoding on Qwen3.5-9B.</li>
+              <li>Critically, the output is bit-for-bit identical to non-speculative decoding — this is a pure speed win with no quality tradeoff.</li>
+              <li>255 upvotes and 41 comments; if you&#x27;re running local models on Mac hardware, this is the most actionable performance story of the week.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/LocalLLaMA/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-agent-sdk-typescript: v0.2.101</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Version 0.2.101 ships security patches — if you&#x27;re running the TypeScript SDK in production, this is a mandatory update.</li>
+              <li>Also includes a fix for a Windows temp directory bug that was causing issues for developers building on Windows.</li>
+              <li>This supersedes v0.2.98 (Claude Code parity release); update directly to .101 to get both the parity improvements and the security fixes in one upgrade.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-agent-sdk-typescript" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -113,39 +113,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>OpenAI researcher says his Anthropic roommate lost his mind over Mythos</h3>
+              <h3>Firecrawl + Claude just replaced McKinsey consultants</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A post claiming an OpenAI researcher&#x27;s Anthropic-employed roommate reacted intensely to the Mythos restricted release is generating the most engagement on the sub this week — 1,531 upvotes and 184 comments.</li>
-              <li>The thread surfaces genuine community tension around Anthropic&#x27;s decision to gate Mythos behind Project Glasswing rather than release it broadly.</li>
-              <li>Whether the anecdote is accurate or not, it&#x27;s crystallizing a wider debate about how AI labs handle capability releases and the internal culture around those decisions.</li>
+              <li>389-upvote post from a user who built a Firecrawl + Claude pipeline that replicates the kind of competitive landscape and market analysis work typically outsourced to consultants.</li>
+              <li>The comments (127) are dense with workflow specifics — prompts, scraping targets, and output formatting — making this one of the more practically reusable threads this week.</li>
+              <li>The framing is hyperbolic, but the underlying workflow is real and repeatable: web scrape at scale, synthesize with Claude, produce structured reports.</li>
             </ul>
             <a href="https://www.reddit.com/r/ClaudeAI/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I automated most of my job</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>MiniMax M2.7 Released</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A high-engagement post (671 upvotes, 194 comments) from a user who used Claude to automate the majority of their daily work tasks — with specifics on which workflows moved to AI.</li>
-              <li>The comments are dense with practical follow-ups: other users describing their own automation setups and asking for workflow templates.</li>
-              <li>This kind of post is a leading indicator of where mainstream professional AI adoption actually is, independent of what enterprise vendors are announcing.</li>
+              <li>MiniMax M2.7 is now available, generating significant discussion (207 upvotes, 94 comments) in the local model community — the most active thread across the three M2.7 posts that landed today.</li>
+              <li>Early hands-on reports in the comments describe strong reasoning performance relative to model size, positioning it as a competitive option for local deployment.</li>
+              <li>Worth watching as benchmarks and comparisons come in over the next 24–48 hours.</li>
             </ul>
-            <a href="https://www.reddit.com/r/ClaudeAI/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/LocalLLaMA/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Is anyone low-key embarrassed for humanity that our Robot Overlord is manifesting not as Skynet, but rather as a lippy spell checker that decided we needed a bedtime?</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>If you haven&#x27;t yet given Gemma 4 a go — do it today</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A comedic post (566 upvotes) that captures collective frustration with AI systems being simultaneously overhyped and annoyingly cautious in practice.</li>
-              <li>The &#x27;bedtime&#x27; joke references Claude&#x27;s occasional unsolicited suggestions to rest or take breaks — a quirk that&#x27;s generated recurring community commentary.</li>
-              <li>Underneath the humor is a real critique: the gap between AGI discourse and the mundane reality of current AI behavior is increasingly hard to ignore.</li>
+              <li>A 202-upvote positive review of Google&#x27;s Gemma 4 local model, with the author calling it the most capable small model they&#x27;ve run on consumer hardware.</li>
+              <li>The 89 comments include direct comparisons to Qwen and Mistral at similar parameter counts, with Gemma 4 coming out ahead on instruction following and code tasks in multiple anecdotal reports.</li>
+              <li>Gemma 4 is free, runs locally, and is seeing genuine community enthusiasm — if you haven&#x27;t tried it, this thread is a good starting point for what to expect.</li>
             </ul>
-            <a href="https://www.reddit.com/r/ClaudeAI/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/LocalLLaMA/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
