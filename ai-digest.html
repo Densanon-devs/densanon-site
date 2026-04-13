@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - April 12, 2026 | Densanon</title>
+  <title>AI Morning Digest - April 13, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,66 +15,95 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 12, 2026</div>
+        <div class="digest-date-badge">April 13, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is heavy on local inference wins and developer tooling — MiniMax M2.7 is making waves on consumer hardware, Gemma 4 gets a big speculative decoding boost, and Anthropic&#x27;s SDK keeps shipping. Plus: a close look at whether Claude Code Max&#x27;s token burn is working as advertised.</p>
+        <p class="digest-intro">Today&#x27;s digest centers on infrastructure trust: Anthropic&#x27;s prompt cache silently regressed from a 1-hour to a 5-minute TTL in early March, inflating costs and quota usage for Claude Code users — and the creator has now acknowledged the issue publicly. On the research side, a new paper exposes a concrete safety alignment vulnerability in diffusion language models, and a formal analysis of how AI-generated text feeds back into training data offers a precise model of ecosystem drift. Rounding things out, Google&#x27;s Gemma 4 multimodal model gets a practical local-inference recipe via MLX.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Re-Mask and Redirect: Exploiting Denoising Irreversibility in Diffusion Language Models</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Diffusion LMs align by assuming the denoising schedule is monotonic — committed tokens stay committed. The paper shows this assumption can be broken by re-introducing masks after commitment, bypassing safety filters entirely.</li>
+              <li>The attack is called &#x27;Re-Mask and Redirect&#x27;: the adversary forces the model to revisit already-decided tokens and steers them toward unsafe outputs without triggering the alignment guard.</li>
+              <li>This exposes a structural gap: safety alignment in autoregressive models doesn&#x27;t transfer automatically to diffusion-based architectures, which need their own denoising-aware defenses.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.08557" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Drift and selection in LLM text ecosystems</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Develops an exact analytical model of the feedback loop where LLM-generated text enters the public record, then gets trained on by future models — quantifying both &#x27;drift&#x27; (random divergence over generations) and &#x27;selection&#x27; (systematic bias amplification).</li>
+              <li>Shows that even small selection pressures on what text gets promoted accumulate into large distributional shifts across training generations, with the effect compounding non-linearly.</li>
+              <li>Provides theoretical grounding for the model collapse concern: the paper characterizes when the human/AI text mixture in training data stabilizes versus spirals.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.08554" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>OpenKedge: Governing Agentic Mutation with Execution-Bound Safety and Evidence Chains</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Identifies a core flaw in API-centric agentic architectures: probabilistic LLM agents execute state mutations (writes, deletes, API calls) without sufficient context or rollback guarantees.</li>
+              <li>Proposes OpenKedge, a protocol that binds each state mutation to an evidence chain — a log of the context and reasoning that authorized it — enabling audits and reversals.</li>
+              <li>Targets the gap between &#x27;agent did a thing&#x27; and &#x27;we can prove why the agent did that thing and undo it if wrong&#x27;, which is critical for enterprise and regulated deployments.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.08601" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>WAND: Windowed Attention and Knowledge Distillation for Efficient Autoregressive Text-to-Speech Models</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Autoregressive TTS models suffer quadratic memory/compute scaling due to full self-attention over long audio token sequences. WAND replaces global attention with windowed local attention to cut this cost.</li>
+              <li>Combines windowed attention with knowledge distillation from a full-attention teacher model, recovering quality lost from the restricted attention window.</li>
+              <li>Targets production-grade TTS deployment where inference cost is a real constraint — a practical efficiency paper, not just a benchmark entry.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.08558" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Why Claude Code Max burns limits 40% faster with 20K less usable context</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>Gemma 4 audio with MLX</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Claude Code v2.1.100+ appears to silently inject ~20K tokens of system-side context into every request, consuming rate limits without appearing in your visible context window.</li>
-              <li>This means Max plan users are effectively getting less usable context per dollar than earlier versions — a meaningful regression for power users running parallel sessions.</li>
-              <li>Downgrading to v2.1.98 is reported as an immediate workaround until Anthropic clarifies the behavior.</li>
-              <li>The post uses proxy traffic analysis as evidence — not confirmed by Anthropic, but the methodology is sound and the impact is reproducible.</li>
+              <li>Provides a working `uv run` one-liner to transcribe audio on macOS using Google&#x27;s Gemma 4 E2B (10.28 GB) model via MLX and mlx-vlm — no separate install, fully local.</li>
+              <li>Gemma 4 E2B is a multimodal model; this recipe treats audio as a direct input modality rather than piping through a separate ASR step.</li>
+              <li>Practical starting point for anyone wanting offline, on-device audio transcription on Apple Silicon without standing up a server.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1sj8o9l/why_claude_code_max_burns_limits_40_faster_with/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Apr/12/mlx-audio/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Anthropic SDK Python v0.93.0 &amp; v0.94.0</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>Quoting Bryan Cantrill</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>v0.93.0 adds the beta advisor tool to the API — a new primitive for building agentic guidance and recommendation flows.</li>
-              <li>v0.94.0 extends Vertex AI support to the EU region, removing a key compliance blocker for European deployments.</li>
-              <li>Both releases shipped within 24 hours of each other, signaling a faster SDK release cadence heading into Q2 2026.</li>
+              <li>Cantrill&#x27;s observation: LLMs lack the programmer virtue of laziness — they have no incentive to minimize complexity or future maintenance burden, so they default to additive solutions.</li>
+              <li>The practical consequence is that unchecked LLM coding produces systems that grow in size and layered abstraction over time rather than converging to a clean, minimal implementation.</li>
+              <li>Frames a concrete challenge for agentic coding workflows: the tool&#x27;s output metric (task completion) is misaligned with engineering quality metrics (simplicity, maintainability).</li>
             </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.94.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>claude-code-action v1.0.93</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The official GitHub Action for Claude Code continues its rapid iteration cycle — v1.0.93 follows v1.0.92 within 24 hours.</li>
-              <li>Teams using Claude in CI/CD pipelines should stay current given the pace of changes; pinning to a specific version is advisable for stability.</li>
-              <li>The action is increasingly production-ready as a drop-in for automated code review and PR assistance workflows.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code-action/releases/tag/v1.0.93" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Speculative Decoding works great for Gemma 4 31B with E2B draft (+29% avg, +50% on code)</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Using Gemma 4&#x27;s 4.65B E2B model as a draft for the 31B target yields a 29% average throughput gain and 50% on code-heavy workloads — among the best speculative decoding results reported for this model family.</li>
-              <li>Tested on an RTX 5090 (32GB VRAM), showing the technique is viable on high-end consumer hardware without datacenter resources.</li>
-              <li>This is a near-free performance win for anyone already running Gemma 4 31B locally — if you have the smaller E2B model, enabling speculative decoding is a no-brainer.</li>
-            </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1sjct6a/speculative_decoding_works_great_for_gemma_4_31b/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Apr/13/bryan-cantrill/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -84,39 +113,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Anthropic&#x27;s Claude Mythos isn&#x27;t a sentient super-hacker — claims of &#x27;thousands&#x27; of severe zero-days rely on just 198 manual reviews</h3>
+              <h3>follow-up: anthropic quietly switched the default cache TTL from 1 hour to 5 minutes on april 2. here&#x27;s the data.</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A widely-shared piece argues that Anthropic&#x27;s marketing around Claude&#x27;s cybersecurity capabilities overstates the evidence — the &#x27;thousands of zero-days&#x27; framing traces back to a much smaller, manually-curated sample.</li>
-              <li>The discussion (90 comments) reflects growing scrutiny of AI capability claims as the industry matures — benchmark theater is becoming harder to sustain with a more technical user base.</li>
-              <li>For developers evaluating Claude for security tooling, this is a useful reminder to pressure-test vendor claims against primary sources before committing.</li>
+              <li>User analyzed JSONL session logs and confirmed that around April 2, 2026, Anthropic changed the default prompt cache TTL from 1 hour to 5 minutes for non-Max plan users.</li>
+              <li>With a 5-minute TTL, any pause longer than 5 minutes in a Claude Code session causes the entire context to expire and be re-uploaded as a fresh cache_write on the next turn — burning tokens and quota.</li>
+              <li>Max plan users retained the 1-hour TTL; the issue disproportionately hits API and lower-tier users who were never informed of the change.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1sjbsyg/anthropics_claude_mythos_isnt_a_sentient/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1sk3m12/followup_anthropic_quietly_switched_the_default/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Unsloth MiniMax M2.7 quants uploaded to Hugging Face (Q1 through BF16)</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>The creator of Claude Code notes on the current Caching Issue</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Unsloth&#x27;s quantized versions of MiniMax M2.7 are now live on Hugging Face, spanning Q1 through BF16 — covering every tier from ultra-low-VRAM to full-quality inference.</li>
-              <li>MiniMax M2.7 has been attracting strong benchmark interest; having Unsloth-quality GGUF quants available immediately lowers the barrier for local experimentation.</li>
-              <li>The 75-comment thread suggests high community demand — expect integration into LM Studio, Ollama, and similar frontends within days.</li>
+              <li>Boris (Claude Code creator) confirmed on GitHub Issues that Anthropic is aware of the cache TTL regression and is actively investigating.</li>
+              <li>Per Boris: leaving an agent session open too long causes cache misses that compound costs — consistent with the 5-minute TTL finding.</li>
+              <li>No ETA given for a fix, but official acknowledgment signals this is being treated as a real bug rather than intended behavior.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1sj7wc8/unsloth_minimax_m27_quants_just_finished/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1sk4wfx/the_creator_of_claude_code_notes_on_the_current/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>MiniMax M2.7 MMLU benchmarks on Mac: 88% at 63GB, 95% at 89GB</h3>
+              <h3>Claude isn&#x27;t dumber, it&#x27;s just not trying. Here&#x27;s how to fix it in Chat.</h3>
+              <span class="digest-source">r/ClaudeAI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Widely-upvoted post (740 points) arguing Claude&#x27;s perceived quality drop is a configuration issue, not a model degradation: Claude Code users can type `/effort max` to restore higher-effort responses.</li>
+              <li>Chat users without access to slash commands can add an explicit system prompt instructing the model to apply its full reasoning capacity.</li>
+              <li>Provides a concrete, testable workaround while the underlying effort-default behavior change remains unexplained officially.</li>
+            </ul>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1sjz1hg/claude_isnt_dumber_its_just_not_trying_heres_how/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Ryan Lee from MiniMax posts article on the license stating it&#x27;s mostly for API providers that did a poor job serving M2.1/M2.5 and may update the license for regular users!</h3>
               <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Community testing on Apple Silicon shows MiniMax M2.7 hitting 88% MMLU at 63GB and 95% at 89GB — the higher tier approaching Claude Sonnet 4.5 territory on a local machine.</li>
-              <li>M5 Max users running the 89GB variant are reportedly seeing ~50 tok/s generation and ~400 tok/s prompt processing — genuinely usable speeds for a model at this quality level.</li>
-              <li>This positions MiniMax M2.7 as a credible &#x27;frontier at home&#x27; option for Mac-first developers who don&#x27;t want cloud inference costs.</li>
+              <li>MiniMax&#x27;s licensing restrictions on M2.1/M2.5 were targeted at API resellers serving the model with poor quality, not at individual developers or local users.</li>
+              <li>Ryan Lee (MiniMax) signaled the license may be updated to explicitly carve out regular users — the restrictive language was an overcorrection rather than deliberate policy.</li>
+              <li>Relevant for anyone running MiniMax models locally: the legal risk is lower than the license text alone implied.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1sjakko/minimax_m27_mac_only_63gb_88_and_89gb_95_mmlu_200q/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1skabyf/ryan_lee_from_minimax_posts_article_on_the/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

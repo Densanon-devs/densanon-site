@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - April 12, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - April 13, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,68 +15,114 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 12, 2026</div>
+        <div class="digest-date-badge">April 13, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Embodied AI is having a big week — general-purpose physical task models, LLM-powered guide dogs, and haptic teleoperation rigs are all landing at once. Meanwhile the ROS 2 community keeps shipping, and MIT CSAIL&#x27;s director sketches out where the field is heading.</p>
+        <p class="digest-intro">Today&#x27;s digest centers on three converging themes: the race to make humanoid robots commercially real (Unitree hitting 10m/s sprint speed, Chery selling a $42K consumer unit), a wave of strong arXiv papers tackling fundamental manipulation and design problems, and national-scale investment bets on robotics infrastructure. Taiwan&#x27;s $629M startup program and Korea&#x27;s moves signal the industry layer is hardening around AI-driven automation in ways that go well beyond demos.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>LEGO: Latent-space Exploration for Geometry-aware Optimization of Humanoid Kinematic Design</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Accepted at ICRA 2026; addresses the lack of principled, automated methods for humanoid upper-body kinematic design — traditionally done by gut feel and manual iteration.</li>
+              <li>Learns a compact latent space from existing mechanical designs using screw-theory joint-axis representations and isometric manifold learning, making gradient-free design-space search tractable.</li>
+              <li>Loss function is derived directly from human motion data via retargeting and Procrustes analysis — no hand-crafted task objective needed, just existing motion capture data.</li>
+              <li>Demonstrates automated discovery of novel robot morphologies that could not be found through intuition-driven design, a concrete step toward hardware/motion co-optimization.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.08636" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Generative Simulation for Policy Learning in Physical Human-Robot Interaction</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>First text2sim2real pipeline for physical human-robot interaction: a natural language description generates a complete simulation environment (soft-body human model, scene layout, robot trajectories) with no manual setup.</li>
+              <li>LLMs and VLMs handle environment synthesis; policies trained via imitation learning on segmented point clouds from the synthetic data.</li>
+              <li>Zero-shot sim-to-real transfer validated on two assistive tasks — scratch assistance and bathing — achieving over 80% success rate in user studies despite unscripted human motion.</li>
+              <li>Directly attacks the data scarcity bottleneck in pHRI; the generative pipeline can produce large-scale diverse training datasets on demand rather than requiring costly physical demonstrations.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.08664" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Toward Hardware-Agnostic Quadrupedal World Models via Morphology Conditioning</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>First world model for quadrupedal locomotion that generalizes zero-shot to new robot morphologies — validated across Boston Dynamics Spot and Unitree Go1, which have meaningfully different kinematics.</li>
+              <li>Key design choice: explicitly condition the generative dynamics model on robot engineering specs via a physical morphology encoder, rather than implicit system identification which creates adaptation lag.</li>
+              <li>Rewards are normalized across embodiments, so the same trained model plans and behaves for robots it was not directly trained on without any retraining step.</li>
+              <li>Authors are candid that the model is a distribution-bounded interpolator within the quadrupedal family, not a universal physics engine — useful scope clarity for practitioners.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.08780" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Task-Aware Bimanual Affordance Prediction via VLM-Guided Semantic-Geometric Reasoning</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Solves the joint problem of contact-region localization and arm assignment in bimanual manipulation — geometry-only planners fail at arm allocation because it requires semantic task understanding.</li>
+              <li>Pipeline fuses multi-view RGB-D into a unified 3D scene, generates global 6-DoF grasp candidates, then uses VLM queries to filter by task-relevant affordance regions and assign left vs. right arm.</li>
+              <li>Evaluated on a dual-arm platform across nine real-world tasks in four categories (parallel manipulation, coordinated stabilization, tool use, human handover); consistently outperforms both geometric and semantic baselines.</li>
+              <li>Generalizes across object categories without category-specific training — VLM grounding provides the cross-category transfer capability that prior task-specific models could not.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.08726" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>In early April, Generalist AI unveiled GEN-1, a general-purpose AI model for mastery of simple physical tasks</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>Unitree&#x27;s H1 robot hits 10m/s sprint speed, getting close to 100M world record</h3>
+              <span class="digest-source">Hacker News Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GEN-1 is positioned as a foundation model for physical manipulation — the same &#x27;generalist&#x27; bet that worked in language is now being placed on embodied tasks.</li>
-              <li>A single model handling diverse simple physical tasks without task-specific retraining would dramatically compress the robot deployment cycle.</li>
-              <li>The accompanying technical blog and video demos make this more substantive than a press release — worth watching the transfer-to-hardware benchmarks closely.</li>
-              <li>If it holds up, this is the kind of upstream development that reshapes how downstream manipulation stacks are designed.</li>
+              <li>Unitree H1 (~62 kg, 80 cm combined leg length) achieved ~10 m/s — within 4% of Usain Bolt&#x27;s 100m average pace of 10.44 m/s — on a human-proportioned bipedal platform.</li>
+              <li>CEO Wang Xingxing publicly predicts breaking the 10-second 100m barrier by mid-2026, which would mean surpassing Bolt&#x27;s 9.58s world record on equivalent average speed.</li>
+              <li>Observers note the achievement demands tight integration across perception, actuation, and learned control policies — the control stack maturity is the meaningful signal, not just raw speed.</li>
+              <li>Multiple Chinese humanoid manufacturers (Unitree, Tien Kung Ultra, MirrorMe) are actively competing in robot sprinting, suggesting dynamic bipedal locomotion is maturing from lab curiosity to competitive benchmark.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1sjan8z/in_early_april_generalist_ai_unveiled_gen1_a/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.globaltimes.cn/page/202604/1358712.shtml" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Binghamton researchers create robotic guide dogs that walk — and talk</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Integrating LLMs directly into a quadruped for real-time natural-language interaction is a meaningful usability leap over button and gesture interfaces.</li>
-              <li>Accessibility robotics is an underserved niche — a talking guide dog addresses a genuine gap that commercial quadrupeds have not prioritized.</li>
-              <li>The work signals that LLM inference is becoming light enough to run on or alongside mobile robot hardware without a cloud dependency.</li>
-              <li>Expect this to accelerate similar human-robot dialogue work in assistive and service robot contexts.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/binghamton-researchers-create-robotic-guide-dogs-that-walk-and-talk/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Why Knowledge Retention is Becoming a Bottleneck in Robotics Engineering</h3>
+              <h3>Chinese automaker Chery begins selling humanoid robot to consumers for $42,000 each</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The pace of ROS, simulation, and ML tooling updates has outrun what individual engineers can track — institutional knowledge is becoming a competitive moat.</li>
-              <li>Teams that invest in internal documentation and knowledge systems will compound advantages as the field accelerates; those that do not will keep re-solving the same problems.</li>
-              <li>This is relevant to hiring strategy: onboarding time is growing because new hires inherit undocumented tribal knowledge alongside fast-moving stacks.</li>
-              <li>Points toward a gap in the tooling market — domain-specific robotics knowledge bases and co-pilots have a real opening here.</li>
+              <li>Chery&#x27;s robotics brand Aimoga listed its humanoid at 285,800 yuan (~$41,830) on JD.com — one of the first consumer-channel humanoid robot sales by a major automaker.</li>
+              <li>Current capabilities are dealership-focused: proactive greeting, vehicle walkthroughs, Q&amp;A, and structured demonstrations rather than general manipulation; 300+ distributor agreements signed.</li>
+              <li>Phased go-to-market: automotive showrooms first, then retail and public services, with residential use as a longer-term target.</li>
+              <li>A companion quadruped robot dog sells for 15,800 yuan (~$2,300), suggesting Chery is building a robotics product line rather than a one-off marketing stunt.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/04/12/why-knowledge-retention-is-becoming-a-bottleneck-in-robotics-engineering/100528/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/04/13/chinese-automaker-chery-begins-selling-humanoid-robot-to-consumers-for-42000-each/100544/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>IEEE calls for papers on autonomous optimization in networked AI</h3>
+              <h3>Taiwan launches national robotics center with $629 million startup funding plan</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>IEEE JSTSP is one of the higher-impact venues in signal processing — a special issue here will pull serious distributed AI and robotics research into one place.</li>
-              <li>The &#x27;evolutive optimization&#x27; framing suggests interest in systems that adapt their own objective functions, which is directly relevant to adaptive robot controllers.</li>
-              <li>Researchers targeting multi-robot coordination and swarm intelligence should treat this CFP as a submission opportunity and a signal of where grant funding is heading.</li>
+              <li>NT$20 billion ($629M) committed across 2026–2029, on top of an earlier NT$10B ($331M) subsidy program — total public commitment now exceeds $960M over the period.</li>
+              <li>The National Center for AI Robotics (NCAIR) operates under the National Institutes of Applied Research and is tasked with development, testing, and talent training; inaugurated by President Lai as part of the Ten AI Initiatives.</li>
+              <li>Explicit target: at least three new robotics startups by 2029, with focus on home care, high-risk industrial automation, and healthcare/hospitality — moving Taiwan beyond component supply into complete system integration.</li>
+              <li>Strategic driver is demographic: Taiwan&#x27;s aging population and workforce decline make domestic automation a national-security-level priority, not just an economic play.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/04/12/ieee-calls-for-papers-on-autonomous-optimization-in-networked-ai/100531/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/04/13/taiwan-launches-national-robotics-center-with-629-million-startup-funding-plan/100540/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -86,28 +132,16 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Running AIC on macOS Apple Silicon</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>ROS 2: The next generation for robust and scalable robotics applications</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The AIC challenge eval image is x86-only, which has been silently blocking Mac-based participants — this post documents the Rosetta and emulation workarounds that actually work.</li>
-              <li>Apple Silicon is now common hardware in robotics research labs, making x86-only Docker images a real friction point that the community needs to address upstream.</li>
-              <li>Practical setup guides like this lower the barrier for new entrants to robotics competitions and benchmarks, which matters for the health of the open-robotics ecosystem.</li>
+              <li>Replaces ROS 1&#x27;s centralized master node with DDS (Data Distribution Service) middleware — eliminating the single point of failure and enabling decentralized multi-robot deployments natively.</li>
+              <li>Real-time support with per-topic Quality of Service (QoS) controls lets engineers tune reliability vs. latency independently per data stream — critical for safety-critical actuation loops.</li>
+              <li>Built-in security layer (encryption, authentication, access control) addresses a fundamental gap in ROS 1 that was increasingly untenable as robots enter networked factory and medical environments.</li>
+              <li>Cross-platform support now covers Linux, Windows, and embedded targets — broadening deployment beyond research-lab Ubuntu setups to production-grade environments.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/running-aic-on-macos-apple-silicon/53960" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ROS 2 Pan Tilt Camera</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Full stack from CAD motor housing to micro-ROS firmware to Isaac ROS object detection to PID follower — a clean example of the modern ROS 2 integration pattern.</li>
-              <li>Using NVIDIA Isaac ROS for low-latency detection on a hobbyist-scale build shows how accessible GPU-accelerated perception has become.</li>
-              <li>The micro-ROS bridge between MCU and ROS 2 graph is a reusable pattern for any project needing hardware-level control without leaving the ROS ecosystem.</li>
-              <li>Open-source hardware and ROS 2 projects like this often become community reference builds — worth tracking if the author publishes CAD and firmware.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1sjgxh4/ros_2_pan_tilt_camera/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/04/13/ros-2-the-next-generation-for-robust-and-scalable-robotics-applications/100535/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -117,42 +151,16 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>MIT CSAIL Director Daniela Rus on the Future of Robotics</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>The &quot;Hand Farms&quot; of India: Fueling the AI Robot Revolution with Human Motion</h3>
+              <span class="digest-source">Hacker News Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Rus frames robotics as converging with biology — soft actuators, ML-analyzed animal communication, and bio-inspired morphology are all active CSAIL research threads.</li>
-              <li>The sperm whale ML project is a striking example of how robotics-grade sequence modeling is finding applications far outside traditional manipulation.</li>
-              <li>Her view of flexible, bio-inspired robots as the next frontier is a useful counterweight to the rigid humanoid hype cycle — compliance and adaptability may matter more than form factor.</li>
-              <li>Worth reading as a directional signal from one of the most influential labs in the field.</li>
+              <li>Data capture facilities in Bengaluru employ workers wearing head-mounted cameras to record first-person manipulation videos (towel folding, box stacking, utensil sorting) — the physical training data layer that robot foundation models depend on.</li>
+              <li>Objectways alone employs 2,000+ people producing hundreds of such videos daily; buyers include Scale AI (Meta-backed), Figure AI, and Micro1.</li>
+              <li>Workers earn $120–250/month for generating the embodied AI training data underpinning multi-billion-dollar robotics companies — the labor economics of the data pipeline are stark.</li>
+              <li>Highlights an under-discussed supply chain reality: the &#x27;data problem&#x27; in robotics is not only a sim-to-real transfer challenge, it is also a global human labor infrastructure operating largely out of public view.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1sjcj62/mit_csail_director_daniela_rus_on_the_future_of/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>PNP Robotics: Haptic Teleoperation for data collection.</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Haptic feedback during teleoperation significantly improves demonstration quality for imitation learning — better data collection directly improves policy performance.</li>
-              <li>Integrating the Haply Inverse3 with Franka robots creates a relatively accessible haptic teleoperation stack compared to custom force-feedback hardware.</li>
-              <li>Presented at the Embodied AI Conference, so this is being evaluated by the community actively pushing the data-collection frontier.</li>
-              <li>As robot learning pipelines scale, the quality of human-demonstrated data becomes the bottleneck — haptic teleoperation is one of the more credible paths to solving it.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1sj5dfk/pnp_robotics_haptic_teleoperation_for_data/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Found this open-source &#x27;Pixar lamp&#x27; while procrastinating today. the engineering under the hood is actually insane for a weekend build</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Built during a 48-hour Shanghai hackathon, this expressive articulated lamp shows what is possible with modern open-source robotics tooling in extremely compressed timelines.</li>
-              <li>The &#x27;personality through motion&#x27; design philosophy is directly applicable to service and companion robots where expressiveness affects user trust and engagement.</li>
-              <li>Hackathon demos that punch above their weight like this often become the seed of serious open-source projects — worth watching for a public repo release.</li>
-              <li>A good reminder that the community hardware bar keeps rising: weekend builds now routinely incorporate smooth inverse kinematics and expressive motion planning.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1sj9u8y/found_this_opensource_pixar_lamp_while/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://quasa.io/media/the-hidden-hand-farms-of-india-fueling-the-ai-robot-revolution-with-human-motion" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
