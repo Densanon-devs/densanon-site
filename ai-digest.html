@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - April 13, 2026 | Densanon</title>
+  <title>AI Morning Digest - April 14, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 13, 2026</div>
+        <div class="digest-date-badge">April 14, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest centers on infrastructure trust: Anthropic&#x27;s prompt cache silently regressed from a 1-hour to a 5-minute TTL in early March, inflating costs and quota usage for Claude Code users — and the creator has now acknowledged the issue publicly. On the research side, a new paper exposes a concrete safety alignment vulnerability in diffusion language models, and a formal analysis of how AI-generated text feeds back into training data offers a precise model of ecosystem drift. Rounding things out, Google&#x27;s Gemma 4 multimodal model gets a practical local-inference recipe via MLX.</p>
+        <p class="digest-intro">Today&#x27;s digest features a compelling look at AI adoption inside Big Tech (hint: it&#x27;s lagging), practical LLM calibration research, a clever local inference hardware hack, and a wave of Anthropic product news — including mid-chat model switching and a Claude Code auth bug.</p>
       </div>
     </section>
 
@@ -29,51 +29,42 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Re-Mask and Redirect: Exploiting Denoising Irreversibility in Diffusion Language Models</h3>
+              <h3>Self-Calibrating Language Models via Test-Time Discriminative Distillation</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Diffusion LMs align by assuming the denoising schedule is monotonic — committed tokens stay committed. The paper shows this assumption can be broken by re-introducing masks after commitment, bypassing safety filters entirely.</li>
-              <li>The attack is called &#x27;Re-Mask and Redirect&#x27;: the adversary forces the model to revisit already-decided tokens and steers them toward unsafe outputs without triggering the alignment guard.</li>
-              <li>This exposes a structural gap: safety alignment in autoregressive models doesn&#x27;t transfer automatically to diffusion-based architectures, which need their own denoising-aware defenses.</li>
+              <li>LLMs are systematically overconfident — they routinely express high certainty on questions they get wrong.</li>
+              <li>Proposes a test-time calibration method via discriminative distillation that requires no labeled validation data and holds up under distribution shifts.</li>
+              <li>Standard post-hoc calibration methods degrade when inputs differ from the validation set; this approach does not.</li>
+              <li>Directly applicable for anyone deploying LLMs in settings where confidence scores matter (RAG, risk-sensitive pipelines).</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.08557" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.09624" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Drift and selection in LLM text ecosystems</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Develops an exact analytical model of the feedback loop where LLM-generated text enters the public record, then gets trained on by future models — quantifying both &#x27;drift&#x27; (random divergence over generations) and &#x27;selection&#x27; (systematic bias amplification).</li>
-              <li>Shows that even small selection pressures on what text gets promoted accumulate into large distributional shifts across training generations, with the effect compounding non-linearly.</li>
-              <li>Provides theoretical grounding for the model collapse concern: the paper characterizes when the human/AI text mixture in training data stabilizes versus spirals.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2604.08554" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>OpenKedge: Governing Agentic Mutation with Execution-Bound Safety and Evidence Chains</h3>
+              <h3>Seven simple steps for log analysis in AI systems</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Identifies a core flaw in API-centric agentic architectures: probabilistic LLM agents execute state mutations (writes, deletes, API calls) without sufficient context or rollback guarantees.</li>
-              <li>Proposes OpenKedge, a protocol that binds each state mutation to an evidence chain — a log of the context and reasoning that authorized it — enabling audits and reversals.</li>
-              <li>Targets the gap between &#x27;agent did a thing&#x27; and &#x27;we can prove why the agent did that thing and undo it if wrong&#x27;, which is critical for enterprise and regulated deployments.</li>
+              <li>Presents a structured 7-step framework for analyzing logs produced by AI agents interacting with tools and users.</li>
+              <li>Useful for understanding model behavior, auditing agentic pipelines, and confirming evaluations ran as intended.</li>
+              <li>Most teams produce rich logs from agent runs but lack principled methods to extract insight — this paper fills that gap.</li>
+              <li>Relevant for anyone running multi-step agent workflows or building evaluation harnesses.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.08601" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.09563" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>WAND: Windowed Attention and Knowledge Distillation for Efficient Autoregressive Text-to-Speech Models</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>LABBench2: An Improved Benchmark for AI Systems Performing Biology Research</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Autoregressive TTS models suffer quadratic memory/compute scaling due to full self-attention over long audio token sequences. WAND replaces global attention with windowed local attention to cut this cost.</li>
-              <li>Combines windowed attention with knowledge distillation from a full-attention teacher model, recovering quality lost from the restricted attention window.</li>
-              <li>Targets production-grade TTS deployment where inference cost is a real constraint — a practical efficiency paper, not just a benchmark entry.</li>
+              <li>Updated benchmark for evaluating AI systems on real biology research tasks, not simplified toy problems.</li>
+              <li>Covers autonomous hypothesis generation and AI-assisted scientific discovery workflows.</li>
+              <li>Second iteration broadens task coverage and raises evaluation difficulty over the original LABBench.</li>
+              <li>A leading indicator of where agentic AI capability is being tested in serious scientific domains.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.08558" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.09554" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -83,27 +74,29 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Gemma 4 audio with MLX</h3>
+              <h3>Steve Yegge</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Provides a working `uv run` one-liner to transcribe audio on macOS using Google&#x27;s Gemma 4 E2B (10.28 GB) model via MLX and mlx-vlm — no separate install, fully local.</li>
-              <li>Gemma 4 E2B is a multimodal model; this recipe treats audio as a direct input modality rather than piping through a separate ASR step.</li>
-              <li>Practical starting point for anyone wanting offline, on-device audio transcription on Apple Silicon without standing up a server.</li>
+              <li>Steve Yegge reports on a conversation with a 20-year Google tech director: Google engineering&#x27;s internal AI adoption looks like John Deere — alarmingly low for the company that builds these tools.</li>
+              <li>Raises hard questions about the gap between the AI hype cycle and actual enterprise engineering adoption rates.</li>
+              <li>The internal friction reportedly comes from tool integration, trust, and workflows — not model capability.</li>
+              <li>Essential reading for anyone tracking whether AI is actually changing how large orgs ship software.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Apr/12/mlx-audio/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Apr/13/steve-yegge/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting Bryan Cantrill</h3>
+              <h3>Exploring the new `servo` crate</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Cantrill&#x27;s observation: LLMs lack the programmer virtue of laziness — they have no incentive to minimize complexity or future maintenance burden, so they default to additive solutions.</li>
-              <li>The practical consequence is that unchecked LLM coding produces systems that grow in size and layered abstraction over time rather than converging to a clean, minimal implementation.</li>
-              <li>Frames a concrete challenge for agentic coding workflows: the tool&#x27;s output metric (task completion) is misaligned with engineering quality metrics (simplicity, maintainability).</li>
+              <li>The Servo browser engine is now available as an embeddable Rust library on crates.io.</li>
+              <li>Simon tasked Claude Code with exploring the crate and building a CLI tool — a real-world agentic coding experiment on new, lightly documented code.</li>
+              <li>Claude Code successfully ramped up and produced a working tool, demonstrating agentic crate exploration as a practical workflow.</li>
+              <li>Useful reference for anyone considering embedding Servo or evaluating AI-assisted discovery of new Rust libraries.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Apr/13/bryan-cantrill/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Apr/13/servo-crate-exploration/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -113,51 +106,55 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>follow-up: anthropic quietly switched the default cache TTL from 1 hour to 5 minutes on april 2. here&#x27;s the data.</h3>
+              <h3>You can now switch models mid-chat</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>User analyzed JSONL session logs and confirmed that around April 2, 2026, Anthropic changed the default prompt cache TTL from 1 hour to 5 minutes for non-Max plan users.</li>
-              <li>With a 5-minute TTL, any pause longer than 5 minutes in a Claude Code session causes the entire context to expire and be re-uploaded as a fresh cache_write on the next turn — burning tokens and quota.</li>
-              <li>Max plan users retained the 1-hour TTL; the issue disproportionately hits API and lower-tier users who were never informed of the change.</li>
+              <li>Anthropic shipped mid-conversation model switching in the Claude web UI — 1,254 upvotes reflects genuine demand.</li>
+              <li>Lets users start on a faster/cheaper model and escalate to a more capable one without losing conversation context.</li>
+              <li>80 comments exploring real workflows: switching from Haiku to Sonnet mid-task when complexity increases.</li>
+              <li>A meaningful UX improvement aligned with how power users already reason about model selection.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1sk3m12/followup_anthropic_quietly_switched_the_default/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1skm9tw/you_can_now_switch_models_midchat/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The creator of Claude Code notes on the current Caching Issue</h3>
+              <h3>Claude has just fixed over-usage of their compute</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Boris (Claude Code creator) confirmed on GitHub Issues that Anthropic is aware of the cache TTL regression and is actively investigating.</li>
-              <li>Per Boris: leaving an agent session open too long causes cache misses that compound costs — consistent with the 5-minute TTL finding.</li>
-              <li>No ETA given for a fix, but official acknowledgment signals this is being treated as a real bug rather than intended behavior.</li>
+              <li>Claude Code v2.1.105 broke the terminal auth flow — users cannot paste the auth code to log in.</li>
+              <li>Workaround: downgrade to v2.1.104 until Anthropic ships a fix.</li>
+              <li>Community frustration is high given the timing — many users hit this on a workday morning.</li>
+              <li>Anthropic typically turns around auth regressions quickly; watch the thread for a patch release.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1sk4wfx/the_creator_of_claude_code_notes_on_the_current/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1skzbiw/claude_has_just_fixed_overusage_of_their_compute/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Claude isn&#x27;t dumber, it&#x27;s just not trying. Here&#x27;s how to fix it in Chat.</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Widely-upvoted post (740 points) arguing Claude&#x27;s perceived quality drop is a configuration issue, not a model degradation: Claude Code users can type `/effort max` to restore higher-effort responses.</li>
-              <li>Chat users without access to slash commands can add an explicit system prompt instructing the model to apply its full reasoning capacity.</li>
-              <li>Provides a concrete, testable workaround while the underlying effort-default behavior change remains unexplained officially.</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1sjz1hg/claude_isnt_dumber_its_just_not_trying_heres_how/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Ryan Lee from MiniMax posts article on the license stating it&#x27;s mostly for API providers that did a poor job serving M2.1/M2.5 and may update the license for regular users!</h3>
+              <h3>24/7 Headless AI Server on Xiaomi 12 Pro (Snapdragon 8 Gen 1 + Ollama/Gemma4)</h3>
               <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>MiniMax&#x27;s licensing restrictions on M2.1/M2.5 were targeted at API resellers serving the model with poor quality, not at individual developers or local users.</li>
-              <li>Ryan Lee (MiniMax) signaled the license may be updated to explicitly carve out regular users — the restrictive language was an overcorrection rather than deliberate policy.</li>
-              <li>Relevant for anyone running MiniMax models locally: the legal risk is lower than the license text alone implied.</li>
+              <li>User converted a Xiaomi 12 Pro into a dedicated local AI inference node running Ollama with Gemma 4.</li>
+              <li>Flashed LineageOS to strip Android UI and bloat, freeing ~9GB RAM for LLM compute — a clever low-cost hardware repurpose.</li>
+              <li>Runs fully headless 24/7 with manual network configuration and no display required.</li>
+              <li>A concrete blueprint for cheap always-on local LLM servers from recycled Android hardware.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1skabyf/ryan_lee_from_minimax_posts_article_on_the/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1sl6931/247_headless_ai_server_on_xiaomi_12_pro/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Please stop using AI for posts and showcasing your completely vibe coded projects</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Top post on r/LocalLLaMA this cycle (817 upvotes, 270 comments) calling out AI-generated content flooding the subreddit.</li>
+              <li>Community tension between AI-assisted project showcases and the expectation of genuine human engagement and insight.</li>
+              <li>As AI tooling matures, authenticity and human curation are becoming real differentiators in technical communities.</li>
+              <li>A cultural signal worth tracking: where the local-AI enthusiast community draws lines on AI-generated participation.</li>
+            </ul>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1skt002/please_stop_using_ai_for_posts_and_showcasing/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

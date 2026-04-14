@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - April 13, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - April 14, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 13, 2026</div>
+        <div class="digest-date-badge">April 14, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest centers on three converging themes: the race to make humanoid robots commercially real (Unitree hitting 10m/s sprint speed, Chery selling a $42K consumer unit), a wave of strong arXiv papers tackling fundamental manipulation and design problems, and national-scale investment bets on robotics infrastructure. Taiwan&#x27;s $629M startup program and Korea&#x27;s moves signal the industry layer is hardening around AI-driven automation in ways that go well beyond demos.</p>
+        <p class="digest-intro">Today&#x27;s digest spans the full stack: VLA model research pushing language-grounded robot control, real warehouse deployments going fully autonomous, and a wave of ROS 2 tooling updates including Transitive 2.0 and a major OSRA strategy reveal.</p>
       </div>
     </section>
 
@@ -29,55 +29,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LEGO: Latent-space Exploration for Geometry-aware Optimization of Humanoid Kinematic Design</h3>
+              <h3>ProGAL-VLA: Grounded Alignment through Prospective Reasoning in Vision-Language-Action Models</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Accepted at ICRA 2026; addresses the lack of principled, automated methods for humanoid upper-body kinematic design — traditionally done by gut feel and manual iteration.</li>
-              <li>Learns a compact latent space from existing mechanical designs using screw-theory joint-axis representations and isometric manifold learning, making gradient-free design-space search tractable.</li>
-              <li>Loss function is derived directly from human motion data via retargeting and Procrustes analysis — no hand-crafted task objective needed, just existing motion capture data.</li>
-              <li>Demonstrates automated discovery of novel robot morphologies that could not be found through intuition-driven design, a concrete step toward hardware/motion co-optimization.</li>
+              <li>Addresses a key failure mode in VLA models: relying on visual shortcuts rather than actually following language instructions.</li>
+              <li>ProGAL-VLA adds prospective grounding — the model reasons about future states before acting, improving instruction sensitivity.</li>
+              <li>Relevant to anyone building generalist robot agents on top of VLA foundations.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.08636" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.09824" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Generative Simulation for Policy Learning in Physical Human-Robot Interaction</h3>
+              <h3>RoboLab: A High-Fidelity Simulation Benchmark for Analysis of Task Generalist Policies</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>First text2sim2real pipeline for physical human-robot interaction: a natural language description generates a complete simulation environment (soft-body human model, scene layout, robot trajectories) with no manual setup.</li>
-              <li>LLMs and VLMs handle environment synthesis; policies trained via imitation learning on segmented point clouds from the synthetic data.</li>
-              <li>Zero-shot sim-to-real transfer validated on two assistive tasks — scratch assistance and bathing — achieving over 80% success rate in user studies despite unscripted human motion.</li>
-              <li>Directly attacks the data scarcity bottleneck in pHRI; the generative pipeline can produce large-scale diverse training datasets on demand rather than requiring costly physical demonstrations.</li>
+              <li>Existing sim benchmarks saturate too fast and don&#x27;t test true generalization — RoboLab is designed to address that gap.</li>
+              <li>Targets foundation model evaluation for robotics, where rapid performance saturation has been a persistent problem.</li>
+              <li>High-fidelity sim environment aimed at separating genuinely general policies from overfit ones.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.08664" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.09860" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Toward Hardware-Agnostic Quadrupedal World Models via Morphology Conditioning</h3>
+              <h3>Kinematics of continuum planar grasping</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>First world model for quadrupedal locomotion that generalizes zero-shot to new robot morphologies — validated across Boston Dynamics Spot and Unitree Go1, which have meaningfully different kinematics.</li>
-              <li>Key design choice: explicitly condition the generative dynamics model on robot engineering specs via a physical morphology encoder, rather than implicit system identification which creates adaptation lag.</li>
-              <li>Rewards are normalized across embodiments, so the same trained model plans and behaves for robots it was not directly trained on without any retraining step.</li>
-              <li>Authors are candid that the model is a distribution-bounded interpolator within the quadrupedal family, not a universal physics engine — useful scope clarity for practitioners.</li>
+              <li>Analytical framework for modeling how soft continuum arms grasp planar objects using smooth curve geometry.</li>
+              <li>Bridges soft robotics and formal kinematics — useful for gripper design and simulation of compliant manipulators.</li>
+              <li>Formulates the grasp problem as a kinematic constraint, enabling geometric analysis of contact configurations.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.08780" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Task-Aware Bimanual Affordance Prediction via VLM-Guided Semantic-Geometric Reasoning</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Solves the joint problem of contact-region localization and arm assignment in bimanual manipulation — geometry-only planners fail at arm allocation because it requires semantic task understanding.</li>
-              <li>Pipeline fuses multi-view RGB-D into a unified 3D scene, generates global 6-DoF grasp candidates, then uses VLM queries to filter by task-relevant affordance regions and assign left vs. right arm.</li>
-              <li>Evaluated on a dual-arm platform across nine real-world tasks in four categories (parallel manipulation, coordinated stabilization, tool use, human handover); consistently outperforms both geometric and semantic baselines.</li>
-              <li>Generalizes across object categories without category-specific training — VLM grounding provides the cross-category transfer capability that prior task-specific models could not.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2604.08726" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.09800" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -87,42 +71,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Unitree&#x27;s H1 robot hits 10m/s sprint speed, getting close to 100M world record</h3>
-              <span class="digest-source">Hacker News Robotics</span>
+              <h3>Locus Robotics launches Locus Array for fully autonomous fulfillment</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Unitree H1 (~62 kg, 80 cm combined leg length) achieved ~10 m/s — within 4% of Usain Bolt&#x27;s 100m average pace of 10.44 m/s — on a human-proportioned bipedal platform.</li>
-              <li>CEO Wang Xingxing publicly predicts breaking the 10-second 100m barrier by mid-2026, which would mean surpassing Bolt&#x27;s 9.58s world record on equivalent average speed.</li>
-              <li>Observers note the achievement demands tight integration across perception, actuation, and learned control policies — the control stack maturity is the meaningful signal, not just raw speed.</li>
-              <li>Multiple Chinese humanoid manufacturers (Unitree, Tien Kung Ultra, MirrorMe) are actively competing in robot sprinting, suggesting dynamic bipedal locomotion is maturing from lab curiosity to competitive benchmark.</li>
+              <li>Locus Array completes entire fulfillment workflows with zero manual intervention — a live commercial launch, not a concept.</li>
+              <li>Already deployed in production at DHL and other customers.</li>
+              <li>Signals continued push toward lights-out warehouse automation in the logistics sector.</li>
             </ul>
-            <a href="https://www.globaltimes.cn/page/202604/1358712.shtml" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/locus-robotics-launches-locus-array-for-fully-autonomous-fulfillment/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Chinese automaker Chery begins selling humanoid robot to consumers for $42,000 each</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>AGIBOT launches Genie Studio Agent zero-code application platform for robots</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Chery&#x27;s robotics brand Aimoga listed its humanoid at 285,800 yuan (~$41,830) on JD.com — one of the first consumer-channel humanoid robot sales by a major automaker.</li>
-              <li>Current capabilities are dealership-focused: proactive greeting, vehicle walkthroughs, Q&amp;A, and structured demonstrations rather than general manipulation; 300+ distributor agreements signed.</li>
-              <li>Phased go-to-market: automotive showrooms first, then retail and public services, with residential use as a longer-term target.</li>
-              <li>A companion quadruped robot dog sells for 15,800 yuan (~$2,300), suggesting Chery is building a robotics product line rather than a one-off marketing stunt.</li>
+              <li>Full lifecycle software platform for robots — from development through deployment — requiring no code.</li>
+              <li>Targets operators and integrators who need to configure robot behavior without deep software expertise.</li>
+              <li>Positions AGIBOT as a platform play beyond just hardware.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/04/13/chinese-automaker-chery-begins-selling-humanoid-robot-to-consumers-for-42000-each/100544/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/agibot-launches-genie-studio-agent-zero-code-application-platform-for-robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Taiwan launches national robotics center with $629 million startup funding plan</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Pickle Robot to share lessons learned from taking robots out of the lab and into the field</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NT$20 billion ($629M) committed across 2026–2029, on top of an earlier NT$10B ($331M) subsidy program — total public commitment now exceeds $960M over the period.</li>
-              <li>The National Center for AI Robotics (NCAIR) operates under the National Institutes of Applied Research and is tasked with development, testing, and talent training; inaugurated by President Lai as part of the Ten AI Initiatives.</li>
-              <li>Explicit target: at least three new robotics startups by 2029, with focus on home care, high-risk industrial automation, and healthcare/hospitality — moving Taiwan beyond component supply into complete system integration.</li>
-              <li>Strategic driver is demographic: Taiwan&#x27;s aging population and workforce decline make domestic automation a national-security-level priority, not just an economic play.</li>
+              <li>Founder and CTO will detail the practical gap between lab performance and commercial viability for warehouse robots at the Robotics Summit.</li>
+              <li>Pickle Robot has hands-on experience with the messy realities of unstructured warehouse environments.</li>
+              <li>Useful signal for anyone building or evaluating real-world robot deployments.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/04/13/taiwan-launches-national-robotics-center-with-629-million-startup-funding-plan/100540/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/pickle-robot-to-share-lessons-learned-from-taking-robots-out-of-the-lab-and-into-the-field/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -132,16 +113,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ROS 2: The next generation for robust and scalable robotics applications</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>OSRA announces technology strategy for 2026</h3>
+              <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Replaces ROS 1&#x27;s centralized master node with DDS (Data Distribution Service) middleware — eliminating the single point of failure and enabling decentralized multi-robot deployments natively.</li>
-              <li>Real-time support with per-topic Quality of Service (QoS) controls lets engineers tune reliability vs. latency independently per data stream — critical for safety-critical actuation loops.</li>
-              <li>Built-in security layer (encryption, authentication, access control) addresses a fundamental gap in ROS 1 that was increasingly untenable as robots enter networked factory and medical environments.</li>
-              <li>Cross-platform support now covers Linux, Windows, and embedded targets — broadening deployment beyond research-lab Ubuntu setups to production-grade environments.</li>
+              <li>Open Robotics Strategy Alliance published its full 2026 technology strategy document.</li>
+              <li>Defines long-term aspirational goals and specific strategic initiatives across all OSRA projects.</li>
+              <li>Worth reading for anyone tracking the direction of open-source robotics infrastructure.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/04/13/ros-2-the-next-generation-for-robust-and-scalable-robotics-applications/100535/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/osra-announces-technology-strategy-for-2026/54010" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Transitive Robotics announces Transitive 2.0 open-source robotics framework</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Adds ClickHouse for time-series storage, Grafana for visualization, and Alertmanager for custom alerting.</li>
+              <li>Designed to help scale growing robot fleets with production-grade observability tooling.</li>
+              <li>Significant upgrade for fleet monitoring use cases — open-source full-stack robotics framework.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/transitive-robotics-announces-transitive-2-0-open-source-robotics-framework/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>New Packages for Jazzy Jalisco 2026-04-13</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>150 new packages and 540 updates landed in ROS 2 Jazzy Jalisco in the latest sync.</li>
+              <li>Tagged as jazzy/2026-04-13 for reproducible builds.</li>
+              <li>Worth checking if any of your dependencies were updated.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/new-packages-for-jazzy-jalisco-2026-04-13/54004" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>RobotCAD 10.5.0 adapted to FreeCAD 1.1 AppImage</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>RobotCAD is a FreeCAD workbench that generates URDF packages for ROS 2 with Gazebo/RViz launchers included.</li>
+              <li>Version 10.5.0 brings compatibility with FreeCAD 1.1 AppImage, unlocking new FreeCAD 1.1 features.</li>
+              <li>Useful for teams doing mechanical design and ROS integration without a separate CAD-to-URDF pipeline.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/robotcad-10-5-0-adapted-to-freecad-1-1-appimage/53994" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -151,16 +167,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The &quot;Hand Farms&quot; of India: Fueling the AI Robot Revolution with Human Motion</h3>
+              <h3>Thermite: The First Commercial Firefighting Robot Sold in the U.S.</h3>
               <span class="digest-source">Hacker News Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Data capture facilities in Bengaluru employ workers wearing head-mounted cameras to record first-person manipulation videos (towel folding, box stacking, utensil sorting) — the physical training data layer that robot foundation models depend on.</li>
-              <li>Objectways alone employs 2,000+ people producing hundreds of such videos daily; buyers include Scale AI (Meta-backed), Figure AI, and Micro1.</li>
-              <li>Workers earn $120–250/month for generating the embodied AI training data underpinning multi-billion-dollar robotics companies — the labor economics of the data pipeline are stark.</li>
-              <li>Highlights an under-discussed supply chain reality: the &#x27;data problem&#x27; in robotics is not only a sim-to-real transfer challenge, it is also a global human labor infrastructure operating largely out of public view.</li>
+              <li>Thermite by Howe &amp; Howe Technologies is the first commercially sold firefighting robot in the U.S.</li>
+              <li>Designed to operate in conditions too dangerous for human firefighters, including structure fires and wildland-urban interface events.</li>
+              <li>A real-world safety robotics deployment, not a research prototype.</li>
             </ul>
-            <a href="https://quasa.io/media/the-hidden-hand-farms-of-india-fueling-the-ai-robot-revolution-with-human-motion" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.howeandhowe.com/civil/thermite" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

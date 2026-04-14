@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - April 13, 2026 | Densanon</title>
+  <title>Computation Morning Digest - April 14, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,138 +15,149 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 13, 2026</div>
+        <div class="digest-date-badge">April 14, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Linux 7.0 ships today with self-healing XFS, a new fault-tolerant filesystem proposal (FTRFS), Btrfs performance wins, and a 3-year-old out-of-bounds certificate vulnerability finally patched. On the hardware side, HighPoint&#x27;s CopprLink delivers full PCIe 5.0 x16 bandwidth to an RTX 5090 externally — achieving near-native performance — while Intel&#x27;s Arrow Lake refresh earns a rare 50-hour retest after anomalous benchmark results. The U.S. Bureau of Industry and Security has shed 20% of its chip-export licensing staff, creating a real administrative bottleneck on Nvidia and AMD AI accelerator approvals.</p>
+        <p class="digest-intro">Today&#x27;s computation digest features substantive semiconductor policy data, a strong wave of Linux 7.1 architecture improvements (ARM64 NEON storage, AMD power management, T10 data integrity), and meaningful GPU driver advances in Mesa and GreenBoost. The US-China chipmaking subsidy gap and a major OpenSSL 4.0 release round out a hardware-heavy day.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Hardware &amp; Chips</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>&#x27;CopprLink&#x27; destroys every eGPU standard in new test, achieves near-native-level performance with an RTX 5090 — setup requires $2,300 worth of additional hardware</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>CopprLink is HighPoint&#x27;s PCIe 5.0 x16 external GPU interconnect — it delivers the full bandwidth of a native motherboard slot over a copper cable, compared to Thunderbolt 5 eGPU setups limited to PCIe 4.0 x4 (~8 GB/s).</li>
-              <li>An RTX 5090 in the CopprLink enclosure matched the benchmark numbers of the same card plugged directly into the motherboard — the first external GPU setup to reach native-parity performance.</li>
-              <li>The barrier is cost: a $1,300 HighPoint enclosure plus a $1,000 PCIe 5.0 host adapter card are required, placing this firmly in enterprise and high-end workstation territory.</li>
-              <li>For rendering farms, ML inference nodes, or dense rack builds where hot-swapping GPUs without opening chassis has operational value, this bandwidth parity changes the viability calculus for external GPU architectures.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/gpus/copprlink-destroys-every-egpu-standard-in-new-test-achieves-near-native-level-performance-with-an-rtx-5090-setup-requires-usd2-300-worth-of-additional-hardware" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Why we spent 50+ hours retesting Intel&#x27;s Core Ultra 270K Plus and 250K Plus</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The Core Ultra 270K Plus and 250K Plus are Arrow Lake refreshes whose initial review results were anomalously high — Tom&#x27;s Hardware ran the full benchmark suite again from scratch to validate them.</li>
-              <li>After 50+ hours of retesting the results held: the Plus variants genuinely outperform their non-Plus predecessors by a significant margin, suggesting Intel&#x27;s microcode and firmware tuning extracted larger gains from the same Arrow Lake silicon than expected.</li>
-              <li>The article is also a useful case study in modern CPU benchmark fragility — BIOS revisions, power limit settings, and Windows scheduler state can shift scores enough to trigger a full re-review.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/why-we-spent-50-hours-retesting-intels-core-ultra-270k-plus-and-250k-plus" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Mesa 26.1 RadeonSI Driver Lands Improvement For AMD APUs With Rusticl</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Mesa&#x27;s Rusticl OpenCL 3.0 driver gained a RadeonSI fix correcting improper behavior on AMD APUs and SoCs with integrated Radeon graphics — relevant for Ryzen AI, Phoenix, and Hawk Point class SoCs.</li>
-              <li>This is the primary open-source OpenCL path for AMD APU-based edge and embedded compute workloads; the fix lands ahead of the Mesa 26.1 release and will propagate to distros automatically.</li>
-              <li>Rusticl is Mesa&#x27;s Rust-based OpenCL implementation and the long-term replacement for the older Clover driver — APU support quality directly affects the viability of open-driver OpenCL for ML and compute on integrated graphics.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Mesa-26.1-RadeonSI-Rusticl-APUs" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>FTRFS: New Fault-Tolerant File-System Proposed For Linux</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>FTRFS is a new Linux filesystem proposal focused on fault tolerance — its initial patch series hit the mailing list today for community review, positioning it as a more serious proposal than recent efforts like VMUFAT.</li>
-              <li>The fault-tolerant design angle targets use cases where data integrity under failure conditions is paramount (embedded systems, storage appliances, safety-critical compute), territory where ext4 and Btrfs are engineered for performance and flexibility rather than strict fault isolation.</li>
-              <li>As a brand-new proposal still in RFC stage, FTRFS will need extensive review before any merge window consideration — but its framing as a purpose-built fault-tolerant FS is a notable gap it is trying to fill in the Linux storage stack.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/FTRFS-Linux-File-System" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux Out-Of-Bounds Access Fixed For Unprivileged Users With Specially Crafted Certs</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>An out-of-bounds memory access bug in the Linux kernel&#x27;s certificate handling subsystem has existed in mainline for three years — exploitable by an unprivileged local user submitting a specially crafted certificate to the kernel.</li>
-              <li>Local privilege escalation via kernel OOB bugs is a well-understood attack class; a three-year window in mainline means the vulnerable code has been in stable distro kernels across multiple LTS releases.</li>
-              <li>The fix is now merged; systems administrators running multi-tenant or untrusted-user Linux environments should treat this as a priority patch cycle.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-OOB-Special-Certificate" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Industry &amp; HPC</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.0 Released With New Hardware Support, Optimizations &amp; Self-Healing XFS</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Linux 7.0 is a major version bump triggered by Torvalds&#x27; convention of incrementing after X.19 — the number reflects cycle cadence, not a singular architectural break, but the release is feature-packed.</li>
-              <li>Headline storage improvement is self-healing XFS, which adds online repair capabilities that allow XFS volumes to fix detected metadata corruption without unmounting — a meaningful reliability upgrade for production storage deployments.</li>
-              <li>The release also includes new hardware support and driver optimizations across the board; the Linux 7.1 merge window opens immediately, with early indications of heavy AMD and Intel GPU/platform driver work queued.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.0-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Btrfs Brings Performance Improvements, Shutdown ioctl Stable With Linux 7.1</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Btrfs in Linux 7.1 receives another round of performance optimizations continuing the multi-cycle effort to close the throughput gap with ext4 on common workloads.</li>
-              <li>The shutdown ioctl — which allows userspace to cleanly stop a Btrfs filesystem without unmounting — graduates from experimental to stable, making it safe to use in production tooling and container orchestration environments.</li>
-              <li>Btrfs remains the primary CoW filesystem for Linux desktops (default on Fedora, openSUSE) and continues gaining ground in server contexts; these 7.1 changes will land in distros within the next two kernel release cycles.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Btrfs-Linux-7.1" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Approvals for Nvidia and AMD AI chip exports to China stall under government bottleneck — 20% staff turnover hobbles Bureau of Industry and Security</h3>
+              <h3>China has spent 3.6 times more than the US on chipmaking subsidies over the past decade — $142 billion and counting, easily outweighs CHIPS Act</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The BIS licensing office that vets AI accelerator exports has lost roughly one-fifth of its staff over the past year, creating a bottleneck severe enough that Under Secretary Jeffrey Kessler is reportedly personally signing off on nearly every license.</li>
-              <li>The practical consequence is processing delays on export licenses for Nvidia and AMD AI chips to China — including approvals for non-restricted buyers — creating supply chain uncertainty for data-center operators and cloud providers.</li>
-              <li>This administrative capacity collapse layers unpredictable bureaucratic delay on top of existing policy-level restrictions, complicating procurement timelines for any organization whose hardware sourcing touches U.S.-China chip trade.</li>
+              <li>China deployed ~$142B in semiconductor subsidies from 2014–2023 vs. $39B committed under the US CHIPS Act — a 3.6x gap.</li>
+              <li>China&#x27;s subsidy base covers both advanced and mature node fabs at massive scale, while US policy focuses narrowly on leading-edge manufacturing.</li>
+              <li>The data raises structural questions about long-term capacity and technology leadership outside China over the next decade.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/us-export-control-agency-has-lost-nearly-a-fifth-of-its-licensing-staff" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/china-spending-3-6-times-more-than-the-us-on-chipmaking-subsidies" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NZXT to cough up $3.45 million over &#x27;predatory&#x27; Flex PC rental scheme in RICO class-action settlement — in-debt customers to get up to $5,000 of relief, eligible renters to be granted ownership</h3>
+              <h3>Half of all US employees now use artificial intelligence at work, crossing landmark threshold for first time — Gallup data shows daily and weekly usage hitting all-time high of 28% in Q1 2026, with 65% feeling positive about its impact on productivity</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NZXT&#x27;s Flex program was a PC rental-to-own scheme that drew a RICO (racketeering) class-action — not just a consumer protection claim — after allegedly using deceptive financing terms, hidden fees, and marketing tactics targeting minors.</li>
-              <li>The $3.45M settlement provides up to $5,000 in relief per customer who ended up in debt under the scheme, and converts eligible active rentals to outright ownership of the hardware.</li>
-              <li>RICO certification requires courts to find a plausible pattern of organized deceptive conduct — getting this far signals the allegations were substantiated, and sets a precedent for how predatory hardware financing schemes can be prosecuted.</li>
+              <li>50% of employed US adults now use AI at least once per year — a landmark milestone per Gallup&#x27;s Q1 2026 survey.</li>
+              <li>Daily or weekly AI usage reached 28%, an all-time high, indicating mainstream workplace integration.</li>
+              <li>65% of users report a positive productivity impact, suggesting real-world value is outpacing hype at the workforce level.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/nzxt-to-cough-up-usd3-45-million-over-predatory-flex-pc-rental-scheme-in-rico-class-action-settlement-in-debt-customers-to-get-up-to-usd5-000-of-relief-eligible-renters-to-be-granted-ownership" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/half-of-all-us-employees-now-use-artificial-intelligence-at-work-crossing-landmark-threshold-for-first-time-gallup-data-shows-daily-and-weekly-usage-hitting-all-time-high-of-28-percent-in-q1-2026-with-65-percent-feeling-positive-about-its-impact-on-productivity" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Hardware &amp; Chips</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.1 Lands ARM64 NEON-Accelerated CRC64-NVMe For ~6x Improvement</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>ARM64-optimized CRC64-NVMe merged for Linux 7.1 delivers roughly 6x faster checksum performance on ARM hardware.</li>
+              <li>NEON SIMD acceleration enables the speedup with no correctness tradeoff — same integrity guarantees, much lower CPU overhead.</li>
+              <li>Particularly impactful for ARM-based servers (Ampere, AWS Graviton) running high-throughput NVMe storage workloads.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.1-Fast-ARM64-CRC64-NVMe" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AMD Ready With CPPC Performance Priority &amp; Dynamic/Raw EPP In Linux 7.1</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Linux 7.1 merges AMD CPPC (Collaborative Processor Performance Control) performance priority and dynamic EPP (Energy Performance Preference) support.</li>
+              <li>Raw EPP mode lets workloads express fine-grained power/performance intent directly, bypassing coarse governor abstractions.</li>
+              <li>Improves responsiveness and efficiency for AMD Ryzen and EPYC systems on Linux without manual tuning workarounds.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.1-Power-Management" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.1 Revamps T10 PI Data Integrity Handling For Better Read Performance</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Linux 7.1 overhauls T10 PI (Protection Information) code used for generating and verifying storage data integrity.</li>
+              <li>Refactored code is cleaner and enables measurably better read performance by reducing overhead on integrity-checked storage paths.</li>
+              <li>Relevant for enterprise NVMe and SAS/SCSI deployments using end-to-end data protection features.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.1-Revamps-T10-PI" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Mesa 26.1 RADV Driver Merges Vulkan Descriptor Heap As Big Improvement For Steam Play</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Mesa RADV merges VK_EXT_descriptor_heap, a key Vulkan extension that improves DXVK and VKD3D-Proton compatibility on AMD GPUs.</li>
+              <li>Direct impact on Steam Play (Proton) — Windows games translated through DX12/DX11 to Vulkan get a notable compatibility and performance boost.</li>
+              <li>Some DX12 titles previously had rendering issues or slow paths on Linux due to missing descriptor heap support.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/RADV-Merges-Descriptor-Heap" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GreenBoost Memory Orchestrator For NVIDIA GPUs Introduces GreenBoost-Proton For Gaming</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>GreenBoost-Proton extends open-source NVIDIA vRAM tiering to gaming workloads via Proton, beyond its original CUDA/LLM inference focus.</li>
+              <li>System RAM and NVMe storage augment GPU vRAM, enabling larger game assets or concurrent AI inference on cards with limited VRAM.</li>
+              <li>Especially relevant for 8–12GB VRAM cards running memory-heavy games or local LLM inference simultaneously.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/GreenBoost-Proton-NVIDIA-vRAM" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>OpenSSL 4.0 Released With Encrypted Client Hello, RFC 8998 Support</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>OpenSSL 4.0 is a major release of the world&#x27;s most widely deployed TLS and cryptography library.</li>
+              <li>Encrypted Client Hello (ECH) hides the SNI hostname from passive observers — a meaningful privacy and censorship-resistance improvement for TLS connections.</li>
+              <li>RFC 8998 adds ShangMi (SM2/SM3/SM4) cipher suite support for compliance with China-region cryptographic requirements.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/OpenSSL-4.0-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Alienware AW2726DM 27-inch QHD 240 Hz QD-OLED gaming monitor review: A price breakthrough for desktop OLED</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Alienware&#x27;s AW2726DM brings QD-OLED panel technology — previously limited to $500+ monitors — down to a $350 opening price.</li>
+              <li>Specs include QHD resolution, 240 Hz refresh, Adaptive-Sync, HDR10, and wide color gamut on a 27-inch panel.</li>
+              <li>This pricing shift signals QD-OLED is entering mass-market territory, likely to pressure competing IPS and VA panel vendors.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/monitors/gaming-monitors/alienware-aw2726dm-27-inch-qhd-240-hz-qd-oled-gaming-monitor-review" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Veteran Windows dev shows off AI running on 47-year-old PDP11 with 6 MHz CPU and 64KB of RAM — &#x27;gloriously absurd&#x27; project runs transformer model written in PDP-11 assembly language</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A veteran developer hand-wrote a transformer neural network in PDP-11 assembly and ran it on the 47-year-old 6 MHz minicomputer with 64KB of RAM.</li>
+              <li>Demonstrates the mathematical minimalism of early transformer architectures — core attention fits within extreme memory and compute constraints.</li>
+              <li>A fun proof-of-concept that underscores how far hardware has come and how lean ML fundamentals can be when stripped to the bare minimum.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/veteran-windows-dev-shows-off-ai-running-on-47-year-old-pdp11-with-6-mhz-cpu-and-64kb-of-ram-gloriously-absurd-project-runs-transformer-model-written-in-pdp-11-assembly-language" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
