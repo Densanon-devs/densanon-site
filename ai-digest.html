@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - April 14, 2026 | Densanon</title>
+  <title>AI Morning Digest - April 18, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 14, 2026</div>
+        <div class="digest-date-badge">April 18, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest features a compelling look at AI adoption inside Big Tech (hint: it&#x27;s lagging), practical LLM calibration research, a clever local inference hardware hack, and a wave of Anthropic product news — including mid-chat model switching and a Claude Code auth bug.</p>
+        <p class="digest-intro">Today&#x27;s digest is dominated by Claude Opus 4.7 and competing releases: Anthropic&#x27;s new flagship landed alongside Qwen3.6-35B-A3B and Gemini 3.1 Flash TTS, sparking hands-on comparisons across benchmarks and real-world use. The community is stress-testing Claude Design&#x27;s new capabilities while also surfacing a sharp hallucination warning around fabricated commit hashes.</p>
       </div>
     </section>
 
@@ -29,42 +29,69 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Self-Calibrating Language Models via Test-Time Discriminative Distillation</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>Inside VAKRA: Reasoning, Tool Use, and Failure Modes of Agents</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>LLMs are systematically overconfident — they routinely express high certainty on questions they get wrong.</li>
-              <li>Proposes a test-time calibration method via discriminative distillation that requires no labeled validation data and holds up under distribution shifts.</li>
-              <li>Standard post-hoc calibration methods degrade when inputs differ from the validation set; this approach does not.</li>
-              <li>Directly applicable for anyone deploying LLMs in settings where confidence scores matter (RAG, risk-sensitive pipelines).</li>
+              <li>IBM Research&#x27;s VAKRA benchmark dissects where agentic LLMs break — reasoning gaps vs. tool-call failures vs. context tracking</li>
+              <li>Identifies failure modes not caught by standard capability evals</li>
+              <li>Practical read for anyone building or auditing agent pipelines</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.09624" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/ibm-research/vakra-benchmark-analysis" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Seven simple steps for log analysis in AI systems</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>Training and Finetuning Multimodal Embedding &amp; Reranker Models with Sentence Transformers</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Presents a structured 7-step framework for analyzing logs produced by AI agents interacting with tools and users.</li>
-              <li>Useful for understanding model behavior, auditing agentic pipelines, and confirming evaluations ran as intended.</li>
-              <li>Most teams produce rich logs from agent runs but lack principled methods to extract insight — this paper fills that gap.</li>
-              <li>Relevant for anyone running multi-step agent workflows or building evaluation harnesses.</li>
+              <li>Sentence Transformers now supports training multimodal (text + image) embedding and reranker models end-to-end</li>
+              <li>Guide covers dataset format, loss functions, and evaluation for cross-modal retrieval</li>
+              <li>Directly applicable to RAG pipelines that need to handle mixed-media content</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.09563" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/train-multimodal-sentence-transformers" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>llm-anthropic 0.25 — Claude Opus 4.7 with thinking_effort: xhigh</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>llm CLI plugin adds claude-opus-4.7 with thinking_effort: xhigh support</li>
+              <li>New thinking_display and thinking_adaptive boolean flags control how reasoning traces are exposed</li>
+              <li>Default max_tokens bumped to the model maximum — removes a common gotcha for long outputs</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Apr/16/llm-anthropic/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LABBench2: An Improved Benchmark for AI Systems Performing Biology Research</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>Gemini 3.1 Flash TTS</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Updated benchmark for evaluating AI systems on real biology research tasks, not simplified toy problems.</li>
-              <li>Covers autonomous hypothesis generation and AI-assisted scientific discovery workflows.</li>
-              <li>Second iteration broadens task coverage and raises evaluation difficulty over the original LABBench.</li>
-              <li>A leading indicator of where agentic AI capability is being tested in serious scientific domains.</li>
+              <li>Google released a prompt-directable TTS model via the standard Gemini API (gemini-3.1-flash-tts-preview)</li>
+              <li>Voice style and tone can be steered through natural-language prompts — unusual for a TTS product</li>
+              <li>Audio-only output; integrates as a drop-in for anyone already on the Gemini API</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.09554" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Apr/15/gemini-31-flash-tts/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Qwen3.6-35B-A3B on My Laptop Drew a Better Pelican than Claude Opus 4.7</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Alibaba&#x27;s Qwen3.6-35B-A3B (MoE, only 3B active params) runs locally and beat Claude Opus 4.7 on a creative generation test</li>
+              <li>Demonstrates MoE efficiency is closing the gap between local and frontier models on certain tasks</li>
+              <li>Willison ran both the same day — a useful real-time side-by-side on two major releases</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Apr/16/qwen-beats-opus/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -74,29 +101,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Steve Yegge</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Building a Fast Multilingual OCR Model with Synthetic Data — Nvidia Nemotron OCR v2</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Steve Yegge reports on a conversation with a 20-year Google tech director: Google engineering&#x27;s internal AI adoption looks like John Deere — alarmingly low for the company that builds these tools.</li>
-              <li>Raises hard questions about the gap between the AI hype cycle and actual enterprise engineering adoption rates.</li>
-              <li>The internal friction reportedly comes from tool integration, trust, and workflows — not model capability.</li>
-              <li>Essential reading for anyone tracking whether AI is actually changing how large orgs ship software.</li>
+              <li>Nvidia&#x27;s Nemotron OCR v2 handles multiple languages at speed, trained entirely on synthetic data</li>
+              <li>Synthetic-data-only pipeline signals a maturing approach to low-resource multilingual OCR</li>
+              <li>Model and weights released on Hugging Face</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Apr/13/steve-yegge/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/nvidia/nemotron-ocr-v2" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Exploring the new `servo` crate</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Meet HoloTab by HCompany — AI Browser Companion</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Servo browser engine is now available as an embeddable Rust library on crates.io.</li>
-              <li>Simon tasked Claude Code with exploring the crate and building a CLI tool — a real-world agentic coding experiment on new, lightly documented code.</li>
-              <li>Claude Code successfully ramped up and produced a working tool, demonstrating agentic crate exploration as a practical workflow.</li>
-              <li>Useful reference for anyone considering embedding Servo or evaluating AI-assisted discovery of new Rust libraries.</li>
+              <li>HoloTab is a browser extension that embeds an AI assistant into every tab without leaving the page</li>
+              <li>Built by HCompany using open models — positioned as a privacy-respecting alternative to browser-native AI from Google/Microsoft</li>
+              <li>Uses open-weight models under the hood rather than proprietary APIs</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Apr/13/servo-crate-exploration/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/Hcompany/holotab" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -106,55 +131,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>You can now switch models mid-chat</h3>
+              <h3>Differences Between Opus 4.6 and Opus 4.7 on MineBench</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Anthropic shipped mid-conversation model switching in the Claude web UI — 1,254 upvotes reflects genuine demand.</li>
-              <li>Lets users start on a faster/cheaper model and escalate to a more capable one without losing conversation context.</li>
-              <li>80 comments exploring real workflows: switching from Haiku to Sonnet mid-task when complexity increases.</li>
-              <li>A meaningful UX improvement aligned with how power users already reason about model selection.</li>
+              <li>683-upvote community benchmark comparing Opus 4.6 and 4.7 on Minecraft building tasks alongside Gemini 3.1 and GPT 5.4</li>
+              <li>4.7 shows stronger architectural reasoning but over-focuses on scenery vs. structure in some prompts</li>
+              <li>Side-by-side build outputs give a concrete feel for the generation-style delta between versions</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1skm9tw/you_can_now_switch_models_midchat/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1sofgno/differences_between_opus_46_and_opus_47_on/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Claude has just fixed over-usage of their compute</h3>
+              <h3>An Old Designer&#x27;s Perspective on Claude Design</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Claude Code v2.1.105 broke the terminal auth flow — users cannot paste the auth code to log in.</li>
-              <li>Workaround: downgrade to v2.1.104 until Anthropic ships a fix.</li>
-              <li>Community frustration is high given the timing — many users hit this on a workday morning.</li>
-              <li>Anthropic typically turns around auth regressions quickly; watch the thread for a patch release.</li>
+              <li>25+ year design veteran finds Claude Design genuinely useful for rapid prototyping — not a threat to craft</li>
+              <li>Highlights where it excels (component iteration, layout exploration) and where human judgment still wins (brand coherence, nuance)</li>
+              <li>347 upvotes — one of the more grounded Claude Design takes amid the hype</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1skzbiw/claude_has_just_fixed_overusage_of_their_compute/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1soql9c/an_old_designers_perspective_on_claude_design/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>24/7 Headless AI Server on Xiaomi 12 Pro (Snapdragon 8 Gen 1 + Ollama/Gemma4)</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>10 Hours of Claude Design — My Thoughts</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>User converted a Xiaomi 12 Pro into a dedicated local AI inference node running Ollama with Gemma 4.</li>
-              <li>Flashed LineageOS to strip Android UI and bloat, freeing ~9GB RAM for LLM compute — a clever low-cost hardware repurpose.</li>
-              <li>Runs fully headless 24/7 with manual network configuration and no display required.</li>
-              <li>A concrete blueprint for cheap always-on local LLM servers from recycled Android hardware.</li>
+              <li>Software engineer (no design background) built a full design system from scratch in a single day using Claude Design</li>
+              <li>Reports coherent, structured output — not just mockups — with real component hierarchy</li>
+              <li>234 upvotes; useful complement to the designer&#x27;s perspective — two very different entry points, similar conclusion</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1sl6931/247_headless_ai_server_on_xiaomi_12_pro/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1soqutr/10_hours_of_claude_design_my_thoughts/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Please stop using AI for posts and showcasing your completely vibe coded projects</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>Claude 4.7 Gaslighted Me with a Real Commit Hash</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Top post on r/LocalLLaMA this cycle (817 upvotes, 270 comments) calling out AI-generated content flooding the subreddit.</li>
-              <li>Community tension between AI-assisted project showcases and the expectation of genuine human engagement and insight.</li>
-              <li>As AI tooling matures, authenticity and human curation are becoming real differentiators in technical communities.</li>
-              <li>A cultural signal worth tracking: where the local-AI enthusiast community draws lines on AI-generated participation.</li>
+              <li>Claude fabricated syntactically valid-looking commit hashes when asked to audit a backlog — nearly shipped to production</li>
+              <li>The &#x27;real-looking&#x27; format made the hallucination much harder to spot than typical confident-but-wrong text</li>
+              <li>Cautionary tale: always verify AI-generated references that look like ground truth (hashes, citations, file paths)</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1skt002/please_stop_using_ai_for_posts_and_showcasing/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1soxmf0/claude_47_gaslighted_me_with_a_real_commit_hash/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
