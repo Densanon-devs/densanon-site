@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - April 18, 2026 | Densanon</title>
+  <title>Computation Morning Digest - April 21, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 18, 2026</div>
+        <div class="digest-date-badge">April 21, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation news is dominated by Linux 7.1 kernel improvements — a major HRTIMER overhaul, scheduler tuning, and a long-awaited NTFS driver rewrite all landed this week. On the silicon front, AMD&#x27;s RDNA 4m GPU architecture is taking shape in open-source drivers, Intel&#x27;s Xe2 integrated graphics posted a 17% Linux performance gain over the past year, and a newly disclosed Zen 1 floating-point vulnerability has already been patched. Jensen Huang&#x27;s blunt comments on US chip export controls round out a busy day in the semiconductor industry.</p>
+        <p class="digest-intro">Today&#x27;s digest is headlined by a busy Linux 7.1 merge window, with notable driver work landing for AMD RDNA2 GPU memory transfers, ARM CPU errata, KVM protected guests, and NTFS. On the industry side, Cerebras has filed for IPO amid heavy customer concentration risk, and AMD&#x27;s GAIA platform gains portable AI agent support across CPU/GPU/NPU hardware.</p>
       </div>
     </section>
 
@@ -29,93 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel Core Ultra 250K Plus vs AMD Ryzen 5 9600X faceoff — battle for the best $200 CPU</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Both CPUs target the ~$200 price band with contrasting architectures — Intel hybrid cores vs. AMD Zen 5 efficiency.</li>
-              <li>Benchmark spread covers gaming, productivity, and power consumption, giving a realistic picture of real-world tradeoffs.</li>
-              <li>Neither part is a clean sweep; buyer profile (gaming vs. workloads, platform cost) determines the better pick.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/intel-core-ultra-250k-plus-vs-amd-ryzen-5-9600x-faceoff" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Minisforum N5 Max NAS comes powered by AMD Strix Halo — $2,899 AI NAS with up to 200TB capacity</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Strix Halo SoC (128 GB unified memory, RDNA 3.5 iGPU) gives the N5 Max meaningful local AI inference capacity alongside NAS duties.</li>
-              <li>Ships with OpenClaw pre-installed — an AI storage management layer — launching April 23 at $2,899.</li>
-              <li>Supports up to 200 TB raw capacity; positions as a home-lab AI compute node, not just a storage appliance.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/nas/minisforums-beastly-n5-max-nas-comes-powered-by-amd-strix-halo-usd2-899-for-ai-nas-with-pre-installed-openclaw-supports-up-to-200tb-capacity" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Intel Xe2 Lunar Lake Linux Graphics Performance Up ~17% Over Past Year</h3>
+              <h3>RADV Driver Enables Host Image Copy By Default For RDNA2 &amp; Newer</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fresh Ubuntu 26.04 benchmarks on a Lenovo ThinkPad X1 Carbon Gen 13 show Xe2 iGPU gains of roughly 17% vs. the same machine one year ago.</li>
-              <li>Gains are entirely driver-led — no hardware change — reflecting active open-source Xe2 stack investment from Intel and the community.</li>
-              <li>Results confirm Xe2 integrated graphics is a viable option for Linux laptop users ahead of the Ubuntu 26.04 LTS launch.</li>
+              <li>VK_EXT_host_image_copy is now enabled by default in the RADV Mesa driver for RDNA2 and newer GPUs, eliminating the need to stage asset data through CPU-accessible buffers during loads.</li>
+              <li>The change reduces memory usage and latency during texture/asset loads by allowing direct CPU-to-GPU image data transfers on the host processor.</li>
+              <li>This Vulkan 1.3.258 extension has been available since 2023 but is only now on by default in RADV, bringing a concrete throughput improvement to Linux AMD GPU users.</li>
             </ul>
-            <a href="https://www.phoronix.com/review/ubuntu-2604-xe2-lunar-lake" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/RADV-Default-Host-Image-Copy" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD FP-DSS Security Bug For Zen 1 CPUs Made Public, Linux Kernel Patched</h3>
+              <h3>Linux 7.1 Lands Workaround For Arm C1-Pro Erratum</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Floating Point Divider State Sampling (FP-DSS) is a newly disclosed side-channel vulnerability affecting original Zen 1 and Zen 1+ processors.</li>
-              <li>Exploiting it could allow cross-process leakage of floating-point division state — a speculative execution class issue.</li>
-              <li>Linux kernel patch is already merged; users on first-gen Ryzen or EPYC hardware should update promptly.</li>
+              <li>Linux 7.1 includes a kernel-level workaround for a confirmed hardware bug in ARM&#x27;s C1-Pro CPU affecting its Scalable Matrix Extension (SME) implementation.</li>
+              <li>The erratum required a kernel mitigation rather than a firmware/microcode patch, making upstream kernel tracking the fix path for affected datacenter and HPC deployments.</li>
+              <li>ARM C1-Pro is a high-performance server-class core, so this fix is relevant for any Linux ARM infrastructure running SME workloads.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-FP-DSS-Zen-1-Bug" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.1-Arm-C1-Pro-Fix" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Valve Developer Lands RADV/ACO Changes For AMD&#x27;s GFX11.7 / RDNA 4m</h3>
+              <h3>Initial Linux Driver Patches For Smart Data Accelerator Interface &quot;SDXI&quot;</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Open-source RADV Vulkan driver and ACO compiler backend are receiving early support for AMD&#x27;s unreleased GFX11.7 target, to be marketed as RDNA 4m.</li>
-              <li>RDNA 4m is expected in future AMD APUs and SoCs — driver groundwork before launch is consistent with AMD and Valve&#x27;s recent cadence.</li>
-              <li>Confirms a new mobile/integrated GPU tier is in AMD&#x27;s pipeline beyond current RDNA 3.5-class integrated graphics.</li>
+              <li>Initial kernel patches for SDXI (Smart Data Accelerator Interface) have been posted — a vendor-neutral architecture for offloading memory-to-memory data movement from the CPU.</li>
+              <li>SDXI is designed to let hardware accelerators handle bulk data copies, reducing CPU overhead during data-intensive network, storage, and AI pipeline transfers.</li>
+              <li>Being vendor-neutral means the driver is intended to work across multiple hardware implementations rather than being tied to a single vendor&#x27;s DMA engine.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-RDNA4m-RADV-ACO" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Initial-Linux-SDXI-Driver" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Glibc Lands A Big Optimization For LoongArch CPUs</h3>
+              <h3>HarfBuzz Continues Improving Its New GPU-Accelerated Text Shaping Library</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Upcoming glibc release includes a Transparent Huge Pages (THP) optimization specifically tuned for Loongson&#x27;s LoongArch ISA.</li>
-              <li>Real-world Loongson 3B6000 benchmarks already show competitive performance; this change should push throughput further.</li>
-              <li>Reflects growing upstream investment in LoongArch as a serious non-x86/ARM server alternative.</li>
+              <li>HarfBuzz 14.2 continues iterating on the GPU-based text rasterization library introduced in 14.0, which supports GLSL, HLSL, WGSL, and Metal MSL shaders.</li>
+              <li>Offloading text shaping to the GPU reduces CPU overhead in text-heavy applications and browser rendering pipelines across all major platforms.</li>
+              <li>Multi-shader-language support means the same GPU text library works across Vulkan, DirectX, WebGPU, and Metal targets without per-platform rewrites.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Faster-LoongArch-glibc-THP" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Industry &amp; HPC</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Nvidia CEO Jensen Huang &#x27;nearly lost his composure&#x27; when pressed on selling chips to China</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Huang called blocking China from US AI chips a &#x27;losing proposition&#x27; — China is Nvidia&#x27;s second-largest AI chip market.</li>
-              <li>His unusually sharp public reaction underscores how materially export controls are biting into Nvidia&#x27;s addressable market.</li>
-              <li>Signals ongoing lobbying pressure from the chip industry against the current US export control framework.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/nvidia-ceo-jensen-huang-nearly-lost-his-composure-when-pressed-on-selling-chips-to-china-youre-not-talking-to-someone-who-woke-up-a-loser" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/HarfBuzz-14.2-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -125,39 +83,87 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.1 Lands High Resolution Timer &#x27;HRTIMER&#x27; Overhaul</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Scientists solve decades-old 2D physics puzzle — Chaotic growth in a 2D quantum system obeys statistical laws</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Merged for Linux 7.1: a rework of the HRTIMER subsystem that reduces overhead for frequently-armed timers, including the HRTICK scheduler timer.</li>
-              <li>HRTICK improves scheduler responsiveness and fairness — lower timer overhead translates directly to better latency on loaded systems.</li>
-              <li>Pairs with the separate Linux 7.1 scheduler changes landing this week for a compound low-level performance improvement.</li>
+              <li>Physicists confirmed for the first time that chaotic surface growth in a 2D quantum system follows the Kardar-Parisi-Zhang (KPZ) universality class, validating a 40-year-old mathematical model.</li>
+              <li>The KPZ framework describes how random, uneven surfaces evolve statistically over time — confirming it holds in quantum systems is a foundational result for quantum chaos research.</li>
+              <li>This finding has implications for understanding noise, decoherence, and error propagation in 2D quantum computing architectures.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.1-HRTIMER-Overhaul" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/big-tech/scientists-solve-decades-old-2d-physics-puzzle-chaotic-growth-in-a-2d-quantum-system-obeys-statistical-laws" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Industry &amp; HPC</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Cerebras files for IPO — company remains unprofitable despite 20x revenue growth</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Cerebras reported approximately $500M in 2025 revenue — a roughly 20x increase year-over-year — but filed for IPO while still unprofitable.</li>
+              <li>86% of revenue is concentrated in two customers: Abu Dhabi-based G42 and Mohamed bin Zayed University of AI, representing serious customer concentration risk flagged in the filing.</li>
+              <li>The IPO filing makes Cerebras one of the first AI chip startups (outside NVIDIA) to attempt a public market exit, setting a valuation benchmark for the wafer-scale chip segment.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/cerebras-files-for-ipo-company-remains-unprofitable-despite-20x-revenue-growth" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.1 Scheduler Changes May Benefit Some Workloads</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>TP-Link seeks to secure conditional approval from FCC following router import ban</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>New scheduler patches are in place for Linux 7.1, targeting performance improvements on select hardware and workload types.</li>
-              <li>Workloads benefiting from tighter CPU affinity and better runqueue balancing stand to gain the most.</li>
-              <li>Combined with the HRTIMER overhaul, Linux 7.1 is shaping up as a meaningful low-level performance release.</li>
+              <li>TP-Link met with FCC officials to negotiate conditional approval for continued U.S. router sales after an import ban was triggered by national security concerns over its Chinese ownership.</li>
+              <li>The company is arguing it has restructured to no longer be Chinese-controlled, but conditional approval means ongoing compliance monitoring requirements.</li>
+              <li>TP-Link holds a large share of the U.S. consumer router market, so a sustained ban would create immediate supply gaps and accelerate demand for ASUS, Netgear, and other alternatives.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.1-Scheduler" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/networking/routers/tp-link-seeks-to-secure-conditional-approval-from-fcc-following-router-import-ban-company-stresses-it-is-no-longer-chinese-owned" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The &#x27;NTFS Resurrection&#x27; Has Occurred For Linux 7.1</h3>
+              <h3>AMD&#x27;s GAIA Makes It Easier To Import/Export Custom AI Agents Across PCs</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A brand-new NTFS kernel driver has been merged into Linux 7.1, addressing long-standing limitations of the Paragon NTFS3 driver and the older read-only NTFS driver.</li>
-              <li>The new driver prioritizes correctness and maintainability over mere feature parity — a notable kernel engineering milestone.</li>
-              <li>Improved NTFS support is relevant for dual-boot systems and workloads that regularly exchange data with Windows filesystems.</li>
+              <li>AMD&#x27;s GAIA platform (built on the Lemonade SDK) now supports portable custom AI agents that can be exported and imported across different AMD-powered machines — CPUs, GPUs, and NPUs.</li>
+              <li>Agent portability removes the need to rebuild or reconfigure local AI setups when moving between AMD hardware, lowering friction for local-only AI workflows.</li>
+              <li>GAIA targets the full AMD silicon stack from Ryzen desktop CPUs to Radeon GPUs and Ryzen AI NPUs, positioning AMD as a cohesive alternative to NVIDIA&#x27;s local AI tooling ecosystem.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.1-New-NTFS-Driver" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/AMD-GAIA-Import-Export-Agent" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Box64 0.4.2 Begins Working On POWER PPC64LE Backend, Support For SteamRT3 + Proton 11</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Box64 0.4.2 introduces early work on a POWER PPC64LE backend, expanding x86_64 binary translation beyond ARM to IBM POWER architecture.</li>
+              <li>This release also adds compatibility with SteamRT3 (Steam Runtime 3) and Proton 11, keeping Box64 current with Valve&#x27;s latest Linux gaming stack.</li>
+              <li>Box64 competes with Valve-backed FEX-Emu for the x86_64-on-AArch64 niche but is pursuing a broader multi-architecture strategy with the POWER backend work.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Box64-0.4.2-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Git 2.54 Released With New Experimental &quot;git history&quot; Command</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Git 2.54 ships a new experimental `git history` command as part of the ongoing effort toward a Git 3.0 redesign of the CLI interface.</li>
+              <li>The `git history` command is intended to offer a cleaner, more structured alternative to `git log` for querying and displaying repository history.</li>
+              <li>This release continues the gradual Git 3.0 groundwork accumulating across recent point releases; the experimental flag signals the API is not yet stable.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Git-2.54-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

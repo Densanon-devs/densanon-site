@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - April 18, 2026 | Densanon</title>
+  <title>AI Morning Digest - April 21, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 18, 2026</div>
+        <div class="digest-date-badge">April 21, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is dominated by Claude Opus 4.7 and competing releases: Anthropic&#x27;s new flagship landed alongside Qwen3.6-35B-A3B and Gemini 3.1 Flash TTS, sparking hands-on comparisons across benchmarks and real-world use. The community is stress-testing Claude Design&#x27;s new capabilities while also surfacing a sharp hallucination warning around fabricated commit hashes.</p>
+        <p class="digest-intro">Today&#x27;s digest centers on inference efficiency and model behavior: a new cross-thread reasoning framework challenges how LLMs explore solution spaces, Apple Silicon gets speculative decoding across mismatched tokenizer families, and Amazon&#x27;s $25B Anthropic commitment signals where cloud AI investment is heading. Claude Opus 4.7&#x27;s changed tone is generating real user pushback, and Anthropic&#x27;s publicly versioned system prompts give a rare window into how model behavior is deliberately shaped.</p>
       </div>
     </section>
 
@@ -29,69 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Inside VAKRA: Reasoning, Tool Use, and Failure Modes of Agents</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>LACE: Lattice Attention for Cross-thread Exploration</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>IBM Research&#x27;s VAKRA benchmark dissects where agentic LLMs break — reasoning gaps vs. tool-call failures vs. context tracking</li>
-              <li>Identifies failure modes not caught by standard capability evals</li>
-              <li>Practical read for anyone building or auditing agent pipelines</li>
+              <li>Introduces a framework where parallel LLM reasoning chains communicate via attention rather than running in isolation and failing redundantly.</li>
+              <li>Cross-thread interaction lets trajectories course-correct based on what sibling chains discovered, reducing repeated dead-ends in hard reasoning tasks.</li>
+              <li>Addresses the core inefficiency of sampling-based methods like Best-of-N without requiring a separate verifier model.</li>
             </ul>
-            <a href="https://huggingface.co/blog/ibm-research/vakra-benchmark-analysis" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.15529" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Training and Finetuning Multimodal Embedding &amp; Reranker Models with Sentence Transformers</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>Cross-Family Speculative Decoding for Polish LLMs on Apple Silicon</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Sentence Transformers now supports training multimodal (text + image) embedding and reranker models end-to-end</li>
-              <li>Guide covers dataset format, loss functions, and evaluation for cross-modal retrieval</li>
-              <li>Directly applicable to RAG pipelines that need to handle mixed-media content</li>
+              <li>Demonstrates speculative decoding between models from different tokenizer families using a UAG (Universal Alignment Gadget) extension to MLX-LM on Apple Silicon.</li>
+              <li>Targets Bielik 11B (Polish-language) — shows the technique generalizes beyond English and same-family model pairs.</li>
+              <li>Cross-family speculative decoding on unified memory (Apple M-series) can still yield meaningful speedups even with tokenizer mismatch overhead.</li>
             </ul>
-            <a href="https://huggingface.co/blog/train-multimodal-sentence-transformers" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>llm-anthropic 0.25 — Claude Opus 4.7 with thinking_effort: xhigh</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>llm CLI plugin adds claude-opus-4.7 with thinking_effort: xhigh support</li>
-              <li>New thinking_display and thinking_adaptive boolean flags control how reasoning traces are exposed</li>
-              <li>Default max_tokens bumped to the model maximum — removes a common gotcha for long outputs</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Apr/16/llm-anthropic/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.16368" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Gemini 3.1 Flash TTS</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Brain-CLIPLM: Decoding Compressed Semantic Representations in EEG for Language Reconstruction</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Google released a prompt-directable TTS model via the standard Gemini API (gemini-3.1-flash-tts-preview)</li>
-              <li>Voice style and tone can be steered through natural-language prompts — unusual for a TTS product</li>
-              <li>Audio-only output; integrates as a drop-in for anyone already on the Gemini API</li>
+              <li>Uses CLIP-style contrastive alignment to bridge non-invasive EEG signals and LM embeddings for sentence-level language reconstruction.</li>
+              <li>Addresses the fundamental SNR and bandwidth limits of EEG by working in compressed semantic space rather than raw token prediction.</li>
+              <li>Sentence-level linguistic structure is recoverable from EEG even when word-level timing is too noisy — an important result for non-invasive BCI research.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Apr/15/gemini-31-flash-tts/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.16370" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Qwen3.6-35B-A3B on My Laptop Drew a Better Pelican than Claude Opus 4.7</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>DeepER-Med: Advancing Deep Evidence-Based Research in Medicine Through Agentic AI</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Alibaba&#x27;s Qwen3.6-35B-A3B (MoE, only 3B active params) runs locally and beat Claude Opus 4.7 on a creative generation test</li>
-              <li>Demonstrates MoE efficiency is closing the gap between local and frontier models on certain tasks</li>
-              <li>Willison ran both the same day — a useful real-time side-by-side on two major releases</li>
+              <li>Builds an agentic pipeline that grounds medical claims in published evidence, designed for clinical trustworthiness and auditability.</li>
+              <li>Integrates retrieval, synthesis, and citation tracking as first-class components — not bolted-on post-processing — to meet clinical adoption requirements.</li>
+              <li>Positions transparent reasoning chains and source attribution as hard constraints, not nice-to-haves, for biomedical AI agents.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Apr/16/qwen-beats-opus/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.15456" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -101,27 +83,57 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Building a Fast Multilingual OCR Model with Synthetic Data — Nvidia Nemotron OCR v2</h3>
+              <h3>QIMMA: A Quality-First Arabic LLM Leaderboard</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Nvidia&#x27;s Nemotron OCR v2 handles multiple languages at speed, trained entirely on synthetic data</li>
-              <li>Synthetic-data-only pipeline signals a maturing approach to low-resource multilingual OCR</li>
-              <li>Model and weights released on Hugging Face</li>
+              <li>New benchmark from TII (UAE) targeting Arabic language quality, filling a major gap in existing leaderboards that underweight non-Latin scripts.</li>
+              <li>Evaluates dialectal coverage, morphological complexity, and cultural grounding rather than just translation accuracy.</li>
+              <li>Signals a broader maturation of regionally-specific LLM evaluation infrastructure beyond English and Chinese-centric benchmarks.</li>
             </ul>
-            <a href="https://huggingface.co/blog/nvidia/nemotron-ocr-v2" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/tiiuae/qimma-arabic-leaderboard" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Meet HoloTab by HCompany — AI Browser Companion</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>Changes in the System Prompt Between Claude Opus 4.6 and 4.7</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>HoloTab is a browser extension that embeds an AI assistant into every tab without leaving the page</li>
-              <li>Built by HCompany using open models — positioned as a privacy-respecting alternative to browser-native AI from Google/Microsoft</li>
-              <li>Uses open-weight models under the hood rather than proprietary APIs</li>
+              <li>Anthropic is the only major lab that publicly versions its user-facing system prompts — Willison&#x27;s analysis makes the 4.6 to 4.7 diff readable.</li>
+              <li>The system prompt changes reveal deliberate behavioral tuning decisions that explain the tone and style shifts users are reporting in 4.7.</li>
+              <li>The public system prompt archive (back to Claude 3, July 2024) is a unique artifact for tracking how AI behavior is intentionally shaped over model releases.</li>
             </ul>
-            <a href="https://huggingface.co/blog/Hcompany/holotab" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Apr/18/opus-system-prompt/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Headless Everything for Personal AI</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Matt Webb&#x27;s thesis: personal AI agents will prefer headless APIs over traditional UIs because they&#x27;re more reliable and consistent to automate.</li>
+              <li>Predicts a bifurcation where services expose both a human-facing UI and a simpler, AI-optimized headless interface as separate products.</li>
+              <li>Implication for builders: designing for AI consumption (structured outputs, predictable endpoints) may become as important as designing for human UX.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Apr/19/headless-everything/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Amazon to Invest Up to $25 Billion in Anthropic as Part of $100 Billion Cloud Deal</h3>
+              <span class="digest-source">r/ClaudeAI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Amazon is deepening its AWS-Anthropic relationship with a deal that ties massive cloud infrastructure commitment to equity investment.</li>
+              <li>The $100B cloud spend component means Anthropic&#x27;s training and inference infrastructure will be predominantly AWS-based going forward.</li>
+              <li>Positions AWS Bedrock as the primary enterprise channel for Claude, directly competing with Azure OpenAI&#x27;s enterprise distribution model.</li>
+            </ul>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1sr8q0k/amazon_to_invest_up_to_25_billion_in_anthropic_as/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -131,51 +143,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Differences Between Opus 4.6 and Opus 4.7 on MineBench</h3>
+              <h3>I Genuinely Hate the Conversation Tone of Opus 4.7</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>683-upvote community benchmark comparing Opus 4.6 and 4.7 on Minecraft building tasks alongside Gemini 3.1 and GPT 5.4</li>
-              <li>4.7 shows stronger architectural reasoning but over-focuses on scenery vs. structure in some prompts</li>
-              <li>Side-by-side build outputs give a concrete feel for the generation-style delta between versions</li>
+              <li>High-engagement thread (183 upvotes, 63 comments) with specific complaints: overuse of em-dashes, punchy essay structure, and loss of Claude&#x27;s previously distinct voice.</li>
+              <li>Users report Opus 4.7 feels more like ChatGPT — a perception problem Anthropic may need to address since differentiated tone was a key selling point.</li>
+              <li>Connects directly to the system prompt changes Willison documented — behavioral tuning has observable downstream effects on perceived model personality.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1sofgno/differences_between_opus_46_and_opus_47_on/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>An Old Designer&#x27;s Perspective on Claude Design</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>25+ year design veteran finds Claude Design genuinely useful for rapid prototyping — not a threat to craft</li>
-              <li>Highlights where it excels (component iteration, layout exploration) and where human judgment still wins (brand coherence, nuance)</li>
-              <li>347 upvotes — one of the more grounded Claude Design takes amid the hype</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1soql9c/an_old_designers_perspective_on_claude_design/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>10 Hours of Claude Design — My Thoughts</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Software engineer (no design background) built a full design system from scratch in a single day using Claude Design</li>
-              <li>Reports coherent, structured output — not just mockups — with real component hierarchy</li>
-              <li>234 upvotes; useful complement to the designer&#x27;s perspective — two very different entry points, similar conclusion</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1soqutr/10_hours_of_claude_design_my_thoughts/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Claude 4.7 Gaslighted Me with a Real Commit Hash</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Claude fabricated syntactically valid-looking commit hashes when asked to audit a backlog — nearly shipped to production</li>
-              <li>The &#x27;real-looking&#x27; format made the hallucination much harder to spot than typical confident-but-wrong text</li>
-              <li>Cautionary tale: always verify AI-generated references that look like ground truth (hashes, citations, file paths)</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1soxmf0/claude_47_gaslighted_me_with_a_real_commit_hash/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1srgo7e/i_genuinely_hate_the_conversation_tone_of_opus_47/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
