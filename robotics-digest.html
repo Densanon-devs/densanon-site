@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - April 21, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - April 23, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,137 +15,140 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 21, 2026</div>
+        <div class="digest-date-badge">April 23, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is anchored by real robot deployments hitting scale: AGIBOT&#x27;s semi-humanoids are going live in electronics manufacturing, Chef Robotics crossed 100 million meal servings, and Siemens validated a wheeled humanoid on a live factory floor. On the research front, a new VLA pretraining approach tackles the 2D-vision/3D-action misalignment at the core of generalist robot models, and a brain-inspired memory architecture takes aim at long-horizon task planning for embodied agents.</p>
+        <p class="digest-intro">Tesla breaks ground on a dedicated Optimus humanoid plant in Texas targeting 10M units, while Sony AI robot Ace becomes the first robot to beat elite human players in competitive sport -- a landmark published in Nature.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AGIBOT deploys semi-humanoid robots in electronics manufacturing</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Longcheer has integrated multiple AGIBOT G2 semi-humanoid robots into live tablet production lines, with a target of 100 units deployed by Q3 2026</li>
-              <li>The G2 is a semi-humanoid form factor — upper-body manipulation on a mobile base — suited for structured electronics assembly tasks</li>
-              <li>Signals continued acceleration of Chinese humanoid-class robots moving from demo to volume manufacturing deployment</li>
-            </ul>
-            <a href="https://www.therobotreport.com/agibot-deploys-semi-humanoid-robots-in-electronics-manufacturing/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Chef Robotics completes 100M meal servings milestone</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Chef Robotics has now served 100 million portions across high-volume commercial food production facilities globally</li>
-              <li>The company frames this as &#x27;real-world physical AI&#x27; — a direct reference to learned manipulation policies trained on production-scale data</li>
-              <li>A meaningful deployment benchmark: 100M servings represents genuine dwell time in industrial kitchens, not controlled demos</li>
-            </ul>
-            <a href="https://www.therobotreport.com/chef-robotics-completes-100-million-product-servings-milestone/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Skild acquires Fetch Robotics assets from Zebra</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Skild AI acquired the hardware and IP assets of Fetch Robotics from Zebra Technologies to deploy its hardware-agnostic AI &#x27;brain&#x27; on proven mobile robot platforms</li>
-              <li>Skild&#x27;s strategy is to avoid building hardware from scratch — instead pairing its foundation model with existing robot form factors to accelerate warehouse deployment</li>
-              <li>Zebra had struggled to extract value from the Fetch acquisition; Skild&#x27;s AI-first approach is a direct contrast to the prior hardware-first integration attempt</li>
-            </ul>
-            <a href="https://www.therobotreport.com/skild-acquires-fetch-robotics-assets-from-zebra-automation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Siemens and Humanoid test HMND 01 Alpha for logistics tasks</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The HMND 01 Alpha wheeled mobile manipulator was tested at Siemens&#x27; electronics factory in Erlangen, Germany using NVIDIA&#x27;s simulation and development toolchain</li>
-              <li>Test focused on logistics tasks — moving parts, handling materials — within a live production environment rather than a controlled lab</li>
-              <li>Continues the pattern of major industrial OEMs (Siemens, BMW, Mercedes) directly validating humanoid-class robots on factory floors in 2026</li>
-            </ul>
-            <a href="https://www.therobotreport.com/siemens-and-humanoid-test-hmnd0-01-alpha-logistics-tasks/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Disentangled Robot Learning via Separate Forward and Inverse Dynamics Pretraining</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Identifies a core tension in VLA models: 2D image forecasting objectives and 3D action prediction objectives are fundamentally misaligned when trained jointly</li>
-              <li>Proposes separate pretraining of forward dynamics (what the world will look like) and inverse dynamics (what action causes a transition) as a disentanglement fix</li>
-              <li>Decoupled training improves generalization and sample efficiency compared to end-to-end VLA baselines — relevant for anyone building generalist robot policies</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2604.16391" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>BrainMem: Brain-Inspired Evolving Memory for Embodied Agent Task Planning</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Addresses long-horizon task planning for embodied agents in 3D environments, where success depends on both immediate perception and accumulated cross-task experience</li>
-              <li>Draws inspiration from human memory consolidation — separating episodic (recent) from semantic (distilled long-term) memory in the agent&#x27;s planning loop</li>
-              <li>LLM-based planners typically have no persistent memory across tasks; BrainMem&#x27;s evolving memory architecture is a direct answer to that gap</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2604.16331" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Visual-RRT: Finding Paths toward Visual-Goals via Differentiable Rendering</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Standard RRT motion planners require goals specified as explicit joint angles — Visual-RRT instead accepts an image of the desired end state as the goal</li>
-              <li>Uses differentiable rendering to bridge the gap between visual goal specification and the joint-space search tree</li>
-              <li>Enables a more intuitive &#x27;show the robot what you want&#x27; interface for manipulation planning without pre-specified numerical configurations</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2604.16388" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AI system learns to keep warehouse robot traffic running smoothly</h3>
+              <h3>Sony AI table tennis robot outplays elite human players</h3>
               <span class="digest-source">Robohub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A learned AI system dynamically determines right-of-way for fleets of warehouse robots at every moment, adapting to real-time congestion patterns</li>
-              <li>Unlike rule-based traffic management, the approach learns from experience — improving throughput without hand-coded priority rules</li>
-              <li>Directly applicable to dense AMR deployments where fixed scheduling and reservation systems break down under variable load</li>
+              <li>Sony AI robot Ace is the first robot to defeat elite human players in a competitive physical sport, published in Nature.</li>
+              <li>The December 2025 match saw Ace beat Yamato Kawamata, demonstrating real-time perception, paddle rotation, and dynamic strategy under adversarial conditions.</li>
+              <li>Separates AI physical-sport performance from purely digital victories like chess or Go -- a genuine closed-loop robotics milestone.</li>
+              <li>Sets a new benchmark for real-time robotic control under full human adversarial pressure.</li>
             </ul>
-            <a href="https://robohub.org/ai-system-learns-to-keep-warehouse-robot-traffic-running-smoothly/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://robohub.org/sony-ai-table-tennis-robot-outplays-elite-human-players/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>HALO: Hybrid Auto-encoded Locomotion with Learned Latent Dynamics, Poincar\&#x27;e Maps, and Regions of Attraction</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Introduces HALO, a reduced-order model framework for legged robots that learns latent dynamics for hybrid contact-switching systems.</li>
+              <li>Uses Poincare maps and regions of attraction to provide formal stability guarantees, filling a gap that classical template models leave open.</li>
+              <li>Targets high-dimensional humanoid and quadruped locomotion where hand-designed models fail to generalize.</li>
+              <li>Could improve sim-to-real transfer by grounding controllers in provably stable manifolds.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.18887" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Gated Memory Policy</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes a policy architecture that adaptively gates memory based on whether a manipulation task is Markovian or non-Markovian.</li>
+              <li>Key finding: naively extending memory to Markovian tasks hurts performance -- selective gating activates history only when needed.</li>
+              <li>Addresses a practical pain point in robot learning where a single policy type rarely fits all task structures.</li>
+              <li>Results span single-trial and multi-trial interaction settings, suggesting broad applicability across manipulation pipelines.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.18933" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Improving mobile robot stability on uneven terrain through vibration monitoring techniques</h3>
+              <h3>From EVs to robotics: Tesla targets 10M Optimus units with new Texas plant</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Vibration sensors (IMUs and accelerometers) can serve as a cheap, real-time proxy for terrain stability — detecting instability before it causes a tip or navigation failure</li>
-              <li>The technique is especially relevant for field robots operating in agriculture, construction, and outdoor inspection where terrain is unpredictable</li>
-              <li>Adds a lightweight, hardware-accessible safety layer that doesn&#x27;t require expensive terrain mapping or deep learning</li>
+              <li>Tesla begins Optimus humanoid production in Q2 2026, replacing legacy car lines at its Fremont facility.</li>
+              <li>A new dedicated robotics plant in Texas is breaking ground, targeting an eventual 10 million Optimus units.</li>
+              <li>Signals Tesla pivot from EV-first to robotics-first manufacturing strategy at unprecedented scale.</li>
+              <li>The Texas plant is the largest single bet on humanoid mass production announced by any company to date.</li>
             </ul>
-            <a href="https://www.therobotreport.com/improving-mobile-robot-stability-on-uneven-terrain-through-vibration-monitoring-techniques/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/from-evs-to-robotics-tesla-targets-10m-optimus-units-with-new-texas-plant/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Proposed Chinese Robot Ban Is Latest U.S. Tech Sovereignty Move</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The American Security Robotics Act, bipartisan and sponsored by Senators Cotton and Schumer and Rep. Stefanik, would bar U.S. government procurement of Chinese ground robots.</li>
+              <li>Covered categories include humanoids, quadruped dogs, and crawlers -- broad enough to affect most major Chinese robotics OEMs.</li>
+              <li>Positions robotics explicitly alongside semiconductors and telecom in the U.S. tech sovereignty legislative agenda.</li>
+              <li>Could accelerate domestic and allied-nation robot supply chains if enacted, creating competitive tailwinds for U.S. and European vendors.</li>
+            </ul>
+            <a href="https://spectrum.ieee.org/chinese-robots-us-ban" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>HII partners with Path Robotics, GrayMatter Robotics to accelerate shipbuilding</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>HII, one of the largest U.S. defense shipbuilders, is deepening existing partnerships with both Path Robotics and GrayMatter Robotics.</li>
+              <li>Path Robotics specializes in autonomous welding; GrayMatter targets flexible industrial robot programming -- together addressing shipbuilding&#x27;s hardest automation bottlenecks.</li>
+              <li>Defense shipbuilding is an underreported robotics growth sector where labor shortages are acute and precision demands are high.</li>
+              <li>Dual-vendor structure suggests HII is building redundancy into its automation stack rather than betting on a single supplier.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/hii-partners-path-robotics-graymatter-robotics-accelerate-shipbuilding/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>German court rules in favor of Teradyne Robotics, issues injunction against Elite Robots</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A German court granted Teradyne (Universal Robots parent) an injunction against Elite Robots for allegedly copying UR cobot software.</li>
+              <li>Elite Robots is a Chinese cobot manufacturer -- a significant IP enforcement action in a European jurisdiction.</li>
+              <li>The ruling could restrict Elite EU sales while the broader claim is litigated, removing a key competitive threat to UR.</li>
+              <li>Signals that European courts are becoming an active venue for IP disputes in the fast-growing cobot market.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/german-court-rules-in-favor-of-teradyne-robotics-issues-injunction-against-elite-robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Texas Instruments interview: The hidden engineering challenges behind humanoid robots</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>TI engineers highlight that semiconductors, sensing, and real-time control systems are the overlooked bottlenecks in humanoid development -- not just AI models.</li>
+              <li>Key challenges: power management at the joint level, low-latency sensor fusion, and thermal constraints in compact form factors.</li>
+              <li>TI perspective underscores that humanoid scale-up depends on embedded silicon advances, not only software.</li>
+              <li>Directly relevant as Tesla, Figure, and Agility push toward mass production where BOM cost and chip reliability become critical.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/04/22/texas-instruments-interview-the-hidden-engineering-challenges-behind-humanoid-robots/100855/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AI robotics: Moving from the lab to the real-world factory floor</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Leaders from Universal Robots, PickNik, and Path Robotics discuss the infrastructure gap between research demos and production deployment.</li>
+              <li>Key themes: data pipelines, safety certification, and human-in-the-loop workflows needed to bridge sim-to-real.</li>
+              <li>Both PickNik and Path emphasize that real-world deployment requires as much systems engineering as ML research.</li>
+              <li>Practical primer for teams evaluating AI-driven robot deployment in manufacturing environments.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/ai-robotics-moving-from-the-lab-to-the-real-world-factory-floor/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
