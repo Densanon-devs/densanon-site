@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - April 23, 2026 | Densanon</title>
+  <title>Computation Morning Digest - April 25, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 23, 2026</div>
+        <div class="digest-date-badge">April 25, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">TSMC drops its full process roadmap through 2029 with A12/A13/N2U and a slipped A16, while Elon Musk confirms TeraFab will license Intel&#x27;s 14A process — two major semiconductor supply-chain signals in one day.</p>
+        <p class="digest-intro">Today&#x27;s digest centers on memory and silicon architecture advances — NEO Semiconductor&#x27;s 3D X-DRAM alternative to HBM passes proof-of-concept, AMD&#x27;s Zen 6 EPYC Venice lands in the Linux 7.1 kernel, and agentic AI workloads are flipping CPU-GPU server ratios. On the community side, Linus merges a 138k-line purge of legacy drivers partly driven by AI-generated noise flooding maintainers.</p>
       </div>
     </section>
 
@@ -29,55 +29,52 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>TSMC unveils process technology roadmap through 2029 — A12, A13, N2U announced, A16 slips to 2027</h3>
+              <h3>NEO Semiconductor&#x27;s 3D X-DRAM for AI Processors Passes Proof-of-Concept Validation</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>TSMC is bifurcating its roadmap: A14/A13/N2U target client/mobile applications while A16/A12/N2X target high-performance datacenter designs.</li>
-              <li>A16 slips to 2027 — a notable delay for the node expected to power next-gen AI accelerators and high-end server silicon.</li>
-              <li>A12 and A13 are newly announced nodes filling the gap between N2U and A16 on the performance-per-watt curve.</li>
-              <li>The 2029 roadmap gives Apple, NVIDIA, AMD, and Intel foundry customers a clearer planning horizon for next-generation chip design.</li>
+              <li>NEO Semiconductor&#x27;s 3D X-DRAM uses existing 3D NAND fabrication processes to build a cheaper alternative to HBM for AI accelerators.</li>
+              <li>Proof-of-concept validation has been completed and the company has secured funding to advance to next-gen development.</li>
+              <li>If commercialized, this could undercut HBM on cost while targeting similar bandwidth-hungry AI inference workloads.</li>
+              <li>3D NAND process reuse is the key bet here — it means NEO doesn&#x27;t need entirely new fab infrastructure, lowering the barrier to production.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/tsmc-unveils-process-technology-roadmap-through-2029-a12-a13-n2u-announced-a16-slips-to-2027" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/neo-semiconductors-revolutionary-3d-x-dram-for-ai-processors-has-passed-proof-of-concept-validation-company-secures-funding-to-develop-next-gen-memory-hbm-alternative" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Elon Musk says his TeraFab facilities will use Intel&#x27;s 14A process technology to make AI chips — SpaceX will be responsible for high-volume chip manufacturing in likely Intel tech licensing deal</h3>
+              <h3>CPU Requirements for AI Workloads Are Multiplying, Driving Intensifying Shortages and Price Hikes</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel&#x27;s 14A process technology will be licensed to TeraFab rather than used exclusively at Intel foundries — a significant shift in Intel&#x27;s IP strategy.</li>
-              <li>Tesla builds the pilot line; SpaceX handles high-volume manufacturing, creating a vertically integrated chip production chain within Musk&#x27;s portfolio.</li>
-              <li>This is Intel&#x27;s largest known process-technology licensing deal and could validate 14A as a competitive node against TSMC N2.</li>
-              <li>The deal underscores growing demand for alternative AI chip fabs outside TSMC/Samsung amid export controls and capacity constraints.</li>
+              <li>Inference and agentic AI workloads are pushing CPU-to-GPU ratios toward 1:1 in server deployments, reversing the GPU-heavy trend.</li>
+              <li>Intel is already shifting production capacity from consumer chips toward Xeon to meet surging server CPU demand.</li>
+              <li>Agentic pipelines require sustained CPU throughput for orchestration, memory management, and I/O — tasks GPUs don&#x27;t handle efficiently.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/elon-musk-says-terafab-will-use-intels-14a-process-technology-to-make-ai-chips-spacex-will-be-responsible-for-high-volume-chip-manufacturing-in-liekly-intel-tech-licensing-deal" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/shifting-need-for-cpus-in-ai-workloads-drives-intensifying-shortages-price-hikes" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GCC 16 Compiler Nearly Ready For Release With Zen 6, AVX10.2, APX &amp; Algol 68</h3>
+              <h3>AMD SBI Driver Preps for EPYC Venice (Zen 6) with Linux 7.1</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GCC 16.1 is imminent as the major annual feature release, bringing native support for AMD Zen 6 microarchitecture tuning flags.</li>
-              <li>AVX10.2 and Intel APX (Advanced Performance Extensions) support added — relevant for next-gen Xeon and client CPUs.</li>
-              <li>Compiler support landing now means downstream distros and HPC software stacks can begin leveraging Zen 6 and APX optimizations.</li>
-              <li>Algol 68 language support is also included alongside the core performance-oriented additions.</li>
+              <li>The Linux 7.1 kernel is receiving AMD System Bus Interface driver updates specifically targeting the upcoming EPYC Venice (Zen 6) server processors.</li>
+              <li>Zen 6 support landing in the kernel ahead of any public release signals silicon is at or near sampling stage.</li>
+              <li>This follows AMD&#x27;s pattern of upstream Linux preparation months before product availability, giving software stacks a head start.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/GCC-16.1-Coming-Soon" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/AMD-SBI-EPYC-Venice" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel LLM-Scaler vllm-0.14.0-b8.2 Released With Official Arc Pro B70 Support</h3>
+              <h3>Arm C1-Ultra Scheduling Model Merged for LLVM/Clang 23</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel&#x27;s LLM-Scaler fork of vLLM now officially supports the Arc Pro B70, expanding AI inferencing options beyond NVIDIA and AMD.</li>
-              <li>The release tracks upstream vLLM 0.14.0, keeping Intel&#x27;s inference stack current with the broader open-source ecosystem.</li>
-              <li>Arc Pro B70 is positioned as an enterprise-grade inference card — official vLLM support is a prerequisite for production deployment.</li>
-              <li>Continued investment in LLM-Scaler signals Intel is actively pursuing the AI inference market with its discrete GPU lineup.</li>
+              <li>LLVM/Clang 23 now includes a machine scheduling model specifically tuned for the Arm C1-Ultra, Arm&#x27;s flagship next-gen mobile CPU.</li>
+              <li>Scheduling models directly influence instruction ordering and pipeline utilization — this is the compiler-side prerequisite for optimal native binaries.</li>
+              <li>Merging ahead of C1-Ultra silicon availability means toolchain vendors can ship optimized compilers at or near product launch.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Intel-LLM-Scaler-vllm-0.14-b8.2" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Arm-C1-Ultra-Sched-LLVM-Clang" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -87,42 +84,45 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Samsung engineer sentenced to 7 years in prison for selling chipmaking trade secrets to Chinese chipmaker — ex-employee supplied 10nm DRAM data to CXMT for $2 million</h3>
+              <h3>Union Rally Causes Samsung Fab Production to Plummet by 58% During Night Shift</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Ex-Samsung employee sentenced to 7 years for leaking over 600 critical chipmaking process steps to CXMT, a Chinese memory manufacturer.</li>
-              <li>The stolen data covered Samsung&#x27;s 10nm DRAM process technology — directly applicable to CXMT&#x27;s effort to close the gap with Korean and US DRAM makers.</li>
-              <li>The $2 million payment illustrates the high commercial value Chinese chipmakers place on advanced process IP amid export control pressure.</li>
-              <li>Sentencing sets a high-profile precedent for semiconductor trade secret enforcement in South Korea.</li>
+              <li>A one-day union strike reduced Samsung&#x27;s memory and foundry fab output by up to 58% during the affected night shift.</li>
+              <li>Over 40,000 workers attended the rally; the union is preparing for an 18-day extended action if management doesn&#x27;t meet pay and bonus demands.</li>
+              <li>Samsung is already under competitive pressure from TSMC and SK Hynix — sustained disruptions could ripple into DRAM and NAND supply chains.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/samsung-engineer-sentenced-to-7-years-in-prison-for-selling-chipmaking-trade-secrets-to-chinese-chipmaker-ex-employee-supplied-10nm-dram-data-to-cxmt-for-usd2-million" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/big-tech/union-rally-causes-samsung-fab-production-to-plummet-by-58-percent-during-night-shift-as-workers-demand-up-to-usd400-000-bonuses-updated-figures-show-over-40-000-people-attended-rally-for-better-pay-and-bonuses" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel Ends Open Ecosystem Community/Evangelism, Archives Other Open-Source Projects</h3>
+              <h3>Linux 7.1 Is Performing Well Overall in Early Benchmarks</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel has formally archived its Open Ecosystem Community and Evangelism GitHub repositories as part of ongoing corporate restructuring.</li>
-              <li>This is the latest in a steady wave of Intel open-source project archival over recent months, signaling a narrowed OSS focus.</li>
-              <li>Projects being dropped include developer-relations and cross-platform tooling efforts that supported non-Intel hardware ecosystems.</li>
-              <li>The cuts reflect Intel&#x27;s financial pressures and priority shift toward core foundry/AI revenue streams over community engineering.</li>
+              <li>Early Phoronix benchmarks on Linux 7.1 Git show measurable performance improvements across multiple workloads compared to 7.0.</li>
+              <li>The kernel is tracking for rc1 shortly, with the merge window winding down — expect the release in the coming weeks.</li>
+              <li>Performance gains span both AMD and Intel hardware, with x86 platform driver improvements merged this cycle for modern Ryzen and Core Ultra laptops.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Intel-Ends-OSS-Evangelism-Repos" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/review/linux-71-early-benchmarks" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Microsoft facing $2.8 billion UK lawsuit for overcharging 60,000 businesses using Microsoft Server on other clouds — Azure users allegedly received lower wholesale pricing</h3>
+              <h3>New 3D Device Computes Using Living Brain Cells</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>UK court has certified a $2.8 billion class-action lawsuit against Microsoft to proceed to trial, affecting ~60,000 businesses.</li>
-              <li>The allegation: Microsoft charged non-Azure cloud customers higher Windows Server licensing rates than Azure customers received.</li>
-              <li>Microsoft is still appealing the certification decision, but the case advancing is a significant antitrust/competition development.</li>
-              <li>Outcome could reshape how hyperscalers and software vendors price cross-cloud licensing across the EU and UK markets.</li>
+              <li>Princeton researchers built a 3D bioelectronic device that embeds living neurons in an electronic mesh, enabling neurons outside the body to perform simple computations.</li>
+              <li>The platform is intended as a research tool for studying brain function and neurological disease, not as a near-term computing product.</li>
+              <li>Biological tissue&#x27;s energy efficiency and adaptive properties far exceed silicon for certain tasks — the research aims to characterize exactly where and why.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/big-tech/microsoft-facing-usd2-8-billion-uk-lawsuit-for-overcharging-60-000-businesses-using-microsoft-server-on-other-clouds-azure-users-allegedly-recieved-lower-wholesale-pricing" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/big-tech/new-3d-device-computes-using-living-brain-cells-bioelectronic-device-uses-3d-electronic-mesh-design-paired-with-living-tissue" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -132,29 +132,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Ubuntu Rust Coreutils Audit Revealed 113 Issues, Ubuntu 26.10 Aims For &quot;100% Rust Coreutils&quot;</h3>
+              <h3>Farewell ISDN, Ham Radio &amp; Old Network Drivers: Linus Torvalds Merges 138k Lines Removed</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A commissioned security audit of Rust Coreutils found 44 CVEs and 113 total issues — a significant finding for a project marketed as a memory-safe C replacement.</li>
-              <li>Canonical is shipping Rust Coreutils in Ubuntu 26.04 LTS (releasing tomorrow) despite the audit findings, with fixes being upstreamed.</li>
-              <li>Ubuntu 26.10 targets &#x27;100% Rust Coreutils,&#x27; making this the largest real-world deployment of Rust-based system utilities to date.</li>
-              <li>The audit results will be closely watched by the broader Linux ecosystem debating Rust&#x27;s maturity for core userspace components.</li>
+              <li>Linus merged a pull request removing 138,000 lines of code — the entire ISDN subsystem plus numerous legacy PCMCIA-era network drivers.</li>
+              <li>The removals were partly motivated by AI/LLM-generated bug reports flooding upstream maintainers for code with zero real users.</li>
+              <li>Less dead code means smaller attack surface, faster build times, and less noise in CI — a genuine maintenance win for the kernel.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Ubuntu-Rust-Coreutils-Audit" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.1-Removes-Old-Net" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux may be ending support for older network drivers due to influx of false AI-generated bug reports — maintenance has become too burdensome for old largely-unused systems</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>GCC Establishes Working Group to Decide on AI/LLM Policy</h3>
+              <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Linux kernel developers are considering removing ISA and PCMCIA-era Ethernet drivers (~27,000 lines of legacy code) from the mainline kernel.</li>
-              <li>The primary driver for removal is not the code&#x27;s age but an influx of false AI-generated bug reports and fuzzing noise overwhelming maintainers.</li>
-              <li>This marks a notable moment: AI-generated noise is becoming a real maintenance burden on a critical open-source infrastructure project.</li>
-              <li>The proposal reflects a broader tension between automated vulnerability scanning tools and the finite bandwidth of volunteer kernel maintainers.</li>
+              <li>GCC&#x27;s steering committee has formed a working group to study and establish formal policy around AI/LLM use in GCC development.</li>
+              <li>The move follows upstream kernel maintainers dealing with a surge of low-quality AI-generated bug reports and patches.</li>
+              <li>This is one of the first major open-source compiler projects to formalize an AI contribution policy — the outcome will likely influence other toolchain projects.</li>
             </ul>
-            <a href="https://www.tomshardware.com/software/linux/linux-may-be-ending-support-for-older-network-drivers-due-to-influx-of-false-ai-generated-bug-reports-maintenance-has-become-too-burdensome-for-old-largely-unused-systems" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/GCC-Working-Group-AI-Policy" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>HDMI FRL Support Achieved with Open-Source Nouveau for NVIDIA GPUs</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The open-source Nouveau driver for NVIDIA GPUs now supports HDMI Fixed Rate Link (FRL), a core feature of the HDMI 2.1 specification.</li>
+              <li>This contrasts with AMD&#x27;s AMDGPU driver, which remains blocked from HDMI 2.1 implementation by HDMI Forum licensing restrictions on open-source.</li>
+              <li>FRL support enables higher resolutions and refresh rates over HDMI, making Nouveau more viable as a daily-driver open-source GPU stack.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/HDMI-FRL-On-Nouveau-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
