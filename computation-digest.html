@@ -17,7 +17,7 @@
       <div class="container">
         <div class="digest-date-badge">April 25, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest centers on memory and silicon architecture advances — NEO Semiconductor&#x27;s 3D X-DRAM alternative to HBM passes proof-of-concept, AMD&#x27;s Zen 6 EPYC Venice lands in the Linux 7.1 kernel, and agentic AI workloads are flipping CPU-GPU server ratios. On the community side, Linus merges a 138k-line purge of legacy drivers partly driven by AI-generated noise flooding maintainers.</p>
+        <p class="digest-intro">Today&#x27;s digest is heavy on chip strategy and kernel news: Intel is quietly retreating from the discrete gaming GPU market while claiming games leave 30% of hybrid-CPU performance on the table, AMD updates its memory overclocking spec with broader vendor support, and Linux 7.1 lands a new NTFS driver and LoongArch gains. On the quantum front, Coinbase&#x27;s advisory board is sounding the alarm on blockchain cryptography timelines.</p>
       </div>
     </section>
 
@@ -29,52 +29,53 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NEO Semiconductor&#x27;s 3D X-DRAM for AI Processors Passes Proof-of-Concept Validation</h3>
+              <h3>Intel Core Ultra 7 270K Plus vs AMD Ryzen 7 7800X3D — Can Intel finally beat X3D?</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NEO Semiconductor&#x27;s 3D X-DRAM uses existing 3D NAND fabrication processes to build a cheaper alternative to HBM for AI accelerators.</li>
-              <li>Proof-of-concept validation has been completed and the company has secured funding to advance to next-gen development.</li>
-              <li>If commercialized, this could undercut HBM on cost while targeting similar bandwidth-hungry AI inference workloads.</li>
-              <li>3D NAND process reuse is the key bet here — it means NEO doesn&#x27;t need entirely new fab infrastructure, lowering the barrier to production.</li>
+              <li>The Core Ultra 7 270K Plus is a strong productivity competitor but the benchmark tests it directly against AMD&#x27;s gaming-focused 3D V-Cache chip.</li>
+              <li>X3D&#x27;s massive L3 cache advantage persists in gaming workloads — Intel&#x27;s answer is higher clock speeds and IPC, not cache size.</li>
+              <li>For mixed workloads, Intel closes the gap significantly; for pure gaming, X3D still leads.</li>
+              <li>A useful data point for anyone choosing between the two platforms heading into mid-2026.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/neo-semiconductors-revolutionary-3d-x-dram-for-ai-processors-has-passed-proof-of-concept-validation-company-secures-funding-to-develop-next-gen-memory-hbm-alternative" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/intel-core-ultra-7-270k-plus-vs-amd-ryzen-7-7800x3d-cpu-faceoff" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>CPU Requirements for AI Workloads Are Multiplying, Driving Intensifying Shortages and Price Hikes</h3>
+              <h3>Intel reportedly cancels discrete gaming GPUs for Xe3P Arc &quot;Celestial&quot; — Gaming uncertain even for Xe4 &quot;Druid&quot; in 2027</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Inference and agentic AI workloads are pushing CPU-to-GPU ratios toward 1:1 in server deployments, reversing the GPU-heavy trend.</li>
-              <li>Intel is already shifting production capacity from consumer chips toward Xeon to meet surging server CPU demand.</li>
-              <li>Agentic pipelines require sustained CPU throughput for orchestration, memory management, and I/O — tasks GPUs don&#x27;t handle efficiently.</li>
+              <li>Intel is pivoting Xe3P (Celestial) resources entirely toward datacenter and workstation segments, abandoning discrete gaming cards.</li>
+              <li>Even the next-gen Xe4 &quot;Druid&quot; architecture landing in 2027 has no confirmed gaming GPU — Intel may be exiting the consumer dGPU market.</li>
+              <li>Arc&#x27;s survival looks to be as an iGPU in laptops, not as a competitive desktop card.</li>
+              <li>This would cement the discrete GPU market as a strict NVIDIA vs AMD duopoly going forward.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/shifting-need-for-cpus-in-ai-workloads-drives-intensifying-shortages-price-hikes" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/gpus/intel-has-reportedly-killed-discrete-gaming-gpus-for-the-upcoming-xe3p-arc-celestial-family-gaming-gpu-remains-uncertain-even-for-the-next-gen-xe4-druid-lineup-that-lands-in-2027" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD SBI Driver Preps for EPYC Venice (Zen 6) with Linux 7.1</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Intel VP claims up to 30% of CPU performance is untapped by modern games</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Linux 7.1 kernel is receiving AMD System Bus Interface driver updates specifically targeting the upcoming EPYC Venice (Zen 6) server processors.</li>
-              <li>Zen 6 support landing in the kernel ahead of any public release signals silicon is at or near sampling stage.</li>
-              <li>This follows AMD&#x27;s pattern of upstream Linux preparation months before product availability, giving software stacks a head start.</li>
+              <li>Intel argues hybrid P-core/E-core architectures are underutilized because game engines weren&#x27;t written for heterogeneous thread scheduling.</li>
+              <li>Up to 30% additional throughput is theoretically available without any hardware change — purely through better thread affinity and task prioritization.</li>
+              <li>Intel is pushing developer tooling and scheduler-aware APIs to help titles actually use the E-core cluster, which sits mostly idle today.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-SBI-EPYC-Venice" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/intel-vp-claims-up-to-30-percent-of-cpu-performance-is-untapped-by-modern-games-software-optimization-is-critical-to-unlocking-full-potential-of-hybrid-cpus" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Arm C1-Ultra Scheduling Model Merged for LLVM/Clang 23</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>AMD EXPO 1.2 arrives with three Chinese memory vendors — gains may be muted until Zen 6</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>LLVM/Clang 23 now includes a machine scheduling model specifically tuned for the Arm C1-Ultra, Arm&#x27;s flagship next-gen mobile CPU.</li>
-              <li>Scheduling models directly influence instruction ordering and pipeline utilization — this is the compiler-side prerequisite for optimal native binaries.</li>
-              <li>Merging ahead of C1-Ultra silicon availability means toolchain vendors can ship optimized compilers at or near product launch.</li>
+              <li>EXPO 1.2 adds certified support for memory from three Chinese vendors, expanding the ecosystem beyond the Samsung/Hynix/Micron triopoly.</li>
+              <li>The new spec enables higher DDR5 speed bins and tighter timings on AM5 motherboards via BIOS updates.</li>
+              <li>Real-world performance gains will be modest on current Zen 5 hardware — the full benefit is gated on Zen 6&#x27;s improved memory controller.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Arm-C1-Ultra-Sched-LLVM-Clang" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/ram/amd-expo-1-2-is-here-but-you-may-not-notice-significant-gains-until-zen-6-upgraded-ram-overclocking-tech-will-unlock-the-next-level-of-memory-speed-on-ryzen-cpus" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -84,27 +85,28 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Union Rally Causes Samsung Fab Production to Plummet by 58% During Night Shift</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A one-day union strike reduced Samsung&#x27;s memory and foundry fab output by up to 58% during the affected night shift.</li>
-              <li>Over 40,000 workers attended the rally; the union is preparing for an 18-day extended action if management doesn&#x27;t meet pay and bonus demands.</li>
-              <li>Samsung is already under competitive pressure from TSMC and SK Hynix — sustained disruptions could ripple into DRAM and NAND supply chains.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/big-tech/union-rally-causes-samsung-fab-production-to-plummet-by-58-percent-during-night-shift-as-workers-demand-up-to-usd400-000-bonuses-updated-figures-show-over-40-000-people-attended-rally-for-better-pay-and-bonuses" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux 7.1 Is Performing Well Overall in Early Benchmarks</h3>
+              <h3>Microsoft Reportedly Looking At Rebasing Azure Linux On Fedora</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Early Phoronix benchmarks on Linux 7.1 Git show measurable performance improvements across multiple workloads compared to 7.0.</li>
-              <li>The kernel is tracking for rc1 shortly, with the merge window winding down — expect the release in the coming weeks.</li>
-              <li>Performance gains span both AMD and Intel hardware, with x86 platform driver improvements merged this cycle for modern Ryzen and Core Ultra laptops.</li>
+              <li>Azure Linux (used inside Azure cloud, WSL, and other Microsoft infrastructure) is reportedly being considered for a full rebase onto Fedora&#x27;s package base.</li>
+              <li>Currently Azure Linux is a custom minimal distro maintained internally by Microsoft — a Fedora foundation would give it access to a much larger community-maintained package ecosystem.</li>
+              <li>Fedora&#x27;s close relationship with RHEL means enterprise tooling and certifications would follow more naturally.</li>
+              <li>If confirmed, this would be one of the more significant cloud-OS architectural shifts in recent years.</li>
             </ul>
-            <a href="https://www.phoronix.com/review/linux-71-early-benchmarks" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/MS-Azure-Linux-Fedora-Based" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Maine governor vetoes bill that bans large new data centers</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Governor Janet Mills vetoed Maine&#x27;s proposed data center moratorium, citing a specific project converting a former paper mill in Jay, Franklin County.</li>
+              <li>The veto signals that blanket state-level bans on data centers face political friction when a specific project has strong local economic support.</li>
+              <li>The Jay project repurposes industrial land and is broadly supported — the governor argued the bill was too blunt to accommodate it.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/desktops/servers/maine-governor-vetoes-bill-that-bans-large-new-data-centers-says-legislature-shouldve-exempted-one-particular-well-supported-data-center" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -114,57 +116,53 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>New 3D Device Computes Using Living Brain Cells</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Princeton researchers built a 3D bioelectronic device that embeds living neurons in an electronic mesh, enabling neurons outside the body to perform simple computations.</li>
-              <li>The platform is intended as a research tool for studying brain function and neurological disease, not as a near-term computing product.</li>
-              <li>Biological tissue&#x27;s energy efficiency and adaptive properties far exceed silicon for certain tasks — the research aims to characterize exactly where and why.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/big-tech/new-3d-device-computes-using-living-brain-cells-bioelectronic-device-uses-3d-electronic-mesh-design-paired-with-living-tissue" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Farewell ISDN, Ham Radio &amp; Old Network Drivers: Linus Torvalds Merges 138k Lines Removed</h3>
+              <h3>New NTFS Driver Sees Fixes Ahead Of Linux 7.1-rc1</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Linus merged a pull request removing 138,000 lines of code — the entire ISDN subsystem plus numerous legacy PCMCIA-era network drivers.</li>
-              <li>The removals were partly motivated by AI/LLM-generated bug reports flooding upstream maintainers for code with zero real users.</li>
-              <li>Less dead code means smaller attack surface, faster build times, and less noise in CI — a genuine maintenance win for the kernel.</li>
+              <li>Linux 7.1 introduces a new NTFS kernel driver designed to supersede NTFS3 with better performance and more modern feature support.</li>
+              <li>Multiple fixes are landing before rc1 to ensure correctness on read/write NTFS volumes.</li>
+              <li>Improved NTFS support has real impact for Linux users on dual-boot systems and those accessing Windows-formatted external drives.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.1-Removes-Old-Net" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/New-NTFS-Driver-Fixes-Linux-7.1" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GCC Establishes Working Group to Decide on AI/LLM Policy</h3>
+              <h3>LoongArch Improvements Land In Linux 7.1</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GCC&#x27;s steering committee has formed a working group to study and establish formal policy around AI/LLM use in GCC development.</li>
-              <li>The move follows upstream kernel maintainers dealing with a surge of low-quality AI-generated bug reports and patches.</li>
-              <li>This is one of the first major open-source compiler projects to formalize an AI contribution policy — the outcome will likely influence other toolchain projects.</li>
+              <li>LoongArch, the Chinese CPU architecture inspired by MIPS and RISC-V, continues to expand its upstream Linux kernel support in the 7.1 merge window.</li>
+              <li>The enhancements span multiple kernel subsystems, reflecting active upstreaming efforts by Loongson.</li>
+              <li>Growing kernel integration positions LoongArch as a more viable alternative to x86 and ARM in markets prioritizing domestic chip supply chains.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/GCC-Working-Group-AI-Policy" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/LoongArch-Linux-7.1" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>HDMI FRL Support Achieved with Open-Source Nouveau for NVIDIA GPUs</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Coinbase Advisers Warn Quantum Computing Will Crack Blockchain Encryption — Window to Prepare Is Narrowing</h3>
+              <span class="digest-source">The Quantum Insider</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The open-source Nouveau driver for NVIDIA GPUs now supports HDMI Fixed Rate Link (FRL), a core feature of the HDMI 2.1 specification.</li>
-              <li>This contrasts with AMD&#x27;s AMDGPU driver, which remains blocked from HDMI 2.1 implementation by HDMI Forum licensing restrictions on open-source.</li>
-              <li>FRL support enables higher resolutions and refresh rates over HDMI, making Nouveau more viable as a daily-driver open-source GPU stack.</li>
+              <li>Coinbase&#x27;s advisory board published a position paper stating that a quantum computer capable of breaking Bitcoin and Ethereum&#x27;s elliptic curve cryptography will eventually be built.</li>
+              <li>The paper stresses timeline urgency: post-quantum migration for blockchain is complex and slow, so preparation must start well before hardware reaches that threshold.</li>
+              <li>NIST&#x27;s recently finalized post-quantum cryptographic standards are the migration target — but retrofitting blockchain consensus and wallet infrastructure is a major engineering effort.</li>
+              <li>The paper frames the preparation window as narrowing faster than the industry is currently moving.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/HDMI-FRL-On-Nouveau-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://thequantuminsider.com/2026/04/25/coinbase-advisers-warn-quantum-computing-will-crack-blockchain-encryption-and-the-window-to-prepare-is-narrowing/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Welinq: Using Shared Entanglement to Network Quantum Processors Into Modular Scale-Out Clusters</h3>
+              <span class="digest-source">The Quantum Insider</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Welinq is building quantum networking infrastructure that uses shared entanglement to interconnect separate quantum processors into modular clusters.</li>
+              <li>The approach enables scale-out to higher qubit counts without requiring a single monolithic processor — a key path to commercially relevant quantum systems.</li>
+              <li>Near-term commercial product is quantum-safe connectivity between data centers, separate from the full quantum computing use case.</li>
+              <li>Technical building blocks include qubit-photon interfaces, entanglement distribution, and repeater architecture for longer-distance quantum links.</li>
+            </ul>
+            <a href="https://thequantuminsider.com/2026/04/25/podcast-with-tom-darras-ceo-and-co-founder-welinq/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
