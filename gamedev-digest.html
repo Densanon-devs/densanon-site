@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Dev Morning Digest - April 25, 2026 | Densanon</title>
+  <title>Game Dev Morning Digest - April 26, 2026 | Densanon</title>
   <meta name="description" content="Daily game development news digest - engines, tools, techniques, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 25, 2026</div>
+        <div class="digest-date-badge">April 26, 2026</div>
         <h1>Game Dev Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest leans heavily community-driven: Godot continues to punch above its weight with multiple solo devs shipping to Steam, an impressive indie FPS progress showcase is making the rounds, and a deep-dive into PEAK&#x27;s ragdoll-driven character movement gives Unreal devs something to dig into. Retro history makes a cameo with Martin Galway releasing original C64 music source files.</p>
+        <p class="digest-intro">Today&#x27;s digest covers Godot 4.7&#x27;s HDR rollout across desktop platforms, a deep-dive into why pixel art goes blurry in asset pipelines (and how to auto-detect it), plus a practical UX principle on surfacing blocked-action feedback that every indie dev should internalize.</p>
       </div>
     </section>
 
@@ -29,46 +29,16 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Show HN: PlayDrop – A home for vibe coded browser games</h3>
-              <span class="digest-source">Hacker News Game Dev</span>
+              <h3>Godot 4.7 Gets HDR Support</h3>
+              <span class="digest-source">Game From Scratch</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Platform targeting AI-assisted (&quot;vibe coded&quot;) browser games as a distinct distribution channel separate from itch.io</li>
-              <li>Positions itself as a curated destination rather than a raw upload host — curation angle could matter for discoverability</li>
-              <li>Worth watching as AI-generated games grow in volume and need a publishing layer that sets them apart from hand-crafted work</li>
+              <li>HDR support is landing incrementally across Dev1/Dev2/Dev3 builds, covering Windows, macOS, and Linux/BSD (Wayland) — platform parity is close but not fully there yet.</li>
+              <li>HDR expands the luminance range rendered to a compatible display, enabling more realistic lighting without post-process clamping — a meaningful visual upgrade for both 3D and stylized 2D projects.</li>
+              <li>If you&#x27;re targeting modern monitors or TVs, now is the time to prototype HDR pipelines in Godot before 4.7 stabilizes.</li>
+              <li>The feature&#x27;s staged rollout means you can test HDR incrementally per Dev build without waiting for a full stable release.</li>
             </ul>
-            <a href="https://www.playdrop.ai" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Industry &amp; News</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Martin Galway&#x27;s music source files from 1980s Commodore 64 games</h3>
-              <span class="digest-source">Hacker News Game Dev</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Galway open-sourced the original SID chip composition files from iconic C64 titles including Wizball, Mikie, and Green Beret</li>
-              <li>58 HN upvotes — strong signal that game audio history content resonates with developer audiences</li>
-              <li>Rare primary-source archive: actual assembly and music data as Galway wrote it in the 1980s, useful for studying early chip-music composition</li>
-              <li>Relevant reference for anyone building retro-style audio systems or researching procedural music techniques from the SID era</li>
-            </ul>
-            <a href="https://github.com/MartinGalway/C64_music" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Show HN: I got tired of boring SQL tutorials, so I built a game</h3>
-              <span class="digest-source">Hacker News Game Dev</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>SQL Protocol gamifies database query learning through an interactive browser-based format</li>
-              <li>Follows the growing &quot;learn X by playing&quot; trend — useful reference for anyone designing educational game mechanics</li>
-              <li>Demonstrates that niche edtech games can find organic traction through a well-timed HN Show launch without a marketing budget</li>
-            </ul>
-            <a href="https://sqlprotocol.com" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://gamefromscratch.com/godot-4-7-gets-hdr-support/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -78,16 +48,16 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How to implement character movement similar to PEAK?</h3>
+              <h3>Why pixel art looks blurry in asset browsers/online (and how I detected it automatically)</h3>
               <span class="digest-source">r/gamedev</span>
             </div>
             <ul class="digest-takeaways">
-              <li>PEAK uses passive ragdoll bodies that conform to IK hand and foot targets rather than fully animated skeletons — a hybrid physics-animation approach</li>
-              <li>Implementing this in Unreal requires a PhysicsAsset with constrained ragdoll joints driven by an AnimBP IK chain</li>
-              <li>The wobbly-but-grounded feel comes from tuning joint constraints and blending physics weight at runtime, not from motion-captured animation alone</li>
-              <li>Thread surfaces practical Unreal implementation paths worth bookmarking for character controller and physics-driven movement experiments</li>
+              <li>Most general-purpose image tools default to bilinear or bicubic resampling, which blurs pixel art — the root cause is mismatched scaling filters, not display resolution.</li>
+              <li>The author built an automatic detection method to identify whether an image is pixel art before selecting a scaling algorithm — a useful pattern for asset pipeline tooling.</li>
+              <li>The correct fix is nearest-neighbor scaling for pixel art; the engineering challenge is reliably detecting pixel art vs. other image types programmatically.</li>
+              <li>Worth reading if you distribute pixel art assets or build any image-handling tooling — the detection heuristics discussed in comments are practical and reproducible.</li>
             </ul>
-            <a href="https://reddit.com/r/gamedev/comments/1sv3sb4/how_to_implement_character_movement_similar_to/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/gamedev/comments/1svqhi9/why_pixel_art_looks_blurry_in_asset/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -97,66 +67,55 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I released my first game! It&#x27;s a Windows 95 themed game where you make PowerPoint Factories</h3>
+              <h3>Marketing insight: How to talk about game dev to people who don&#x27;t know how to talk about games</h3>
+              <span class="digest-source">r/gamedev</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Pitching an indie studio to non-gamers (investors, incubator peers, family) requires reframing around universal hooks — emotion, craft, and market scale — rather than genre mechanics.</li>
+              <li>Framing games as &#x27;interactive experiences&#x27; comparable to film or board games resonates more broadly than explaining engine choices or gameplay loops.</li>
+              <li>Useful mental model for crowdfunding pages and press kits aimed at journalists or backers unfamiliar with the medium.</li>
+              <li>The incubator context adds real-world pressure — these communication lessons translate directly to pitch decks and early marketing copy.</li>
+            </ul>
+            <a href="https://reddit.com/r/gamedev/comments/1svmchd/marketing_insight_how_to_talk_about_game_dev_to/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>I realized something important while improving my game</h3>
+              <span class="digest-source">r/IndieDev</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>When a player can&#x27;t perform an action due to a game condition, the UI should immediately display the reason — a one-time tutorial mention is not sufficient.</li>
+              <li>Contextual feedback (e.g., flashing a stamina bar at the moment movement is blocked) dramatically reduces player confusion and friction.</li>
+              <li>This principle applies broadly: cooldowns, resource gates, locked abilities — all benefit from in-context &#x27;why not&#x27; messaging rather than passive UI states.</li>
+              <li>Simple implementation pattern: intercept failed action checks and emit a localized feedback event rather than silently rejecting input.</li>
+            </ul>
+            <a href="https://reddit.com/r/IndieDev/comments/1sw383f/i_realized_something_important_while_improving_my/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>I was skeptical about Godot&#x27;s 3D capabilities, but my game turned out great!</h3>
               <span class="digest-source">r/godot</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Factory 95 shipped to Steam — a factory/management game wrapped in a Windows 95 aesthetic where you automate PowerPoint production</li>
-              <li>Built in Godot by a solo first-time dev; 298 upvotes signals genuine community enthusiasm for the concept</li>
-              <li>Nostalgia-driven UI theming (Win95 chrome, dialog boxes) is doing real differentiation work in a crowded factory genre</li>
-              <li>Good case study for how a strong visual gimmick can carry a debut release to initial visibility without a marketing budget</li>
+              <li>A year-long tower defense project demonstrates that Godot 3D is production-capable for realistic sci-fi aesthetics — skepticism about 3D quality is increasingly unfounded.</li>
+              <li>The developer notes that Godot&#x27;s node/scene workflow made iteration fast even for a first 3D project — a meaningful usability signal for teams considering the switch from Unity or Unreal.</li>
+              <li>868 upvotes and 40 comments make this one of the stronger community confidence signals for Godot&#x27;s 3D pipeline in recent months.</li>
+              <li>Good reference data point if you&#x27;re evaluating Godot for a 3D commercial project and need peer evidence of shipping quality.</li>
             </ul>
-            <a href="https://reddit.com/r/godot/comments/1sv3jt3/i_released_my_first_game_its_a_windows_95_themed/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/godot/comments/1svlzb3/i_was_skeptical_about_godots_3d_capabilities_but/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Let me introduce the trailer for my current solo Godot project</h3>
+              <h3>Made a rain cloud peg that spawns scoring raindrops</h3>
               <span class="digest-source">r/godot</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Defrost is a solo-developed Godot game now with a Steam page — trailer earned 257 upvotes on r/godot</li>
-              <li>Strong visual presentation for a solo project; demonstrates what polished Godot output can look like at the trailer stage</li>
-              <li>Available to wishlist at store.steampowered.com/app/4568940/Defrost</li>
+              <li>Demonstrates a &#x27;triggered spawner&#x27; peg mechanic in a Peggle/pachinko-style physics game — hitting the cloud spawns raindrop projectiles that score on subsequent peg collisions.</li>
+              <li>Chain-reaction mechanics like this create emergent depth without complex state machines: a single special peg type generates cascading scoring opportunities.</li>
+              <li>Built in Godot using RigidBody2D physics — practical example of combining physics nodes with dynamic scene instantiation for procedural gameplay moments.</li>
+              <li>The design principle (one special node type that amplifies the core mechanic) is a transferable pattern for any physics-puzzle or roguelite game.</li>
             </ul>
-            <a href="https://reddit.com/r/godot/comments/1sva2vv/let_me_introduce_the_trailer_for_my_current_solo/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>How it started / How it&#x27;s going</h3>
-              <span class="digest-source">r/IndieDev</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Solo dev shares a before/after showcase of a high-fidelity UE5 FPS concept demo — 740 upvotes, the top post in today&#x27;s batch by a wide margin</li>
-              <li>The project is a 6-8 minute &quot;true gameplay&quot; video intended as an artistic statement, not a shippable game — an interesting positioning choice</li>
-              <li>UE5 visual fidelity is clearly within reach for solo devs given enough iteration time; the progression images are genuinely striking</li>
-              <li>Text on the in-game pillar translates from Ukrainian — personal narrative embedded directly in the environment design</li>
-            </ul>
-            <a href="https://reddit.com/r/IndieDev/comments/1svbehi/how_it_started_how_its_going/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>I&#x27;m building Alpine Architect, the ski resort manager I always wanted to play. What do you think?</h3>
-              <span class="digest-source">r/IndieDev</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Alpine Architect is a ski resort management sim — an underserved niche with no obvious modern competitor in the management genre</li>
-              <li>112 upvotes and 29 comments suggest solid community interest; the feedback thread is worth reading for genre feature expectations</li>
-              <li>The &quot;game I always wanted to play&quot; framing is a reliable indie positioning strategy — scratching a personal itch tends to produce more authentic designs</li>
-            </ul>
-            <a href="https://reddit.com/r/IndieDev/comments/1sv9hsb/im_building_alpine_architect_the_ski_resort/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>I am making a farming game that has dynamic water irrigation, terrain editing and weather system</h3>
-              <span class="digest-source">r/IndieDev</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Goes well beyond Stardew-style farming by adding dynamic water flow, terrain deformation, and a full weather simulation that interact with each other</li>
-              <li>122 upvotes and 37 comments — the comment thread likely contains useful player expectations for anyone building in the farming sim genre</li>
-              <li>Dynamic irrigation as a core mechanic (water flows based on terrain shape) is technically ambitious and visually distinguishing from competitors</li>
-              <li>Terrain editing combined with weather interaction suggests simulation depth rather than the narrative/relationship focus most farming games lean on</li>
-            </ul>
-            <a href="https://reddit.com/r/IndieDev/comments/1sv8c0p/i_am_making_a_farming_game_that_have_dynamic/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/godot/comments/1sw7heg/made_a_rain_cloud_peg_that_spawns_scoring/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

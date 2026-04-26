@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - April 25, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - April 26, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 25, 2026</div>
+        <div class="digest-date-badge">April 26, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest spans hardware to deployment: ABB enters the cobot gap with a new family, 1X ships its first mail-order humanoid, and the ROS community debates the right containerization stack for real-world deployments. Research threads run from 3B policy speed gains to Sony AI&#x27;s real-world robotics push.</p>
+        <p class="digest-intro">Today&#x27;s robotics digest covers a decade of lessons from Ghost Robotics&#x27; quadruped deployments, the strategic case for keeping legacy automation components alive, and practical URDF validation tools that skip the ROS setup entirely.</p>
       </div>
     </section>
 
@@ -29,69 +29,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ABB Robotics launches PoWa cobot family targeting industrial tasks</h3>
+              <h3>Look back on 10 years of legged robots with Ghost Robotics at the Robotics Summit</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ABB&#x27;s PoWa line is positioned to fill the payload/reach gap between traditional lightweight cobots and full industrial arms.</li>
-              <li>Targets industrial task categories -- assembly, material handling -- where existing cobots have historically underperformed.</li>
-              <li>Adds competitive pressure on UR, Fanuc, and Doosan in the mid-tier cobot segment.</li>
+              <li>Ghost Robotics CEO Gavin Kenneally will share hard-won lessons from a decade of real-world quadruped deployments -- a rare candid retrospective from a field-tested team.</li>
+              <li>Ten years puts Ghost in a unique position: they pre-date the current humanoid hype cycle and have survived multiple hardware generations, market shifts, and defense contracts.</li>
+              <li>The Robotics Summit retrospective format is a good signal on what actually works vs. what only demos well -- expect lessons on reliability and operational edge cases.</li>
             </ul>
-            <a href="https://www.therobotreport.com/abb-robotics-launches-powa-cobot-family-targeting-industrial-tasks/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/look-back-on-10-years-of-legged-robots-with-ghost-robotics-at-the-robotics-summit/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The company building America&#x27;s first mail-order servant robot</h3>
-              <span class="digest-source">Hacker News Robotics</span>
+              <h3>The Strategic Value of Legacy Components in Automation</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>1X is scaling a factory to produce the Neo humanoid for direct-to-consumer mail-order delivery -- an unusual go-to-market for a full humanoid.</li>
-              <li>Positions the robot as a home servant, shifting humanoid framing from industrial to residential use.</li>
-              <li>Factory scale-up is the key bottleneck the piece explores -- unit economics and logistics at consumer volume.</li>
+              <li>Most factory floors are hybrid environments -- cutting-edge IIoT layers sitting on top of PLCs and actuators that are 10-20 years old, and the legacy hardware isn&#x27;t going away anytime soon.</li>
+              <li>Ripping and replacing legacy components is rarely cost-justified; the strategic play is extending component life through predictive maintenance, adapters, and software shims.</li>
+              <li>Robot integrators that co-exist with legacy equipment win more deployments than systems demanding greenfield installs.</li>
             </ul>
-            <a href="https://www.dezeen.com/2026/04/23/1x-neo-servant-robot-factory/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/04/26/the-strategic-value-of-legacy-components-in-automation-3/101012/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>America Cannot Lose the Robotics Race</h3>
-              <span class="digest-source">Hacker News Robotics</span>
+              <h3>Circular economy in electronics: Extending hardware life</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>a16z argues China&#x27;s robotics manufacturing lead is accelerating and the US needs a coordinated policy and investment response.</li>
-              <li>Frames humanoid robots as the next industrial platform -- analogous to semiconductors in strategic importance.</li>
-              <li>Calls for regulatory streamlining, domestic supply chain investment, and defense/commercial cross-pollination.</li>
+              <li>Global e-waste runs in the tens of millions of tonnes annually while semiconductor shortages simultaneously leave factories starved for parts -- a paradox that circular approaches directly address.</li>
+              <li>Refurbishing, remanufacturing, and component harvesting from end-of-life hardware can reduce procurement costs and supply-chain exposure for automation shops.</li>
+              <li>Robot OEMs that design for disassembly and part reuse gain a sustainability story that increasingly matters in enterprise procurement decisions.</li>
             </ul>
-            <a href="https://a16z.com/america-cannot-lose-the-robotics-race/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Sony AI Announces Real-World Artificial Intelligence and Robotics</h3>
-              <span class="digest-source">Hacker News Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Sony AI is publishing research targeting real-world robustness -- a harder problem than lab benchmarks.</li>
-              <li>Focus areas include perception and manipulation in unstructured environments, aligning with humanoid deployment needs.</li>
-              <li>Sony&#x27;s research arm entering this space adds a major consumer-electronics player to the embodied AI competition.</li>
-            </ul>
-            <a href="https://ai.sony/news/sony-ai-announces-breakthrough-research-in-real-world-artificial-intelligence-and-robotics" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Making a 3B Robot Policy Faster</h3>
-              <span class="digest-source">Hacker News Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Haptic Labs documents practical inference optimizations on a 3B-parameter robot policy model during a first-week engineering sprint.</li>
-              <li>Highlights the gap between academic policy performance and real-time deployment latency requirements.</li>
-              <li>Techniques explored are applicable to any team running large neural policies on embedded or edge hardware.</li>
-            </ul>
-            <a href="https://www.hapticlabs.ai/blog/2026/04/23/my-first-week-at-haptic-making-a-3b-robot-policy-faster" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/04/26/circular-economy-in-electronics-extending-hardware-life-2/101007/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -101,45 +71,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Dockerized robotics development should be easy!</h3>
+              <h3>Private URDF/Xacro validation (no storage, CI-ready)</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ros2-dockergen automates generation of a customized Dockerfile and docker-compose.yml tailored for ROS2 projects.</li>
-              <li>Reduces the boilerplate barrier that discourages containerized ROS2 dev environments.</li>
-              <li>Supports reproducible builds and easier onboarding for teams adopting container-based workflows.</li>
+              <li>RoboInfraapi processes URDF/Xacro files entirely in-memory -- nothing is stored, directly addressing the hesitation engineers have about uploading proprietary robot models to external services.</li>
+              <li>CI-ready design means validation can be gated into a build pipeline without a local ROS install on the runner, lowering the barrier for teams using cloud CI.</li>
+              <li>Privacy-first validation tooling fills a real gap: most existing online tools require file uploads with unclear retention policies.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/dockerized-robotics-development-should-be-easy/54302" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/private-urdf-xacro-validation-no-storage-ci-ready/54314" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>What are you using for containerization in ROS deployments?</h3>
+              <h3>I Validated a NASA Robot Model in Minutes Without ROS, Setup, or Blender</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Active community thread sparked by a post arguing Docker is not the right tool for production robotics deployments.</li>
-              <li>Practitioners are weighing Docker, Podman, Snap, and Yocto -- each with different tradeoffs for OTA update reliability.</li>
-              <li>Real-world deployment constraints (hardware access, real-time scheduling, OTA) push teams away from standard Docker setups.</li>
+              <li>End-to-end URDF and Xacro validation, URDF-to-Xacro conversion, kinematic analysis, and 3D preview -- all without installing ROS, Blender, or any local tooling.</li>
+              <li>Tested on NASA&#x27;s Robonaut 2 (r2c6.urdf), a complex humanoid with many joints -- a meaningful stress test beyond toy examples.</li>
+              <li>Zero-setup validation lowers the floor for researchers and hobbyists who want to work with real robot models but aren&#x27;t ready to commit to a full ROS environment.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/what-are-you-using-for-containerization-in-ros-deployments/54303" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Jailbreaking a robot vacuum to run Tailscale and Valetudo</h3>
-              <span class="digest-source">Hacker News Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Walk-through of rooting a consumer robot vacuum and replacing its cloud stack with Valetudo (local-only firmware) and Tailscale for remote access.</li>
-              <li>Demonstrates the growing maker interest in reclaiming local control over cloud-dependent consumer robots.</li>
-              <li>Tailscale&#x27;s mesh VPN makes the previously tricky &#x27;local access anywhere&#x27; problem nearly trivial once the device is rooted.</li>
-            </ul>
-            <a href="https://tailscale.com/blog/tailscale-sucks" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/i-validated-a-nasa-robot-model-in-minutes-without-ros-setup-or-blender/54310" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
