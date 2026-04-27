@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - April 26, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - April 27, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,53 +15,100 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 26, 2026</div>
+        <div class="digest-date-badge">April 27, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s robotics digest covers a decade of lessons from Ghost Robotics&#x27; quadruped deployments, the strategic case for keeping legacy automation components alive, and practical URDF validation tools that skip the ROS setup entirely.</p>
+        <p class="digest-intro">Hexagon and Schaeffler announce 1,000 humanoid deployments, Sereact closes $110M for manipulation world models, NVIDIA drops Sonic for full-body humanoid control, and researchers push policy evaluation to thousands of simulated environments in one shot.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>dWorldEval: Scalable Robotic Policy Evaluation via Discrete Diffusion World Model</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Uses a discrete diffusion world model to generate thousands of evaluation environments automatically, giving researchers a scalable alternative to hand-crafted test suites.</li>
+              <li>Policy evaluation at this scale surfaces failure modes that small held-out sets miss entirely -- a meaningful step toward reliable sim-to-real transfer.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/cs.RO" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>SNGR: Selective Non-Gaussian Refinement for Ambiguous SLAM Factor Graphs</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Augments iSAM2 with targeted nested sampling only where the factor graph is genuinely ambiguous, rather than applying expensive non-Gaussian inference everywhere.</li>
+              <li>Selective refinement means the compute budget goes where it matters most -- a practical improvement for long-horizon SLAM in complex environments.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/cs.RO" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Robust Localization for Autonomous Vehicles in Highway Scenes</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Addresses the specific localization challenges of highway AV operation where sparse lane features, high speed, and limited sensor overlap create failure modes distinct from urban scenarios.</li>
+              <li>Robust highway localization remains an underserved research area compared to urban and parking environments -- this work directly targets that gap.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/cs.RO" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Look back on 10 years of legged robots with Ghost Robotics at the Robotics Summit</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Ghost Robotics CEO Gavin Kenneally will share hard-won lessons from a decade of real-world quadruped deployments -- a rare candid retrospective from a field-tested team.</li>
-              <li>Ten years puts Ghost in a unique position: they pre-date the current humanoid hype cycle and have survived multiple hardware generations, market shifts, and defense contracts.</li>
-              <li>The Robotics Summit retrospective format is a good signal on what actually works vs. what only demos well -- expect lessons on reliability and operational edge cases.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/look-back-on-10-years-of-legged-robots-with-ghost-robotics-at-the-robotics-summit/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>The Strategic Value of Legacy Components in Automation</h3>
+              <h3>Hexagon and Schaeffler to install 1,000 Aeon humanoids across global factory network</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Most factory floors are hybrid environments -- cutting-edge IIoT layers sitting on top of PLCs and actuators that are 10-20 years old, and the legacy hardware isn&#x27;t going away anytime soon.</li>
-              <li>Ripping and replacing legacy components is rarely cost-justified; the strategic play is extending component life through predictive maintenance, adapters, and software shims.</li>
-              <li>Robot integrators that co-exist with legacy equipment win more deployments than systems demanding greenfield installs.</li>
+              <li>A four-figure humanoid deployment across a live global factory network is a different category of commitment than pilot programs -- this is Schaeffler treating humanoids as production infrastructure.</li>
+              <li>Hexagon&#x27;s Aeon robots will be monitored and managed via Hexagon&#x27;s own factory software stack, making this a vertically integrated humanoid play rather than a standalone hardware purchase.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/04/26/the-strategic-value-of-legacy-components-in-automation-3/101012/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Circular economy in electronics: Extending hardware life</h3>
+              <h3>Sereact raises $110 million for its &#x27;world model&#x27; for robotics</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Global e-waste runs in the tens of millions of tonnes annually while semiconductor shortages simultaneously leave factories starved for parts -- a paradox that circular approaches directly address.</li>
-              <li>Refurbishing, remanufacturing, and component harvesting from end-of-life hardware can reduce procurement costs and supply-chain exposure for automation shops.</li>
-              <li>Robot OEMs that design for disassembly and part reuse gain a sustainability story that increasingly matters in enterprise procurement decisions.</li>
+              <li>Sereact is betting that a dedicated world model for manipulation -- trained specifically on grasping and pick-and-place tasks -- outperforms general-purpose vision-language models for robotic arms.</li>
+              <li>A $110M Series B signals serious investor conviction in the world-model-for-robotics thesis, putting Sereact alongside Physical Intelligence and Covariant in the foundation-model-for-manipulation race.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/04/26/circular-economy-in-electronics-extending-hardware-life-2/101007/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>UK could unlock £150 billion robotics opportunity, says techUK</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>techUK&#x27;s estimate frames robotics adoption as a national economic lever, not just an industrial efficiency play -- expect this figure to show up in UK policy discussions and procurement decisions.</li>
+              <li>The report positions the UK as having the talent and research base to capture a meaningful share, but warns that slow adoption in manufacturing is the primary risk to realizing the opportunity.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Evri to trial autonomous guided vehicles in Rugby, UK hub</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Evri is one of the UK&#x27;s largest parcel networks -- an AGV trial at a major hub is a live stress test under real logistics volume, not a controlled demo environment.</li>
+              <li>Logistics AGV deployments at this scale generate the operational data (failure rates, throughput deltas, maintenance cycles) that actually moves industry adoption curves.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -71,27 +118,42 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Private URDF/Xacro validation (no storage, CI-ready)</h3>
+              <h3>Enhancing ROS 2 Network Visibility with eBPF Kernel Probes</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>RoboInfraapi processes URDF/Xacro files entirely in-memory -- nothing is stored, directly addressing the hesitation engineers have about uploading proprietary robot models to external services.</li>
-              <li>CI-ready design means validation can be gated into a build pipeline without a local ROS install on the runner, lowering the barrier for teams using cloud CI.</li>
-              <li>Privacy-first validation tooling fills a real gap: most existing online tools require file uploads with unclear retention policies.</li>
+              <li>eBPF kernel probes let you observe ROS 2 DDS traffic at the network level without modifying node code -- a non-invasive approach to security monitoring and performance profiling in production systems.</li>
+              <li>As ROS 2 deployments move into critical infrastructure, network-level visibility tools become essential for audit trails and anomaly detection that application-layer logging alone cannot provide.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/private-urdf-xacro-validation-no-storage-ci-ready/54314" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.ros.org/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Sonic: Supersizing Motion Tracking for Natural Humanoid Whole-Body Control</h3>
+              <span class="digest-source">Hacker News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>NVIDIA Labs&#x27; Sonic system scales motion tracking data to achieve natural whole-body control on humanoid robots -- addressing one of the core data bottlenecks in humanoid locomotion research.</li>
+              <li>Whole-body control that looks natural (rather than mechanically correct) is the threshold that matters for real-world humanoid acceptance; Sonic directly targets this gap.</li>
+            </ul>
+            <a href="https://news.ycombinator.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I Validated a NASA Robot Model in Minutes Without ROS, Setup, or Blender</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>Ukrainian robot carried 77-year-old from grey zone near Lyman</h3>
+              <span class="digest-source">Hacker News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>End-to-end URDF and Xacro validation, URDF-to-Xacro conversion, kinematic analysis, and 3D preview -- all without installing ROS, Blender, or any local tooling.</li>
-              <li>Tested on NASA&#x27;s Robonaut 2 (r2c6.urdf), a complex humanoid with many joints -- a meaningful stress test beyond toy examples.</li>
-              <li>Zero-setup validation lowers the floor for researchers and hobbyists who want to work with real robot models but aren&#x27;t ready to commit to a full ROS environment.</li>
+              <li>A field robotics system successfully performed a live civilian evacuation in an active conflict zone -- one of the highest-stakes real-world deployments of ground robotics on record.</li>
+              <li>This is the kind of outcome that reframes the humanitarian case for field robotics: not a demo metric, but a documented life preserved under conditions no human team could safely enter.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/i-validated-a-nasa-robot-model-in-minutes-without-ros-setup-or-blender/54310" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://news.ycombinator.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

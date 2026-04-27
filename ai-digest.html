@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - April 26, 2026 | Densanon</title>
+  <title>AI Morning Digest - April 27, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,56 +15,78 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 26, 2026</div>
+        <div class="digest-date-badge">April 27, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest covers a striking privacy finding — Claude 4.7 identified a journalist from just 125 words of unpublished writing — alongside Qwen3.6 hitting 100 tokens/second on a single RTX 5090 and a community expose on license plagiarism in the uncensored model space.</p>
+        <p class="digest-intro">Today: an agentic system that auto-reproduces social-science studies, a sharp look at where LLMs fail on culture-specific health misinformation, Meta&#x27;s $2B Manus deal blocked by China, and a 60-year-old with zero coding experience who built a RAG app in two months.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Read the Paper, Write the Code: Agentic Reproduction of Social-Science Results</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Researchers built an agent that reads a social-science paper and autonomously reproduces its statistical results end-to-end — data wrangling, model fitting, and output validation included.</li>
+              <li>Successful reproduction rates vary sharply by methodology complexity, giving a concrete benchmark for how far agentic coding has come and where it still breaks down.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2504.recent" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Math Takes Two: A Test for Emergent Mathematical Reasoning in Communication</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The paper introduces a two-agent math task where neither agent can solve the problem alone — cooperation and communication are structurally required, making it a clean probe for emergent reasoning.</li>
+              <li>Results show that even strong models struggle when mathematical reasoning must be distributed across agents, pointing to a meaningful gap between single-agent and multi-agent problem solving.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2504.recent" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>When Cow Urine Cures Constipation on YouTube: Limits of LLMs in Detecting Culture-specific Health Misinformation</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>LLMs trained predominantly on English Western data miss a significant share of health misinformation rooted in non-Western cultural and traditional medicine contexts — the models often can&#x27;t recognize the claim as false because they lack cultural grounding.</li>
+              <li>The finding has real stakes: YouTube health content in Hindi, Bengali, and similar languages reaches hundreds of millions of users, and generic LLM safety filters are not calibrated for it.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2504.recent" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Shared Lexical Task Representations Explain Behavioral Variability in LLMs</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The study finds that LLMs form shared internal representations for lexically similar tasks, which explains why performance varies predictably across surface-form prompt rewrites.</li>
+              <li>This has direct implications for prompt engineering: task similarity at the token level — not just semantic similarity — shapes how reliably a model generalizes.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2504.recent" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Pocket LLM v1.5.0: Offline Android LLM Chat with Voice, Image Input, OCR, and Camera Capture</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>How to Build Scalable Web Apps with OpenAI&#x27;s Privacy Filter</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>v1.5.0 adds voice input, image input with OCR, Gemma vision support, FastVLM, and camera capture — making it a genuinely capable offline AI assistant on Android.</li>
-              <li>Entirely local and offline: no cloud calls, no data leaving the device, which is rare for a feature-rich mobile LLM app.</li>
-              <li>Adds a previous chats side panel and on-device model deletion to manage storage, addressing two major usability gaps from prior releases.</li>
-              <li>Supports editable model instructions, giving users fine-grained control over model behavior without technical setup.</li>
+              <li>OpenAI&#x27;s Privacy Filter API can be wired into web app request pipelines to strip or redact PII before it reaches a model — the guide walks through a concrete integration pattern.</li>
+              <li>Practical for teams building user-facing AI features where GDPR or CCPA compliance is a concern; using it as a pre-processing layer avoids sending raw user data to the model at all.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1sw4qku/pocket_llm_v150_is_out_offline_android_llm_chat/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Qwen3.6-27B-INT4 Clocking 100 TPS with 256K Context Length on 1x RTX 5090 via vLLM 0.19</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>100+ tokens/second on a single consumer GPU with a 256K context window is a meaningful throughput milestone for a 27B model.</li>
-              <li>Uses INT4 quantization via vLLM 0.19, showing how quantization plus a modern inference stack can dramatically change local model usability.</li>
-              <li>Builds on a community-iterated recipe — 80 TPS was achieved the previous day — showing rapid convergence through open collaboration.</li>
-              <li>256K context at this speed opens doors for long-document tasks (legal, research, codebases) that were previously impractical on local hardware.</li>
-            </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1sw21op/qwen3627bint4_clocking_100_tps_with_256k_context/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Qwen3.6 35B A3B Heretic (KLD 0.0015): Best 35B for Multi-Turn Tool Calls</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>KLD of 0.0015 indicates extremely precise abliteration — capabilities are almost entirely preserved while restrictions are removed.</li>
-              <li>Fits in 24GB VRAM at IQ4XS with Q8 KV cache and 262K context, practical on a single high-end consumer GPU.</li>
-              <li>Notably does not fail on multi-turn tool calls — a known pain point for many quantized or abliterated models.</li>
-              <li>Community is converging on Heretic as the go-to fine-tune for Qwen3.6 for agentic and tool-use workloads.</li>
-            </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1sw5fb7/qwen36_35b_a3b_heretic_kld_00015_incredible_model/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -74,68 +96,47 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Claude 4.7 Named a Journalist from 125 Words of Unpublished Writing</h3>
+              <h3>Taught my 60-year-old dad (zero coding exp) Claude and Git in Feb. Today he built a RAG solution.</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Journalist Kelsey Piper pasted 125 words of an unpublished political column into Claude 4.7 and received her own name back — unprompted.</li>
-              <li>She ruled out login or session leakage: she was logged out, used the API directly, and replicated it on a friend&#x27;s laptop.</li>
-              <li>Switching genres (unpublished prose instead of political writing) also returned her name, suggesting it is not narrow genre memorization.</li>
-              <li>Raises serious questions about stylometric re-identification as a practical privacy threat at consumer scale, and what writing data is in Claude&#x27;s training set.</li>
+              <li>In roughly two months, a non-technical retiree went from zero coding experience to building a working retrieval-augmented generation app — with Claude as the primary teacher and pair programmer.</li>
+              <li>330 upvotes and 73 comments reflect genuine community excitement; this is one of the clearest real-world data points yet for AI dramatically lowering the floor for software development.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1sw8npc/claude_47_named_a_journalist_from_125_words_of/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>You&#x27;re Right to Push Back</h3>
+              <h3>Drop your best Claude skills in here!</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>High-scoring post (3,244 upvotes) reflecting widespread community sentiment that Claude should resist sycophantic agreement and hold its position under pressure.</li>
-              <li>Signals growing user preference for models that maintain correctness even when users push back hard.</li>
-              <li>Relevant as Anthropic and other labs tune honesty vs. helpfulness tradeoffs — community feedback like this shapes RLHF priorities.</li>
-              <li>The title becoming a community rallying phrase suggests this is less a support post and more a values statement from Claude&#x27;s user base.</li>
+              <li>A crowdsourced thread of high-signal Claude workflows and prompting patterns — 74 comments and actively growing, making it a useful reference for power users.</li>
+              <li>Top techniques include structured output forcing, iterative persona refinement, and using Projects memory to persist context across long work sessions.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1sw0xbo/youre_right_to_push_back/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Anthropic&#x27;s Support System Has No Path to a Human for Billing Issues</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A Claude Max 20x gift subscription disappeared mid-period with no recourse — the poster found no path to a human support agent for billing resolution.</li>
-              <li>The post frames this as a structural problem: the support loop is AI-only and never escalates to humans, by design.</li>
-              <li>For a product charging premium subscription prices, the lack of human billing escalation is a real customer trust risk.</li>
-              <li>136 upvotes and 79 comments suggest this is a shared pain point, not an edge case — worth watching as Anthropic scales its consumer subscriber base.</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1svzspd/anthropics_support_system_is_broken_by_design/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>HauhauCS Published an Abliteration Package That Plagiarizes Heretic Without Attribution, Violating Its License</h3>
+              <h3>To 16GB VRAM users, plug in your old GPU</h3>
               <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>HauhauCS has 5M+ combined monthly downloads across 22 models on HuggingFace — the scale of the alleged plagiarism is significant.</li>
-              <li>The package is alleged to directly copy Heretic&#x27;s work without credit or license compliance, despite every model card claiming original capability.</li>
-              <li>This case highlights the governance gap in open-weight model distribution: HuggingFace license enforcement is community-driven, not platform-enforced.</li>
-              <li>A reminder that &#x27;open&#x27; in open-source AI does not eliminate IP obligations — Apache 2.0 and MIT licenses still require attribution and compliance.</li>
+              <li>Adding a second GPU — even a years-old card — for KV cache and attention offload can meaningfully extend effective context length and reduce VRAM pressure on the primary card without requiring a full hardware upgrade.</li>
+              <li>234 upvotes and 129 comments confirm this resonates: for the large segment of local LLM users on 16GB cards, a cheap second GPU is a high-ROI upgrade over replacing the primary card.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1sw77p0/hauhaucs_of_uncensored_aggressive_fame_published/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Claude for Personal Use: How Regular People Are Using It Daily</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>Meta&#x27;s $2 Billion Manus Acquisition Blocked by China</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Thread reveals a wide range of non-developer Claude use cases: grocery lists, personal training, finances, and MS Office automation.</li>
-              <li>279 upvotes and 76 comments show this is a genuinely popular discussion — practical consumer AI use is growing alongside developer use.</li>
-              <li>Many users report Claude inside Excel as their highest-value daily use, suggesting integration with existing productivity tools is a strong adoption lever.</li>
-              <li>Useful signal for product teams: consumers want AI embedded in tools they already use, not standalone chat interfaces.</li>
+              <li>Chinese regulators reportedly blocked Meta&#x27;s $2B acquisition of Manus, the autonomous AI agent company, on national security grounds — a significant escalation of tech geopolitical friction in the AI agent space.</li>
+              <li>Manus had drawn wide attention for its browser-control and task-automation capabilities; the block leaves it independent and raises questions about which AI agent companies remain acquirable across jurisdictions.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1svv1at/claude_in_excel_is_the_best_thing_ai_has_brought/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
