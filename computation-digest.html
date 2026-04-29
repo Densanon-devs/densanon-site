@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - April 28, 2026 | Densanon</title>
+  <title>Computation Morning Digest - April 29, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 28, 2026</div>
+        <div class="digest-date-badge">April 29, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Scientists push semiconductors to extreme-temperature operation with beta-gallium oxide, AMD strips Electron out of its local AI SDK for a 10x size reduction, and six proposed AI data centers threaten to consume 14% of a 7,000-person town — all while GCC 16.1 lands this week and Fedora 44 ships GNOME 50.</p>
+        <p class="digest-intro">Today&#x27;s set is anchored by TSMC&#x27;s concrete 3D stacking pitch roadmap and US export controls targeting China&#x27;s emerging 7nm fabs — two stories that define where leading-edge silicon goes next and who gets to build it. On the systems side, IBM&#x27;s ARM64-on-s390 KVM patches and a high-severity GitHub git infrastructure vulnerability round out a technically dense day.</p>
       </div>
     </section>
 
@@ -29,58 +29,94 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Scientists create electronic devices that function reliably at extreme temperatures</h3>
+              <h3>TSMC SoIC 3D stacking roadmap outlines path from 6-micron pitches today to 4.5-micron in 2029 — Fujitsu&#x27;s Monaka CPU to benefit from face-to-face chiplet stacking</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Researchers demonstrated silicon-doped beta-gallium oxide transistors that operate across a 771°C range — from -271°C (near absolute zero) to 500°C — a span no silicon or GaN device can cover, opening doors for space, aerospace, and downhole industrial sensing without thermal management hardware.</li>
-              <li>Beta-gallium oxide&#x27;s ultra-wide bandgap (~4.8 eV) is what enables this extreme range; the silicon doping technique used here is a practical manufacturing path, not just a lab curiosity, suggesting near-term transition from prototype to process node.</li>
+              <li>Current SoIC production runs at 6 µm bump pitch; the roadmap adds a 6.5 µm variant for yield, then targets 4.5 µm by 2029</li>
+              <li>Face-to-face (F2F) stacking mode is newly added alongside existing face-to-back — enables tighter signal coupling between logic dies without a passive interposer</li>
+              <li>Fujitsu&#x27;s Monaka HPC CPU is a named production customer for F2F SoIC, confirming the technology is committed rather than roadmap vapor</li>
+              <li>Tighter pitch reduces interconnect length and latency between stacked chiplets — directly impactful for memory-bandwidth-bound HPC and AI workloads</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/scientists-create-electronic-devices-that-function-reliably-at-extreme-temperatures" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/tsmc-soic-3d-stacking-roadmap-outlines-path-from-6-micron-pitches-today-to-4-5-micron-in-2029-fujitsus-monaka-cpu-to-benefit-from-face-to-face-chiplet-stacking" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD&#x27;s Lemonade SDK 10.3 Now 10x Smaller By Getting Rid Of Electron</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>US stops exports of tools to China&#x27;s number two chip maker — Hua Hong and Huali Microelectronics reportedly on the cusp of starting a 7-nm fab in Shanghai</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMD&#x27;s open-source Lemonade local AI server dropped Electron entirely in v10.3, shrinking the install from ~300 MB to ~30 MB — a meaningful win for the on-device AI stack that targets AMD CPUs, GPUs, and NPUs without cloud dependency.</li>
-              <li>Removing Electron also improves startup latency and memory footprint at runtime, not just install size; for developers building local inference pipelines on AMD hardware, this is a more deployable base that doesn&#x27;t carry a full Chromium runtime.</li>
+              <li>Applied Materials, KLA, and Lam Research all received Commerce Department letters blocking shipments on Hua Hong&#x27;s pending orders</li>
+              <li>The blocked tools were destined for a planned 7nm fab in Shanghai — the same node SMIC achieved via multi-patterning without EUV</li>
+              <li>Hua Hong is China&#x27;s second-largest foundry; extending controls beyond SMIC signals the US is targeting the broader advanced-node ecosystem, not just a single actor</li>
+              <li>Action comes as China pushes mature-node workarounds toward 7nm using non-EUV techniques, and before that capability is fully established</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-Lemonade-10.3-No-Electron" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/us-stops-exports-of-chip-making-tools-to-chinas-number-two-chip-maker-hua-hong-and-huali-microelectronics-reportedly-on-the-cusp-of-starting-a-7-nm-fab-in-shanghai" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GCC 16&#x27;s Improved Error Messages, Experimental HTML Output</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>More details emerge about how Intel now earns more revenue from each wafer by looking to the edges — analyst reports say reduced yield variability across each wafer leads to more sellable CPUs</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GCC 16.1 is releasing this week with significantly reworked diagnostics — error messages are more precise and better formatted, closing a long-standing usability gap with Clang that had made GCC the second choice for developer experience even when it produced better codegen.</li>
-              <li>Experimental HTML diagnostic output is a forward-looking addition: structured, linkable error reports that IDEs and CI dashboards can parse and display natively, hinting at a future where compiler feedback integrates directly into review workflows.</li>
+              <li>Intel is tightening process controls at wafer edges — historically a low-yield dead-zone — to recover more sellable dies per wafer</li>
+              <li>Analyst reports attribute this to incremental fab optimization rather than new node introductions, meaning no additional capex required</li>
+              <li>More sellable dies per wafer improves gross margin directly; under AI-driven demand, squeezing output from existing Intel 3/18A capacity has outsized revenue impact</li>
+              <li>Technique addresses a fundamental fab challenge: process parameters drift toward wafer edges, making edge dies historically unreliable for binning to high-performance SKUs</li>
             </ul>
-            <a href="https://www.phoronix.com/news/GCC-16-Improved-Error-Messages" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/more-details-emerge-about-how-intel-now-earns-more-revenue-from-each-wafer-by-looking-to-the-edges-analyst-reports-say-reduced-yield-variability-across-each-wafer-leads-to-more-sellable-cpus" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Fedora 44 Released For Living On The Leading-Edge Of Linux Innovations</h3>
+              <h3>Hygon C86-4G CPU Support Added To The GCC 17 Compiler</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fedora 44 ships GNOME 50 and KDE Plasma 6.6, making it the first major distro release to carry both desktop environments at their respective new major versions simultaneously — a useful snapshot of the current state of the Linux desktop for developers evaluating workstation setups.</li>
-              <li>As Fedora&#x27;s primary role in the ecosystem is validating what eventually lands in RHEL, Fedora 44 acts as a preview of the stack that enterprise Linux shops will standardize on in 12-18 months — worth tracking for anyone building software that targets RHEL derivatives.</li>
+              <li>GCC 17 gains support for three Hygon C86-4G server variants: C86-4G-M4, C86-4G-M6, C86-4G-M7 — all x86_64 processors targeted at Chinese data centers</li>
+              <li>Merged to GCC mainline (not a fork), so standard Linux toolchains will natively emit optimized code for this silicon</li>
+              <li>Hygon is architecturally descended from AMD Zen 1 IP licensed before export controls tightened; the C86-4G line represents independent iteration on that base</li>
+              <li>GCC 16.1 is imminent; this targets GCC 17, meaning production compiler support is approximately one year out</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Fedora-44-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Hygon-C86-4G-CPU-GCC-17" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Ubuntu 26.04 LTS Leads Over Windows 11 In Creator Workstation Performance</h3>
+              <h3>IBM Updates Linux Patches For Introducing ARM64 KVM Virtualization On s390</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>On an HP Z6 G5 A workstation with a Threadripper PRO 9975WX, Ubuntu 26.04 LTS outperforms Windows 11 across creator and compilation workloads — continuing a multi-year trend where Linux&#x27;s scheduler and memory management edge widens as core count scales up.</li>
-              <li>For computation-heavy workloads (parallel builds, local LLM inference, simulation), the benchmark reinforces Ubuntu LTS as the lower-overhead choice on high-core-count AMD hardware, with no performance penalty from the &#x27;AI feature&#x27; additions Canonical is rolling out.</li>
+              <li>IBM and Arm are co-developing dual-architecture hardware enabling ARM64 guest VMs to run natively on IBM Z (s390x) mainframes via KVM</li>
+              <li>Second revision of kernel patches posted, indicating active upstream review cycle — this is past proof-of-concept stage</li>
+              <li>Allows IBM Z customers to consolidate ARM64 cloud-native workloads onto mainframe infrastructure with hardware-level fault isolation</li>
+              <li>s390&#x27;s distinct memory model and interrupt architecture make ARM64 KVM support a substantial systems engineering effort; upstream acceptance would be a significant milestone</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Ubuntu-2604-vs-Windows-11-Creator" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/ARM64-On-s390-IBM-Z-v2" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Framework&#x27;s new RTX 5070 12GB graphics module costs a whopping $1,199 — 72% more expensive than $699 8GB version, says pricing is beyond its control</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>RTX 5070 mobile 12GB module priced at $1,199 vs. $699 for the 8GB variant — a 72% premium for 50% more VRAM on otherwise identical GPU silicon</li>
+              <li>Framework explicitly attributes the gap to supply chain costs outside their control, pointing to constrained GDDR7 12GB memory supply</li>
+              <li>In prior GPU generations a memory tier step was typically 10–20%; the 72% gap signals abnormal GDDR7 supply/demand pressure</li>
+              <li>For engineers evaluating workstation-class modular GPUs, the 8GB variant is the only rational choice at current pricing until supply normalizes</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/gpus/frameworks-new-rtx-5070-12gb-graphics-module-costs-a-whopping-usd1-199-72-percent-more-expensive-than-usd699-8gb-version-says-pricing-is-beyond-its-control" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Libcamera 0.7.1 Released With Improved Software ISP</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Libcamera 0.7.1 ships an improved software ISP pipeline for platforms without dedicated hardware ISP silicon — Raspberry Pi, Chrome OS, recent Intel Core laptops</li>
+              <li>Software ISP offloads image signal processing to CPU/GPU, broadening camera support on embedded and edge devices where custom ISP silicon is absent</li>
+              <li>Growing importance as edge vision systems proliferate in robotics and IoT where platform diversity means ISP hardware is not guaranteed</li>
+              <li>Release advances a unified open-source camera abstraction layer across Linux, reducing the per-platform camera driver fragmentation problem</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/libcamera-0.7.1-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -90,64 +126,29 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>OpenAI and Microsoft&#x27;s alliance fractures as cloud exclusivity deal ends</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>GitHub: Woah, a genuinely helpful AI-assisted bug report that isn&#x27;t total slop. Here, Wiz, take this wad of cash</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>OpenAI&#x27;s Azure exclusivity is over — it can now distribute inference workloads across AWS, Google Cloud, and Azure, ending Microsoft&#x27;s structural lock-in on frontier-model compute and opening the door for multi-cloud redundancy at hyperscale.</li>
-              <li>Microsoft retains a revenue share through 2030, so this is a renegotiation rather than a clean break; the real consequence is competitive: AWS and Google Cloud can now bid for OpenAI&#x27;s inference business, which should drive down GPU reservation prices across all three providers.</li>
+              <li>Wiz researchers found a high-severity flaw in GitHub&#x27;s git infrastructure granting remote attackers full read/write access to private repositories</li>
+              <li>Claude was used to accelerate vulnerability research — described as compressing months of analysis into a much shorter window, producing substantive output rather than noise</li>
+              <li>The vulnerability resided at the git protocol layer within GitHub&#x27;s own infrastructure, not in user-facing application code — a deeper systems-level finding</li>
+              <li>GitHub awarded a significant bug bounty and rated the issue critical; full technical disclosure is forthcoming</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/openai-and-microsofts-alliance-fractures-as-cloud-exclusivity-deal-ends" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://go.theregister.com/feed/www.theregister.com/2026/04/29/github_woah_a_genuinely_helpful/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Six AI data centers proposed for a small town of 7,000</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>AWS keynote hypes AI as magic. Its own engineers tell a different story</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Six AI data center proposals would collectively consume 14% of a 7,000-person town&#x27;s land area — a concentration that illustrates how rural communities with cheap power and land are becoming the default site selection target, with limited local governance capacity to evaluate the tradeoffs.</li>
-              <li>Four of the seven town council members resigned in response, signaling a breakdown in local democratic process at exactly the scale where AI infrastructure buildout intersects most sharply with community impact — this is likely a preview of a recurring political pattern as hyperscale siting accelerates.</li>
+              <li>Amazon&#x27;s internal StoreGen team mandates human review of all AI-generated output with no exceptions — a non-negotiable policy even under AI mandate</li>
+              <li>The team director explicitly says they are still hiring junior developers despite AI tooling, directly contradicting autonomous-replacement narratives</li>
+              <li>Internal framing treats AI as a friction-reducer requiring human sign-off, not an autonomous agent — a significant gap from keynote &#x27;agentic&#x27; messaging</li>
+              <li>One of the largest cloud AI deployers is internally treating current LLMs as assistants, not systems — useful calibration data for architects evaluating AI-augmented workflows</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/six-ai-data-centers-proposed-for-a-small-town-of-7000" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Ubuntu&#x27;s AI roadmap revealed, universal AI &#x27;kill switch&#x27; and forced AI integration are not part of the plan</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Canonical&#x27;s official AI roadmap commits to opt-in AI integration and local inference support — no forced cloud dependencies, no system-wide kill switches — a meaningful policy position that distinguishes Ubuntu&#x27;s approach from the always-online AI features shipped in Windows 11.</li>
-              <li>Local agentic tooling is explicitly on the roadmap, with Snap-based AI components designed to be individually removable; for privacy-conscious users and enterprise IT, this is the architecture that makes Ubuntu&#x27;s AI story credible rather than a marketing layer over cloud API calls.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/software/operating-systems/ubuntus-ai-roadmap-revealed-universal-ai-kill-switch-and-forced-ai-integration-are-not-part-of-the-plan" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMDXDNA Driver Preps Hardware Scheduler Time Quantum For Ryzen AI Multi-User Fairness</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The AMDXDNA open-source driver is adding hardware scheduler time-quantum support to the Ryzen AI NPU — enabling fair multi-user/multi-process sharing of NPU compute, which is necessary before NPU access can be exposed at the OS level without one process monopolizing the accelerator.</li>
-              <li>This is infrastructure work, not a user-facing feature, but it&#x27;s a prerequisite for the local AI stack Canonical and AMD are both building toward: a system where NPU inference is a shared system resource with proper preemption, analogous to how GPU compute scheduling matured over the last decade.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/AMDXDNA-HW-Scheduler-Time-Quantum" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Ubuntu&#x27;s &#x27;AI Kill Switch&#x27; Is Achieved By Removing Snaps, Initially Opt-In</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The practical mechanism for Ubuntu&#x27;s AI &#x27;kill switch&#x27; is Snap removal — since AI features will be packaged as Snaps, uninstalling them cleanly removes the AI layer with no residual system-level hooks, a more surgical approach than a monolithic disable toggle.</li>
-              <li>Starting opt-in is the right call for enterprise adoption: IT departments need to evaluate AI components before deploying them at scale, and Snap-based delivery makes that evaluation and rollback straightforward in ways that baked-in OS features do not.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Ubuntu-AI-Kill-Switch-Snaps" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://go.theregister.com/feed/www.theregister.com/2026/04/29/aws_keynote_hypes_ai_magic/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

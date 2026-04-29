@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - April 28, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - April 29, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 28, 2026</div>
+        <div class="digest-date-badge">April 29, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Sereact closes its Series B to push Cortex 2.0 into assembly and kitting, Asimov releases a fully open-source humanoid, Boston Dynamics unloads trailers live at MODEX, and new ArXiv work tackles humanoid fall recovery and swarm-coordinated autonomous driving.</p>
+        <p class="digest-intro">Today&#x27;s set is research-heavy with five strong ArXiv papers spanning real hardware deployments (first RL on a ballbot, underwater gliders, fruit-picking sensor analysis) and two novel manipulation architectures. On the deployment side, Starship hitting 10 million sidewalk deliveries and GFT&#x27;s factory defect-removal system provide grounded commercial benchmarks.</p>
       </div>
     </section>
 
@@ -29,36 +29,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>RecoverFormer: End-to-End Contact-Aware Recovery for Humanoid Robots</h3>
+              <h3>asRoBallet: Closing the Sim2Real Gap via Friction-Aware Reinforcement Learning for Underactuated Spherical Dynamics</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>RecoverFormer learns fall-recovery policies that explicitly model contact forces during ground interaction, producing recovery motions that adapt to the robot&#x27;s actual posture rather than replaying a fixed get-up sequence.</li>
-              <li>End-to-end contact awareness closes a persistent gap in humanoid control: getting back up reliably after unexpected disturbances is a prerequisite for any real-world deployment, and prior controllers handle it poorly.</li>
+              <li>First reported RL deployment on a humanoid ballbot -- a canonical underactuated, nonholonomic platform that has historically resisted learned controllers due to instability under surface variation.</li>
+              <li>Introduces friction-aware domain randomization specifically targeting the rolling contact between ball and floor, which is the dominant sim-to-real failure mode for this platform.</li>
+              <li>Validates that RL can transfer to physical ballbot hardware when the right physical parameters are randomized during training.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.22911" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.24916" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SwarmDrive: Semantic V2V Coordination for Latency-Constrained Cooperative Autonomous Driving</h3>
+              <h3>Libra-VLA: Achieving Learning Equilibrium via Asynchronous Coarse-to-Fine Dual-System</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>SwarmDrive routes semantic scene summaries between nearby vehicles instead of raw sensor streams, slashing the bandwidth required for cooperative perception while keeping cloud round-trips out of the critical path.</li>
-              <li>Reducing cloud dependency for multi-vehicle coordination is a key step toward practical deployment -- latency spikes and connectivity gaps are the failure mode that makes cloud-dependent AV cooperation unsafe in real traffic.</li>
+              <li>Replaces the monolithic generation paradigm in Vision-Language-Action models with an asynchronous dual-system: a coarse semantic planner running at low frequency and a fine-grained action executor at full control rate.</li>
+              <li>Directly addresses the latency vs. quality trade-off that makes current VLA models impractical for real-time manipulation -- the high-level system does not block the low-level executor.</li>
+              <li>Targets generalist robotic manipulation where grounding language instructions into physical actions remains brittle in single-network approaches.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.22852" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.24921" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Gradient-based planning for world models at longer horizons</h3>
-              <span class="digest-source">Robohub</span>
+              <h3>VISION-SLS: Safe Perception-Based Control from Learned Visual Representations via System Level Synthesis</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The GRASP planner lifts trajectory optimization into virtual states so gradient updates run in parallel across the full horizon rather than sequentially, making long-horizon planning over learned dynamics practical for the first time at scale.</li>
-              <li>Adding stochasticity directly to state iterates and reshaping the loss landscape addresses the local-minima problem that has hampered gradient-based planning through world models -- a meaningful methodological step for model-based RL.</li>
+              <li>Provides provable constraint satisfaction guarantees for nonlinear output-feedback controllers operating directly from high-resolution RGB images -- a hard safety result rarely achieved for vision-based control.</li>
+              <li>Handles partial observability, sensor noise, and nonlinear dynamics simultaneously through System Level Synthesis with calibrated uncertainty bounds.</li>
+              <li>Practical for deployment scenarios where worst-case constraint violation (e.g., collision) is unacceptable, not just average performance.</li>
             </ul>
-            <a href="https://robohub.org/gradient-based-planning-for-world-models-at-longer-horizons/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.24894" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>MotionBricks: Scalable Real-Time Motions with Modular Latent Generative Model and Smart Primitives</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Identifies the production gap: research-grade generative motion synthesis is not real-time interactive -- practical deployment still relies on handcrafted state machines and transition graphs.</li>
+              <li>Proposes modular &#x27;motion bricks&#x27; -- composable latent primitives that can be assembled and blended at runtime without rerunning a full generative model.</li>
+              <li>Targets game engines, simulation, and character animation pipelines where a 30-60fps hard latency budget rules out current diffusion or autoregressive motion models.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.24833" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>An analysis of sensor selection for fruit picking with suction-based grippers</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Systematically evaluates force, vacuum pressure, and vision sensor modalities for detecting successful picks on compliant fruit with suction grippers.</li>
+              <li>Targets the specific failure modes of variable stem attachment and occlusion that cause silent pick failures -- the robot doesn&#x27;t know it missed, increasing crop damage.</li>
+              <li>Provides a sensor selection framework with practical guidance for agricultural robotics teams choosing instrumentation for suction-based end effectors.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.24906" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -68,36 +95,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Sereact gets Series B funding to expand Cortex 2.0 robot brain, enter U.S. market</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Starship passes 10 million deliveries as autonomous delivery moves toward mainstream adoption</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Cortex 2.0 is expanding beyond bin picking into assembly and kitting -- tasks that require more context-aware manipulation -- putting Sereact directly in the path of the next wave of robotic labor substitution in manufacturing.</li>
-              <li>A new Boston office signals a deliberate U.S. market push; the combination of European engineering depth and U.S. sales presence is the playbook for robotics companies that want to land enterprise contracts at scale.</li>
+              <li>Starship&#x27;s sidewalk robot fleet has crossed 10 million cumulative deliveries -- a concrete operational scale milestone that separates it from pilot-stage autonomous delivery programs.</li>
+              <li>Demonstrates that AMR delivery is commercially viable today on geofenced, well-mapped urban routes even as fully open-world autonomy remains unsolved.</li>
+              <li>The milestone reframes sidewalk robotics: the question is no longer whether the technology works in controlled conditions but how fast geofenced coverage can expand.</li>
             </ul>
-            <a href="https://www.therobotreport.com/sereact-gets-series-b-funding-expand-cortex-2-robot-brain-enter-u-s-market/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/04/29/starship-passes-10-million-deliveries-as-autonomous-delivery-moves-toward-mainstream-adoption/101097/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Appetronix acquires Cibotica to automate restaurant kitchens</h3>
+              <h3>GFT Technologies AI-powered robots move from inspection to action for automakers</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Cibotica acquisition gives Appetronix a retrofit path alongside its existing standalone autonomous restaurant model -- doubling its addressable market by letting existing operators automate in place rather than rebuild from scratch.</li>
-              <li>Restaurant kitchen automation has been slow to scale because greenfield builds require operator buy-in upfront; a retrofit offering removes the largest adoption barrier in the segment.</li>
+              <li>GFT has closed the loop from computer vision defect detection to physical defect removal on automotive factory floors, using Google Cloud AI to drive actuation decisions -- not just flag issues for humans.</li>
+              <li>This is a meaningful step beyond passive inspection robots: the system takes autonomous corrective action, reducing dependence on human operators for remediation.</li>
+              <li>Deployed in automotive manufacturing where part rejection costs are high and defect-removal speed directly affects line throughput.</li>
             </ul>
-            <a href="https://www.therobotreport.com/appetronix-acquires-cibotica-to-automate-restaurant-kitchens/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/gft-technologies-ai-powered-robots-move-from-inspection-action-automakers/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SquareMind raises $18M for robotic dermatology platform</h3>
+              <h3>Project CETI deploys autonomous underwater gliders to better observe sperm whales</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Swan automates full-body skin imaging at clinical resolution, turning a manual dermatologist workflow into a repeatable, standardized scan -- the kind of consistency that makes AI-assisted cancer detection meaningful at population scale.</li>
-              <li>Medical robotics funding at this level for a dermatology-specific platform signals growing investor appetite for narrow-domain clinical robots, where the regulatory path is clearer and the value proposition more defensible than general-purpose surgical systems.</li>
+              <li>Project CETI&#x27;s new AUV glider extends continuous sperm whale observation duration well beyond what previous tethered or diver-deployed hydrophone arrays allowed.</li>
+              <li>Demonstrates long-endurance autonomous marine robotics in an open-ocean science mission context -- minimal surface support, extended deployment, and real behavioral data collection.</li>
+              <li>The platform design is applicable to any team working on long-duration underwater monitoring or environmental data collection.</li>
             </ul>
-            <a href="https://www.therobotreport.com/squaremind-raises-18m-dermatology-robotics-platform/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/project-ceti-deploys-autonomous-underwater-gliders-better-observe-sperm-whales/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -107,36 +137,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Asimov v1: Open-Source Humanoid Robot</h3>
-              <span class="digest-source">Hacker News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Asimov v1 is a fully open-source humanoid robot with hardware designs and software published on GitHub -- a rare combination that lets the community build, modify, and benchmark on a common platform rather than locked proprietary hardware.</li>
-              <li>Open humanoid reference platforms accelerate the entire field: researchers get reproducible baselines, hobbyists get a build target, and the community gets a shared foundation for comparing control algorithms on identical hardware.</li>
-            </ul>
-            <a href="https://github.com/asimovinc/asimov-v1" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Humanoid robots to become baggage handlers in Japan airport experiment</h3>
-              <span class="digest-source">Hacker News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Japan&#x27;s airport experiment puts humanoids into one of the most physically demanding and schedule-sensitive logistics environments in the world -- the results will be far more informative than warehouse pilots where the task mix is narrower.</li>
-              <li>Baggage handling requires lifting irregular loads, navigating crowded ramps, and operating within tight timing windows; a successful deployment here would validate humanoid robustness in a way that controlled demos cannot.</li>
-            </ul>
-            <a href="https://www.theguardian.com/world/2026/apr/28/humanoid-robots-baggage-handlers-japan-airports" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Boston Dynamics Trailer Unloading at MODEX</h3>
+              <h3>Why self-driving cars took longer than expected to reach real-world deployment</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Stretch unloading trailers live at MODEX in front of logistics industry buyers is a different signal than a controlled lab demo -- it&#x27;s Boston Dynamics making a direct sales argument to the people who would actually deploy the system.</li>
-              <li>Trailer unloading is one of the hardest last-50-feet problems in warehouse logistics: boxes are stacked irregularly, trailers are tight, and throughput requirements are unforgiving. Live demo performance at a trade show sets concrete expectations.</li>
+              <li>CMU&#x27;s Martial Hebert distinguishes technology readiness from deployment readiness -- the core sensing and ML capabilities were sufficient years earlier, but operational complexity in uncontrolled environments was consistently underestimated.</li>
+              <li>Heavily mapped, geofenced corridors (Waymo&#x27;s operational domain) are fundamentally different engineering problems from open-world urban driving -- a gap that has still not closed.</li>
+              <li>Useful calibration for any robotics team estimating deployment timelines: environmental variability and edge-case density are usually the binding constraint, not algorithm performance on benchmarks.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1sy2hs7/boston_dynamics_trailer_unloading_at_modex/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1syxb98/why_selfdriving_cars_took_longer_than_expected_to/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
