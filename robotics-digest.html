@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - April 29, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - April 30, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,137 +15,161 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 29, 2026</div>
+        <div class="digest-date-badge">April 30, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s set is research-heavy with five strong ArXiv papers spanning real hardware deployments (first RL on a ballbot, underwater gliders, fruit-picking sensor analysis) and two novel manipulation architectures. On the deployment side, Starship hitting 10 million sidewalk deliveries and GFT&#x27;s factory defect-removal system provide grounded commercial benchmarks.</p>
+        <p class="digest-intro">Today&#x27;s digest centers on two converging themes: the push to get humanoid robots into real workplaces at scale, and a wave of concrete tooling and perception advances that make autonomous operation in degraded conditions more tractable. From Japan Airlines&#x27; Haneda trial to Schaeffler&#x27;s 1,000-unit commitment, deployment bets are getting specific.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>asRoBallet: Closing the Sim2Real Gap via Friction-Aware Reinforcement Learning for Underactuated Spherical Dynamics</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>First reported RL deployment on a humanoid ballbot -- a canonical underactuated, nonholonomic platform that has historically resisted learned controllers due to instability under surface variation.</li>
-              <li>Introduces friction-aware domain randomization specifically targeting the rolling contact between ball and floor, which is the dominant sim-to-real failure mode for this platform.</li>
-              <li>Validates that RL can transfer to physical ballbot hardware when the right physical parameters are randomized during training.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2604.24916" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Libra-VLA: Achieving Learning Equilibrium via Asynchronous Coarse-to-Fine Dual-System</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Replaces the monolithic generation paradigm in Vision-Language-Action models with an asynchronous dual-system: a coarse semantic planner running at low frequency and a fine-grained action executor at full control rate.</li>
-              <li>Directly addresses the latency vs. quality trade-off that makes current VLA models impractical for real-time manipulation -- the high-level system does not block the low-level executor.</li>
-              <li>Targets generalist robotic manipulation where grounding language instructions into physical actions remains brittle in single-network approaches.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2604.24921" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>VISION-SLS: Safe Perception-Based Control from Learned Visual Representations via System Level Synthesis</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Provides provable constraint satisfaction guarantees for nonlinear output-feedback controllers operating directly from high-resolution RGB images -- a hard safety result rarely achieved for vision-based control.</li>
-              <li>Handles partial observability, sensor noise, and nonlinear dynamics simultaneously through System Level Synthesis with calibrated uncertainty bounds.</li>
-              <li>Practical for deployment scenarios where worst-case constraint violation (e.g., collision) is unacceptable, not just average performance.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2604.24894" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>MotionBricks: Scalable Real-Time Motions with Modular Latent Generative Model and Smart Primitives</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Identifies the production gap: research-grade generative motion synthesis is not real-time interactive -- practical deployment still relies on handcrafted state machines and transition graphs.</li>
-              <li>Proposes modular &#x27;motion bricks&#x27; -- composable latent primitives that can be assembled and blended at runtime without rerunning a full generative model.</li>
-              <li>Targets game engines, simulation, and character animation pipelines where a 30-60fps hard latency budget rules out current diffusion or autoregressive motion models.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2604.24833" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>An analysis of sensor selection for fruit picking with suction-based grippers</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Systematically evaluates force, vacuum pressure, and vision sensor modalities for detecting successful picks on compliant fruit with suction grippers.</li>
-              <li>Targets the specific failure modes of variable stem attachment and occlusion that cause silent pick failures -- the robot doesn&#x27;t know it missed, increasing crop damage.</li>
-              <li>Provides a sensor selection framework with practical guidance for agricultural robotics teams choosing instrumentation for suction-based end effectors.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2604.24906" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Starship passes 10 million deliveries as autonomous delivery moves toward mainstream adoption</h3>
+              <h3>Schaeffler plans to deploy 1,000 Hexagon humanoids by 2032</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Schaeffler — a major automotive and industrial supplier — is committing to 1,000 Hexagon humanoid units in its own production lines by 2032, not a vague pilot program.</li>
+              <li>The partnership includes VinDynamics for deployment support, signaling a full integration play rather than a vendor demo.</li>
+              <li>A traditional manufacturer self-deploying humanoids at this scale is a concrete data point for the &#x27;humanoids in factories&#x27; thesis moving from hype to capex commitment.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/schaeffler-plans-to-deploy-1000-hexagon-humanoids-2032/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Japan trials humanoid robots for airport operations as labor shortages intensify</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Starship&#x27;s sidewalk robot fleet has crossed 10 million cumulative deliveries -- a concrete operational scale milestone that separates it from pilot-stage autonomous delivery programs.</li>
-              <li>Demonstrates that AMR delivery is commercially viable today on geofenced, well-mapped urban routes even as fully open-world autonomy remains unsolved.</li>
-              <li>The milestone reframes sidewalk robotics: the question is no longer whether the technology works in controlled conditions but how fast geofenced coverage can expand.</li>
+              <li>Japan Airlines will begin humanoid robot trials for ground handling at Haneda Airport in May 2026, developed with GMO Internet Group — one of the first real-world airport deployments of this type.</li>
+              <li>The driver is structural: Japan&#x27;s aviation sector faces acute labor shortages projected to worsen, making automation a necessity rather than a preference.</li>
+              <li>Ground handling tasks (baggage, towing, loading) are unstructured and physically demanding — success here would validate humanoids in one of the harder general-labor environments.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/04/29/starship-passes-10-million-deliveries-as-autonomous-delivery-moves-toward-mainstream-adoption/101097/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/04/30/japan-trials-humanoid-robots-for-airport-operations-as-labor-shortages-intensify/101120/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GFT Technologies AI-powered robots move from inspection to action for automakers</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>DAIMON Robotics Wants to Give Robot Hands a Sense of Touch</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GFT has closed the loop from computer vision defect detection to physical defect removal on automotive factory floors, using Google Cloud AI to drive actuation decisions -- not just flag issues for humans.</li>
-              <li>This is a meaningful step beyond passive inspection robots: the system takes autonomous corrective action, reducing dependence on human operators for remediation.</li>
-              <li>Deployed in automotive manufacturing where part rejection costs are high and defect-removal speed directly affects line throughput.</li>
+              <li>DAIMON Robotics released Daimon-Infinity, described as the largest omni-modal robotic dataset for physical AI, combining high-resolution tactile sensing with a wide task range including laundry folding.</li>
+              <li>Tactile sensing data at this scale is a known bottleneck for dexterous manipulation — most robot learning datasets are vision-only, leaving touch-driven tasks underrepresented.</li>
+              <li>The Hong Kong startup is positioning this as infrastructure for the physical AI field, competing with data initiatives from players like Google DeepMind and Physical Intelligence.</li>
             </ul>
-            <a href="https://www.therobotreport.com/gft-technologies-ai-powered-robots-move-from-inspection-action-automakers/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://spectrum.ieee.org/daimon-robotics-physical-ai" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Project CETI deploys autonomous underwater gliders to better observe sperm whales</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Eternal.ag launches omni-directional trolley as &#x27;stepping stone to fully-automated greenhouses&#x27;</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Project CETI&#x27;s new AUV glider extends continuous sperm whale observation duration well beyond what previous tethered or diver-deployed hydrophone arrays allowed.</li>
-              <li>Demonstrates long-endurance autonomous marine robotics in an open-ocean science mission context -- minimal surface support, extended deployment, and real behavioral data collection.</li>
-              <li>The platform design is applicable to any team working on long-duration underwater monitoring or environmental data collection.</li>
+              <li>German agritech startup eternal.ag is shipping an omni-directional autonomous trolley designed to replace human harvest workers in greenhouses — a de-risked entry point before full harvesting robots.</li>
+              <li>The staged approach (trolley first, full autonomy later) addresses a real barrier: greenhouse growers are risk-averse about capital-intensive full-automation commitments.</li>
+              <li>Structural labor shortages in European horticulture make &#x27;stepping stone&#x27; products with shorter payback periods likely to see faster adoption than full-automation systems.</li>
             </ul>
-            <a href="https://www.therobotreport.com/project-ceti-deploys-autonomous-underwater-gliders-better-observe-sperm-whales/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/04/30/eternal-ag-launches-omni-directional-trolley-as-stepping-stone-to-fully-automated-greenhouses/101115/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Why self-driving cars took longer than expected to reach real-world deployment</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>FlowS: One-Step Motion Prediction via Local Transport Conditioning</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>CMU&#x27;s Martial Hebert distinguishes technology readiness from deployment readiness -- the core sensing and ML capabilities were sufficient years earlier, but operational complexity in uncontrolled environments was consistently underestimated.</li>
-              <li>Heavily mapped, geofenced corridors (Waymo&#x27;s operational domain) are fundamentally different engineering problems from open-world urban driving -- a gap that has still not closed.</li>
-              <li>Useful calibration for any robotics team estimating deployment timelines: environmental variability and edge-case density are usually the binding constraint, not algorithm performance on benchmarks.</li>
+              <li>FlowS reformulates generative motion prediction as a one-step flow matching problem, targeting real-world autonomy&#x27;s hard constraint: accurate, diverse predictions with strictly bounded latency.</li>
+              <li>Standard diffusion models require tens to hundreds of denoising steps; FlowS achieves comparable accuracy and multimodality in a single forward pass.</li>
+              <li>For on-robot inference this is practically significant — motion prediction is on the critical path for reactive systems, and removing the diffusion-step bottleneck directly improves control loop frequency.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1syxb98/why_selfdriving_cars_took_longer_than_expected_to/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.26065" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Lights Out: A Nighttime UAV Localization Framework Using Thermal Imagery and Semantic 3D Maps</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Presents a backup localization system for UAVs in GNSS-denied nighttime conditions, bridging the modality gap between daytime RGB maps and nighttime thermal imagery via semantic 3D maps.</li>
+              <li>The core challenge is that existing map infrastructure is RGB/daytime — this work provides a cross-modal matching path so prior map data remains usable at night without reacquisition.</li>
+              <li>Relevant to defense, search-and-rescue, and any autonomous UAV operations where GPS spoofing or denial is a realistic operational threat.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.26201" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>FalconApp: Rapid iPhone Deployment of End-to-End Perception via Automatically Labeled Synthetic Data</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>FalconApp is an iPhone app with a frontend-backend pipeline that generates automatically labeled synthetic training data for robotic perception, cutting the manual annotation bottleneck.</li>
+              <li>Real-world robotic perception datasets are expensive and slow to produce; synthetic-data pipelines that auto-label at scale could substantially compress the data collection phase.</li>
+              <li>Deploying via consumer hardware (iPhone) lowers the barrier for capture and bootstrapping new perception tasks without specialized rigs.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.25949" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Ultralightweight sonar plus AI lets tiny drones navigate like bats</h3>
+              <span class="digest-source">Robohub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Researchers at Worcester Polytechnic Institute built a bat-echolocation-inspired sonar + AI navigation system light enough for small aerial robots, demonstrated navigating through a grove of trees.</li>
+              <li>Small drones typically rely on cameras or LiDAR, both of which degrade in darkness, smoke, or rain; ultrasonic sonar sidesteps all three failure modes simultaneously.</li>
+              <li>Meeting the weight budget on a micro-drone platform is the key result — echolocation-style navigation has been studied before, but fitting it on vehicles this small is the differentiator.</li>
+            </ul>
+            <a href="https://robohub.org/ultralightweight-sonar-plus-ai-lets-tiny-drones-navigate-like-bats/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>I&#x27;m done manually tuning DDS parameters!</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A community-built tool automates ROS2 DDS parameter tuning, replacing the painful workflow of manually tweaking hundreds of parameters and re-running benchmarks to improve latency or throughput.</li>
+              <li>DDS configuration is one of the most common ROS2 friction points — poor defaults cause silent performance degradation in production deployments and existing docs provide little actionable guidance.</li>
+              <li>Automating this removes a significant expert-knowledge gate for teams new to ROS2 or deploying in bandwidth-constrained environments.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/im-done-manually-tuning-dds-parameters/54415" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Buoyancy and hydrodynamics improvements across Gazebo</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A series of fixes and new features for gz-math and gz-sim have been merged, significantly improving Gazebo&#x27;s buoyancy and hydrodynamics simulation fidelity.</li>
+              <li>The gz-math changes are general-purpose — any simulation involving fluid interaction benefits, not just maritime use cases.</li>
+              <li>Maritime robotics (AUVs, USVs, underwater inspection) is a growing segment and Gazebo has historically lagged on water physics; this narrows that gap meaningfully.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/buoyancy-and-hydrodynamics-improvements-across-gazebo/54407" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Zenoh 1.8.0 packages available on packages.osrfoundation.org (prerelease)</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Zenoh 1.8.0 prerelease packages are now hosted on the OSRF repository, sourced from the upstream Eclipse Zenoh Debian repository, targeting stable promotion after testing.</li>
+              <li>Zenoh is increasingly used as a high-performance DDS alternative for ROS2 middleware transport, especially in edge and constrained-network deployment scenarios.</li>
+              <li>OSRF-hosted packages simplify adoption for teams already using OSRF infrastructure — no need to track the upstream separately or manage a separate apt source.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/zenoh-1-8-0-packages-available-on-packages-osrfoundation-org-prerelease/54406" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

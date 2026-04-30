@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - April 29, 2026 | Densanon</title>
+  <title>AI Morning Digest - April 30, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 29, 2026</div>
+        <div class="digest-date-badge">April 30, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is heavy on concrete releases and mechanisms: a multimodal model targeting document/audio/video agents, a leaked GPT-5.5 system prompt dissection, two test-time scaling papers, a multilingual agent benchmark, and Qwen&#x27;s new linear-attention kernel. Notable outlier: a 13B model trained exclusively on pre-1931 text by the author of GPT and Whisper.</p>
+        <p class="digest-intro">Today&#x27;s digest covers a significant architectural shift in the LLM tooling ecosystem, a 21-day real-money autonomous agent deployment study, and a concrete new jailbreak technique that bypasses trained refusals — alongside IBM&#x27;s transparent look at how Granite 4.1 was built.</p>
       </div>
     </section>
 
@@ -29,68 +29,55 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>PExA: Parallel Exploration Agent for Complex Text-to-SQL</h3>
+              <h3>Operating-Layer Controls for Onchain Language-Model Agents Under Real Capital</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Reframes text-to-SQL as a software test-coverage problem — run parallel candidate queries and score by coverage rather than picking the single best guess</li>
-              <li>Targets the latency-performance tradeoff that plagues sequential chain-of-thought agents on complex SQL schemas</li>
-              <li>Parallel exploration branches from multiple schema decompositions simultaneously, then merges the highest-coverage result</li>
-              <li>Approach generalizes to other structured-output tasks where ground-truth can be approximated by test execution</li>
+              <li>21-day live deployment: 3,505 user-funded agents traded real ETH on a bounded onchain environment — one of the first published studies of LLM agents under actual financial stakes.</li>
+              <li>Researchers found that operating-layer controls (validation layers between user mandate and tool execution) are the critical reliability lever, not model capability alone.</li>
+              <li>Agents without operating-layer guardrails failed in correlated ways under adversarial or edge-case market conditions, showing model-level alignment is insufficient for autonomous capital management.</li>
+              <li>Provides a concrete framework for auditing LLM agent reliability before real-world deployment in high-stakes domains.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.22934" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.26091" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Power of Power Law: Asymmetry Enables Compositional Reasoning</h3>
+              <h3>One Word at a Time: Incremental Completion Decomposition Breaks LLM Safety</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Introduces ICD (Incremental Completion Decomposition): feeds harmful requests one token or phrase at a time across multiple turns, evading turn-level safety filters.</li>
+              <li>The attack works because safety training is typically evaluated on complete prompts — decomposing a request across a trajectory bypasses the classifier&#x27;s trigger conditions.</li>
+              <li>Effective across multiple frontier models without model-specific tuning or white-box access.</li>
+              <li>Highlights a structural gap in current refusal-training pipelines that evaluate single-turn inputs rather than multi-turn trajectories.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2604.25921" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>OMEGA: Optimizing Machine Learning by Evaluating Generated Algorithms</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Challenges the intuition that reweighting training data toward a uniform distribution improves reasoning — power-law skew is actually load-bearing</li>
-              <li>Low-frequency knowledge follows a long tail; flattening the distribution strips compositional signals needed for rare concept combinations</li>
-              <li>Provides a theoretical account of why curated &#x27;balanced&#x27; datasets can hurt compositional generalization at test time</li>
-              <li>Implications for dataset curation: preserve natural frequency ratios rather than aggressively upsampling rare categories</li>
+              <li>OMEGA is a full end-to-end framework for automated AI research: from idea generation through algorithm implementation to executable benchmark evaluation, no human in the loop.</li>
+              <li>Uses structured meta-prompting to guide LLMs through hypothesis formation, then validates generated algorithms against standard ML benchmarks automatically.</li>
+              <li>Represents a step toward AI systems that can meaningfully accelerate their own research cycle, not just synthesize existing literature.</li>
+              <li>Early results show the system can produce novel algorithmic variants that match or beat baselines on targeted tasks.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.22951" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.26211" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Large Language Models Explore by Latent Distilling</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>Evaluating Strategic Reasoning in Forecasting Agents</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Standard stochastic sampling yields surface-level lexical variation but not genuine semantic diversity — a real ceiling for test-time scaling via best-of-N</li>
-              <li>Proposes Exploratory Sampling: distills diverse latent directions from the model&#x27;s own representation space to guide generation toward semantically distinct outputs</li>
-              <li>Semantic exploration improves best-of-N and majority-vote aggregation without requiring larger models or more compute per token</li>
-              <li>Mechanism is self-contained — no ensemble, external verifier, or separate reward model required</li>
+              <li>Introduces BTF-2 (Bench to the Future 2): 1,417 pastcasting questions with a frozen 15M-document research corpus, designed to isolate strategic reasoning from factual recall.</li>
+              <li>Standard forecasting leaderboards measure accuracy but reveal nothing about why some agents outperform — BTF-2 adds structured reasoning traces to close that gap.</li>
+              <li>Top agents use qualitatively different search and synthesis strategies, not just better base models.</li>
+              <li>The frozen corpus design prevents data contamination from live web access, making results more reproducible than live-internet benchmarks.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.24927" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>GAIA-v2-LILT: Multilingual Adaptation of Agent Benchmark beyond Translation</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Machine-translated versions of GAIA break benchmark validity — tool names, URLs, and procedural steps don&#x27;t survive MT faithfully for agentic tasks</li>
-              <li>LILT (Localization-Informed Linguistic Transformation) applies culture-aware localization rather than string-level translation</li>
-              <li>First multilingual GAIA variant requiring non-English web navigation and reasoning, not just non-English question text</li>
-              <li>Exposes a systematic gap: agents with strong English GAIA scores fail to generalize even to closely related European languages</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2604.24929" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ADE: Adaptive Dictionary Embeddings — Scaling Multi-Anchor Representations to Large Language Models</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Traditional single-vector word embeddings create representational bottlenecks for polysemous words — ADE assigns each word multiple anchor vectors weighted by context</li>
-              <li>Scales multi-anchor representations to LLM scale without proportional parameter increase by using a learned dictionary of shared anchors</li>
-              <li>Demonstrates improved performance on tasks where word sense disambiguation matters: metaphor, legal text, technical jargon</li>
-              <li>Designed as a drop-in replacement for standard embedding layers with modest training overhead</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2604.24940" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2604.26106" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -100,61 +87,68 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Introducing NVIDIA Nemotron 3 Nano Omni: Long-Context Multimodal Intelligence for Documents, Audio and Video Agents</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Nemotron 3 Nano Omni targets agentic document, audio, and video workflows with extended context — not a general-purpose chat model</li>
-              <li>Released on Hugging Face, positioned for on-device and edge deployment given the Nano naming from the Nemotron family</li>
-              <li>Handles all three modalities (text/audio/video) in a unified model rather than a pipeline of specialist models</li>
-              <li>Part of NVIDIA&#x27;s push to provide open-weights alternatives to proprietary multimodal APIs for enterprise agent stacks</li>
-            </ul>
-            <a href="https://huggingface.co/blog/nvidia/nemotron-3-nano-omni-multimodal-intelligence" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Quoting OpenAI Codex base_instructions</h3>
+              <h3>LLM 0.32a0 is a major backwards-compatible refactor</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon Willison surfaced leaked base_instructions for OpenAI Codex (GPT-5.5), including a prohibition on mentioning goblins, gremlins, raccoons, trolls, and similar creatures without direct relevance</li>
-              <li>Reveals how production system prompts use highly specific negative constraints to shape model persona — not just capability or safety boundaries</li>
-              <li>The creature prohibition hints at prior incidents where GPT-5.5 introduced whimsical animal metaphors in coding contexts unprompted</li>
-              <li>Real-world example of the gap between published model cards and the actual instruction stack deployed users interact with</li>
+              <li>Simon Willison&#x27;s `llm` CLI/library drops its prompt-and-response model in favor of a first-class conversation and tool-call abstraction — a fundamental rethinking of how the library represents interactions.</li>
+              <li>The refactor is backwards-compatible but changes how sessions are stored and replayed from SQLite, enabling richer multi-turn and agentic workflows.</li>
+              <li>Tool-calling conversations can now be correctly reinflated from persistent storage, fixing a long-standing gap for stateful LLM pipelines built on `llm`.</li>
+              <li>Alpha release (0.32a0/a1) — worth testing now if you use `llm` in scripts or notebooks, but treat as unstable until GA.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Apr/28/openai-codex/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Talkie: a 13B LLM trained only on pre-1931 text used Claude Sonnet to help test the model and judge its output</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Alec Radford (author of GPT, CLIP, and Whisper), Nick Levine, and David Duvenaud trained a 13B model exclusively on text published before December 31, 1930 — no WWII, no internet, no post-1930 concepts</li>
-              <li>Trained on 260B tokens of pre-1931 English text; knowledge cutoff is enforced by corpus selection rather than instruction</li>
-              <li>Claude Sonnet was used as the automated judge to evaluate historical accuracy and temporal consistency of Talkie&#x27;s outputs</li>
-              <li>Demonstrates using a frontier model as an eval harness for a specialized domain-bounded model — clean separation of generation and judgment</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1sy7rry/talkie_a_13b_llm_trained_only_on_pre1931_text/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Apr/29/llm/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Qwen Introduced FlashQLA</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>AI evals are becoming the new compute bottleneck</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>FlashQLA delivers 2-3x forward speedup and 2x backward speedup for linear attention via high-performance kernels built on TileLang</li>
-              <li>Uses gate-driven automatic intra-card communication parallelism to keep compute dense across attention layers</li>
-              <li>Hardware-friendly algebraic reformulation avoids the bottlenecks that make naive linear attention slower than standard attention on modern GPUs</li>
-              <li>Targeted explicitly at agentic AI on personal devices — relevant for anyone running Qwen models locally at inference time</li>
+              <li>Evaluation runs — not training — are now the dominant compute cost for many model development teams, as benchmark suites have grown to thousands of tasks and multi-model comparison grids.</li>
+              <li>The post argues the field needs &#x27;eval evals&#x27;: meta-evaluations that assess which benchmarks are actually informative vs. redundant, so teams can prune eval suites without losing signal.</li>
+              <li>Practical strategies covered include shared eval caches, lightweight proxy evals for rapid iteration, and separating capability evals from safety evals on different cadences.</li>
+              <li>Directly relevant to anyone running recurring model comparisons — the cost of knowing which model is better is becoming non-trivial.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1syx4sg/qwen_introduced_flashqla/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/evaleval/eval-costs-bottleneck" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Granite 4.1 LLMs: How They&#x27;re Built</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>IBM provides an unusually transparent account of Granite 4.1&#x27;s training pipeline, covering data curation, mixture ratios, and instruction-tuning methodology.</li>
+              <li>The series focuses on enterprise use cases — code, language, and time-series tasks — with explicit design choices to keep models deployable on modest hardware.</li>
+              <li>IBM opted for smaller specialized models over scaling a single large model, with documented tradeoffs between model size and task performance.</li>
+              <li>Useful reference for teams designing fine-tuning pipelines or evaluating IBM&#x27;s models for on-premise deployment.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/ibm-granite/granite-4-1" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>The Zig project&#x27;s rationale for their firm anti-AI contribution policy</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Zig bans LLM-generated content from all issues, PRs, comments, and bug tracker translations — one of the strictest policies of any major open source project.</li>
+              <li>The rationale centers on review burden: LLM output shifts work from the submitter to the maintainer, who must spend more effort verifying correctness than the contributor saved generating it.</li>
+              <li>The policy also cites signal degradation — LLM-generated issues and PRs dilute the high-quality, precise communication the Zig compiler project depends on.</li>
+              <li>A useful counterpoint to &#x27;AI speeds up open source&#x27; narratives; the tradeoffs differ sharply depending on project culture and review bandwidth.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Apr/30/zig-anti-ai/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Claude Agent SDK Python: v0.1.70 + v0.1.71</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>v0.1.70 fixes a silent data loss bug: in-process MCP tool results were lost with older `mcp` library versions, causing the model to receive a validation error instead of actual tool output — floor bumped to `mcp&gt;=1.19.0`.</li>
+              <li>v0.1.71 adds domain allowlist fields to `SandboxNetworkConfig` (`allowedDomains`, `deniedDomains`, `allowManagedDomainsOnly`, `allowMachLookup`), bringing Python SDK network controls to parity with the TypeScript SDK.</li>
+              <li>Both releases are production-relevant for anyone running Claude agents with MCP tools or sandboxed network access.</li>
+              <li>Upgrade immediately if you use in-process MCP tool handlers — the silent failure mode in prior versions could cause hard-to-debug agent behavior.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.1.71" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

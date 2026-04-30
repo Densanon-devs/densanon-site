@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - April 29, 2026 | Densanon</title>
+  <title>Computation Morning Digest - April 30, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 29, 2026</div>
+        <div class="digest-date-badge">April 30, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s set is anchored by TSMC&#x27;s concrete 3D stacking pitch roadmap and US export controls targeting China&#x27;s emerging 7nm fabs — two stories that define where leading-edge silicon goes next and who gets to build it. On the systems side, IBM&#x27;s ARM64-on-s390 KVM patches and a high-severity GitHub git infrastructure vulnerability round out a technically dense day.</p>
+        <p class="digest-intro">Today&#x27;s computation landscape is dominated by memory supply crunch warnings stretching into 2027, back-to-back kernel and compiler releases with real benchmark data, and a wave of open-firmware and low-level hardware work pushing the Linux ecosystem forward.</p>
       </div>
     </section>
 
@@ -29,94 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>TSMC SoIC 3D stacking roadmap outlines path from 6-micron pitches today to 4.5-micron in 2029 — Fujitsu&#x27;s Monaka CPU to benefit from face-to-face chiplet stacking</h3>
+              <h3>Samsung and SK hynix warn AI-driven memory shortages could last until 2027 and beyond</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Current SoIC production runs at 6 µm bump pitch; the roadmap adds a 6.5 µm variant for yield, then targets 4.5 µm by 2029</li>
-              <li>Face-to-face (F2F) stacking mode is newly added alongside existing face-to-back — enables tighter signal coupling between logic dies without a passive interposer</li>
-              <li>Fujitsu&#x27;s Monaka HPC CPU is a named production customer for F2F SoIC, confirming the technology is committed rather than roadmap vapor</li>
-              <li>Tighter pitch reduces interconnect length and latency between stacked chiplets — directly impactful for memory-bandwidth-bound HPC and AI workloads</li>
+              <li>Both Samsung and SK hynix are explicitly warning customers that HBM supply constraints will not normalize before 2027, with some hyperscalers already locking in forward reservations years out.</li>
+              <li>The HBM shortage is beginning to spill into the wider commodity DRAM market, tightening supply even for standard server and client memory.</li>
+              <li>Record profits are being reported as a direct consequence of constrained supply meeting explosive AI training and inference demand — a dynamic neither vendor expects to reverse quickly.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/tsmc-soic-3d-stacking-roadmap-outlines-path-from-6-micron-pitches-today-to-4-5-micron-in-2029-fujitsus-monaka-cpu-to-benefit-from-face-to-face-chiplet-stacking" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/samsung-and-sk-hynix-warn-ai-driven-memory-shortages-could-last-until-2027-and-beyond-as-hbm-demand-explodes-customers-already-reserving-supply-years-ahead-while-the-wider-dram-market-begins-to-tighten" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>US stops exports of tools to China&#x27;s number two chip maker — Hua Hong and Huali Microelectronics reportedly on the cusp of starting a 7-nm fab in Shanghai</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Applied Materials, KLA, and Lam Research all received Commerce Department letters blocking shipments on Hua Hong&#x27;s pending orders</li>
-              <li>The blocked tools were destined for a planned 7nm fab in Shanghai — the same node SMIC achieved via multi-patterning without EUV</li>
-              <li>Hua Hong is China&#x27;s second-largest foundry; extending controls beyond SMIC signals the US is targeting the broader advanced-node ecosystem, not just a single actor</li>
-              <li>Action comes as China pushes mature-node workarounds toward 7nm using non-EUV techniques, and before that capability is fully established</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/us-stops-exports-of-chip-making-tools-to-chinas-number-two-chip-maker-hua-hong-and-huali-microelectronics-reportedly-on-the-cusp-of-starting-a-7-nm-fab-in-shanghai" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>More details emerge about how Intel now earns more revenue from each wafer by looking to the edges — analyst reports say reduced yield variability across each wafer leads to more sellable CPUs</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Intel is tightening process controls at wafer edges — historically a low-yield dead-zone — to recover more sellable dies per wafer</li>
-              <li>Analyst reports attribute this to incremental fab optimization rather than new node introductions, meaning no additional capex required</li>
-              <li>More sellable dies per wafer improves gross margin directly; under AI-driven demand, squeezing output from existing Intel 3/18A capacity has outsized revenue impact</li>
-              <li>Technique addresses a fundamental fab challenge: process parameters drift toward wafer edges, making edge dies historically unreliable for binning to high-performance SKUs</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/more-details-emerge-about-how-intel-now-earns-more-revenue-from-each-wafer-by-looking-to-the-edges-analyst-reports-say-reduced-yield-variability-across-each-wafer-leads-to-more-sellable-cpus" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Hygon C86-4G CPU Support Added To The GCC 17 Compiler</h3>
+              <h3>Intel Lunar Lake CPU Performance Gains On Linux Over The Past Year</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GCC 17 gains support for three Hygon C86-4G server variants: C86-4G-M4, C86-4G-M6, C86-4G-M7 — all x86_64 processors targeted at Chinese data centers</li>
-              <li>Merged to GCC mainline (not a fork), so standard Linux toolchains will natively emit optimized code for this silicon</li>
-              <li>Hygon is architecturally descended from AMD Zen 1 IP licensed before export controls tightened; the C86-4G line represents independent iteration on that base</li>
-              <li>GCC 16.1 is imminent; this targets GCC 17, meaning production compiler support is approximately one year out</li>
+              <li>Phoronix ran a full benchmark suite on Lunar Lake (ThinkPad X1 Carbon Gen 13) under Ubuntu 26.04, comparing against original launch numbers — measurable CPU performance gains from driver and kernel maturation across a year of mainline development.</li>
+              <li>These CPU results are a companion to recently published Xe2 iGPU benchmark data, giving a complete year-over-year picture of the Lunar Lake platform on Linux.</li>
+              <li>The data underscores that Linux platform support for newer Intel silicon is maturing faster than in previous generations, with meaningful effective gains from software alone.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Hygon-C86-4G-CPU-GCC-17" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/review/intel-lunar-lake-ubuntu-2604" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>IBM Updates Linux Patches For Introducing ARM64 KVM Virtualization On s390</h3>
+              <h3>AMD Posts Newest Linux Patches To Accelerate Page Migration For Better Performance</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>IBM and Arm are co-developing dual-architecture hardware enabling ARM64 guest VMs to run natively on IBM Z (s390x) mainframes via KVM</li>
-              <li>Second revision of kernel patches posted, indicating active upstream review cycle — this is past proof-of-concept stage</li>
-              <li>Allows IBM Z customers to consolidate ARM64 cloud-native workloads onto mainframe infrastructure with hardware-level fault isolation</li>
-              <li>s390&#x27;s distinct memory model and interrupt architecture make ARM64 KVM support a substantial systems engineering effort; upstream acceptance would be a significant milestone</li>
+              <li>AMD engineers published v4 of the accelerated page migration patch series, originally started by NVIDIA in early 2025, now extended with batch copy support and hardware offload paths.</li>
+              <li>The patches target NUMA-heavy workloads and GPU-adjacent memory movement, where page migration latency is a real bottleneck for HPC and ML inference pipelines.</li>
+              <li>Hardware-offloaded batch migration reduces CPU involvement in large memory moves — a meaningful architectural gain for systems with high-bandwidth interconnects like NVLink or Infinity Fabric.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/ARM64-On-s390-IBM-Z-v2" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Accelerated-Page-Migration-v4" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Framework&#x27;s new RTX 5070 12GB graphics module costs a whopping $1,199 — 72% more expensive than $699 8GB version, says pricing is beyond its control</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>RTX 5070 mobile 12GB module priced at $1,199 vs. $699 for the 8GB variant — a 72% premium for 50% more VRAM on otherwise identical GPU silicon</li>
-              <li>Framework explicitly attributes the gap to supply chain costs outside their control, pointing to constrained GDDR7 12GB memory supply</li>
-              <li>In prior GPU generations a memory tier step was typically 10–20%; the 72% gap signals abnormal GDDR7 supply/demand pressure</li>
-              <li>For engineers evaluating workstation-class modular GPUs, the 8GB variant is the only rational choice at current pricing until supply normalizes</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/gpus/frameworks-new-rtx-5070-12gb-graphics-module-costs-a-whopping-usd1-199-72-percent-more-expensive-than-usd699-8gb-version-says-pricing-is-beyond-its-control" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Libcamera 0.7.1 Released With Improved Software ISP</h3>
+              <h3>3mdeb Gets More Bits Of AMD openSIL &amp; Coreboot Working On Ryzen AM5 Motherboard</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Libcamera 0.7.1 ships an improved software ISP pipeline for platforms without dedicated hardware ISP silicon — Raspberry Pi, Chrome OS, recent Intel Core laptops</li>
-              <li>Software ISP offloads image signal processing to CPU/GPU, broadening camera support on embedded and edge devices where custom ISP silicon is absent</li>
-              <li>Growing importance as edge vision systems proliferate in robotics and IoT where platform diversity means ISP hardware is not guaranteed</li>
-              <li>Release advances a unified open-source camera abstraction layer across Linux, reducing the per-platform camera driver fragmentation problem</li>
+              <li>3mdeb is simultaneously porting Coreboot + AMD openSIL to a consumer Ryzen AM5 board and to a Gigabyte EPYC server motherboard — two separate open-firmware efforts on AMD silicon progressing in parallel.</li>
+              <li>Getting USB functional under the open firmware stack is a key milestone for AM5 usability, moving the project from proof-of-concept toward something that can boot useful payloads.</li>
+              <li>openSIL is AMD&#x27;s open-source silicon initialization library intended to eventually replace closed AGESA blobs — real progress here matters for platform transparency and long-term supply-chain security auditing.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/libcamera-0.7.1-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/AMD-openSIL-AM5-USB" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -126,29 +83,87 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GitHub: Woah, a genuinely helpful AI-assisted bug report that isn&#x27;t total slop. Here, Wiz, take this wad of cash</h3>
-              <span class="digest-source">The Register</span>
+              <h3>Google, Microsoft, Meta, and Amazon capex spending to hit $725 billion in 2026, up 77% from last year</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Wiz researchers found a high-severity flaw in GitHub&#x27;s git infrastructure granting remote attackers full read/write access to private repositories</li>
-              <li>Claude was used to accelerate vulnerability research — described as compressing months of analysis into a much shorter window, producing substantive output rather than noise</li>
-              <li>The vulnerability resided at the git protocol layer within GitHub&#x27;s own infrastructure, not in user-facing application code — a deeper systems-level finding</li>
-              <li>GitHub awarded a significant bug bounty and rated the issue critical; full technical disclosure is forthcoming</li>
+              <li>The four largest cloud and AI spenders collectively plan $725B in capital expenditure for 2026, up 77% from the already-record $410B spent in 2025.</li>
+              <li>This level of infrastructure investment is the direct upstream driver of the HBM and advanced packaging shortages reported today — demand is not speculative.</li>
+              <li>Analysts covering the sector are pushing back hard against bear theses, arguing the spending is structural and tied to committed AI capacity buildout, not cyclical hype.</li>
             </ul>
-            <a href="https://go.theregister.com/feed/www.theregister.com/2026/04/29/github_woah_a_genuinely_helpful/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/big-tech/big-techs-ai-spending-plans-reach-725-billion" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AWS keynote hypes AI as magic. Its own engineers tell a different story</h3>
-              <span class="digest-source">The Register</span>
+              <h3>OpenCL Introducing Cooperative Matrix Extensions For Machine Learning</h3>
+              <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Amazon&#x27;s internal StoreGen team mandates human review of all AI-generated output with no exceptions — a non-negotiable policy even under AI mandate</li>
-              <li>The team director explicitly says they are still hiring junior developers despite AI tooling, directly contradicting autonomous-replacement narratives</li>
-              <li>Internal framing treats AI as a friction-reducer requiring human sign-off, not an autonomous agent — a significant gap from keynote &#x27;agentic&#x27; messaging</li>
-              <li>One of the largest cloud AI deployers is internally treating current LLMs as assistants, not systems — useful calibration data for architects evaluating AI-augmented workflows</li>
+              <li>The OpenCL API is adopting Cooperative Matrix extensions, mirroring the Vulkan cooperative matrix support introduced in 2023 and the SPIR-V integration that followed it.</li>
+              <li>Cooperative matrix ops allow workgroups to collaborate on matrix multiply-accumulate at the hardware level — the same primitive underlying tensor core performance on modern GPUs.</li>
+              <li>Bringing this to OpenCL expands native ML acceleration to a broader set of GPU hardware and runtimes beyond the Vulkan and CUDA ecosystems, relevant for cross-vendor HPC deployments.</li>
             </ul>
-            <a href="https://go.theregister.com/feed/www.theregister.com/2026/04/29/aws_keynote_hypes_ai_magic/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/OpenCL-Cooperative-Matrix" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.1-rc1 Showing Off Some Wins On AMD Ryzen Threadripper</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Early Linux 7.1-rc1 benchmarks on Ryzen Threadripper show positive performance deltas versus 7.0, with one synthetic micro-benchmark regression identified across multiple test systems.</li>
+              <li>The regression is isolated to a single micro-benchmark and has not surfaced in broader workload testing, keeping the overall rc1 picture clean ahead of final release.</li>
+              <li>Linux 7.1 is still in early RC — this benchmark data is useful baseline signal before the merge window closes and gives downstream distros an early read.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.1-rc1-Threadripper" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GCC 16.1 Released With AMD Zen 6 Support, Algol 68 &amp; Many C++ Improvements</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>GCC 16.1 is the first stable release in the GCC 16 series — the annual major feature drop from the GNU toolchain.</li>
+              <li>Native AMD Zen 6 tuning targets are included, meaning the compiler can now emit code optimized specifically for next-generation AMD microarchitecture without manual march flags — shipping before Zen 6 hardware is widely available.</li>
+              <li>Broad C++ improvements land alongside the revival of Algol 68 frontend support, and overall this is the compiler baseline that will ship in most 2026 Linux distributions.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/GCC-16.1-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux&#x27;s sched_ext Sees A Bunch Of Bug Fixes Following Increased AI Code Review</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The Linux kernel&#x27;s extensible scheduler class (sched_ext) received a surge of bug fixes in the 7.1 cycle, many of which trace back across multiple prior kernel releases that missed them.</li>
+              <li>The uptick is directly attributed to AI-assisted code review applied to the sched_ext codebase — a concrete data point that AI tooling is finding kernel bugs human review missed.</li>
+              <li>sched_ext allows userspace-defined scheduling policies to run safely in-kernel; correctness is critical as the subsystem sees growing use in HPC batch systems and gaming compositors.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.1-AI-Sched-Ext-Fixes" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>CPPC v4 Support Being Worked On By NVIDIA For The Linux ACPI Driver</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>NVIDIA is implementing CPPC v4 (Collaborative Processor Performance Control) in the Linux ACPI driver, following the ACPI 6.6 specification published last year.</li>
+              <li>CPPC provides a standardized OS-level interface for fine-grained CPU core performance management using an abstract scale — v4 extends what the OS scheduler and power management stack can request from hardware.</li>
+              <li>NVIDIA&#x27;s involvement signals this will land on GPU-adjacent server platforms where tightly coupled CPU core tuning alongside GPU workloads matters for total system power efficiency.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/ACPI-CPPC-v4-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
