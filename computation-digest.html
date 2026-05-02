@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="canonical" href="https://densanon.com/computation-digest.html">
-  <title>Computation Morning Digest - April 30, 2026 | Densanon</title>
+  <title>Computation Morning Digest - May 02, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -16,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">April 30, 2026</div>
+        <div class="digest-date-badge">May 02, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation landscape is dominated by memory supply crunch warnings stretching into 2027, back-to-back kernel and compiler releases with real benchmark data, and a wave of open-firmware and low-level hardware work pushing the Linux ecosystem forward.</p>
+        <p class="digest-intro">Today&#x27;s computation digest covers the recovery and open-sourcing of the earliest DOS source ever found, NVIDIA Vulkan driver correctness and perf improvements, a supply-chain policy shift that will affect 75% of US electronics imports, and VideoLAN&#x27;s early AV2 decoder work.</p>
       </div>
     </section>
 
@@ -30,51 +29,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Samsung and SK hynix warn AI-driven memory shortages could last until 2027 and beyond</h3>
+              <h3>45 years later, earliest DOS source code transcribed from a stack of old printouts found in a garage</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Both Samsung and SK hynix are explicitly warning customers that HBM supply constraints will not normalize before 2027, with some hyperscalers already locking in forward reservations years out.</li>
-              <li>The HBM shortage is beginning to spill into the wider commodity DRAM market, tightening supply even for standard server and client memory.</li>
-              <li>Record profits are being reported as a direct consequence of constrained supply meeting explosive AI training and inference demand — a dynamic neither vendor expects to reverse quickly.</li>
+              <li>86-DOS 1.00 source was recovered from physical printouts found in a garage, manually transcribed, and open-sourced to mark the codebase&#x27;s 45th anniversary — this is the earliest known DOS code to be made publicly available.</li>
+              <li>The transcription-from-printout methodology is notable: no digital backup existed, making the recovery entirely manual, and the result directly documents the x86 software foundation that eventually became MS-DOS.</li>
+              <li>Microsoft&#x27;s accelerating pattern of open-sourcing historical OS artifacts is real archival value for systems researchers and retrocomputing communities alike.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/samsung-and-sk-hynix-warn-ai-driven-memory-shortages-could-last-until-2027-and-beyond-as-hbm-demand-explodes-customers-already-reserving-supply-years-ahead-while-the-wider-dram-market-begins-to-tighten" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/software/operating-systems/45-years-later-earliest-dos-source-code-transcribed-from-a-stack-of-old-printouts-found-in-a-garage-code-was-open-sourced-to-mark-86-dos-1-00s-anniversary" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel Lunar Lake CPU Performance Gains On Linux Over The Past Year</h3>
+              <h3>NVIDIA Ships Fixes For Descriptor Heaps, More Vulkan Performance Optimizations</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Phoronix ran a full benchmark suite on Lunar Lake (ThinkPad X1 Carbon Gen 13) under Ubuntu 26.04, comparing against original launch numbers — measurable CPU performance gains from driver and kernel maturation across a year of mainline development.</li>
-              <li>These CPU results are a companion to recently published Xe2 iGPU benchmark data, giving a complete year-over-year picture of the Lunar Lake platform on Linux.</li>
-              <li>The data underscores that Linux platform support for newer Intel silicon is maturing faster than in previous generations, with meaningful effective gains from software alone.</li>
+              <li>NVIDIA&#x27;s 595.44.06 Linux Vulkan beta (paired with 595.46 on Windows) fixes descriptor heap correctness bugs and ships measurable performance improvements for Vulkan-heavy workloads including game engines and GPU compute.</li>
+              <li>Descriptor heap issues have been a persistent cross-platform pain point for developers targeting both D3D12 and Vulkan; the fix landing simultaneously on both platforms suggests root-cause resolution rather than a workaround.</li>
+              <li>This driver series continues steady Vulkan stabilization ahead of what looks like a feature-heavy second half of 2026.</li>
             </ul>
-            <a href="https://www.phoronix.com/review/intel-lunar-lake-ubuntu-2604" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/NVIDIA-595.44.06-Vulkan-Beta" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD Posts Newest Linux Patches To Accelerate Page Migration For Better Performance</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Gigabyte Z890 Aorus Elite Duo X Motherboard Review: CQDIMM support with Arrow Lake Refresh</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMD engineers published v4 of the accelerated page migration patch series, originally started by NVIDIA in early 2025, now extended with batch copy support and hardware offload paths.</li>
-              <li>The patches target NUMA-heavy workloads and GPU-adjacent memory movement, where page migration latency is a real bottleneck for HPC and ML inference pipelines.</li>
-              <li>Hardware-offloaded batch migration reduces CPU involvement in large memory moves — a meaningful architectural gain for systems with high-bandwidth interconnects like NVLink or Infinity Fabric.</li>
+              <li>Sub-$280 board with native Arrow Lake Refresh support and CQDIMM compatibility — CQDIMM is an emerging high-density memory form factor, and mid-range board support this early matters for forward upgrade path planning.</li>
+              <li>Five M.2 slots and a strong connectivity spec at this price tier represent a meaningful step up over prior Z890 mid-range options.</li>
+              <li>If CQDIMM adoption accelerates, this board category slots into the right upgrade window without requiring a full platform change.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Accelerated-Page-Migration-v4" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/motherboards/gigabyte-z890-aorus-elite-duo-x-motherboard-review" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>3mdeb Gets More Bits Of AMD openSIL &amp; Coreboot Working On Ryzen AM5 Motherboard</h3>
+              <h3>Enthusiast creates Peltier thermoelectric cooler from scratch</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A custom TEC build using two 360mm AIOs and homemade DC controllers consumed over 300W to push an RTX 3070 barely below ambient temperatures — empirical proof of why Peltier cooling hasn&#x27;t displaced conventional solutions.</li>
+              <li>The power efficiency math is brutal: the TEC overhead exceeded the GPU&#x27;s own draw just to achieve marginal sub-ambient gains, making this a hobbyist curiosity rather than a viable thermal architecture at scale.</li>
+              <li>Valuable for anyone modeling TEC-based cooling at the GPU scale — the overhead numbers are now documented with a full working rig rather than back-of-envelope estimates.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/liquid-cooling/enthusiast-creates-peltier-thermoelectric-cooler-from-scratch-impressive-rig-uses-two-360mm-aios-homemade-dc-controllers-and-a-custom-loop" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>FUSEX File-System Being Developed For Extended/Experimental Features</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>3mdeb is simultaneously porting Coreboot + AMD openSIL to a consumer Ryzen AM5 board and to a Gigabyte EPYC server motherboard — two separate open-firmware efforts on AMD silicon progressing in parallel.</li>
-              <li>Getting USB functional under the open firmware stack is a key milestone for AM5 usability, moving the project from proof-of-concept toward something that can boot useful payloads.</li>
-              <li>openSIL is AMD&#x27;s open-source silicon initialization library intended to eventually replace closed AGESA blobs — real progress here matters for platform transparency and long-term supply-chain security auditing.</li>
+              <li>Red Hat&#x27;s Miklos Szeredi (original FUSE author) is developing FUSEX as a dedicated experimental surface for FUSE — built to prototype filesystem features that don&#x27;t yet have a clear path into the mainline kernel ABI.</li>
+              <li>FUSE has become critical infrastructure for SSHFS, overlayfs derivatives, and container runtimes; a dedicated experimental variant could accelerate kernel-FS innovation without destabilizing the stable public API.</li>
+              <li>Extended locking semantics, new notification models, and higher-performance passthrough paths are the likely target areas worth watching.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-openSIL-AM5-USB" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/FUSEX-File-System" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AMD&#x27;s GAIA Defaults To Better Model, Continued Improvements For Local AI</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>GAIA 0.17.5 upgrades its default bundled model and continues hardening the Lemonade SDK integration — AMD&#x27;s push to make heterogeneous CPU/GPU/NPU local AI inference a first-class experience on AMD hardware.</li>
+              <li>The Lemonade SDK abstraction layer across ROCm, CPU, and XDNA NPU backends is the architectural piece worth tracking: it targets unified-memory AI workloads on RDNA4/Strix-class chips where NPU offload changes the performance equation.</li>
+              <li>AMD shipping this as open-source developer tooling directly affects the local AI software ecosystem; worth watching alongside ROCm and XDNA NPU maturity improvements.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/AMD-GAIA-0.17.5" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -84,69 +107,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Google, Microsoft, Meta, and Amazon capex spending to hit $725 billion in 2026, up 77% from last year</h3>
+              <h3>FCC votes to ban all Chinese labs from certifying electronics sold in the US due to national security concerns</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The four largest cloud and AI spenders collectively plan $725B in capital expenditure for 2026, up 77% from the already-record $410B spent in 2025.</li>
-              <li>This level of infrastructure investment is the direct upstream driver of the HBM and advanced packaging shortages reported today — demand is not speculative.</li>
-              <li>Analysts covering the sector are pushing back hard against bear theses, arguing the spending is structural and tied to committed AI capacity buildout, not cyclical hype.</li>
+              <li>75% of US-bound electronics are currently tested at Chinese certification facilities — this ruling forces a full re-routing of EMC/RF compliance testing to US or approved third-country labs, adding cost and lead time across the entire consumer electronics supply chain.</li>
+              <li>The impact hits everyone from peripheral makers to GPU board partners; expect SKU rationalization and pricing pressure on hardware that previously relied on fast, cheap China-based certification turnaround.</li>
+              <li>This is a structural supply-chain shift, not a tariff — it rewrites where certification infrastructure needs to exist, with multi-year ripple effects for hardware manufacturers and importers.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/big-tech/big-techs-ai-spending-plans-reach-725-billion" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/fcc-votes-to-ban-all-chinese-labs-from-certifying-electronics-sold-in-the-us" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>OpenCL Introducing Cooperative Matrix Extensions For Machine Learning</h3>
+              <h3>VideoLAN Publishes Dav2d For Open-Source AV2 Decoder</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The OpenCL API is adopting Cooperative Matrix extensions, mirroring the Vulkan cooperative matrix support introduced in 2023 and the SPIR-V integration that followed it.</li>
-              <li>Cooperative matrix ops allow workgroups to collaborate on matrix multiply-accumulate at the hardware level — the same primitive underlying tensor core performance on modern GPUs.</li>
-              <li>Bringing this to OpenCL expands native ML acceleration to a broader set of GPU hardware and runtimes beyond the Vulkan and CUDA ecosystems, relevant for cross-vendor HPC deployments.</li>
+              <li>VideoLAN shipped dav2d, an open-source AV2 software decoder, ahead of the AV2 spec reaching final status — the Alliance for Open Media&#x27;s AV2 is still in draft, but the decode implementation is already being optimized.</li>
+              <li>dav2d follows the lineage of the battle-hardened dav1d AV1 decoder, which suggests aggressive SIMD tuning and production-grade reliability will arrive early in the AV2 adoption cycle.</li>
+              <li>Releasing a reference decoder before spec finalization is a standards-influence move as much as a technical delivery — it shapes implementation choices of other codec authors while the spec is still malleable.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/OpenCL-Cooperative-Matrix" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux 7.1-rc1 Showing Off Some Wins On AMD Ryzen Threadripper</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Early Linux 7.1-rc1 benchmarks on Ryzen Threadripper show positive performance deltas versus 7.0, with one synthetic micro-benchmark regression identified across multiple test systems.</li>
-              <li>The regression is isolated to a single micro-benchmark and has not surfaced in broader workload testing, keeping the overall rc1 picture clean ahead of final release.</li>
-              <li>Linux 7.1 is still in early RC — this benchmark data is useful baseline signal before the merge window closes and gives downstream distros an early read.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.1-rc1-Threadripper" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>GCC 16.1 Released With AMD Zen 6 Support, Algol 68 &amp; Many C++ Improvements</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>GCC 16.1 is the first stable release in the GCC 16 series — the annual major feature drop from the GNU toolchain.</li>
-              <li>Native AMD Zen 6 tuning targets are included, meaning the compiler can now emit code optimized specifically for next-generation AMD microarchitecture without manual march flags — shipping before Zen 6 hardware is widely available.</li>
-              <li>Broad C++ improvements land alongside the revival of Algol 68 frontend support, and overall this is the compiler baseline that will ship in most 2026 Linux distributions.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/GCC-16.1-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux&#x27;s sched_ext Sees A Bunch Of Bug Fixes Following Increased AI Code Review</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The Linux kernel&#x27;s extensible scheduler class (sched_ext) received a surge of bug fixes in the 7.1 cycle, many of which trace back across multiple prior kernel releases that missed them.</li>
-              <li>The uptick is directly attributed to AI-assisted code review applied to the sched_ext codebase — a concrete data point that AI tooling is finding kernel bugs human review missed.</li>
-              <li>sched_ext allows userspace-defined scheduling policies to run safely in-kernel; correctness is critical as the subsystem sees growing use in HPC batch systems and gaming compositors.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.1-AI-Sched-Ext-Fixes" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Dav2d-Open-Source-AV2-Decode" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -156,15 +137,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>CPPC v4 Support Being Worked On By NVIDIA For The Linux ACPI Driver</h3>
+              <h3>Steam On Linux In April Pulled Back From Its Record High Marketshare</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NVIDIA is implementing CPPC v4 (Collaborative Processor Performance Control) in the Linux ACPI driver, following the ACPI 6.6 specification published last year.</li>
-              <li>CPPC provides a standardized OS-level interface for fine-grained CPU core performance management using an abstract scale — v4 extends what the OS scheduler and power management stack can request from hardware.</li>
-              <li>NVIDIA&#x27;s involvement signals this will land on GPU-adjacent server platforms where tightly coupled CPU core tuning alongside GPU workloads matters for total system power efficiency.</li>
+              <li>Linux Steam usage pulled back from March&#x27;s record 5.33% in April — the March spike was likely survey methodology noise amplified by Steam Deck activity rather than a sustained desktop Linux adoption surge.</li>
+              <li>Even post-correction, the Linux gaming marketshare floor is structurally higher than pre-Deck levels; Proton&#x27;s continued compatibility improvements are delivering real long-term baseline growth.</li>
+              <li>The April pullback is a useful calibration signal: headline single-month spikes should be discounted; steady compounding is the real story.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/ACPI-CPPC-v4-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Steam-April-2026-Survey" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Wine 11.8 Improves VBScript Compatibility, Finally Fixes Microsoft Golf 1999</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Wine 11.8&#x27;s VBScript improvements matter beyond vintage games — VBScript is embedded in a long tail of enterprise Windows automation tools, legacy installers, and ActiveX controls that businesses still need to run on Linux.</li>
+              <li>The broader pattern is Wine 12.0 (early 2027) hardening its COM/scripting engine compatibility to better handle enterprise software without Windows; the Microsoft Golf 1999 fix is a community morale item alongside real COM work.</li>
+              <li>Wine&#x27;s bi-weekly cadence means fixes land fast without waiting for a major version cycle — the gap between &quot;fixed in Wine&quot; and &quot;stable release&quot; is measured in weeks.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Wine-11.8-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
