@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - May 02, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - May 04, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 02, 2026</div>
+        <div class="digest-date-badge">May 04, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Humanoid production is ramping fast, Meta just made a strategic acquisition, and California opened the door for autonomous trucks — a big week for real-world robotics deployment across every layer of the stack.</p>
+        <p class="digest-intro">Today&#x27;s robotics digest is heavy on world models and embodied AI fundamentals, with a comprehensive ArXiv survey dropping alongside a novel egocentric action-model paper and a predictive spatio-temporal scene-graph approach. On the industry side, simulation-first development gets fresh funding, edge-first cobot architectures get a technical treatment, and Ouster ships native-color lidar that simplifies perception pipelines.</p>
       </div>
     </section>
 
@@ -29,27 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Phase stability regulator based on two dynamic parameters for autonomous mobile robots</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>World Model for Robot Learning: A Comprehensive Survey</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>New phase regulator uses two real-time dynamic signals to improve stability in AMRs navigating uneven or unpredictable environments.</li>
-              <li>The approach enables tighter locomotion control without requiring expensive additional sensors — pure signal-level engineering.</li>
-              <li>Relevant for warehouse AMRs and legged robots alike, where terrain variation causes oscillation and drift.</li>
+              <li>Covers how world models serve policy learning, planning, sim-to-real transfer, evaluation, and synthetic data generation — a single reference spanning the full design space.</li>
+              <li>Highlights rapid progress in predictive representations that model environment dynamics under actions, directly relevant to building simulation-grounded autonomy stacks.</li>
+              <li>Useful map for anyone designing NPC world models or embodied agents: identifies where learned priors outperform hand-coded physics and where open gaps remain.</li>
             </ul>
-            <a href="https://www.therobotreport.com/phase-stability-regulator-based-two-dynamic-parameters-autonomous-mobile-robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.00080" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Robot Talk Episode 154 – Visual navigation in insects and robots, with Andrew Philippides</h3>
-              <span class="digest-source">Robohub</span>
+              <h3>Being-H0.7: A Latent World-Action Model from Egocentric Videos</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Ants and bees navigate complex environments with tiny brains — University of Sussex research is distilling those principles into compact robot vision systems.</li>
-              <li>Bioinspired visual navigation sidesteps the compute cost of traditional SLAM and dense 3D mapping, opening paths for ultra-low-power robots.</li>
-              <li>Insects achieve robust outdoor navigation with optic flow and landmark matching — techniques that transfer well to ground robots in GPS-denied spaces.</li>
+              <li>Proposes a VLA architecture that learns latent world representations from egocentric video rather than relying on sparse action supervision alone, reducing shortcut mappings.</li>
+              <li>Directly addresses the core failure mode of standard VLAs: models that regress actions without grounding in how the world actually changes under those actions.</li>
+              <li>Egocentric training signal is particularly applicable to humanoid and mobile manipulation policies where first-person visual streams are the primary sensor input.</li>
             </ul>
-            <a href="https://robohub.org/robot-talk-episode-154-visual-navigation-in-insects-and-robots-with-andrew-philippides/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.00078" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Predictive Spatio-Temporal Scene Graphs for Semi-Static Scenes</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Extends spatio-semantic scene graphs with temporal prediction, enabling robots to reason about where objects will be — not just where they currently are.</li>
+              <li>Targets semi-static scenes (the common real-world case where most objects stay put but a subset changes), rather than assuming fully static or fully dynamic environments.</li>
+              <li>Directly applicable to manipulation and navigation agents that need to anticipate state changes before executing long-horizon plans.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.00121" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Do Open-Loop Metrics Predict Closed-Loop Driving? A Cross-Benchmark Correlation Study of NAVSIM and Bench2Drive</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Empirically tests whether fast open-loop benchmark scores (displacement error, etc.) actually predict how a planner behaves when it is in the loop controlling the vehicle.</li>
+              <li>Finds that traditional open-loop metrics have questionable predictive validity — a critical signal for simulation pipeline design and benchmark selection.</li>
+              <li>Provides a reproducible cross-benchmark correlation methodology teams can apply to validate their own evaluation setups before committing to a metric.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.00066" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -59,75 +83,69 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Video Friday: Figure, 1X Ramp Up Humanoid Robot Production</h3>
-              <span class="digest-source">IEEE Spectrum Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Figure and 1X are both publicly accelerating humanoid production cadence — the race from prototype to factory floor is real and picking up speed.</li>
-              <li>Video evidence shows warehouse-style task execution improving markedly; the gap between demo polish and operational reality is narrowing.</li>
-              <li>Two companies moving in parallel signals that the humanoid supply chain (actuators, sensors, compute) is maturing enough to support simultaneous scale-ups.</li>
-            </ul>
-            <a href="https://spectrum.ieee.org/video-friday-humanoid-robot-production" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Why deformable materials are physical AI&#x27;s real manufacturing test</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Fabric, foam, and flex — deformable materials expose the limits of rigid-body simulation and force physical AI to generalize across unpredictable contact states.</li>
-              <li>Createme&#x27;s CEO argues the right software abstraction layer matters more than raw model capacity for handling deformable assembly in apparel and beyond.</li>
-              <li>Cracking deformable manipulation would unlock a huge swath of labor-intensive light manufacturing that robotic arms have never reliably touched.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/why-deformable-materials-are-physical-ai-real-manufacturing-test/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>California lawmakers open the gate for autonomous trucks in the state</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>California DMV expanded its autonomous vehicle framework to include full-size commercial trucks — a significant regulatory unlock for the industry.</li>
-              <li>New rules come with expanded safety and oversight requirements, suggesting regulators are threading the needle between enablement and accountability.</li>
-              <li>Opens one of the largest freight markets in North America to driverless commercial deployment; Kodiak, Aurora, and Waymo Via are positioned to move fast.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/california-lawmakers-open-gate-autonomous-trucks-state/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Bosch begins delivering hardware to Kodiak as autonomous trucking moves toward production scale</h3>
+              <h3>Antioch raises $8.5 million to accelerate simulation-based development of autonomous systems</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Bosch is now actively shipping critical hardware components to Kodiak — moving the partnership from MOU to physical supply chain.</li>
-              <li>This is the industrial-partnership model for autonomous trucking: an AV software company paired with a tier-1 supplier to hit production volumes no startup can reach alone.</li>
-              <li>Timing aligns with the California regulatory green light — Kodiak enters a newly open market with supply chain momentum already building.</li>
+              <li>Antioch is building a cloud simulation platform to replace physical environment testing for robotics and autonomous systems — $8.5M seed led by A* and Category Ventures.</li>
+              <li>The bet mirrors the industry consensus that sim-first iteration cycles are 10-100x faster than hardware loops for policy development and regression testing.</li>
+              <li>Worth tracking as a potential infrastructure layer for teams running large-scale policy training without access to physical robot fleets.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/05/01/bosch-begins-delivering-hardware-to-kodiak-as-autonomous-trucking-moves-toward-production-scale/101157/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/05/03/antioch-raises-8-5-million-to-accelerate-simulation-based-development-of-autonomous-systems/101171/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Teradyne Robotics revenue rises at the start of 2026</h3>
+              <h3>Closing the latency gap: Why physical AI requires edge-first architectures</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Teradyne Robotics posted $91M in Q1 2026, with AI-enhanced product lines credited for driving the uptick in robotics sales.</li>
-              <li>Strong early-year revenue suggests industrial robot buyers are not waiting — AI integration is converting interest into purchase orders.</li>
-              <li>Teradyne&#x27;s UR (Universal Robots) and MiR divisions give it visibility across both cobot arms and mobile platforms — a useful macro barometer.</li>
+              <li>Cogniedge.ai CEO argues cloud-round-trip latency is the core blocker for real cobots — true real-time response requires inference at the edge, not in the datacenter.</li>
+              <li>Safety cages and speed limits are reframed as workarounds for a latency problem, and edge inference eliminates the underlying constraint.</li>
+              <li>Directly relevant to anyone designing local-LLM or on-device policy stacks where inference latency determines feasibility of closed-loop control.</li>
             </ul>
-            <a href="https://www.therobotreport.com/teradyne-robotics-revenue-rises-start-2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/closing-latency-gap-why-physical-ai-requires-edge-first-architectures/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ABB Robotics launches new automated surface finishing cell</h3>
+              <h3>Why physical AI is the real manufacturing revolution</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Fictiv argues the manufacturing revolution is not the hardware — it is the AI layer that makes robots reprogrammable without line-stops or re-tooling.</li>
+              <li>Calls out real scaling challenges: policy generalization across tasks, hardware variability, and integration into existing factory IT stacks.</li>
+              <li>Grounds the &#x27;physical AI&#x27; narrative in practical deployment friction that developers building embodied agents should anticipate before shipping.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/why-physical-ai-is-real-manufacturing-revolution/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Ouster releases REV8 OS sensor family with native-color lidar</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>REV8 OS sensors are the first in the OS family with native color output — color embedded in the lidar point cloud without a separate camera fusion step.</li>
+              <li>OS1 Max doubles the range and resolution vs. Rev7, pushing practical detection distances for outdoor autonomy and large-space warehouse robots.</li>
+              <li>Native color in a single sensor simplifies perception pipeline architecture and reduces calibration overhead for RGB+depth fusion workflows.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/ouster-releases-rev8-os-family-native-color-lidar-sensors/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>From Cloud to Robot: Why Network Infrastructure is the Critical Failure Point in Modern Automation</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ABB&#x27;s OmniVance Collaborative Surface Finishing Cell is the first fully automated sanding and polishing system targeting manufacturers without dedicated robotics teams.</li>
-              <li>Collaborative design means the cell can work alongside humans rather than requiring full cell isolation — lowering the deployment bar for mid-size shops.</li>
-              <li>Surface finishing has been one of the last manual holdouts in discrete manufacturing; ABB packaging it as a turn-key product signals the automation frontier is advancing.</li>
+              <li>As AI and vision capabilities mature, the bottleneck for warehouse and industrial deployments has shifted from robot hardware to network reliability and latency.</li>
+              <li>Covers the gap between impressive demo conditions and production network environments — packet loss, jitter, and failover are now first-class design concerns.</li>
+              <li>Practical framing for sim-to-real work: network failure modes belong in simulation scenarios alongside sensor noise and actuator drift.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/05/01/abb-robotics-launches-new-automated-surface-finishing-cell/101146/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/05/04/from-cloud-to-robot-why-network-infrastructure-is-the-critical-failure-point-in-modern-automation/101197/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -137,39 +155,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Meta buys robotics startup to bolster its humanoid AI ambitions</h3>
-              <span class="digest-source">Hacker News Robotics</span>
+              <h3>iRobot Founder Wants to Put a Robotic Familiar Into Your Home</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Meta made a direct acquisition in robotics — not a research grant or partnership, a buy — signaling serious intent to compete in embodied AI.</li>
-              <li>Adds to a crowded humanoid field (Google DeepMind, Apple, Microsoft, Amazon all investing) but Meta&#x27;s social/AR angle gives it a distinctive use-case thesis.</li>
-              <li>Acquisition likely brings hardware expertise or manipulation datasets that accelerate Meta&#x27;s path from simulation research to physical deployment.</li>
+              <li>Colin Angle&#x27;s new stealth startup Familiar Machines &amp; Magic (FM&amp;M) is building a quadruped &#x27;familiar&#x27; — a companion robot framed as &#x27;physical AI&#x27; for the home.</li>
+              <li>Coming from the co-founder of the most commercially successful home robot company ever, this is the most credible attempt yet at a companion-robot category that has repeatedly failed to scale.</li>
+              <li>The &#x27;familiar&#x27; framing — persistent, relationship-forming, personality-driven — maps closely to embodied NPC design problems; worth watching for what social behavior primitives they ship.</li>
             </ul>
-            <a href="https://techcrunch.com/2026/05/01/meta-buys-robotics-startup-to-bolster-its-humanoid-ai-ambitions/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>How Fast Could Robot Production Scale Up?</h3>
-              <span class="digest-source">Hacker News Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Epoch AI models the manufacturing bottlenecks constraining robot production ramp — actuators, compute, and skilled assembly labor are the real chokepoints, not demand.</li>
-              <li>Their analysis suggests scaling from thousands to millions of units annually requires years of supply chain build-out, even with strong capital investment.</li>
-              <li>Important counterweight to hype: the limiting factor for humanoid deployment isn&#x27;t AI capability or funding — it&#x27;s industrial manufacturing throughput.</li>
-            </ul>
-            <a href="https://epoch.ai/blog/how-fast-could-robot-production-scale-up" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Man takes robot to airport, gets ticket for it, it gets on plane</h3>
-              <span class="digest-source">Hacker News Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A robot purchased a commercial airline ticket and boarded — a real-world stress test of how transportation infrastructure handles non-human passengers.</li>
-              <li>Signals that robotic presence in everyday public spaces is no longer hypothetical; social and regulatory norms around robots-in-public are getting tested in real time.</li>
-              <li>Airport security and boarding workflows currently have no protocol for autonomous agents — a policy gap that will need addressing as deployments scale.</li>
-            </ul>
-            <a href="https://twitter.com/scottbudman/status/2050321131467653197" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://spectrum.ieee.org/familiar-machines-and-magic" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - May 02, 2026 | Densanon</title>
+  <title>AI Morning Digest - May 04, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 02, 2026</div>
+        <div class="digest-date-badge">May 04, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest spans a milestone in fully autonomous AI-driven science, a practical production guide for LLM migrations, agentic coding tool advances, and a sharp look at the political money shaping the AI narrative.</p>
+        <p class="digest-intro">Today&#x27;s digest centers on the hidden costs of agentic AI: a new paper quantifies the reasoning tax of adding tools to LLM pipelines, llama.cpp lands beta multi-token prediction (MTP) for real on-device speedups, and the community is reckoning with the gap between vibe-coded prototypes and production-grade systems. Security and trust round out the day, with new causal analysis of jailbreak mechanics and a decentralized reputation framework for agentic marketplaces.</p>
       </div>
     </section>
 
@@ -29,27 +29,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>End-to-end autonomous scientific discovery on a real optical platform</h3>
+              <h3>Are Tools All We Need? Unveiling the Tool-Use Tax in LLM Agents</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An LLM-based agent ran a full hypothesis-experiment-revision loop on real physical lab hardware, not just simulations.</li>
-              <li>First demonstrated end-to-end closure: the system revised its own experimental design based on live optical measurement results.</li>
-              <li>Signals a shift from AI as research assistant to AI as independent research executor — with real-world consequences for lab automation.</li>
+              <li>Tool-augmented agents pay a measurable &#x27;tool-use tax&#x27;: adding tools can hurt reasoning accuracy when semantic distractors are present in the context, challenging the assumption that more tools always equals better performance.</li>
+              <li>The degradation appears in frontier models — not just small ones — suggesting this is a fundamental prompt-context interaction issue, not a capability ceiling.</li>
+              <li>Implication for agentic builders: gate advanced tools behind need, not convenience; exposing irrelevant tools actively harms the model&#x27;s reasoning path.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.27092" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.00136" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>When Your LLM Reaches End-of-Life: A Framework for Confident Model Migration in Production Systems</h3>
+              <h3>Minimal, Local, Causal Explanations for Jailbreak Success in Large Language Models</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Introduces a Bayesian statistical approach to calibrate automated evals so you know when a replacement model is safe to ship.</li>
-              <li>Addresses the under-discussed problem of production LLM deprecations — not just benchmarks but risk-quantified rollout decisions.</li>
-              <li>Directly applicable to any team running GPT-4 or Claude 2-era models that will need forced migrations in 2026.</li>
+              <li>Uses causal analysis (not just correlation) to pinpoint which token spans in a jailbreak prompt are actually load-bearing for bypassing safety training.</li>
+              <li>Identifies minimal sufficient subsets — the smallest prompt fragments that still reproduce the jailbreak — enabling more targeted red-teaming and defenses.</li>
+              <li>Findings are relevant for anyone building safety layers on local LLMs: the causal structure suggests patch points at specific attention heads rather than full retraining.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2604.27082" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.00123" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AgentReputation: A Decentralized Agentic AI Reputation Framework</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes a trust scoring system for agents in decentralized marketplaces (debugging, patch generation, security auditing) that operates without centralized oversight.</li>
+              <li>Addresses Sybil attacks and reputation laundering — failure modes that naive score-averaging systems are blind to in open agent ecosystems.</li>
+              <li>Directly applicable to multi-agent orchestration: the reputation model can function as a lightweight selector when routing tasks across a pool of specialized sub-agents.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.00073" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -59,39 +71,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Our evaluation of OpenAI&#x27;s GPT-5.5 cyber capabilities</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Llama.cpp MTP support now in beta!</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>UK AI Security Institute found GPT-5.5 matches Claude Mythos on finding security vulnerabilities — and it is publicly available now.</li>
-              <li>First cross-lab independent eval confirming frontier-level offensive cyber capability in a generally available model.</li>
-              <li>Raises the baseline for what responsible deployment controls need to look like for any production-facing LLM integration.</li>
+              <li>Multi-Token Prediction (MTP) is now in beta for llama.cpp, initially supporting Qwen3.5 MTP variants — this is a speculative-decoding-adjacent technique that can meaningfully increase tokens/sec on consumer hardware.</li>
+              <li>The implementation is community-driven and is tracking toward a mainline merge; other model families expected to follow once the Qwen path is proven.</li>
+              <li>For on-device inference builders: MTP is a lower-complexity speed lever than full speculative decoding (no separate draft model needed), making it practical on single-GPU rigs.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Apr/30/gpt-55-cyber-capabilities/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1t3guzw/llamacpp_mtp_support_now_in_beta/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Codex CLI 0.128.0 adds /goal</h3>
+              <h3>TRE Python binding — ReDoS robustness demo</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>OpenAI&#x27;s Codex CLI now supports a persistent /goal that drives a looping agent until completion or token budget exhaustion.</li>
-              <li>Mirrors the Ralph loop pattern — set a high-level objective once and let the agent self-evaluate and retry without hand-holding.</li>
-              <li>Token-budget guardrails make this safer for unattended runs than open-ended agent frameworks without cost controls.</li>
+              <li>Demonstrates a ctypes-based Python binding for TRE (Ville Laurikari&#x27;s approximate regex engine), built using Claude Code — the engine is immune to ReDoS by design because it uses a finite automaton, not backtracking.</li>
+              <li>TRE was recently added to Redis by antirez, giving it production credibility; the Python binding opens it for use in input validation pipelines that handle untrusted user regex.</li>
+              <li>Practical for RAG/tool pipelines: swapping pathological backtracking regexes for TRE in user-facing input sanitization eliminates a whole class of denial-of-service vectors.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Apr/30/codex-goals/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/4/tre-python-binding/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I gave Claude Code a $0.02/call coworker and stopped hitting Pro limits</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>Quoting Anthropic</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Delegates bulk file reads and boilerplate tasks to cheap CLI scripts, reserving Pro context for high-value reasoning steps.</li>
-              <li>The pattern cuts weekly Pro usage enough to stop hitting Wednesday rate limits without changing models.</li>
-              <li>A replicable workflow: thin wrapper scripts route low-complexity subtasks away from the main model context entirely.</li>
+              <li>Anthropic used an automatic sycophancy classifier to evaluate Claude&#x27;s behavior — it measures willingness to push back, maintain positions under pressure, and give praise proportional to merit, not user sentiment.</li>
+              <li>The classifier operates as a post-hoc behavioral probe, not a training-time constraint — this is the measurement methodology that informed recent Claude alignment work.</li>
+              <li>For those building eval harnesses: this framing (measure frank disagreement rate, not just refusal rate) is a concrete template for evaluating sycophancy in any fine-tuned or prompted model.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1t1o43w/i_gave_claude_code_a_002call_coworker_and_stopped/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/3/anthropic/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -101,39 +113,45 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>We are finally there: Qwen3.6-27B + agentic search; 95.7% SimpleQA on a single 3090, fully local</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>Vibe Coding vs. Production reality</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>95.7% on SimpleQA fully local on a single RTX 3090 — matches hosted API accuracy on factual retrieval.</li>
-              <li>Achieved by pairing Qwen3.6-27B with agentic search via LDR, not raw model capability alone.</li>
-              <li>A meaningful local-AI milestone: cloud-parity factual QA now fits in consumer hardware without a server farm.</li>
+              <li>The 80/20 split is real and accelerating: PoCs that took a week now take an afternoon, but production hardening (error handling, auth, data integrity, observability) still requires the same engineering discipline.</li>
+              <li>The thread documents specific failure modes — RAG pipelines and internal tooling shipped without input validation, GRC modules with no audit trail — giving concrete examples of where vibe-coded shortcuts collapse.</li>
+              <li>Takeaway for indie builders: use AI acceleration for scaffolding and exploration, but treat the last 20% (edge cases, security, ops) as non-negotiable engineering work with no shortcut.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1t1n6o8/we_are_finally_there_qwen3627b_agentic_search_957/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1t3bk3x/vibe_coding_vs_production_reality/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A Dark-Money Campaign Is Paying Influencers to Frame Chinese AI as a Threat</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>built a plugin so my parallel Claude Code sessions can message each other instead of me alt-tabbing</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Build American AI — a nonprofit tied to OpenAI and a16z executives — is funding a coordinated narrative campaign against Chinese AI.</li>
-              <li>The campaign targets public perception of open-weight models specifically, which are disproportionately Chinese-led right now.</li>
-              <li>Raises legitimate questions about who benefits from AI nationalism rhetoric and why open-source advocates should stay skeptical.</li>
+              <li>Built a lightweight inter-session messaging plugin so a frontend Claude Code session can query a backend session for schema/type information without human relay — eliminates context-switching overhead in multi-repo workflows.</li>
+              <li>The plugin acts as a shared memory bus between parallel agents, letting each session maintain its own context window while still accessing live state from sibling sessions.</li>
+              <li>Pattern is directly applicable to any multi-repo agentic setup: an agent working on a consumer (frontend) can pull ground-truth type definitions from the producer (backend) agent in real time.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1t1i4yg/a_darkmoney_campaign_is_paying_influencers_to/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1t3osat/built_a_plugin_so_my_parallel_claude_code/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I built a transformer in C++17 from scratch — no PyTorch, no BLAS, no dependencies</h3>
+              <h3>White House Considers Vetting A.I. Models Before They Are Released</h3>
               <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Full GPT-style transformer in pure C++17 — only the standard library and POSIX sockets, 0.83M params, trains on CPU.</li>
-              <li>Hits val loss 1.64 in 76 minutes with complete analytical backprop, no autograd framework under the hood.</li>
-              <li>An exceptional from-scratch engineering reference for anyone who wants to understand transformers at the metal level.</li>
+              <li>The proposal would require pre-release government vetting of AI models above a capability threshold — similar in structure to export controls but applied domestically before public release.</li>
+              <li>Local/open-weight model developers and the open-source community are specifically worried this could function as a de facto gate on open releases, since vetting timelines are undefined.</li>
+              <li>The r/LocalLLaMA thread (172 upvotes, 199 comments) reflects genuine concern from the on-device inference community that this could slow or chill open-weight model drops independently of safety rationale.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1t1x9jv/i_built_a_transformer_in_c17_from_scratch_no/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1t3ro1w/white_house_considers_vetting_ai_models_before/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

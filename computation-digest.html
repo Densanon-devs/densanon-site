@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - May 02, 2026 | Densanon</title>
+  <title>Computation Morning Digest - May 04, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 02, 2026</div>
+        <div class="digest-date-badge">May 04, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation digest covers the recovery and open-sourcing of the earliest DOS source ever found, NVIDIA Vulkan driver correctness and perf improvements, a supply-chain policy shift that will affect 75% of US electronics imports, and VideoLAN&#x27;s early AV2 decoder work.</p>
+        <p class="digest-intro">Today&#x27;s compute picture is anchored by a live kernel security incident — CVE-2026-31431 (&#x27;Copy Fail&#x27;) is being actively exploited for root takeover on unpatched Linux systems — alongside Intel&#x27;s 32GB-VRAM Arc Pro B70 hitting competitive raster/RT numbers, GCC 16 delivering measurable throughput gains with fresh Zen 6 and Arm AGI tuning, and ROCm 7.2.3 landing with AMD GPU stack updates relevant to local inference users.</p>
       </div>
     </section>
 
@@ -29,75 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>45 years later, earliest DOS source code transcribed from a stack of old printouts found in a garage</h3>
+              <h3>Intel&#x27;s Arc Pro B70 workstation GPU with 32GB of VRAM gets tested in games — Roughly twice as fast as Arc B580 on average, beats RTX 5060 Ti in some titles</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>86-DOS 1.00 source was recovered from physical printouts found in a garage, manually transcribed, and open-sourced to mark the codebase&#x27;s 45th anniversary — this is the earliest known DOS code to be made publicly available.</li>
-              <li>The transcription-from-printout methodology is notable: no digital backup existed, making the recovery entirely manual, and the result directly documents the x86 software foundation that eventually became MS-DOS.</li>
-              <li>Microsoft&#x27;s accelerating pattern of open-sourcing historical OS artifacts is real archival value for systems researchers and retrocomputing communities alike.</li>
+              <li>32GB VRAM at a workstation price point makes this a compelling option for loading large GGUFs that don&#x27;t fit on an RTX 3060 12GB or 4090 24GB in a single card.</li>
+              <li>Only 2.9% behind RTX 5060 Ti 16GB on average raster, beats it in ray tracing — Intel&#x27;s driver maturity gap is closing faster than expected for 1440p workloads.</li>
+              <li>Twice the throughput of Arc B580 on average; developers priced out of multi-GPU H100 setups should benchmark this card for long-context LLM inference capacity.</li>
             </ul>
-            <a href="https://www.tomshardware.com/software/operating-systems/45-years-later-earliest-dos-source-code-transcribed-from-a-stack-of-old-printouts-found-in-a-garage-code-was-open-sourced-to-mark-86-dos-1-00s-anniversary" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/gpus/intels-arc-pro-b70-workstation-gpu-with-32gb-of-vram-gets-tested-in-games-roughly-twice-as-fast-as-arc-b580-on-average-beats-rtx-5060-ti-in-some-titles" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NVIDIA Ships Fixes For Descriptor Heaps, More Vulkan Performance Optimizations</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>NVIDIA&#x27;s 595.44.06 Linux Vulkan beta (paired with 595.46 on Windows) fixes descriptor heap correctness bugs and ships measurable performance improvements for Vulkan-heavy workloads including game engines and GPU compute.</li>
-              <li>Descriptor heap issues have been a persistent cross-platform pain point for developers targeting both D3D12 and Vulkan; the fix landing simultaneously on both platforms suggests root-cause resolution rather than a workaround.</li>
-              <li>This driver series continues steady Vulkan stabilization ahead of what looks like a feature-heavy second half of 2026.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/NVIDIA-595.44.06-Vulkan-Beta" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Gigabyte Z890 Aorus Elite Duo X Motherboard Review: CQDIMM support with Arrow Lake Refresh</h3>
+              <h3>AMD Ryzen AI 5 435G APU breaks cover in early benchmarks — six-core Zen 5 chip goes head-to-head with the Ryzen 5 8600G for budget PC builders</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Sub-$280 board with native Arrow Lake Refresh support and CQDIMM compatibility — CQDIMM is an emerging high-density memory form factor, and mid-range board support this early matters for forward upgrade path planning.</li>
-              <li>Five M.2 slots and a strong connectivity spec at this price tier represent a meaningful step up over prior Z890 mid-range options.</li>
-              <li>If CQDIMM adoption accelerates, this board category slots into the right upgrade window without requiring a full platform change.</li>
+              <li>Geekbench 6 scores align closely with Ryzen 5 8600G — Zen 5 IPC gains are partially offset by the budget SKU&#x27;s clock and TDP limits.</li>
+              <li>Zen 5 APU with integrated NPU is relevant for edge inference where no discrete GPU is present; NPU offload can relieve the CPU for host-side orchestration.</li>
+              <li>Watch for iGPU shared-memory bandwidth numbers: a Zen 5 APU with competitive memory bandwidth could serve as a capable CPU-only inference host for sub-7B models.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/motherboards/gigabyte-z890-aorus-elite-duo-x-motherboard-review" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/amd-ryzen-ai-5-435g-apu-breaks-cover-in-early-benchmarks-six-core-zen-5-chip-goes-head-to-head-with-the-ryzen-5-8600g-for-budget-pc-builders" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Enthusiast creates Peltier thermoelectric cooler from scratch</h3>
+              <h3>Nvidia&#x27;s exposure to Asian supply chains for components hits 90% of its production costs — marked increase from 65% could intensify as physical AI adds even more exposure</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A custom TEC build using two 360mm AIOs and homemade DC controllers consumed over 300W to push an RTX 3070 barely below ambient temperatures — empirical proof of why Peltier cooling hasn&#x27;t displaced conventional solutions.</li>
-              <li>The power efficiency math is brutal: the TEC overhead exceeded the GPU&#x27;s own draw just to achieve marginal sub-ambient gains, making this a hobbyist curiosity rather than a viable thermal architecture at scale.</li>
-              <li>Valuable for anyone modeling TEC-based cooling at the GPU scale — the overhead numbers are now documented with a full working rig rather than back-of-envelope estimates.</li>
+              <li>Asian supplier share jumped from ~65% to ~90% of Nvidia production costs in a single year — a significant concentration risk if trade policy tightens further.</li>
+              <li>Physical AI hardware (robotics, edge inference accelerators) is the primary driver of the increase, not just datacenter GPU demand.</li>
+              <li>A single regional disruption now has a 90% blast radius across Nvidia&#x27;s cost base; supply availability for consumer GPUs would be directly affected in such a scenario.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/liquid-cooling/enthusiast-creates-peltier-thermoelectric-cooler-from-scratch-impressive-rig-uses-two-360mm-aios-homemade-dc-controllers-and-a-custom-loop" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidias-asian-supply-chain-hits-90-percent-of-production-costs" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>FUSEX File-System Being Developed For Extended/Experimental Features</h3>
+              <h3>Mesa Begins Seeing Patch Activity For AMD GFX12.1 Graphics</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Red Hat&#x27;s Miklos Szeredi (original FUSE author) is developing FUSEX as a dedicated experimental surface for FUSE — built to prototype filesystem features that don&#x27;t yet have a clear path into the mainline kernel ABI.</li>
-              <li>FUSE has become critical infrastructure for SSHFS, overlayfs derivatives, and container runtimes; a dedicated experimental variant could accelerate kernel-FS innovation without destabilizing the stable public API.</li>
-              <li>Extended locking semantics, new notification models, and higher-performance passthrough paths are the likely target areas worth watching.</li>
+              <li>GFX12.1 is a new GPU IP revision beyond RDNA4 (RX 9000 series / GFX12.0), with GFX13 bring-up also underway — AMD&#x27;s open-source driver pipeline is running 1-2 GPU generations ahead of retail availability.</li>
+              <li>Mesa open-source driver patches arriving this early means Linux ROCm and Vulkan compute support will be available at or near product launch rather than lagging by months.</li>
+              <li>For ROCm inference users: early Mesa bring-up historically correlates with faster compute-stack readiness than proprietary-only launch windows, reducing the wait for usable driver support.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/FUSEX-File-System" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD&#x27;s GAIA Defaults To Better Model, Continued Improvements For Local AI</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>GAIA 0.17.5 upgrades its default bundled model and continues hardening the Lemonade SDK integration — AMD&#x27;s push to make heterogeneous CPU/GPU/NPU local AI inference a first-class experience on AMD hardware.</li>
-              <li>The Lemonade SDK abstraction layer across ROCm, CPU, and XDNA NPU backends is the architectural piece worth tracking: it targets unified-memory AI workloads on RDNA4/Strix-class chips where NPU offload changes the performance equation.</li>
-              <li>AMD shipping this as open-source developer tooling directly affects the local AI software ecosystem; worth watching alongside ROCm and XDNA NPU maturity improvements.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/AMD-GAIA-0.17.5" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/AMD-GFX12.1-Mesa-Start" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -107,27 +83,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>FCC votes to ban all Chinese labs from certifying electronics sold in the US due to national security concerns</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>75% of US-bound electronics are currently tested at Chinese certification facilities — this ruling forces a full re-routing of EMC/RF compliance testing to US or approved third-country labs, adding cost and lead time across the entire consumer electronics supply chain.</li>
-              <li>The impact hits everyone from peripheral makers to GPU board partners; expect SKU rationalization and pricing pressure on hardware that previously relied on fast, cheap China-based certification turnaround.</li>
-              <li>This is a structural supply-chain shift, not a tariff — it rewrites where certification infrastructure needs to exist, with multi-year ripple effects for hardware manufacturers and importers.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/fcc-votes-to-ban-all-chinese-labs-from-certifying-electronics-sold-in-the-us" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>VideoLAN Publishes Dav2d For Open-Source AV2 Decoder</h3>
+              <h3>ROCm 7.2.3 Brings Minor Updates, ROCm XIO Documentation</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>VideoLAN shipped dav2d, an open-source AV2 software decoder, ahead of the AV2 spec reaching final status — the Alliance for Open Media&#x27;s AV2 is still in draft, but the decode implementation is already being optimized.</li>
-              <li>dav2d follows the lineage of the battle-hardened dav1d AV1 decoder, which suggests aggressive SIMD tuning and production-grade reliability will arrive early in the AV2 adoption cycle.</li>
-              <li>Releasing a reference decoder before spec finalization is a standards-influence move as much as a technical delivery — it shapes implementation choices of other codec authors while the spec is still malleable.</li>
+              <li>Released less than one month after ROCm 7.2.2 — AMD is maintaining a rapid patch cadence on its open compute stack heading into mid-2026.</li>
+              <li>ROCm XIO (eXtended I/O) documentation addition hints at upcoming heterogeneous memory bandwidth features relevant to large-model data movement across GPU and host memory.</li>
+              <li>Worth a bump for AMD GPU inference users on ROCm; check the changelog for any HIP kernel or MIOpen fixes affecting LLM inference throughput before upgrading.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Dav2d-Open-Source-AV2-Decode" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/AMD-ROCm-7.2.3" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GCC 16 Compiler Delivering Some Decent Performance Gains Over GCC 15</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>GCC 16 adds AMD Zen 6 and Arm AGI CPU tuning passes — inference backends like llama.cpp and GGML compiled with GCC 16 get architecture-specific optimization automatically at build time.</li>
+              <li>Phoronix benchmarks show measurable gains over GCC 15 in compute-heavy workloads; numbers cover real-world compilation and numeric performance across multiple workload classes.</li>
+              <li>New C++23/26 features in GCC 16 may matter for projects compiling cutting-edge ML kernels; this is the first stable GCC release with these language-level changes available.</li>
+            </ul>
+            <a href="https://www.phoronix.com/review/gcc-16-benchmarks" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>NVIDIA Looking To Create New Tool For Generating AutoFDO Profiles For GCC</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>AutoFDO lets GCC use runtime profiling data to optimize hot code paths — NVIDIA contributing this to GCC mainline means GPU-adjacent CPU code gets profile-guided tuning without a separate Clang/LLVM toolchain.</li>
+              <li>Primary target is CUDA host-side code and ML framework glue layers that spend significant time in CPU logic before dispatching work to the GPU.</li>
+              <li>If merged upstream, this benefits the entire Linux open-source ecosystem including ROCm, oneAPI, and inference runtimes compiled with GCC.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/NVIDIA-AutoFDO-Tool-For-GCC" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -137,27 +125,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Steam On Linux In April Pulled Back From Its Record High Marketshare</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>CISA flags actively exploited &#x27;Copy Fail&#x27; Linux kernel flaw enabling root takeover across major distros — unpatched systems may remain vulnerable to attack</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Linux Steam usage pulled back from March&#x27;s record 5.33% in April — the March spike was likely survey methodology noise amplified by Steam Deck activity rather than a sustained desktop Linux adoption surge.</li>
-              <li>Even post-correction, the Linux gaming marketshare floor is structurally higher than pre-Deck levels; Proton&#x27;s continued compatibility improvements are delivering real long-term baseline growth.</li>
-              <li>The April pullback is a useful calibration signal: headline single-month spikes should be discounted; steady compounding is the real story.</li>
+              <li>CVE-2026-31431 (&#x27;Copy Fail&#x27;) allows local privilege escalation to root and is actively exploited in the wild — apply kernel patches immediately on any Linux inference server or edge node.</li>
+              <li>A public exploit was released before patches were fully available across major distros; systems running unpatched kernels are exposed right now with no mitigating factor.</li>
+              <li>Multi-tenant LLM hosting on Linux is a high-priority target: local user escalation to root in a shared-inference environment is a critical threat model that this CVE directly enables.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Steam-April-2026-Survey" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/software/linux/cisa-flags-actively-exploited-copy-fail-linux-kernel-flaw-enabling-root-takeover-across-major-distros-unpatched-systems-may-remain-vulnerable-to-attack" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Wine 11.8 Improves VBScript Compatibility, Finally Fixes Microsoft Golf 1999</h3>
+              <h3>CachyOS Switches Python To Using Tail-Call Interpreter For 5~15% Better Performance</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Wine 11.8&#x27;s VBScript improvements matter beyond vintage games — VBScript is embedded in a long tail of enterprise Windows automation tools, legacy installers, and ActiveX controls that businesses still need to run on Linux.</li>
-              <li>The broader pattern is Wine 12.0 (early 2027) hardening its COM/scripting engine compatibility to better handle enterprise software without Windows; the Microsoft Golf 1999 fix is a community morale item alongside real COM work.</li>
-              <li>Wine&#x27;s bi-weekly cadence means fixes land fast without waiting for a major version cycle — the gap between &quot;fixed in Wine&quot; and &quot;stable release&quot; is measured in weeks.</li>
+              <li>CachyOS now ships Python with the tail-call interpreter enabled by default, yielding 5-15% throughput gains with zero application code changes.</li>
+              <li>This is CPython&#x27;s computed-goto / tail-call dispatch path — same binary, different interpreter loop that reduces branch mispredictions on modern CPU microarchitectures.</li>
+              <li>Python-based inference orchestration layers (FastAPI wrappers, LangChain pipelines, custom harnesses) benefit directly; no Python code changes required to see the gains.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Wine-11.8-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/CachyOS-Better-Python-Perf" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux File-System Proliferation A Burden: Requirements Laid Out For Any Future File-Systems</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Linux kernel maintainers have documented formal requirements any new filesystem must satisfy before upstream acceptance — significantly raising the bar for in-tree inclusion.</li>
+              <li>The VFS maintenance burden grows linearly with each new filesystem; this policy aims to stop experimental or niche filesystems from becoming permanent upstream maintenance debt.</li>
+              <li>Relevant for inference storage decisions: erofs, bcachefs, and other emerging filesystems used for model caching and container layers will face stricter upstream scrutiny going forward.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-FS-Proliferation-Burden" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

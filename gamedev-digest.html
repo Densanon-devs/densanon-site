@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Dev Morning Digest - May 02, 2026 | Densanon</title>
+  <title>Game Dev Morning Digest - May 04, 2026 | Densanon</title>
   <meta name="description" content="Daily game development news digest - engines, tools, techniques, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 02, 2026</div>
+        <div class="digest-date-badge">May 04, 2026</div>
         <h1>Game Dev Morning <span>Digest</span></h1>
-        <p class="digest-intro">A busy week for platform battles and market signals: Epic cracks iPhone in Japan, Roblox bets on AI photorealism, and the industry&#x27;s labor shakeout continues with VR and AA studio casualties.</p>
+        <p class="digest-intro">Today&#x27;s digest covers a quiet but meaningful shift in indie funding structures, Valve doubling down on hardware ambitions, and a cluster of practical tooling updates spanning Godot, Blender, and custom engine work. Engine builders and solo devs get a strong batch — CRT simulation engines, multi-scene Godot editors, and a five-year solo dev retrospective all land in the same cycle.</p>
       </div>
     </section>
 
@@ -29,111 +29,141 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GameMaker says AI coding is inevitable, Sony clarifies DRM confusion, and how video games are helping Rikers inmates - Patch Notes #50</h3>
+              <h3>Meet the indie studios funding other indie studios</h3>
               <span class="digest-source">Game Developer</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GameMaker&#x27;s public stance that AI-assisted coding is inevitable signals mainstream engine vendors are committing to the shift rather than hedging — this will accelerate similar moves from Unity and Godot.</li>
-              <li>Job security being called a &#x27;romantic notion&#x27; inside the industry is a candid acknowledgment of structural, not cyclical, workforce instability at studios of every size.</li>
-              <li>The Rikers rehabilitation angle is a rare positive data point: games as genuine rehabilitation infrastructure, not just entertainment — worth filing for advocacy conversations.</li>
+              <li>Successful indie studios are reinvesting profits to fund peer studios rather than seeking traditional publisher deals — a structural shift in how indie games get made.</li>
+              <li>This peer-funding model keeps creative control with developers while providing capital that bypasses publisher revenue-share cuts.</li>
+              <li>Business signal for solo devs: relationships with funded indie studios may become a viable alternative path to publisher gates.</li>
             </ul>
-            <a href="https://www.gamedeveloper.com/business/gamemaker-says-ai-coding-is-inevitable-sony-clarifies-drm-confusion-and-how-video-games-are-helping-rikers-inmates-patch-notes-50" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.gamedeveloper.com/business/meet-the-indie-studios-funding-other-indie-studios" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Sony clarifies confusion around DRM game licenses on PlayStation</h3>
-              <span class="digest-source">Game Developer</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The policy lands on &#x27;one-time online check-in after purchase&#x27; — softer than feared, but still tethers digital ownership to an initial internet connection.</li>
-              <li>Sony had to clarify explicitly because the original policy language was ambiguous enough to trigger a player revolt; that&#x27;s a communications failure worth studying.</li>
-              <li>For devs shipping on PS: offline play is unrestricted post-check — design your offline fallback states accordingly and communicate that clearly in your store listing.</li>
-            </ul>
-            <a href="https://www.gamedeveloper.com/business/sony-clarifies-confusion-around-drm-game-licenses-on-playstation" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Roblox announces AI-driven upscaler, which it claims will convert Roblox titles to photorealistic graphics</h3>
+              <h3>Valve&#x27;s hardware graduates from side-quest to full-blown ambition</h3>
               <span class="digest-source">GamesIndustry.biz</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Roblox Reality layers AI-generated photorealistic visuals on top of existing UGC content without requiring creators to rebuild assets — the barrier-to-upgrade is effectively zero for existing titles.</li>
-              <li>If it delivers at scale, this compresses the visual gap between Roblox and traditional engines, potentially keeping the platform competitive as graphically capable alternatives (Godot, Unity) target the same audience.</li>
-              <li>This is a signal that AI upscaling is moving from AAA GPU tech to mass-market UGC platforms — the technology is commoditizing faster than most predicted.</li>
+              <li>The redesigned Steam Controller is receiving strong early reviews — a decade after the original failed to gain traction with mainstream players.</li>
+              <li>Valve is treating 2026 as a hardware inflection year, with the Controller as the first piece of a broader hardware platform strategy.</li>
+              <li>For indie devs: strong Steam Controller adoption would push gamepad input support higher on the accessibility checklist for PC releases.</li>
             </ul>
-            <a href="https://www.gamesindustry.biz/roblox-announces-ai-driven-upscaler-called-roblox-reality" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.gamesindustry.biz/valves-hardware-graduates-from-side-quest-to-full-blown-ambition" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Engines &amp; Tools</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Enhance Your Godot Experience with This Useful Editor</h3>
+              <span class="digest-source">80 Level</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>GDstudio adds multi-scene editing to Godot — a long-requested workflow feature that lets you work across scenes without constant tab-switching.</li>
+              <li>The editor offers a redesigned UI on top of Godot&#x27;s standard interface, targeting teams juggling large scene hierarchies.</li>
+              <li>Worth evaluating for any Godot project with modular level design or complex prefab workflows where context-switching between scenes is a bottleneck.</li>
+            </ul>
+            <a href="https://80.lv/articles/enhance-your-godot-experience-with-this-useful-editor/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Roblox reports strong Q1 growth, revises full-year forecast due to new safety measures</h3>
-              <span class="digest-source">GamesIndustry.biz</span>
+              <h3>Blender 5.2 LTS Introduces New Cycles Texture Cache System</h3>
+              <span class="digest-source">80 Level</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Strong Q1 bookings but a lowered full-year outlook is a rare admission that safety compliance (mandatory age checks) has a measurable, quantifiable revenue cost.</li>
-              <li>For developers on the platform, audience reach may contract as age-gating takes effect — worth factoring into UGC monetization projections now rather than reactively.</li>
-              <li>Roblox is running a live experiment on whether safety investment pays off long-term vs. near-term revenue drag; the answer will shape how other platforms handle similar regulatory pressure.</li>
+              <li>Cycles now caches textures to disk during rendering, significantly cutting VRAM pressure on scenes with many image textures.</li>
+              <li>This is an LTS release, meaning it is the stable target for production pipelines — not just an experimental feature drop.</li>
+              <li>Directly useful for game artists doing offline renders of environments or cutscenes before baking into engine-ready assets.</li>
             </ul>
-            <a href="https://www.gamesindustry.biz/roblox-reports-strong-q1-growth-revises-full-year-forecast-due-to-new-saftey-measures" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://80.lv/articles/blender-5-2-lts-introduces-new-cycles-texture-cache-system/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Krafton Q1 revenue up 56.9% to $931m, driven by mobile content</h3>
-              <span class="digest-source">GamesIndustry.biz</span>
+              <h3>Take a Look at a Free Browser-Based MMD Animation Editor</h3>
+              <span class="digest-source">80 Level</span>
             </div>
             <ul class="digest-takeaways">
-              <li>56.9% YoY revenue growth to $931M is exceptional — mobile content (PUBG Mobile and derivatives) is carrying the entire company while PC/console remains secondary.</li>
-              <li>This reinforces that mobile-first live service titles, particularly battle royale in Asian markets, remain the most reliable revenue engine in games heading into 2026.</li>
-              <li>For indie devs: if you&#x27;re building mobile, live-service retention mechanics matter more than polished launch windows — Krafton&#x27;s numbers are a market signal, not just a company story.</li>
+              <li>Reze Studio runs entirely in-browser with no install, supporting MMD model animation across laptops, desktops, and iPads.</li>
+              <li>Zero-install tooling for animation previewing lowers the barrier for non-technical collaborators reviewing character motion.</li>
+              <li>The browser-first architecture is worth studying for anyone building lightweight game-adjacent tooling that needs wide accessibility.</li>
             </ul>
-            <a href="https://www.gamesindustry.biz/krafton-q1-revenue-up-569-to-931m-driven-by-mobile-content" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://80.lv/articles/take-a-look-at-a-free-browser-based-mmd-animation-editor/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Epic Games Store launches on iPhone in Japan</h3>
-              <span class="digest-source">GamesIndustry.biz</span>
+              <h3>Custom Retro Game Engine That Simulates Real CRT Displays Behavior</h3>
+              <span class="digest-source">80 Level</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Japan&#x27;s Mobile Software Competition Act enabled this — it&#x27;s the first major market where Epic can distribute iOS games outside the App Store, offering developers an alternative path with no Apple commission.</li>
-              <li>This is a live stress test for alternative app store viability: if Epic gains meaningful traction in Japan, expect more markets to legislate similar access and more storefronts to follow.</li>
-              <li>For iOS developers, this is the opening of a genuine alternative distribution channel within 2-3 years — the economics of mobile game publishing could shift materially.</li>
+              <li>AnalogDreamDev built a purpose-specific engine centered on authentic CRT simulation — scanlines, phosphor glow, and beam convergence modeled at the hardware level.</li>
+              <li>This is a strong example of domain-specific engine design: instead of adding CRT shaders to a general engine, the entire architecture is shaped around the aesthetic constraint.</li>
+              <li>Engine builders should note the tradeoff: extreme fidelity in one dimension often yields cleaner, leaner code than general-purpose engines with shader bolt-ons.</li>
             </ul>
-            <a href="https://www.gamesindustry.biz/epic-games-store-launches-on-iphone-in-japan" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://80.lv/articles/custom-retro-game-engine-that-simulates-real-crt-displays-behavior/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Techniques &amp; Learning</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Understanding Material-Based Mesh Reorientation In Unreal Engine 5</h3>
+              <span class="digest-source">80 Level</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The breakdown demonstrates how UE5 materials can drive mesh pivot reorientation at runtime — useful for organic deformation, foliage bending, and character accessories.</li>
+              <li>Three showcase examples provide concrete before/after comparisons, making the technique easy to evaluate for your own use cases.</li>
+              <li>This is a GPU-side approach, keeping the logic in the material graph rather than burdening the CPU with skeletal or transform overhead.</li>
+            </ul>
+            <a href="https://80.lv/articles/understanding-material-based-mesh-reorientation-in-unreal-engine-5/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Report: VR specialist Survios has laid off the majority of its development team</h3>
-              <span class="digest-source">Game Developer</span>
+              <h3>Game Boy Advance Dev: Link Cable Networking</h3>
+              <span class="digest-source">Hacker News Game Dev</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Survios built a solid licensed VR catalogue (Alien: Rogue Incursion) but couldn&#x27;t sustain headcount — another data point that licensed AAA VR titles alone are not a viable business at studio scale.</li>
-              <li>The VR market remains hardware-constrained; studios that bet on VR exclusivity are structurally exposed as the installed base fails to reach critical mass.</li>
-              <li>For indie VR devs: lean, small-team VR projects remain viable where large licensed studios are not — overhead is the killer, not the platform itself.</li>
+              <li>Deep technical walkthrough of GBA serial I/O and link cable protocol — covers the hardware registers and synchronization model directly.</li>
+              <li>The low-level networking primitives here (master/slave arbitration, timing windows) map well to understanding deterministic lockstep networking in modern engines.</li>
+              <li>Constraint-driven development on locked hardware reveals fundamental multiplayer architecture decisions that get abstracted away in modern engines.</li>
             </ul>
-            <a href="https://www.gamedeveloper.com/business/report-vr-specialist-survios-has-laid-off-the-majority-of-its-development-team" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.mattgreer.dev/blog/gba-dev-link-cable-networking/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>What five years of solo development taught me</h3>
+              <span class="digest-source">Hacker News Game Dev</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Five-year retrospective from a solo dev covering scope management, burnout cycles, and shipping discipline — the kind of earned insight that short postmortems miss.</li>
+              <li>Key recurring theme: the hardest part of solo dev is not technical skill but sustaining motivation through the mid-project trough.</li>
+              <li>Relevant to indie devs at any stage — the patterns identified (scope creep, isolation, perfectionism loops) are near-universal.</li>
+            </ul>
+            <a href="https://www.tylerevan.dev/writing/five-years-solo" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Union claims Nacon&#x27;s decision to shutter Spiders was a &quot;premeditated and deliberate choice&quot;</h3>
-              <span class="digest-source">GamesIndustry.biz</span>
+              <h3>SCI Companion – An IDE for Sierra SCI Games</h3>
+              <span class="digest-source">Hacker News Game Dev</span>
             </div>
             <ul class="digest-takeaways">
-              <li>French union STJV&#x27;s framing of the closure as premeditated — not financially forced — escalates this into a formal labor dispute and signals organized pushback against publisher-driven studio closures in Europe.</li>
-              <li>A consumer boycott call against Nacon raises real brand stakes; Greedfall and Steelrising have genuine fan communities, and the overlap between &#x27;gamer&#x27; and &#x27;person who cares about worker rights&#x27; is growing.</li>
-              <li>This is the clearest example yet of European game unions moving from collective bargaining to direct market pressure — a tactic that&#x27;s new to games but well-established in film and TV.</li>
+              <li>SCI Companion is a full IDE for creating and modifying Sierra On-Line SCI adventure games — covering scripts, resources, and room editors.</li>
+              <li>The project is a living example of community-driven engine tooling built decades after the original platform was abandoned by its creators.</li>
+              <li>For engine builders: the scope and completeness of SCI Companion illustrates what a mature modding/editing toolchain looks like for a legacy scripting VM.</li>
             </ul>
-            <a href="https://www.gamesindustry.biz/union-claims-nacons-decision-to-shutter-spiders-was-a-premeditated-and-deliberate-choice" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Gamescom Latam shows Brazil&#x27;s dev scene has huge potential, but it&#x27;s waiting for a spark | Opinion</h3>
-              <span class="digest-source">GamesIndustry.biz</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Brazil&#x27;s dev scene is skilled but chronically underfunded — the gap isn&#x27;t talent, it&#x27;s access to capital and international publishing relationships.</li>
-              <li>Gamescom Latam as a recurring fixture signals the broader industry is beginning to treat LatAm as both a legitimate dev hub and a consumer market, not just a distribution afterthought.</li>
-              <li>For studios exploring co-production or outsourcing, Brazil is increasingly worth scoping: competitive rates, strong art talent, and a growing local ecosystem that&#x27;s starting to attract international attention.</li>
-            </ul>
-            <a href="https://www.gamesindustry.biz/gamescom-latam-shows-brazils-dev-scene-has-huge-potential-but-its-waiting-for-a-spark-opinion" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://scicompanion.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
