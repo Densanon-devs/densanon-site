@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - May 04, 2026 | Densanon</title>
+  <title>Computation Morning Digest - May 05, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 04, 2026</div>
+        <div class="digest-date-badge">May 05, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s compute picture is anchored by a live kernel security incident — CVE-2026-31431 (&#x27;Copy Fail&#x27;) is being actively exploited for root takeover on unpatched Linux systems — alongside Intel&#x27;s 32GB-VRAM Arc Pro B70 hitting competitive raster/RT numbers, GCC 16 delivering measurable throughput gains with fresh Zen 6 and Arm AGI tuning, and ROCm 7.2.3 landing with AMD GPU stack updates relevant to local inference users.</p>
+        <p class="digest-intro">Today&#x27;s digest is dominated by the deepening US-China semiconductor split: Huawei projects $12B in AI chip revenue as Nvidia&#x27;s China share hits zero, China races to localize 70% of silicon wafer supply, and Jensen Huang draws a hard line on Blackwell and Rubin exports. On the standards side, OpenCL 3.1 lands after six years with explicit AI and HPC enhancements.</p>
       </div>
     </section>
 
@@ -29,51 +29,97 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel&#x27;s Arc Pro B70 workstation GPU with 32GB of VRAM gets tested in games — Roughly twice as fast as Arc B580 on average, beats RTX 5060 Ti in some titles</h3>
+              <h3>Huawei braces for $12 billion in AI chip revenue driven by homegrown AI model demand — Chinese fabs can barely keep up as Nvidia&#x27;s market share craters within the region</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>32GB VRAM at a workstation price point makes this a compelling option for loading large GGUFs that don&#x27;t fit on an RTX 3060 12GB or 4090 24GB in a single card.</li>
-              <li>Only 2.9% behind RTX 5060 Ti 16GB on average raster, beats it in ray tracing — Intel&#x27;s driver maturity gap is closing faster than expected for 1440p workloads.</li>
-              <li>Twice the throughput of Arc B580 on average; developers priced out of multi-GPU H100 setups should benchmark this card for long-context LLM inference capacity.</li>
+              <li>Huawei projects $12B in AI chip revenue for 2026, a 60%+ year-over-year increase, with firm orders already in hand from Alibaba, ByteDance, and Tencent.</li>
+              <li>Nvidia&#x27;s market share in China has effectively hit zero as export restrictions cut off Blackwell supply, leaving domestic fabs scrambling to cover the gap.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/gpus/intels-arc-pro-b70-workstation-gpu-with-32gb-of-vram-gets-tested-in-games-roughly-twice-as-fast-as-arc-b580-on-average-beats-rtx-5060-ti-in-some-titles" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/huawei-expects-12-billion-in-ai-chip-revenue-this-year-as-nvidias-china-market-share-hits-zero" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD Ryzen AI 5 435G APU breaks cover in early benchmarks — six-core Zen 5 chip goes head-to-head with the Ryzen 5 8600G for budget PC builders</h3>
+              <h3>Nvidia CEO Jensen Huang says China should not have Blackwell or Rubin AI GPUs — firmly states US should have &#x27;the first, the most, and the best&#x27; when it comes to AI hardware</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Geekbench 6 scores align closely with Ryzen 5 8600G — Zen 5 IPC gains are partially offset by the budget SKU&#x27;s clock and TDP limits.</li>
-              <li>Zen 5 APU with integrated NPU is relevant for edge inference where no discrete GPU is present; NPU offload can relieve the CPU for host-side orchestration.</li>
-              <li>Watch for iGPU shared-memory bandwidth numbers: a Zen 5 APU with competitive memory bandwidth could serve as a capable CPU-only inference host for sub-7B models.</li>
+              <li>Jensen Huang explicitly stated that Blackwell and next-generation Rubin AI accelerators should remain in the US first, framing AI hardware leadership as a strategic national priority.</li>
+              <li>Huang supports broad global sales for Nvidia products in general, but draws the hard line at the latest AI accelerators — not consumer-grade or legacy GPUs.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/amd-ryzen-ai-5-435g-apu-breaks-cover-in-early-benchmarks-six-core-zen-5-chip-goes-head-to-head-with-the-ryzen-5-8600g-for-budget-pc-builders" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-ceo-jensen-huang-says-china-should-not-have-blackwell-or-rubin-ai-gpus-firmly-states-us-should-have-the-first-the-most-and-the-best-when-it-comes-to-ai-hardware" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Nvidia&#x27;s exposure to Asian supply chains for components hits 90% of its production costs — marked increase from 65% could intensify as physical AI adds even more exposure</h3>
+              <h3>China pushes for 70% homegrown silicon wafer use as domestic firm ramps up 12-inch production — government seeking to localize critical chip supply chain amid AI boom and export restrictions</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Asian supplier share jumped from ~65% to ~90% of Nvidia production costs in a single year — a significant concentration risk if trade policy tightens further.</li>
-              <li>Physical AI hardware (robotics, edge inference accelerators) is the primary driver of the increase, not just datacenter GPU demand.</li>
-              <li>A single regional disruption now has a 90% blast radius across Nvidia&#x27;s cost base; supply availability for consumer GPUs would be directly affected in such a scenario.</li>
+              <li>China&#x27;s government is targeting 70% domestic silicon wafer sourcing, with Eswin scaling 12-inch wafer production to reduce reliance on Japanese and Taiwanese suppliers.</li>
+              <li>Silicon wafers are an upstream choke point in chip manufacturing; localizing this layer insulates China&#x27;s AI chip fabs from the same kind of export-restriction pressure that crippled Nvidia&#x27;s China business.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidias-asian-supply-chain-hits-90-percent-of-production-costs" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/china-pushes-for-70-percent-homegrown-silicon-wafer-use-as-domestic-firm-ramps-up-12-inch-production-government-seeking-to-localize-critical-chip-supply-chain-amid-ai-boom-and-export-restrictions" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Mesa Begins Seeing Patch Activity For AMD GFX12.1 Graphics</h3>
+              <h3>JSR to build first Taiwan photoresist plant to co-develop advanced resists with TSMC — multi-million dollar plant could come online as early as 2028</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>JSR is building its first photoresist facility in Taiwan to co-develop advanced EUV resists with TSMC, with the plant potentially online by 2028.</li>
+              <li>The move closes a competitive gap versus JSR&#x27;s two largest Japanese rivals (Shin-Etsu and Tokyo Ohka Kogyo), who already co-locate near leading-edge fabs to iterate on resist chemistry faster.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/jsr-to-build-first-taiwan-photoresist-plant-to-co-develop-advanced-resists-with-tsmc" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Apple considering Intel and Samsung for US chip production, report claims — consumer electronics giant looks to diversify supply chain amid chip shortages</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Apple is in early talks with Intel Foundry and Samsung to secure additional production capacity for its SoCs, driven by constrained availability at TSMC&#x27;s advanced nodes.</li>
+              <li>Apple has relied almost exclusively on TSMC for A-series and M-series chips — any move to Intel or Samsung foundry would require significant process adaptation and signals serious supply anxiety.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/apple-considering-intel-and-samsung-for-us-chip-production-report-claims-consumer-electronics-giant-looks-to-diversify-supply-chain-amid-chip-shortages" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intel Drivers With Mesa 26.2 Ready With Xe In Linux 7.1 To Better Handle vRAM Pressure</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GFX12.1 is a new GPU IP revision beyond RDNA4 (RX 9000 series / GFX12.0), with GFX13 bring-up also underway — AMD&#x27;s open-source driver pipeline is running 1-2 GPU generations ahead of retail availability.</li>
-              <li>Mesa open-source driver patches arriving this early means Linux ROCm and Vulkan compute support will be available at or near product launch rather than lagging by months.</li>
-              <li>For ROCm inference users: early Mesa bring-up historically correlates with faster compute-stack readiness than proprietary-only launch windows, reducing the wait for usable driver support.</li>
+              <li>Linux 7.1 with Mesa 26.2 introduces purgeable buffer objects to the Intel Xe driver via a new user-space API, giving the OS better tools to reclaim vRAM under memory pressure instead of crashing or stalling.</li>
+              <li>This directly improves behavior for discrete Arc GPUs pushed near their vRAM limits — relevant for inference workloads that load large model layers onto Arc hardware.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-GFX12.1-Mesa-Start" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Intel-Mesa-26.2-Memory-Pressure" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AMD Preps Linux For CPPC HighestFreq Feature Coming With Future ACPI Spec</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>AMD is landing support for a new &quot;HighestFreq&quot; CPPC register in the Linux AMD P-State frequency scaling driver, ahead of its formal standardization in a future ACPI spec revision.</li>
+              <li>The upstream-first approach signals AMD is co-designing the next ACPI spec revision with Linux kernel requirements already shipping in the driver — a tighter hardware-software feedback loop.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/AMD-CPPC-HighestFreq" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>OpenCL 3.1 Released To Bolster AI &amp; HPC Workloads</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The Khronos Group shipped OpenCL 3.1 six years after OpenCL 3.0 debuted in provisional form, with the spec explicitly targeting AI inference and HPC compute workloads.</li>
+              <li>OpenCL remains the primary vendor-neutral heterogeneous compute standard as an alternative to CUDA and ROCm — this update keeps it relevant for cross-vendor HPC pipelines that cannot lock into NVIDIA or AMD toolchains.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/OpenCL-3.1-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -83,39 +129,14 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ROCm 7.2.3 Brings Minor Updates, ROCm XIO Documentation</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>VMware claims Cloud Foundation on track for world domination</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Released less than one month after ROCm 7.2.2 — AMD is maintaining a rapid patch cadence on its open compute stack heading into mid-2026.</li>
-              <li>ROCm XIO (eXtended I/O) documentation addition hints at upcoming heterogeneous memory bandwidth features relevant to large-model data movement across GPU and host memory.</li>
-              <li>Worth a bump for AMD GPU inference users on ROCm; check the changelog for any HIP kernel or MIOpen fixes affecting LLM inference throughput before upgrading.</li>
+              <li>VMware&#x27;s VCF 9 update introduces features to run private cloud workloads with a smaller physical hardware footprint, directly addressing hardware bill shock that has pushed enterprises toward public cloud.</li>
+              <li>The update positions VCF as a cost-competitive option for organizations running AI and HPC workloads on-premises who want to reduce node count without sacrificing private-cloud control.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-ROCm-7.2.3" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>GCC 16 Compiler Delivering Some Decent Performance Gains Over GCC 15</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>GCC 16 adds AMD Zen 6 and Arm AGI CPU tuning passes — inference backends like llama.cpp and GGML compiled with GCC 16 get architecture-specific optimization automatically at build time.</li>
-              <li>Phoronix benchmarks show measurable gains over GCC 15 in compute-heavy workloads; numbers cover real-world compilation and numeric performance across multiple workload classes.</li>
-              <li>New C++23/26 features in GCC 16 may matter for projects compiling cutting-edge ML kernels; this is the first stable GCC release with these language-level changes available.</li>
-            </ul>
-            <a href="https://www.phoronix.com/review/gcc-16-benchmarks" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>NVIDIA Looking To Create New Tool For Generating AutoFDO Profiles For GCC</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>AutoFDO lets GCC use runtime profiling data to optimize hot code paths — NVIDIA contributing this to GCC mainline means GPU-adjacent CPU code gets profile-guided tuning without a separate Clang/LLVM toolchain.</li>
-              <li>Primary target is CUDA host-side code and ML framework glue layers that spend significant time in CPU logic before dispatching work to the GPU.</li>
-              <li>If merged upstream, this benefits the entire Linux open-source ecosystem including ROCm, oneAPI, and inference runtimes compiled with GCC.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/NVIDIA-AutoFDO-Tool-For-GCC" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://go.theregister.com/feed/www.theregister.com/2026/05/05/vmware_vcf_9_update/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -125,39 +146,14 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>CISA flags actively exploited &#x27;Copy Fail&#x27; Linux kernel flaw enabling root takeover across major distros — unpatched systems may remain vulnerable to attack</h3>
+              <h3>Google, Microsoft, and xAI agree to let US government test AI models before public release — OpenAI and Anthropic also on board after renegotiating deals with Washington</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>CVE-2026-31431 (&#x27;Copy Fail&#x27;) allows local privilege escalation to root and is actively exploited in the wild — apply kernel patches immediately on any Linux inference server or edge node.</li>
-              <li>A public exploit was released before patches were fully available across major distros; systems running unpatched kernels are exposed right now with no mitigating factor.</li>
-              <li>Multi-tenant LLM hosting on Linux is a high-priority target: local user escalation to root in a shared-inference environment is a critical threat model that this CVE directly enables.</li>
+              <li>Google, Microsoft, and xAI signed agreements with a US government AI safety center for pre-release model evaluations; OpenAI and Anthropic renegotiated existing 2024 deals to align with Trump&#x27;s AI Action Plan priorities.</li>
+              <li>This establishes a structural pre-deployment government review layer for frontier models — a meaningful shift in how the most compute-intensive AI hardware gets put to commercial use.</li>
             </ul>
-            <a href="https://www.tomshardware.com/software/linux/cisa-flags-actively-exploited-copy-fail-linux-kernel-flaw-enabling-root-takeover-across-major-distros-unpatched-systems-may-remain-vulnerable-to-attack" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>CachyOS Switches Python To Using Tail-Call Interpreter For 5~15% Better Performance</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>CachyOS now ships Python with the tail-call interpreter enabled by default, yielding 5-15% throughput gains with zero application code changes.</li>
-              <li>This is CPython&#x27;s computed-goto / tail-call dispatch path — same binary, different interpreter loop that reduces branch mispredictions on modern CPU microarchitectures.</li>
-              <li>Python-based inference orchestration layers (FastAPI wrappers, LangChain pipelines, custom harnesses) benefit directly; no Python code changes required to see the gains.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/CachyOS-Better-Python-Perf" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux File-System Proliferation A Burden: Requirements Laid Out For Any Future File-Systems</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Linux kernel maintainers have documented formal requirements any new filesystem must satisfy before upstream acceptance — significantly raising the bar for in-tree inclusion.</li>
-              <li>The VFS maintenance burden grows linearly with each new filesystem; this policy aims to stop experimental or niche filesystems from becoming permanent upstream maintenance debt.</li>
-              <li>Relevant for inference storage decisions: erofs, bcachefs, and other emerging filesystems used for model caching and container layers will face stricter upstream scrutiny going forward.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-FS-Proliferation-Burden" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/google-microsoft-and-xai-agree-to-let-us-govenment-test-ai-models-before-public-release" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
