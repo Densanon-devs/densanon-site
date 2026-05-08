@@ -17,132 +17,153 @@
       <div class="container">
         <div class="digest-date-badge">May 08, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is anchored by Anthropic&#x27;s Code w/ Claude event aftermath — a landmark xAI/Anthropic data center deal, Mozilla&#x27;s large-scale Claude-assisted Firefox security hardening, and a new deterministic context-management architecture that benchmarks above Claude Code on long-context tasks. RL-for-LLM-reasoning papers dominate the research side.</p>
+        <p class="digest-intro">Today&#x27;s digest centers on Claude Code shipping two back-to-back releases with new auto-mode safety controls and worktree flexibility, while ArXiv delivers three concrete systems papers on multi-hop RAG, lossless watermarking, and LLM-to-solver compilation — rounding out with LocalLLaMA&#x27;s vLLM ROCm milestone and AI2&#x27;s new domain-routing MoE.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Behind the Scenes: Hardening Firefox with Claude Mythos Preview</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Mozilla used early access to Claude Mythos to find and fix hundreds of security vulnerabilities in Firefox — a qualitative leap over prior AI-assisted security review.</li>
-              <li>The post describes AI-generated bugs as suddenly becoming &#x27;very good,&#x27; suggesting model capability crossed a threshold useful for real CVE-class work.</li>
-              <li>Demonstrates a concrete production use case for frontier models in automated security auditing at browser-engine scale.</li>
-              <li>Relevant for practitioners evaluating Claude for automated security triage and patch generation on large codebases.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/May/7/firefox-claude-mythos/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Notes on the xAI/Anthropic Data Center Deal</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Anthropic announced it will use &#x27;all of the capacity&#x27; of SpaceX/xAI&#x27;s Colossus data center — one of the largest GPU clusters in existence (reportedly 100k+ H100s).</li>
-              <li>This is a compute-access deal, not a model merger; Anthropic trains on Colossus while keeping its own IP and model development pipeline.</li>
-              <li>Signals that even well-funded AI labs face GPU supply constraints severe enough to justify cross-competitor infrastructure deals.</li>
-              <li>Longer term, this accelerates Anthropic&#x27;s ability to train larger or more frequent model generations.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/May/7/xai-anthropic/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>vLLM V0 to V1: Correctness Before Corrections in RL</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>ServiceNow AI details their migration from vLLM V0 to V1 for reinforcement learning training, surfacing correctness bugs that could silently corrupt RL reward signals.</li>
-              <li>Key finding: sequence-level correctness guarantees must precede any RL &#x27;correction&#x27; loop — a principled argument against skipping validation in training pipelines.</li>
-              <li>Practical for teams building RLVR pipelines on vLLM who may have inherited V0 behavior assumptions without realizing it.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/ServiceNow-AI/correctness-before-corrections" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Vibe Coding and Agentic Engineering Are Getting Closer Than I&#x27;d Like</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Simon Willison reflects on his realization that &#x27;vibe coding&#x27; (low-rigor AI-assisted coding) and &#x27;agentic engineering&#x27; (deliberate multi-step AI systems) are converging in his own practice.</li>
-              <li>As agents become more capable, the discipline gap between the two approaches narrows — raising questions about when to trust vs. verify agent output.</li>
-              <li>Useful framing for teams setting code-review and human-in-the-loop policies for AI coding tools.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/May/6/vibe-coding-and-agentic-engineering/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>datasette-llm 0.1a7</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Adds per-model default option configuration to datasette-llm, letting operators pin a specific model and inference parameters for all enrichment operations without per-call overrides.</li>
-              <li>Useful for local deployments where a specific GGUF or local model should be the standing default.</li>
-              <li>Part of Datasette&#x27;s evolving plugin LLM abstraction — the system is maturing toward production-grade configurability.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/May/5/datasette-llm/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>llm-gemini 0.31</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>gemini-3.1-flash-lite exits preview and is now a stable production model in the llm-gemini plugin.</li>
-              <li>No reported capability changes from the preview version; the release is primarily a stability and availability signal.</li>
-              <li>For practitioners using the `llm` CLI with Gemini backends, flash-lite is now safe to pin in production configs.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/May/7/llm-gemini/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LCM: Lossless Context Management</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Introduces a deterministic (non-learned) architecture for LLM memory called LCM that preserves context losslessly — no summarization or token eviction.</li>
-              <li>Their coding agent Volt, built on Claude Opus 4.6 + LCM, outscores vanilla Claude Code on long-context benchmark tasks.</li>
-              <li>Deterministic design means the memory layer is fully auditable and reproducible — a significant advantage for agentic pipelines where debugging context drift is painful.</li>
-              <li>Directly relevant for local-AI practitioners building long-running agent sessions where RAG or summarization-based memory loses fidelity.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.04050" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Free Energy-Driven Reinforcement Learning with Adaptive Advantage Shaping for Unsupervised Reasoning in LLMs</h3>
+              <h3>AdaGATE: Adaptive Gap-Aware Token-Efficient Evidence Assembly for Multi-Hop Retrieval-Augmented Generation</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes using free energy minimization (from active inference theory) as an intrinsic reward signal for unsupervised RL on LLMs — no labeled data or verifiable reward function required.</li>
-              <li>Adaptive advantage shaping adjusts the RL signal based on the model&#x27;s current reasoning confidence, addressing reward stagnation in self-play loops.</li>
-              <li>Could enable self-improvement loops on local models without a separate reward model or ground-truth verifier.</li>
+              <li>AdaGATE targets the core RAG brittleness problem on multi-hop questions — noisy or redundant retrieved evidence with a limited context budget passed to the generator.</li>
+              <li>Uses adaptive, gap-aware assembly to select and compress evidence before generation, rather than passing raw retrieval output.</li>
+              <li>Addresses realistic deployment settings where naive retrieval pipelines break down across chains of reasoning.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.04065" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.05245" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Adapt to Thrive! Adaptive Power-Mean Policy Optimization for Improved LLM Reasoning</h3>
+              <h3>SLAM: Structural Linguistic Activation Marking for Language Models</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Critiques GRPO and similar RLVR methods for using static policy optimization schemes that mismatch the model&#x27;s evolving capability during training.</li>
-              <li>Proposes a power-mean aggregation of policy gradients that dynamically adapts to the difficulty of the current training batch.</li>
-              <li>Shows improved reasoning benchmark scores vs. fixed-scheme RLVR baselines — relevant for fine-tuning smaller models on math or code reasoning tasks.</li>
+              <li>SLAM is a whitebox watermarking scheme that embeds detection signals without biasing the next-token distribution — sidestepping the quality-vs-detectability tradeoff of prior methods.</li>
+              <li>Works at the structural/activation level rather than altering output token probabilities, making it transparent to the generation process.</li>
+              <li>A concrete step toward deployable LLM watermarking that doesn&#x27;t degrade generation quality.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.04066" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.05443" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ReaComp: Compiling LLM Reasoning into Symbolic Solvers for Efficient Program Synthesis</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>ReaComp takes a small set of LLM reasoning traces and uses coding agents to compile them into reusable symbolic program synthesizers.</li>
+              <li>Targets hard program synthesis tasks where LLMs alone are unreliable due to large combinatorial search spaces.</li>
+              <li>Once compiled, the symbolic solver runs without calling the LLM again — a practical efficiency win for repeated structured tasks.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.05485" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Reports suggest DeepSeek is seeking $7.35 billion in funding and plans to release its V4.1 update next month</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>DeepSeek founder Liang Wenfeng is reportedly pursuing RMB 50B (~$7.35B) in a first external funding round, signaling an accelerated commercialization push.</li>
+              <li>V4.1 is reportedly planned for release next month — DeepSeek&#x27;s first major model update since V3.</li>
+              <li>The funding round marks a significant pivot: DeepSeek has operated without external capital since its founding.</li>
+            </ul>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1t7bfpw/reports_suggest_deepseek_is_seeking_735_billion/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.136</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Adds `settings.autoMode.hard_deny` — classifier rules that block actions unconditionally regardless of user intent or allowlists, giving enterprises a true safety floor in auto mode.</li>
+              <li>Adds `CLAUDE_CODE_ENABLE_FEEDBACK_SURVEY_FOR_OTEL` to restore session quality surveys for enterprises routing telemetry through OpenTelemetry.</li>
+              <li>Two targeted enterprise controls shipped in a single point release — Anthropic is iterating quickly on the operator-safety surface of Claude Code.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.136" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.133</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Introduces `worktree.baseRef` (`fresh` | `head`) controlling whether `--worktree`, `EnterWorktree`, and agent-isolation worktrees branch from `origin/&lt;default&gt;` or local `HEAD`.</li>
+              <li>Default is `fresh`, restoring `EnterWorktree`&#x27;s original behavior of branching from origin — a fix for a prior behavioral regression.</li>
+              <li>Gives teams explicit control over the worktree base commit, important for CI pipelines and multi-agent parallelism workflows.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.133" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Using Claude Code: The Unreasonable Effectiveness of HTML</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Thariq Shihipar (Anthropic, Claude Code team) argues HTML is a far better output format to request from Claude than Markdown — richer structure, browser-renderable, and artifact-friendly.</li>
+              <li>The piece is example-dense, drawn from a curated collection of real Claude HTML outputs showing layout, interactivity, and data presentation.</li>
+              <li>Practical tip: explicitly ask Claude for HTML instead of Markdown when you want structured, shareable, or interactive output.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/May/8/unreasonable-effectiveness-of-html/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>CyberSecQwen-4B: Why Defensive Cyber Needs Small, Specialized, Locally-Runnable Models</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>CyberSecQwen-4B is a 4B-parameter model fine-tuned specifically for defensive cybersecurity tasks and designed to run fully locally.</li>
+              <li>The case study argues that air-gapped, on-device specialized models are preferable to large cloud models for security-sensitive workflows.</li>
+              <li>Built on Qwen as a base, demonstrating the continued trend of domain-specialized fine-tunes at small footprint for privacy-critical deployments.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/lablab-ai-amd-developer-hackathon/cybersecqwen-4b" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>vLLM ROCm has been added to Lemonade as an experimental backend</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Lemonade now supports vLLM with ROCm as an experimental backend, letting AMD GPU users run .safetensors models without converting to GGUF first.</li>
+              <li>Install is a one-liner: `lemonade backends install vllm:rocm` — dramatically lowering the barrier for AMD inference experimentation.</li>
+              <li>Opens up the vLLM engine (known for high-throughput serving) to the LocalLLaMA AMD crowd that previously had to rely on llama.cpp.</li>
+            </ul>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1t7g70j/vllm_rocm_has_been_added_to_lemonade_as_an/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>new MoE from ai2, EMO</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>AI2 released EMO (Emergent Modularity), a 14B-total / 1B-active MoE trained on 1T tokens with document-level expert routing.</li>
+              <li>Unlike token-level routing in most MoEs, EMO&#x27;s experts specialize around domains (health, news, etc.) rather than surface-level token patterns — a novel pretraining approach.</li>
+              <li>Models are available on HuggingFace under the AllenAI collection; domain-routing architecture makes this a strong candidate for specialized inference tasks.</li>
+            </ul>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1t7kgy4/new_moe_from_ai2_emo/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
