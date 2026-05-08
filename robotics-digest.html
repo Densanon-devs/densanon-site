@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - May 05, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - May 08, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 05, 2026</div>
+        <div class="digest-date-badge">May 08, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest covers foundational LLM-agent frameworks for social robots (ARIS), formal safety filters for deformable-object manipulation, and a major industry signal as OpenAI weighs spinning out its robotics division ahead of IPO. A standout community post documents an autonomous crawler placing 30 kg solar panels at 1 panel per 30 seconds with ±1–2 mm precision.</p>
+        <p class="digest-intro">Today&#x27;s digest covers a surge in humanoid manufacturing and manipulation foundation models, alongside fresh ArXiv work on hierarchical diffusion-flow planning and VLM-grounded safe navigation — a sign that the research-to-product pipeline is accelerating on multiple fronts.</p>
       </div>
     </section>
 
@@ -29,47 +29,55 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ARIS: Agentic and Relationship Intelligence System for Social Robots</h3>
+              <h3>HDFlow: Hierarchical Diffusion-Flow Planning for Long-horizon Tasks</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ARIS uses foundational models to track multi-turn social-relationship context across conversations, directly addressing the failure mode where current systems lose coherence after a few exchanges.</li>
-              <li>The architecture grounds dialogue in prior interaction history using relationship-aware reasoning, enabling robots to give contextually appropriate responses rather than treating each turn as stateless.</li>
+              <li>Combines hierarchical decomposition with generative diffusion-flow models to plan across long-horizon, sparse-reward manipulation tasks — a key gap in current robot learning.</li>
+              <li>Provides a principled way to break complex tasks into sub-goals, rather than relying on flat single-step policies that fail at depth.</li>
+              <li>Directly targets real-world manipulation: tasks like assembly or multi-step pick-and-place are exactly the long-horizon regime this framework addresses.</li>
+              <li>Signals growing convergence between diffusion generative models and classical hierarchical planning — a design pattern worth tracking for next-generation policy architectures.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.00943" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.04525" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Ablation Study of Multimodal Perception, Language Grounding, and Control for Human-Robot Interaction in an Object Detection and Grasping Task</h3>
+              <h3>From Language to Logic: A Theoretical Architecture for VLM-Grounded Safe Navigation</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A controlled ablation isolates which of three modules — LLM for action extraction, vision-language grounding, and low-level controller — most strongly drives end-to-end performance on an object-detection-and-grasping HRI task.</li>
-              <li>The methodology provides a replicable framework for diagnosing failure modes in multimodal robot pipelines, helping teams prioritize which component to improve for the biggest accuracy gain.</li>
+              <li>Proposes translating plain-English safety rules and semantic preferences directly into robot navigation constraints for unstructured outdoor environments.</li>
+              <li>Uses a vision-language model (VLM) as the grounding layer, bridging the gap between operator intent and low-level motion planning.</li>
+              <li>The architecture separates rule specification from execution, making it easier to audit and update safety constraints without retraining the policy.</li>
+              <li>Directly applicable to autonomous field robots (inspection, delivery, search and rescue) where operators need trustworthy behavior under novel conditions.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.00963" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.04327" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Online Safety Filter for Deformable Object Manipulation with Horizon Agnostic Neural Operators</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
+              <h3>New understanding of insect flight points way to stable flapping-wing robots</h3>
+              <span class="digest-source">Robohub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The paper proposes a real-time safety filter for robots manipulating deformable media (fluids, cloth, soft objects) using horizon-agnostic neural operators — replacing reward-shaping heuristics that offer no formal safety guarantees.</li>
-              <li>Unlike prior RL-based approaches, the filter enforces hard safety constraints online without requiring a fixed prediction horizon, making it practical for manipulation tasks where deformation dynamics are difficult to model precisely.</li>
+              <li>Cornell researchers built a computational model revealing how insect body morphology — not just wing motion — contributes to passive flight stability.</li>
+              <li>The findings give micro air vehicle (MAV) designers concrete geometric parameters to target for inherently stable flapping-wing platforms.</li>
+              <li>Passive stability reduces the control burden on onboard processors, critical for the ultra-constrained compute budgets of insect-scale robots.</li>
+              <li>Opens a bio-inspired path to more resilient drones for GPS-denied environments like building interiors or disaster sites.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.01069" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://robohub.org/new-understanding-of-insect-flight-points-way-to-stable-flapping-wing-robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LiDAR for Rehabilitation: A Comprehensive Survey of Applications, AI Techniques, and Future Directions</h3>
+              <h3>Autonomous Laparoscope Control through Unified Mechanics-Based Representation of Multimodal Intraoperative Information</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The survey maps LiDAR-based sensing across physical rehabilitation — gait analysis, posture correction, exercise monitoring — alongside the AI techniques (pose estimation, anomaly detection) that process the point-cloud data.</li>
-              <li>Sensor fusion and real-time embedded processing are identified as the two primary open problems limiting clinical deployment of LiDAR rehab systems.</li>
+              <li>Presents a laparoscope-holding robot that autonomously maintains optimal field-of-view by fusing multiple intraoperative signals (visual, mechanical, procedural context).</li>
+              <li>The unified mechanics-based representation handles instrument occlusions and tissue motion in real time — two hard failure modes for earlier systems.</li>
+              <li>Reduces reliance on human camera assistants, freeing surgical teams to focus on the procedure and cutting fatigue-related errors.</li>
+              <li>Complements emerging surgical platforms like J&amp;J OTTAVA by automating a task that currently adds friction and latency to minimally invasive procedures.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.00879" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.04408" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -79,42 +87,68 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Ahead of Race to IPO, OpenAI Discussed Spinning Out Robotics, Hardware Divisions</h3>
-              <span class="digest-source">Hacker News Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>WSJ reports OpenAI internally discussed separating its robotics and hardware efforts into independent entities as part of IPO restructuring conversations — signaling the robotics unit may need different capital and governance than the core LLM business.</li>
-              <li>If a spin-out occurs, it would create a standalone AI-robotics company backed by OpenAI&#x27;s foundational models and partnerships (including Figure AI and 1X), potentially the most well-capitalized pure-play embodied-AI startup to date.</li>
-            </ul>
-            <a href="https://www.wsj.com/tech/ahead-of-race-to-ipo-openai-discussed-spinning-out-robotics-hardware-divisions-18c89706" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Hiroshi Fujiwara and Robert Little selected for 2026 Joseph F. Engelberger Robotics Awards</h3>
+              <h3>Hugging Face launches agentic toolkit for Reachy Mini</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A3 (Association for Advancing Automation) named Hiroshi Fujiwara and Robert Little as the 2026 Engelberger Award recipients — the industry&#x27;s most recognized honor — for transformative leadership and robotics application breakthroughs.</li>
-              <li>Engelberger Award recipients historically preview where commercial robotics investment concentrates in the following 2–3 years; tracking awardee domains is a useful leading indicator.</li>
+              <li>The toolkit lets users describe desired robot behavior in plain English; an agent then writes, tests, and deploys the code directly to Reachy Mini — dramatically lowering the programming barrier.</li>
+              <li>Hugging Face&#x27;s entry into physical robotics tooling signals that the open-source AI ecosystem is treating embodied AI as a first-class use case.</li>
+              <li>Reachy Mini becomes a testbed where the AI-writes-robot-code loop can be iterated openly, potentially accelerating community-driven manipulation datasets.</li>
+              <li>An early but concrete example of the &#x27;natural language to robot behavior&#x27; pipeline reaching consumer-accessible hardware at practical scale.</li>
             </ul>
-            <a href="https://www.therobotreport.com/hiroshi-fujiwara-robert-little-selected-2026-joseph-f-engelberger-robotics-awards/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/hugging-face-launches-agentic-toolkit-for-reachy-mini/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
-        <div class="digest-grid">
-
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>&quot;ROS 2 in a Nutshell: A Survey&quot; is now published in ACM Computing Surveys</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>Genesis AI introduces GENE-26.5 model for more dexterous robot manipulation</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Published in ACM Computing Surveys (one of computing&#x27;s highest-impact journals), the paper provides a comprehensive, citable overview of ROS 2 architecture, DDS middleware, lifecycle nodes, and the security model — a definitive reference for practitioners and a benchmark for new ROS 2 tooling.</li>
-              <li>Top-tier ACM publication status is likely to accelerate ROS 2 adoption in university research labs and standardization bodies that require peer-reviewed foundations before committing to a framework.</li>
+              <li>GENE-26.5 pairs an advanced data engine with a proprietary robotic hand, targeting dexterity benchmarks that current general-purpose hands consistently struggle with.</li>
+              <li>The proprietary hardware-model co-design approach mirrors what Tesla and Figure have pursued — suggesting Genesis believes hardware constraints must be solved jointly with the policy.</li>
+              <li>A dedicated data engine hints at large-scale synthetic or teleoperated data generation pipelines, now table stakes for competitive manipulation models.</li>
+              <li>Watch GENE-26.5 as a signal of whether purpose-built hand-plus-model combos can outperform general-purpose arms on fine manipulation tasks throughout 2026.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/ros-2-in-a-nutshell-a-survey-is-now-published-in-acm-computing-surveys/54524" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/genesis-ai-introduces-gene-foundation-model-more-dexterous-manipulation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>1X begins production of NEO humanoids in California facility</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>1X launched full-scale manufacturing at its Hayward &#x27;NEO factory,&#x27; making it one of the first humanoid makers to vertically integrate production in the United States.</li>
+              <li>Domestic production reduces supply-chain exposure and enables tighter hardware-software iteration cycles compared to overseas contract manufacturing.</li>
+              <li>1X&#x27;s vertically integrated model (design, fabrication, and AI training under one roof) positions it to accumulate real-world deployment data faster than competitors.</li>
+              <li>A key de-risking milestone: it separates 1X from humanoid ventures still in prototype phase and places it in the small group shipping at volume.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/1x-begins-production-neo-humanoid-robots-at-hayward-california-facility/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Johnson &amp; Johnson completes clinical study for OTTAVA robotic surgical system</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>J&amp;J demonstrated OTTAVA&#x27;s compact design is clinically feasible in small operating rooms — a key differentiator versus the da Vinci system&#x27;s larger footprint.</li>
+              <li>Completing a clinical study is a major regulatory milestone, moving OTTAVA closer to FDA clearance and commercial deployment.</li>
+              <li>Compact OR fit matters commercially: many community hospitals lack space for current surgical robots, so OTTAVA targets a largely underserved segment.</li>
+              <li>J&amp;J&#x27;s entry intensifies competition in the surgical robotics market Intuitive Surgical has dominated — expect pricing and feature pressure across the sector.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/johnson-johnson-completes-clinical-study-ottava-robotic-surgical-system/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ABB Robotics launches PickMaster Lite to simplify and accelerate robotic picking</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>PickMaster Lite is a streamlined version of ABB&#x27;s vision-guided picking software, targeting packaging OEMs and system integrators who need faster deployment with less complexity.</li>
+              <li>By reducing configuration overhead, ABB lowers the barrier for smaller integrators to deploy high-speed picking — expanding the addressable market beyond large automation shops.</li>
+              <li>Vision-guided picking software that deploys quickly is a major pain point for mid-market manufacturers; a lightweight SKU signals ABB sees volume opportunity in that segment.</li>
+              <li>Comes at a moment when labor shortages in packaging and food processing are driving urgency around automation ROI timelines.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/05/07/abb-robotics-launches-pickmaster-lite-to-simplify-and-accelerate-robotic-picking/101274/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -124,36 +158,16 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Autonomous solar panel installation: Crawler base, robotic arm, suction system, AI vision, and 3D sensors — placing ~30 kg panels with ±1–2 mm precision. At about 1 panel every 30 seconds.</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>Podcast: Colin Angle discusses building companion robots with Familiar Machines &amp; Magic</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A crawler-mounted robot combines a 6-DOF arm, vacuum suction end-effector, AI vision, and 3D depth sensors to autonomously install 30 kg solar panels at ±1–2 mm precision and ~1 panel per 30 seconds — commercial-scale throughput for a heavy outdoor manipulation task.</li>
-              <li>This deployment profile — heavy payload, millimeter precision, outdoor terrain, no human-in-the-loop — is a challenge level most lab manipulators don&#x27;t address, making it a notable real-world embodied AI milestone.</li>
+              <li>iRobot co-founder Colin Angle has moved on to Familiar Machines, focused on social and companion robots — a significant pivot from task-focused home automation.</li>
+              <li>Angle&#x27;s track record with Roomba gives Familiar Machines credibility in the notoriously difficult consumer robotics market where many startups have failed.</li>
+              <li>Companion robots represent a bet that the next mainstream robotics category is not manipulation or logistics but emotional and social presence.</li>
+              <li>The discussion surfaces a recurring tension in consumer robotics: capability vs. approachability, and how to price a device that competes with pets and smart speakers.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1t4alwf/autonomous_solar_panel_installation_crawler_base/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Real-Time Inference on Thor &amp; RTX Pi0.5/GR00T N1.6/1.7 Thor 23 Hz RTX 5090 50-80Hz</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>An independent developer built a hand-written CUDA kernel inference engine hitting 23 Hz on NVIDIA Thor hardware and 50–80 Hz on an RTX 5090 for Pi0.5 and GR00T N1.6/N1.7 — closed-loop-viable inference rates for VLA robot policies.</li>
-              <li>Off-the-shelf inference servers optimized for large-batch LLM throughput leave a significant gap for small-batch robot-policy inference; this work demonstrates that custom CUDA kernels close it practically without requiring specialized hardware.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1t4emw2/realtime_inference_on_thor_rtx_pi05gr00t_n1617/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Is &quot;AI-powered robotics&quot; just a marketing term at this point?</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A community member visited a robotics trade event where nearly every booth banner read &quot;AI-powered,&quot; yet most systems ran classical controllers or pre-trained detection models, with some engineers unable to explain what the AI component was actually doing.</li>
-              <li>The discussion surfaces a real signal-to-noise problem: inflated AI claims are eroding practitioner trust and making it harder to identify products where learned policies genuinely replace hand-engineered controllers — a gap the research community needs to address with clearer benchmarks.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1t4frai/is_aipowered_robotics_just_a_marketing_term_at/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/podcast-colin-angle-discusses-building-companion-robots-familiar-machines-magic/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

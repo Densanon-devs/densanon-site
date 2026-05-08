@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - May 05, 2026 | Densanon</title>
+  <title>AI Morning Digest - May 08, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,137 +15,134 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 05, 2026</div>
+        <div class="digest-date-badge">May 08, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">This morning&#x27;s digest covers new mechanistic research into how LLMs encode hierarchical structure, reliability gaps in medical AI benchmarks, and a concrete agentic benchmark showing DeepSeek V4 Pro matching GPT-5.2 at 17x lower cost.</p>
+        <p class="digest-intro">Today&#x27;s digest is anchored by Anthropic&#x27;s Code w/ Claude event aftermath — a landmark xAI/Anthropic data center deal, Mozilla&#x27;s large-scale Claude-assisted Firefox security hardening, and a new deterministic context-management architecture that benchmarks above Claude Code on long-context tasks. RL-for-LLM-reasoning papers dominate the research side.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>H-Probes: Extracting Hierarchical Structures From Latent Representations of Language Models</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Introduces H-Probes, a method for reading tree-structured hierarchical representations directly from LLM hidden states — going beyond flat linear probes to capture nested structure.</li>
-              <li>Finds that LLMs geometrically encode nested hierarchies (syntactic constituency, taxonomies) in a way extractable without retraining a separate model from scratch.</li>
-              <li>Opens a concrete interpretability path for multi-step reasoning by mapping which layers hold which levels of a hierarchy.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.00847" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Model Organisms Are Leaky: Perplexity Differencing Often Reveals Finetuning Objectives</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Shows that comparing perplexity scores between a finetuned &#x27;model organism&#x27; and its base can reliably reveal the finetuning objective — even for covert or harmful behaviors.</li>
-              <li>Challenges a core assumption in safety research: model organisms used for controlled experiments are not as opaque as assumed; the training signal can be reverse-engineered cheaply.</li>
-              <li>Has direct implications for AI auditing — the technique requires no access to training data and can be run as a lightweight forensic check on any finetuned model.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.00994" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>CLEAR: Revealing How Noise and Ambiguity Degrade Reliability in LLMs for Medicine</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The CLEAR (Clinical Evaluation of Ambiguity and Reliability) framework stress-tests medical LLMs with noisy and ambiguous inputs rather than clean exam-style questions.</li>
-              <li>State-of-the-art medical LLMs show significant reliability drops under realistic clinical ambiguity — gaps that standard USMLE-style benchmarks systematically miss.</li>
-              <li>Practical conclusion: current benchmarks overestimate clinical readiness; CLEAR-style evaluation should be a prerequisite before any clinical deployment.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.01011" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Can AI Debias the News? LLM Interventions Improve Cross-Partisan Receptivity but LLMs Overestimate Their Own Effectiveness</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Two pre-registered experiments show LLM-rewritten news headlines do improve cross-partisan receptivity — readers across the political spectrum rated debiased versions as more credible.</li>
-              <li>LLMs consistently overestimate how effective their debiasing was compared to measured human study results — a calibration gap in self-assessment.</li>
-              <li>The finding is a concrete warning for deployments that rely on LLM self-rating to gate content interventions: perceived effectiveness does not match actual effectiveness.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.01006" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Granite 4.1 3B SVG Pelican Gallery</h3>
+              <h3>Behind the Scenes: Hardening Firefox with Claude Mythos Preview</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>IBM released Granite 4.1 in 3B, 8B, and 30B sizes under Apache 2.0 — all weights freely usable commercially with no use-case restrictions.</li>
-              <li>Simon Willison&#x27;s SVG pelican gallery test shows Granite 4.1 3B produces coherent SVG code generation output for its size class.</li>
-              <li>Unsloth has already released quantized GGUFs, making same-day local deployment available via llama.cpp or Ollama.</li>
+              <li>Mozilla used early access to Claude Mythos to find and fix hundreds of security vulnerabilities in Firefox — a qualitative leap over prior AI-assisted security review.</li>
+              <li>The post describes AI-generated bugs as suddenly becoming &#x27;very good,&#x27; suggesting model capability crossed a threshold useful for real CVE-class work.</li>
+              <li>Demonstrates a concrete production use case for frontier models in automated security auditing at browser-engine scale.</li>
+              <li>Relevant for practitioners evaluating Claude for automated security triage and patch generation on large codebases.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/May/4/granite-41-3b-svg-pelican-gallery/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/7/firefox-claude-mythos/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.128</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>Notes on the xAI/Anthropic Data Center Deal</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Bare /color with no arguments now picks a random session color — useful QoL for users juggling multiple parallel sessions.</li>
-              <li>/mcp now shows tool count per connected server and flags servers that connected with 0 tools, cutting MCP debugging time significantly.</li>
-              <li>--plugin-dir now accepts .zip plugin archives in addition to directories, lowering friction for distributing and installing plugins.</li>
+              <li>Anthropic announced it will use &#x27;all of the capacity&#x27; of SpaceX/xAI&#x27;s Colossus data center — one of the largest GPU clusters in existence (reportedly 100k+ H100s).</li>
+              <li>This is a compute-access deal, not a model merger; Anthropic trains on Colossus while keeping its own IP and model development pipeline.</li>
+              <li>Signals that even well-funded AI labs face GPU supply constraints severe enough to justify cross-competitor infrastructure deals.</li>
+              <li>Longer term, this accelerates Anthropic&#x27;s ability to train larger or more frequent model generations.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.128" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/7/xai-anthropic/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>vLLM V0 to V1: Correctness Before Corrections in RL</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>ServiceNow AI details their migration from vLLM V0 to V1 for reinforcement learning training, surfacing correctness bugs that could silently corrupt RL reward signals.</li>
+              <li>Key finding: sequence-level correctness guarantees must precede any RL &#x27;correction&#x27; loop — a principled argument against skipping validation in training pipelines.</li>
+              <li>Practical for teams building RLVR pipelines on vLLM who may have inherited V0 behavior assumptions without realizing it.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/ServiceNow-AI/correctness-before-corrections" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Vibe Coding and Agentic Engineering Are Getting Closer Than I&#x27;d Like</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Simon Willison reflects on his realization that &#x27;vibe coding&#x27; (low-rigor AI-assisted coding) and &#x27;agentic engineering&#x27; (deliberate multi-step AI systems) are converging in his own practice.</li>
+              <li>As agents become more capable, the discipline gap between the two approaches narrows — raising questions about when to trust vs. verify agent output.</li>
+              <li>Useful framing for teams setting code-review and human-in-the-loop policies for AI coding tools.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/May/6/vibe-coding-and-agentic-engineering/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>datasette-llm 0.1a7</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Adds per-model default option configuration to datasette-llm, letting operators pin a specific model and inference parameters for all enrichment operations without per-call overrides.</li>
+              <li>Useful for local deployments where a specific GGUF or local model should be the standing default.</li>
+              <li>Part of Datasette&#x27;s evolving plugin LLM abstraction — the system is maturing toward production-grade configurability.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/May/5/datasette-llm/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>llm-gemini 0.31</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>gemini-3.1-flash-lite exits preview and is now a stable production model in the llm-gemini plugin.</li>
+              <li>No reported capability changes from the preview version; the release is primarily a stability and availability signal.</li>
+              <li>For practitioners using the `llm` CLI with Gemini backends, flash-lite is now safe to pin in production configs.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/May/7/llm-gemini/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>DeepSeek V4 Pro matches GPT-5.2 on FoodTruck Bench, our agentic benchmark — 10 weeks later, ~17× cheaper</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>LCM: Lossless Context Management</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>FoodTruck Bench runs models for 30 simulated days operating a food truck via 34 tools (locations, pricing, inventory, staff, weather) with persistent memory — a rigorous multi-step agentic evaluation.</li>
-              <li>DeepSeek V4 Pro matched GPT-5.2 on the benchmark, arriving ~10 weeks after GPT-5.2 at approximately 17x lower API cost per query.</li>
-              <li>First Chinese frontier model to reach the top tier on this benchmark — a concrete data point on the pace of cost-competitive capability convergence.</li>
+              <li>Introduces a deterministic (non-learned) architecture for LLM memory called LCM that preserves context losslessly — no summarization or token eviction.</li>
+              <li>Their coding agent Volt, built on Claude Opus 4.6 + LCM, outscores vanilla Claude Code on long-context benchmark tasks.</li>
+              <li>Deterministic design means the memory layer is fully auditable and reproducible — a significant advantage for agentic pipelines where debugging context drift is painful.</li>
+              <li>Directly relevant for local-AI practitioners building long-running agent sessions where RAG or summarization-based memory loses fidelity.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1t47qbw/deepseek_v4_pro_matches_gpt52_on_foodtruck_bench/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.04050" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Qwen3.6 27B FP8 runs with 200k tokens of BF16 KV cache at 80 TPS on a single RTX 5000 PRO 48GB</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>Free Energy-Driven Reinforcement Learning with Adaptive Advantage Shaping for Unsupervised Reasoning in LLMs</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Qwen3.6 27B in FP8 with full BF16 KV cache hits 80 tokens/second on a single RTX 5000 PRO 48GB — no quantized KV, avoiding the compound accuracy loss of dual quantization.</li>
-              <li>Achieves 200k token context at these speeds, demonstrating a practical 48GB single-GPU path for large-context long-form tasks.</li>
-              <li>Highlights the growing qualitative gap between 24GB and 48GB VRAM tiers: the extra headroom enables fundamentally different deployment configurations, not just marginal speed gains.</li>
+              <li>Proposes using free energy minimization (from active inference theory) as an intrinsic reward signal for unsupervised RL on LLMs — no labeled data or verifiable reward function required.</li>
+              <li>Adaptive advantage shaping adjusts the RL signal based on the model&#x27;s current reasoning confidence, addressing reward stagnation in self-play loops.</li>
+              <li>Could enable self-improvement loops on local models without a separate reward model or ground-truth verifier.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1t46klu/qwen36_27b_fp8_runs_with_200k_tokens_of_bf16_kv/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.04065" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Peanut - Text to Image Model (Open Weights coming soon)</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>Adapt to Thrive! Adaptive Power-Mean Policy Optimization for Improved LLM Reasoning</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An anonymous model called Peanut debuted at #8 on the Artificial Analysis Text-to-Image Arena, outscoring FLUX and SDXL variants in blind preference ratings.</li>
-              <li>Open weights are expected imminently — if released, Peanut would become the top open-weights text-to-image model, displacing current FLUX/Zeroscope leaders.</li>
-              <li>The anonymous release pattern mirrors how several top open LLMs landed: community benchmarking precedes author reveal, building credibility before a formal announcement.</li>
+              <li>Critiques GRPO and similar RLVR methods for using static policy optimization schemes that mismatch the model&#x27;s evolving capability during training.</li>
+              <li>Proposes a power-mean aggregation of policy gradients that dynamically adapts to the difficulty of the current training batch.</li>
+              <li>Shows improved reasoning benchmark scores vs. fixed-scheme RLVR baselines — relevant for fine-tuning smaller models on math or code reasoning tasks.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1t45g3l/peanut_text_to_image_model_open_weights_coming/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.04066" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
