@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - May 08, 2026 | Densanon</title>
+  <title>Computation Morning Digest - May 10, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 08, 2026</div>
+        <div class="digest-date-badge">May 10, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation landscape is defined by foundry realignments and kernel-level developments: Apple&#x27;s reported Intel fab deal reshapes domestic chip manufacturing, while a pair of unpatched Linux privilege-escalation bugs and a new Rust-to-CUDA compiler headline the systems side.</p>
+        <p class="digest-intro">Today&#x27;s computation digest is anchored by kernel and systems-level movement: Jens Axboe is pursuing a 60% per-core Linux I/O uplift following a direct comparison with SPDK at LSFMM 2026, Debian 14 has mandated reproducible builds across the entire distribution, and AMD&#x27;s 30-year-old K5 processor is being retired from Linux 7.2 due to missing TSC support. On the hardware side, China&#x27;s Hanyuan-2 dual-core 200-qubit quantum system debuted — notably lacking independent benchmarks — while AMD&#x27;s new dual-cache 9950X3D2 faces off against the single-cache 9950X3D in a six-round benchmark.</p>
       </div>
     </section>
 
@@ -29,75 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Apple reportedly strikes deal for Intel to make some of its chips</h3>
+              <h3>China&#x27;s Hanyuan-2 debuts as &#x27;world&#x27;s first&#x27; dual-core quantum computer — 200-qubit claims incredible power efficiency, but lacks critical performance benchmarks</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel and Apple have reached a preliminary foundry agreement, marking a significant reversal given Apple&#x27;s full migration to TSMC-fabbed Apple Silicon.</li>
-              <li>The deal would make Apple one of Intel Foundry&#x27;s most marquee external customers, a critical vote of confidence for Intel 18A&#x27;s commercial viability.</li>
-              <li>No chip families or volume commitments have been disclosed; the deal is still preliminary and could shift before tape-out.</li>
+              <li>CAS Cold Atom Technology, affiliated with the Chinese Academy of Sciences, unveiled Hanyuan-2, claiming it is the world&#x27;s first dual-core quantum computer at 200 qubits.</li>
+              <li>The announcement highlights power efficiency gains but does not include standard quantum performance benchmarks such as quantum volume or circuit fidelity scores.</li>
+              <li>The dual-core framing is architecturally novel on paper; independent verification of the claims has not yet been published.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/apple-reportedly-strikes-deal-for-intel-to-make-some-of-its-chips-two-tech-giants-reached-a-preliminary-agreement-for-intel-to-make-processors-for-cupertino" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/quantum-computing/china-claims-worlds-first-dual-core-quantum-computer" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NVIDIA Releases CUDA-Oxide 0.1 For Experimental Rust-To-CUDA Compiler</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>AMD Ryzen 9 9950X3D2 vs Ryzen 9 9950X3D faceoff — How far does dual cache take you?</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NVIDIA Labs shipped CUDA-Oxide 0.1, enabling Rust code to be compiled directly to CUDA kernels — bypassing C/C++ entirely for GPU compute.</li>
-              <li>The project targets safety-critical and systems programmers who want Rust&#x27;s memory guarantees on NVIDIA GPU workloads.</li>
-              <li>At v0.1 it is explicitly experimental; full PTX coverage and production toolchain integration are not yet claimed.</li>
+              <li>Tom&#x27;s Hardware ran a six-round head-to-head gauntlet between AMD&#x27;s new dual-cache Ryzen 9 9950X3D2 and the single-cache 9950X3D to quantify the real-world benefit of the second 3D V-Cache stack.</li>
+              <li>The 9950X3D2 is described as a unique processor, with the benchmark suite revealing where dual-cache stacking produces measurable gains versus where a single cache stack saturates.</li>
+              <li>Results are benchmark-driven rather than theoretical, making this a practical reference point for workstation and gaming workload comparisons.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/NVIDIA-CUDA-Oxide-0.1" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/amd-ryzen-9-9950x3d2-vs-ryzen-9-9950x3d-cpu-faceoff" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>HP Z6 G5 A Continues Working Out Well For Linux-Friendly, High-End Workstation</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>AMD&#x27;s legendary K5, its first independently-designed processor, is being removed from the Linux kernel — 4.3-million-transistor chip gets the axe because it lacks Time Stamp Counter (TSC) support, making it a coding burden</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The refreshed HP Z6 G5 A moves to AMD Threadripper PRO 9000 series and NVIDIA RTX PRO Blackwell graphics, both new silicon generations versus the 2023 review unit.</li>
-              <li>Phoronix confirms strong out-of-box Linux compatibility on this workstation platform — drivers, ECC, and thermal management all functional.</li>
-              <li>Positioned as a high-end Linux workstation for professional compute and ML workloads where both CPU core count and GPU VRAM matter.</li>
+              <li>The AMD K5 — AMD&#x27;s first fully independently designed x86 processor, introduced in 1996 — will be dropped from Linux support in kernel version 7.2.</li>
+              <li>The concrete technical trigger is the K5&#x27;s lack of a Time Stamp Counter (TSC), which modern kernel timekeeping and performance subsystems depend on, creating an ongoing maintenance burden.</li>
+              <li>This is a code-hygiene removal rather than a functional regression: no consumer hardware running a K5 is plausibly still in active production use.</li>
             </ul>
-            <a href="https://www.phoronix.com/review/hp-z6-g5-a-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/software/linux/amds-legendary-k5-its-first-independently-designed-processor-is-being-removed-from-the-linux-kernel-4-3-million-transistor-chip-gets-the-axe-because-it-lacks-time-stamp-counter-tsc-support-making-it-a-coding-burden" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux Erroneously Thinks Intel Bartlett Lake CPUs Run At 7GHz</h3>
+              <h3>FEX 2605 Brings Performance Improvements, Initial Snapdragon X2 Elite Fixes</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Intel P-State driver misreports Bartlett Lake (embedded P-core-only) CPUs as running above 7.0 GHz — a driver bug, not actual clock speed.</li>
-              <li>Bartlett Lake is Intel&#x27;s latest embedded-market processor; the 7 GHz report affects Core 9 273PE and likely other SKUs in the family.</li>
-              <li>The bug is visible in system monitoring tools and could cause incorrect thermal/power policy decisions by the OS scheduler.</li>
+              <li>FEX 2605 is the latest monthly release of the Valve-sponsored x86_64-on-ARM64 binary translation layer, targeted at running Linux x86 software on AArch64 devices including the upcoming Steam Frame.</li>
+              <li>This release adds initial compatibility fixes for Snapdragon X2 Elite — Qualcomm&#x27;s newest high-performance ARM laptop SoC — expanding the range of devices FEX runs on.</li>
+              <li>General performance improvements are included alongside the Snapdragon fixes, continuing FEX&#x27;s role as the primary x86 compatibility layer for ARM Linux gaming.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Intel-Bartlett-Lake-7GHz-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Dirty Frag Vulnerability Made Public Early: Root Privilege On All Distributions</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Dirty Frag is a local privilege escalation bug in Linux that grants root on all major distributions — no patches or CVEs are available yet.</li>
-              <li>The embargo was broken early by the researcher, meaning the vulnerability is now public before any coordinated fix has landed.</li>
-              <li>This follows the Copy Fail LPE disclosed just one week prior; Linux sysadmins should monitor kernel security lists for emergency patches.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Dirty-Frag-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>DM-INLINECRYPT Expected For Linux 7.2 To Leverage Inline Encryption</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A new dm-inlinecrypt device-mapper target is queued for Linux 7.2, allowing block device encryption to be offloaded to hardware inline encryption engines.</li>
-              <li>This reduces CPU overhead for storage encryption on hardware that supports inline crypto (common on mobile SoCs and newer NVMe controllers).</li>
-              <li>The change lands in the DeviceMapper subsystem and is targeted for the 7.2 merge window.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/DM-INLINECRYPT-For-Linux-7.2" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/FEX-2605-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -107,27 +83,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>OpenZL 0.2 Released For Meta&#x27;s Content-Aware Compression Software</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>MIT researchers revive 40-year-old triangular zipper concept now made possible by 3D printing, creates shape-shifting robots and deployable structures — 3D-printed &#x27;Y-Zipper&#x27; turns floppy tentacles into rigid beams in seconds</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Meta&#x27;s OpenZL 0.2 is a format-aware compression framework that applies different strategies depending on the data type being compressed, succeeding their Zstandard work.</li>
-              <li>The content-aware approach targets high compression ratios without sacrificing throughput — relevant to datacenter storage and network bandwidth costs at Meta&#x27;s scale.</li>
-              <li>OpenZL is open-source and positioned as a general-purpose compressor, not Meta-internal-only.</li>
+              <li>MIT researchers 3D-printed a three-sided Y-Zipper mechanism based on a triangular zipper geometry originally theorized 40 years ago but not practically manufacturable until now.</li>
+              <li>The device can rapidly transition a floppy structure into a load-bearing rigid beam, with direct applications to soft robotics, deployable frameworks, and reconfigurable structures.</li>
+              <li>The advance is enabled by modern 3D printing precision — the geometry&#x27;s tolerances were previously impossible to achieve through conventional fabrication.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/OpenZL-0.2-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD&#x27;s Local, Open-Source AI Can Now Easily Interact With Your Gmail</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>AMD GAIA 0.17.6 adds Gmail integration to the local AI/LLM stack targeting consumer Radeon and Ryzen hardware on Windows, Linux, and macOS.</li>
-              <li>GAIA continues AMD&#x27;s push to make fully local LLM inference viable on consumer silicon without cloud dependencies.</li>
-              <li>The Gmail integration is opt-in; all processing runs on-device, which is the architecture&#x27;s primary selling point versus cloud AI assistants.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/AMD-GAIA-Gmail-Integration" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/3d-printing/mit-researchers-revive-40-year-old-triangular-zipper-concept-now-made-possible-by-3d-printing-creates-shape-shifting-robots-and-deployable-structures-3d-printed-y-zipper-turns-floppy-tentacles-into-rigid-beams-in-seconds" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -137,27 +101,69 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AI data center bans are rapidly multiplying across the US</h3>
+              <h3>AI data center project secretly sucked 29 million gallons of water over 15 months before detected by residents complaining about low water pressure — officials refuse to fine builders of massive 6.2 million-square-foot facility over unauthorized water use</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>69 US jurisdictions have enacted active bans on new AI datacenter construction as of April 2026, with four bans classified as permanent.</li>
-              <li>Drivers include power grid strain, water usage, and local zoning opposition — not regulatory mandates from the federal level.</li>
-              <li>The accelerating ban count creates real siting constraints for hyperscalers planning domestic AI compute expansion.</li>
+              <li>A QTS data center in Georgia consumed 29 million gallons of water over 15 months without proper authorization, only surfacing after local residents reported low water pressure.</li>
+              <li>QTS attributed the usage to temporary construction activities — concrete work, dust control, and site preparation — rather than operational cooling, but the facility spans 6.2 million square feet.</li>
+              <li>Local officials declined to issue fines, highlighting a regulatory gap in oversight of large-scale data center infrastructure projects and their impact on municipal water systems.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-data-center-bans-are-rapidly-multiplying-across-the-us-69-jurisdictions-block-new-builds-with-four-moves-noted-as-permanent" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/georgia-data-center-used-29-million-gallons-of-water" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Axboe Hacking On New Linux Patches For 60% Increase To Per-Core I/O Performance</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Jens Axboe, the Linux block layer maintainer, is developing new kernel I/O patches after a presentation at the LSFMM 2026 summit directly compared Linux I/O overhead against the Storage Performance Development Kit (SPDK).</li>
+              <li>The target improvement is a 60% increase in per-core I/O throughput — a substantial kernel-level gain, relevant to NVMe-heavy server and storage workloads.</li>
+              <li>The patches are in active development and have not yet been merged into mainline; they represent Axboe&#x27;s direct response to the SPDK performance gap analysis.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Axboe-60p-Faster-Per-Core-Perf" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Middle East had everything data center builders and hyperscalers could wish for — then the Iran war happened</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>Debian Release Team: Debian Must Now Ship Reproducible Packages</h3>
+              <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Middle East was emerging as a prime datacenter destination — cheap land, energy agreements, and sovereign wealth investment — before the Israel-US-Iran conflict disrupted the region.</li>
-              <li>Multiple large datacenter projects that were in planning or early construction phases are now on hold or under review.</li>
-              <li>Hyperscalers face a geographic squeeze: US bans from one direction, Middle East instability from another, pushing capacity planning back toward Europe and Southeast Asia.</li>
+              <li>The Debian Release Team has mandated that all packages in Debian 14 &#x27;Forky&#x27; must be reproducibly built — meaning a package built from the same source twice must produce bit-for-bit identical binaries.</li>
+              <li>Reproducible builds allow independent verification that shipped binaries match their source code, closing a class of backdoor-insertion and supply-chain attacks.</li>
+              <li>The announcement comes at the midpoint of the Debian 14 development cycle, giving maintainers time to bring non-reproducible packages into compliance before the freeze.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/the-middle-east-had-everything-data-center-builders-and-hyperscalers-could-wish-for-then-the-iran-war-happened" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Debian-Must-Ship-Reproducible" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>OpenAI&#x27;s Coding Agent Helped Create A New AMD Temperature Driver For Linux</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A new open-source Linux driver — prom21-xhci — has been submitted to the kernel mailing list to expose temperature sensors on AMD Promontory 21 chipset xHCI controllers.</li>
+              <li>The driver&#x27;s development was assisted by OpenAI&#x27;s coding agent, making this one of the first AI-assisted drivers to enter the Linux kernel review process.</li>
+              <li>The driver is currently under review on the kernel mailing list and not yet merged into mainline.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/AMD-Prom21-xHCI-Temp-Driver" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Hyprland 0.55 Released With Lua-Based Configuration, User-Defined Layouts</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Hyprland 0.55 ships Lua as a first-class configuration language for the popular Wayland compositor, replacing the prior declarative-only config format with a fully scriptable alternative.</li>
+              <li>User-defined layouts are introduced, allowing custom tiling and window arrangement logic without patching the compositor itself.</li>
+              <li>Hyprland is one of the most actively developed tiling Wayland compositors; 0.55 is a significant extensibility upgrade for power users building personalized Linux desktops.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Hyprland-0.55-Wayland-Comp" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
