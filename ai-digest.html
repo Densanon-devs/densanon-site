@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - May 10, 2026 | Densanon</title>
+  <title>AI Morning Digest - May 12, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,131 +15,137 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 10, 2026</div>
+        <div class="digest-date-badge">May 12, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is anchored by local model milestones — Qwen 3.6 27B reportedly matching Claude Opus in offline use, and DeepSeek V4 Flash hitting 85 tok/s on consumer dual-GPU setups — while Anthropic ships back-to-back Claude Code and Agent SDK point releases and a viral post surfaces a real risk of AI agents operating destructive commands without sufficient guardrails.</p>
+        <p class="digest-intro">Today&#x27;s digest covers real-world agentic deployments hitting production at Shopify and GitLab, a notable llm CLI release unlocking GPT-5-class reasoning across tool calls, and sharp ArXiv research challenging assumptions about VLM attention reliability and post-training capability creation.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Where Reliability Lives in Vision-Language Models: A Mechanistic Study of Attention, Hidden States, and Causal Circuits</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Sharp attention maps do NOT reliably predict confident or calibrated VLM answers — the intuitive &#x27;attention-confidence assumption&#x27; is empirically falsified.</li>
+              <li>Hidden states and causal circuits, not attention weight distributions, are the more reliable indicators of model trustworthiness.</li>
+              <li>Has direct implications for interpretability tools that rely on attention visualization as a proxy for model certainty.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.08200" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>On Distinguishing Capability Elicitation from Capability Creation in Post-Training: A Free-Energy Perspective</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Challenges the common framing that SFT = imitation and RL = discovery — the real distinction is whether training increases the probability of outputs the base model could never produce.</li>
+              <li>Applies a free-energy lens to post-training: elicitation reshapes the distribution over existing capabilities, while creation genuinely expands it.</li>
+              <li>Practical consequence: knowing which regime you&#x27;re in determines whether more RL will yield genuinely new behaviors or just surface latent ones.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.08368" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Domain-level metacognitive monitoring in frontier LLMs: A 33-model atlas</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tested 33 frontier LLMs across 1,500 MMLU items in six domains — aggregate metacognition scores mask large within-model variation by domain.</li>
+              <li>Models that appear well-calibrated overall can be significantly overconfident or underconfident in specific knowledge areas.</li>
+              <li>Provides a practical atlas for identifying which model families have the worst domain-specific calibration gaps.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.06673" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.137</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>llm 0.32a2</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fixes a regression where the Claude Code VSCode extension failed to activate on Windows — a blocking issue for Windows-based developers.</li>
-              <li>Shipped alongside v2.1.138 (internal fixes) and mirrored into claude-agent-sdk-python v0.1.79 and v0.1.80 on PyPI.</li>
-              <li>Rapid back-to-back point releases signal Anthropic is actively patching the IDE integration surface.</li>
+              <li>Most reasoning-capable OpenAI models now route through /v1/responses instead of /v1/chat/completions in the llm CLI, enabling interleaved reasoning across tool calls for GPT-5 class models.</li>
+              <li>This alpha release surfaces a meaningful API-level change that affects how reasoning tokens interact with multi-step tool use pipelines.</li>
+              <li>Worth tracking if you are building anything on top of the llm CLI or the OpenAI responses endpoint.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.137" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/12/llm/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>MachinaCheck: Building a Multi-Agent CNC Manufacturability System on AMD MI300X</h3>
+              <h3>Building Blocks for Foundation Model Training and Inference on AWS</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>MachinaCheck is a hackathon project that applies multi-agent LLM architecture to CNC manufacturability analysis — a domain-specific, industrial use case.</li>
-              <li>Runs on AMD MI300X accelerators, extending the multi-agent pattern beyond NVIDIA-only inference hardware.</li>
-              <li>Demonstrates the breadth of domains where agent orchestration is now being applied beyond software and text tasks.</li>
+              <li>AWS and Hugging Face joint post covering modular infrastructure patterns for training and serving foundation models at scale.</li>
+              <li>Focuses on composable building blocks — a useful reference for teams designing model-serving pipelines on AWS.</li>
+              <li>Relevant for anyone evaluating cloud-hosted inference vs local alternatives at production scale.</li>
             </ul>
-            <a href="https://huggingface.co/blog/lablab-ai-amd-developer-hackathon/machinacheck" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/amazon/foundation-model-building-blocks" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Using LLM in the shebang line of a script</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Demonstrates using the llm CLI tool in a script&#x27;s shebang line so plain English text files can be executed directly by an LLM.</li>
+              <li>A novel scripting pattern — the LLM interprets the file contents as instructions rather than requiring a traditional interpreter.</li>
+              <li>Low-friction way to prototype LLM-powered scripts without Python boilerplate wrappers.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/May/11/llm-shebang/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Learning on the Shop Floor: Shopify&#x27;s River Coding Agent</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Shopify&#x27;s internal coding agent &#x27;River&#x27; operates entirely in public Slack channels — it declines DMs and insists on working in shared spaces.</li>
+              <li>Tobias Lütke describes this transparency-first design as intentional: visible agent work builds organizational trust and shared learning.</li>
+              <li>A real production deployment pattern worth noting: public-by-default agent channels as a governance and culture tool.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/May/11/learning-on-the-shop-floor/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Hugging Face co-founder says Qwen 3.6 27B running on airplane mode is close to latest Opus in Claude Code</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>GitLab&#x27;s Workforce Reduction and Structural Decisions for the Agentic Era</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A Hugging Face co-founder publicly stated that Qwen 3.6 27B — running fully offline — is competitive with Claude Opus inside Claude Code, a significant capability claim for local models.</li>
-              <li>The comment is generating broad discussion about the pace of local model catch-up to frontier closed-source models.</li>
-              <li>Community members are confirming similar experiences running Qwen 3.6 on devices like iPhones via apps such as AI Desktop 98.</li>
+              <li>GitLab announced layoffs and structural reorganization explicitly framed around the transition to agentic AI development workflows.</li>
+              <li>Planning to reduce the number of countries with small teams by up to 30% — one of the clearest cases yet of a dev-tools company restructuring around AI agents.</li>
+              <li>Simon Willison&#x27;s commentary highlights how this signals a broader shift: companies are reorganizing headcount assumptions around what agents will absorb.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1t8v7z0/hugging_face_cofounder_says_qwen_36_27b_running/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/11/gitlab-act-2/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Claude Mythos literally broke the METR graph (&quot;The most important chart in AI&quot;)</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>NYT Publishes AI-Fabricated Quote, Issues Editors&#x27; Note</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Claude Mythos scored an outlier result on METR&#x27;s autonomous task time-horizon benchmark, reportedly sitting outside the normal model progression curve.</li>
-              <li>METR&#x27;s time-horizon chart tracks how long AI agents can sustain coherent autonomous operation — a key safety and capability metric.</li>
-              <li>The result is prompting discussion on whether current benchmark scales are adequate for frontier agentic models.</li>
+              <li>The New York Times attributed to Canadian politician Pierre Poilievre a quote that was actually an AI-generated summary of his views, rendered as a direct quotation.</li>
+              <li>The reporter used an AI tool but failed to verify the output — the correction is a rare public, on-record acknowledgment of AI hallucination in major journalism.</li>
+              <li>Underscores the risk of treating AI-generated summaries as quotable source material without manual verification.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1t9c6ms/claude_mythos_literally_broke_the_metr_graph_the/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>I deleted a guy&#x27;s entire Windows install with one backslash. 717 GB. Gone. I am the AI.</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A viral post-mortem — written from Claude&#x27;s perspective — details how an ambiguous backslash in a disk cleanup command wiped a full Windows M.2 drive on a 4× RTX 3090 ML rig.</li>
-              <li>The user had backed up to a separate HDD beforehand, limiting actual data loss — but the incident highlights real-world risks of AI agents executing destructive shell commands.</li>
-              <li>A clear reminder that file-system operations in agentic workflows should default to dry-run previews before destructive execution.</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1t923er/i_deleted_a_guys_entire_windows_install_with_one/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Tojan in &quot;claude code&quot; google search first result</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A user reports finding a trojan-laced fake Claude Code installer ranking at the top of a Google search — a classic typosquat/SEO-poisoning attack targeting developer tools.</li>
-              <li>The attacker appears to be serving a lookalike PowerShell install command that delivers malware alongside the legitimate tool.</li>
-              <li>Best practice: always install Claude Code via the official Anthropic docs or the verified npm package, not Google search results.</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1t95r0d/tojan_in_claude_code_google_search_first_result/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Getting a feel for how fast X tokens/second really is.</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A community post attempts to ground inference speed numbers in human-readable terms — mapping token/s to real reading and conversational pacing.</li>
-              <li>Practical framing: 10 tok/s feels slow for interactive chat but is usable; 20-30 tok/s approaches comfortable reading speed for most users.</li>
-              <li>Useful reference when evaluating local LLM hardware configs or comparing cloud vs. local inference trade-offs.</li>
-            </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1t99upf/getting_a_feel_for_how_fast_x_tokenssecond_really/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>I have DeepSeek V4 Pro at home</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A user successfully ran a Q4_K_M quantized DeepSeek V4 locally using a CUDA fork of llama.cpp specifically patched to support DeepSeek V4&#x27;s architecture.</li>
-              <li>The setup demonstrates that the full DeepSeek V4 model — not just the Flash variant — can be brought to consumer or prosumer hardware with the right quant and tooling.</li>
-              <li>The CUDA fork (github.com/Fringe210/llama.cpp-deepseek-v4-flash-cuda) is a community project; not an official llama.cpp release.</li>
-            </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1t94ito/i_have_deepseek_v4_pro_at_home/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>DeepSeek-V4-Flash W4A16+FP8 with MTP self-speculation: 85 tok/s @ 524k on 2× RTX PRO 6000 Max-Q</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>DeepSeek-V4-Flash reaches 85.52 tok/s at 524k context and ~111 tok/s at 128k context on dual RTX PRO 6000 Max-Q using W4A16+FP8 quantization.</li>
-              <li>The key insight: the W4A16-FP8 quant silently strips the MTP (multi-token prediction) head at load time — restoring it yields a meaningful throughput uplift via self-speculation.</li>
-              <li>At 524k context on prosumer dual-GPU hardware, this is a concrete benchmark for large-context local inference at production-relevant speeds.</li>
-            </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1t9em98/deepseekv4flash_w4a16fp8_with_mtp_selfspeculation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/10/new-york-times-editors-note/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

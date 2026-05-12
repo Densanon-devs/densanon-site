@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - May 10, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - May 12, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,139 +15,143 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 10, 2026</div>
+        <div class="digest-date-badge">May 12, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest spans the full stack: Kodiak and Roehl put autonomous long-haul freight on a real Texas corridor, Bimo&#x27;s walking policy squeezes to 5ms on a Raspberry Pi Pico, and Cognex ships a fully integrated edge-AI vision system for manipulators — while Bloomberg and industry analysts push back on humanoid hype with data on how far the field still has to go.</p>
+        <p class="digest-intro">Today&#x27;s digest is headlined by Hello Robot&#x27;s Stretch 4 launch and RLWRLD&#x27;s dexterity foundation model RLDX-1, with strong VLA research tackling real inference latency and failure-learning challenges. Seegrid&#x27;s 20 million autonomous miles milestone and the 2026 RBR50 awards round out a busy day across commercial deployment and fundamental research.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Understanding Asynchronous Inference Methods for Vision-Language-Action Models</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>VLA models suffer observation staleness when actions are executed asynchronously — this paper surveys and unifies the concurrent methods proposed to address it.</li>
+              <li>Delayed observations during async execution can cause compounding control errors in real-time manipulation tasks.</li>
+              <li>Provides a unified framework for comparing latency-mitigation strategies across different VLA architectures.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.08168" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Failing Forward: Adaptive Failure-Informed Learning for Vision-Language-Action Models</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Standard VLA training relies on success-only behavioral cloning, leaving models brittle when small execution errors compound.</li>
+              <li>This work introduces failure-informed learning that uses failed rollouts as corrective training signal rather than discarding them.</li>
+              <li>Improves manipulation robustness without requiring additional human demonstrations, making training data more efficient.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.08434" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Hierarchical Prompting with Dual LLM Modules for Robotic Task and Motion Planning</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A two-LLM architecture splits high-level task planning from low-level motion planning, improving natural language instruction handling in service robots.</li>
+              <li>Hierarchical prompting reduces the semantic gap between language commands and executable robot actions.</li>
+              <li>Each LLM specializes independently, enabling more intuitive human-robot interaction in assistance scenarios.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.08330" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>How to teach the same skill to different robots</h3>
+              <span class="digest-source">Robohub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>EPFL LASA researchers tackle skill transfer across robots with different kinematics — currently, upgrading a fleet means reprogramming tasks entirely from scratch.</li>
+              <li>The approach encodes manipulation skills in a robot-agnostic representation that can be retargeted to new hardware.</li>
+              <li>Demonstrated on assembly-line tasks, reducing the cost of migrating skills when deploying or upgrading industrial robot fleets.</li>
+            </ul>
+            <a href="https://robohub.org/how-to-teach-the-same-skill-to-different-robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Kodiak and Roehl Transport begin autonomous freight operations between Dallas and Houston</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Kodiak AI and Roehl Transport have moved past testing: the Kodiak Driver system is now hauling live freight on the Dallas–Houston corridor.</li>
-              <li>Roehl is one of the largest U.S. truckload carriers, giving this deployment real commercial weight rather than a controlled pilot scale.</li>
-              <li>The I-45 corridor is a high-volume, structured highway route — a favorable operational design domain for building early autonomous miles.</li>
-              <li>Marks another data point in the hub-to-hub trucking model closing the gap between demo and commercial revenue operations.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/05/09/kodiak-and-roehl-transport-begin-autonomous-freight-operations-between-dallas-and-houston/101340/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Cognex releases fully integrated AI-powered vision system for robotics</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Cognex combines edge AI, advanced AI, and rule-based vision tools into a single embedded compute unit — reducing integration overhead for robot cell builders.</li>
-              <li>The all-in-one packaging removes the need to separately source compute, cameras, and vision software for inspection and pick-and-place tasks.</li>
-              <li>Targets factory automation integrators who need a certified, supportable vision stack rather than a DIY pipeline.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/cognex-releases-fully-integrated-ai-powered-vision-system-robotics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Why traditional robotics data collection is obsolete and what replaces it</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Rhoda AI&#x27;s approach uses video data rather than structured teleoperation or kinesthetic teaching to scale robot learning.</li>
-              <li>Video-based data collection is argued to be more scalable and less bottlenecked by hardware access than traditional demonstration collection pipelines.</li>
-              <li>The piece reflects a broader industry shift: raw video as a training substrate for manipulation policies rather than purpose-collected robot trajectories.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/why-traditional-robotics-data-collection-is-obsolete-and-what-replaces-it/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Opinion: Autonomy is reshaping logistics, but its real value lies in better decision-making</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Labour shortages and supply chain pressure are accelerating AMR adoption in UK and European warehouses — the UK Warehousing Association data is cited as evidence.</li>
-              <li>The author (Dexory&#x27;s head of autonomy) argues the primary value isn&#x27;t physical automation but real-time inventory intelligence and decision support.</li>
-              <li>Positions autonomous warehouse robots as a data infrastructure play as much as a labour replacement, which shapes how ROI should be measured.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/05/09/opinion-autonomy-is-reshaping-logistics-but-its-real-value-lies-in-better-decision-making/101336/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>rbot: an open-source AMR simulation stack for ROS 2 Jazzy and Gazebo Harmonic</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>rbot packages a full AMR simulation baseline — navigation, localization, and sensor models — into a single ROS 2 Jazzy + Gazebo Harmonic workspace.</li>
-              <li>Designed for teams and students who need a practical starting point they can run and adapt rather than building simulation infrastructure from scratch.</li>
-              <li>Targets ROS 2 Jazzy and Gazebo Harmonic specifically, keeping it current with the latest stable LTS toolchain.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1t92d8q/rbot_an_opensource_amr_simulation_stack_for_ros_2/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Bimo&#x27;s walking model now runs natively on a Raspberry Pi Pico at 5ms inference time!</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Bimo&#x27;s locomotion policy — trained on thousands of Isaac Lab parallel environments — was distilled down to run on a bare RP2040 microcontroller with no external compute.</li>
-              <li>5.2ms inference time on the Pico means the full walking control loop runs at well over 100Hz on a $4 chip.</li>
-              <li>Policy distillation from Isaac Lab sim to embedded edge hardware is a repeatable workflow for low-cost legged robot platforms.</li>
-              <li>Demonstrates that simulation-trained locomotion policies are now compact enough for microcontroller deployment, not just GPU-class inference.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1t968vj/bimos_walking_model_now_runs_natively_on_a/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Video Friday: AI Gives Robot Hands Human-Like Dexterity</h3>
+              <h3>Hello Robot Sets the Standard for Practical, Safe Home Robots</h3>
               <span class="digest-source">IEEE Spectrum Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>IEEE Spectrum&#x27;s weekly video roundup focuses on AI-driven dexterous manipulation — one of the hardest open problems in manipulation robotics.</li>
-              <li>ICRA 2026 (Vienna, June 1–5) and RSS 2026 (July 13–17) are the next major venues for manipulation research previews.</li>
-              <li>Aggregates the week&#x27;s most technically notable robot hand and manipulation demonstrations in one place.</li>
+              <li>IEEE Spectrum frames Stretch 4 as a deliberate counter to humanoid hype — practical, safety-first, designed for real home environments rather than staged demos.</li>
+              <li>The design prioritizes collaborative manipulation and open-source software over spectacle.</li>
+              <li>Positioned as a reference point for what responsible, deployable home robotics looks like in 2026.</li>
             </ul>
-            <a href="https://spectrum.ieee.org/video-friday-robotic-hand-dexterity" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://spectrum.ieee.org/stretch-4-home-robot" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Humanoid Robots Are the Next Phase of the AI Hype Cycle</h3>
-              <span class="digest-source">Hacker News Robotics</span>
+              <h3>Hello Robot&#x27;s latest Stretch 4 is bigger, faster, and stronger than previous versions</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Bloomberg&#x27;s analysis argues humanoid robots are being swept into the AI hype cycle, with deployment timelines and capability claims outpacing the engineering reality.</li>
-              <li>The HN thread reflects a practitioner community that is skeptical of humanoid marketing while still tracking the genuine research progress underneath it.</li>
-              <li>Useful calibration piece alongside the week&#x27;s deployment and capability announcements.</li>
+              <li>Stretch 4 launches at $29,950, targeting researchers, developers, and Physical AI application engineers.</li>
+              <li>Bigger reach, faster motion, and higher payload than Stretch 3 while maintaining the open-source platform architecture.</li>
+              <li>Hello Robot explicitly markets it as a foundation for the next wave of Physical AI development.</li>
             </ul>
-            <a href="https://www.bloomberg.com/news/articles/2026-05-08/humanoid-robots-aren-t-as-advanced-as-the-ai-hype-cycle-suggests" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/hello-robots-latest-stretch-4-is-bigger-faster-and-stronger-than-previous-versions/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>From phones to humanoid robots: China&#x27;s supply chain eyes next growth curve</h3>
-              <span class="digest-source">Hacker News Robotics</span>
+              <h3>RLWRLD releases RLDX-1, a dexterity-first foundation model for robot hands</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Chinese contract manufacturers — the same supply chain that scaled smartphones — are positioning humanoid robot components as the next volume opportunity.</li>
-              <li>The transition from consumer electronics to humanoid actuators, sensors, and structural components leverages existing precision manufacturing at scale.</li>
-              <li>Signals a structural cost-reduction pathway for humanoid hardware that doesn&#x27;t depend on U.S. or European component pricing.</li>
+              <li>RLDX-1 is a foundation model designed specifically for dexterous manipulation, incorporating context memorization and force sensing that most existing models lack.</li>
+              <li>RLWRLD treats hand-level dexterity as a first-class capability rather than a fine-tuning afterthought.</li>
+              <li>Addresses the growing gap between humanoid locomotion progress and the slower advancement in fine manipulation.</li>
             </ul>
-            <a href="https://www.scmp.com/tech/tech-trends/article/3352212/phones-robots-chinas-supply-chain-eyes-next-growth-curve-humanoid" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/rlwrld-releases-rldx-1-a-dexterity-first-foundation-model-for-robot-hands/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>2026 RBR50 Robotics Innovation Awards</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The annual RBR50 awards recognize the top 50 robotics innovations across Robot of the Year, Startup of the Year, Application of the Year, and Robots for Good categories.</li>
+              <li>The 2026 cohort reflects a field increasingly focused on practical deployment, embodied AI integration, and autonomous industrial systems.</li>
+              <li>A useful annual industry snapshot of which commercial robots and startups are considered most significant.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/rbr50-2026-report/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Seegrid surpasses 20 million autonomous miles in industrial facilities</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Seegrid&#x27;s AMR fleet has logged 20 million autonomous miles across manufacturing, warehousing, and logistics — a real-world reliability benchmark at commercial scale.</li>
+              <li>The milestone reflects sustained deployment in actual production environments rather than controlled lab conditions.</li>
+              <li>Fleet scale at this level generates significant operational data for continued autonomy improvements and safety validation.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/05/12/seegrid-surpasses-20-million-autonomous-miles-in-industrial-facilities/101430/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Infineon launches humanoid robotics-focused startup challenge for 2026</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Infineon&#x27;s 2026 Startup Challenge is explicitly themed around humanoid robotics, signaling semiconductor-level investment in the humanoid supply chain.</li>
+              <li>The program bridges chip-level hardware with humanoid system design, targeting concepts that can become market-ready applications.</li>
+              <li>Major semiconductor players entering the humanoid ecosystem accelerates the path to cost-effective humanoid hardware.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/05/12/infineon-launches-humanoid-robotics-focused-startup-challenge-for-2026/101426/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

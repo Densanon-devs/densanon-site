@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - May 10, 2026 | Densanon</title>
+  <title>Computation Morning Digest - May 12, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,101 +15,107 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 10, 2026</div>
+        <div class="digest-date-badge">May 12, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation digest is anchored by kernel and systems-level movement: Jens Axboe is pursuing a 60% per-core Linux I/O uplift following a direct comparison with SPDK at LSFMM 2026, Debian 14 has mandated reproducible builds across the entire distribution, and AMD&#x27;s 30-year-old K5 processor is being retired from Linux 7.2 due to missing TSC support. On the hardware side, China&#x27;s Hanyuan-2 dual-core 200-qubit quantum system debuted — notably lacking independent benchmarks — while AMD&#x27;s new dual-cache 9950X3D2 faces off against the single-cache 9950X3D in a six-round benchmark.</p>
+        <p class="digest-intro">Today&#x27;s computation headlines are dominated by geopolitics shaping semiconductor supply chains — TSMC&#x27;s $20B Arizona bet and the Nvidia/China policy signal — alongside serious security news including a PyPI supply-chain attack hitting AI developer tooling and AI-accelerated vulnerability exploitation shrinking the 90-day disclosure window. On the Linux/kernel front, Intel&#x27;s scheduler and power-efficiency work lands meaningful gains for both aging hardware and hybrid CPUs.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Hardware &amp; Chips</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>China&#x27;s Hanyuan-2 debuts as &#x27;world&#x27;s first&#x27; dual-core quantum computer — 200-qubit claims incredible power efficiency, but lacks critical performance benchmarks</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>CAS Cold Atom Technology, affiliated with the Chinese Academy of Sciences, unveiled Hanyuan-2, claiming it is the world&#x27;s first dual-core quantum computer at 200 qubits.</li>
-              <li>The announcement highlights power efficiency gains but does not include standard quantum performance benchmarks such as quantum volume or circuit fidelity scores.</li>
-              <li>The dual-core framing is architecturally novel on paper; independent verification of the claims has not yet been published.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/quantum-computing/china-claims-worlds-first-dual-core-quantum-computer" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD Ryzen 9 9950X3D2 vs Ryzen 9 9950X3D faceoff — How far does dual cache take you?</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Tom&#x27;s Hardware ran a six-round head-to-head gauntlet between AMD&#x27;s new dual-cache Ryzen 9 9950X3D2 and the single-cache 9950X3D to quantify the real-world benefit of the second 3D V-Cache stack.</li>
-              <li>The 9950X3D2 is described as a unique processor, with the benchmark suite revealing where dual-cache stacking produces measurable gains versus where a single cache stack saturates.</li>
-              <li>Results are benchmark-driven rather than theoretical, making this a practical reference point for workstation and gaming workload comparisons.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/amd-ryzen-9-9950x3d2-vs-ryzen-9-9950x3d-cpu-faceoff" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD&#x27;s legendary K5, its first independently-designed processor, is being removed from the Linux kernel — 4.3-million-transistor chip gets the axe because it lacks Time Stamp Counter (TSC) support, making it a coding burden</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The AMD K5 — AMD&#x27;s first fully independently designed x86 processor, introduced in 1996 — will be dropped from Linux support in kernel version 7.2.</li>
-              <li>The concrete technical trigger is the K5&#x27;s lack of a Time Stamp Counter (TSC), which modern kernel timekeeping and performance subsystems depend on, creating an ongoing maintenance burden.</li>
-              <li>This is a code-hygiene removal rather than a functional regression: no consumer hardware running a K5 is plausibly still in active production use.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/software/linux/amds-legendary-k5-its-first-independently-designed-processor-is-being-removed-from-the-linux-kernel-4-3-million-transistor-chip-gets-the-axe-because-it-lacks-time-stamp-counter-tsc-support-making-it-a-coding-burden" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>FEX 2605 Brings Performance Improvements, Initial Snapdragon X2 Elite Fixes</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>FEX 2605 is the latest monthly release of the Valve-sponsored x86_64-on-ARM64 binary translation layer, targeted at running Linux x86 software on AArch64 devices including the upcoming Steam Frame.</li>
-              <li>This release adds initial compatibility fixes for Snapdragon X2 Elite — Qualcomm&#x27;s newest high-performance ARM laptop SoC — expanding the range of devices FEX runs on.</li>
-              <li>General performance improvements are included alongside the Snapdragon fixes, continuing FEX&#x27;s role as the primary x86 compatibility layer for ARM Linux gaming.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/FEX-2605-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>MIT researchers revive 40-year-old triangular zipper concept now made possible by 3D printing, creates shape-shifting robots and deployable structures — 3D-printed &#x27;Y-Zipper&#x27; turns floppy tentacles into rigid beams in seconds</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>MIT researchers 3D-printed a three-sided Y-Zipper mechanism based on a triangular zipper geometry originally theorized 40 years ago but not practically manufacturable until now.</li>
-              <li>The device can rapidly transition a floppy structure into a load-bearing rigid beam, with direct applications to soft robotics, deployable frameworks, and reconfigurable structures.</li>
-              <li>The advance is enabled by modern 3D printing precision — the geometry&#x27;s tolerances were previously impossible to achieve through conventional fabrication.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/3d-printing/mit-researchers-revive-40-year-old-triangular-zipper-concept-now-made-possible-by-3d-printing-creates-shape-shifting-robots-and-deployable-structures-3d-printed-y-zipper-turns-floppy-tentacles-into-rigid-beams-in-seconds" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Industry &amp; HPC</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AI data center project secretly sucked 29 million gallons of water over 15 months before detected by residents complaining about low water pressure — officials refuse to fine builders of massive 6.2 million-square-foot facility over unauthorized water use</h3>
+              <h3>TSMC allocates $20 billion to Arizona expansion — project faces water and labor shortages, complicated by visa rules</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A QTS data center in Georgia consumed 29 million gallons of water over 15 months without proper authorization, only surfacing after local residents reported low water pressure.</li>
-              <li>QTS attributed the usage to temporary construction activities — concrete work, dust control, and site preparation — rather than operational cooling, but the facility spans 6.2 million square feet.</li>
-              <li>Local officials declined to issue fines, highlighting a regulatory gap in oversight of large-scale data center infrastructure projects and their impact on municipal water systems.</li>
+              <li>Fab 21 turned profitable in its first year of operation, validating the U.S. domestic fab strategy despite ongoing headwinds.</li>
+              <li>TSMC is committing an additional $20B to further Arizona development even while wrestling with water scarcity, skilled-labor shortages, and long-term power supply uncertainty.</li>
+              <li>Visa rule friction continues to complicate importing Taiwanese engineering talent, a structural bottleneck for ramp-up speed.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/georgia-data-center-used-29-million-gallons-of-water" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/tsmc-allocates-usd20-billion-to-arizona-expansion-project-faces-water-and-labor-shortages-complicated-by-visa-rules" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Jensen Huang snubbed by White House for President Trump&#x27;s China state visit — Nvidia CEO not on roster, which includes Apple&#x27;s Tim Cook and Elon Musk</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Huang&#x27;s exclusion from the delegation is read by analysts as a deliberate signal that the U.S. will not ease GPU export restrictions to China in the near term.</li>
+              <li>The move contrasts with Huang&#x27;s inclusion on previous state visits, suggesting the administration views Nvidia&#x27;s China sales as a policy liability rather than leverage.</li>
+              <li>Export control uncertainty continues to weigh on Nvidia&#x27;s addressable market for H-series and B-series datacenter GPUs in the world&#x27;s largest semiconductor market.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/jensen-huang-snubbed-by-white-house-for-president-trumps-china-state-visit-nvidia-ceo-not-on-roster-which-includes-apples-tim-cook-and-elon-musk" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Trump administration reportedly debating ban on Chinese cellular modules in expansion of FCC crackdown</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Potential restrictions would cover cellular modules from Chinese vendors embedded in IoT devices, routers, connected vehicles, and industrial systems — a far broader scope than prior FCC actions.</li>
+              <li>A ban would disrupt global supply chains that heavily rely on low-cost Chinese modules from suppliers like Quectel and Fibocom.</li>
+              <li>The move follows an escalating FCC crackdown that has already restricted Huawei and ZTE equipment from U.S. networks.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/trump-administration-reportedly-debating-ban-on-chinese-cellular-modules-in-expansion-of-fcc-crackdown-potential-restrictions-could-impact-everything-from-smart-devices-and-routers-to-connected-cars-and-industrial-iot-systems" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Hardware &amp; Chips</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Compromised Mistral AI and TanStack packages may have exposed GitHub, cloud and CI/CD credentials in &#x27;mini Shai Hulud&#x27; malware infection</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The &#x27;Mini Shai-Hulud&#x27; campaign compromised the mistralai PyPI package so malware executed on import, silently exfiltrating GitHub tokens and cloud credentials from developer machines.</li>
+              <li>Related npm compromises hit TanStack and Mistral SDK packages, spreading the supply-chain attack across both Python and JavaScript AI developer ecosystems.</li>
+              <li>Any project that pip-installed or npm-installed affected packages should treat credentials as compromised and rotate immediately.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/cyber-security/compromised-mistral-ai-and-tanstack-packages-may-have-exposed-github-cloud-and-ci-cd-credentials-in-mini-shai-hulud-malware-infection-supply-chain-campaign-spreads-across-npm-and-ai-developer-ecosystems-like-wildfire" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Standard 90-day vulnerability disclosure policy is likely dead thanks to AI, expert warns that AI can weaponize patches in 30 minutes</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>LLMs can now analyze a published patch and generate a working exploit within 30 minutes, collapsing the window vendors rely on to push fixes before attackers reverse-engineer them.</li>
+              <li>The researcher argues the 90-day coordinated disclosure standard — developed over decades — is no longer sufficient and the industry needs a new, shorter baseline.</li>
+              <li>Defenders face an asymmetry: patching at scale still takes weeks or months, while AI-assisted weaponization is near-instant.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/cyber-security/standard-90-day-vulnerability-disclosure-policy-is-likely-dead-thanks-to-ai-leaving-worlds-systems-exposed-to-zero-day-attacks-security-expert-details-how-llm-assisted-bug-hunting-ushers-in-a-new-cyberworld-orders" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Running Four Intel Graphics Cards Under Linux On Ubuntu 26.04</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Intel&#x27;s Project Battlematrix multi-GPU initiative now supports up to eight Arc Pro GPUs per system under Linux, with open-source driver improvements shipping over the past year.</li>
+              <li>The review exercises four Arc Pro B70 cards on Ubuntu 26.04, providing a concrete benchmark of Intel&#x27;s datacenter/workstation GPU Linux stack maturity.</li>
+              <li>Open-source driver parity with Intel&#x27;s GPU compute roadmap is progressing faster than prior Arc generations, relevant for HPC and ML inference workloads.</li>
+            </ul>
+            <a href="https://www.phoronix.com/review/intel-arc-pro-b70-four" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AMD &amp; Intel Roll Out New Linux Updates For Today&#x27;s Patch Tuesday</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Both AMD and Intel released Linux-specific microcode and driver security updates for May 2026 Patch Tuesday.</li>
+              <li>Vulnerabilities addressed are described as not widespread or critically impactful, but represent the standard monthly security maintenance cycle.</li>
+              <li>Linux users on AMD and Intel platforms should apply vendor-provided updates promptly given the month&#x27;s elevated security activity.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Patch-Tuesday-May-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -119,51 +125,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Axboe Hacking On New Linux Patches For 60% Increase To Per-Core I/O Performance</h3>
+              <h3>Linux Scheduler Work Helping Boost Gaming Performance On Old &#x27;Potato&#x27; Hardware</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Jens Axboe, the Linux block layer maintainer, is developing new kernel I/O patches after a presentation at the LSFMM 2026 summit directly compared Linux I/O overhead against the Storage Performance Development Kit (SPDK).</li>
-              <li>The target improvement is a 60% increase in per-core I/O throughput — a substantial kernel-level gain, relevant to NVMe-heavy server and storage workloads.</li>
-              <li>The patches are in active development and have not yet been merged into mainline; they represent Axboe&#x27;s direct response to the SPDK performance gap analysis.</li>
+              <li>Intel kernel engineer Peter Zijlstra is developing scheduler patches specifically targeting aging hardware — tested on Sandy Bridge CPU + Radeon RX 580 — to recover gaming responsiveness.</li>
+              <li>The patches improve task-pick behavior so older CPUs don&#x27;t thrash under gaming workloads, delivering measurably smoother frame pacing without hardware upgrades.</li>
+              <li>This work benefits the large installed base of decade-old PCs running Linux, particularly relevant as more users switch from Windows 10 end-of-life machines.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Axboe-60p-Faster-Per-Core-Perf" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-Flatten-The-Pick" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Debian Release Team: Debian Must Now Ship Reproducible Packages</h3>
+              <h3>Intel Looking To Move Their Low-Power Mode Daemon Into The Linux Kernel Source Tree</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Debian Release Team has mandated that all packages in Debian 14 &#x27;Forky&#x27; must be reproducibly built — meaning a package built from the same source twice must produce bit-for-bit identical binaries.</li>
-              <li>Reproducible builds allow independent verification that shipped binaries match their source code, closing a class of backdoor-insertion and supply-chain attacks.</li>
-              <li>The announcement comes at the midpoint of the Debian 14 development cycle, giving maintainers time to bring non-reproducible packages into compliance before the freeze.</li>
+              <li>Intel LPMD (Low Power Mode Daemon), which optimizes idle power on hybrid CPUs by leveraging hardware hints, is being proposed for inclusion directly in the Linux kernel tree.</li>
+              <li>Moving LPMD in-tree would make it available to all Linux distributions without separate packaging and ensure it evolves alongside kernel power-management infrastructure.</li>
+              <li>This is particularly impactful for Intel&#x27;s P/E-core hybrid laptop CPUs where tuned idle behavior can meaningfully extend battery life.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Debian-Must-Ship-Reproducible" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Intel-LPMD-Kernel-Source-Tree" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>OpenAI&#x27;s Coding Agent Helped Create A New AMD Temperature Driver For Linux</h3>
+              <h3>OpenZFS 2.4.2 Released With Linux 7.0 Kernel Support, Many Bug Fixes</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A new open-source Linux driver — prom21-xhci — has been submitted to the kernel mailing list to expose temperature sensors on AMD Promontory 21 chipset xHCI controllers.</li>
-              <li>The driver&#x27;s development was assisted by OpenAI&#x27;s coding agent, making this one of the first AI-assisted drivers to enter the Linux kernel review process.</li>
-              <li>The driver is currently under review on the kernel mailing list and not yet merged into mainline.</li>
+              <li>OpenZFS 2.4.2 adds compatibility with the Linux 7.0 kernel, keeping the ZFS filesystem current with the latest kernel release.</li>
+              <li>The release bundles numerous bug fixes for both Linux and FreeBSD platforms, maintaining OpenZFS as a production-grade storage option across operating systems.</li>
+              <li>Users running ZFS on kernel 7.0 should update to 2.4.2 to ensure compatibility and pick up stability fixes.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-Prom21-xHCI-Temp-Driver" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/OpenZFS-2.4.2-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Hyprland 0.55 Released With Lua-Based Configuration, User-Defined Layouts</h3>
+              <h3>IBM s390 Is The Latest Architecture Seeing Rust Linux Kernel Support</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Hyprland 0.55 ships Lua as a first-class configuration language for the popular Wayland compositor, replacing the prior declarative-only config format with a fully scriptable alternative.</li>
-              <li>User-defined layouts are introduced, allowing custom tiling and window arrangement logic without patching the compositor itself.</li>
-              <li>Hyprland is one of the most actively developed tiling Wayland compositors; 0.55 is a significant extensibility upgrade for power users building personalized Linux desktops.</li>
+              <li>IBM engineers have submitted the first patches enabling Rust-language kernel modules to build on the s390 (mainframe) architecture.</li>
+              <li>This extends Rust&#x27;s kernel footprint beyond x86/ARM to mainframe-class hardware, signaling growing cross-architecture commitment from hardware vendors to Rust in the kernel.</li>
+              <li>s390 Rust support matters for enterprise Linux on IBM Z-series mainframes, where memory-safety improvements in critical kernel paths have direct reliability implications.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Hyprland-0.55-Wayland-Comp" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/IBM-s390-Linux-Kernel-Rust" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
