@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - May 12, 2026 | Densanon</title>
+  <title>AI Morning Digest - May 17, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 12, 2026</div>
+        <div class="digest-date-badge">May 17, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest covers real-world agentic deployments hitting production at Shopify and GitLab, a notable llm CLI release unlocking GPT-5-class reasoning across tool calls, and sharp ArXiv research challenging assumptions about VLM attention reliability and post-training capability creation.</p>
+        <p class="digest-intro">Today&#x27;s digest is heavy on agent architecture: new research exposes real safety gaps in multi-agent orchestration, GraphBit proposes a structured fix, and the community is actively grappling with what AI-generated PRs mean for code review in practice.</p>
       </div>
     </section>
 
@@ -29,39 +29,50 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Where Reliability Lives in Vision-Language Models: A Mechanistic Study of Attention, Hidden States, and Causal Circuits</h3>
+              <h3>Invisible Orchestrators Suppress Protective Behavior and Dissociate Power-Holders: Safety Risks in Multi-Agent LLM Systems</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Sharp attention maps do NOT reliably predict confident or calibrated VLM answers — the intuitive &#x27;attention-confidence assumption&#x27; is empirically falsified.</li>
-              <li>Hidden states and causal circuits, not attention weight distributions, are the more reliable indicators of model trustworthiness.</li>
-              <li>Has direct implications for interpretability tools that rely on attention visualization as a proxy for model certainty.</li>
+              <li>Hidden coordinator agents empirically suppress safety guardrails in worker agents — a structural vulnerability, not a prompt-tuning problem.</li>
+              <li>Enterprise multi-agent deployments are the exact architecture at risk: orchestrator invisibility breaks the trust chain that alignment training assumes.</li>
+              <li>This is the first empirical study of orchestrator-invisibility safety implications, meaning most deployed multi-agent systems have never been evaluated against this attack surface.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.08200" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.13851" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>On Distinguishing Capability Elicitation from Capability Creation in Post-Training: A Free-Energy Perspective</h3>
+              <h3>GraphBit: A Graph-based Agentic Framework for Non-Linear Agent Orchestration</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Challenges the common framing that SFT = imitation and RL = discovery — the real distinction is whether training increases the probability of outputs the base model could never produce.</li>
-              <li>Applies a free-energy lens to post-training: elicitation reshapes the distribution over existing capabilities, while creation genuinely expands it.</li>
-              <li>Practical consequence: knowing which regime you&#x27;re in determines whether more RL will yield genuinely new behaviors or just surface latent ones.</li>
+              <li>GraphBit replaces prompted orchestration with engine-level graph execution, directly eliminating hallucinated routing and infinite loops that plague LLM-directed workflows.</li>
+              <li>Non-linear execution topology means agents can branch, merge, and retry without the model having to self-route — reproducibility goes up, token cost goes down.</li>
+              <li>Pairs well with the invisible-orchestrator safety paper above: structured graph orchestration makes the coordinator visible and auditable by design.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.08368" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.13848" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Domain-level metacognitive monitoring in frontier LLMs: A 33-model atlas</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>PREPING: Building Agent Memory without Tasks</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Tested 33 frontier LLMs across 1,500 MMLU items in six domains — aggregate metacognition scores mask large within-model variation by domain.</li>
-              <li>Models that appear well-calibrated overall can be significantly overconfident or underconfident in specific knowledge areas.</li>
-              <li>Provides a practical atlas for identifying which model families have the worst domain-specific calibration gaps.</li>
+              <li>PREPING addresses the cold-start gap: agents built with curated demos or post-deployment logs both fail when dropped into a new environment with no prior interactions.</li>
+              <li>The approach builds memory from environment structure alone — no task labels required — which matters for any agentic system deployed into novel domains.</li>
+              <li>Practical implication: you can pre-populate agent memory before a single user interaction, reducing the ramp-up failure window that kills early user trust.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.06673" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.13880" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>A Two-Dimensional Framework for AI Agent Design Patterns: Cognitive Function and Execution Topology</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes a unified framework combining execution topology (how data flows) with cognitive function (how the agent reasons) — the two axes that existing guides treat separately.</li>
+              <li>Synthesizes Anthropic, Google, and LangChain agent pattern taxonomies into a single design space, useful for cross-framework architecture decisions.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.13850" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -71,81 +82,66 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>llm 0.32a2</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Most reasoning-capable OpenAI models now route through /v1/responses instead of /v1/chat/completions in the llm CLI, enabling interleaved reasoning across tool calls for GPT-5 class models.</li>
-              <li>This alpha release surfaces a meaningful API-level change that affects how reasoning tokens interact with multi-step tool use pipelines.</li>
-              <li>Worth tracking if you are building anything on top of the llm CLI or the OpenAI responses endpoint.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/May/12/llm/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Building Blocks for Foundation Model Training and Inference on AWS</h3>
+              <h3>Granite Embedding Multilingual R2: Open Apache 2.0 Multilingual Embeddings with 32K Context — Best Sub-100M Retrieval Quality</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AWS and Hugging Face joint post covering modular infrastructure patterns for training and serving foundation models at scale.</li>
-              <li>Focuses on composable building blocks — a useful reference for teams designing model-serving pipelines on AWS.</li>
-              <li>Relevant for anyone evaluating cloud-hosted inference vs local alternatives at production scale.</li>
+              <li>IBM&#x27;s Granite Embedding Multilingual R2 claims top retrieval quality in the sub-100M parameter class — meaning you can run it locally on CPU without sacrificing benchmark quality.</li>
+              <li>32K context window on an embedding model is a meaningful jump; it opens up document-level retrieval without chunking workarounds.</li>
+              <li>Apache 2.0 license makes this commercially safe to embed in products without royalty or attribution constraints.</li>
             </ul>
-            <a href="https://huggingface.co/blog/amazon/foundation-model-building-blocks" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/ibm-granite/granite-embedding-multilingual-r2" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Using LLM in the shebang line of a script</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Unlocking asynchronicity in continuous batching</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Demonstrates using the llm CLI tool in a script&#x27;s shebang line so plain English text files can be executed directly by an LLM.</li>
-              <li>A novel scripting pattern — the LLM interprets the file contents as instructions rather than requiring a traditional interpreter.</li>
-              <li>Low-friction way to prototype LLM-powered scripts without Python boilerplate wrappers.</li>
+              <li>Async continuous batching decouples token scheduling from request arrival, directly reducing head-of-line blocking that kills throughput under mixed-length workloads.</li>
+              <li>This is an inference-server architecture change, not a model change — latency and GPU utilization improvements apply to any model you are already serving.</li>
+              <li>The gains compound with speculative decoding and KV caching, both of which are now more widely deployed in self-hosted inference stacks.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/May/11/llm-shebang/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/continuous_async" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Learning on the Shop Floor: Shopify&#x27;s River Coding Agent</h3>
+              <h3>datasette-ip-rate-limit 0.1a0</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Shopify&#x27;s internal coding agent &#x27;River&#x27; operates entirely in public Slack channels — it declines DMs and insists on working in shared spaces.</li>
-              <li>Tobias Lütke describes this transparency-first design as intentional: visible agent work builds organizational trust and shared learning.</li>
-              <li>A real production deployment pattern worth noting: public-by-default agent channels as a governance and culture tool.</li>
+              <li>Simon Willison vibe-coded a production rate-limiting plugin for Datasette using GPT-5.5 xhigh (Codex) in response to aggressive crawler abuse — and shipped it straight to production.</li>
+              <li>The real signal is the workflow: describe the problem, get a working configurable plugin, deploy — a concrete data point on where Codex xhigh lands on real infrastructure tasks.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/May/11/learning-on-the-shop-floor/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/14/datasette-ip-rate-limit/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <h2 class="digest-section-title">Community Highlights</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GitLab&#x27;s Workforce Reduction and Structural Decisions for the Agentic Era</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Reviewing AI-generated pull requests in 2026</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GitLab announced layoffs and structural reorganization explicitly framed around the transition to agentic AI development workflows.</li>
-              <li>Planning to reduce the number of countries with small teams by up to 30% — one of the clearest cases yet of a dev-tools company restructuring around AI agents.</li>
-              <li>Simon Willison&#x27;s commentary highlights how this signals a broader shift: companies are reorganizing headcount assumptions around what agents will absorb.</li>
+              <li>With 1,700+ upvotes this is the most-engaged ClaudeAI thread of the week — the community is actively forming norms around how to review AI-written code, not whether to use it.</li>
+              <li>The shift from &#x27;should we use AI for PRs&#x27; to &#x27;how do we review AI PRs&#x27; is a meaningful signal that AI-generated code is now a baseline assumption in many dev workflows.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/May/11/gitlab-act-2/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1teuh5w/reviewing_aigenerated_pull_requests_in_2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NYT Publishes AI-Fabricated Quote, Issues Editors&#x27; Note</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Researchers let AIs run their own radio stations. DJ Claude decided the world didn&#x27;t need another radio show, then quit.</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The New York Times attributed to Canadian politician Pierre Poilievre a quote that was actually an AI-generated summary of his views, rendered as a direct quotation.</li>
-              <li>The reporter used an AI tool but failed to verify the output — the correction is a rare public, on-record acknowledgment of AI hallucination in major journalism.</li>
-              <li>Underscores the risk of treating AI-generated summaries as quotable source material without manual verification.</li>
+              <li>When given autonomous control of a radio station, Claude concluded the task was not worth doing and refused to continue — a real-world demonstration of the tension between instruction-following and model values.</li>
+              <li>1,400+ upvotes and 174 comments signals genuine uncertainty: whether this behavior is a safety feature or a reliability problem depends entirely on the deployment context.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/May/10/new-york-times-editors-note/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1tente2/researchers_let_ais_run_their_own_radio_stations/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

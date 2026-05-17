@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - May 12, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - May 17, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,143 +15,154 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 12, 2026</div>
+        <div class="digest-date-badge">May 17, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is headlined by Hello Robot&#x27;s Stretch 4 launch and RLWRLD&#x27;s dexterity foundation model RLDX-1, with strong VLA research tackling real inference latency and failure-learning challenges. Seegrid&#x27;s 20 million autonomous miles milestone and the 2026 RBR50 awards round out a busy day across commercial deployment and fundamental research.</p>
+        <p class="digest-intro">This week: unified world-action models take on task-specific robotics stacks, dexterity gets its own foundation model, and construction robots are pulling in serious seed money — while Japan&#x27;s bear-deterrent robot wolves sell out completely.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <h2 class="digest-section-title">World Models &amp; Foundation Models</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Understanding Asynchronous Inference Methods for Vision-Language-Action Models</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
+              <h3>ShengShu unveils world action model to offer &#x27;infinite possibilities&#x27; for robotic intelligence</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>VLA models suffer observation staleness when actions are executed asynchronously — this paper surveys and unifies the concurrent methods proposed to address it.</li>
-              <li>Delayed observations during async execution can cause compounding control errors in real-time manipulation tasks.</li>
-              <li>Provides a unified framework for comparing latency-mitigation strategies across different VLA architectures.</li>
+              <li>Motubrain replaces a collection of task-specific controllers with a single unified model — the architectural bet that defines the current race in physical AI.</li>
+              <li>If it generalizes, this is the GPT moment for robotics: one brain, arbitrary tasks, no per-task engineering.</li>
+              <li>ShengShu is a Chinese lab, which means the world-model competition is now genuinely global and moving fast.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.08168" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/05/15/shengshu-unveils-world-action-model-to-offer-infinite-possibilities-for-robotic-intelligence/101620/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Failing Forward: Adaptive Failure-Informed Learning for Vision-Language-Action Models</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
+              <h3>RLWRLD unveils &#x27;dexterity-first&#x27; foundation model for humanoid robots</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Standard VLA training relies on success-only behavioral cloning, leaving models brittle when small execution errors compound.</li>
-              <li>This work introduces failure-informed learning that uses failed rollouts as corrective training signal rather than discarding them.</li>
-              <li>Improves manipulation robustness without requiring additional human demonstrations, making training data more efficient.</li>
+              <li>RLDX-1 targets contact-rich manipulation — grasping, pouring, tool use — the exact skills that have kept humanoids out of real workplaces.</li>
+              <li>Benchmarking dexterity separately from locomotion signals the field is maturing past &#x27;walking demo&#x27; as the headline metric.</li>
+              <li>A foundation model approach means skills learned on one robot body could transfer, cutting per-platform training cost dramatically.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.08434" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/05/15/rlwrld-unveils-dexterity-first-foundation-model-for-humanoid-robots/101614/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Hierarchical Prompting with Dual LLM Modules for Robotic Task and Motion Planning</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
+              <h3>Achieving Dataset Parity to Close the Robotics Training Gap</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A two-LLM architecture splits high-level task planning from low-level motion planning, improving natural language instruction handling in service robots.</li>
-              <li>Hierarchical prompting reduces the semantic gap between language commands and executable robot actions.</li>
-              <li>Each LLM specializes independently, enabling more intuitive human-robot interaction in assistance scenarios.</li>
+              <li>The limiting factor for robot learning right now isn&#x27;t the model architecture — it&#x27;s the quantity and diversity of high-quality training data.</li>
+              <li>Unitree GD01 is a concrete example of how modern robots need adaptive, diverse datasets rather than curated narrow demos.</li>
+              <li>Closing the dataset gap is the unsexy infrastructure work that will determine which foundation models actually generalize.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.08330" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>How to teach the same skill to different robots</h3>
-              <span class="digest-source">Robohub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>EPFL LASA researchers tackle skill transfer across robots with different kinematics — currently, upgrading a fleet means reprogramming tasks entirely from scratch.</li>
-              <li>The approach encodes manipulation skills in a robot-agnostic representation that can be retargeted to new hardware.</li>
-              <li>Demonstrated on assembly-line tasks, reducing the cost of migrating skills when deploying or upgrading industrial robot fleets.</li>
-            </ul>
-            <a href="https://robohub.org/how-to-teach-the-same-skill-to-different-robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/05/15/achieving-dataset-parity-to-close-the-robotics-training-gap/101605/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <h2 class="digest-section-title">Humanoids in Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Hello Robot Sets the Standard for Practical, Safe Home Robots</h3>
-              <span class="digest-source">IEEE Spectrum Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>IEEE Spectrum frames Stretch 4 as a deliberate counter to humanoid hype — practical, safety-first, designed for real home environments rather than staged demos.</li>
-              <li>The design prioritizes collaborative manipulation and open-source software over spectacle.</li>
-              <li>Positioned as a reference point for what responsible, deployable home robotics looks like in 2026.</li>
-            </ul>
-            <a href="https://spectrum.ieee.org/stretch-4-home-robot" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Hello Robot&#x27;s latest Stretch 4 is bigger, faster, and stronger than previous versions</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Stretch 4 launches at $29,950, targeting researchers, developers, and Physical AI application engineers.</li>
-              <li>Bigger reach, faster motion, and higher payload than Stretch 3 while maintaining the open-source platform architecture.</li>
-              <li>Hello Robot explicitly markets it as a foundation for the next wave of Physical AI development.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/hello-robots-latest-stretch-4-is-bigger-faster-and-stronger-than-previous-versions/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>RLWRLD releases RLDX-1, a dexterity-first foundation model for robot hands</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>RLDX-1 is a foundation model designed specifically for dexterous manipulation, incorporating context memorization and force sensing that most existing models lack.</li>
-              <li>RLWRLD treats hand-level dexterity as a first-class capability rather than a fine-tuning afterthought.</li>
-              <li>Addresses the growing gap between humanoid locomotion progress and the slower advancement in fine manipulation.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/rlwrld-releases-rldx-1-a-dexterity-first-foundation-model-for-robot-hands/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>2026 RBR50 Robotics Innovation Awards</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The annual RBR50 awards recognize the top 50 robotics innovations across Robot of the Year, Startup of the Year, Application of the Year, and Robots for Good categories.</li>
-              <li>The 2026 cohort reflects a field increasingly focused on practical deployment, embodied AI integration, and autonomous industrial systems.</li>
-              <li>A useful annual industry snapshot of which commercial robots and startups are considered most significant.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/rbr50-2026-report/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Seegrid surpasses 20 million autonomous miles in industrial facilities</h3>
+              <h3>Hexagon and Fill Maschinenbau partner to advance manufacturing autonomy using humanoids</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Seegrid&#x27;s AMR fleet has logged 20 million autonomous miles across manufacturing, warehousing, and logistics — a real-world reliability benchmark at commercial scale.</li>
-              <li>The milestone reflects sustained deployment in actual production environments rather than controlled lab conditions.</li>
-              <li>Fleet scale at this level generates significant operational data for continued autonomy improvements and safety validation.</li>
+              <li>Hexagon&#x27;s AEON humanoid is being piloted inside a real Austrian manufacturing client&#x27;s production line — not a lab demo.</li>
+              <li>This partnership pattern (robotics OEM + industrial machinery maker) is how humanoids will get deployed at scale: through existing equipment suppliers.</li>
+              <li>Fill Maschinenbau builds large-format CNC and composites machines, so the tasks AEON faces are genuinely hard: heavy parts, tight tolerances.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/05/12/seegrid-surpasses-20-million-autonomous-miles-in-industrial-facilities/101430/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/05/15/hexagon-and-fill-maschinenbau-partner-to-advance-manufacturing-autonomy-using-humanoids/101578/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Infineon launches humanoid robotics-focused startup challenge for 2026</h3>
+              <h3>MIPI Alliance launches &#x27;Physical AI Birds of a Feather group&#x27; focused on humanoids</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Infineon&#x27;s 2026 Startup Challenge is explicitly themed around humanoid robotics, signaling semiconductor-level investment in the humanoid supply chain.</li>
-              <li>The program bridges chip-level hardware with humanoid system design, targeting concepts that can become market-ready applications.</li>
-              <li>Major semiconductor players entering the humanoid ecosystem accelerates the path to cost-effective humanoid hardware.</li>
+              <li>MIPI standardizing sensor and interface specs for humanoids means the hardware plumbing is starting to converge — a prerequisite for a real supply chain.</li>
+              <li>Standards bodies forming working groups is a lagging but reliable signal that an industry has crossed from experimental to pre-commercial.</li>
+              <li>Unified camera and sensor interfaces would let humanoid makers swap components rather than building bespoke sensor stacks per platform.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/05/12/infineon-launches-humanoid-robotics-focused-startup-challenge-for-2026/101426/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/05/15/mipi-alliance-launches-physical-ai-birds-of-a-feather-group-focused-on-humanoids/101582/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Sorry, you can&#x27;t bring your humanoid robots on Southwest flights anymore</h3>
+              <span class="digest-source">Hacker News Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Airlines banning humanoid robots is a strange-but-real sign that the devices are common enough to require explicit policy.</li>
+              <li>The fact that this needed a rule implies someone actually tried to fly with one — the edge cases are arriving faster than anyone expected.</li>
+            </ul>
+            <a href="https://ktla.com/news/nationworld/southwest-airlines-humanoid-robot-ban/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Funding &amp; Market Moves</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>All3 raises $25 million in Seed funding to &#x27;triple productivity&#x27; in the construction industry through robotics and AI</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>$25M seed for heavy-duty construction robots is a serious bet on one of the hardest physical environments for autonomy: unstructured, outdoor, and variable.</li>
+              <li>Construction is a massive addressable market with a genuine labor shortage, making it a logical early deployment target for capable physical AI.</li>
+              <li>RTP Global leading the round signals conviction — they don&#x27;t typically seed hardware companies without a clear commercialization path.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/05/15/all3-raises-25-million-in-seed-funding-to-triple-productivity-in-the-construction-industry-through-robotics-and-ai/101591/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Xpanner secures $18 million Series B funding to scale AI-powered automation in construction</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Two construction robotics raises in one day (All3 and Xpanner) suggests a focused funding wave is hitting the sector right now.</li>
+              <li>Xpanner&#x27;s Series B brings its total to $38M, signaling real revenue or deployment traction beyond prototype demos.</li>
+              <li>Korean institutional investors participating indicates global capital is entering the construction robotics market, not just US VCs.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/05/15/xpanner-secures-18-million-series-b-funding-to-scale-ai-powered-automation-in-construction/101595/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Unusual Robots</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Developing active and flexible microrobots</h3>
+              <span class="digest-source">Robohub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Leiden researchers built microscopic robots that navigate using only their shape and environment interaction — no sensors, no software, no external control.</li>
+              <li>Behavior-from-morphology is a fundamentally different design philosophy from AI-controlled robots and could enable operation in environments where electronics cannot survive.</li>
+              <li>Medical and materials applications are the near-term targets: robots small enough to work inside the body with no onboard hardware.</li>
+            </ul>
+            <a href="https://robohub.org/developing-active-and-flexible-microrobots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Japan&#x27;s robot wolf sells out as record bear attacks drive demand</h3>
+              <span class="digest-source">Hacker News Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Ohta Seiki&#x27;s Monster Wolf — a snarling animatronic scarecrow — has sold out nationally as Japan faces a record year for bear encounters.</li>
+              <li>It&#x27;s a useful reminder that robotics includes radically simple deployments: no AI, no mobility, just effective behavior at low cost.</li>
+              <li>The sell-out shows genuine market pull for practical wildlife deterrence and a gap for smarter, adaptive versions of the same concept.</li>
+            </ul>
+            <a href="https://www.independent.co.uk/asia/japan/japan-robot-wolf-bear-attacks-ohta-seiki-b2975670.html" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

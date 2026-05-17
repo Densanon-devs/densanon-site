@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - May 12, 2026 | Densanon</title>
+  <title>Computation Morning Digest - May 17, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,161 +15,142 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 12, 2026</div>
+        <div class="digest-date-badge">May 17, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation headlines are dominated by geopolitics shaping semiconductor supply chains — TSMC&#x27;s $20B Arizona bet and the Nvidia/China policy signal — alongside serious security news including a PyPI supply-chain attack hitting AI developer tooling and AI-accelerated vulnerability exploitation shrinking the 90-day disclosure window. On the Linux/kernel front, Intel&#x27;s scheduler and power-efficiency work lands meaningful gains for both aging hardware and hybrid CPUs.</p>
+        <p class="digest-intro">AI infrastructure stress dominates today: a 76% electricity price spike declared &#x27;irreversible&#x27; in the PJM grid, fiber supply chains booked into 2027, and a Texas county attempting an outright data center ban — while Apple&#x27;s M5 ships its first privilege-escalation exploit discovered with AI assistance, and AMD reshapes the Linux GPU driver landscape.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Industry &amp; HPC</h2>
+        <h2 class="digest-section-title">Security &amp; Exploits</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>TSMC allocates $20 billion to Arizona expansion — project faces water and labor shortages, complicated by visa rules</h3>
+              <h3>First Apple M5 memory exploit discovered using Anthropic AI, gives root access on MacOS</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fab 21 turned profitable in its first year of operation, validating the U.S. domestic fab strategy despite ongoing headwinds.</li>
-              <li>TSMC is committing an additional $20B to further Arizona development even while wrestling with water scarcity, skilled-labor shortages, and long-term power supply uncertainty.</li>
-              <li>Visa rule friction continues to complicate importing Taiwanese engineering talent, a structural bottleneck for ramp-up speed.</li>
+              <li>Claude Mythos was used as a research accelerant to find the first privilege escalation bypass in M5&#x27;s Memory Integrity Enforcement — AI-assisted exploit research is now practical at the architecture level.</li>
+              <li>Root access via an MIE bypass on Apple silicon is a severe vulnerability class; expect a rapid patch and close scrutiny of M4/M3 implementations for the same flaw.</li>
+              <li>This compresses the time between silicon release and first public exploit, a trend that will force hardware vendors to invest in pre-silicon AI-assisted security review.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/tsmc-allocates-usd20-billion-to-arizona-expansion-project-faces-water-and-labor-shortages-complicated-by-visa-rules" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/cyber-security/apple-m5-architecture-suffers-first-privilege-escalation-exploit-anthropics-claude-mythos-helps-researchers-bypass-memory-integrity-enforcement" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Jensen Huang snubbed by White House for President Trump&#x27;s China state visit — Nvidia CEO not on roster, which includes Apple&#x27;s Tim Cook and Elon Musk</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>Linux Kernel Adds Documentation For What Qualifies As A Security Bug, Responsible AI Use</h3>
+              <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Huang&#x27;s exclusion from the delegation is read by analysts as a deliberate signal that the U.S. will not ease GPU export restrictions to China in the near term.</li>
-              <li>The move contrasts with Huang&#x27;s inclusion on previous state visits, suggesting the administration views Nvidia&#x27;s China sales as a policy liability rather than leverage.</li>
-              <li>Export control uncertainty continues to weigh on Nvidia&#x27;s addressable market for H-series and B-series datacenter GPUs in the world&#x27;s largest semiconductor market.</li>
+              <li>Linux 7.1 now officially codifies what counts as a security bug, giving maintainers a clear standard for triage, disclosure timelines, and CVE assignment decisions.</li>
+              <li>Explicit guidance on responsible AI use for bug-finding reflects that LLM-assisted fuzzing and static analysis are now routine parts of the kernel security research pipeline.</li>
+              <li>Clearer policy reduces ambiguity for distros and downstream vendors who need to make patching priority calls quickly.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/jensen-huang-snubbed-by-white-house-for-president-trumps-china-state-visit-nvidia-ceo-not-on-roster-which-includes-apples-tim-cook-and-elon-musk" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.1-Kernel-Docs-AI-Bugs" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Trump administration reportedly debating ban on Chinese cellular modules in expansion of FCC crackdown</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>Debian 13.5 Released To Ship The Latest Linux Security Fixes</h3>
+              <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Potential restrictions would cover cellular modules from Chinese vendors embedded in IoT devices, routers, connected vehicles, and industrial systems — a far broader scope than prior FCC actions.</li>
-              <li>A ban would disrupt global supply chains that heavily rely on low-cost Chinese modules from suppliers like Quectel and Fibocom.</li>
-              <li>The move follows an escalating FCC crackdown that has already restricted Huawei and ZTE equipment from U.S. networks.</li>
+              <li>Debian 13.5 (Trixie) rolls up the latest Linux kernel security patches and dozens of userspace fixes into a stable point release.</li>
+              <li>For production Debian deployments, this is a mandatory update cycle — the kernel fixes alone justify immediate rollout across server fleets.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/trump-administration-reportedly-debating-ban-on-chinese-cellular-modules-in-expansion-of-fcc-crackdown-potential-restrictions-could-impact-everything-from-smart-devices-and-routers-to-connected-cars-and-industrial-iot-systems" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Debian-13.5-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Hardware &amp; Chips</h2>
+        <h2 class="digest-section-title">Hardware &amp; Silicon</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Compromised Mistral AI and TanStack packages may have exposed GitHub, cloud and CI/CD credentials in &#x27;mini Shai Hulud&#x27; malware infection</h3>
+              <h3>The Core Ultra 7 270K was too good, so Intel scrapped the flagship Core Ultra 9 290K Plus</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The &#x27;Mini Shai-Hulud&#x27; campaign compromised the mistralai PyPI package so malware executed on import, silently exfiltrating GitHub tokens and cloud credentials from developer machines.</li>
-              <li>Related npm compromises hit TanStack and Mistral SDK packages, spreading the supply-chain attack across both Python and JavaScript AI developer ecosystems.</li>
-              <li>Any project that pip-installed or npm-installed affected packages should treat credentials as compromised and rotate immediately.</li>
+              <li>Prototype benchmarks show the 290K Plus delivered only ~2% gains over the 270K Plus — a margin too thin to justify a separate SKU, confirming Intel made the right call canceling it.</li>
+              <li>This exposes Arrow Lake Refresh&#x27;s architectural ceiling: Intel is extracting the final headroom from the current node before a more meaningful generational leap.</li>
+              <li>For buyers, the Core Ultra 7 270K is effectively the top-end Arrow Lake Refresh chip with no further flagship headroom above it.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/cyber-security/compromised-mistral-ai-and-tanstack-packages-may-have-exposed-github-cloud-and-ci-cd-credentials-in-mini-shai-hulud-malware-infection-supply-chain-campaign-spreads-across-npm-and-ai-developer-ecosystems-like-wildfire" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/the-core-ultra-7-270k-was-too-good-so-intel-scrapped-the-flagship-core-ultra-9-290k-plus-benchmarks-of-the-290k-prototype-find-slim-2-percent-faster-performance-in-gaming-and-applications" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Standard 90-day vulnerability disclosure policy is likely dead thanks to AI, expert warns that AI can weaponize patches in 30 minutes</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>LLMs can now analyze a published patch and generate a working exploit within 30 minutes, collapsing the window vendors rely on to push fixes before attackers reverse-engineer them.</li>
-              <li>The researcher argues the 90-day coordinated disclosure standard — developed over decades — is no longer sufficient and the industry needs a new, shorter baseline.</li>
-              <li>Defenders face an asymmetry: patching at scale still takes weeks or months, while AI-assisted weaponization is near-instant.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/cyber-security/standard-90-day-vulnerability-disclosure-policy-is-likely-dead-thanks-to-ai-leaving-worlds-systems-exposed-to-zero-day-attacks-security-expert-details-how-llm-assisted-bug-hunting-ushers-in-a-new-cyberworld-orders" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Running Four Intel Graphics Cards Under Linux On Ubuntu 26.04</h3>
+              <h3>AMD ROCm 7.13 Released With Instinct MI350P Support, More Ryzen AI APUs</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel&#x27;s Project Battlematrix multi-GPU initiative now supports up to eight Arc Pro GPUs per system under Linux, with open-source driver improvements shipping over the past year.</li>
-              <li>The review exercises four Arc Pro B70 cards on Ubuntu 26.04, providing a concrete benchmark of Intel&#x27;s datacenter/workstation GPU Linux stack maturity.</li>
-              <li>Open-source driver parity with Intel&#x27;s GPU compute roadmap is progressing faster than prior Arc generations, relevant for HPC and ML inference workloads.</li>
+              <li>ROCm 7.13 adds official Instinct MI350P support — AMD&#x27;s latest datacenter GPU — alongside broader Ryzen AI APU coverage, both critical for on-prem inference stacks.</li>
+              <li>This is a preview SDK stepping stone toward ROCm 8.0, meaning operators should test compatibility now before the major version break lands later this year.</li>
+              <li>Broader Ryzen AI APU support narrows the software gap between AMD&#x27;s desktop and server AI compute offerings.</li>
             </ul>
-            <a href="https://www.phoronix.com/review/intel-arc-pro-b70-four" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD &amp; Intel Roll Out New Linux Updates For Today&#x27;s Patch Tuesday</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Both AMD and Intel released Linux-specific microcode and driver security updates for May 2026 Patch Tuesday.</li>
-              <li>Vulnerabilities addressed are described as not widespread or critically impactful, but represent the standard monthly security maintenance cycle.</li>
-              <li>Linux users on AMD and Intel platforms should apply vendor-provided updates promptly given the month&#x27;s elevated security activity.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Patch-Tuesday-May-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/ROCm-7.13-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
+        <h2 class="digest-section-title">Datacenter &amp; Infrastructure</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux Scheduler Work Helping Boost Gaming Performance On Old &#x27;Potato&#x27; Hardware</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>AI data centers trigger massive &#x27;irreversible&#x27; 76% electricity price spike in largest US region</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel kernel engineer Peter Zijlstra is developing scheduler patches specifically targeting aging hardware — tested on Sandy Bridge CPU + Radeon RX 580 — to recover gaming responsiveness.</li>
-              <li>The patches improve task-pick behavior so older CPUs don&#x27;t thrash under gaming workloads, delivering measurably smoother frame pacing without hardware upgrades.</li>
-              <li>This work benefits the large installed base of decade-old PCs running Linux, particularly relevant as more users switch from Windows 10 end-of-life machines.</li>
+              <li>Monitoring Analytics labels the PJM price spike &#x27;irreversible&#x27; — ratepayers in 13 states are absorbing infrastructure costs that primarily benefit hyperscaler tenants, not the grid.</li>
+              <li>The federal demand that tech giants fund their own power infrastructure is a policy inflection point that would materially reshape the economics of future datacenter siting.</li>
+              <li>A 76% electricity price increase is large enough to cascade into cloud pricing pressure as operators pass higher OpEx through to customers — watch for it in Q3/Q4 earnings.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-Flatten-The-Pick" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/ai-data-centers-trigger-massive-irreversible-76-percent-electricity-price-spike-in-largest-us-region-federal-watchdog-demands-tech-giants-pay-for-their-own-power-infrastructure" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel Looking To Move Their Low-Power Mode Daemon Into The Linux Kernel Source Tree</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>AI data centers require 36 times more fiber than designs with standard servers</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel LPMD (Low Power Mode Daemon), which optimizes idle power on hybrid CPUs by leveraging hardware hints, is being proposed for inclusion directly in the Linux kernel tree.</li>
-              <li>Moving LPMD in-tree would make it available to all Linux distributions without separate packaging and ensure it evolves alongside kernel power-management infrastructure.</li>
-              <li>This is particularly impactful for Intel&#x27;s P/E-core hybrid laptop CPUs where tuned idle behavior can meaningfully extend battery life.</li>
+              <li>The 36x fiber multiplier is driven by dense intra-cluster GPU-to-GPU interconnects — not a rounding error, but a fundamental architectural demand of AI training clusters.</li>
+              <li>Chinese optical fiber manufacturers are booked into 2027, meaning new AI datacenters breaking ground today face a hard constraint on when they can actually be cabled and commissioned.</li>
+              <li>Fiber is now on the same critical path as power and cooling — operators who haven&#x27;t pre-ordered glass are facing multi-year delivery delays.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Intel-LPMD-Kernel-Source-Tree" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/ai-data-centers-are-consuming-fiber-optic-cable-faster-than-suppliers-can-make-it" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>OpenZFS 2.4.2 Released With Linux 7.0 Kernel Support, Many Bug Fixes</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Texas county passes data center ban for rural areas for a year</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>OpenZFS 2.4.2 adds compatibility with the Linux 7.0 kernel, keeping the ZFS filesystem current with the latest kernel release.</li>
-              <li>The release bundles numerous bug fixes for both Linux and FreeBSD platforms, maintaining OpenZFS as a production-grade storage option across operating systems.</li>
-              <li>Users running ZFS on kernel 7.0 should update to 2.4.2 to ensure compatibility and pick up stability fixes.</li>
+              <li>Hill County&#x27;s one-year moratorium reflects a growing pattern of local governments pushing back against AI datacenter sprawl that strains rural utilities and water supplies without proportionate local benefit.</li>
+              <li>The county-vs.-state legal conflict over preemption sets a precedent that will determine how much veto power communities have over hyperscaler infrastructure placement.</li>
+              <li>Even if courts void the ban, the political signal is clear: rural Texas is no longer a passive host for load-shifting, and permitting friction will increase across similar jurisdictions.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/OpenZFS-2.4.2-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/big-tech/texas-county-passes-data-center-moratorium-for-a-year-follows-other-local-governments-pausing-similar-projects-but-state-senator-says-counties-cannot-impose-these-bans" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Open Source &amp; Linux</h2>
+        <div class="digest-grid">
+
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>IBM s390 Is The Latest Architecture Seeing Rust Linux Kernel Support</h3>
+              <h3>Longtime Leading AMD Linux GPU Driver Developer Now Working For Valve</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>IBM engineers have submitted the first patches enabling Rust-language kernel modules to build on the s390 (mainframe) architecture.</li>
-              <li>This extends Rust&#x27;s kernel footprint beyond x86/ARM to mainframe-class hardware, signaling growing cross-architecture commitment from hardware vendors to Rust in the kernel.</li>
-              <li>s390 Rust support matters for enterprise Linux on IBM Z-series mainframes, where memory-safety improvements in critical kernel paths have direct reliability implications.</li>
+              <li>Marek Olsak is one of the most significant Mesa contributors AMD had — his move to Valve is a direct investment in Linux gaming performance at the open-source driver layer.</li>
+              <li>Valve now controls a critical mass of elite Mesa talent, meaning future Linux GPU driver improvements will increasingly be shaped by gaming workload priorities rather than enterprise or compute.</li>
+              <li>This continues Valve&#x27;s pattern of quietly building the strongest Linux graphics engineering team outside the GPU vendors themselves.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/IBM-s390-Linux-Kernel-Rust" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/AMD-Marek-Joins-Valve" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
