@@ -17,7 +17,7 @@
       <div class="container">
         <div class="digest-date-badge">May 18, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is heavy on infrastructure shifts: a CPU-only exascale machine from China sidesteps GPU export controls, India lands its first major semiconductor fab partnership, and AI-assisted bug hunting is starting to break the Linux security review process.</p>
+        <p class="digest-intro">Linus Torvalds dominated today&#x27;s conversation: AI-generated vulnerability reports have flooded the Linux security mailing list to the point of being &#x27;almost entirely unmanageable,&#x27; forcing a structural shift to a public reporting system — while simultaneously, kernel lieutenant Greg Kroah-Hartman&#x27;s own AI fuzzing bots are legitimately finding real bugs at scale. Elsewhere, the NGINX Rift flaw is already under active exploitation just days after disclosure, Samsung&#x27;s wildly unequal bonus structure (607% for memory workers vs. 50% for logic chip staff) sparked a strike only partially blocked by court injunction, and AMD&#x27;s Lemonade SDK hit a milestone with macOS GA and ROCm 7.13 integration.</p>
       </div>
     </section>
 
@@ -29,63 +29,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ASML to equip India&#x27;s first commercial chip fab — $11 billion Dholera project targets 50,000 wafers a month</h3>
+              <h3>Flood of duplicate vulnerability reports have made Linux security mailing list &#x27;almost entirely unmanageable&#x27; — Linus Torvalds</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ASML signed an MOU with Tata Electronics to supply lithography equipment for India&#x27;s first commercial fab at Dholera.</li>
-              <li>50,000 wafers/month target makes this a serious industrial-scale facility, not a pilot.</li>
-              <li>Signals India moving from chip assembly/packaging toward front-end fabrication, reshaping supply chain geography.</li>
+              <li>Torvalds is abandoning the private security mailing list for AI-generated reports, arguing LLM-found bugs are &#x27;by definition not secret&#x27; and the private channel is &#x27;a waste of time for everybody involved.&#x27;</li>
+              <li>The volume of duplicate, low-signal AI reports has reached a threshold where the list is operationally unmanageable for maintainers.</li>
+              <li>The policy shift forces a rethink of how the kernel community triages AI-assisted vulnerability disclosures going forward.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/asml-partners-with-tata-electronics-to-equip-indias-first-commercial-semiconductor-fab" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/software/linux/linus-torvalds-says-ai-bug-reports-have-made-the-linux-security-mailing-list-almost-entirely-unmanageable" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>China bypasses US GPU bans with 1.54-exaflops &#x27;LineShine&#x27; supercomputer — CPU-only monster packs 2.4 million Huawei-designed Armv9 cores</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>LineShine hits 1.54 exaflops using 2.4 million Huawei Armv9 CPUs — no NVIDIA GPUs needed.</li>
-              <li>Takes the same CPU-only HPC approach as Japan&#x27;s Fugaku, showing this architecture scales to exascale.</li>
-              <li>Demonstrates that GPU export controls don&#x27;t cap China&#x27;s HPC ceiling; domestic CPU clusters fill the gap.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/china-bypasses-us-gpu-bans-with-1-54-exaflops-lineshine-supercomputer-cpu-only-monster-packs-2-4-million-huawei-designed-armv9-cores" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>US FTC reportedly launches antitrust probe into Arm following its launch of its own AGI CPU — regulators investigate if chip designer is restricting architecture access to rivals</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>FTC is investigating whether Arm is favoring its own chip manufacturing business by limiting architecture access to licensees.</li>
-              <li>Arm&#x27;s new AGI CPU product puts it in direct competition with its own customers — the conflict of interest is the core concern.</li>
-              <li>Outcome could affect licensing terms for every company building Arm-based silicon.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/big-tech/us-ftc-reportedly-launches-antitrust-probe-into-arm-following-its-launch-of-its-own-agi-cpu-regulators-investigate-if-chip-designer-is-restricting-architecture-access-to-rivals" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Forza Horizon 6 boots up in just 4 seconds instead of 90 with new Advanced Shader Delivery tech and AMD GPUs — Microsoft claims 95% reduction in gaming load times</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Microsoft&#x27;s Advanced Shader Delivery ships pre-compiled shaders at download time rather than compiling at first launch.</li>
-              <li>90s to 4s load time on Forza Horizon 6 is a real-world 95% improvement, not a synthetic benchmark.</li>
-              <li>Expanding from Xbox ROG Ally handhelds to all Windows 11 PCs — AMD GPU users get it first.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/gpu-drivers/forza-horizon-6-boots-up-in-just-4-seconds-instead-of-90-with-new-advanced-shader-delivery-tech-and-amd-gpus-microsoft-claims-95-percent-reduction-in-gaming-load-times" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Ubuntu Concept ISOs Published For CIX P1 AI CPU</h3>
+              <h3>gkh_clanker_t1000 &amp; gkh_clanker_2000 Continue Uncovering Linux Kernel Bugs</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Canonical is publishing hardware-specific Ubuntu ISOs for the CIX P1 AI CPU ahead of mainline kernel support landing.</li>
-              <li>Same early-access pattern used for Qualcomm Snapdragon X Elite laptops — suggests CIX P1 is a priority hardware target.</li>
-              <li>Lets developers test AI workloads on CIX P1 before waiting for upstream kernel stabilization.</li>
+              <li>Greg Kroah-Hartman&#x27;s AI fuzzing bots are the legitimate counterexample — systematically finding real, previously unknown kernel bugs, not spamming duplicates.</li>
+              <li>GKH&#x27;s position as primary Linux stable maintainer gives the tooling immediate triage weight that random external AI reporters lack.</li>
+              <li>The contrast with the flood of low-quality external reports shows that tool quality and domain expertise determine signal-to-noise, not AI use itself.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Ubuntu-Concept-CIX-P1-CPU" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-GKH-Clanker-2000" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux AF_ALG Crypto Code Removing Zero-Copy Support Out Of Security Concerns</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The kernel&#x27;s AF_ALG cryptographic socket interface is proactively dropping zero-copy — a performance feature being traded away to reduce attack surface.</li>
+              <li>The move follows the kernel community tightening subsystem boundaries in response to the current wave of newly discovered security issues.</li>
+              <li>Userspace crypto workloads that relied on zero-copy AF_ALG for throughput will require application-layer adjustments.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-AF-ALF-Zero-Copy-Security" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AMD&#x27;s Lemonade SDK For AI Promotes macOS To GA Status, ROCm 7.13 Integrated</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>AMD&#x27;s open-source local AI serving stack for GPUs and NPUs has graduated macOS support from experimental to general availability in v10.5.</li>
+              <li>ROCm 7.13 is now integrated, aligning the stack with AMD&#x27;s latest GPU compute runtime.</li>
+              <li>The SDK is primarily developed by AMD engineers, making it a semi-official AMD AI inference story outside the formal ROCm release cadence.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Lemonade-SDK-10.5-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Samsung meeting transcripts show memory workers offered 607% bonus worth $477,000, while logic chip staff get as little as 50%</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Leaked wage transcripts reveal a 12x bonus gap between Samsung&#x27;s memory and logic chip divisions — 607% vs. 50% of annual salary — driven by HBM and DRAM demand.</li>
+              <li>The union argues the disparity creates a retention crisis in the logic division at exactly the time Samsung needs that talent to compete with TSMC on advanced nodes.</li>
+              <li>A court injunction blocked an imminent 18-day walkout, but negotiations remain active and unresolved.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/leaked-samsung-meeting-transcripts-show-memory-workers-offered-607-percent-bonus" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>LG UltraGear 52G930B 52-inch 5K gaming monitor review: Extreme in every respect</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>LG&#x27;s 52G930B hits 5120x2160 at 240 Hz on a 52-inch 1000R curved VA panel — the largest and highest-resolution gaming monitor in the UltraGear lineup.</li>
+              <li>HDR600 and wide gamut color are included; the 1000R curve at 52 inches is aggressive enough to be polarizing for flat-seated desktop use.</li>
+              <li>This panel represents the current engineering ceiling of consumer displays in a single product.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/monitors/gaming-monitors/lg-ultragear-52g930b-52-inch-5k-gaming-monitor-review-extreme-in-every-respect" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -93,42 +105,6 @@
         <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Open-Source &quot;low_latency_layer&quot; Brings Reflex &amp; Anti-Lag 2 To AMD &amp; Intel GPUs On Linux</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>An implicit Vulkan layer intercepts Reflex 2 and Anti-Lag 2 calls and makes them work on any GPU, not just the originating vendor&#x27;s hardware.</li>
-              <li>AMD and Intel users on Linux gain access to latency-reduction tech previously gated to NVIDIA or AMD-only games.</li>
-              <li>Open-source approach means it can be audited, extended, and packaged into distros without driver vendor cooperation.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Low-Latency-Layer" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>FFmpeg Introduces Apple ProRes RAW Vulkan-Powered Video Acceleration</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>FFmpeg now decodes Apple ProRes RAW using Vulkan compute shaders — GPU-accelerated on non-Apple hardware.</li>
-              <li>Builds on the ProRes (non-RAW) Vulkan path added last year; RAW variant requires more compute due to higher bit depth.</li>
-              <li>Useful for video pipelines processing camera-native ProRes RAW footage on Linux or Windows without Apple hardware.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/FFmpeg-ProRes-RAW-Vulkan" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>FluidX3D Lands A Big Speed-Up For This OpenCL CFD Software</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>FluidX3D 3.7 delivers a significant performance improvement to this GPU-accelerated computational fluid dynamics solver.</li>
-              <li>Runs on OpenCL, meaning it works across AMD, NVIDIA, and Intel GPUs without vendor lock-in.</li>
-              <li>CFD is compute-heavy and expensive in commercial tools — open-source options gaining performance matter for accessibility.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/FluidX3D-3.7-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
         </div>
       </div>
       <div class="digest-section">
@@ -137,27 +113,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.1-rc4 Released With Many Fixes, New Documentation For Security/AI Topics</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Linux 7.1-rc4 lands a broad set of bug fixes alongside new kernel documentation covering security and AI-related subsystems.</li>
-              <li>RC4 typically signals the kernel is stabilizing toward a final release — fewer new features, more regression fixes.</li>
-              <li>Documentation additions for AI topics suggest kernel-level AI accelerator support is maturing enough to warrant official docs.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.1-rc4-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linus Torvalds says AI-powered bug hunters have made Linux security mailing list &#x27;almost entirely unmanageable&#x27;</h3>
+              <h3>NGINX Rift attackers waste no time targeting exposed servers</h3>
               <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Multiple researchers running the same AI tools independently are flooding the security list with duplicate low-quality reports.</li>
-              <li>Torvalds&#x27; framing is that the volume creates unnecessary pain for maintainers, not that the bugs themselves are wrong.</li>
-              <li>Raises a real coordination problem: AI lowers the barrier to finding bugs, but reviewer bandwidth doesn&#x27;t scale the same way.</li>
+              <li>An 18-year-old flaw in NGINX dubbed &#x27;Rift&#x27; is already being actively probed and exploited in the wild, just days after public disclosure.</li>
+              <li>The age of the vulnerability means a large installed base of unpatched servers is exposed — patch cadence on infrastructure software lags far behind disclosure timelines.</li>
+              <li>Any internet-facing NGINX instance not on the patched release should be treated as compromised until verified.</li>
             </ul>
-            <a href="https://www.theregister.com/security/2026/05/18/linus-torvalds-says-ai-powered-bug-hunters-have-made-linux-security-mailing-list-almost-entirely-unmanageable/5241633" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/security/2026/05/18/nginx-rift-attackers-waste-no-time-targeting-exposed-servers/5241851" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Poland directs officials to ditch Signal in favor of &#x27;secure&#x27; state-developed alternative</h3>
+              <span class="digest-source">The Register</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Poland is mandating a shift away from Signal for official communications, citing successful social engineering attacks targeting senior government officials.</li>
+              <li>The replacement is a domestically developed messaging platform — part of a growing pattern of governments building sovereign secure-comms stacks.</li>
+              <li>Metadata and endpoint control concerns with commercial E2EE apps are now driving nation-state messaging policy decisions.</li>
+            </ul>
+            <a href="https://www.theregister.com/security/2026/05/18/poland-builds-its-own-signal-amid-security-concerns/5241824" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Google tells database devs to lean hard on AI for PostgreSQL work</h3>
+              <span class="digest-source">The Register</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Google is pushing PostgreSQL contributors to adopt AI-assisted development tooling, while maintaining that human engineers remain accountable for all code that ships.</li>
+              <li>PostgreSQL&#x27;s open governance model means Google&#x27;s push is advisory, not binding — but Google&#x27;s contributor weight gives it real influence over community norms.</li>
+              <li>The guidance positions AI as a force multiplier for database patch and extension work, not a replacement for domain expertise.</li>
+            </ul>
+            <a href="https://www.theregister.com/databases/2026/05/18/google-tells-database-devs-to-lean-hard-on-ai-for-postgresql-work/5238070" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Windows boot partition runs out of space for Microsoft&#x27;s May security update</h3>
+              <span class="digest-source">The Register</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Microsoft&#x27;s May 2026 Patch Tuesday update is failing on systems where the EFI/boot partition lacks sufficient free space, blocking security patching on a broad class of OEM machines.</li>
+              <li>The failure mode is silent enough that users may not realize their system remains unpatched after a seemingly completed update cycle.</li>
+              <li>This is a QA process failure: the update shipped without accounting for real-world minimum partition sizes common in manufacturer configurations.</li>
+            </ul>
+            <a href="https://www.theregister.com/oses/2026/05/18/windows-boot-partition-runs-out-of-space-for-microsofts-may-security-update/5241799" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -165,18 +165,6 @@
         <h2 class="digest-section-title">Community Highlights</h2>
         <div class="digest-grid">
 
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Claude Code Did The Heavy Lifting To Get Adobe Lightroom CC Running On Linux</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A developer used Claude Code to work through the Wine compatibility patches needed to run Lightroom CC on Linux.</li>
-              <li>Lightroom on Linux has been a long-standing gap for photographers on open-source stacks — this is a community-driven workaround.</li>
-              <li>Shows AI-assisted debugging applied to a real-world reverse-compatibility problem, not just greenfield code.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Adobe-Lightroom-CC-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
         </div>
       </div>
 

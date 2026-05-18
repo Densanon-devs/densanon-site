@@ -17,27 +17,105 @@
       <div class="container">
         <div class="digest-date-badge">May 18, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s robotics community is active across hands-on builds and real-world deployments — from a 21-DOF dexterous hand to an offline sign language translator on Raspberry Pi, plus a practical conversation about improving CI for ROS 2 autonomy stacks.</p>
+        <p class="digest-intro">Sony&#x27;s Ace table-tennis robot beating elite human players headlines today&#x27;s digest, demonstrating that millisecond-precision perception-action loops can now outperform top-ranked competitors in a sport that demands near-human reflexes. On the humanoid front, Figure&#x27;s F.03 nearly matched a human worker&#x27;s packaging throughput (12,732 vs 12,924 packages) — close enough that Brett Adcock called it potentially the last time a human wins that race. Rounding out the day: PhysBrain 1.0 shows how human egocentric video can bootstrap VLA training without any robot trajectories, and a candid community thread punctures the hype around 24/7 unattended deployment.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Title: Would your team use an open-loop regression testing tool for ROS 2 autonomy stacks?</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>Table tennis robot defeats some of world&#x27;s best players – why this has major implications for robotics</h3>
+              <span class="digest-source">Robohub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes automating rosbag replay plus metric diffing in CI so perception and planning regressions surface before merge.</li>
-              <li>Targets the manual replay workflow that most deployed-robot teams still rely on today.</li>
-              <li>Worth reading if you work on ROS 2 nav or autonomy stacks and want faster feedback loops.</li>
+              <li>Sony&#x27;s Ace robot outperformed elite players including Yamato Kawamata in December 2025 matches, relying on sub-millisecond perception-action loops that no human can replicate.</li>
+              <li>Table tennis is a meaningful robotics benchmark because it simultaneously demands real-time spin estimation, trajectory prediction, and precise paddle rotation under chaotic ball dynamics.</li>
+              <li>The win signals that closed-loop dynamic manipulation — not just quasi-static pick-and-place — is entering competitive territory against trained human athletes.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/title-would-your-team-use-an-open-loop-regression-testing-tool-for-ros-2-autonomy-stacks/54919" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://robohub.org/table-tennis-robot-defeats-some-of-worlds-best-players-why-this-has-major-implications-for-robotics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>PhysBrain 1.0 Technical Report</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>PhysBrain 1.0 converts large-scale human egocentric video into VLA training data, bypassing the need for costly robot trajectory collection.</li>
+              <li>Human video provides far broader coverage of physical interactions than robot-collected datasets, exposing models to edge cases robots rarely encounter in lab settings.</li>
+              <li>The approach directly attacks the data bottleneck in embodied AI: getting diverse manipulation training signal without proportionally scaling robot hardware time.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.15298" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>HoloMotion-1 Technical Report</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>HoloMotion-1 is a humanoid motion foundation model that achieves zero-shot whole-body motion tracking without task-specific fine-tuning.</li>
+              <li>Training scales using a hybrid motion corpus that blends video-reconstructed motions with motion-capture data, dramatically widening the training distribution.</li>
+              <li>Zero-shot whole-body tracking is a prerequisite for general-purpose humanoids that need to imitate arbitrary human demonstrations on first contact.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.15336" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Diffusion Policy for Coordinated Control of a Nonholonomic Mobile Base and Dual Arms in Door Opening and Passing</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Diffusion Policy jointly controls a nonholonomic mobile base and two arms to solve heavy self-closing door opening — requiring simultaneous handle rotation, gap widening, arm switching, and base repositioning.</li>
+              <li>Nonholonomic constraints make base-arm coordination especially hard; the policy plans arm and base timing jointly rather than sequentially.</li>
+              <li>Door traversal is a high-value manipulation benchmark because it is unavoidable in any real facility deployment and has resisted robust solutions for decades.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.15352" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Where to Perch in a Tree: Vision-Guidance for Tree-Grasping Drones</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Vision-guided drones use image segmentation and binary morphology to autonomously identify optimal branch perch sites on real trees in outdoor conditions.</li>
+              <li>Perching on natural structures rather than engineered pads cuts battery consumption dramatically for long-duration surveillance or sensor-deployment missions.</li>
+              <li>ML-based segmentation handles the irregular geometry of real branches where rule-based approaches fail, making the method applicable across tree species without re-tuning.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.15430" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Residual Reinforcement Learning for Robot Teleoperation under Stochastic Delays</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Residual RL adds a learned corrective layer on top of the human teleoperator&#x27;s control signal to compensate for unpredictable network delays that destabilize conventional RL policies.</li>
+              <li>Stochastic delays create signal discontinuities that standard control pipelines cannot absorb, making unmodified RL impractical for real-world remote operation over variable-latency links.</li>
+              <li>Keeping the human in the loop while the residual policy absorbs timing uncertainty is directly applicable to surgical robots, disaster response, and space teleoperation.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.15480" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Fanuc strengthens Nvidia partnership for AI robot simulation and digital twins</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Fanuc integrated Nvidia Isaac Sim directly into its RoboGuide software, letting manufacturers validate AI-trained robot programs inside a digital twin before touching physical hardware.</li>
+              <li>Programs verified in Isaac Sim transfer to Fanuc arms with minimal real-world re-tuning, directly closing the sim-to-real gap for production deployments.</li>
+              <li>Fanuc&#x27;s massive global installed base means Isaac Sim gaining native RoboGuide support effectively makes Nvidia&#x27;s simulation stack the default AI training environment for factory robotics.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/05/18/fanuc-strengthens-nvidia-partnership-for-ai-robot-simulation-and-digital-twins/101628/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -47,63 +125,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ElliQ is a surprisingly helpful companion robot for older adults</h3>
+              <h3>Human beats F.03: F.03: 12,732 packages (2.83 seconds/package) - Aime: 12,924 packages (2.79 seconds/package)</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Figure&#x27;s F.03 humanoid packaged 12,732 units at 2.83 sec/package versus human worker Aime&#x27;s 12,924 at 2.79 sec — a throughput gap of under 1.5%.</li>
+              <li>Brett Adcock publicly framed the result as potentially the last time a human will win this head-to-head, treating it as an inflection-point benchmark rather than a promotional stunt.</li>
+              <li>A 2.83-second cycle time puts F.03 in the range of unskilled warehouse labor, not just proof-of-concept demos under controlled conditions.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1tgh6gi/human_beats_f03_f03_12732_packages_283/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Has anyone here actually deployed a robot that runs 24/7 for more than a year without a human babysitter?</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Practitioners consistently report the same failure mode: something breaks mechanically after 2-3 months and an on-site human is required to recover — a hardware wear problem, not a software one.</li>
+              <li>The thread draws a sharp line between lab demos and true production deployments, pushing back on vendor marketing that implies current robots are maintenance-free.</li>
+              <li>Long-running autonomous operation without human intervention remains an unsolved engineering problem in 2026, and the community consensus says the gap is wider than press releases suggest.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1tgb38r/has_anyone_here_actually_deployed_a_robot_that/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Tom&#x27;s Hardware covered my fully-offline suitcase robot but used a stock graphic - so I put up a real dev site featuring the build with photos</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Sparky is a fully-offline companion robot built into a suitcase running Gemma 4 E4B via llama.cpp on an NVIDIA Jetson Orin NX Super 16GB, achieving ~200ms response latency.</li>
+              <li>Thirty-plus integrated sensors feed real-time context into every prompt, making responses situationally aware with zero cloud dependency or API keys.</li>
+              <li>The build is a concrete proof point that capable edge-AI companion robotics is achievable today on commodity hardware — no server infrastructure required.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1tgf4w7/toms_hardware_covered_my_fullyoffline_suitcase/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Two Autonomous Humanoid Robots Seamlessly Work Together to Make the Bed</h3>
               <span class="digest-source">Hacker News Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Hands-on report from The Verge finds ElliQ genuinely useful for social engagement with older adults.</li>
-              <li>Intuition Robotics focuses on proactive conversation rather than task automation — a different product angle than most companion bots.</li>
-              <li>Relevant for anyone building or evaluating social robotics for elder care markets.</li>
+              <li>Two humanoid robots coordinate autonomously to complete bimanual bed-making — a deformable-object manipulation challenge where each robot must anticipate the other&#x27;s movements in real time.</li>
+              <li>Deformable textiles like bedsheets are among the hardest manipulation targets because their state space is high-dimensional and varies substantially between attempts.</li>
+              <li>Multi-robot coordination on a shared unstructured task without scripted hand-offs is a meaningful step beyond single-robot or fixed-pipeline demos.</li>
             </ul>
-            <a href="https://www.theverge.com/gadgets/928806/elliq-intuition-robotics-hands-on" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://laughingsquid.com/robots-make-bed/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>My little robot has learned to walk in Isaac Lab!!</h3>
+              <h3>We just introduced live visualizations to bonsai-bt behavior trees</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Community build trained a small quadruped using NVIDIA Isaac Lab&#x27;s sim-to-real RL pipeline.</li>
-              <li>Demonstrates Isaac Lab is accessible enough for hobbyist hardware, not just research labs.</li>
-              <li>Good reference if you&#x27;re exploring sim-to-real transfer on custom robot hardware.</li>
+              <li>bonsai-bt is a Rust behavior-tree library that now ships a live visualizer, letting developers watch decision-node state change in real time during a running robot control loop.</li>
+              <li>Behavior trees are the dominant architecture for deterministic, debuggable robot decision-making, and live introspection was the main missing tooling piece compared to neural-network approaches.</li>
+              <li>A Rust implementation means near-zero runtime overhead, making it viable for hard real-time control loops where Python-based BT libraries introduce unsafe latency.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1tg10ks/my_little_robot_has_learned_to_walk_in_isaac_lab/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Would you consider this dexterous hand highly dexterous？</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>21-DOF hand with tactile perception and backdrivable joints — capable of single-hand cat&#x27;s cradle.</li>
-              <li>Backdrivable design is key for safe human interaction and compliant grasping.</li>
-              <li>Raises a useful community debate about how to define and benchmark dexterity.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1tfgd5q/would_you_consider_this_dexterous_hand_highly/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>After a 2-year journey, my friend and I built &#x27;TARANG&#x27; - a real-time Sign Language Translator powered by a Raspberry Pi 5. It uses MediaPipe for hand tracking and runs the ML model completely offline.</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Runs MediaPipe hand tracking plus full ML inference entirely on-device — no cloud dependency.</li>
-              <li>Two-year hobbyist build that ships a real accessibility use case on commodity hardware.</li>
-              <li>Raspberry Pi 5 performance enables real-time inference that previous Pi generations could not sustain.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1tfkx3d/after_a_2year_journey_my_friend_and_i_built/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Bittle X quadruped survives unsupervised kids at a Robot Zoo event — backflip, self-righting, and all</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Petoi&#x27;s Bittle X handled free-play by children including backflips and repeated knockdowns without failure.</li>
-              <li>Controlled via mobile app and micro:bit — no coding required, useful for education and outreach events.</li>
-              <li>Good real-world durability data point for small consumer quadrupeds in uncontrolled environments.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1tg4xij/bittle_x_quadruped_survives_unsupervised_kids_at/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1tgjyxa/we_just_introduced_live_visualizations_to/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

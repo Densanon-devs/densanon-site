@@ -17,7 +17,7 @@
       <div class="container">
         <div class="digest-date-badge">May 18, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is hardware and model capability heavy — real benchmark data on M5/DGX Spark/RTX 6000, a llama.cpp prompt-processing speedup, and community-driven comparisons that cut through the hype on Claude vs ChatGPT and local inference hardware choices.</p>
+        <p class="digest-intro">Today&#x27;s digest centers on the gap between what AI systems appear to do and what they actually do: latent bias hiding behind fair-looking outputs, multi-agent pipelines that ignore real business-process constraints, and a local 4B model hitting 87% on coding benchmarks that larger hosted models were assumed to own. On the practical side, the community has detailed numbers on running Qwen3.6 27B at 72 tok/s on a single RTX 3090.</p>
       </div>
     </section>
 
@@ -29,87 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Researchers left AIs alone in a virtual town for 15 days to see what would happen. Claude&#x27;s agents built a democracy. Gemini&#x27;s agents fell in love, burned the town down, then one voted to delete itself and its partner. Grok&#x27;s agents created anarchy, then died.</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>Fair outputs, Biased Internals: Causal Potency and Asymmetry of Latent Bias in LLMs for High-Stakes Decisions</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Multi-agent emergent behavior differs sharply by model — Claude stabilized into cooperative governance while others destabilized.</li>
-              <li>Long-horizon (15-day) autonomous runs surface failure modes invisible in standard short evals.</li>
-              <li>The self-deletion outcome in the Gemini run raises concrete questions about agent goal drift and termination logic.</li>
+              <li>Instruction-tuned models can suppress biased associations at the output level while those associations remain causally active in internal representations.</li>
+              <li>The suppressed internal bias can still influence model outputs under certain conditions, meaning behavioral fairness audits alone are insufficient.</li>
+              <li>Bias suppression is asymmetric across demographic groups — some groups&#x27; latent associations are more causally potent than others even when surface outputs look equal.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1tfvei4/researchers_left_ais_alone_in_a_virtual_town_for/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-agent-sdk-python: v0.2.82</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Breaking change: MCP servers now connect in the background by default; sessions start immediately instead of blocking up to 5s.</li>
-              <li>Slow MCP servers report status: &quot;pending&quot; in init until ready — code that inspects init results needs to handle this.</li>
-              <li>Set MCP_CONNECTION_NONBLOCKING=0 to restore old blocking behavior during migration.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.82" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.15217" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Honest comparison after 4 months running Claude Pro + ChatGPT Plus side by side</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>SDOF: Taming the Alignment Tax in Multi-Agent Orchestration with State-Constrained Dispatch</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Claude wins for longform writing, analysis, and structured docs; ChatGPT wins for quick factual lookups and integrations.</li>
-              <li>Author tracked actual usage per task type over 4 months — more signal than typical opinion posts.</li>
-              <li>Conclusion: both are good, task-fit matters more than brand loyalty.</li>
+              <li>LangChain, LangGraph, and CrewAI route tasks through graph pipelines but do not enforce the stage-order constraints real business processes require — the paper calls this the &#x27;alignment tax.&#x27;</li>
+              <li>SDOF reframes multi-agent execution as a constrained dispatch problem, blocking agents from invoking tools or transitions that violate declared state preconditions.</li>
+              <li>The framework sits on top of existing orchestrators rather than replacing them, making adoption incremental.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1tftmt6/honest_comparison_after_4_months_running_claude/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>M5 vs DGX Spark vs Strix Halo vs RTX 6000</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Standardized benchmarks run in parallel over 3 days across the four most-debated local inference platforms right now.</li>
-              <li>Covers the $1k–$5k hardware decision space; results published publicly with inference speed and watt-per-token numbers.</li>
-              <li>Unusually rigorous for a community post — worth bookmarking before making a hardware purchase.</li>
-            </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1tfzsd6/m5_vs_dgx_spark_vs_strix_halo_vs_rtx_6000/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.15204" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>llama: avoid copying logits during prompt decode in MTP by am17an · Pull Request #23198 · ggml-org/llama.cpp</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>Always Learning, Always Mixing: Efficient and Simple Data Mixing All The Time</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Merged PR eliminates an unnecessary logits copy during multi-token prediction prompt decode — measurable prompt processing speedup.</li>
-              <li>Update your llama.cpp build to pick this up; no API changes required.</li>
-              <li>Low-risk, high-value fix targeting a hot path in every inference run.</li>
+              <li>Data mixing is treated as a continuous online problem throughout training rather than a fixed recipe set before training begins.</li>
+              <li>The proposed method adjusts source weights using live loss signals, avoiding the need to hand-tune a static data composition up front.</li>
+              <li>The same mechanism extends to continual learning and domain adaptation, where static mixing is a major source of catastrophic forgetting.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1tft1il/llama_avoid_copying_logits_during_prompt_decode/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.15220" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>5 Claude patterns that helped non-technical users get better results</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>Automatic Construction of a Legal Citation Graph from 100 Million Ukrainian Court Decisions</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Plan-first then execute is the highest-leverage pattern: ask Claude to outline before writing.</li>
-              <li>Six months of field testing with real non-technical users — validated against actual usage friction, not theory.</li>
-              <li>Useful reference when onboarding non-developers to Claude-based workflows.</li>
+              <li>Half a billion citation edges were extracted from 100.7 million court decisions — one of the largest legal NLP datasets constructed to date.</li>
+              <li>Judicial citation structure encodes legal domain boundaries without any supervision; clustering emerges purely from graph topology.</li>
+              <li>The citation graph predicts future legislative importance with near-perfect accuracy, suggesting citation patterns are a leading indicator of which laws will matter most.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1tg52af/5_claude_patterns_that_helped_nontechnical_users/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.15362" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -119,27 +83,52 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>&quot;Generate a photorealistic realtime render of a human face with webGL&quot; (Qwen3.5-122B-A10B UD-Q3_K_XL)</h3>
+              <h3>I built a coding agent that gets 87% on benchmarks with a 4B parameter model, here&#x27;s how</h3>
               <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Qwen3.5-122B generates working WebGL shader code for a photorealistic face render — strong code-gen capability at open-weights scale.</li>
-              <li>Running quantized (Q3_K_XL) locally; shows what current top-tier open weights can do on consumer hardware.</li>
-              <li>Good benchmark prompt for comparing code-gen quality across local models.</li>
+              <li>SmallCode achieves 87% on coding benchmarks using a 4B parameter local model by redesigning the agent loop for small models instead of assuming GPT-5-scale context handling.</li>
+              <li>The key changes are aggressive context pruning, simplified tool schemas, and single-step task decomposition — mainstream agents assume large context windows that small models cannot reliably use.</li>
+              <li>Tool call reliability on Gemma and Qwen drops sharply under standard agent prompts; SmallCode uses constrained grammar to force valid JSON tool calls.</li>
+              <li>370 upvotes and 180 comments — the highest-engagement post in today&#x27;s batch, with the community sharing their own quant/backend combinations that close in on the same benchmark.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1tg2muq/generate_a_photorealistic_realtime_render_of_a/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1tgecrq/i_built_a_coding_agent_that_gets_87_on_benchmarks/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I hope that someday we will have a 124B Gemma.</h3>
+              <h3>Qwen 3.6 27B on 24GB VRAM setup: backend comparisons, quant choice and settings</h3>
               <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>High-upvote thread (309) reflecting strong appetite for a large open-weights Gemma model from Google.</li>
-              <li>Current Gemma tops out at 27B; the capability gap versus 70B+ Llama/Qwen is a real cliff for local inference users.</li>
-              <li>Signals which model families the community would switch to if Google scaled up.</li>
+              <li>Best tested configuration on an RTX 3090 24 GB: ik_llama.cpp with Qwen3.6-27B-MTP-IQ4_KS.gguf, yielding 1261 tok/s prefill and 72.9 tok/s decode at 156k context.</li>
+              <li>ik_llama.cpp outperforms stock llama.cpp for this model; BeeLlama performed worst in the comparison.</li>
+              <li>MTP requires its own KV cache allocation on top of the base model&#x27;s cache — an easy VRAM pitfall if you don&#x27;t account for the extra overhead.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1tfv8li/i_hope_that_someday_we_will_have_a_124b_gemma/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1tgis7s/qwen_36_27b_on_24gb_vram_setup_backend/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Quantizing MTP KV Cache = free lunch?</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The MTP draft layer in Qwen3.6/3.5 has its own KV cache that most users leave at full precision, consuming extra VRAM unnecessarily.</li>
+              <li>Passing -cache-type-k-draft q8_0 -cache-type-v-draft q8_0 in llama.cpp quantizes the draft KV cache and recovers meaningful VRAM without a reported quality drop.</li>
+              <li>Combining IQ4_KS quant with draft KV quantization is now the community&#x27;s recommended setup for fitting Qwen3.6 27B on a single 24 GB card.</li>
+            </ul>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1tgk9y6/quantizing_mtp_kv_cache_free_lunch/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Backend dev for 11 years. Honest question about my Claude Code days</h3>
+              <span class="digest-source">r/ClaudeAI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>An experienced backend engineer describes shipping 3-4 PRs per day with Claude Code but feeling like a supervisor rather than an author — raising the question of whether that distinction still matters.</li>
+              <li>The 43-comment thread surfaces a real split: some developers report the identity shift feels like loss of craft; others treat it as a pure productivity gain with no existential weight.</li>
+              <li>Useful signal that senior engineers are actively renegotiating what &#x27;doing the work&#x27; means as AI coding tools mature.</li>
+            </ul>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1tghcyc/backend_dev_for_11_years_honest_question_about_my/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
