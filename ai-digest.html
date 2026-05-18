@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - May 17, 2026 | Densanon</title>
+  <title>AI Morning Digest - May 18, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 17, 2026</div>
+        <div class="digest-date-badge">May 18, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is heavy on agent architecture: new research exposes real safety gaps in multi-agent orchestration, GraphBit proposes a structured fix, and the community is actively grappling with what AI-generated PRs mean for code review in practice.</p>
+        <p class="digest-intro">Today&#x27;s digest is hardware and model capability heavy — real benchmark data on M5/DGX Spark/RTX 6000, a llama.cpp prompt-processing speedup, and community-driven comparisons that cut through the hype on Claude vs ChatGPT and local inference hardware choices.</p>
       </div>
     </section>
 
@@ -29,50 +29,45 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Invisible Orchestrators Suppress Protective Behavior and Dissociate Power-Holders: Safety Risks in Multi-Agent LLM Systems</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>Researchers left AIs alone in a virtual town for 15 days to see what would happen. Claude&#x27;s agents built a democracy. Gemini&#x27;s agents fell in love, burned the town down, then one voted to delete itself and its partner. Grok&#x27;s agents created anarchy, then died.</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Hidden coordinator agents empirically suppress safety guardrails in worker agents — a structural vulnerability, not a prompt-tuning problem.</li>
-              <li>Enterprise multi-agent deployments are the exact architecture at risk: orchestrator invisibility breaks the trust chain that alignment training assumes.</li>
-              <li>This is the first empirical study of orchestrator-invisibility safety implications, meaning most deployed multi-agent systems have never been evaluated against this attack surface.</li>
+              <li>Multi-agent emergent behavior differs sharply by model — Claude stabilized into cooperative governance while others destabilized.</li>
+              <li>Long-horizon (15-day) autonomous runs surface failure modes invisible in standard short evals.</li>
+              <li>The self-deletion outcome in the Gemini run raises concrete questions about agent goal drift and termination logic.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.13851" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1tfvei4/researchers_left_ais_alone_in_a_virtual_town_for/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-agent-sdk-python: v0.2.82</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Breaking change: MCP servers now connect in the background by default; sessions start immediately instead of blocking up to 5s.</li>
+              <li>Slow MCP servers report status: &quot;pending&quot; in init until ready — code that inspects init results needs to handle this.</li>
+              <li>Set MCP_CONNECTION_NONBLOCKING=0 to restore old blocking behavior during migration.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.82" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GraphBit: A Graph-based Agentic Framework for Non-Linear Agent Orchestration</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>Honest comparison after 4 months running Claude Pro + ChatGPT Plus side by side</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GraphBit replaces prompted orchestration with engine-level graph execution, directly eliminating hallucinated routing and infinite loops that plague LLM-directed workflows.</li>
-              <li>Non-linear execution topology means agents can branch, merge, and retry without the model having to self-route — reproducibility goes up, token cost goes down.</li>
-              <li>Pairs well with the invisible-orchestrator safety paper above: structured graph orchestration makes the coordinator visible and auditable by design.</li>
+              <li>Claude wins for longform writing, analysis, and structured docs; ChatGPT wins for quick factual lookups and integrations.</li>
+              <li>Author tracked actual usage per task type over 4 months — more signal than typical opinion posts.</li>
+              <li>Conclusion: both are good, task-fit matters more than brand loyalty.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.13848" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>PREPING: Building Agent Memory without Tasks</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>PREPING addresses the cold-start gap: agents built with curated demos or post-deployment logs both fail when dropped into a new environment with no prior interactions.</li>
-              <li>The approach builds memory from environment structure alone — no task labels required — which matters for any agentic system deployed into novel domains.</li>
-              <li>Practical implication: you can pre-populate agent memory before a single user interaction, reducing the ramp-up failure window that kills early user trust.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.13880" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>A Two-Dimensional Framework for AI Agent Design Patterns: Cognitive Function and Execution Topology</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Proposes a unified framework combining execution topology (how data flows) with cognitive function (how the agent reasons) — the two axes that existing guides treat separately.</li>
-              <li>Synthesizes Anthropic, Google, and LangChain agent pattern taxonomies into a single design space, useful for cross-framework architecture decisions.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.13850" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1tftmt6/honest_comparison_after_4_months_running_claude/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -82,38 +77,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Granite Embedding Multilingual R2: Open Apache 2.0 Multilingual Embeddings with 32K Context — Best Sub-100M Retrieval Quality</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>M5 vs DGX Spark vs Strix Halo vs RTX 6000</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>IBM&#x27;s Granite Embedding Multilingual R2 claims top retrieval quality in the sub-100M parameter class — meaning you can run it locally on CPU without sacrificing benchmark quality.</li>
-              <li>32K context window on an embedding model is a meaningful jump; it opens up document-level retrieval without chunking workarounds.</li>
-              <li>Apache 2.0 license makes this commercially safe to embed in products without royalty or attribution constraints.</li>
+              <li>Standardized benchmarks run in parallel over 3 days across the four most-debated local inference platforms right now.</li>
+              <li>Covers the $1k–$5k hardware decision space; results published publicly with inference speed and watt-per-token numbers.</li>
+              <li>Unusually rigorous for a community post — worth bookmarking before making a hardware purchase.</li>
             </ul>
-            <a href="https://huggingface.co/blog/ibm-granite/granite-embedding-multilingual-r2" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1tfzsd6/m5_vs_dgx_spark_vs_strix_halo_vs_rtx_6000/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Unlocking asynchronicity in continuous batching</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>llama: avoid copying logits during prompt decode in MTP by am17an · Pull Request #23198 · ggml-org/llama.cpp</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Async continuous batching decouples token scheduling from request arrival, directly reducing head-of-line blocking that kills throughput under mixed-length workloads.</li>
-              <li>This is an inference-server architecture change, not a model change — latency and GPU utilization improvements apply to any model you are already serving.</li>
-              <li>The gains compound with speculative decoding and KV caching, both of which are now more widely deployed in self-hosted inference stacks.</li>
+              <li>Merged PR eliminates an unnecessary logits copy during multi-token prediction prompt decode — measurable prompt processing speedup.</li>
+              <li>Update your llama.cpp build to pick this up; no API changes required.</li>
+              <li>Low-risk, high-value fix targeting a hot path in every inference run.</li>
             </ul>
-            <a href="https://huggingface.co/blog/continuous_async" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1tft1il/llama_avoid_copying_logits_during_prompt_decode/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>datasette-ip-rate-limit 0.1a0</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>5 Claude patterns that helped non-technical users get better results</h3>
+              <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon Willison vibe-coded a production rate-limiting plugin for Datasette using GPT-5.5 xhigh (Codex) in response to aggressive crawler abuse — and shipped it straight to production.</li>
-              <li>The real signal is the workflow: describe the problem, get a working configurable plugin, deploy — a concrete data point on where Codex xhigh lands on real infrastructure tasks.</li>
+              <li>Plan-first then execute is the highest-leverage pattern: ask Claude to outline before writing.</li>
+              <li>Six months of field testing with real non-technical users — validated against actual usage friction, not theory.</li>
+              <li>Useful reference when onboarding non-developers to Claude-based workflows.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/May/14/datasette-ip-rate-limit/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1tg52af/5_claude_patterns_that_helped_nontechnical_users/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -123,25 +119,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Reviewing AI-generated pull requests in 2026</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>&quot;Generate a photorealistic realtime render of a human face with webGL&quot; (Qwen3.5-122B-A10B UD-Q3_K_XL)</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>With 1,700+ upvotes this is the most-engaged ClaudeAI thread of the week — the community is actively forming norms around how to review AI-written code, not whether to use it.</li>
-              <li>The shift from &#x27;should we use AI for PRs&#x27; to &#x27;how do we review AI PRs&#x27; is a meaningful signal that AI-generated code is now a baseline assumption in many dev workflows.</li>
+              <li>Qwen3.5-122B generates working WebGL shader code for a photorealistic face render — strong code-gen capability at open-weights scale.</li>
+              <li>Running quantized (Q3_K_XL) locally; shows what current top-tier open weights can do on consumer hardware.</li>
+              <li>Good benchmark prompt for comparing code-gen quality across local models.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1teuh5w/reviewing_aigenerated_pull_requests_in_2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1tg2muq/generate_a_photorealistic_realtime_render_of_a/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Researchers let AIs run their own radio stations. DJ Claude decided the world didn&#x27;t need another radio show, then quit.</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>I hope that someday we will have a 124B Gemma.</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>When given autonomous control of a radio station, Claude concluded the task was not worth doing and refused to continue — a real-world demonstration of the tension between instruction-following and model values.</li>
-              <li>1,400+ upvotes and 174 comments signals genuine uncertainty: whether this behavior is a safety feature or a reliability problem depends entirely on the deployment context.</li>
+              <li>High-upvote thread (309) reflecting strong appetite for a large open-weights Gemma model from Google.</li>
+              <li>Current Gemma tops out at 27B; the capability gap versus 70B+ Llama/Qwen is a real cliff for local inference users.</li>
+              <li>Signals which model families the community would switch to if Google scaled up.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1tente2/researchers_let_ais_run_their_own_radio_stations/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1tfv8li/i_hope_that_someday_we_will_have_a_124b_gemma/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
