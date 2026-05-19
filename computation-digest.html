@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - May 18, 2026 | Densanon</title>
+  <title>Computation Morning Digest - May 19, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 18, 2026</div>
+        <div class="digest-date-badge">May 19, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Linus Torvalds dominated today&#x27;s conversation: AI-generated vulnerability reports have flooded the Linux security mailing list to the point of being &#x27;almost entirely unmanageable,&#x27; forcing a structural shift to a public reporting system — while simultaneously, kernel lieutenant Greg Kroah-Hartman&#x27;s own AI fuzzing bots are legitimately finding real bugs at scale. Elsewhere, the NGINX Rift flaw is already under active exploitation just days after disclosure, Samsung&#x27;s wildly unequal bonus structure (607% for memory workers vs. 50% for logic chip staff) sparked a strike only partially blocked by court injunction, and AMD&#x27;s Lemonade SDK hit a milestone with macOS GA and ROCm 7.13 integration.</p>
+        <p class="digest-intro">Today&#x27;s computation landscape is dominated by Intel making aggressive supply-chain moves to push OEMs onto 18A, a serious hardware-level attack on AMD SEV-SNP confidential VMs, and a strong batch of Linux kernel advances — capped by a Phoronix benchmark confirming 13% throughput gains from Linux 6.6 to 7.1 on AMD Threadripper workloads.</p>
       </div>
     </section>
 
@@ -29,82 +29,108 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Flood of duplicate vulnerability reports have made Linux security mailing list &#x27;almost entirely unmanageable&#x27; — Linus Torvalds</h3>
+              <h3>Intel tells PC makers to adopt 18A CPUs or lose their supply, report claims</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Torvalds is abandoning the private security mailing list for AI-generated reports, arguing LLM-found bugs are &#x27;by definition not secret&#x27; and the private channel is &#x27;a waste of time for everybody involved.&#x27;</li>
-              <li>The volume of duplicate, low-signal AI reports has reached a threshold where the list is operationally unmanageable for maintainers.</li>
-              <li>The policy shift forces a rethink of how the kernel community triages AI-assisted vulnerability disclosures going forward.</li>
+              <li>Intel has redirected constrained Intel 7 node capacity toward server and industrial customers, effectively cutting notebook/PC OEMs in the US, China, and Taiwan.</li>
+              <li>The supply lever is deliberate: OEMs must qualify Wildcat Lake and upcoming 18A-node parts or lose allocation entirely, compressing qualification timelines.</li>
+              <li>Intel 18A uses RibbonFET gate-all-around transistors and PowerVia backside power delivery — the largest process architecture shift since FinFET adoption.</li>
+              <li>The move accelerates Intel&#x27;s 18A volume ramp by forcing hand rather than waiting for OEM pull.</li>
             </ul>
-            <a href="https://www.tomshardware.com/software/linux/linus-torvalds-says-ai-bug-reports-have-made-the-linux-security-mailing-list-almost-entirely-unmanageable" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/intel-tells-pc-makers-to-adopt-18a-cpus-or-lose-their-allocations" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>gkh_clanker_t1000 &amp; gkh_clanker_2000 Continue Uncovering Linux Kernel Bugs</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Greg Kroah-Hartman&#x27;s AI fuzzing bots are the legitimate counterexample — systematically finding real, previously unknown kernel bugs, not spamming duplicates.</li>
-              <li>GKH&#x27;s position as primary Linux stable maintainer gives the tooling immediate triage weight that random external AI reporters lack.</li>
-              <li>The contrast with the flood of low-quality external reports shows that tool quality and domain expertise determine signal-to-noise, not AI use itself.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-GKH-Clanker-2000" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux AF_ALG Crypto Code Removing Zero-Copy Support Out Of Security Concerns</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The kernel&#x27;s AF_ALG cryptographic socket interface is proactively dropping zero-copy — a performance feature being traded away to reduce attack surface.</li>
-              <li>The move follows the kernel community tightening subsystem boundaries in response to the current wave of newly discovered security issues.</li>
-              <li>Userspace crypto workloads that relied on zero-copy AF_ALG for throughput will require application-layer adjustments.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-AF-ALF-Zero-Copy-Security" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD&#x27;s Lemonade SDK For AI Promotes macOS To GA Status, ROCm 7.13 Integrated</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>AMD&#x27;s open-source local AI serving stack for GPUs and NPUs has graduated macOS support from experimental to general availability in v10.5.</li>
-              <li>ROCm 7.13 is now integrated, aligning the stack with AMD&#x27;s latest GPU compute runtime.</li>
-              <li>The SDK is primarily developed by AMD engineers, making it a semi-official AMD AI inference story outside the formal ROCm release cadence.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Lemonade-SDK-10.5-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Samsung meeting transcripts show memory workers offered 607% bonus worth $477,000, while logic chip staff get as little as 50%</h3>
+              <h3>Researchers attack AMD&#x27;s Infinity Fabric to bypass hardware security protections with &#x27;Fabricked&#x27;</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Leaked wage transcripts reveal a 12x bonus gap between Samsung&#x27;s memory and logic chip divisions — 607% vs. 50% of annual salary — driven by HBM and DRAM demand.</li>
-              <li>The union argues the disparity creates a retention crisis in the logic division at exactly the time Samsung needs that talent to compete with TSMC on advanced nodes.</li>
-              <li>A court injunction blocked an imminent 18-day walkout, but negotiations remain active and unresolved.</li>
+              <li>ETH Zurich disclosed &#x27;Fabricked&#x27; — a software-only attack requiring no physical access that manipulates AMD Infinity Fabric routing during the EPYC boot sequence.</li>
+              <li>The attack breaks AMD SEV-SNP (Secure Encrypted Virtualization – Secure Nested Paging), allowing a malicious cloud hypervisor to silently read confidential guest VM memory.</li>
+              <li>Fabricked also enables forged attestation reports, destroying the trust guarantee cloud tenants use to verify VM integrity.</li>
+              <li>Impact is broadest in multi-tenant cloud environments where SEV-SNP is the primary hardware confidentiality boundary — a significant concern for confidential-compute workloads.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/leaked-samsung-meeting-transcripts-show-memory-workers-offered-607-percent-bonus" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/researchers-attack-amds-infinity-fabric-to-bypass-hardware-security-protections-with-fabricked-flaw-lets-malicious-cloud-hosts-silently-read-confidential-vm-memory-and-forge-attestation-reports" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LG UltraGear 52G930B 52-inch 5K gaming monitor review: Extreme in every respect</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>New Intel Xe Linux Graphics Driver Code Now Cites Multiple Crescent Island SKUs</h3>
+              <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>LG&#x27;s 52G930B hits 5120x2160 at 240 Hz on a 52-inch 1000R curved VA panel — the largest and highest-resolution gaming monitor in the UltraGear lineup.</li>
-              <li>HDR600 and wide gamut color are included; the 1000R curve at 52 inches is aggressive enough to be polarizing for flat-seated desktop use.</li>
-              <li>This panel represents the current engineering ceiling of consumer displays in a single product.</li>
+              <li>Latest Intel Xe kernel patches register multiple PCI IDs for Crescent Island (&#x27;CRI&#x27;) accelerators, confirming the hardware will ship as a product family, not a single SKU.</li>
+              <li>Multiple driver PCI entries appearing at this stage is a reliable signal the hardware is near tape-out or already in validation.</li>
+              <li>Crescent Island is Intel&#x27;s next-gen Xe accelerator line; the open Xe kernel driver will underpin both rendering and OpenCL/SYCL compute on CRI for Linux deployments.</li>
             </ul>
-            <a href="https://www.tomshardware.com/monitors/gaming-monitors/lg-ultragear-52g930b-52-inch-5k-gaming-monitor-review-extreme-in-every-respect" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Intel-Xe-Multi-Crescent-Island" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.2 Will Fix The Intel P-State Driver For The New Bartlett Lake CPUs</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Bartlett Lake is Intel&#x27;s P-core-only server/workstation refresh; without the fix, the intel_pstate driver reports bogus maximum frequency values for these chips.</li>
+              <li>The patch is queued for the Linux 7.2 merge window — users on 7.1 or earlier see incorrect CPU frequency reporting and potentially suboptimal power/perf governor behavior.</li>
+              <li>Correct P-state ceilings directly affect inference throughput scheduling and compile-job performance on affected hardware.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Intel-Bartlett-Lake-P-State-7.2" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <h2 class="digest-section-title">Linux &amp; Open Source</h2>
         <div class="digest-grid">
 
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 6.6 LTS To Linux 7.1 Benchmarks: Performance Up 13% On AMD Threadripper Over Three Years</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Phoronix benchmarks on AMD Threadripper show a cumulative ~13% throughput improvement moving from Linux 6.6 LTS to Linux 7.1 across multi-threaded workloads.</li>
+              <li>Linux 7.1 shows incremental gains over 7.0 on both Intel and AMD test systems with no observed regressions in the benchmark sweep.</li>
+              <li>For compute or inference servers still running 6.6 LTS, the data makes a strong case for scheduling a kernel upgrade to 7.1 to capture accumulated scheduler and memory subsystem improvements.</li>
+            </ul>
+            <a href="https://www.phoronix.com/review/linux-66-linux-71" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>The Linux Kernel Working On A Rust-Based Untrusted Data API</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A new Rust interface is being developed for the Linux kernel to handle user-space-supplied data with explicit untrust semantics, making it a compile-time error to pass untrusted bytes into routines expecting validated input.</li>
+              <li>This is a foundational safety primitive: drivers and subsystems written in Rust can annotate inputs as untrusted at the type level, preventing unsafe promotion bugs.</li>
+              <li>Extends Rust&#x27;s kernel footprint beyond device drivers into OS-level memory-safety guarantees for kernel-user data boundaries.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-Kernel-Untrusted-Data-API" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.2 Expected To Introduce &quot;OPENAT2_REGULAR&quot; To Avoid Tricking Secure Programs</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A new OPENAT2_REGULAR flag for the openat2 syscall is queued for Linux 7.2, ensuring callers can require that only regular files — not symlinks, devices, or FIFOs — are opened.</li>
+              <li>Motivation: prevents TOCTOU and symlink-substitution attacks where a secure program opens what it expects to be a known regular file but gets redirected.</li>
+              <li>Security-sensitive applications (package managers, privilege-separated daemons, container runtimes) can harden file-open paths without custom validation logic.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.2-OPENAT2_REGULAR" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Ubuntu Core 26 Released With Live Kernel Patching, Better OTA Updates</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Ubuntu Core 26 ships alongside the Ubuntu 26.04 LTS cycle, targeting embedded and edge deployments where downtime for kernel security updates is operationally impractical.</li>
+              <li>Live kernel patching allows security fixes to be applied to a running kernel without a reboot — directly applicable to always-on inference nodes or edge compute fleets.</li>
+              <li>Improved OTA update mechanics reduce the risk of bricked or stuck devices during delta upgrades across large device fleets.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Ubuntu-Core-26" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
         </div>
       </div>
       <div class="digest-section">
@@ -113,58 +139,16 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NGINX Rift attackers waste no time targeting exposed servers</h3>
-              <span class="digest-source">The Register</span>
+              <h3>Intel&#x27;s Project Firefly creates sub-$600 laptops to compete with Apple&#x27;s MacBook Neo</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An 18-year-old flaw in NGINX dubbed &#x27;Rift&#x27; is already being actively probed and exploited in the wild, just days after public disclosure.</li>
-              <li>The age of the vulnerability means a large installed base of unpatched servers is exposed — patch cadence on infrastructure software lags far behind disclosure timelines.</li>
-              <li>Any internet-facing NGINX instance not on the patched release should be treated as compromised until verified.</li>
+              <li>Intel China is applying the Chinese smartphone ODM/supply-chain model to PC manufacturing to hit sub-$600 price points for Wildcat Lake laptops.</li>
+              <li>The initiative is a direct response to Apple&#x27;s MacBook Neo and the broader ARM laptop momentum eroding Intel&#x27;s consumer market share.</li>
+              <li>Wildcat Lake is Intel&#x27;s upcoming mobile platform on the 18A node — Project Firefly effectively front-loads 18A volume by targeting the budget segment first, seeding manufacturing scale.</li>
             </ul>
-            <a href="https://www.theregister.com/security/2026/05/18/nginx-rift-attackers-waste-no-time-targeting-exposed-servers/5241851" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/laptops/intels-project-firefly-creates-sub-usd600-laptops-to-compete-with-macbook-neo-leverages-chinas-smartphone-manufacturing-blueprint-to-produce-affordable-wildcat-lake-systems" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Poland directs officials to ditch Signal in favor of &#x27;secure&#x27; state-developed alternative</h3>
-              <span class="digest-source">The Register</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Poland is mandating a shift away from Signal for official communications, citing successful social engineering attacks targeting senior government officials.</li>
-              <li>The replacement is a domestically developed messaging platform — part of a growing pattern of governments building sovereign secure-comms stacks.</li>
-              <li>Metadata and endpoint control concerns with commercial E2EE apps are now driving nation-state messaging policy decisions.</li>
-            </ul>
-            <a href="https://www.theregister.com/security/2026/05/18/poland-builds-its-own-signal-amid-security-concerns/5241824" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Google tells database devs to lean hard on AI for PostgreSQL work</h3>
-              <span class="digest-source">The Register</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Google is pushing PostgreSQL contributors to adopt AI-assisted development tooling, while maintaining that human engineers remain accountable for all code that ships.</li>
-              <li>PostgreSQL&#x27;s open governance model means Google&#x27;s push is advisory, not binding — but Google&#x27;s contributor weight gives it real influence over community norms.</li>
-              <li>The guidance positions AI as a force multiplier for database patch and extension work, not a replacement for domain expertise.</li>
-            </ul>
-            <a href="https://www.theregister.com/databases/2026/05/18/google-tells-database-devs-to-lean-hard-on-ai-for-postgresql-work/5238070" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Windows boot partition runs out of space for Microsoft&#x27;s May security update</h3>
-              <span class="digest-source">The Register</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Microsoft&#x27;s May 2026 Patch Tuesday update is failing on systems where the EFI/boot partition lacks sufficient free space, blocking security patching on a broad class of OEM machines.</li>
-              <li>The failure mode is silent enough that users may not realize their system remains unpatched after a seemingly completed update cycle.</li>
-              <li>This is a QA process failure: the update shipped without accounting for real-world minimum partition sizes common in manufacturer configurations.</li>
-            </ul>
-            <a href="https://www.theregister.com/oses/2026/05/18/windows-boot-partition-runs-out-of-space-for-microsofts-may-security-update/5241799" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
         </div>
       </div>
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - May 18, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - May 19, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 18, 2026</div>
+        <div class="digest-date-badge">May 19, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Sony&#x27;s Ace table-tennis robot beating elite human players headlines today&#x27;s digest, demonstrating that millisecond-precision perception-action loops can now outperform top-ranked competitors in a sport that demands near-human reflexes. On the humanoid front, Figure&#x27;s F.03 nearly matched a human worker&#x27;s packaging throughput (12,732 vs 12,924 packages) — close enough that Brett Adcock called it potentially the last time a human wins that race. Rounding out the day: PhysBrain 1.0 shows how human egocentric video can bootstrap VLA training without any robot trajectories, and a candid community thread punctures the hype around 24/7 unattended deployment.</p>
+        <p class="digest-intro">Today&#x27;s digest is anchored in simulation and representation research — OrbiSim reframes world models as differentiable physics engines while SCAR tackles transferable action learning across embodiments — alongside real-world deployments from SAE L4 trucking in Ohio to autonomous underwater reef mapping.</p>
       </div>
     </section>
 
@@ -29,75 +29,68 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Table tennis robot defeats some of world&#x27;s best players – why this has major implications for robotics</h3>
-              <span class="digest-source">Robohub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Sony&#x27;s Ace robot outperformed elite players including Yamato Kawamata in December 2025 matches, relying on sub-millisecond perception-action loops that no human can replicate.</li>
-              <li>Table tennis is a meaningful robotics benchmark because it simultaneously demands real-time spin estimation, trajectory prediction, and precise paddle rotation under chaotic ball dynamics.</li>
-              <li>The win signals that closed-loop dynamic manipulation — not just quasi-static pick-and-place — is entering competitive territory against trained human athletes.</li>
-            </ul>
-            <a href="https://robohub.org/table-tennis-robot-defeats-some-of-worlds-best-players-why-this-has-major-implications-for-robotics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>PhysBrain 1.0 Technical Report</h3>
+              <h3>OrbiSim: World Models as Differentiable Physics Engines for Embodied Intelligence</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>PhysBrain 1.0 converts large-scale human egocentric video into VLA training data, bypassing the need for costly robot trajectory collection.</li>
-              <li>Human video provides far broader coverage of physical interactions than robot-collected datasets, exposing models to edge cases robots rarely encounter in lab settings.</li>
-              <li>The approach directly attacks the data bottleneck in embodied AI: getting diverse manipulation training signal without proportionally scaling robot hardware time.</li>
+              <li>OrbiSim reframes world models not as latent-space imagination engines but as fully differentiable physics simulators, enabling gradient flow through contact dynamics and rigid-body constraints.</li>
+              <li>Unlike prior visual/latent world models, OrbiSim enforces physical laws as hard constraints rather than learned dynamics, which the authors argue closes the sim-to-real gap more reliably.</li>
+              <li>Differentiability through the physics layer enables gradient-based policy optimization directly through simulated contact events without separate surrogate models.</li>
+              <li>The architecture is designed for embodied intelligence tasks where physical plausibility of predicted futures is required, not just visual realism.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.15298" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.16395" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>HoloMotion-1 Technical Report</h3>
+              <h3>SCAR: Self-Supervised Continuous Action Representation Learning</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>HoloMotion-1 is a humanoid motion foundation model that achieves zero-shot whole-body motion tracking without task-specific fine-tuning.</li>
-              <li>Training scales using a hybrid motion corpus that blends video-reconstructed motions with motion-capture data, dramatically widening the training distribution.</li>
-              <li>Zero-shot whole-body tracking is a prerequisite for general-purpose humanoids that need to imitate arbitrary human demonstrations on first contact.</li>
+              <li>SCAR learns transferable action representations from visual transitions without task-specific labels, targeting the core cross-embodiment generalization problem.</li>
+              <li>Self-supervised training signal comes from predicting future visual states given action embeddings, forcing the representation to capture action semantics rather than robot-specific kinematics.</li>
+              <li>The method addresses a key bottleneck in foundation models for robotics: actions lack a universal representation analogous to tokens in language models.</li>
+              <li>Generalization across embodiments under limited data is the explicit target — the paper is not a sim benchmark but a cross-robot transfer result.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.15336" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.16412" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Diffusion Policy for Coordinated Control of a Nonholonomic Mobile Base and Dual Arms in Door Opening and Passing</h3>
+              <h3>Support-Safe Variational Hybrid Filtering for Contact-Mode and Sparse-Law Recovery</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Diffusion Policy jointly controls a nonholonomic mobile base and two arms to solve heavy self-closing door opening — requiring simultaneous handle rotation, gap widening, arm switching, and base repositioning.</li>
-              <li>Nonholonomic constraints make base-arm coordination especially hard; the policy plans arm and base timing jointly rather than sequentially.</li>
-              <li>Door traversal is a high-value manipulation benchmark because it is unavoidable in any real facility deployment and has resisted robust solutions for decades.</li>
+              <li>Proposes a variational Bayesian filter that tracks contact-mode transitions (free flight, impact, stick-slip) without permanently collapsing probability mass off feasible transitions.</li>
+              <li>Standard amortized filters fail in contact-rich manipulation because they assign zero probability to valid contact regime changes — support-safety prevents that degeneracy.</li>
+              <li>The method enables simultaneous recovery of discrete contact modes and sparse physical laws (e.g., friction coefficients) from raw observations.</li>
+              <li>Targeted at contact-rich manipulation pipelines where reliable state estimation across hybrid dynamic regimes is the state-estimation bottleneck.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.15352" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.16398" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Where to Perch in a Tree: Vision-Guidance for Tree-Grasping Drones</h3>
+              <h3>MR-SLAM: Immersive Spatial Supervision for Multi-Robot Mapping via Mixed Reality</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Vision-guided drones use image segmentation and binary morphology to autonomously identify optimal branch perch sites on real trees in outdoor conditions.</li>
-              <li>Perching on natural structures rather than engineered pads cuts battery consumption dramatically for long-duration surveillance or sensor-deployment missions.</li>
-              <li>ML-based segmentation handles the irregular geometry of real branches where rule-based approaches fail, making the method applicable across tree species without re-tuning.</li>
+              <li>MR-SLAM overlays each robot&#x27;s live position and mapping state into a mixed-reality view, giving the operator a fused spatial picture without switching between per-robot dashboards.</li>
+              <li>Designed for multi-robot fleets doing building inspection or warehouse-aisle SLAM, where operator spatial awareness degrades as fleet size grows.</li>
+              <li>The MR interface provides immersive supervision rather than telemetry readouts, enabling faster operator intervention when a robot&#x27;s map diverges from ground truth.</li>
+              <li>The mapping algorithms are standard — the contribution is the supervision interface architecture that scales oversight to heterogeneous fleets.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.15430" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.16432" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Residual Reinforcement Learning for Robot Teleoperation under Stochastic Delays</h3>
+              <h3>Haptic Rendering of Fractional-Order Viscoelasticity: Passivity and Rendering Fidelity</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Residual RL adds a learned corrective layer on top of the human teleoperator&#x27;s control signal to compensate for unpredictable network delays that destabilize conventional RL policies.</li>
-              <li>Stochastic delays create signal discontinuities that standard control pipelines cannot absorb, making unmodified RL impractical for real-world remote operation over variable-latency links.</li>
-              <li>Keeping the human in the loop while the residual policy absorbs timing uncertainty is directly applicable to surgical robots, disaster response, and space teleoperation.</li>
+              <li>Addresses haptic rendering of biological tissue that exhibits creep and stress relaxation — behaviors integer-order spring-damper models cannot accurately capture.</li>
+              <li>Fractional-order viscoelastic models fit soft tissue mechanics better, but rendering them on a haptic device raises passivity concerns where energy can leak and cause unstable force feedback.</li>
+              <li>The paper derives passivity conditions for fractional-order impedance rendering, establishing safe parameter bounds for medical training simulators.</li>
+              <li>Rendering fidelity analysis quantifies how closely the haptic interface can match the target fractional model within those passivity-safe constraints.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.15480" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.16389" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -107,15 +100,42 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Fanuc strengthens Nvidia partnership for AI robot simulation and digital twins</h3>
+              <h3>Home Robot Safety Is All About Relationships</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>ISO is revising its 12-year-old personal care robot safety standard, which predates modern domestic humanoids and the body of research on human-robot relationship dynamics.</li>
+              <li>The update shifts focus from mechanical hazard prevention toward the social and relational dimensions of safety — trust, dependence, and long-term cohabitation all introduce risks the original standard did not model.</li>
+              <li>Researchers now distinguish physical safety (collision, force limits) from relational safety (manipulation, privacy, emotional dependency), both of which the new standard must address.</li>
+              <li>The revision has direct regulatory implications for humanoid robots entering homes, where the standards framework has lagged the hardware by over a decade.</li>
+            </ul>
+            <a href="https://spectrum.ieee.org/domestic-humanoid-robot-safety-standards" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Agentic AI for Robot Teams</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Johns Hopkins Applied Physics Laboratory presents a scalable agentic AI architecture for coordinating heterogeneous robot teams across autonomy, coordination, and adaptability challenges.</li>
+              <li>Uses agentic AI as the coordination layer rather than hand-coded task allocation, allowing the system to generalize across mission types without per-scenario reprogramming.</li>
+              <li>Heterogeneous fleet support is a first-class design goal — the architecture is not restricted to homogeneous swarms, targeting real-world mixed deployments.</li>
+              <li>The framing from APL is significant: this is defense-adjacent research applying LLM-based agents to multi-robot military and emergency-response contexts.</li>
+            </ul>
+            <a href="https://events.bizzabo.com/867156" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Einride deploys autonomous electric trucks in Ohio freight corridor pilot</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fanuc integrated Nvidia Isaac Sim directly into its RoboGuide software, letting manufacturers validate AI-trained robot programs inside a digital twin before touching physical hardware.</li>
-              <li>Programs verified in Isaac Sim transfer to Fanuc arms with minimal real-world re-tuning, directly closing the sim-to-real gap for production deployments.</li>
-              <li>Fanuc&#x27;s massive global installed base means Isaac Sim gaining native RoboGuide support effectively makes Nvidia&#x27;s simulation stack the default AI training environment for factory robotics.</li>
+              <li>Einride has deployed SAE Level 4 autonomous electric trucks in revenue-generating proof-of-concept service between EASE Logistics warehouses in Marysville, Ohio.</li>
+              <li>This is a real L4 deployment on a fixed freight corridor under the Ohio DOT and DriveOhio Truck Automation Pilot — not a closed test track.</li>
+              <li>The corridor approach reflects the current practical ceiling for L4 trucking: well-defined ODD (operational design domain) with repeatable routes and minimal edge-case variability.</li>
+              <li>Einride&#x27;s pod-style trucks are purpose-designed for autonomous operation rather than retrofitting autonomy onto conventional cab-over hardware.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/05/18/fanuc-strengthens-nvidia-partnership-for-ai-robot-simulation-and-digital-twins/101628/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/05/18/einride-deploys-autonomous-electric-trucks-in-ohio-freight-corridor-pilot/101666/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -125,63 +145,16 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Human beats F.03: F.03: 12,732 packages (2.83 seconds/package) - Aime: 12,924 packages (2.79 seconds/package)</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Figure&#x27;s F.03 humanoid packaged 12,732 units at 2.83 sec/package versus human worker Aime&#x27;s 12,924 at 2.79 sec — a throughput gap of under 1.5%.</li>
-              <li>Brett Adcock publicly framed the result as potentially the last time a human will win this head-to-head, treating it as an inflection-point benchmark rather than a promotional stunt.</li>
-              <li>A 2.83-second cycle time puts F.03 in the range of unskilled warehouse labor, not just proof-of-concept demos under controlled conditions.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1tgh6gi/human_beats_f03_f03_12732_packages_283/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Has anyone here actually deployed a robot that runs 24/7 for more than a year without a human babysitter?</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Practitioners consistently report the same failure mode: something breaks mechanically after 2-3 months and an on-site human is required to recover — a hardware wear problem, not a software one.</li>
-              <li>The thread draws a sharp line between lab demos and true production deployments, pushing back on vendor marketing that implies current robots are maintenance-free.</li>
-              <li>Long-running autonomous operation without human intervention remains an unsolved engineering problem in 2026, and the community consensus says the gap is wider than press releases suggest.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1tgb38r/has_anyone_here_actually_deployed_a_robot_that/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Tom&#x27;s Hardware covered my fully-offline suitcase robot but used a stock graphic - so I put up a real dev site featuring the build with photos</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Sparky is a fully-offline companion robot built into a suitcase running Gemma 4 E4B via llama.cpp on an NVIDIA Jetson Orin NX Super 16GB, achieving ~200ms response latency.</li>
-              <li>Thirty-plus integrated sensors feed real-time context into every prompt, making responses situationally aware with zero cloud dependency or API keys.</li>
-              <li>The build is a concrete proof point that capable edge-AI companion robotics is achievable today on commodity hardware — no server infrastructure required.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1tgf4w7/toms_hardware_covered_my_fullyoffline_suitcase/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Two Autonomous Humanoid Robots Seamlessly Work Together to Make the Bed</h3>
+              <h3>Autonomous underwater robot discovers hidden coral reef &#x27;hotspots&#x27;</h3>
               <span class="digest-source">Hacker News Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Two humanoid robots coordinate autonomously to complete bimanual bed-making — a deformable-object manipulation challenge where each robot must anticipate the other&#x27;s movements in real time.</li>
-              <li>Deformable textiles like bedsheets are among the hardest manipulation targets because their state space is high-dimensional and varies substantially between attempts.</li>
-              <li>Multi-robot coordination on a shared unstructured task without scripted hand-offs is a meaningful step beyond single-robot or fixed-pipeline demos.</li>
+              <li>An autonomous underwater vehicle independently identified and mapped previously unknown coral reef hotspots, demonstrating real science discovery from an uncrewed platform.</li>
+              <li>The mission highlights the maturing capability of AUVs for long-duration self-directed survey in environments that are logistically difficult for divers or tethered ROVs.</li>
+              <li>Discovery of hidden reef structures implies the robots are operating with enough onboard sensing and decision-making to deviate from pre-planned survey paths when the environment warrants it.</li>
+              <li>Coral reef mapping is a high-value conservation use case where AUV survey frequency can far exceed what crewed expeditions can support at equivalent cost.</li>
             </ul>
-            <a href="https://laughingsquid.com/robots-make-bed/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>We just introduced live visualizations to bonsai-bt behavior trees</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>bonsai-bt is a Rust behavior-tree library that now ships a live visualizer, letting developers watch decision-node state change in real time during a running robot control loop.</li>
-              <li>Behavior trees are the dominant architecture for deterministic, debuggable robot decision-making, and live introspection was the main missing tooling piece compared to neural-network approaches.</li>
-              <li>A Rust implementation means near-zero runtime overhead, making it viable for hard real-time control loops where Python-based BT libraries introduce unsafe latency.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1tgjyxa/we_just_introduced_live_visualizations_to/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://phys.org/news/2026-05-autonomous-underwater-robot-hidden-coral.html" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
