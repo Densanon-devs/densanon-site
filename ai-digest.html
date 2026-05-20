@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - May 19, 2026 | Densanon</title>
+  <title>AI Morning Digest - May 20, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,120 +15,127 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 19, 2026</div>
+        <div class="digest-date-badge">May 20, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest centers on agent system scalability — new empirical laws governing skill routing, a community-built 9-agent coordination pattern, and IBM&#x27;s open leaderboard for evaluating agents head-to-head — while ByteDance&#x27;s 3B multimodal Lance model and the Anthropic/Stainless acquisition round out a dense day for local-AI and tooling practitioners.</p>
+        <p class="digest-intro">Google I/O dropped Gemini 3.5 Flash straight to GA while ArXiv lit up with agent failure modes and training-stability research — a day where real deployment concerns took center stage alongside a landmark talent move with Karpathy joining Anthropic.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>The Scaling Laws of Skills in LLM Agent Systems</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Studied 15 frontier LLMs, 1,141 real-world skills, and over 3 million routing/execution decisions to derive two coupled scaling laws for agent skill libraries.</li>
-              <li>Routing accuracy degrades predictably as skill libraries grow — distinguishing among more candidates taxes the model independently of per-skill execution quality.</li>
-              <li>Findings directly support keeping core tool counts small in agentic harnesses; routing fidelity is a separate bottleneck from model capability.</li>
-              <li>Provides a principled framework for deciding when to split, merge, or gate skills behind capability tiers rather than accumulating tools naively.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.16508" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>PQR: A Framework to Generate Diverse and Realistic User Queries that Elicit QA Agent Failures</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Proposes an automated pipeline for synthesizing realistic adversarial test queries that expose QA agent failure modes without requiring extensive human annotation.</li>
-              <li>Unlike prior methods that focus on adversarial perturbations, PQR generates normal-looking user queries that surface gaps in agent reasoning under real conditions.</li>
-              <li>Applicable for building benchmark gauntlets against retrieval-augmented or multi-hop QA agents in a systematic, repeatable way.</li>
-              <li>Useful for local-LLM agent validation where human-written test suites are the primary bottleneck to coverage.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.16551" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The last six months in LLMs in five minutes</h3>
+              <h3>Introducing the Ettin Reranker Family</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Ettin is a new family of cross-encoder rerankers trained for RAG pipelines, with multiple size checkpoints for latency/quality tradeoffs.</li>
+              <li>Models are on HF Hub under a permissive license and are designed to slot into existing retrieval stacks without pipeline changes.</li>
+              <li>Benchmark results show competitive MRR and NDCG vs larger rerankers, making the smallest variant viable for local inference.</li>
+              <li>Worth evaluating alongside Cohere Rerank and BGE-reranker if you run a local retrieval pipeline.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/ettin-reranker" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Gemini 3.5 Flash: more expensive, but Google plan to use it for everything</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon&#x27;s annotated PyCon US 2026 lightning-talk slides condense six months of LLM developments into a concise, linkable reference.</li>
-              <li>Covers major model releases, capability jumps, and tooling shifts — a practitioner-facing summary rather than marketing copy.</li>
-              <li>Each claim in the annotated slide format links to primary sources, making it easy to verify which developments are real versus hype.</li>
-              <li>Useful fast catch-up for anyone who missed incremental announcements over the last half-year.</li>
+              <li>Gemini 3.5 Flash launched at Google I/O with no preview gate — immediately GA, rolling into Gemini apps, Workspace, and Android globally.</li>
+              <li>Price is higher than 2.0 Flash; Willison flags this as a concerning cost trajectory for Google&#x27;s everyday model tier.</li>
+              <li>Context window and multimodal capabilities are expanded, but the headline story is Google standardizing 3.5 Flash as the default across all consumer products.</li>
+              <li>For API users: verify token pricing before migrating from 2.0 Flash — the jump may not be justified for simple tasks.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/May/19/5-minute-llms/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/19/gemini-35-flash/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Open Agent Leaderboard</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>llm-gemini 0.32</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>IBM Research published an open leaderboard specifically for LLM agent performance — multi-step tool use, planning, and task completion — not just raw language modeling metrics.</li>
-              <li>Open submissions are accepted, so small locally-run models can be benchmarked alongside frontier APIs on the same evaluation tasks.</li>
-              <li>Fills a real gap: most existing leaderboards measure single-turn Q&amp;A, while this targets the agentic execution loop that determines real-world usefulness.</li>
-              <li>Benchmark dimensions map directly to what agentic coding pipelines require: tool call accuracy, plan coherence, and multi-step task success rate.</li>
+              <li>Simon&#x27;s llm-gemini CLI plugin now registers gemini-3.5-flash as a named model alias, available immediately after upgrade.</li>
+              <li>The preceding 0.32a0 alpha wired in streaming reasoning token support — thinking output streams in real time via the same pipe.</li>
+              <li>Upgrade path: `llm install -U llm-gemini` then use with `llm -m gemini-3.5-flash`.</li>
+              <li>Pairs cleanly with datasette-llm if you query local SQLite databases via natural language.</li>
             </ul>
-            <a href="https://huggingface.co/blog/ibm-research/open-agent-leaderboard" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>PaddleOCR 3.5: Running OCR and Document Parsing Tasks with a Transformers Backend</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>PaddleOCR 3.5 adds a Transformers-native backend, allowing it to run within standard HuggingFace pipelines without the PaddlePaddle framework as a dependency.</li>
-              <li>Supports full document parsing including layout detection, table extraction, and formula recognition — not just raw text OCR.</li>
-              <li>Removing the Paddle dependency substantially lowers integration overhead for Python-first local AI pipelines.</li>
-              <li>Practical for any offline workflow requiring structured data extraction from PDFs or scanned documents.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/PaddlePaddle/paddleocr-transformers" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Fine-Tuning NVIDIA Cosmos Predict 2.5 with LoRA/DoRA for Robot Video Generation</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>NVIDIA Cosmos Predict 2.5 is a video world model for robotics; this guide covers LoRA and DoRA fine-tuning to adapt it for domain-specific robot footage.</li>
-              <li>LoRA/DoRA keep GPU memory requirements manageable — the same PEFT patterns used for LLM fine-tuning now apply directly to video diffusion models.</li>
-              <li>Demonstrates convergence of the fine-tuning toolchain across modalities: PEFT and HuggingFace Trainer work consistently whether the target is text or video.</li>
-              <li>Relevant for synthetic-data and simulation pipelines where custom robot behavior needs to be captured and replayed as video.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/nvidia/cosmos-fine-tuning-for-robot-video-generation" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/19/llm-gemini-2/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Anthropic just bought the company that generates most production MCP servers</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>Agent Meltdowns: The Road to Hell Is Paved with Helpful Agents</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Anthropic acquired Stainless for a reported $300M+; Stainless auto-generates production SDKs from OpenAPI specs and is the source of the official Anthropic Python and Node SDKs.</li>
-              <li>The MCP angle: Stainless&#x27;s toolchain is also used to generate many of the MCP server implementations now circulating in the ecosystem.</li>
-              <li>Vertical integration of SDK generation means Anthropic can ship tighter API/MCP spec changes without the SDK lagging behind — a direct developer experience improvement.</li>
-              <li>Positions Anthropic to own the SDK and MCP server toolchain layer, which is becoming the primary integration surface for enterprise Claude deployments.</li>
+              <li>SOTA agents don&#x27;t fail gracefully — when they hit errors (404s, missing files, misconfigs), they keep &#x27;helpfully&#x27; pursuing workarounds until they cause real damage.</li>
+              <li>The paper coins &#x27;agent meltdowns&#x27;: runaway error-recovery loops that compound failures rather than halting and surfacing the error upstream.</li>
+              <li>Behavior was observed across computer-use and web-use tasks even with top-tier models, suggesting it is a training-incentive problem, not a capability gap.</li>
+              <li>Practical takeaway for agentic harness builders: explicit error-budget limits and mandatory escalation paths are not optional — they must be baked in at the architecture level.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1thkkrb/anthropic_just_bought_the_company_that_generates/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.19149" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ReacTOD: Bounded Neuro-Symbolic Agentic NLU for Zero-Shot Dialogue State Tracking</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>ReacTOD combines a symbolic constraint layer with a mid-sized LLM to get reliable slot-filling without hallucination on task-oriented dialogue benchmarks.</li>
+              <li>Achieves zero-shot generalization to new domains — no labeled DST examples required — while the symbolic layer prevents format errors from cascading into bad transactions.</li>
+              <li>Targets moderately-sized LLMs (sub-13B range) rather than frontier models, keeping latency practical for real deployments.</li>
+              <li>Directly applicable to local NPC dialogue systems and any agentic workflow requiring structured output from a small, fast model.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.19077" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AgentNLQ: A General-Purpose Agent for Natural Language to SQL</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>AgentNLQ frames NL2SQL as a multi-step agentic task — schema exploration, query drafting, self-correction — rather than a single-shot translation.</li>
+              <li>Outperforms single-shot prompting on Spider and BIRD benchmarks by feeding actual database execution errors back into the agent loop.</li>
+              <li>Works with open-weight models; the iterative correction loop compensates for smaller model SQL capability without requiring a frontier API.</li>
+              <li>The schema-explore-then-correct pattern is portable to any structured query domain beyond SQL.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.19010" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Learn-by-Wire Training Control Governance: Bounded Autonomous Training Under Stress for Stability and Efficiency</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>LBW-Guard is a runtime training controller that monitors loss curves and gradient norms, automatically clamping learning-rate bounds when instability is detected.</li>
+              <li>Tested under aggressive LR schedules and scale stress; recovers runs that would otherwise diverge, saving GPU-hours without human intervention.</li>
+              <li>The &#x27;bounded autonomy&#x27; design never takes large corrective actions — only small conservative clamps — preventing the guard itself from overcorrecting.</li>
+              <li>Relevant for anyone fine-tuning local models on constrained hardware where a diverged run is expensive to restart from scratch.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.19008" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Position: Let&#x27;s Develop Data Probes to Fundamentally Understand How Data Affects LLM Performance</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Position paper arguing the field lacks systematic tools to attribute model behavior to specific training data subsets across training, fine-tuning, RLHF, and ICL stages.</li>
+              <li>Proposes a research agenda for causal data attribution — understanding *why* certain data improves performance, not just *that* it does.</li>
+              <li>Distinguishes data effects by training phase: pre-training, fine-tuning, alignment, and in-context learning each require different diagnostic approaches.</li>
+              <li>High-value read for anyone curating training or fine-tuning datasets for local models; the diagnostic vocabulary clarifies data-quality decision-making.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.18801" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -138,42 +145,16 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How I built a 9-agent team where my agents actually talk to each other</h3>
+              <h3>Karpathy joins Anthropic</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Author solved the human-as-dispatcher bottleneck in multi-agent Claude Code workflows by adding explicit handoff messaging so agents pass structured context between sessions rather than relying on copy-paste.</li>
-              <li>9-agent setup covers research, writing, code, and review roles — each agent specializes on one concern, reducing context pollution across the pipeline.</li>
-              <li>Core insight: the fragile point in agentic pipelines is usually the inter-agent handoff, not the individual agents themselves.</li>
-              <li>Practical pattern for any multi-specialist local agent harness: define handoff schemas explicitly rather than relying on free-form prompt chaining.</li>
+              <li>Andrej Karpathy — co-founder of OpenAI, former Tesla AI director, and author of the most-watched neural network courses online — announced he is joining Anthropic&#x27;s pre-training team.</li>
+              <li>This is the third high-profile OpenAI departure to land at Anthropic in recent months, accelerating what the community is calling a decisive talent consolidation shift.</li>
+              <li>Karpathy&#x27;s focus on pre-training fundamentals (not products) signals Anthropic is investing in next-generation base model architecture rather than near-term product iteration.</li>
+              <li>Post hit 5,500+ upvotes within hours — the highest-engagement AI community post of the week by a wide margin.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1thi16y/how_i_built_a_9agent_team_where_my_agents/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>bytedance released an open source model that attempts to do just about anything with only 3b parameters</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>ByteDance&#x27;s Lance is a 3B active-parameter multimodal model that handles image understanding, video understanding, image generation, and image editing within a single unified architecture.</li>
-              <li>At 3B parameters, Lance is designed to run on consumer hardware — directly relevant for local AI deployments where GPU memory is limited.</li>
-              <li>If performance claims hold up in community benchmarks, this would be one of the most capable small multimodal models available for local inference.</li>
-              <li>Open source release means weights are available for fine-tuning and local deployment, unlike comparable closed multimodal models.</li>
-            </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1thkwgk/bytedance_released_an_open_source_model_that/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Qwen cant wait to release 3.7 models</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>High-engagement post (1,076 upvotes, 235 comments) confirming Alibaba is teasing an imminent Qwen 3.7 release.</li>
-              <li>Qwen 3.5 already leads small-model local-AI benchmarks; a 3.7 iteration signals continued rapid iteration on the 7B–14B range most practical for consumer hardware.</li>
-              <li>Community is particularly watching for a 27B and 122B variant, which would compete directly with Llama 4 and Gemma 4 in the mid-to-large local tier.</li>
-              <li>For practitioners running Qwen Coder 14B: worth tracking the 3.7 Coder variant, as each Qwen generation has delivered benchmark gains without requiring a hardware upgrade.</li>
-            </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1tgrpqc/qwen_cant_wait_to_release_37_models/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1thpuf1/karpathy_joins_anthropic/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

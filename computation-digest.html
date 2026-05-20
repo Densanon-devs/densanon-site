@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - May 19, 2026 | Densanon</title>
+  <title>Computation Morning Digest - May 20, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 19, 2026</div>
+        <div class="digest-date-badge">May 20, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation landscape is dominated by Intel making aggressive supply-chain moves to push OEMs onto 18A, a serious hardware-level attack on AMD SEV-SNP confidential VMs, and a strong batch of Linux kernel advances — capped by a Phoronix benchmark confirming 13% throughput gains from Linux 6.6 to 7.1 on AMD Threadripper workloads.</p>
+        <p class="digest-intro">Today&#x27;s computation headlines are dominated by semiconductor roadmap moves and chip geopolitics — Intel finalizes its 14A/10A/7A process timeline while Beijing bans Nvidia&#x27;s China-only RTX 5090D V2, accelerating the push toward Huawei Ascend silicon for local AI workloads.</p>
       </div>
     </section>
 
@@ -29,107 +29,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel tells PC makers to adopt 18A CPUs or lose their supply, report claims</h3>
+              <h3>Intel kicks off development on next-decade 10A and 7A process technologies — 14A node remains on track for critical October PDK release</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel has redirected constrained Intel 7 node capacity toward server and industrial customers, effectively cutting notebook/PC OEMs in the US, China, and Taiwan.</li>
-              <li>The supply lever is deliberate: OEMs must qualify Wildcat Lake and upcoming 18A-node parts or lose allocation entirely, compressing qualification timelines.</li>
-              <li>Intel 18A uses RibbonFET gate-all-around transistors and PowerVia backside power delivery — the largest process architecture shift since FinFET adoption.</li>
-              <li>The move accelerates Intel&#x27;s 18A volume ramp by forcing hand rather than waiting for OEM pull.</li>
+              <li>Intel&#x27;s 14A node is targeting high-volume manufacturing in 2029 with its October PDK release as the critical near-term milestone.</li>
+              <li>10A and 7A process nodes are now in early development, slated for the 2030s — Intel is staking out a decade-long fab roadmap.</li>
+              <li>This signals Intel Foundry is committing to a full process ladder through the next decade to compete with TSMC&#x27;s equivalent N2/A14 trajectory.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/intel-tells-pc-makers-to-adopt-18a-cpus-or-lose-their-allocations" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/intel-kicks-off-development-on-next-decade-10a-and-7a-process-technologies-14a-node-remains-on-track-for-critical-october-pdk-release" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Researchers attack AMD&#x27;s Infinity Fabric to bypass hardware security protections with &#x27;Fabricked&#x27;</h3>
+              <h3>China banned Nvidia 5090D V2 while CEO Jensen Huang was in town — move comes as Beijing pushes AI companies to use homegrown chips</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ETH Zurich disclosed &#x27;Fabricked&#x27; — a software-only attack requiring no physical access that manipulates AMD Infinity Fabric routing during the EPYC boot sequence.</li>
-              <li>The attack breaks AMD SEV-SNP (Secure Encrypted Virtualization – Secure Nested Paging), allowing a malicious cloud hypervisor to silently read confidential guest VM memory.</li>
-              <li>Fabricked also enables forged attestation reports, destroying the trust guarantee cloud tenants use to verify VM integrity.</li>
-              <li>Impact is broadest in multi-tenant cloud environments where SEV-SNP is the primary hardware confidentiality boundary — a significant concern for confidential-compute workloads.</li>
+              <li>Beijing banned the RTX 5090D V2 — the GPU Nvidia purpose-built to comply with U.S. export controls for the Chinese market.</li>
+              <li>The 5090D V2 is primarily a gaming/3D card but was also actively used for AI inference workloads by Chinese developers due to its raw compute.</li>
+              <li>The ban intensifies pressure on Chinese AI firms to migrate to Huawei Ascend hardware, accelerating Huawei&#x27;s data-center chip ecosystem regardless of supply constraints.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/researchers-attack-amds-infinity-fabric-to-bypass-hardware-security-protections-with-fabricked-flaw-lets-malicious-cloud-hosts-silently-read-confidential-vm-memory-and-forge-attestation-reports" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/china-banned-nvidia-5090d-v2-while-ceo-jensen-huang-was-in-town-report-claims-move-comes-as-beijing-pushes-its-ai-tech-companies-to-use-homegrown-chips" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>New Intel Xe Linux Graphics Driver Code Now Cites Multiple Crescent Island SKUs</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Russia&#x27;s Sberbank wants Chinese chips for its GigaChat AI — faces a long wait behind ByteDance and Alibaba</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Latest Intel Xe kernel patches register multiple PCI IDs for Crescent Island (&#x27;CRI&#x27;) accelerators, confirming the hardware will ship as a product family, not a single SKU.</li>
-              <li>Multiple driver PCI entries appearing at this stage is a reliable signal the hardware is near tape-out or already in validation.</li>
-              <li>Crescent Island is Intel&#x27;s next-gen Xe accelerator line; the open Xe kernel driver will underpin both rendering and OpenCL/SYCL compute on CRI for Linux deployments.</li>
+              <li>Sberbank CEO German Gref confirmed the bank is seeking Chinese AI accelerators for GigaChat after Western sanctions cut off Nvidia supply.</li>
+              <li>The most likely target is Huawei&#x27;s Ascend 950 family, but Sberbank is already in a queue behind ByteDance and Alibaba for allocation.</li>
+              <li>This illustrates the supply constraint on Huawei accelerators — even geopolitically-aligned customers face multi-year waits as China prioritizes domestic hyperscalers first.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Intel-Xe-Multi-Crescent-Island" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/russias-sberbank-wants-chinese-chips-for-its-gigachat-ai" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.2 Will Fix The Intel P-State Driver For The New Bartlett Lake CPUs</h3>
+              <h3>AMD Announces The EPYC 8005 Series SKUs From 8 To 84 Cores</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Bartlett Lake is Intel&#x27;s P-core-only server/workstation refresh; without the fix, the intel_pstate driver reports bogus maximum frequency values for these chips.</li>
-              <li>The patch is queued for the Linux 7.2 merge window — users on 7.1 or earlier see incorrect CPU frequency reporting and potentially suboptimal power/perf governor behavior.</li>
-              <li>Correct P-state ceilings directly affect inference throughput scheduling and compile-job performance on affected hardware.</li>
+              <li>AMD published the full EPYC 8005 &#x27;Sorano&#x27; SKU table covering 8 to 84 cores — the successor to the single-socket EPYC 8004 Siena line.</li>
+              <li>The 8005 series targets edge, telco, and 1P server segments where per-socket core density and power efficiency matter more than dual-socket scaling.</li>
+              <li>Full SKU disclosure enables system builders to begin qualification; ODM server announcements should follow in the near term.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Intel-Bartlett-Lake-P-State-7.2" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Linux &amp; Open Source</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux 6.6 LTS To Linux 7.1 Benchmarks: Performance Up 13% On AMD Threadripper Over Three Years</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Phoronix benchmarks on AMD Threadripper show a cumulative ~13% throughput improvement moving from Linux 6.6 LTS to Linux 7.1 across multi-threaded workloads.</li>
-              <li>Linux 7.1 shows incremental gains over 7.0 on both Intel and AMD test systems with no observed regressions in the benchmark sweep.</li>
-              <li>For compute or inference servers still running 6.6 LTS, the data makes a strong case for scheduling a kernel upgrade to 7.1 to capture accumulated scheduler and memory subsystem improvements.</li>
-            </ul>
-            <a href="https://www.phoronix.com/review/linux-66-linux-71" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/AMD-EPYC-8005-SKU-Table" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Linux Kernel Working On A Rust-Based Untrusted Data API</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Intel CEO Lip-Bu Tan stamps out chip bugs with aggressive new quality standards — &#x27;B0, you keep your job. Anything above that, you are fired&#x27;</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A new Rust interface is being developed for the Linux kernel to handle user-space-supplied data with explicit untrust semantics, making it a compile-time error to pass untrusted bytes into routines expecting validated input.</li>
-              <li>This is a foundational safety primitive: drivers and subsystems written in Rust can annotate inputs as untrusted at the type level, preventing unsafe promotion bugs.</li>
-              <li>Extends Rust&#x27;s kernel footprint beyond device drivers into OS-level memory-safety guarantees for kernel-user data boundaries.</li>
+              <li>Lip-Bu Tan is mandating A0 silicon production readiness as the new bar — the goal is shipping functionally correct first-pass silicon rather than relying on multiple stepping iterations.</li>
+              <li>Engineers whose work requires B1 or higher stepping revisions face potential termination under the new accountability framework.</li>
+              <li>The policy is a direct cultural response to Intel&#x27;s historical pattern of costly silicon re-spins, targeting pre-silicon verification and validation pipelines specifically.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-Kernel-Untrusted-Data-API" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux 7.2 Expected To Introduce &quot;OPENAT2_REGULAR&quot; To Avoid Tricking Secure Programs</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A new OPENAT2_REGULAR flag for the openat2 syscall is queued for Linux 7.2, ensuring callers can require that only regular files — not symlinks, devices, or FIFOs — are opened.</li>
-              <li>Motivation: prevents TOCTOU and symlink-substitution attacks where a secure program opens what it expects to be a known regular file but gets redirected.</li>
-              <li>Security-sensitive applications (package managers, privilege-separated daemons, container runtimes) can harden file-open paths without custom validation logic.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.2-OPENAT2_REGULAR" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Ubuntu Core 26 Released With Live Kernel Patching, Better OTA Updates</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Ubuntu Core 26 ships alongside the Ubuntu 26.04 LTS cycle, targeting embedded and edge deployments where downtime for kernel security updates is operationally impractical.</li>
-              <li>Live kernel patching allows security fixes to be applied to a running kernel without a reboot — directly applicable to always-on inference nodes or edge compute fleets.</li>
-              <li>Improved OTA update mechanics reduce the risk of bricked or stuck devices during delta upgrades across large device fleets.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Ubuntu-Core-26" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/intel-ceo-lip-bu-tan-stamps-out-chip-bugs-with-aggressive-new-quality-standards-says-major-validation-errors-can-result-in-termination-b0-you-keep-your-job-anything-above-that-you-are-fired" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -139,15 +95,69 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel&#x27;s Project Firefly creates sub-$600 laptops to compete with Apple&#x27;s MacBook Neo</h3>
+              <h3>Intel llm-scaler-vllm PV 1.4 Released With Updated Components, Arc Pro B70 Support</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Intel shipped llm-scaler-vllm PV v1.4, a pre-configured Docker stack for running vLLM on Arc (Pro) GPU hardware with updated component versions.</li>
+              <li>New in 1.4: support for the Arc Pro B70, Intel&#x27;s professional discrete GPU targeting inference and workstation AI acceleration.</li>
+              <li>For developers running local or on-prem inference on Intel Arc hardware, this is the lowest-friction path to a performant vLLM deployment without manual dependency management.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Intel-LLM-Scaler-vLLM-PV-1.4" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>RHEL 10.2 Released With New AI Command Line Assistance</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Red Hat shipped RHEL 10.2 and RHEL 9.8 simultaneously; the headline feature in 10.2 is integrated AI command-line assistance for the shell environment.</li>
+              <li>RHEL 9.8 provides a parallel update path for organizations not yet on the RHEL 10 base, keeping the 9.x series current for existing production deployments.</li>
+              <li>The AI CLI assistance feature signals Red Hat&#x27;s intent to make the enterprise Linux shell an intelligent interface — relevant to DevOps and sysadmin workflows at scale.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Red-Hat-RHEL-10.2-RHEL-9.8" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>HP Now Sponsoring The Linux Vendor Firmware Service / Fwupd</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>HP has joined Dell and Lenovo as a premiere sponsor of the Linux Vendor Firmware Service (LVFS), each contributing $100k+ annually to the open-source firmware update initiative.</li>
+              <li>All three major PC OEMs are now funding fwupd, the daemon used by virtually every major Linux distribution for firmware updates.</li>
+              <li>Consolidated OEM backing should accelerate firmware coverage across HP&#x27;s commercial and consumer hardware lines, improving the Linux experience on HP devices fleet-wide.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/HP-Sponsoring-LVFS-Fwupd" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Greg KH Calls For More Rust Linux Developers</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Linux kernel co-maintainer Greg Kroah-Hartman used a Rust Week conference talk to make a direct appeal for more Rust-fluent kernel developers.</li>
+              <li>Greg KH noted he is also using AI/LLMs as an auxiliary tool for finding kernel bugs alongside his traditional review responsibilities.</li>
+              <li>The appeal reflects a genuine bottleneck: Rust subsystem patches are accumulating faster than the pool of reviewers with both Rust expertise and kernel internals knowledge.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Greg-KH-More-Rust-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Hacker group hits 3,800 internal GitHub repositories via poisoned developer plugin — employee installed malicious VS Code extension</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel China is applying the Chinese smartphone ODM/supply-chain model to PC manufacturing to hit sub-$600 price points for Wildcat Lake laptops.</li>
-              <li>The initiative is a direct response to Apple&#x27;s MacBook Neo and the broader ARM laptop momentum eroding Intel&#x27;s consumer market share.</li>
-              <li>Wildcat Lake is Intel&#x27;s upcoming mobile platform on the 18A node — Project Firefly effectively front-loads 18A volume by targeting the budget segment first, seeding manufacturing scale.</li>
+              <li>GitHub confirmed a breach of approximately 3,800 internal repositories after a single employee installed a malicious VS Code extension.</li>
+              <li>The TeamPCP hacker group claims source code theft and attempted to sell the data for at least $50,000.</li>
+              <li>This is a concrete supply-chain attack vector: developer tooling extensions remain a high-value, low-friction entry point — vet VS Code extension publishers carefully and pin to known versions.</li>
             </ul>
-            <a href="https://www.tomshardware.com/laptops/intels-project-firefly-creates-sub-usd600-laptops-to-compete-with-macbook-neo-leverages-chinas-smartphone-manufacturing-blueprint-to-produce-affordable-wildcat-lake-systems" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/cyber-security/hacker-group-hits-3-800-internal-github-repositories-via-poisoned-developer-plugin-teampcp-claims-source-code-theft-and-attempts-usd50-000-sale-employee-installed-malicious-vs-code-extension" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
