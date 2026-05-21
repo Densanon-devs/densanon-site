@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - May 20, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - May 21, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,153 +15,149 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 20, 2026</div>
+        <div class="digest-date-badge">May 21, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s robotics digest centers on safety and manipulation: ArXiv delivers concrete control architectures for contact-rich tasks and adversarial humanoid safety testing, while industry shows real deployments — Atlas lifting washing machines and zero-shot picking stations live at Schneider Electric.</p>
+        <p class="digest-intro">Today&#x27;s digest is heavy on humanoid scale-up: Humanoid locks in Bosch and Schaeffler as European manufacturing partners, Figure AI&#x27;s package-handling robots go viral, and a new open-source mobile arm aims to cut the hardware cost barrier for embodied AI research. Research highlights include a human-video-driven framework for whole-body loco-manipulation and a novel method for preventing operator skill atrophy from AI assistance.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Adversarial Stress Testing of SPARK Humanoid Safety Filters</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>SPARK humanoid safety filters modify nominal control actions when collision-avoidance constraints may be violated — adversarial stress testing reveals failure modes at the boundary of those filters.</li>
-              <li>Humanoid robots present a uniquely hard safety problem: high-dimensional bodies, dense collision constraints, and operation near people mean standard filter margins may be insufficient under adversarial inputs.</li>
-              <li>The adversarial test methodology generates worst-case perturbations to nominal motion plans, producing a structured benchmark for comparing safety filter robustness across humanoid platforms.</li>
-              <li>Findings identify where filter conservatism must be raised vs. where it can be relaxed — directly applicable to industrial humanoid deployment criteria.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.19009" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Distributionally Robust Control via Stein Variational Inference for Contact-Rich Manipulation</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Contact-rich manipulation introduces sharp uncertainty discontinuities that standard Gaussian models poorly represent — Stein Variational Inference maintains a richer, particle-based uncertainty estimate updated online per interaction.</li>
-              <li>The distributionally robust formulation optimizes control against the worst-case distribution within an uncertainty set, providing formal guarantees that degrade gracefully when contact dynamics shift at runtime.</li>
-              <li>Unlike large-scale data-driven methods that amortize uncertainty through dataset size, this approach adapts to rare or novel contact geometries without retraining.</li>
-              <li>Benchmarks show improved success rates under model mismatch compared to standard robust MPC baselines on contact-rich manipulation tasks.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.19029" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>KG-ASG: Collision-Knowledge-Guided Closed-Loop Adversarial Scenario Generation</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>KG-ASG uses a collision knowledge graph to guide adversarial scenario generation toward semantically meaningful near-miss and collision events, addressing the gap between coverage and interpretability in AV safety validation.</li>
-              <li>The closed-loop generation loop ensures scenarios remain executable by the system under test, avoiding the common open-loop pitfall where adversarial trajectories become physically infeasible.</li>
-              <li>Primary-support attribution labels the causal agent vs. reactive participant in each collision, enabling targeted fault analysis rather than aggregate pass/fail metrics.</li>
-              <li>This structured approach generates high-risk scenarios that are both coverage-rich and semantically interpretable — a combination existing methods have not achieved simultaneously.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.18895" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>RLFTSim: Realistic and Controllable Multi-Agent Traffic Simulation via Reinforcement Learning Fine-Tuning</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Supervised open-loop training for traffic simulation fails to capture emergent multi-agent interaction dynamics — RLFTSim fine-tunes pretrained simulation models with RL to close the behavioral distribution gap.</li>
-              <li>The RL objective rewards realistic multi-agent interaction fidelity and scenario controllability, allowing operators to dial in target traffic density and conflict frequency.</li>
-              <li>Closed-loop RL fine-tuning avoids compounding errors that accumulate when open-loop models are rolled out for extended simulation horizons.</li>
-              <li>RLFTSim generates diverse, controllable traffic scenarios for AV testing without requiring additional real-world data collection.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.19033" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Boston Dynamics trains Atlas humanoid robot to pick up and place washing machine</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Electric Atlas is being trained on heavy-object manipulation — picking up and precisely placing a full washing machine — targeting awkward, high-mass industrial tasks that previous hydraulic Atlas could not sustain reliably.</li>
-              <li>Behind-the-scenes footage reveals the training pipeline Boston Dynamics uses to transfer manipulation skills, providing a rare window into their learning-from-demonstration approach on the electric platform.</li>
-              <li>Washing machine placement requires both load-bearing whole-body control and precise terminal positioning, making it a strong proxy benchmark for industrial readiness beyond scripted pick-and-place.</li>
-              <li>This demo signals that Atlas&#x27;s commercial trajectory is aimed at unstructured heavy-manufacturing environments, not just show-floor demonstrations.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/05/20/boston-dynamics-trains-atlas-humanoid-robot-to-pick-up-and-place-washing-machine/101759/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Fraunhofer IPA offers new test benchmark for humanoids</h3>
+              <h3>Humanoid partners with Bosch, Schaeffler to scale robot production</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fraunhofer IPA developed a third-party benchmark for industrial humanoid evaluation, filling the gap left by vendor-run demos that lack standardized, application-relevant criteria.</li>
-              <li>The benchmark covers criteria directly tied to industrial deployment: payload, cycle time, dexterity under load, and safety proximity performance — not general locomotion or stair-climbing metrics.</li>
-              <li>Third-party independent testing is critical for buyers: without it, humanoid procurement decisions rely entirely on vendor-curated footage, which rarely shows failure modes.</li>
-              <li>IPA is making the benchmark available for external analysis, positioning it as a potential industry-standard evaluation framework as humanoid deployments scale past pilot programs.</li>
+              <li>Humanoid is building out a European manufacturing and distribution network for its HMND robot, adding Bosch and Schaeffler to an existing Siemens partnership.</li>
+              <li>The multi-supplier strategy signals a push toward volume production rather than prototype-scale builds.</li>
+              <li>Schaeffler&#x27;s precision actuator expertise is a strategic fit for humanoid joints, potentially lowering per-unit BOM costs as production scales.</li>
             </ul>
-            <a href="https://www.therobotreport.com/fraunhofer-ipa-offers-new-test-benchmark-for-humanoid-robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/humanoid-partners-with-bosch-schaeffler-scale-robot-production/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Geekplus Takes Fifth RBR50 Innovation Award With AI-Powered Picking Station</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Geekplus&#x27;s Robot Arm Picking Station uses zero-shot learning to handle item picking without per-SKU training data — deployed in production at a Schneider Electric facility in Shanghai.</li>
-              <li>Zero-shot picking eliminates the weeks-long SKU onboarding process that has historically limited the economics of robotic picking in high-mix warehouses.</li>
-              <li>The system is production-deployed, not a lab demo — Schneider Electric&#x27;s facility provides real-world validation across a diverse industrial parts catalog.</li>
-              <li>This is Geekplus&#x27;s fifth RBR50 award, reflecting a consistent pattern of shipping novel warehouse intelligence rather than iterating on existing AMR form factors.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/05/20/geekplus-takes-fifth-rbr50-innovation-award-with-ai-powered-picking-station/101765/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>FANUC strengthens robot integration with NVIDIA Isaac Sim</h3>
+              <h3>Inside Verobotics&#x27; edge AI robotics deployment at NVIDIA&#x27;s Israel campus</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>FANUC is integrating its industrial robots and teach pendant interface directly with NVIDIA Isaac Sim, enabling physics-accurate simulation of FANUC cells before physical deployment.</li>
-              <li>Tight teach-pendant integration means simulation workflows use the same operator interface as the real robot, reducing the training overhead and configuration gap between virtual and physical environments.</li>
-              <li>Isaac Sim&#x27;s GPU-accelerated physics and AI training pipeline lets FANUC users generate synthetic training data for vision and manipulation policies using their exact robot kinematics.</li>
-              <li>This partnership extends the sim-to-real pipeline to one of the largest installed bases in industrial automation, potentially accelerating AI-driven programming adoption at scale.</li>
+              <li>Verobotics deployed wall-climbing robots at NVIDIA&#x27;s Israel campus that turn vertical surfaces into repeatable, data-rich robotic workspaces.</li>
+              <li>The deployment demonstrates edge-AI inference running fully on-board for inspection tasks without cloud connectivity.</li>
+              <li>Reframing vertical surfaces as scheduled robotic workspaces rather than one-off access jobs is a meaningful shift for industrial inspection market economics.</li>
             </ul>
-            <a href="https://www.therobotreport.com/fanuc-strengthens-robot-integration-nvidia-isaac-sim/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/inside-verobotics-edge-ai-robotics-deployment-at-nvidias-israel-campus/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Robots Could Turn E-Waste Into a Source of Legacy Chips</h3>
+              <h3>The Future of Physical AI Isn&#x27;t Smarter Robots, It&#x27;s Smarter Interfaces</h3>
               <span class="digest-source">IEEE Spectrum Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Robotic disassembly of e-waste is emerging as a practical path to recovering legacy chips — components no longer in production but still in high demand for industrial and defense applications.</li>
-              <li>New European waste-shipment rules, California&#x27;s non-removable battery recycling fees, and Malaysia&#x27;s e-waste import ban are creating simultaneous regulatory pressure that makes automated recovery economically viable.</li>
-              <li>Robotic disassembly must handle extreme product variety with no standardized fastening, driving demand for dexterous manipulation systems capable of operating on unpredictable, mixed-density assemblies.</li>
-              <li>Recovering functioning legacy ICs from e-waste boards could partially offset semiconductor supply shortages for sectors that cannot migrate to newer parts.</li>
+              <li>Interface friction - not robot capability - is currently the primary bottleneck for deploying physical AI on real worksites.</li>
+              <li>Field scenarios like hands-busy or eyes-occupied workers expose a fundamental gap between robot capability and usable control surfaces.</li>
+              <li>Wetour Robotics is betting on ambient, voice, and gesture interfaces rather than touchscreen panels to close this human-robot interaction gap.</li>
             </ul>
-            <a href="https://spectrum.ieee.org/e-waste-recycling-robots-ram" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://spectrum.ieee.org/wetour-robotics-physical-ai-human-interfaces" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>SUGAR: A Scalable Human-Video-Driven Generalizable Humanoid Loco-Manipulation Learning Framework</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>SUGAR learns whole-body loco-manipulation from human video rather than task-specific reward engineering, making it far more generalizable across environments.</li>
+              <li>The framework avoids rigid reference-motion replay - a common failure mode - by allowing flexible adaptation during execution.</li>
+              <li>A meaningful step toward training humanoids on internet-scale human demonstration data rather than purpose-built robot datasets.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.20373" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Locus Array expands picking ability with Nexera Robotics&#x27; NeuraGrasp</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Proximal State Nudging: Reducing Skill Atrophy from AI Assistance</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Nexera Robotics&#x27; NeuraGrasp adds adaptive grasping to the Locus Array mobile manipulator, expanding SKU coverage beyond what a fixed gripper configuration can handle in e-commerce fulfillment.</li>
-              <li>Adaptive grasping for mobile manipulation is architecturally significant: it decouples picking capability from the locomotion platform, allowing gripper upgrades without replacing the base system.</li>
-              <li>E-commerce SKU diversity — irregular shapes, flexible packaging, varying weights — has been the primary ceiling on autonomous picking adoption; NeuraGrasp targets this directly.</li>
-              <li>The Locus Array + NeuraGrasp integration represents a modular hardware ecosystem approach, contrasting with vertically integrated humanoid platforms that bundle locomotion and manipulation in a single SKU.</li>
+              <li>Skill atrophy - humans losing capability when AI handles corrections - is a real safety risk in shared-control systems where sudden handoff to manual must remain safe.</li>
+              <li>Proximal State Nudging keeps human skills engaged by nudging system state toward outcomes the operator could achieve themselves.</li>
+              <li>Directly applicable to surgical robotics, aviation, and industrial teleoperation where operators may need to take over with little warning.</li>
             </ul>
-            <a href="https://www.therobotreport.com/locus-array-expands-picking-ability-with-nexera-robotics-neuragrip/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.20355" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Adaptive Human-Robot Collaboration for Masonry Construction Under Material and Assembly Uncertainty</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The system handles tolerance accumulation in masonry by adapting the robot&#x27;s plan in real time rather than assuming tight material consistency.</li>
+              <li>Improved robot-to-human communication is a first-class design goal, not an afterthought, making this more deployable on actual job sites.</li>
+              <li>Demonstrates that HRC in construction is moving beyond lab demos toward workflows that handle the messy physical variability of real projects.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.20264" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>VBT-MPC: Vision-Based Tactile MPC for Contour Following</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>VBT-MPC fuses vision-based tactile sensing with Model Predictive Control to enable real-time contour following without losing contact.</li>
+              <li>The MPC framing gives the system a principled way to recover from slip or misalignment - a long-standing brittleness in tactile-based inspection.</li>
+              <li>Applicable to quality control, assembly verification, and any manipulation task requiring maintained contact with complex or irregular geometries.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.20392" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Mobile OpenArm!</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Mobile OpenArm X1 is an open-source mobile manipulator co-developed with OpenArm, targeting researchers priced out of industrial AMR+cobot setups that easily cross $50k.</li>
+              <li>Positions itself as a genuine embodied AI research platform with ROS compatibility, not just a hobbyist toy.</li>
+              <li>Lowering hardware cost floors for mobile manipulation research could meaningfully accelerate the open-source robotics ecosystem.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1tjbs3l/mobile_openarm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Testing Gemma 4 on Jetson Orin Nano for Robotics tasks</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Community member ran Gemma 4 on a Jetson Orin Nano via ROS-MCP server, testing tool use, image labeling, and audio transcription for real robotics workloads.</li>
+              <li>The LLM handled tool calls through the ROS-MCP bridge - a practical data point for on-robot LLM inference at edge power budgets.</li>
+              <li>Ground-truth edge benchmarks like this are what the community needs before committing to a model for embedded deployment.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1tjmh7o/testing_gemma_4_on_jetson_orin_nano_for_robotics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Wearable robot boosts strength of children with spinal muscular atrophy</h3>
+              <span class="digest-source">Hacker News Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A wearable exoskeleton designed for children with spinal muscular atrophy (SMA) demonstrably improves their strength and functional mobility.</li>
+              <li>Pediatric exoskeleton research is sparse given SMA&#x27;s rarity - this is a meaningful clinical milestone for assistive wearable robotics.</li>
+              <li>Published in Nature, lending significant weight to the clinical evidence base for wearable assistive robotics in pediatric populations.</li>
+            </ul>
+            <a href="https://www.nature.com/articles/d41586-026-01573-x" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

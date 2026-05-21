@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - May 20, 2026 | Densanon</title>
+  <title>AI Morning Digest - May 21, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 20, 2026</div>
+        <div class="digest-date-badge">May 21, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Google I/O dropped Gemini 3.5 Flash straight to GA while ArXiv lit up with agent failure modes and training-stability research — a day where real deployment concerns took center stage alongside a landmark talent move with Karpathy joining Anthropic.</p>
+        <p class="digest-intro">Today&#x27;s AI digest is headlined by Google I/O announcements, a major Claude Code release, and a high-scoring community thread on mobile vibe-coding workflows — plus new research on quantized LLM quality and bias in representation.</p>
       </div>
     </section>
 
@@ -29,42 +29,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Introducing the Ettin Reranker Family</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>anthropics/claude-code: v2.1.146</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Ettin is a new family of cross-encoder rerankers trained for RAG pipelines, with multiple size checkpoints for latency/quality tradeoffs.</li>
-              <li>Models are on HF Hub under a permissive license and are designed to slot into existing retrieval stacks without pipeline changes.</li>
-              <li>Benchmark results show competitive MRR and NDCG vs larger rerankers, making the smallest variant viable for local inference.</li>
-              <li>Worth evaluating alongside Cohere Rerank and BGE-reranker if you run a local retrieval pipeline.</li>
+              <li>/simplify has been renamed /code-review with optional effort levels (e.g. /code-review high), making intent clearer.</li>
+              <li>Auto mode no longer suppresses AskUserQuestion when a skill or user explicitly relies on it — fixes a key agentic workflow gap.</li>
+              <li>Windows PowerShell tool crash with &#x27;command line is invalid&#x27; when pwsh is missing has been fixed.</li>
             </ul>
-            <a href="https://huggingface.co/blog/ettin-reranker" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.146" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Gemini 3.5 Flash: more expensive, but Google plan to use it for everything</h3>
+              <h3>Google I/O, Gemini Spark, Antigravity</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Gemini 3.5 Flash launched at Google I/O with no preview gate — immediately GA, rolling into Gemini apps, Workspace, and Android globally.</li>
-              <li>Price is higher than 2.0 Flash; Willison flags this as a concerning cost trajectory for Google&#x27;s everyday model tier.</li>
-              <li>Context window and multimodal capabilities are expanded, but the headline story is Google standardizing 3.5 Flash as the default across all consumer products.</li>
-              <li>For API users: verify token pricing before migrating from 2.0 Flash — the jump may not be justified for simple tasks.</li>
+              <li>Simon Willison&#x27;s measured take on Google I/O: most big announcements are &#x27;coming soon&#x27; and he deliberately avoids writing about features he can&#x27;t try himself.</li>
+              <li>Highlights the gap between Google&#x27;s announcement cadence and what&#x27;s actually available for developers to test today.</li>
+              <li>Worth reading as a reality-check counterpoint to the hype around Gemini Spark and other I/O reveals.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/May/19/gemini-35-flash/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/20/google-io/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>llm-gemini 0.32</h3>
+              <h3>How fast is 10 tokens per second really?</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon&#x27;s llm-gemini CLI plugin now registers gemini-3.5-flash as a named model alias, available immediately after upgrade.</li>
-              <li>The preceding 0.32a0 alpha wired in streaming reasoning token support — thinking output streams in real time via the same pipe.</li>
-              <li>Upgrade path: `llm install -U llm-gemini` then use with `llm -m gemini-3.5-flash`.</li>
-              <li>Pairs cleanly with datasette-llm if you query local SQLite databases via natural language.</li>
+              <li>Interactive HTML tool lets you simulate LLM output speeds from 5 to 800 tokens/second so you can feel the difference before buying.</li>
+              <li>Useful calibration resource when evaluating local model hardware specs or cloud API latency claims.</li>
+              <li>Demystifies marketing numbers — 30 tok/s feels very different from 10 tok/s in practice.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/May/19/llm-gemini-2/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/20/tokens-per-second/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -74,68 +71,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Agent Meltdowns: The Road to Hell Is Paved with Helpful Agents</h3>
+              <h3>Improving Quantized Model Performance in Qualitative Analysis with Multi-Pass Prompt Verification</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>SOTA agents don&#x27;t fail gracefully — when they hit errors (404s, missing files, misconfigs), they keep &#x27;helpfully&#x27; pursuing workarounds until they cause real damage.</li>
-              <li>The paper coins &#x27;agent meltdowns&#x27;: runaway error-recovery loops that compound failures rather than halting and surfacing the error upstream.</li>
-              <li>Behavior was observed across computer-use and web-use tasks even with top-tier models, suggesting it is a training-incentive problem, not a capability gap.</li>
-              <li>Practical takeaway for agentic harness builders: explicit error-budget limits and mandatory escalation paths are not optional — they must be baked in at the architecture level.</li>
+              <li>Examines how 8-bit, 4-bit, 3-bit, and 2-bit quantization levels affect LLM output quality on qualitative analysis tasks.</li>
+              <li>Proposes a multi-pass prompt verification strategy to recover accuracy lost at lower bit depths.</li>
+              <li>Practical for anyone running quantized models locally — lower bits can still perform well with the right prompting pipeline.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.19149" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.20193" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ReacTOD: Bounded Neuro-Symbolic Agentic NLU for Zero-Shot Dialogue State Tracking</h3>
+              <h3>Shiny Stories, Hidden Struggles: Investigating the Representation of Disability Through the Lens of LLMs</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ReacTOD combines a symbolic constraint layer with a mid-sized LLM to get reliable slot-filling without hallucination on task-oriented dialogue benchmarks.</li>
-              <li>Achieves zero-shot generalization to new domains — no labeled DST examples required — while the symbolic layer prevents format errors from cascading into bad transactions.</li>
-              <li>Targets moderately-sized LLMs (sub-13B range) rather than frontier models, keeping latency practical for real deployments.</li>
-              <li>Directly applicable to local NPC dialogue systems and any agentic workflow requiring structured output from a small, fast model.</li>
+              <li>Studies how LLMs represent disability when simulating personas, finding systematic gaps and distortions in how disabled identities are portrayed.</li>
+              <li>Highlights risks of using LLMs for demographic simulation without auditing for under-represented or misrepresented groups.</li>
+              <li>Calls for targeted evaluation benchmarks focused on disability representation — a largely overlooked fairness dimension.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.19077" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.20191" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AgentNLQ: A General-Purpose Agent for Natural Language to SQL</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>Parallel LLM Reasoning for Bias-Resilient, Robust Conceptual Abstraction</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AgentNLQ frames NL2SQL as a multi-step agentic task — schema exploration, query drafting, self-correction — rather than a single-shot translation.</li>
-              <li>Outperforms single-shot prompting on Spider and BIRD benchmarks by feeding actual database execution errors back into the agent loop.</li>
-              <li>Works with open-weight models; the iterative correction loop compensates for smaller model SQL capability without requiring a frontier API.</li>
-              <li>The schema-explore-then-correct pattern is portable to any structured query domain beyond SQL.</li>
+              <li>Identifies a failure mode where sequential processing of long documents causes early/dominant concepts to bias the model&#x27;s reasoning.</li>
+              <li>Proposes a parallel reasoning architecture that processes document chunks independently to reduce conceptual anchoring bias.</li>
+              <li>Relevant for long-document summarization, legal review, and any task where positional bias in context matters.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.19010" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Learn-by-Wire Training Control Governance: Bounded Autonomous Training Under Stress for Stability and Efficiency</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>LBW-Guard is a runtime training controller that monitors loss curves and gradient norms, automatically clamping learning-rate bounds when instability is detected.</li>
-              <li>Tested under aggressive LR schedules and scale stress; recovers runs that would otherwise diverge, saving GPU-hours without human intervention.</li>
-              <li>The &#x27;bounded autonomy&#x27; design never takes large corrective actions — only small conservative clamps — preventing the guard itself from overcorrecting.</li>
-              <li>Relevant for anyone fine-tuning local models on constrained hardware where a diverged run is expensive to restart from scratch.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.19008" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Position: Let&#x27;s Develop Data Probes to Fundamentally Understand How Data Affects LLM Performance</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Position paper arguing the field lacks systematic tools to attribute model behavior to specific training data subsets across training, fine-tuning, RLHF, and ICL stages.</li>
-              <li>Proposes a research agenda for causal data attribution — understanding *why* certain data improves performance, not just *that* it does.</li>
-              <li>Distinguishes data effects by training phase: pre-training, fine-tuning, alignment, and in-context learning each require different diagnostic approaches.</li>
-              <li>High-value read for anyone curating training or fine-tuning datasets for local models; the diagnostic vocabulary clarifies data-quality decision-making.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.18801" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.20194" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -145,16 +113,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Karpathy joins Anthropic</h3>
+              <h3>I&#x27;m a software engineer with a decade of experience. I vibe code all of my side projects from my phone using Claude Code and don&#x27;t read any of the code. Here are the rules I follow:</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Andrej Karpathy — co-founder of OpenAI, former Tesla AI director, and author of the most-watched neural network courses online — announced he is joining Anthropic&#x27;s pre-training team.</li>
-              <li>This is the third high-profile OpenAI departure to land at Anthropic in recent months, accelerating what the community is calling a decisive talent consolidation shift.</li>
-              <li>Karpathy&#x27;s focus on pre-training fundamentals (not products) signals Anthropic is investing in next-generation base model architecture rather than near-term product iteration.</li>
-              <li>Post hit 5,500+ upvotes within hours — the highest-engagement AI community post of the week by a wide margin.</li>
+              <li>1,290-upvote thread from a senior engineer who uses Claude Code exclusively on mobile — key rule: always start in plan mode and actually read the plan before proceeding.</li>
+              <li>Practical workflow: use plan-mode edits frequently to ask Claude to clarify unclear sections before approving execution.</li>
+              <li>Valuable signal that experienced devs are finding agentic coding genuinely productive, not just a novelty.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1thpuf1/karpathy_joins_anthropic/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1tj2i90/im_a_software_engineer_with_a_decade_of/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Same task in github-copilot, pi, claude-code, and opencode with Qwen3.6 27B</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Side-by-side comparison isolating harness vs. model contribution to coding agent performance — same Qwen3.6 27B model, four different harnesses.</li>
+              <li>Findings suggest the agent harness (tool loop, context management, prompting) matters significantly alongside raw model capability.</li>
+              <li>Useful methodology for anyone evaluating which coding assistant framework to adopt for local model deployments.</li>
+            </ul>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1tjbhjk/same_task_in_githubcopilot_pi_claudecode_and/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>110 tok/s with 12GB VRAM on Qwen3.6 35B A3B and ik_llama.cpp</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>RTX 4070 Super (12GB) achieving 110 tok/s on a 35B MoE model using ik_llama.cpp after mainstream llama.cpp&#x27;s MTP merge tanked performance.</li>
+              <li>The ik_llama.cpp fork is maintaining aggressive performance optimization where the upstream project has regressed.</li>
+              <li>Reference data point for local inference hardware planning — 35B MoE at cloud-competitive speeds on a consumer GPU.</li>
+            </ul>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1tjh7az/110_toks_with_12gb_vram_on_qwen36_35b_a3b_and_ik/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
