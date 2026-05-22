@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - May 21, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - May 22, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,107 +15,107 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 21, 2026</div>
+        <div class="digest-date-badge">May 22, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is heavy on humanoid scale-up: Humanoid locks in Bosch and Schaeffler as European manufacturing partners, Figure AI&#x27;s package-handling robots go viral, and a new open-source mobile arm aims to cut the hardware cost barrier for embodied AI research. Research highlights include a human-video-driven framework for whole-body loco-manipulation and a novel method for preventing operator skill atrophy from AI assistance.</p>
+        <p class="digest-intro">Today&#x27;s digest is anchored by open-source AI momentum in robotics and a string of high-stakes industry partnerships moving physical AI from proof-of-concept into production. On the research side, bimanual manipulation and sim-to-real transfer push the limits of what robots can learn from minimal data.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Humanoid partners with Bosch, Schaeffler to scale robot production</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Humanoid is building out a European manufacturing and distribution network for its HMND robot, adding Bosch and Schaeffler to an existing Siemens partnership.</li>
-              <li>The multi-supplier strategy signals a push toward volume production rather than prototype-scale builds.</li>
-              <li>Schaeffler&#x27;s precision actuator expertise is a strategic fit for humanoid joints, potentially lowering per-unit BOM costs as production scales.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/humanoid-partners-with-bosch-schaeffler-scale-robot-production/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Inside Verobotics&#x27; edge AI robotics deployment at NVIDIA&#x27;s Israel campus</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Verobotics deployed wall-climbing robots at NVIDIA&#x27;s Israel campus that turn vertical surfaces into repeatable, data-rich robotic workspaces.</li>
-              <li>The deployment demonstrates edge-AI inference running fully on-board for inspection tasks without cloud connectivity.</li>
-              <li>Reframing vertical surfaces as scheduled robotic workspaces rather than one-off access jobs is a meaningful shift for industrial inspection market economics.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/inside-verobotics-edge-ai-robotics-deployment-at-nvidias-israel-campus/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>The Future of Physical AI Isn&#x27;t Smarter Robots, It&#x27;s Smarter Interfaces</h3>
-              <span class="digest-source">IEEE Spectrum Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Interface friction - not robot capability - is currently the primary bottleneck for deploying physical AI on real worksites.</li>
-              <li>Field scenarios like hands-busy or eyes-occupied workers expose a fundamental gap between robot capability and usable control surfaces.</li>
-              <li>Wetour Robotics is betting on ambient, voice, and gesture interfaces rather than touchscreen panels to close this human-robot interaction gap.</li>
-            </ul>
-            <a href="https://spectrum.ieee.org/wetour-robotics-physical-ai-human-interfaces" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SUGAR: A Scalable Human-Video-Driven Generalizable Humanoid Loco-Manipulation Learning Framework</h3>
+              <h3>PGDG: Physically Grounded Data Generation for Robust Bimanual Policy Learning from a Single Demonstration</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>SUGAR learns whole-body loco-manipulation from human video rather than task-specific reward engineering, making it far more generalizable across environments.</li>
-              <li>The framework avoids rigid reference-motion replay - a common failure mode - by allowing flexible adaptation during execution.</li>
-              <li>A meaningful step toward training humanoids on internet-scale human demonstration data rather than purpose-built robot datasets.</li>
+              <li>A single human demonstration is augmented with physics-grounded synthetic data to train contact-rich bimanual manipulation policies, dramatically cutting the collection burden.</li>
+              <li>The approach generates recovery supervision for off-manifold states — the core failure mode of standard behavior cloning — by simulating disturbances and their corrections.</li>
+              <li>Robustness to perturbation improves significantly over baselines trained on the same single demo without augmentation.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.20373" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.21710" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Proximal State Nudging: Reducing Skill Atrophy from AI Assistance</h3>
+              <h3>Closed-Loop Sim-to-Real Reinforcement Learning for Deformable Microfiber Shape Control</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Skill atrophy - humans losing capability when AI handles corrections - is a real safety risk in shared-control systems where sudden handoff to manual must remain safe.</li>
-              <li>Proximal State Nudging keeps human skills engaged by nudging system state toward outcomes the operator could achieve themselves.</li>
-              <li>Directly applicable to surgical robotics, aviation, and industrial teleoperation where operators may need to take over with little warning.</li>
+              <li>Microscale surface interactions are notoriously hard to model, making sim-to-real transfer for micromanipulation largely impractical — this paper closes that gap with a closed-loop RL approach.</li>
+              <li>The system learns to control deformable microfiber shape through contact without relying on accurate physical models, using real-world feedback to iteratively refine the policy instead.</li>
+              <li>Results suggest the framework generalizes to other contact-based micro-manipulation tasks where surface forces dominate.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.20355" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.21688" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Adaptive Human-Robot Collaboration for Masonry Construction Under Material and Assembly Uncertainty</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
+              <h3>Robot Talk Episode 157 – Generating new robot designs, with Josie Hughes</h3>
+              <span class="digest-source">Robohub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The system handles tolerance accumulation in masonry by adapting the robot&#x27;s plan in real time rather than assuming tight material consistency.</li>
-              <li>Improved robot-to-human communication is a first-class design goal, not an afterthought, making this more deployable on actual job sites.</li>
-              <li>Demonstrates that HRC in construction is moving beyond lab demos toward workflows that handle the messy physical variability of real projects.</li>
+              <li>EPFL&#x27;s CREATE Lab is using AI to co-design robotic manipulators, exploring how generative models can propose morphologies that human engineers would not intuitively reach.</li>
+              <li>The work bridges the gap between task specification and hardware form factor — asking &#x27;what shape should this robot be?&#x27; rather than just &#x27;how should it move?&#x27;</li>
+              <li>Hughes argues that AI-driven design exploration is key to unlocking manipulators suited for unstructured, real-world environments.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.20264" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://robohub.org/robot-talk-episode-157-generating-new-robot-designs-with-josie-hughes/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Open-Source Software Is Starting to Help Robots Think</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Hugging Face, NVIDIA, and other major players are open-sourcing the AI cognition stack for robots, mirroring the earlier wave of open-source hardware that saved researchers years of work.</li>
+              <li>The shift makes robot reasoning — perception, planning, and language grounding — accessible to labs and startups that couldn&#x27;t afford to build it from scratch.</li>
+              <li>The article notes this is still early, but the trajectory is clear: open-source AI will be as foundational to robotics as ROS was for motion control.</li>
+            </ul>
+            <a href="https://spectrum.ieee.org/open-source-robot-ai-platforms" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>VBT-MPC: Vision-Based Tactile MPC for Contour Following</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
+              <h3>FANUC partners with Google to advance physical AI in its robots</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>VBT-MPC fuses vision-based tactile sensing with Model Predictive Control to enable real-time contour following without losing contact.</li>
-              <li>The MPC framing gives the system a principled way to recover from slip or misalignment - a long-standing brittleness in tactile-based inspection.</li>
-              <li>Applicable to quality control, assembly verification, and any manipulation task requiring maintained contact with complex or irregular geometries.</li>
+              <li>FANUC — one of the world&#x27;s largest industrial robot makers — is integrating physical AI from both Google and NVIDIA following strong customer interest at IREX Tokyo.</li>
+              <li>The partnership signals that traditional industrial automation incumbents are moving beyond classical path planning toward learned, adaptive behaviors.</li>
+              <li>Google&#x27;s involvement likely brings DeepMind robotics research into high-volume factory deployments for the first time at this scale.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.20392" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/fanuc-partners-google-advance-physical-ai-robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Humanoid secures partnership with manufacturing giant Bosch following a successful proof of concept</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>UK-based Humanoid completed a joint POC with Bosch in March 2026 and converted it into a scaled production agreement — a rare proof-of-concept-to-contract win for a humanoid startup.</li>
+              <li>The deal moves Humanoid&#x27;s platform from demonstration into a real manufacturing environment at Bosch scale, providing the kind of operational data most humanoid companies lack.</li>
+              <li>Bosch&#x27;s endorsement gives other tier-1 manufacturers a credible reference case for humanoid deployment.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/05/22/humanoid-secures-partnership-with-manufacturing-giant-bosch-following-a-successful-proof-of-concept/101720/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Flytrex opens drone manufacturing facility in Dallas</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Flytrex is standing up domestic US drone manufacturing in Texas to support its target of 60 delivery sites across Dallas-Fort Worth by mid-2027.</li>
+              <li>Bringing manufacturing stateside reduces supply chain risk and positions Flytrex to meet FAA&#x27;s increasing preference for US-made autonomous systems.</li>
+              <li>The facility scale suggests Flytrex is betting on drone-delivery unit economics improving at volume — the key open question for autonomous last-mile logistics.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/05/22/flytrex-opens-drone-manufacturing-facility-in-dallas/101786/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -125,39 +125,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Mobile OpenArm!</h3>
+              <h3>Custom protocol, sub-40-ms Latency Teleoperation software</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Mobile OpenArm X1 is an open-source mobile manipulator co-developed with OpenArm, targeting researchers priced out of industrial AMR+cobot setups that easily cross $50k.</li>
-              <li>Positions itself as a genuine embodied AI research platform with ROS compatibility, not just a hobbyist toy.</li>
-              <li>Lowering hardware cost floors for mobile manipulation research could meaningfully accelerate the open-source robotics ecosystem.</li>
+              <li>The Adamo teleoperation system achieves sub-40ms end-to-end latency for SF-to-London remote robot control by using a custom UDP-based protocol instead of WebRTC, eliminating WebRTC&#x27;s buffering overhead.</li>
+              <li>Low-latency teleop is critical for collecting high-quality imitation learning data and for real-time human-in-the-loop correction during deployment.</li>
+              <li>The custom protocol trades WebRTC&#x27;s built-in reliability for raw speed — a deliberate engineering choice where stale frames are worse than dropped ones.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1tjbs3l/mobile_openarm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1tkjuag/custom_protocol_sub40ms_latency_teleoperation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Testing Gemma 4 on Jetson Orin Nano for Robotics tasks</h3>
+              <h3>Hand taxonomy tests with my robotic hand &amp; wrist</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Community member ran Gemma 4 on a Jetson Orin Nano via ROS-MCP server, testing tool use, image labeling, and audio transcription for real robotics workloads.</li>
-              <li>The LLM handled tool calls through the ROS-MCP bridge - a practical data point for on-robot LLM inference at edge power budgets.</li>
-              <li>Ground-truth edge benchmarks like this are what the community needs before committing to a model for embedded deployment.</li>
+              <li>A hobbyist validates their custom robotic hand against the Yale GRASP taxonomy (Feix et al., 2016), a standard 33-grasp classification used in manipulation research.</li>
+              <li>The hand covers the majority of power and precision grips but lacks independent distal phalanx control for inferior pinch and disk grasps — an honest capability gap rarely surfaced in community demos.</li>
+              <li>Testing against a published taxonomy rather than ad-hoc demos is a useful model for the maker community to evaluate real dexterity coverage.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1tjmh7o/testing_gemma_4_on_jetson_orin_nano_for_robotics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Wearable robot boosts strength of children with spinal muscular atrophy</h3>
-              <span class="digest-source">Hacker News Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A wearable exoskeleton designed for children with spinal muscular atrophy (SMA) demonstrably improves their strength and functional mobility.</li>
-              <li>Pediatric exoskeleton research is sparse given SMA&#x27;s rarity - this is a meaningful clinical milestone for assistive wearable robotics.</li>
-              <li>Published in Nature, lending significant weight to the clinical evidence base for wearable assistive robotics in pediatric populations.</li>
-            </ul>
-            <a href="https://www.nature.com/articles/d41586-026-01573-x" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1tkgco6/hand_taxonomy_tests_with_my_robotic_hand_wrist/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
