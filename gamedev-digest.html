@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Dev Morning Digest - May 22, 2026 | Densanon</title>
+  <title>Game Dev Morning Digest - May 23, 2026 | Densanon</title>
   <meta name="description" content="Daily game development news digest - engines, tools, techniques, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,95 +15,107 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 22, 2026</div>
+        <div class="digest-date-badge">May 23, 2026</div>
         <h1>Game Dev Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest covers the end of an era for Destiny 2 and the Bungie workforce, a surge in MMO optimism from Cryptic Studios, and practical deep dives into lighting design, character sculpting workflows, and UE5 rendering debug tools.</p>
+        <p class="digest-intro">Today&#x27;s digest is headlined by Godot&#x27;s long-awaited official Asset Store going live in beta, filling a competitive gap vs Unity and Unreal. On the tools side, Blender is adding a native texture layer system that will reshape texture painting workflows. Industry-wise, Subnautica 2&#x27;s breakout EA launch and Take-Two&#x27;s GTA VI revenue projections signal a high-stakes summer for the sector.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Industry &amp; News</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Destiny 2&#x27;s active development will end in June</h3>
-              <span class="digest-source">Game Developer</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The upcoming content update will be the final live-service drop for Destiny 2, effectively closing an 11-year live-game lifecycle.</li>
-              <li>Bungie is simultaneously facing significant layoffs, a direct consequence of ending the title that anchored its entire development org.</li>
-              <li>A cautionary data point on single-franchise live-service studios: revenue concentration makes workforce exposure extreme when one title sunsets.</li>
-            </ul>
-            <a href="https://www.gamedeveloper.com/business/destiny-2-s-active-development-will-end-in-june" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>The future of European publishing is diversity, not concentration | Opinion</h3>
-              <span class="digest-source">GamesIndustry.biz</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Ubisoft and Embracer both reported bleak results in the same week, prompting analysis of whether Europe&#x27;s mid-tier publisher model is structurally broken.</li>
-              <li>The counterargument: a distributed ecosystem of smaller, focused studios is more resilient than a few large consolidated publishers.</li>
-              <li>Indie and mid-size European studios have been outperforming AAA peers on a per-dollar basis, suggesting the concentration model itself was the risk.</li>
-            </ul>
-            <a href="https://www.gamesindustry.biz/the-future-of-european-publishing-is-diversity-not-concentration-opinion" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>&quot;People want MMOs&quot; – Cryptic Studios head Jack Emmert on why MMOs are ripe for reinvention</h3>
-              <span class="digest-source">GamesIndustry.biz</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Emmert argues New World&#x27;s sales proved latent MMO demand exists — the genre underperforms because of execution, not player appetite.</li>
-              <li>Cryptic&#x27;s track record (Champions Online, Star Trek Online, Neverwinter — all still live) is framed as proof that sustainable MMO design is achievable.</li>
-              <li>The reinvention pitch centers on tighter loop design and modern onboarding rather than chasing open-world scale.</li>
-            </ul>
-            <a href="https://www.gamesindustry.biz/people-want-mmos-and-the-sales-of-new-world-proved-it-cryptic-studios-head-jack-emmert-on-why-mmos-are-ripe-for-reinvention" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>The big Strauss Zelnick interview: GTA, AI, Roblox and building the biggest entertainment company in the world</h3>
-              <span class="digest-source">GamesIndustry.biz</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Zelnick positions Take-Two&#x27;s AI strategy as augmenting production pipelines rather than replacing creative roles — a measured stance compared to competitors.</li>
-              <li>The Roblox comparison is used to argue that user-generated-content platforms and premium titles can coexist in the same portfolio.</li>
-              <li>Take-Two&#x27;s 19% net bookings increase (driven by NBA 2K, Zynga mobile, and GTA catalog) shows the portfolio is diversified enough to carry GTA VI&#x27;s extended runway.</li>
-            </ul>
-            <a href="https://www.gamesindustry.biz/the-big-strauss-zelnick-interview-gta-ai-roblox-and-building-the-biggest-entertainment-company-in-the-world" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Engines &amp; Tools</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Ultimate Professional Rendering Debug Suite For Unreal Engine 5</h3>
-              <span class="digest-source">80 Level</span>
+              <h3>The Godot Asset Store is Live</h3>
+              <span class="digest-source">Game From Scratch</span>
             </div>
             <ul class="digest-takeaways">
-              <li>DrDebug is a custom UE5 toolkit that surfaces shader, material, and render pipeline issues in real-time without leaving the editor.</li>
-              <li>The toolset consolidates UE5&#x27;s scattered debug views (normally spread across menus and console commands) into a single unified panel.</li>
-              <li>Real-time debug overlays cut shader iteration time significantly on projects with complex material graphs or Lumen setups.</li>
+              <li>Godot&#x27;s new official Asset Store (now in beta) replaces the aging Asset Library with commercial tools, plugins, and a creator-driven marketplace — closing a long-standing gap vs Unity Asset Store and Unreal&#x27;s Fab.</li>
+              <li>Developers can now sell and monetize assets directly through the official Godot ecosystem for the first time.</li>
+              <li>The launch represents a major maturity milestone for Godot as a production engine targeting professional and commercial teams.</li>
             </ul>
-            <a href="https://80.lv/articles/ultimate-professional-rendering-debug-suite-for-unreal-engine-5/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://gamefromscratch.com/the-godot-asset-store-is-live/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Check Out This Cozy Grandma&#x27;s Kitchen 3D Scene Created with Unreal Engine</h3>
+              <h3>Godot Is Launching a New Asset Store to Replace the Old Asset Library</h3>
               <span class="digest-source">80 Level</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Christine Jung&#x27;s showcase winner demonstrates UE5&#x27;s Lumen and Nanite at a domestic-interior scale, proving the tech isn&#x27;t limited to outdoor or large environments.</li>
-              <li>The piece highlights how subtle light temperature and prop density choices drive the &#x27;cozy&#x27; read — useful reference for environmental storytelling.</li>
-              <li>Polished UE5 real-time renders are closing the gap with offline renders, making them viable portfolio pieces for art directors and environment artists.</li>
+              <li>The beta Asset Store expands beyond free community assets to include paid commercial content, giving creators a revenue path within Godot.</li>
+              <li>Marketplace features are designed to support plugin authors and tool creators, not just art asset packs.</li>
+              <li>The move signals Godot Foundation&#x27;s push to build a sustainable ecosystem around the engine rather than relying solely on donations.</li>
             </ul>
-            <a href="https://80.lv/articles/check-out-this-cozy-grandma-s-kitchen-3d-scene-created-with-unreal-engine/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://80.lv/articles/godot-is-launching-a-new-asset-store-to-replace-the-old-asset-library/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Blender To Add Native Texture Layer System</h3>
+              <span class="digest-source">80 Level</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Blender is developing a built-in texture layer system, reducing reliance on third-party add-ons like Ucupaint for layer-based texture painting.</li>
+              <li>The Ucupaint add-on will be affected by this change — the article covers its updated development direction in response.</li>
+              <li>For game artists, native layer support in Blender could streamline PBR texture creation and reduce pipeline friction between modeling and export.</li>
+            </ul>
+            <a href="https://80.lv/articles/blender-to-add-native-texture-layer-system/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Industry &amp; News</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Subnautica 2 hits four million sales</h3>
+              <span class="digest-source">Game Developer</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Subnautica 2 reached four million copies sold within its first week of Early Access — a strong signal that the survival/exploration genre remains commercially robust.</li>
+              <li>The result validates the early-access model for sequels with established fanbases, where player trust carries over from the original.</li>
+              <li>Indie and AA studios should note the sustained demand for open-world underwater and exploration mechanics as a differentiated genre.</li>
+            </ul>
+            <a href="https://www.gamedeveloper.com/business/subnautica-2-hits-four-million-sales" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Take-Two expects to earn $8B in FY27 thanks to Grand Theft Auto VI</h3>
+              <span class="digest-source">Game Developer</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Take-Two is projecting $8B in revenue for FY2027, almost entirely contingent on GTA VI&#x27;s performance — an unusually concentrated single-title bet for a major publisher.</li>
+              <li>GTA V is closing in on 230 million lifetime sales, giving Rockstar an enormous install base to convert to GTA VI buyers and GTA Online migrants.</li>
+              <li>The projection underscores how AAA publishing increasingly orbits a handful of mega-franchises, squeezing market oxygen for mid-tier titles launching in GTA VI&#x27;s window.</li>
+            </ul>
+            <a href="https://www.gamedeveloper.com/business/take-two-expects-to-earn-8b-in-fy27-thanks-to-grand-theft-auto-vi" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Inside Focus Entertainment&#x27;s Strategy for AA Games and Long-Term Franchises</h3>
+              <span class="digest-source">80 Level</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Focus Entertainment details its evolution from physical distributor to global AA publisher, with Space Marine II as the flagship proof point of their franchise-building approach.</li>
+              <li>The studio emphasizes long-term developer partnerships over quick single-release deals, funding ongoing live-service support post-launch.</li>
+              <li>Their model offers a practical playbook for mid-size studios: carve a niche in licensed/franchise IPs, avoid direct AAA competition, and sustain games post-launch to build brand loyalty.</li>
+            </ul>
+            <a href="https://80.lv/articles/inside-focus-entertainment-s-strategy-for-aa-games-and-long-term-franchises/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>How Bubsy 4D Reimagines a Retro Mascot for Modern 3D Platformers</h3>
+              <span class="digest-source">80 Level</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Fabraz built Bubsy 4D in Unity with a momentum-driven movement system at its core — the team discusses how feel-first design drove every technical decision.</li>
+              <li>Balancing nostalgia with sincerity is the studio&#x27;s stated design philosophy: lean into the character&#x27;s legacy without ironic distance.</li>
+              <li>The article is a useful case study in Unity 3D platformer architecture and how small studios handle IP revival without AAA resources.</li>
+            </ul>
+            <a href="https://80.lv/articles/how-bubsy-4d-reimagines-a-retro-mascot-for-modern-3d-platformers/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -113,39 +125,45 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Splinter Cell designer says modern lighting has made stealth games harder to read</h3>
-              <span class="digest-source">Game Developer</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Clint Hocking identifies ambient occlusion and physically-based lighting as double-edged: they look better but destroy the high-contrast silhouette reads that stealth gameplay depends on.</li>
-              <li>Classic stealth games used deliberately stylized, low-realism lighting to communicate safe shadow vs exposed at a glance — modern PBR pipelines make that binary harder to maintain.</li>
-              <li>Practical implication: stealth games may need explicit post-process or material overrides to preserve gameplay-legible darkness zones independent of the art lighting pass.</li>
-            </ul>
-            <a href="https://www.gamedeveloper.com/design/splinter-cell-designer-says-modern-lighting-have-made-stealth-games-harder-to-read" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Learn Realistic Character Creation with ZBrush, MetaHuman, &amp; Marvelous Designer</h3>
+              <h3>This Stunning 3D Persian Warrior Character Was Rendered in Real-Time Using UE5</h3>
               <span class="digest-source">80 Level</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The course chains three industry-standard tools — ZBrush for sculpt, MetaHuman for rigging/facial, Marvelous Designer for cloth sim — into a single character pipeline.</li>
-              <li>Integrating MetaHuman as the rigging foundation means characters arrive Unreal-ready with production-quality facial rigs without a custom skeleton build.</li>
-              <li>Marvelous Designer&#x27;s cloth simulation output is covered as a static mesh bake step, making it applicable to teams without real-time cloth sim budgets.</li>
+              <li>A highly detailed human character is rendered entirely in real-time within Unreal Engine 5, showcasing Nanite and Lumen at the limit of current hardware capability.</li>
+              <li>The work demonstrates the current ceiling for real-time character fidelity and serves as a practical reference for lead character artists targeting next-gen specs.</li>
+              <li>Relevant for studios evaluating UE5&#x27;s viability for cinematic-quality in-engine cutscenes vs pre-rendered video.</li>
             </ul>
-            <a href="https://80.lv/articles/learn-realistic-character-creation-with-zbrush-metahuman-marvelous-designer/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://80.lv/articles/this-stunning-3d-persian-warrior-character-was-rendered-in-real-time-using-ue5/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ZA/UM (Disco Elysium&#x27;s studio) releases new computer game &#x27;Zero Parades&#x27;</h3>
+              <span class="digest-source">Hacker News Game Dev</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>ZA/UM has shipped Zero Parades, their first major release since the legal and creative fallout that split the original Disco Elysium team.</li>
+              <li>The release is closely watched by the narrative-game community as a signal of whether ZA/UM&#x27;s new leadership can replicate or move beyond Disco Elysium&#x27;s design legacy.</li>
+              <li>For indie narrative devs, the launch is a data point on the commercial viability of dense, literary RPGs outside the original team&#x27;s creative identity.</li>
+            </ul>
+            <a href="https://news.err.ee/1610032093/estonian-game-studio-za-um-releases-new-computer-game-zero-parades" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Explore Surface Variation In This ZBrush Stone Sculpting Practice</h3>
-              <span class="digest-source">80 Level</span>
+              <h3>Denuvo game cracked on day 1 of launch</h3>
+              <span class="digest-source">Hacker News Game Dev</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Nadya Pal&#x27;s competition piece focuses on micro-surface variation — the key driver that separates convincing stone from flat normal-mapped props.</li>
-              <li>The breakdown shows how layering macro-form, mid-frequency breakup, and micro-pore detail in separate sculpt passes keeps each frequency controllable.</li>
-              <li>Technique is directly transferable to any hard-surface organic hybrid (concrete, aged metal, bone) where surface interest carries the visual weight.</li>
+              <li>A Denuvo-protected title was cracked on its day-one launch, continuing a trend of increasingly rapid DRM defeats that erode the technology&#x27;s core value proposition.</li>
+              <li>Publishers paying Denuvo&#x27;s licensing fees are now receiving minimal protection windows, raising the cost-benefit question for mid-size studios especially.</li>
+              <li>The event reinforces the ongoing industry debate: DRM primarily inconveniences legitimate buyers while crackers bypass it faster than ever.</li>
             </ul>
-            <a href="https://80.lv/articles/explore-surface-variation-in-this-zbrush-stone-sculpting-practice/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://pastebin.com/jQjvNrvA" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

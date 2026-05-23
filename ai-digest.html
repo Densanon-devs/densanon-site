@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - May 22, 2026 | Densanon</title>
+  <title>AI Morning Digest - May 23, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 22, 2026</div>
+        <div class="digest-date-badge">May 23, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is heavy on agentic AI: a self-optimizing lifelong learning agent, retrieval-based multi-agent workflow synthesis, and a closed-loop industrial design-simulation agent all landed on arXiv. On the tools side, Simon Willison shipped the first release of Datasette Agent, bringing LLM querying natively into Datasette.</p>
+        <p class="digest-intro">Today&#x27;s AI digest centers on inference efficiency — NVIDIA&#x27;s diffusion language model work promises near-instant text generation, while the community validates Gemma 4 26B&#x27;s remarkable speed-quality tradeoff on consumer GPUs. On the tooling front, Claude Code v2.1.149 lands a notable UX upgrade with per-category usage breakdowns, and a supply-chain security warning around the GSD npm package serves as a timely reminder to vet AI tooling dependencies.</p>
       </div>
     </section>
 
@@ -29,51 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SOLAR: A Self-Optimizing Open-Ended Autonomous Agent for Lifelong Learning and Continual Adaptation</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>Towards Speed-of-Light Text Generation with Nemotron-Labs Diffusion Language Models</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>SOLAR tackles concept drift in deployed LLMs without expensive gradient-based fine-tuning, using a self-optimizing retrieval and adaptation loop instead.</li>
-              <li>The approach targets the core bottleneck of dynamic real-world deployment: keeping agents useful as their environment changes over time.</li>
-              <li>Lifelong learning without retraining is a key open problem — this paper proposes a fully autonomous path to continual adaptation.</li>
+              <li>NVIDIA&#x27;s Nemotron-Labs introduces diffusion-based language models that generate text in parallel rather than autoregressively, targeting dramatic latency reductions at the same compute budget.</li>
+              <li>The approach could reshape inference economics for agentic and real-time workloads where wall-clock time per token is the binding constraint.</li>
+              <li>Posted directly to Hugging Face by NVIDIA researchers, signaling the work is moving toward practical deployment rather than staying purely academic.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.20189" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/nvidia/nemotron-labs-diffusion" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AgentCo-op: Retrieval-Based Synthesis of Interoperable Multi-Agent Workflows</h3>
+              <h3>MindLoom: Composing Thought Modes for Frontier-Level Reasoning Data Synthesis</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AgentCo-op addresses open-ended scientific tasks where there are no curated training sets or reliable scalar metrics to guide agent orchestration.</li>
-              <li>The retrieval-based synthesis approach composes existing agents and tools into workflows without requiring standardized interfaces, making it useful for heterogeneous toolchains.</li>
-              <li>Directly relevant to anyone building multi-agent pipelines over disparate tools — the framework handles interoperability without tight coupling.</li>
+              <li>MindLoom proposes composing distinct &#x27;thought modes&#x27; to synthesize high-quality reasoning training data, adding structural visibility into what drives problem difficulty.</li>
+              <li>Addresses a key bottleneck: existing synthesis methods produce frontier-level reasoning data inconsistently because they don&#x27;t model the structural factors governing difficulty.</li>
+              <li>Better data generation pipelines directly translate to stronger chain-of-thought and agentic reasoning performance — relevant to anyone fine-tuning or distilling reasoning models.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.20425" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.21630" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Tool-Augmented Agent for Closed-loop Optimization, Simulation, and Modeling Orchestration</h3>
+              <h3>Benchmarking and Improving Monitors for Out-Of-Distribution Alignment Failure in LLMs</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>COSMO-Agent bridges the CAD-CAE semantic gap by translating simulation feedback directly into valid geometric edits, closing the design-simulate-refine loop.</li>
-              <li>Industrial design workflows have historically required expert engineers to interpret simulation output — this agent automates that translation under complex geometric constraints.</li>
-              <li>Represents a practical application of agentic AI beyond text tasks, with tight integration between LLM reasoning and domain-specific simulation tools.</li>
+              <li>Systematically evaluates whether LLM monitoring pipelines can detect alignment failures triggered by out-of-distribution prompts — a safety-critical gap in production deployments.</li>
+              <li>Provides both a benchmark suite and concrete improvements for OOD monitors, giving practitioners tools to harden deployed LLM systems against unexpected inputs.</li>
+              <li>Relevant beyond safety labs: any production agent pipeline faces OOD inputs, and better monitors reduce unexpected behavior at runtime.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.20190" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.21602" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>RankJudge: A Multi-Turn LLM-as-a-Judge Synthetic Benchmark Generator</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>Specialization Beats Scale: A Strategic Variable Most AI Procurement Decisions Overlook</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>RankJudge automates generation of evaluation benchmarks for multi-turn conversational LLM systems, addressing the scalability problem of human evaluation.</li>
-              <li>As LLM-based apps grow more complex, the ability to auto-generate high-quality synthetic evals becomes a key infrastructure capability.</li>
-              <li>Designed for teams iterating on production conversational systems where manual labeling doesn&#x27;t scale to the volume of changes.</li>
+              <li>Argues that domain-specialized smaller models consistently outperform larger general-purpose ones for specific tasks, challenging the default &#x27;bigger is better&#x27; procurement logic.</li>
+              <li>Frames specialization as the overlooked third axis alongside scale and architecture when evaluating models for enterprise or production deployment.</li>
+              <li>Practical guidance for teams weighing fine-tuned 7B–14B models against frontier API calls for narrow, well-defined workflows.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.21748" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/Dharma-AI/specialization-beats-scale" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -83,27 +83,38 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Datasette Agent</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>anthropics/claude-code: v2.1.149</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Datasette Agent is Simon Willison&#x27;s first release merging his LLM Python library (3+ years in development) with Datasette, enabling natural-language querying of any Datasette database.</li>
-              <li>The agent is extensible via plugins — datasette-agent-charts and datasette-agent-sprites already exist for sandboxed command execution and charting from SQL results.</li>
-              <li>SQL queries generated by the agent are surfaced with &#x27;View SQL query&#x27; buttons, keeping the workflow transparent and auditable rather than a black box.</li>
+              <li>/usage now shows a per-category breakdown of limit consumption — skills, subagents, plugins, and per-MCP-server cost — making it far easier to diagnose heavy usage patterns.</li>
+              <li>/diff detail view gains full keyboard scrolling (arrows, j/k, PgUp/PgDn, Space, Home/End), removing a key friction point during in-terminal code review.</li>
+              <li>Markdown output now renders inline, improving readability for documentation-heavy workflows without leaving the terminal.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/May/21/datasette-agent/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.149" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>FTC to Require Cox Media Group to Pay Nearly $1 Million Over &quot;Active Listening&quot; AI Marketing</h3>
+              <h3>The memory shortage is causing a repricing of consumer electronics</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Cox Media Group marketed an ad targeting service claiming it used device microphones to listen for consumer intent — the FTC found this claim deceptive and unsubstantiated.</li>
-              <li>The nearly $1M settlement is a significant FTC enforcement action specifically targeting AI-powered surveillance marketing claims.</li>
-              <li>Sets a precedent: claiming AI capabilities (especially passive audio monitoring) without evidence is now an FTC enforcement risk, not just a PR problem.</li>
+              <li>Memory manufacturers form a concentrated oligopoly; current supply constraints are translating directly into higher prices for DRAM and NAND-dependent devices with multi-year impact expected.</li>
+              <li>For local AI practitioners, this is a near-term hardware cost signal — GPUs and high-RAM consumer machines are likely to get more expensive before they get cheaper.</li>
+              <li>Simon Willison surfaces David Oks&#x27; analysis as the clearest current explanation of the macro trend driving these repricing dynamics.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/May/22/ftc-active-listening/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/22/memory-shortage/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/anthropic-sdk-python: v0.104.1</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Bug fix: streaming now correctly carries encrypted_content through the beta compaction accumulator — a correctness issue affecting pipelines using streaming with context compaction enabled.</li>
+              <li>Patch release, but load-bearing for any production streaming pipeline relying on the beta compaction path.</li>
+            </ul>
+            <a href="https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.104.1" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -113,39 +124,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Anthropic officially launched 13+ FREE AI courses with certificates (Including Agentic AI and Claude Code!)</h3>
-              <span class="digest-source">r/ClaudeAI</span>
+              <h3>Gemma4 26b a4b Apex quant is quite good</h3>
+              <span class="digest-source">r/LocalLLaMA</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Anthropic quietly released a large library of free, official training modules covering agentic AI, Claude Code, and foundational LLM concepts — no paywall, certificates included.</li>
-              <li>The course library went largely unnoticed at launch but is now surfacing via community sharing, with 2,000+ upvotes and 108 comments on this thread.</li>
-              <li>Directly competes with paid AI education platforms by offering first-party, always-current instruction from the model creators themselves.</li>
+              <li>mudler&#x27;s APEX-I-Compact quant of Gemma 4 26B-A4B hits 38 tokens/sec on a 16 GB RX 9060 XT at 90K context via llama.cpp Vulkan — strong throughput for a single mid-range GPU.</li>
+              <li>Community reports no perceptible quality degradation versus the reference quant, making this a compelling option for local inference on constrained VRAM budgets.</li>
+              <li>Validates that MoE-style architectures like Gemma 4&#x27;s A4B can be quantized aggressively without the quality collapse seen in dense models.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1tjpfh8/anthropic_officially_launched_13_free_ai_courses/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/LocalLLaMA/comments/1tl9woz/gemma4_26b_a4b_apex_quant_is_quite_good/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>After comparing Claude Max $100 and ChatGPT Pro $100 side by side on actual billable work, I&#x27;m cancelling my ChatGPT Pro subscription</h3>
+              <h3>If you use the &quot;Get Shit Done&quot; (GSD) AI tool, you need to migrate immediately (Original creator rug-pulled)</h3>
               <span class="digest-source">r/ClaudeAI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A professional accountant ran both subscriptions in parallel on real billable work in accountancy, taxation, and company law — Claude came out decisively ahead in output quality.</li>
-              <li>The comparison is grounded in domain-specific professional work rather than coding benchmarks, making it a useful data point for non-engineering use cases.</li>
-              <li>The author acknowledges Claude&#x27;s context limits but argues the quality differential more than offsets the friction.</li>
+              <li>The original GSD npm package creator abandoned the project, ran a crypto scam, and retains npm publish access — any future version could contain malicious code.</li>
+              <li>The community forked the project to get-shit-done-redux and performed a security audit; users should uninstall the old packages immediately.</li>
+              <li>A timely reminder that popular open-source AI tooling on npm carries real supply-chain risk, especially for tools that run with broad system permissions.</li>
             </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1tkhp7a/after_comparing_claude_max_100_and_chatgpt_pro/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>SpaceXAI locked Anthropic into paying them $1.25 billion per MONTH for compute</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Reports suggest Anthropic signed a substantial compute contract with SpaceX AI, locking in significant GPU capacity at scale for model training and inference.</li>
-              <li>At $1.25B/month, this would represent one of the largest compute procurement deals in AI history and signals Anthropic&#x27;s aggressive scaling ambitions.</li>
-              <li>Community reaction is divided — some see it as necessary infrastructure investment, others question whether it creates dangerous dependency on a single compute provider.</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1tkdkr2/spacexai_locked_anthropic_into_paying_them_125/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://reddit.com/r/ClaudeAI/comments/1tktl4w/if_you_use_the_get_shit_done_gsd_ai_tool_you_need/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
