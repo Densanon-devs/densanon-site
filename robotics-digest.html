@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - May 23, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - May 28, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,136 +15,143 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 23, 2026</div>
+        <div class="digest-date-badge">May 28, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest centers on a key industry debate: task-specific physical AI is challenging the humanoid narrative as the more scalable near-term deployment path. On the ground, warehouse automation milestones and Kawasaki&#x27;s new Silicon Valley physical AI center signal real-world traction. The open-source community also earns a spotlight, with Open Robotics making the case for open foundations at the Robotics Summit and a developer shipping ROS 2 runtime integrity middleware targeting EU AI Act compliance.</p>
+        <p class="digest-intro">The 2026 Robotics Summit wraps in Boston as the industry confronts the gap between lab demos and real-world deployment — VLA pipelines hit the factory floor, perception calibration emerges as the reliability bottleneck, and Singapore&#x27;s enterprise humanoid rollouts signal the commercial wave is arriving faster than expected.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>A Factory-Floor Deployment Case Study of VLA Pipelines for Industrial Packaging Task: Workflow, Failures, and Lessons</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Real Siemens factory deployment exposes the failure modes that lab benchmarks miss — reliability demands in production are fundamentally different from demo conditions.</li>
+              <li>The paper catalogs the actual workflow breakdown points in VLA (Vision-Language-Action) pipelines when packaging tasks go wrong, giving practitioners a failure taxonomy they can act on.</li>
+              <li>Key finding: VLA policies need explicit failure-recovery loops baked in at design time, not as an afterthought — graceful degradation is a first-class engineering concern.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.27461" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GE-Sim 2.0: A Roadmap Towards Comprehensive Closed-loop Video World Simulators for Robotic Manipulation</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>GE-Sim 2.0 generates action-conditioned video of manipulation tasks, letting robots train on thousands of hours of synthetic household data without physical hardware.</li>
+              <li>Closed-loop simulation means the robot&#x27;s actions influence the generated video in real time — a major step toward sim-to-real transfer that actually holds up for dexterous tasks.</li>
+              <li>World model approaches like this could dramatically reduce the data collection bottleneck that has been the primary cost driver for manipulation research.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.27491" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>SCALE-COMM: Shared, Contrastively-Aligned Latent Embeddings for MARL Communication</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Addresses the communication instability problem in multi-robot reinforcement learning — current emergent-comms approaches break down when agents have partial observability in dynamic environments.</li>
+              <li>Contrastive alignment forces robots to build shared latent representations of their observations before communicating, making coordination more robust to noisy or incomplete sensor data.</li>
+              <li>Direct implications for warehouse AMR fleets and swarm robotics where centralized communication is impractical or creates single points of failure.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2605.27532" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Handle with care: Soft robot gripper picks ripe fruit without bruising</h3>
+              <span class="digest-source">Robohub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Cornell&#x27;s gripper uses stretchable fiber-optic sensors to infer strawberry ripeness by touch — no vision system required, sidestepping occlusion and outdoor lighting variability.</li>
+              <li>The system predicts ripeness before committing to a full grasp, reducing bruising rates that cost the agricultural industry billions annually.</li>
+              <li>Fiber-optic tactile sensing is significantly cheaper and more durable than piezoelectric alternatives, making this viable for mass deployment in harvest robotics.</li>
+            </ul>
+            <a href="https://robohub.org/handle-with-care-soft-robot-gripper-picks-ripe-fruit-without-bruising/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Light-activated gel could impact wearables, soft robotics, and more</h3>
+              <span class="digest-source">Robohub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>MIT&#x27;s ionotronic gel transmits data through ions rather than electrons, enabling direct signal exchange between electronics and biological tissue without conversion overhead.</li>
+              <li>Light activation allows precise, localized control of soft actuators without embedded wiring — the key engineering barrier in compliant robot designs.</li>
+              <li>Could replace rigid actuators in prosthetics and surgical robots where biocompatibility and flexibility are non-negotiable requirements.</li>
+            </ul>
+            <a href="https://robohub.org/light-activated-gel-could-impact-wearables-soft-robotics-and-more/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The future of physical AI isn&#x27;t humanoid; it&#x27;s task-specific and cost-efficient</h3>
+              <h3>Why robots still struggle to see the real world</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Hailo&#x27;s VP of physical AI argues near-term winners will be specialized machines tuned for single real-world tasks, not general-purpose humanoids.</li>
-              <li>On-device inference is central to the thesis — latency, cost, and reliability all favor running AI locally on purpose-built hardware.</li>
-              <li>Directly challenges the dominant industry narrative that humanoids are the universal deployment target for physical AI at scale.</li>
+              <li>Orbbec&#x27;s co-founder argues the perception reliability gap is not an AI problem — it is a sensor calibration problem that better models cannot compensate for.</li>
+              <li>Miscalibrated depth sensors produce systematic errors that compound through the perception stack, causing failures that look like AI mistakes but are actually hardware drift.</li>
+              <li>For deployers: perception audits and in-field recalibration schedules are as critical as model updates, and most operations skip both.</li>
             </ul>
-            <a href="https://www.therobotreport.com/future-high-scale-robotics-isnt-humanoid-its-task-specific-cost-efficient-ai/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/why-robots-still-struggle-to-see-real-world-orbbec/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Kawasaki launches Silicon Valley hub to accelerate deployment of physical AI</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Kawasaki Heavy Industries opened the Kawasaki Physical AI Center in San Jose to bridge Japanese manufacturing expertise with US AI and semiconductor development.</li>
-              <li>The center is positioned to accelerate joint R&amp;D between Kawasaki and US partners on robotics hardware, AI inference, and physical deployment pipelines.</li>
-              <li>Signals growing investment by traditional heavy-industry players in owning the physical AI stack end-to-end.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/05/22/kawasaki-launches-silicon-valley-hub-to-accelerate-deployment-of-physical-ai/101844/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Plus One Robotics streams eight hours of live warehouse automation performance</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Plus One Robotics ran a full 8-hour public livestream of its AI-powered parcel induction system at warehouse scale — a transparency-first deployment showcase.</li>
-              <li>The live demo format highlights confidence in real-world reliability, moving beyond polished marketing clips to unedited operational footage.</li>
-              <li>Parcel induction is a high-repetition, high-uptime task where reliability matters more than peak performance.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/05/22/plus-one-robotics-streams-eight-hours-of-live-warehouse-automation-performance/101835/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>NūMove surpasses 20 mixed palletizer deployments as US beverage distributors accelerate warehouse automation</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>NūMove has crossed 20 deployed semi-automatic mixed palletizing systems since 2021, primarily in US wholesale alcoholic beverage distribution.</li>
-              <li>Mixed palletizing — handling irregular SKU combinations — remains one of the harder real-world manipulation problems, making traction here noteworthy.</li>
-              <li>Deployment momentum suggests unit economics and reliability have cleared the bar for repeat commercial adoption.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/05/22/numove-surpasses-20-mixed-palletizer-deployments-as-us-beverage-distributors-accelerate-warehouse-automation/101829/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Gecko Robotics tests Ouster&#x27;s next-generation color lidar to enhance AI-powered infrastructure inspections</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Gecko Robotics is integrating Ouster&#x27;s Rev8 digital lidar — which adds color data layers — into its Cantilever platform for AI-powered industrial inspection.</li>
-              <li>Color lidar expands the semantic richness of inspection scans, potentially enabling automated defect classification beyond geometry alone.</li>
-              <li>Industrial inspection robots are a real-deployment sector where sensor fidelity directly affects safety outcomes.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/05/22/gecko-robotics-tests-ousters-next-generation-color-lidar-to-enhance-ai-powered-infrastructure-inspections/101824/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Exploring PLC and robot integration with YRG Robotics&#x27; Chris Elston</h3>
+              <h3>The evolution of cobots in metal fabrication and construction</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Chris Elston covers how PLC integration with Yamaha Robotics hardware is making industrial automation more accessible to smaller manufacturers.</li>
-              <li>AI is framed as lowering the barrier to programming and maintaining robot cells, not replacing traditional control architecture.</li>
-              <li>Addresses a persistent adoption bottleneck: the gap between cutting-edge research and practical factory-floor deployment for SMEs.</li>
+              <li>Hirebotics CEO frames cobots not as automation that replaces welders, but as a force multiplier letting experienced welders supervise multiple robots simultaneously — reframing the labor narrative.</li>
+              <li>Metal fabrication has one of the highest injury rates in manufacturing; cobots handling arc-welding while humans do setup and QC is a practical safety upgrade, not just a productivity play.</li>
+              <li>Cobot-as-a-service models (pay-per-hour, no capital purchase) are lowering the bar for small fab shops that could not justify a six-figure robot investment.</li>
             </ul>
-            <a href="https://www.therobotreport.com/exploring-plc-and-robot-integration-with-yrg-robotics-chris-elston/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/hirebotics-talks-evolution-cobots-metal-fabrication-construction/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
-        <div class="digest-grid">
-
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Robotics Summit keynote to present open foundation for AI-powered robots</h3>
+              <h3>IntBot and Certis Group partner to scale physical AI for enterprises across Singapore</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Open Robotics CEO Brian Gerkey will keynote the Robotics Summit presenting how open-source infrastructure — principally ROS — underpins the emerging AI-robot stack.</li>
-              <li>The talk positions the open-source community as a critical enabler for AI deployment in robotics, not just a hobbyist ecosystem.</li>
-              <li>Timely context ahead of ICRA 2026 (June 1-5, Vienna) as the field debates standards and shared foundations.</li>
+              <li>Certis — a major security and facility services company — is adding humanoids to its existing service robot fleet, signaling that enterprise service contracts are the commercial path for humanoid deployment.</li>
+              <li>Singapore&#x27;s density, labor costs, and regulatory environment make it an ideal proving ground; success here will accelerate similar deals in other high-density Asian markets.</li>
+              <li>The partnership model (humanoid maker + large service operator) may become the dominant go-to-market for humanoid commercialization outside pure manufacturing.</li>
             </ul>
-            <a href="https://www.therobotreport.com/robotics-summit-keynote-present-open-robotics-ai-foundation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Building a runtime audit layer for mobile robots as EU AI Act logging / human oversight requirements approach</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A developer is building runtime_integrity (formerly ros2_kinematic_guard), an open-source ROS 2 middleware that detects when a robot&#x27;s physical execution diverges from its commanded state.</li>
-              <li>The project targets EU AI Act compliance requirements around runtime accountability and human oversight for autonomous mobile systems.</li>
-              <li>Addresses a real gap: a robot can receive valid commands while its physical execution has already gone wrong — logging command validity alone is not sufficient.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1tkniag/building_a_runtime_audit_layer_for_mobile_robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/intbot-certis-group-partner-scale-physical-ai-enterprises-across-singapore/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ROS News for the Week of May 18th, 2026</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>XELA Robotics to show tactile sensing at the 2026 Robotics Summit &amp; Expo</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Weekly ROS ecosystem roundup from Open Robotics covering the latest releases, package updates, and community discussions.</li>
-              <li>Useful standing reference for developers tracking ROS 2 toolchain changes heading into ICRA 2026.</li>
+              <li>XELA&#x27;s improved magnetic interference compensation addresses one of the biggest practical obstacles to deploying tactile sensors in industrial environments full of motors and electromagnets.</li>
+              <li>The uSkin integration into the Universal Manipulation Interface (UMI) means tactile data feeds directly into imitation learning pipelines — closing the sense-learn loop for dexterous manipulation.</li>
+              <li>Tactile sensing is increasingly seen as the missing modality that separates &#x27;picks objects&#x27; from &#x27;handles objects&#x27;; this demo is a litmus test for production readiness.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1tkor8t/ros_news_for_the_week_of_may_18th_2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/xela-robotics-show-tactile-sensing-2026-robotics-summit-expo/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Why Optical Metrology is Replacing Tactile Measurement for Complex Component Validation</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Non-contact optical measurement eliminates surface damage risk on high-value parts and enables full-surface scans versus point-by-point tactile probing — throughput gains are 10x or more on complex geometries.</li>
+              <li>Structured light and confocal systems now match or exceed CMM accuracy for most industrial tolerances, removing the last technical justification for tactile-only QC lines.</li>
+              <li>The shift is accelerating in-line inspection robots, since optical heads integrate on robotic arms far more easily than probe-based systems.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/05/28/why-optical-metrology-is-replacing-tactile-measurement-for-complex-component-validation-source/102029/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

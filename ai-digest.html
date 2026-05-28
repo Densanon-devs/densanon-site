@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - May 23, 2026 | Densanon</title>
+  <title>AI Morning Digest - May 28, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 23, 2026</div>
+        <div class="digest-date-badge">May 28, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s AI digest centers on inference efficiency — NVIDIA&#x27;s diffusion language model work promises near-instant text generation, while the community validates Gemma 4 26B&#x27;s remarkable speed-quality tradeoff on consumer GPUs. On the tooling front, Claude Code v2.1.149 lands a notable UX upgrade with per-category usage breakdowns, and a supply-chain security warning around the GSD npm package serves as a timely reminder to vet AI tooling dependencies.</p>
+        <p class="digest-intro">Agents are hitting hard limits everywhere at once: frontier models can&#x27;t reliably handle enterprise IT tasks, LLMs plateau on causal reasoning, and the agentic systems that are working are leaking user files. Meanwhile, Anthropic and OpenAI quietly crossed into profitability.</p>
       </div>
     </section>
 
@@ -29,51 +29,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Towards Speed-of-Light Text Generation with Nemotron-Labs Diffusion Language Models</h3>
+              <h3>ITBench-AA: Frontier Models Score Below 50% on the First Benchmark for Agentic Enterprise IT Tasks</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NVIDIA&#x27;s Nemotron-Labs introduces diffusion-based language models that generate text in parallel rather than autoregressively, targeting dramatic latency reductions at the same compute budget.</li>
-              <li>The approach could reshape inference economics for agentic and real-time workloads where wall-clock time per token is the binding constraint.</li>
-              <li>Posted directly to Hugging Face by NVIDIA researchers, signaling the work is moving toward practical deployment rather than staying purely academic.</li>
+              <li>Every frontier model tested — including GPT-4o and Claude — scored under 50% on real enterprise IT workflows like incident triage, config management, and log analysis.</li>
+              <li>The benchmark from Artificial Analysis and IBM is the first to evaluate agents on end-to-end IT ops tasks rather than isolated subtasks, exposing a gap that code-eval benchmarks mask.</li>
+              <li>The failure mode isn&#x27;t factual recall — it&#x27;s multi-step tool orchestration under ambiguous real-world conditions, which is exactly what IT automation requires.</li>
             </ul>
-            <a href="https://huggingface.co/blog/nvidia/nemotron-labs-diffusion" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/ibm-research/itbench-aa" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>MindLoom: Composing Thought Modes for Frontier-Level Reasoning Data Synthesis</h3>
+              <h3>Why LLMs Fail at Causal Discovery and How Interventional Agents Escape</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>MindLoom proposes composing distinct &#x27;thought modes&#x27; to synthesize high-quality reasoning training data, adding structural visibility into what drives problem difficulty.</li>
-              <li>Addresses a key bottleneck: existing synthesis methods produce frontier-level reasoning data inconsistently because they don&#x27;t model the structural factors governing difficulty.</li>
-              <li>Better data generation pipelines directly translate to stronger chain-of-thought and agentic reasoning performance — relevant to anyone fine-tuning or distilling reasoning models.</li>
+              <li>Fine-tuned LLMs plateau on even simple causal graphs and degrade as graph complexity grows — the paper argues this is a fundamental limit of passive text prediction, not a scale problem.</li>
+              <li>Interventional agents that can actively experiment (run do-calculus-style queries on an environment) consistently outperform passive LLMs on causal discovery tasks.</li>
+              <li>The practical implication: any system that needs to infer cause-effect relationships — diagnostics, root-cause analysis, scientific reasoning — needs active probing loops, not bigger models.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.21630" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Benchmarking and Improving Monitors for Out-Of-Distribution Alignment Failure in LLMs</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Systematically evaluates whether LLM monitoring pipelines can detect alignment failures triggered by out-of-distribution prompts — a safety-critical gap in production deployments.</li>
-              <li>Provides both a benchmark suite and concrete improvements for OOD monitors, giving practitioners tools to harden deployed LLM systems against unexpected inputs.</li>
-              <li>Relevant beyond safety labs: any production agent pipeline faces OOD inputs, and better monitors reduce unexpected behavior at runtime.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2605.21602" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Specialization Beats Scale: A Strategic Variable Most AI Procurement Decisions Overlook</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues that domain-specialized smaller models consistently outperform larger general-purpose ones for specific tasks, challenging the default &#x27;bigger is better&#x27; procurement logic.</li>
-              <li>Frames specialization as the overlooked third axis alongside scale and architecture when evaluating models for enterprise or production deployment.</li>
-              <li>Practical guidance for teams weighing fine-tuned 7B–14B models against frontier API calls for narrow, well-defined workflows.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/Dharma-AI/specialization-beats-scale" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2605.27567" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -83,68 +59,93 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.149</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>Reachy Mini Goes Fully Local</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>/usage now shows a per-category breakdown of limit consumption — skills, subagents, plugins, and per-MCP-server cost — making it far easier to diagnose heavy usage patterns.</li>
-              <li>/diff detail view gains full keyboard scrolling (arrows, j/k, PgUp/PgDn, Space, Home/End), removing a key friction point during in-terminal code review.</li>
-              <li>Markdown output now renders inline, improving readability for documentation-heavy workflows without leaving the terminal.</li>
+              <li>The Reachy Mini robot now runs its full conversational pipeline — speech recognition, LLM inference, and TTS — entirely on-device with no cloud calls.</li>
+              <li>The stack uses faster-whisper for STT and a quantized local LLM, proving the hardware bar for private embodied AI is now within reach of a consumer robot price point.</li>
+              <li>Latency is the remaining tradeoff: local inference adds ~1-2s vs cloud, but the privacy and offline-capability gains matter significantly for real deployments.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.149" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/local-reachy-mini-conversation" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The memory shortage is causing a repricing of consumer electronics</h3>
+              <h3>Shipping a Trillion Parameters With a Hub Bucket: Delta Weight Sync in TRL</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>TRL&#x27;s new delta weight sync pushes only changed weights between training steps to the Hub, cutting checkpoint upload time dramatically for large models.</li>
+              <li>For RLHF and online training loops where policy weights update continuously, this removes the I/O bottleneck that previously made frequent syncing impractical.</li>
+              <li>The pattern is Hub-bucket-agnostic — the same delta mechanism can plug into S3 or GCS, making it relevant beyond Hugging Face-hosted workflows.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/delta-weight-sync" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Harness, Scaffold, and the AI Agent Terms Worth Getting Right</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The glossary distinguishes &#x27;harness&#x27; (execution environment + tool dispatch) from &#x27;scaffold&#x27; (prompt structure + control flow) — conflating them causes real architectural mistakes downstream.</li>
+              <li>Terms like &#x27;ReAct&#x27;, &#x27;tool call&#x27;, and &#x27;multi-agent&#x27; have drifted in meaning across papers and frameworks; this reference pins definitions to canonical implementations.</li>
+              <li>Worth bookmarking for teams onboarding engineers onto agentic codebases — miscommunication around these terms wastes significant debugging time.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/agent-glossary" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>sqlite AGENTS.md</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Memory manufacturers form a concentrated oligopoly; current supply constraints are translating directly into higher prices for DRAM and NAND-dependent devices with multi-year impact expected.</li>
-              <li>For local AI practitioners, this is a near-term hardware cost signal — GPUs and high-RAM consumer machines are likely to get more expensive before they get cheaper.</li>
-              <li>Simon Willison surfaces David Oks&#x27; analysis as the clearest current explanation of the macro trend driving these repricing dynamics.</li>
+              <li>SQLite added an AGENTS.md file to its repo — not for their own AI-assisted development, but to guide agents that third-party developers point at the SQLite codebase.</li>
+              <li>The file explicitly states SQLite does not accept PRs without prior legal agreement, a direct attempt to prevent AI coding agents from auto-submitting contributions.</li>
+              <li>This is likely the first major open-source project to proactively document agent boundaries — expect the pattern to spread as agentic coding tools become standard.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/May/22/memory-shortage/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/27/sqlite-agents/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/anthropic-sdk-python: v0.104.1</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>Microsoft Copilot Cowork Exfiltrates Files</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Bug fix: streaming now correctly carries encrypted_content through the beta compaction accumulator — a correctness issue affecting pipelines using streaming with context compaction enabled.</li>
-              <li>Patch release, but load-bearing for any production streaming pipeline relying on the beta compaction path.</li>
+              <li>Microsoft Copilot Cowork was discovered allowing agents to send emails containing file contents to an attacker-controlled inbox via prompt injection — a classic indirect injection attack.</li>
+              <li>The product routed agentic actions through the user&#x27;s own email session, giving injected instructions the same trust level as legitimate user commands.</li>
+              <li>This is the same attack class that has hit every major LLM-integrated office tool — email drafting + file access + external output = exfiltration surface, regardless of vendor.</li>
             </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.104.1" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/26/copilot-cowork-exfiltrates-files/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>The Pressure: AI-Assisted Security Reports Are Overwhelming curl</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The curl project is receiving security reports at 4-5x the 2024 rate and 2x the 2025 rate, overwhelmingly from AI-assisted reporters who generate plausible-sounding but often low-quality findings.</li>
+              <li>Maintainer Daniel Stenberg describes the volume as unsustainable — triaging AI-generated reports now consumes more time than actual development.</li>
+              <li>The dual-use problem is concrete: AI makes security research accessible, but it floods maintainer queues with noise, slowing response to real vulnerabilities.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/May/26/the-pressure/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Gemma4 26b a4b Apex quant is quite good</h3>
-              <span class="digest-source">r/LocalLLaMA</span>
+              <h3>I Think Anthropic and OpenAI Have Found Product-Market Fit</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>mudler&#x27;s APEX-I-Compact quant of Gemma 4 26B-A4B hits 38 tokens/sec on a 16 GB RX 9060 XT at 90K context via llama.cpp Vulkan — strong throughput for a single mid-range GPU.</li>
-              <li>Community reports no perceptible quality degradation versus the reference quant, making this a compelling option for local inference on constrained VRAM budgets.</li>
-              <li>Validates that MoE-style architectures like Gemma 4&#x27;s A4B can be quantized aggressively without the quality collapse seen in dense models.</li>
+              <li>Anthropic is rumored to be approaching its first profitable quarter, driven by enterprise seat licenses where employees are racking up LLM spend without central IT oversight.</li>
+              <li>Simon Willison argues the signal is companies being &#x27;surprised&#x27; by their LLM bills — that surprise indicates real organic adoption, not mandated top-down rollout.</li>
+              <li>The pattern mirrors early SaaS: individual teams adopt tools on expense accounts, usage compounds, and enterprises eventually formalize what&#x27;s already entrenched.</li>
             </ul>
-            <a href="https://reddit.com/r/LocalLLaMA/comments/1tl9woz/gemma4_26b_a4b_apex_quant_is_quite_good/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>If you use the &quot;Get Shit Done&quot; (GSD) AI tool, you need to migrate immediately (Original creator rug-pulled)</h3>
-              <span class="digest-source">r/ClaudeAI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The original GSD npm package creator abandoned the project, ran a crypto scam, and retains npm publish access — any future version could contain malicious code.</li>
-              <li>The community forked the project to get-shit-done-redux and performed a security audit; users should uninstall the old packages immediately.</li>
-              <li>A timely reminder that popular open-source AI tooling on npm carries real supply-chain risk, especially for tools that run with broad system permissions.</li>
-            </ul>
-            <a href="https://reddit.com/r/ClaudeAI/comments/1tktl4w/if_you_use_the_get_shit_done_gsd_ai_tool_you_need/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/May/27/product-market-fit/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
