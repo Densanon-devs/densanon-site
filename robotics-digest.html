@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - May 28, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - June 04, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 28, 2026</div>
+        <div class="digest-date-badge">June 04, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">The 2026 Robotics Summit wraps in Boston as the industry confronts the gap between lab demos and real-world deployment — VLA pipelines hit the factory floor, perception calibration emerges as the reliability bottleneck, and Singapore&#x27;s enterprise humanoid rollouts signal the commercial wave is arriving faster than expected.</p>
+        <p class="digest-intro">Today&#x27;s digest is anchored by fresh ICRA-week output: a sharp critique arguing that aggressive sim2real hardening is actively hurting policy learning, and a companion VLA paper proposing visual evidence budgets as a fix for generalization brittleness under distractors. On the hardware and tooling side, NVIDIA dropped an open-source Isaac GR00T humanoid reference platform alongside updated physical-AI agent skills, while Festo shipped a zero-training-data GripperAI that handles novel object grasps without prior examples.</p>
       </div>
     </section>
 
@@ -29,63 +29,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A Factory-Floor Deployment Case Study of VLA Pipelines for Industrial Packaging Task: Workflow, Failures, and Lessons</h3>
+              <h3>Too Much of a Good Thing: When sim2real Efforts Impede Policy Learning (And What to Do About It)</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Real Siemens factory deployment exposes the failure modes that lab benchmarks miss — reliability demands in production are fundamentally different from demo conditions.</li>
-              <li>The paper catalogs the actual workflow breakdown points in VLA (Vision-Language-Action) pipelines when packaging tasks go wrong, giving practitioners a failure taxonomy they can act on.</li>
-              <li>Key finding: VLA policies need explicit failure-recovery loops baked in at design time, not as an afterthought — graceful degradation is a first-class engineering concern.</li>
+              <li>The paper argues that heavy sim2real engineering (domain randomization, fidelity tuning, adaptation layers) creates simulator lock-in that misaligns incentives with learning robust policies.</li>
+              <li>Excessive sim2real investment can mask poor policy architecture choices that would be caught immediately on real hardware, slowing genuine progress.</li>
+              <li>The authors propose a principled framework for deciding when to invest in simulation fidelity versus designing policies that are robust to the sim-to-real gap by construction.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.27461" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.02636" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GE-Sim 2.0: A Roadmap Towards Comprehensive Closed-loop Video World Simulators for Robotic Manipulation</h3>
+              <h3>See Less, Specify More: Visual Evidence Budgets for Generalizable VLAs</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GE-Sim 2.0 generates action-conditioned video of manipulation tasks, letting robots train on thousands of hours of synthetic household data without physical hardware.</li>
-              <li>Closed-loop simulation means the robot&#x27;s actions influence the generated video in real time — a major step toward sim-to-real transfer that actually holds up for dexterous tasks.</li>
-              <li>World model approaches like this could dramatically reduce the data collection bottleneck that has been the primary cost driver for manipulation research.</li>
+              <li>The paper introduces a visual evidence budget that forces VLA models to commit to a small set of task-relevant visual tokens rather than attending broadly over the full image.</li>
+              <li>Restricting visual evidence improves generalization under distractors and appearance shifts by preventing the policy from over-fitting to irrelevant scene features.</li>
+              <li>The approach is architecture-agnostic and improves success rates on semantically similar tasks where standard VLAs fail to distinguish execution details.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.27491" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.02735" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SCALE-COMM: Shared, Contrastively-Aligned Latent Embeddings for MARL Communication</h3>
+              <h3>Fixed-Time Dynamic Landing of Quadrotors using Adaptive Unscented Kalman Filtering and Nonlinear Model Predictive Control</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Addresses the communication instability problem in multi-robot reinforcement learning — current emergent-comms approaches break down when agents have partial observability in dynamic environments.</li>
-              <li>Contrastive alignment forces robots to build shared latent representations of their observations before communicating, making coordination more robust to noisy or incomplete sensor data.</li>
-              <li>Direct implications for warehouse AMR fleets and swarm robotics where centralized communication is impractical or creates single points of failure.</li>
+              <li>The framework pairs adaptive unscented Kalman filtering with nonlinear MPC to land a quadrotor on a moving platform with guaranteed fixed-time convergence bounds.</li>
+              <li>A real-time minimum-jerk trajectory planner is embedded inside the MPC loop, enabling smooth re-planning as the target platform moves unpredictably.</li>
+              <li>Target state estimation is handled entirely by the adaptive UKF — no direct velocity measurements of the moving platform are required.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.27532" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.02658" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Handle with care: Soft robot gripper picks ripe fruit without bruising</h3>
+              <h3>Motion Planning in Dynamic Environments: A Survey from Classical to Modern Methods</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The survey maps the evolution from classical reactive planners (potential fields, velocity obstacles) through sampling-based methods to modern learned planners for dynamic environments.</li>
+              <li>Most existing benchmarks under-represent highly dynamic multi-agent scenarios, leaving a documented gap between reported performance and real-world results.</li>
+              <li>The paper provides a taxonomy linking method classes to environment dynamics categories, useful as a design reference when selecting planners for specific deployment contexts.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.02677" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>RoboChem Flex: democratisation of the autonomous synthesis robot</h3>
               <span class="digest-source">Robohub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Cornell&#x27;s gripper uses stretchable fiber-optic sensors to infer strawberry ripeness by touch — no vision system required, sidestepping occlusion and outdoor lighting variability.</li>
-              <li>The system predicts ripeness before committing to a full grasp, reducing bruising rates that cost the agricultural industry billions annually.</li>
-              <li>Fiber-optic tactile sensing is significantly cheaper and more durable than piezoelectric alternatives, making this viable for mass deployment in harvest robotics.</li>
+              <li>Published in Nature Synthesis, RoboChem Flex is a modular, reconfigurable autonomous flow-chemistry robot designed so non-specialist labs can assemble and operate it without custom engineering.</li>
+              <li>The platform couples automated synthesis with closed-loop Bayesian optimization over reaction conditions, running experiments without human intervention between iterations.</li>
+              <li>Swappable reaction modules for different chemistries lower the barrier to automated synthesis research beyond well-funded specialist labs.</li>
             </ul>
-            <a href="https://robohub.org/handle-with-care-soft-robot-gripper-picks-ripe-fruit-without-bruising/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Light-activated gel could impact wearables, soft robotics, and more</h3>
-              <span class="digest-source">Robohub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>MIT&#x27;s ionotronic gel transmits data through ions rather than electrons, enabling direct signal exchange between electronics and biological tissue without conversion overhead.</li>
-              <li>Light activation allows precise, localized control of soft actuators without embedded wiring — the key engineering barrier in compliant robot designs.</li>
-              <li>Could replace rigid actuators in prosthetics and surgical robots where biocompatibility and flexibility are non-negotiable requirements.</li>
-            </ul>
-            <a href="https://robohub.org/light-activated-gel-could-impact-wearables-soft-robotics-and-more/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://robohub.org/robochem-flex-democratisation-of-the-autonomous-synthesis-robot/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -95,63 +95,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Why robots still struggle to see the real world</h3>
+              <h3>NVIDIA releases new and updated tools for physical AI developers</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Orbbec&#x27;s co-founder argues the perception reliability gap is not an AI problem — it is a sensor calibration problem that better models cannot compensate for.</li>
-              <li>Miscalibrated depth sensors produce systematic errors that compound through the perception stack, causing failures that look like AI mistakes but are actually hardware drift.</li>
-              <li>For deployers: perception audits and in-field recalibration schedules are as critical as model updates, and most operations skip both.</li>
+              <li>NVIDIA released Isaac GR00T as an open-source humanoid reference robot platform, providing a hardware-and-software baseline for physical AI experiments.</li>
+              <li>Alongside GR00T, NVIDIA published open-source physical AI agent skills — pre-built manipulation and locomotion policy modules developers can fine-tune or chain together.</li>
+              <li>The release targets the workflow gap between Isaac Sim training and real hardware deployment, with updated tooling for policy transfer and real-time inference on edge.</li>
             </ul>
-            <a href="https://www.therobotreport.com/why-robots-still-struggle-to-see-real-world-orbbec/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/nvidia-releases-new-updated-tools-physical-ai-gtc-taipei-computex/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The evolution of cobots in metal fabrication and construction</h3>
+              <h3>Festo launches lightweight pneumatic gripper and tests GripperAI</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Hirebotics CEO frames cobots not as automation that replaces welders, but as a force multiplier letting experienced welders supervise multiple robots simultaneously — reframing the labor narrative.</li>
-              <li>Metal fabrication has one of the highest injury rates in manufacturing; cobots handling arc-welding while humans do setup and QC is a practical safety upgrade, not just a productivity play.</li>
-              <li>Cobot-as-a-service models (pay-per-hour, no capital purchase) are lowering the bar for small fab shops that could not justify a six-figure robot investment.</li>
+              <li>Festo&#x27;s new compact cobot gripper is robot-agnostic and significantly lighter than previous pneumatic grippers, designed for direct cobot end-of-arm mounting.</li>
+              <li>GripperAI enables zero-shot grasping of novel objects without any prior training — grasp strategy is inferred from object geometry at runtime.</li>
+              <li>Zero-shot grasping differentiates it from most commercial grippers that require either pre-programmed positions or a separate training dataset per object class.</li>
             </ul>
-            <a href="https://www.therobotreport.com/hirebotics-talks-evolution-cobots-metal-fabrication-construction/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/festo-launches-pneumatic-gripper-tests-gripperai/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>IntBot and Certis Group partner to scale physical AI for enterprises across Singapore</h3>
+              <h3>This DIY Bipedal Robot Used Pneumatic &quot;Air-Muscles&quot; Instead of Motors</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The Shadow Walker project (started 1987) used McKibben-style pneumatic artificial muscles (PAMs) rather than electric motors to drive a full-size humanoid biped.</li>
+              <li>PAMs contract under air pressure to approximate biological muscle geometry, providing inherently compliant actuation that rigid motor drives cannot match.</li>
+              <li>The project predates most modern compliant-actuator research and serves as an early practical proof-of-concept for biologically-inspired bipedal locomotion.</li>
+            </ul>
+            <a href="https://spectrum.ieee.org/shadow-walker-biped-humanoid-robot" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>FORT Robotics acquires Mapless AI to expand teleop capabilities</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Certis — a major security and facility services company — is adding humanoids to its existing service robot fleet, signaling that enterprise service contracts are the commercial path for humanoid deployment.</li>
-              <li>Singapore&#x27;s density, labor costs, and regulatory environment make it an ideal proving ground; success here will accelerate similar deals in other high-density Asian markets.</li>
-              <li>The partnership model (humanoid maker + large service operator) may become the dominant go-to-market for humanoid commercialization outside pure manufacturing.</li>
+              <li>Mapless AI specializes in navigation in unstructured environments without pre-built maps — a capability gap distinct from FORT&#x27;s existing industrial-environment focus.</li>
+              <li>The acquisition extends FORT&#x27;s teleoperation safety platform into outdoor and semi-structured settings where GPS-denied, mapless navigation is required.</li>
+              <li>Maintaining functional safety guarantees when the environment model is constructed on-the-fly is a hard open problem; this deal is a bet that Mapless AI has a viable path.</li>
             </ul>
-            <a href="https://www.therobotreport.com/intbot-certis-group-partner-scale-physical-ai-enterprises-across-singapore/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>XELA Robotics to show tactile sensing at the 2026 Robotics Summit &amp; Expo</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>XELA&#x27;s improved magnetic interference compensation addresses one of the biggest practical obstacles to deploying tactile sensors in industrial environments full of motors and electromagnets.</li>
-              <li>The uSkin integration into the Universal Manipulation Interface (UMI) means tactile data feeds directly into imitation learning pipelines — closing the sense-learn loop for dexterous manipulation.</li>
-              <li>Tactile sensing is increasingly seen as the missing modality that separates &#x27;picks objects&#x27; from &#x27;handles objects&#x27;; this demo is a litmus test for production readiness.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/xela-robotics-show-tactile-sensing-2026-robotics-summit-expo/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Why Optical Metrology is Replacing Tactile Measurement for Complex Component Validation</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Non-contact optical measurement eliminates surface damage risk on high-value parts and enables full-surface scans versus point-by-point tactile probing — throughput gains are 10x or more on complex geometries.</li>
-              <li>Structured light and confocal systems now match or exceed CMM accuracy for most industrial tolerances, removing the last technical justification for tactile-only QC lines.</li>
-              <li>The shift is accelerating in-line inspection robots, since optical heads integrate on robotic arms far more easily than probe-based systems.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/05/28/why-optical-metrology-is-replacing-tactile-measurement-for-complex-component-validation-source/102029/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/fort-robotics-acquires-mapless-ai-to-expand-teleop-capabilities/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

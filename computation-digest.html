@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - May 28, 2026 | Densanon</title>
+  <title>Computation Morning Digest - June 04, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 28, 2026</div>
+        <div class="digest-date-badge">June 04, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Computex 2026 pre-announcements are reshaping the handheld and budget-laptop silicon race, while trailing-edge foundry strategy and a novel browser-based SSD side-channel attack round out a hardware-heavy day.</p>
+        <p class="digest-intro">Computex 2026 delivered hardware headlines headlined by Samsung&#x27;s first HBM5 mockup with in-package thermal management, while AMD&#x27;s EPYC 8005 Sorano benchmarks confirm a substantial Zen 5 performance uplift for single-socket servers. On the open-source stack, NVIDIA&#x27;s Rust-written Nova driver advances Hopper/Blackwell bring-up, Ubuntu commits to shipping fresh ROCm releases via SRUs, and a new KRAID compiler lands in Mesa for Arm Mali — a strong week for Linux GPU compute.</p>
       </div>
     </section>
 
@@ -29,63 +29,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel challenges AMD&#x27;s handheld dominance with new Arc G3 chips — Panther Lake silicon brings up to 14 cores, Arc B390 graphics to handhelds</h3>
+              <h3>Samsung shows first HBM5 mockup with Heat Path Block cooling — thermal race with SK hynix shaping up</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Arc G3 Extreme packs an Arc B390-class iGPU — Intel&#x27;s most capable integrated graphics yet — directly targeting AMD&#x27;s Z2 Extreme in Steam Deck-style devices.</li>
-              <li>Panther Lake&#x27;s 14-core configuration gives Intel a core-count edge over AMD&#x27;s current handheld lineup, though real-world perf-per-watt is still unproven.</li>
-              <li>OEM partners Acer and OneXPlayer are already committed, signaling this isn&#x27;t vaporware — expect first devices before end of 2026.</li>
+              <li>Samsung&#x27;s HBM5 mockup debuts a Heat Path Block structure that routes heat out of the stacked die package, addressing the thermal bottleneck that limits sustained AI workload bandwidth on HBM4.</li>
+              <li>This is the eighth generation of Samsung&#x27;s HBM and the first to publicly feature in-package active thermal management as a first-class design goal.</li>
+              <li>The reveal sets up a direct thermal-architecture competition with SK hynix, whose own HBM5 roadmap has been aggressive since HBM3E volume production.</li>
             </ul>
-            <a href="https://www.tomshardware.com/video-games/handheld-gaming/intel-challenges-amds-handheld-dominance-with-new-arc-g3-chips-panther-lake-silicon-brings-up-to-14-cores-arc-b390-graphics-to-handhelds" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/samsung-shows-first-hbm5-mockup-at-computex-with-heat-path-block-cooling" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Qualcomm announces Snapdragon C Platform for $300 and up laptops — Windows on Arm and NPUs for the budget tier</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Snapdragon C brings Kryo cores and a dedicated NPU to the sub-$350 price band — the tier previously dominated by Intel N-series and MediaTek Kompanio.</li>
-              <li>This is Qualcomm&#x27;s clearest signal that WoA is no longer a premium-only play; budget-tier NPU inclusion also puts on-device AI features within reach of entry-level buyers.</li>
-              <li>Competing against Apple&#x27;s MacBook Neo at this price will be a tough benchmark, but Qualcomm&#x27;s battery-life story on Arm could be the differentiator.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/laptops/qualcomm-announces-snapdragon-c-platform-for-usd300-and-up-laptops-windows-on-arm-and-npus-for-the-budget-market" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Trailing-edge foundry roadmaps for GlobalFoundries, UMC, and SMIC — mature node chipmakers each pursue differing strategies and IP</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>GlobalFoundries is doubling down on specialty nodes (RF, FD-SOI, automotive) rather than racing toward smaller nodes — a deliberate differentiation from commodity TSMC customers.</li>
-              <li>SMIC&#x27;s trajectory is constrained by US export controls limiting EUV access, pushing it toward density-improvement tricks on older tooling that yield diminishing returns.</li>
-              <li>UMC&#x27;s strategy sits in the middle — cost-competitive on 22/28nm for IoT and automotive — making it the most likely beneficiary as Western OEMs diversify away from TSMC dependency.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/the-trailing-edge-foundry-roadmap-examined" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Intel Arc Pro B70 BMG-G31 Linux Gaming Performance</h3>
+              <h3>AMD EPYC 8635P &quot;Sorano&quot; Benchmarks: Significant Upgrade Opportunity For EPYC 8004 Servers</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Arc Pro B70 posts competitive Vulkan gaming numbers on Linux, closing the historically large gap between Intel Arc and NVIDIA/AMD on the open-source driver stack.</li>
-              <li>The review benchmarks four B70 cards in compute-parallel workloads via Level Zero, relevant for anyone evaluating Intel for mixed gaming/HPC Linux nodes.</li>
-              <li>Intel&#x27;s Linux driver investment is paying off — consistent frame pacing and fewer rendering artifacts than Arc&#x27;s Alchemist launch — though NVIDIA RTX PRO Blackwell still leads in raw throughput.</li>
+              <li>The EPYC 8635P (Zen 5 Sorano) is a drop-in upgrade for existing EPYC 8004 Siena single-socket servers after a BIOS update, covering 8 to 84 core SKUs.</li>
+              <li>Phoronix benchmark data shows Zen 5 delivering meaningful throughput gains over Zen 4c Siena across compute-intensive Linux workloads.</li>
+              <li>The single-socket SP6 platform positioning makes Sorano particularly relevant for edge and distributed HPC nodes where dual-socket cost and power are prohibitive.</li>
             </ul>
-            <a href="https://www.phoronix.com/review/intel-b70-linux-gaming" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/review/amd-epyc-8635p" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Steam Deck sells out in North America within 24 hours of price hike</h3>
-              <span class="digest-source">Ars Technica Hardware</span>
+              <h3>Computex 2026 Day Two Wrap-Up: Intel atones for Arrow Lake, Wi-Fi 8 comes into focus</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A sellout within 24 hours of a price increase is a rare demand signal — it suggests the Deck&#x27;s value proposition remains sticky even at a higher MSRP.</li>
-              <li>North America inventory exhaustion while EU/AU/Asia stock remains available points to tariff-driven regional pricing pressure as the likely culprit behind the hike.</li>
-              <li>Intel&#x27;s Arc G3 announcement the same week adds competitive context: Valve may face pressure to refresh Deck hardware sooner than planned.</li>
+              <li>Intel&#x27;s Day Two Computex messaging centered on addressing the Arrow Lake performance shortfalls that drew heavy criticism at launch, signaling revised silicon or firmware paths ahead.</li>
+              <li>Wi-Fi 8 (802.11bn) received substantial floor coverage, with multiple vendors showing early hardware targeting multi-link operation improvements beyond Wi-Fi 7.</li>
+              <li>The wrap-up frames Intel&#x27;s Computex posture as defensive — repositioning around architectural corrections rather than net-new platform announcements.</li>
             </ul>
-            <a href="https://arstechnica.com/gaming/2026/05/despite-price-hike-steam-deck-is-already-sold-out-in-north-america/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/computex-2026-day-two-wrap-up-intel-atones-for-arrow-lake-wi-fi-8-comes-into-focus" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>3mdeb Keeps Making Progress On Their Coreboot + AMD openSIL Port To Ryzen MSI Board</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>3mdeb is porting Coreboot and AMD&#x27;s open-source openSIL CPU silicon initialization library to a Ryzen 9000 series MSI B850 consumer motherboard, extending open firmware to a mainstream AM5 platform.</li>
+              <li>The same team previously shipped a Coreboot/openSIL build for the EPYC 9005 Gigabyte server board, making this a direct progression from datacenter to consumer silicon.</li>
+              <li>openSIL replacing AGESA blobs is a prerequisite for fully auditable firmware on AMD platforms, and Ryzen 9000 coverage significantly broadens the reachable audience.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/3mdeb-June-B850-P-WiFI" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intel Preps GCC Function Multi-Versioning To Support APX &amp; AVX10.2</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>New GCC patches add Function Multi-Versioning (FMV) dispatch for AVX10.2 and Intel&#x27;s Advanced Performance Extensions (APX), letting a single binary ship optimized hot-paths that activate at runtime based on detected CPU features.</li>
+              <li>Separate GCC tuning work for Nova Lake and Diamond Rapids explicitly disables some APX capabilities that showed negative performance impact, indicating the ISA extensions are not universally beneficial without profiling.</li>
+              <li>FMV support is the upstream compiler prerequisite before distro-packaged software can realistically exploit these instruction sets on next-generation Intel server chips.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/GCC-FMV-Patches-APX-AVX10.2" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intel XPU Manager Adds Support For Arc Pro B65 + Arc Pro B70</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Intel&#x27;s open-source XPU Manager now covers the Arc Pro B65 and B70 datacenter/workstation GPUs, enabling power, utilization, and health telemetry on these Battlemage-generation compute cards.</li>
+              <li>The update ships alongside a refreshed Linux NPU driver, consolidating GPU and NPU management tooling in the same release cycle.</li>
+              <li>Arc Pro B-series cards target AI inferencing and media transcode workloads where Xe2 architecture&#x27;s efficiency improvements over Arc A-series are most pronounced.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Intel-XPU-Manager-B65-B70" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -95,57 +107,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Supermicro says it assisted Taiwanese authorities in server smuggling bust that led to three arrests — company issues statement on working with US, Taiwan to block illicit diversion of servers to China</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>50 servers seized and three arrested — the bust confirms export-control enforcement is moving from paper policy to active interdiction in the supply chain.</li>
-              <li>Supermicro proactively cooperating with both US and Taiwanese authorities is a notable compliance posture shift, likely driven by lingering scrutiny from its 2018 supply-chain controversy.</li>
-              <li>As AI datacenter hardware becomes the highest-value export-controlled commodity, expect smuggling attempts to intensify and enforcement to scale accordingly.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/supermicro-says-it-assisted-taiwanese-authorities-in-server-smuggling-bust-that-led-to-three-arrests-company-issues-statement-on-working-with-us-taiwan-to-block-illicit-diversion-of-servers-to-china" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Leaks reveal US authorities concerned about the rise of &#x27;anti-tech extremists&#x27; as AI data center issues become increasingly contentious</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The leaked report frames datacenter opposition — including water usage and power grid protests — as a potential security threat, a framing civil liberties groups say conflates activism with extremism.</li>
-              <li>Datacenter build-out has become the sharpest political fault line in tech infrastructure policy, with communities near proposed sites increasingly organized and vocal.</li>
-              <li>For operators and investors, community relations and environmental mitigation are no longer optional PR exercises — they&#x27;re risk management.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/leaks-reveal-us-authorities-concerned-about-the-rise-of-anti-tech-extremists-as-ai-data-center-issues-become-increasingly-contentious-critics-say-this-could-lead-to-surveillance-criminalization-of-peaceful-opposition" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Researchers say they can spy on your browsing by measuring SSD activity through a browser API — claim FROST attack requires no permissions or user interaction</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>FROST abuses the Origin Private File System (OPFS) browser API to create measurable SSD I/O patterns, then fingerprints which apps and sites are active — no malware install, no permissions required.</li>
-              <li>The attack vector is the browser itself: any site can instantiate OPFS, making mitigation tricky without breaking legitimate storage-heavy web apps.</li>
-              <li>Browser vendors will likely need to rate-limit or noise-inject OPFS throughput stats — a reminder that storage APIs designed for performance routinely become side-channel attack surfaces.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/cyber-security/researchers-say-they-can-spy-on-your-browsing-by-measuring-ssd-activity-through-a-browser-api" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>KRAID Being Developed As New Compiler For Modern Arm Mali Graphics</h3>
+              <h3>Ubuntu To Ship Newer AMD ROCm Updates Via SRUs</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>KRAID is written in Rust and targets Mali Valhall GPUs — a clean-slate design that sidesteps the technical debt accumulated in Mesa&#x27;s existing Panfrost/PanVK path.</li>
-              <li>A new shader compiler built from scratch signals that Arm and Mesa contributors believe the current open-source Mali stack cannot be incrementally fixed to match proprietary driver quality.</li>
-              <li>If KRAID ships production-ready, it could significantly improve Linux performance on Arm SoCs used in Chromebooks, Android dev boards, and single-board compute clusters.</li>
+              <li>Canonical will deliver updated AMD ROCm releases to Ubuntu 26.04 LTS through Stable Release Updates (SRUs), closing the gap between the `apt install rocm` experience and upstream ROCm point releases.</li>
+              <li>At Ubuntu 26.04 launch the packaged ROCm was already months behind upstream, which is a critical friction point for GPU compute users who depend on current driver support for production workloads.</li>
+              <li>SRU delivery means ROCm users on LTS can receive GPU compute stack updates without waiting for a full Ubuntu cycle, matching a workflow closer to CUDA&#x27;s standalone installer model.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Mesa-Arm-Mali-KRAID" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Ubuntu-Newer-ROCm-SRUs" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Microsoft Announces Coreutils For Windows: Derived From Rust Coreutils</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Microsoft is maintaining a Windows fork of the Rust-rewritten coreutils project, providing POSIX-compatible command-line tools that behave consistently across Windows, WSL, macOS, and Linux.</li>
+              <li>Announced at Build 2026 alongside the open-source Intelligent Terminal project, this directly targets developer workflow friction where script portability breaks at the shell tooling layer.</li>
+              <li>Using Rust coreutils as the upstream means Windows developers inherit memory-safe rewrites of historically bug-prone C implementations alongside cross-platform consistency.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/MS-Coreutils-For-Windows" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -155,15 +137,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>QEMU Shifting On AI Policy To Allow Some AI/LLM-Generated Contributions</h3>
+              <h3>Widely-Used libinput Updated Due To Arbitrary Root Code Execution</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>QEMU&#x27;s previous blanket AI-contribution ban is softening: a proposed patch permits LLM-generated code in non-critical, non-security paths — a pragmatic middle ground rather than a full reversal.</li>
-              <li>The policy shift reflects a broader open-source trend: maintaining strict AI bans is increasingly untenable as contributors use LLMs for boilerplate, tests, and documentation.</li>
-              <li>QEMU&#x27;s carve-out for &#x27;critical&#x27; code (security, core emulation) is the right call — it preserves human review where bugs have the highest blast radius while reducing friction elsewhere.</li>
+              <li>libinput 1.31.2 patches a vulnerability that allows arbitrary code execution with root privileges, affecting all Linux desktops using X.Org or Wayland input handling.</li>
+              <li>Because libinput is a foundational input library present on virtually every modern Linux desktop distribution, the blast radius for unpatched systems is unusually wide.</li>
+              <li>Users should verify their distro has shipped the 1.31.2 package update — this is an active security fix, not a future hardening change.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/QEMU-Patch-Allows-Some-AI" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/libinput-1.31.2-Security-Fix" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>NVIDIA Hopper &amp; Blackwell GPU Support Moves Closer For Open-Source Nova Driver</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The 12th revision of Hopper and Blackwell enablement patches for the Rust-written Nova kernel driver has posted, indicating sustained active development toward open-source support for NVIDIA&#x27;s current AI GPU generations.</li>
+              <li>Nova is a clean-room Rust rewrite intended to eventually replace Nouveau, leveraging the GPU System Processor (GSP) firmware path that NVIDIA already uses in the proprietary driver.</li>
+              <li>Iteration 12 of complex GPU bring-up patches is a notable velocity signal — rapid revision cycles on this scope of work typically precede mainline merge readiness within a few kernel cycles.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Hopper-Blackwell-Nova-Closer" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>New &quot;KRAID&quot; Compiler Merged To Mesa For Panfrost/PanVK Drivers</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>KRAID, a new compiler backend targeting modern Arm Mali GPUs, has been merged into Mesa 26.2 and will serve both the Panfrost (OpenGL) and PanVK (Vulkan) open-source driver stacks.</li>
+              <li>The compiler is designed specifically for the CSF (Command Stream Frontend) architecture used in recent Mali GPUs, replacing older compiler paths that were not architected for these ISA characteristics.</li>
+              <li>Landing in Mesa 26.2 means KRAID will be available to distributions shipping the next Mesa stable series, directly improving GPU performance and compatibility on Arm-based Linux devices and SBCs.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/KRAID-Merged-To-Mesa" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

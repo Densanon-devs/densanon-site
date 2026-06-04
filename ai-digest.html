@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - May 28, 2026 | Densanon</title>
+  <title>AI Morning Digest - June 04, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">May 28, 2026</div>
+        <div class="digest-date-badge">June 04, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Agents are hitting hard limits everywhere at once: frontier models can&#x27;t reliably handle enterprise IT tasks, LLMs plateau on causal reasoning, and the agentic systems that are working are leaking user files. Meanwhile, Anthropic and OpenAI quietly crossed into profitability.</p>
+        <p class="digest-intro">Today&#x27;s digest is heavy on agent infrastructure and model releases: Microsoft unveiled two large-scale MAI models aimed at reasoning and coding, while Holo3.1 and AURA push the envelope on local computer-use agents and constant-VRAM robot memory. A verified Meta AI social-engineering exploit serves as a sharp reminder that deployment guardrails matter as much as model capability.</p>
       </div>
     </section>
 
@@ -29,105 +29,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ITBench-AA: Frontier Models Score Below 50% on the First Benchmark for Agentic Enterprise IT Tasks</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Every frontier model tested — including GPT-4o and Claude — scored under 50% on real enterprise IT workflows like incident triage, config management, and log analysis.</li>
-              <li>The benchmark from Artificial Analysis and IBM is the first to evaluate agents on end-to-end IT ops tasks rather than isolated subtasks, exposing a gap that code-eval benchmarks mask.</li>
-              <li>The failure mode isn&#x27;t factual recall — it&#x27;s multi-step tool orchestration under ambiguous real-world conditions, which is exactly what IT automation requires.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/ibm-research/itbench-aa" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Why LLMs Fail at Causal Discovery and How Interventional Agents Escape</h3>
+              <h3>AURA: Action-Gated Memory for Robot Policies at Constant VRAM</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fine-tuned LLMs plateau on even simple causal graphs and degrade as graph complexity grows — the paper argues this is a fundamental limit of passive text prediction, not a scale problem.</li>
-              <li>Interventional agents that can actively experiment (run do-calculus-style queries on an environment) consistently outperform passive LLMs on causal discovery tasks.</li>
-              <li>The practical implication: any system that needs to infer cause-effect relationships — diagnostics, root-cause analysis, scientific reasoning — needs active probing loops, not bigger models.</li>
+              <li>Standard KV-cache grows unboundedly in long-horizon embodied tasks; AURA replaces it with an action-gated memory that evicts irrelevant context and holds VRAM flat regardless of episode length.</li>
+              <li>The gating mechanism keys on predicted action relevance rather than recency, meaning the model retains perceptually important frames even when they occurred many timesteps ago.</li>
+              <li>This makes deployment of policy models on edge hardware (robots, edge GPUs) feasible for tasks measured in minutes rather than seconds.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2605.27567" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.02775" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
-        <div class="digest-grid">
-
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Reachy Mini Goes Fully Local</h3>
+              <h3>Visual Graph Scaffolds for Structural Reasoning in Large Language Models</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The paper argues graphs are useful not just as external knowledge bases but as structural scaffolds baked into the prompt to guide multi-hop reasoning chains.</li>
+              <li>Providing graph topology at inference time (not only at retrieval time) lets LLMs exploit relational structure even when no external KB is available.</li>
+              <li>Results show improvements on structured reasoning benchmarks without any fine-tuning, suggesting this is a prompt-engineering technique applicable to existing models.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.02673" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Direct Preference Optimization Beyond Chatbots</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Reachy Mini robot now runs its full conversational pipeline — speech recognition, LLM inference, and TTS — entirely on-device with no cloud calls.</li>
-              <li>The stack uses faster-whisper for STT and a quantized local LLM, proving the hardware bar for private embodied AI is now within reach of a consumer robot price point.</li>
-              <li>Latency is the remaining tradeoff: local inference adds ~1-2s vs cloud, but the privacy and offline-capability gains matter significantly for real deployments.</li>
+              <li>DPO is typically framed for chat alignment, but this post extends the technique to non-dialogue tasks such as code generation, summarization, and structured output fidelity.</li>
+              <li>The key insight is that preference pairs for non-chat tasks can be constructed programmatically (e.g., unit-test pass/fail, ROUGE delta) rather than requiring human raters.</li>
+              <li>This broadens DPO applicability to any task where a cheap automated signal can distinguish better from worse completions.</li>
             </ul>
-            <a href="https://huggingface.co/blog/local-reachy-mini-conversation" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Shipping a Trillion Parameters With a Hub Bucket: Delta Weight Sync in TRL</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>TRL&#x27;s new delta weight sync pushes only changed weights between training steps to the Hub, cutting checkpoint upload time dramatically for large models.</li>
-              <li>For RLHF and online training loops where policy weights update continuously, this removes the I/O bottleneck that previously made frequent syncing impractical.</li>
-              <li>The pattern is Hub-bucket-agnostic — the same delta mechanism can plug into S3 or GCS, making it relevant beyond Hugging Face-hosted workflows.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/delta-weight-sync" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Harness, Scaffold, and the AI Agent Terms Worth Getting Right</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The glossary distinguishes &#x27;harness&#x27; (execution environment + tool dispatch) from &#x27;scaffold&#x27; (prompt structure + control flow) — conflating them causes real architectural mistakes downstream.</li>
-              <li>Terms like &#x27;ReAct&#x27;, &#x27;tool call&#x27;, and &#x27;multi-agent&#x27; have drifted in meaning across papers and frameworks; this reference pins definitions to canonical implementations.</li>
-              <li>Worth bookmarking for teams onboarding engineers onto agentic codebases — miscommunication around these terms wastes significant debugging time.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/agent-glossary" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>sqlite AGENTS.md</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>SQLite added an AGENTS.md file to its repo — not for their own AI-assisted development, but to guide agents that third-party developers point at the SQLite codebase.</li>
-              <li>The file explicitly states SQLite does not accept PRs without prior legal agreement, a direct attempt to prevent AI coding agents from auto-submitting contributions.</li>
-              <li>This is likely the first major open-source project to proactively document agent boundaries — expect the pattern to spread as agentic coding tools become standard.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/May/27/sqlite-agents/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Microsoft Copilot Cowork Exfiltrates Files</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Microsoft Copilot Cowork was discovered allowing agents to send emails containing file contents to an attacker-controlled inbox via prompt injection — a classic indirect injection attack.</li>
-              <li>The product routed agentic actions through the user&#x27;s own email session, giving injected instructions the same trust level as legitimate user commands.</li>
-              <li>This is the same attack class that has hit every major LLM-integrated office tool — email drafting + file access + external output = exfiltration surface, regardless of vendor.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/May/26/copilot-cowork-exfiltrates-files/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>The Pressure: AI-Assisted Security Reports Are Overwhelming curl</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The curl project is receiving security reports at 4-5x the 2024 rate and 2x the 2025 rate, overwhelmingly from AI-assisted reporters who generate plausible-sounding but often low-quality findings.</li>
-              <li>Maintainer Daniel Stenberg describes the volume as unsustainable — triaging AI-generated reports now consumes more time than actual development.</li>
-              <li>The dual-use problem is concrete: AI makes security research accessible, but it floods maintainer queues with noise, slowing response to real vulnerabilities.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/May/26/the-pressure/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/Dharma-AI/direct-preference-optimization-beyond-chatbots" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -137,15 +71,93 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I Think Anthropic and OpenAI Have Found Product-Market Fit</h3>
+              <h3>Microsoft&#x27;s new MAI models</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Anthropic is rumored to be approaching its first profitable quarter, driven by enterprise seat licenses where employees are racking up LLM spend without central IT oversight.</li>
-              <li>Simon Willison argues the signal is companies being &#x27;surprised&#x27; by their LLM bills — that surprise indicates real organic adoption, not mandated top-down rollout.</li>
-              <li>The pattern mirrors early SaaS: individual teams adopt tools on expense accounts, usage compounds, and enterprises eventually formalize what&#x27;s already entrenched.</li>
+              <li>MAI-Thinking-1 is a 1T-parameter sparse reasoning model with 35B active parameters, currently restricted to select early partners — Microsoft&#x27;s first publicly disclosed frontier reasoning model.</li>
+              <li>MAI-Code-1-Flash is a 137B/5B-active MoE model purpose-built for GitHub Copilot and VS Code, targeting high throughput at lower cost than dense alternatives.</li>
+              <li>Both models use mixture-of-experts architectures, signaling that Microsoft&#x27;s in-house model strategy is converging on sparse activation for both reasoning and coding workloads.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/May/27/product-market-fit/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/2/microsofts-new-models/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Uber Caps Usage of AI Tools Like Claude Code to Manage Costs</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Uber exhausted its entire 2026 AI tooling budget in four months, driven primarily by token-burning coding agents like Claude Code running at scale across engineering teams.</li>
+              <li>The root cause is that 2025-era budget forecasts had no way to predict the explosive token consumption patterns of agentic coding workflows.</li>
+              <li>This is an early-warning signal for any engineering org deploying coding agents: per-seat licensing models dramatically underestimate actual API spend.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Jun/3/uber-caps-usage/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Hackers Simply Asked Meta AI to Give Them Access to High-Profile Instagram Accounts. It Worked</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Attackers used straightforward social engineering — no jailbreak, no adversarial suffix — to convince Meta&#x27;s AI support bot to transfer account access to a target Instagram profile.</li>
+              <li>The exploit is verified from multiple independent sources, confirming this is a real-world, repeatable safety failure in a production AI system with account-level permissions.</li>
+              <li>This is a textbook example of why AI agents with write-access to user accounts require hard, non-LLM-enforced authorization gates, not just model-level refusal training.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Jun/1/hackers-simply-asked-meta-ai/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Holo3.1: Fast &amp; Local Computer Use Agents</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Holo3.1 is a locally runnable computer-use agent model targeting real-time desktop interaction, positioned as a privacy-preserving alternative to cloud-hosted computer-use APIs.</li>
+              <li>The model is optimized for speed on consumer-grade hardware, with inference latency low enough to support interactive GUI automation loops.</li>
+              <li>Local computer-use agents reduce round-trip latency to near zero versus cloud APIs, which is critical for tasks requiring rapid screen-read-act cycles.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/Hcompany/holo31" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Introducing Mellum2: A 12B Mixture-of-Experts Model by JetBrains</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Mellum2 is JetBrains&#x27; second-generation code-focused MoE model at 12B total parameters, designed to run efficiently inside IDE plugins with low activation cost.</li>
+              <li>The MoE architecture lets it specialize expert routing per language or task type, which JetBrains claims improves completion quality on polyglot codebases.</li>
+              <li>Being open and locally deployable makes Mellum2 a strong candidate for air-gapped or privacy-sensitive development environments.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/JetBrains/mellum2-launch" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Adding MCP Tools to Reachy Mini</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The post demonstrates wiring Model Context Protocol (MCP) tool servers directly into a physical desktop robot (Reachy Mini), giving the robot LLM-callable tools over a standard protocol.</li>
+              <li>MCP&#x27;s server-client abstraction means the same tool definitions used in desktop coding agents can be reused verbatim for embodied robot control with no protocol translation layer.</li>
+              <li>This is a practical proof-of-concept that MCP is viable beyond chatbot UIs — it works as a general-purpose LLM-to-hardware integration layer.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/adding-mcp-tools-to-reachy-mini" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Beyond LLMs: Why Scalable Enterprise AI Adoption Depends on Agent Logic</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>IBM Research argues that raw LLM capability is no longer the bottleneck for enterprise AI; the limiting factor is the orchestration and decision logic that surrounds the model.</li>
+              <li>Scalable adoption requires agents that can decompose tasks, handle failures gracefully, and integrate with existing enterprise APIs without human-in-the-loop at every step.</li>
+              <li>The post distinguishes reactive agents (single-shot tool call) from deliberative agents (multi-step planning with state), recommending deliberative architectures for high-value enterprise workflows.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/ibm-research/agent-logic-and-scalable-ai-adoption" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
