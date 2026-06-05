@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - June 04, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - June 05, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 04, 2026</div>
+        <div class="digest-date-badge">June 05, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is anchored by fresh ICRA-week output: a sharp critique arguing that aggressive sim2real hardening is actively hurting policy learning, and a companion VLA paper proposing visual evidence budgets as a fix for generalization brittleness under distractors. On the hardware and tooling side, NVIDIA dropped an open-source Isaac GR00T humanoid reference platform alongside updated physical-AI agent skills, while Festo shipped a zero-training-data GripperAI that handles novel object grasps without prior examples.</p>
+        <p class="digest-intro">Today&#x27;s robotics landscape spans world-model breakthroughs for action-free video learning, physical AI arguments reaching the factory floor, Amazon&#x27;s natural-language warehouse bots going continental, and real autonomous vehicles completing civil-engineering jobs in the field.</p>
       </div>
     </section>
 
@@ -29,63 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Too Much of a Good Thing: When sim2real Efforts Impede Policy Learning (And What to Do About It)</h3>
+              <h3>CLAW: Learning Continuous Latent Action World Models via Adversarial Latent Regularization</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The paper argues that heavy sim2real engineering (domain randomization, fidelity tuning, adaptation layers) creates simulator lock-in that misaligns incentives with learning robust policies.</li>
-              <li>Excessive sim2real investment can mask poor policy architecture choices that would be caught immediately on real hardware, slowing genuine progress.</li>
-              <li>The authors propose a principled framework for deciding when to invest in simulation fidelity versus designing policies that are robust to the sim-to-real gap by construction.</li>
+              <li>CLAW learns a world model entirely from action-free video using adversarial latent regularization — no robot-collected teleoperation data required.</li>
+              <li>The framework is end-to-end self-supervised and diffusion-based, producing continuous latent action representations that can be decoded into physical commands.</li>
+              <li>Removes the labeling bottleneck that currently limits how much video data can be used to train manipulation policies.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.02636" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.04130" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>See Less, Specify More: Visual Evidence Budgets for Generalizable VLAs</h3>
+              <h3>CADET: A Modular Platform for Evaluating Distributed Cooperative Autonomy in Connected Autonomous Vehicles</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The paper introduces a visual evidence budget that forces VLA models to commit to a small set of task-relevant visual tokens rather than attending broadly over the full image.</li>
-              <li>Restricting visual evidence improves generalization under distractors and appearance shifts by preventing the policy from over-fitting to irrelevant scene features.</li>
-              <li>The approach is architecture-agnostic and improves success rates on semantically similar tasks where standard VLAs fail to distinguish execution details.</li>
+              <li>Breaks the monolithic onboard-compute assumption: perception, planning, and control are split across networked nodes and evaluated as a distributed system.</li>
+              <li>Designed specifically to surface failure modes that only appear when multiple AVs coordinate — single-vehicle simulators miss these.</li>
+              <li>Modular architecture lets researchers swap individual pipeline stages without rebuilding the full evaluation harness.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.02735" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.04072" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Fixed-Time Dynamic Landing of Quadrotors using Adaptive Unscented Kalman Filtering and Nonlinear Model Predictive Control</h3>
+              <h3>AgenticDiffusion: Agentic Diffusion-based Path Planning for Vision-Based UAV Navigation</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The framework pairs adaptive unscented Kalman filtering with nonlinear MPC to land a quadrotor on a moving platform with guaranteed fixed-time convergence bounds.</li>
-              <li>A real-time minimum-jerk trajectory planner is embedded inside the MPC loop, enabling smooth re-planning as the target platform moves unpredictably.</li>
-              <li>Target state estimation is handled entirely by the adaptive UKF — no direct velocity measurements of the moving platform are required.</li>
+              <li>Replaces single-view indoor UAV navigation with a multi-view agentic loop that builds scene understanding before committing to a trajectory.</li>
+              <li>Diffusion-based planner generates trajectories that degrade gracefully under limited field-of-view — a common real-world constraint.</li>
+              <li>Agentic loop allows mid-flight re-planning without a full reset, unlike prior feed-forward navigation stacks.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.02658" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.04111" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Motion Planning in Dynamic Environments: A Survey from Classical to Modern Methods</h3>
+              <h3>Selecting haptic guidance models in teleoperation: guidelines from a comparative user study</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The survey maps the evolution from classical reactive planners (potential fields, velocity obstacles) through sampling-based methods to modern learned planners for dynamic environments.</li>
-              <li>Most existing benchmarks under-represent highly dynamic multi-agent scenarios, leaving a documented gap between reported performance and real-world results.</li>
-              <li>The paper provides a taxonomy linking method classes to environment dynamics categories, useful as a design reference when selecting planners for specific deployment contexts.</li>
+              <li>Provides a unified formulation across haptic guidance models so task-appropriate force-feedback can be selected systematically, not by trial-and-error.</li>
+              <li>User study shows guidance model choice is highly task-dependent — a single default model degrades performance on half the tested scenarios.</li>
+              <li>Practical output is a decision guide: given task type and environment, pick the model class that minimizes operator error.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.02677" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>RoboChem Flex: democratisation of the autonomous synthesis robot</h3>
-              <span class="digest-source">Robohub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Published in Nature Synthesis, RoboChem Flex is a modular, reconfigurable autonomous flow-chemistry robot designed so non-specialist labs can assemble and operate it without custom engineering.</li>
-              <li>The platform couples automated synthesis with closed-loop Bayesian optimization over reaction conditions, running experiments without human intervention between iterations.</li>
-              <li>Swappable reaction modules for different chemistries lower the barrier to automated synthesis research beyond well-funded specialist labs.</li>
-            </ul>
-            <a href="https://robohub.org/robochem-flex-democratisation-of-the-autonomous-synthesis-robot/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.04157" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -95,51 +83,81 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NVIDIA releases new and updated tools for physical AI developers</h3>
+              <h3>Proteus gets natural-language ability as Amazon expands European robot deployments</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NVIDIA released Isaac GR00T as an open-source humanoid reference robot platform, providing a hardware-and-software baseline for physical AI experiments.</li>
-              <li>Alongside GR00T, NVIDIA published open-source physical AI agent skills — pre-built manipulation and locomotion policy modules developers can fine-tune or chain together.</li>
-              <li>The release targets the workflow gap between Isaac Sim training and real hardware deployment, with updated tooling for policy transfer and real-time inference on edge.</li>
+              <li>Amazon&#x27;s Proteus mobile robot now accepts natural-language instructions with no special command syntax — a shift from hard-coded task codes.</li>
+              <li>Deployment expanding across Europe alongside STARK and Vulcan, signaling Amazon is standardizing on this stack at warehouse scale.</li>
+              <li>Natural-language control reduces operator training time and allows ad-hoc task assignment without software updates.</li>
             </ul>
-            <a href="https://www.therobotreport.com/nvidia-releases-new-updated-tools-physical-ai-gtc-taipei-computex/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/proteus-gets-natural-language-ability-amazon-expands-europe-robot-deployments/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Festo launches lightweight pneumatic gripper and tests GripperAI</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Genesis AI launches simulation platform to accelerate robotics development</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Festo&#x27;s new compact cobot gripper is robot-agnostic and significantly lighter than previous pneumatic grippers, designed for direct cobot end-of-arm mounting.</li>
-              <li>GripperAI enables zero-shot grasping of novel objects without any prior training — grasp strategy is inferred from object geometry at runtime.</li>
-              <li>Zero-shot grasping differentiates it from most commercial grippers that require either pre-programmed positions or a separate training dataset per object class.</li>
+              <li>Genesis World 1.0 claims to compress robotics evaluation cycles from days to minutes via large-scale parallel simulation.</li>
+              <li>Targets the data-generation bottleneck: physical AI models need high-fidelity sim environments to generate training data at the scale cloud GPUs allow.</li>
+              <li>Direct competition to NVIDIA Isaac and MuJoCo-based pipelines — adds pressure on incumbent simulators to match throughput claims.</li>
             </ul>
-            <a href="https://www.therobotreport.com/festo-launches-pneumatic-gripper-tests-gripperai/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/06/04/genesis-ai-launches-simulation-platform-to-accelerate-robotics-development/102243/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>This DIY Bipedal Robot Used Pneumatic &quot;Air-Muscles&quot; Instead of Motors</h3>
-              <span class="digest-source">IEEE Spectrum Robotics</span>
+              <h3>Why robotics can&#x27;t advance without physical AI</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Shadow Walker project (started 1987) used McKibben-style pneumatic artificial muscles (PAMs) rather than electric motors to drive a full-size humanoid biped.</li>
-              <li>PAMs contract under air pressure to approximate biological muscle geometry, providing inherently compliant actuation that rigid motor drives cannot match.</li>
-              <li>The project predates most modern compliant-actuator research and serves as an early practical proof-of-concept for biologically-inspired bipedal locomotion.</li>
+              <li>Argues the next capability jump requires 3D-asset simulation environments that replicate real physical behavior — faster processors alone don&#x27;t close the gap.</li>
+              <li>Physical AI is defined here as the data pipeline (simulation fidelity plus diverse 3D assets), not just the model architecture.</li>
+              <li>Points to sim-to-real transfer failure rates as the primary drag on deployment timelines for manipulation and mobility tasks.</li>
             </ul>
-            <a href="https://spectrum.ieee.org/shadow-walker-biped-humanoid-robot" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/06/04/why-robotics-cant-advance-without-physical-ai/102280/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>FORT Robotics acquires Mapless AI to expand teleop capabilities</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Volvo and Boliden complete dam construction milestone with autonomous transport</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Mapless AI specializes in navigation in unstructured environments without pre-built maps — a capability gap distinct from FORT&#x27;s existing industrial-environment focus.</li>
-              <li>The acquisition extends FORT&#x27;s teleoperation safety platform into outdoor and semi-structured settings where GPS-denied, mapless navigation is required.</li>
-              <li>Maintaining functional safety guarantees when the environment model is constructed on-the-fly is a hard open problem; this deal is a bet that Mapless AI has a viable path.</li>
+              <li>First completed field milestone under Volvo-Boliden&#x27;s 2023 MOU: autonomous trucks transported dam-construction material at Garpenberg mine in Sweden.</li>
+              <li>Demonstrates Level 4 autonomy completing a defined civil-engineering scope — not a demo loop, an actual construction deliverable.</li>
+              <li>Sets a template for autonomous transport as an infrastructure construction tool, not just warehouse logistics.</li>
             </ul>
-            <a href="https://www.therobotreport.com/fort-robotics-acquires-mapless-ai-to-expand-teleop-capabilities/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/06/04/volvo-and-boliden-complete-dam-construction-milestone-with-autonomous-transport/102283/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Interview with CreateMe CEO: Physical AI could transform the way clothes are made</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Fabric manipulation remains one of the hardest unsolved problems in robotics — soft, deformable materials defeat rigid-body planners that handle automotive parts well.</li>
+              <li>CreateMe is shifting from stitching to adhesive bonding as the joining method, changing the manipulation problem enough for current robot hands to handle.</li>
+              <li>If the bonding approach scales, apparel manufacturing — one of the most labor-intensive global industries — becomes automatable without solving general cloth manipulation.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/06/04/interview-with-createme-ceo-campbell-myers-from-stitching-to-bonding-physical-ai-could-transform-the-way-clothes-are-made/102258/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>The skeptic&#x27;s guide to humanoid robots going viral on the Internet</h3>
+              <span class="digest-source">Hacker News Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Ars Technica deconstructs the gap between viral humanoid robot clips and actual deployed capability — curated demos vs. unscripted real-world performance.</li>
+              <li>Highlights how narrow task demonstrations, careful staging, and post-production editing make brittle systems look general-purpose.</li>
+              <li>Useful calibration piece: sets realistic expectations for what current humanoid hardware can and cannot do outside controlled environments.</li>
+            </ul>
+            <a href="https://arstechnica.com/ai/2026/06/the-skeptics-guide-to-humanoid-robots-going-viral-on-the-internet/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

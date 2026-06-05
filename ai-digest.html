@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - June 04, 2026 | Densanon</title>
+  <title>AI Morning Digest - June 05, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,149 +15,129 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 04, 2026</div>
+        <div class="digest-date-badge">June 05, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is heavy on agent infrastructure and model releases: Microsoft unveiled two large-scale MAI models aimed at reasoning and coding, while Holo3.1 and AURA push the envelope on local computer-use agents and constant-VRAM robot memory. A verified Meta AI social-engineering exploit serves as a sharp reminder that deployment guardrails matter as much as model capability.</p>
+        <p class="digest-intro">Today&#x27;s digest centers on agent reliability: pre-deployment verification frameworks, a salience-based memory architecture, multi-agent disagreement as a feature not a bug, a large-scale RAG reality check in biomedicine, and a cluster of Anthropic SDK releases hardening Claude Code and the Agent SDK for enterprise use.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AURA: Action-Gated Memory for Robot Policies at Constant VRAM</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Standard KV-cache grows unboundedly in long-horizon embodied tasks; AURA replaces it with an action-gated memory that evicts irrelevant context and holds VRAM flat regardless of episode length.</li>
-              <li>The gating mechanism keys on predicted action relevance rather than recency, meaning the model retains perceptually important frames even when they occurred many timesteps ago.</li>
-              <li>This makes deployment of policy models on edge hardware (robots, edge GPUs) feasible for tasks measured in minutes rather than seconds.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.02775" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Visual Graph Scaffolds for Structural Reasoning in Large Language Models</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The paper argues graphs are useful not just as external knowledge bases but as structural scaffolds baked into the prompt to guide multi-hop reasoning chains.</li>
-              <li>Providing graph topology at inference time (not only at retrieval time) lets LLMs exploit relational structure even when no external KB is available.</li>
-              <li>Results show improvements on structured reasoning benchmarks without any fine-tuning, suggesting this is a prompt-engineering technique applicable to existing models.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.02673" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Direct Preference Optimization Beyond Chatbots</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>DPO is typically framed for chat alignment, but this post extends the technique to non-dialogue tasks such as code generation, summarization, and structured output fidelity.</li>
-              <li>The key insight is that preference pairs for non-chat tasks can be constructed programmatically (e.g., unit-test pass/fail, ROUGE delta) rather than requiring human raters.</li>
-              <li>This broadens DPO applicability to any task where a cheap automated signal can distinguish better from worse completions.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/Dharma-AI/direct-preference-optimization-beyond-chatbots" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Microsoft&#x27;s new MAI models</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>MAI-Thinking-1 is a 1T-parameter sparse reasoning model with 35B active parameters, currently restricted to select early partners — Microsoft&#x27;s first publicly disclosed frontier reasoning model.</li>
-              <li>MAI-Code-1-Flash is a 137B/5B-active MoE model purpose-built for GitHub Copilot and VS Code, targeting high throughput at lower cost than dense alternatives.</li>
-              <li>Both models use mixture-of-experts architectures, signaling that Microsoft&#x27;s in-house model strategy is converging on sparse activation for both reasoning and coding workloads.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jun/2/microsofts-new-models/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Uber Caps Usage of AI Tools Like Claude Code to Manage Costs</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Uber exhausted its entire 2026 AI tooling budget in four months, driven primarily by token-burning coding agents like Claude Code running at scale across engineering teams.</li>
-              <li>The root cause is that 2025-era budget forecasts had no way to predict the explosive token consumption patterns of agentic coding workflows.</li>
-              <li>This is an early-warning signal for any engineering org deploying coding agents: per-seat licensing models dramatically underestimate actual API spend.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jun/3/uber-caps-usage/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Hackers Simply Asked Meta AI to Give Them Access to High-Profile Instagram Accounts. It Worked</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Attackers used straightforward social engineering — no jailbreak, no adversarial suffix — to convince Meta&#x27;s AI support bot to transfer account access to a target Instagram profile.</li>
-              <li>The exploit is verified from multiple independent sources, confirming this is a real-world, repeatable safety failure in a production AI system with account-level permissions.</li>
-              <li>This is a textbook example of why AI agents with write-access to user accounts require hard, non-LLM-enforced authorization gates, not just model-level refusal training.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jun/1/hackers-simply-asked-meta-ai/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Holo3.1: Fast &amp; Local Computer Use Agents</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>anthropics/claude-code: v2.1.163</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Holo3.1 is a locally runnable computer-use agent model targeting real-time desktop interaction, positioned as a privacy-preserving alternative to cloud-hosted computer-use APIs.</li>
-              <li>The model is optimized for speed on consumer-grade hardware, with inference latency low enough to support interactive GUI automation loops.</li>
-              <li>Local computer-use agents reduce round-trip latency to near zero versus cloud APIs, which is critical for tasks requiring rapid screen-read-act cycles.</li>
+              <li>New `requiredMinimumVersion` / `requiredMaximumVersion` managed settings let enterprise admins pin Claude Code to an approved version range — the CLI refuses to start outside the window.</li>
+              <li>New `/plugin list` command with `--enabled` / `--disabled` flags gives operators a quick audit surface for installed plugins.</li>
+              <li>Version-gating closes a real supply-chain risk for teams that auto-update CLI tools across many developer machines.</li>
             </ul>
-            <a href="https://huggingface.co/blog/Hcompany/holo31" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.163" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Introducing Mellum2: A 12B Mixture-of-Experts Model by JetBrains</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>anthropics/claude-agent-sdk-typescript: v0.3.163</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Mellum2 is JetBrains&#x27; second-generation code-focused MoE model at 12B total parameters, designed to run efficiently inside IDE plugins with low activation cost.</li>
-              <li>The MoE architecture lets it specialize expert routing per language or task type, which JetBrains claims improves completion quality on polyglot codebases.</li>
-              <li>Being open and locally deployable makes Mellum2 a strong candidate for air-gapped or privacy-sensitive development environments.</li>
+              <li>`stop_task` now returns success when the target task is already gone (`not_found` or `not_running`), eliminating race-condition errors in task-pruning loops.</li>
+              <li>SDK hosts can now add builtin MCP servers (e.g. `claude-in-chrome`) via `setMcpServers` — previously blocked for native builds.</li>
             </ul>
-            <a href="https://huggingface.co/blog/JetBrains/mellum2-launch" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.163" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Adding MCP Tools to Reachy Mini</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>anthropics/claude-agent-sdk-typescript: v0.3.162</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The post demonstrates wiring Model Context Protocol (MCP) tool servers directly into a physical desktop robot (Reachy Mini), giving the robot LLM-callable tools over a standard protocol.</li>
-              <li>MCP&#x27;s server-client abstraction means the same tool definitions used in desktop coding agents can be reused verbatim for embodied robot control with no protocol translation layer.</li>
-              <li>This is a practical proof-of-concept that MCP is viable beyond chatbot UIs — it works as a general-purpose LLM-to-hardware integration layer.</li>
+              <li>Refusal errors now carry `stop_reason: &quot;refusal&quot;` on the assistant message and in session transcripts — SDK consumers can detect refusals programmatically without brittle text-matching.</li>
+              <li>Agent SDK sessions on native builds now default to a fast embedded file-finder, cutting cold-start latency for local agentic workflows.</li>
             </ul>
-            <a href="https://huggingface.co/blog/adding-mcp-tools-to-reachy-mini" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.162" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Beyond LLMs: Why Scalable Enterprise AI Adoption Depends on Agent Logic</h3>
+              <h3>EVA-Bench Data 2.0: 3 Domains, 121 Tools, 213 Scenarios</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>IBM Research argues that raw LLM capability is no longer the bottleneck for enterprise AI; the limiting factor is the orchestration and decision logic that surrounds the model.</li>
-              <li>Scalable adoption requires agents that can decompose tasks, handle failures gracefully, and integrate with existing enterprise APIs without human-in-the-loop at every step.</li>
-              <li>The post distinguishes reactive agents (single-shot tool call) from deliberative agents (multi-step planning with state), recommending deliberative architectures for high-value enterprise workflows.</li>
+              <li>EVA-Bench now covers 3 enterprise domains (IT, HR, Finance) with 121 tool definitions and 213 multi-step agentic scenarios — a more demanding stress test than single-tool evals.</li>
+              <li>Scenarios include tool chaining, ambiguous instructions, and error recovery, targeting gaps that most current agent benchmarks underweight.</li>
+              <li>Open dataset enables reproducible apples-to-apples comparison for enterprise tool-use agent development.</li>
             </ul>
-            <a href="https://huggingface.co/blog/ibm-research/agent-logic-and-scalable-ai-adoption" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/ServiceNow-AI/eva-bench-data" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Nemotron 3.5 Content Safety: Customizable Multimodal Safety for Global Enterprise AI</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>NVIDIA&#x27;s Nemotron 3.5 Safety model handles text and images and ships as a customizable guardrail layer — enterprise teams can tune thresholds per deployment context.</li>
+              <li>Trained on multilingual safety categories rather than English-only policies, targeting genuine global enterprise deployments.</li>
+              <li>Offered as a standalone module that wraps any LLM, not just NVIDIA&#x27;s own models.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/nvidia/nemotron-3-5-content-safety" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>When Retrieval Doesn&#x27;t Help: A Large-Scale Study of Biomedical RAG</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Large-scale study finds RAG does not reliably improve biomedical QA — gains reported in prior work often disappear under controlled evaluation, and retrieval can actively hurt accuracy.</li>
+              <li>The degradation is strongest when the base model already has solid domain knowledge; noisy retrieved passages introduce conflicting signals rather than grounding answers.</li>
+              <li>Takeaway for practitioners: RAG is not a free accuracy boost in high-stakes domains — retrieval quality and corpus curation matter more than retrieval presence alone.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.04127" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Toward Pre-Deployment Assurance for Enterprise AI Agents: Ontology-Grounded Simulation and Trust Certification</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes ontology-grounded simulation as a pre-deployment verification layer for enterprise agents — systematically exercising failure modes before production rather than relying on post-deployment monitoring.</li>
+              <li>Introduces a trust-certification framework that generates attestable evidence of agent behavior across defined scenario classes, not just aggregate benchmark scores.</li>
+              <li>Directly addresses the gap between capability benchmarks and deployment readiness that plagues current enterprise agent rollouts.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.04037" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>SaliMory: Orchestrating Cognitive Memory for Conversational Agents</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>SaliMory uses salience-weighted memory orchestration rather than raw context expansion — a dedicated module decides what to keep, compress, or discard based on relevance signals.</li>
+              <li>Standard RL training for memory agents degrades reasoning quality; SaliMory separates memory management from the main reasoning path entirely.</li>
+              <li>Outperforms both full-context and naive RAG retrieval approaches on long-session conversational benchmarks.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.04120" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Consensus is Strategically Insufficient: Reasoning-Trace Disagreement as a Knowledge-Representation Signal</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Challenges the standard multi-agent design goal of minimizing disagreement — argues that on value-laden tasks, divergent reasoning traces are a signal worth preserving, not averaging away.</li>
+              <li>Voting and consensus protocols can suppress genuine normative uncertainty, producing overconfident outputs on questions with no single correct answer.</li>
+              <li>Recommends surfacing disagreement metadata rather than collapsing it, so downstream systems or humans can act on the uncertainty.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.04223" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
