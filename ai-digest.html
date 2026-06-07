@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - June 05, 2026 | Densanon</title>
+  <title>AI Morning Digest - June 07, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 05, 2026</div>
+        <div class="digest-date-badge">June 07, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest centers on agent reliability: pre-deployment verification frameworks, a salience-based memory architecture, multi-agent disagreement as a feature not a bug, a large-scale RAG reality check in biomedicine, and a cluster of Anthropic SDK releases hardening Claude Code and the Agent SDK for enterprise use.</p>
+        <p class="digest-intro">Today&#x27;s digest is heavy on tooling: Anthropic shipped multiple Claude Code and Agent SDK point releases this week, OpenAI rolled out Lockdown Mode to protect against prompt-injection exfiltration, and Simon Willison published a clean technique for sandboxing Python execution with MicroPython and WASM.</p>
       </div>
     </section>
 
@@ -29,115 +29,85 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.163</h3>
+              <h3>Claude Code v2.1.166 — fallbackModel + glob deny rules</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>New `requiredMinimumVersion` / `requiredMaximumVersion` managed settings let enterprise admins pin Claude Code to an approved version range — the CLI refuses to start outside the window.</li>
-              <li>New `/plugin list` command with `--enabled` / `--disabled` flags gives operators a quick audit surface for installed plugins.</li>
-              <li>Version-gating closes a real supply-chain risk for teams that auto-update CLI tools across many developer machines.</li>
+              <li>New `fallbackModel` setting lets you configure up to three backup models tried in order when the primary is overloaded or unavailable.</li>
+              <li>`--fallback-model` flag now applies to interactive sessions, not just headless/API use.</li>
+              <li>Glob pattern support added to deny-rule tool-name position — `&quot;*&quot;` denies all tools matching a pattern, enabling tighter permission policies.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.163" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.166" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-agent-sdk-typescript: v0.3.163</h3>
+              <h3>Claude Code v2.1.167–168 — reliability patch releases</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>`stop_task` now returns success when the target task is already gone (`not_found` or `not_running`), eliminating race-condition errors in task-pruning loops.</li>
-              <li>SDK hosts can now add builtin MCP servers (e.g. `claude-in-chrome`) via `setMcpServers` — previously blocked for native builds.</li>
+              <li>Two consecutive bug-fix-only releases shipped within 24 hours of the v2.1.166 feature drop.</li>
+              <li>No new features — pure reliability hardening following the fallbackModel and glob-rule changes.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.163" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.168" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-agent-sdk-typescript: v0.3.162</h3>
+              <h3>Claude Agent SDK Python v0.2.91–0.2.93</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Refusal errors now carry `stop_reason: &quot;refusal&quot;` on the assistant message and in session transcripts — SDK consumers can detect refusals programmatically without brittle text-matching.</li>
-              <li>Agent SDK sessions on native builds now default to a fast embedded file-finder, cutting cold-start latency for local agentic workflows.</li>
+              <li>v0.2.91 switched the test suite from `pytest-asyncio` to anyio&#x27;s pytest plugin, running every async test under both asyncio and trio backends to catch backend-specific regressions.</li>
+              <li>v0.2.92 and v0.2.93 are bundled CLI bumps tracking claude-code v2.1.166 and v2.1.167 respectively.</li>
+              <li>Install the latest: `pip install claude-agent-sdk==0.2.93`</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.162" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.93" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>EVA-Bench Data 2.0: 3 Domains, 121 Tools, 213 Scenarios</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>Running Python code in a sandbox with MicroPython and WASM</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>EVA-Bench now covers 3 enterprise domains (IT, HR, Finance) with 121 tool definitions and 213 multi-step agentic scenarios — a more demanding stress test than single-tool evals.</li>
-              <li>Scenarios include tool chaining, ambiguous instructions, and error recovery, targeting gaps that most current agent benchmarks underweight.</li>
-              <li>Open dataset enables reproducible apples-to-apples comparison for enterprise tool-use agent development.</li>
+              <li>Willison&#x27;s `micropython-wasm` alpha runs MicroPython inside a WASM sandbox, giving full Python execution with no host-process escape surface.</li>
+              <li>Satisfies key sandbox properties that prior approaches (subprocess, RestrictedPython, Pyodide) each failed on in different ways.</li>
+              <li>Practical use case: safe code execution for LLM tool calls without spinning up a container or a separate server.</li>
             </ul>
-            <a href="https://huggingface.co/blog/ServiceNow-AI/eva-bench-data" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/6/micropython-in-a-sandbox/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Nemotron 3.5 Content Safety: Customizable Multimodal Safety for Global Enterprise AI</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>micropython-wasm 0.1a2 — CLI added</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NVIDIA&#x27;s Nemotron 3.5 Safety model handles text and images and ships as a customizable guardrail layer — enterprise teams can tune thresholds per deployment context.</li>
-              <li>Trained on multilingual safety categories rather than English-only policies, targeting genuine global enterprise deployments.</li>
-              <li>Offered as a standalone module that wraps any LLM, not just NVIDIA&#x27;s own models.</li>
+              <li>This release adds a CLI to `micropython-wasm`, making the sandbox easy to try from the command line.</li>
+              <li>Package is available on PyPI; companion to the full sandboxing write-up published the same day.</li>
             </ul>
-            <a href="https://huggingface.co/blog/nvidia/nemotron-3-5-content-safety" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>When Retrieval Doesn&#x27;t Help: A Large-Scale Study of Biomedical RAG</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Large-scale study finds RAG does not reliably improve biomedical QA — gains reported in prior work often disappear under controlled evaluation, and retrieval can actively hurt accuracy.</li>
-              <li>The degradation is strongest when the base model already has solid domain knowledge; noisy retrieved passages introduce conflicting signals rather than grounding answers.</li>
-              <li>Takeaway for practitioners: RAG is not a free accuracy boost in high-stakes domains — retrieval quality and corpus curation matter more than retrieval presence alone.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.04127" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/6/micropython-wasm/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Toward Pre-Deployment Assurance for Enterprise AI Agents: Ontology-Grounded Simulation and Trust Certification</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>OpenAI Lockdown Mode now rolling out</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes ontology-grounded simulation as a pre-deployment verification layer for enterprise agents — systematically exercising failure modes before production rather than relying on post-deployment monitoring.</li>
-              <li>Introduces a trust-certification framework that generates attestable evidence of agent behavior across defined scenario classes, not just aggregate benchmark scores.</li>
-              <li>Directly addresses the gap between capability benchmarks and deployment readiness that plagues current enterprise agent rollouts.</li>
+              <li>Lockdown Mode is now live for Free, Go, Plus, Pro, and self-serve ChatGPT Business accounts — first announced in February.</li>
+              <li>Designed to block the final stage of prompt-injection data exfiltration: prevents ChatGPT from rendering attacker-controlled URLs or leaking data via tool calls.</li>
+              <li>Opt-in, not default — users who process untrusted documents should enable it proactively.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.04037" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/5/openai-help-lockdown-mode/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SaliMory: Orchestrating Cognitive Memory for Conversational Agents</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>Open-source project closes PRs to AI-generated patches</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>SaliMory uses salience-weighted memory orchestration rather than raw context expansion — a dedicated module decides what to keep, compress, or discard based on relevance signals.</li>
-              <li>Standard RL training for memory agents degrades reasoning quality; SaliMory separates memory management from the main reasoning path entirely.</li>
-              <li>Outperforms both full-context and naive RAG retrieval approaches on long-session conversational benchmarks.</li>
+              <li>SerenityOS / Ladybird creator Andreas Kling announced the project will no longer accept public pull requests, citing LLM-generated patches flooding the review queue.</li>
+              <li>Key argument: patch size used to signal effort and good faith; that proxy is broken when generation is near-free.</li>
+              <li>Raises a broader question for open-source maintainers: how to gate contribution quality when automated generation lowers the cost of plausible-but-wrong PRs.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.04120" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Consensus is Strategically Insufficient: Reasoning-Trace Disagreement as a Knowledge-Representation Signal</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Challenges the standard multi-agent design goal of minimizing disagreement — argues that on value-laden tasks, divergent reasoning traces are a signal worth preserving, not averaging away.</li>
-              <li>Voting and consensus protocols can suppress genuine normative uncertainty, producing overconfident outputs on questions with no single correct answer.</li>
-              <li>Recommends surfacing disagreement metadata rather than collapsing it, so downstream systems or humans can act on the uncertainty.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.04223" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/5/andreas-kling/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
