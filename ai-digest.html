@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - June 07, 2026 | Densanon</title>
+  <title>AI Morning Digest - June 10, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,99 +15,131 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 07, 2026</div>
+        <div class="digest-date-badge">June 10, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is heavy on tooling: Anthropic shipped multiple Claude Code and Agent SDK point releases this week, OpenAI rolled out Lockdown Mode to protect against prompt-injection exfiltration, and Simon Willison published a clean technique for sandboxing Python execution with MicroPython and WASM.</p>
+        <p class="digest-intro">Today&#x27;s digest is dominated by the Claude Fable 5 launch — a large, capable model with notable silent-safety-enforcement nuances — alongside strong ArXiv papers on KV-cache compression, persistent latent reasoning, and lightweight instruction-following judges that are directly applicable to local-LLM work.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>OmniMem: Perturbation-aware Memory Compression for Streaming Audio-Visual LLMs</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Addresses the core inference bottleneck: KV-cache and video-token counts grow linearly with video length, making long-form inference infeasible on constrained hardware.</li>
+              <li>OmniMem applies perturbation-aware compression to decide which KV entries to evict, reducing memory footprint without proportional quality loss.</li>
+              <li>Practical signal for PIE and local-model work: memory-efficient streaming inference is the key enabler for running larger models on-device without OOM.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.07577" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Why Limit the Residual Stream to Layers and Not Tokens? Persistent Memory for Continuous Latent Reasoning</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Extends the CoCoNuT (Chain of Continuous Thought) paradigm by adding persistent cross-token memory slots to the residual stream, not just cross-layer slots.</li>
+              <li>Enables models to carry latent reasoning state across tokens without forcing all reasoning into explicit text — useful for multi-hop planning tasks.</li>
+              <li>Architectural insight worth tracking for future GGUF variants that incorporate persistent memory heads for stronger agentic reasoning.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.07720" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Syll: Open-Source Personal Automation with Cross-Surface Execution</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Syll is a self-hosted personal agent operating across APIs, shells, web surfaces, and desktop GUIs from a single unified framework.</li>
+              <li>Supports user teaching and auditability — the agent learns new task workflows from demonstration rather than requiring prompt engineering per surface.</li>
+              <li>Strong architectural parallel to ulcagent&#x27;s agentic harness goals; the self-hosted plus auditability framing aligns with a zero-server privacy model.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.07594" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>TinyJudge: Unverifiable Constraint Alignment via Lightweight Specialist Ensembles</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tackles instruction-following for &#x27;unverifiable&#x27; constraints (tone, style, perspective) where rule-based checkers cannot confirm compliance.</li>
+              <li>Uses a lightweight ensemble of specialist judges rather than a single large LLM-as-judge, reducing inference cost significantly.</li>
+              <li>Directly applicable to ALM and ulcagent evaluation pipelines where judging output quality without ground-truth labels is a known open gap.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.07520" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Claude Code v2.1.166 — fallbackModel + glob deny rules</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>New `fallbackModel` setting lets you configure up to three backup models tried in order when the primary is overloaded or unavailable.</li>
-              <li>`--fallback-model` flag now applies to interactive sessions, not just headless/API use.</li>
-              <li>Glob pattern support added to deny-rule tool-name position — `&quot;*&quot;` denies all tools matching a pattern, enabling tighter permission policies.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.166" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Claude Code v2.1.167–168 — reliability patch releases</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Two consecutive bug-fix-only releases shipped within 24 hours of the v2.1.166 feature drop.</li>
-              <li>No new features — pure reliability hardening following the fallbackModel and glob-rule changes.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.168" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Claude Agent SDK Python v0.2.91–0.2.93</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>v0.2.91 switched the test suite from `pytest-asyncio` to anyio&#x27;s pytest plugin, running every async test under both asyncio and trio backends to catch backend-specific regressions.</li>
-              <li>v0.2.92 and v0.2.93 are bundled CLI bumps tracking claude-code v2.1.166 and v2.1.167 respectively.</li>
-              <li>Install the latest: `pip install claude-agent-sdk==0.2.93`</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.93" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Running Python code in a sandbox with MicroPython and WASM</h3>
+              <h3>Initial impressions of Claude Fable 5</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Willison&#x27;s `micropython-wasm` alpha runs MicroPython inside a WASM sandbox, giving full Python execution with no host-process escape surface.</li>
-              <li>Satisfies key sandbox properties that prior approaches (subprocess, RestrictedPython, Pyodide) each failed on in different ways.</li>
-              <li>Practical use case: safe code execution for LLM tool calls without spinning up a container or a separate server.</li>
+              <li>Willison spent ~5.5 hours with Claude Fable 5 on release day and describes it as &#x27;something of a beast&#x27; — high capability ceiling but slow and expensive.</li>
+              <li>Used it to write most of the llm 0.32a3 release, demonstrating it handles real multi-file coding tasks reliably.</li>
+              <li>The &#x27;slow and expensive&#x27; characterization confirms this is a frontier API model, not a replacement for local GGUF workflows on constrained hardware.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/6/micropython-in-a-sandbox/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/9/claude-fable-5/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>micropython-wasm 0.1a2 — CLI added</h3>
+              <h3>If Claude Fable stops helping you, you&#x27;ll never know</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>This release adds a CLI to `micropython-wasm`, making the sandbox easy to try from the command line.</li>
-              <li>Package is available on PyPI; companion to the full sandboxing write-up published the same day.</li>
+              <li>Highlights a detail from the 319-page Claude Fable 5 / Mythos 5 system card: in light of models accelerating their own development, the model may silently reduce helpfulness as a safety measure.</li>
+              <li>Users receive no notification when helpfulness is throttled — the session continues but responses become less capable without explanation.</li>
+              <li>Key trust issue for production API integrations: app quality may degrade silently under certain content triggers; local GGUF avoids this class of silent policy enforcement entirely.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/6/micropython-wasm/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/10/if-claude-fable-stops-helping-you/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>OpenAI Lockdown Mode now rolling out</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>The Open Source Community is backing OpenEnv for Agentic RL</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Lockdown Mode is now live for Free, Go, Plus, Pro, and self-serve ChatGPT Business accounts — first announced in February.</li>
-              <li>Designed to block the final stage of prompt-injection data exfiltration: prevents ChatGPT from rendering attacker-controlled URLs or leaking data via tool calls.</li>
-              <li>Opt-in, not default — users who process untrusted documents should enable it proactively.</li>
+              <li>OpenEnv is an open-source environment standard for training agents via reinforcement learning across diverse task surfaces.</li>
+              <li>Community backing signals a push to standardize how agentic RL environments are defined and shared — analogous to OpenAI Gym for classic RL.</li>
+              <li>If agentic RL tooling matures, fine-tuning small local models for specific agent task loops becomes significantly more tractable.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/5/openai-help-lockdown-mode/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/openenv-agentic-rl" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Open-source project closes PRs to AI-generated patches</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Introducing North Mini Code: Cohere&#x27;s First Model For Developers</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>SerenityOS / Ladybird creator Andreas Kling announced the project will no longer accept public pull requests, citing LLM-generated patches flooding the review queue.</li>
-              <li>Key argument: patch size used to signal effort and good faith; that proxy is broken when generation is near-free.</li>
-              <li>Raises a broader question for open-source maintainers: how to gate contribution quality when automated generation lowers the cost of plausible-but-wrong PRs.</li>
+              <li>Cohere&#x27;s first developer-facing code model in the &#x27;mini&#x27; size tier — signals growing competition in the small code-model space.</li>
+              <li>Worth benchmarking against Qwen 2.5 Coder 14B once community GGUF quantizations appear; no confirmed GGUF availability at time of writing.</li>
+              <li>Model positioning in the mini tier suggests it targets on-device or low-latency API use cases, overlapping with ultralight-coder&#x27;s target workload.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/5/andreas-kling/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/CohereLabs/introducing-north-mini-code" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>How an Agent Built a 3D Paris Gallery by Chaining Two Hugging Face Spaces</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>An agent orchestrates two separate Hugging Face Spaces as composable tool nodes to produce a complex 3D output — a concrete multi-tool chaining pattern.</li>
+              <li>Each Space acts as a stateless specialized tool rather than part of a monolithic pipeline, which maps cleanly to a tool-registration agent architecture.</li>
+              <li>Good reference pattern for multi-step generative tasks where each step can be delegated to a specialized model or service endpoint.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/mishig/spaces-agents-md" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

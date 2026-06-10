@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - June 07, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - June 10, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 07, 2026</div>
+        <div class="digest-date-badge">June 10, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">This week&#x27;s robotics landscape is defined by the push from simulation scores to real-world closed-loop validation, with major funding rounds and first customer deployments signaling the field is maturing past proof-of-concept. Tactile sensing, autonomous harvesting, and foundation model scaling all made tangible progress.</p>
+        <p class="digest-intro">Today&#x27;s robotics signal is heavy on manipulation and embodied AI: a new open-vocabulary long-horizon manipulation system, cross-morphology whole-body teleoperation, tactile dexterous hands landing on the Unitree H2 Plus / Isaac GR00T stack, and Festo shipping no-code gripper AI for production floors.</p>
       </div>
     </section>
 
@@ -29,27 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Robot Talk Episode 159 – Robot sensing and manipulation, with Maria Koskinopoulou</h3>
-              <span class="digest-source">Robohub</span>
+              <h3>VoLo: A Physical Orchestrator for Open-Vocabulary Long-Horizon Manipulation</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Maria Koskinopoulou (Heriot-Watt University) leads the ARM²Lab, focused on autonomous robotic manipulators for surgery, industry, and beyond.</li>
-              <li>Research bridges computer vision and manipulation, targeting applications where precision and adaptability both matter.</li>
-              <li>Surgical robotics is a key domain — the work addresses the gap between lab manipulation demos and deployment in constrained real-world environments.</li>
+              <li>Closed-loop agent reasons over flexible natural-language instructions across complex multi-object scenes</li>
+              <li>Handles adaptive planning, execution monitoring, and failure recovery end-to-end</li>
+              <li>Targets the long-horizon manipulation gap where single-step policies fail</li>
             </ul>
-            <a href="https://robohub.org/robot-talk-episode-159-robot-sensing-and-manipulation-with-maria-koskinopoulou/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.07723" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Interview with Columbia professor and co-founder of SceniX Yunzhu Li: &#x27;Simulation is central&#x27;</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>X-OP: Cross-Morphology Whole-Body Teleoperation via MPC Retargeting</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Yunzhu Li argues that simulation — not just data scaling — is the critical missing ingredient for general-purpose robot learning.</li>
-              <li>SceniX is building simulation infrastructure that can generate physically grounded training environments at scale.</li>
-              <li>The interview challenges the assumption that more real-world data alone will close the gap; the key is high-fidelity sim-to-real transfer.</li>
+              <li>Enables whole-body teleoperation without costly exoskeleton suits or multi-camera setups</li>
+              <li>Uses MPC retargeting to map human motion onto robots with different morphologies</li>
+              <li>Designed for scalable robot data collection in loco-manipulation tasks</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/06/05/interview-with-columbia-professor-and-co-founder-of-scenix-yuhnzu-li-simulation-is-central/102333/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.07934" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>End-to-End Control of a Powered Knee-Ankle Prosthesis Towards Unified, Tuning-Free Assistance</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Real-time end-to-end controller eliminates manual impedance tuning and explicit mode classification</li>
+              <li>Estimates continuous actuator outputs directly from sensor data</li>
+              <li>Demonstrates embodied AI policy learning applied to prosthetics with practical deployment</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.07902" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Congratulations to the #AAMAS2026 best paper award winners</h3>
+              <span class="digest-source">Robohub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Best paper, best student paper, and best blue sky paper winners at AAMAS 2026 (Paphos, Cyprus)</li>
+              <li>25th International Conference on Autonomous Agents and Multiagent Systems</li>
+              <li>Highlights leading research directions in multi-agent coordination and autonomous systems</li>
+            </ul>
+            <a href="https://robohub.org/congratulations-to-the-aamas2026-best-paper-award-winners/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -59,93 +83,81 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AGIBOT holds World Challenge 2026 to see how AI models perform on real tasks</h3>
+              <h3>Sharpa brings dexterous robot hands to Nvidia and Unitree humanoid reference design</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Sharpa Wave tactile hands integrated into Unitree H2 Plus humanoid reference design</li>
+              <li>First dexterous humanoid platform on Nvidia Isaac GR00T framework with tactile manipulation</li>
+              <li>Signals convergence of tactile sensing and humanoid reference stacks for downstream developers</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/06/09/sharpa-brings-dexterous-robot-hands-to-nvidia-and-unitree-humanoid-reference-design/102424/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Beyond Dexterity: Why Contact May Define the Next Era of Robotics</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>ICRA 2026 standout demo: robotic hands constructing a balloon dog via contact-rich manipulation</li>
+              <li>Argues contact intelligence — not just dexterity — is the key unsolved frontier</li>
+              <li>Frames physical interaction modeling as the next major differentiator in manipulation research</li>
+            </ul>
+            <a href="https://spectrum.ieee.org/agilink-contact-intelligence-robot-manipulation" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Daimon Robotics and Galbot jointly launches RobOmni for benchmarking tactile perception and dexterous manipulation</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AGIBOT&#x27;s World Challenge 2026 shifts evaluation from simulation benchmarks to closed-loop testing on physical robots performing real tasks.</li>
-              <li>The event signals a broader industry move toward standardized real-world evaluation that simulation scores alone cannot replace.</li>
-              <li>Results will help identify which AI models generalize versus which only perform well in controlled or simulated settings.</li>
+              <li>RobOmni is a new joint benchmark targeting tactile perception and dexterous manipulation</li>
+              <li>Reflects the shift in embodied AI from vision-centric to Physical AI paradigms</li>
+              <li>Provides a shared evaluation platform for the manipulation research community</li>
             </ul>
-            <a href="https://www.therobotreport.com/agibot-holds-world-challenge-2026-see-how-ai-models-perform-real-tasks/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/daimon-robotics-and-galbot-jointly-launches-robomni-for-benchmarking-tactile-perception-and-dexterous-manipulation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Generalist AI raises $400 million to scale robot intelligence platform</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Standard Bots raises $200M to expand U.S. manufacturing footprint</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Generalist AI raised $400M to develop foundation models targeting &#x27;physical AGI&#x27; — general-purpose intelligence for robots operating in the real world.</li>
-              <li>The funding round values the company in the multi-billion dollar range, reflecting continued investor conviction in robot foundation models.</li>
-              <li>The company&#x27;s thesis: a single generalizable intelligence layer can replace the patchwork of task-specific robotic programs used today.</li>
+              <li>$200M raised to scale robotics manufacturing presence in the United States</li>
+              <li>Positioned as a play to keep U.S. manufacturing globally competitive via automation</li>
+              <li>Signals continued large-round momentum in industrial robotics</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/06/05/generalist-ai-raises-400-million-to-scale-robot-intelligence-platform/102307/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Eternal.ag scales fully-autonomous harvesting robots with first customer Van Noord Growers</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>German agritech startup eternal.ag deployed its fully-autonomous Harvester robot at Van Noord Growers, a Dutch greenhouse operator covering 8.5 hectares of tomatoes and cucumbers.</li>
-              <li>This is eternal.ag&#x27;s first commercial customer deployment, moving the product from demo stage to paid production use.</li>
-              <li>Fully autonomous greenhouse harvesting — no remote operator — is one of the most demanding real-world manipulation deployments in agriculture.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/06/05/eternal-ag-scales-fully-autonomous-harvesting-robots-with-first-customer-van-noord-growers/102303/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Kirisense wins funding to develop robotic fingertips that can sense touch and slip</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>UK startup Kirisense secured Henry Royce Institute funding to build tactile fingertips capable of detecting both contact force and slip — a key gap in current robot grippers.</li>
-              <li>Slip detection is critical for dexterous manipulation; most commercial grippers today rely on vision or simple force thresholds rather than true tactile feedback.</li>
-              <li>The technology targets industrial manipulation tasks where grasp reliability matters more than raw speed.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/06/05/kirisense-wins-funding-to-develop-robotic-fingertips-that-can-sense-touch-and-slip/102292/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Interview with Jun Wu of GMEX Robotics: &#x27;We provide an integrated terminal + brain closed-loop system&#x27;</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>GMEX Robotics argues the real bottleneck is hardware-software co-design, not just AI model capability — their approach tightly integrates the compute &#x27;brain&#x27; with the physical &#x27;terminal&#x27;.</li>
-              <li>The closed-loop system is designed to reduce latency between perception, decision, and actuation compared to loosely coupled AI-on-robot stacks.</li>
-              <li>GMEX positions itself against pure-software foundation model companies by emphasizing that robot intelligence cannot be fully decoupled from its specific hardware.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/06/05/interview-with-jun-wu-of-gmex-robotics-we-provide-an-integrated-terminal-brain-closed-loop-system/102327/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Fanuc-powered robotic cell automates one of furniture manufacturing&#x27;s toughest jobs</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A Canadian furniture manufacturer deployed a Fanuc M-710iC robotic cell to automate upholstery — historically one of the last holdouts against automation due to irregular materials and variable geometry.</li>
-              <li>The system was built by Fanuc Authorized Integrator Dvolu and handles a sequence of tasks that previously required skilled manual labor.</li>
-              <li>The deployment demonstrates that manipulation of soft, deformable materials is increasingly within reach of industrial robot cells.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/06/05/fanuc-powered-robotic-cell-automates-one-of-furniture-manufacturings-toughest-jobs/102312/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/standard-bots-raises-200m-expand-u-s-manufacturing-footprint/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Why Robotics Is a Pre-Paradigm Field</h3>
-              <span class="digest-source">Hacker News Robotics</span>
+              <h3>Festo launches GripperAI software to simplify flexible robot handling</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The essay argues robotics still lacks the unifying theoretical framework that transformed fields like deep learning — there is no &#x27;backpropagation moment&#x27; yet.</li>
-              <li>Pre-paradigm fields are characterized by competing incompatible approaches, which explains why robotics progress feels fragmented despite real advances.</li>
-              <li>The implication: whoever finds the unifying paradigm (possibly through embodied AI or world models) will define the next decade of the field.</li>
+              <li>AI-powered software handles mixed, unfamiliar, and randomly positioned objects without template loading</li>
+              <li>No specialist vision integration required — reduces deployment friction for manufacturers</li>
+              <li>Targets production flexibility as a key differentiator over traditional fixed-program grippers</li>
             </ul>
-            <a href="https://whattotelltherobot.com/p/why-robotics-is-a-pre-paradigm-field" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/06/09/festo-launches-gripperai-software-to-simplify-flexible-robot-handling/102402/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Nebius and Nvidia launch Physical AI Living Lab for European robotics startups</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Six-month program gives EU/UK robotics startups access to Nvidia physical AI tools and Nebius cloud infra</li>
+              <li>Focuses on large-scale simulation and synthetic data generation for policy training</li>
+              <li>Lowers the compute barrier for startups building on Isaac GR00T and related frameworks</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/06/09/nebius-and-nvidia-launch-physical-ai-living-lab-for-european-robotics-startups/102413/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
