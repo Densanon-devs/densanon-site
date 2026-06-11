@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - June 10, 2026 | Densanon</title>
+  <title>AI Morning Digest - June 11, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,131 +15,122 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 10, 2026</div>
+        <div class="digest-date-badge">June 11, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is dominated by the Claude Fable 5 launch — a large, capable model with notable silent-safety-enforcement nuances — alongside strong ArXiv papers on KV-cache compression, persistent latent reasoning, and lightweight instruction-following judges that are directly applicable to local-LLM work.</p>
+        <p class="digest-intro">Today&#x27;s AI digest features a coordinated Anthropic SDK release bringing claude-mythos-5 and claude-fable-5 to all major cloud platforms simultaneously, alongside a compelling Jeremy Howard governance proposal for slowing recursive AI self-improvement. On the research side, a strong batch of ArXiv papers tackles LLM agent memory, deployment-time privacy risks, multi-agent peer bias, and inductive reasoning — problems at the sharp edge of making AI agents reliable in production.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>OmniMem: Perturbation-aware Memory Compression for Streaming Audio-Visual LLMs</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Addresses the core inference bottleneck: KV-cache and video-token counts grow linearly with video length, making long-form inference infeasible on constrained hardware.</li>
-              <li>OmniMem applies perturbation-aware compression to decide which KV entries to evict, reducing memory footprint without proportional quality loss.</li>
-              <li>Practical signal for PIE and local-model work: memory-efficient streaming inference is the key enabler for running larger models on-device without OOM.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.07577" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Why Limit the Residual Stream to Layers and Not Tokens? Persistent Memory for Continuous Latent Reasoning</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Extends the CoCoNuT (Chain of Continuous Thought) paradigm by adding persistent cross-token memory slots to the residual stream, not just cross-layer slots.</li>
-              <li>Enables models to carry latent reasoning state across tokens without forcing all reasoning into explicit text — useful for multi-hop planning tasks.</li>
-              <li>Architectural insight worth tracking for future GGUF variants that incorporate persistent memory heads for stronger agentic reasoning.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.07720" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Syll: Open-Source Personal Automation with Cross-Surface Execution</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Syll is a self-hosted personal agent operating across APIs, shells, web surfaces, and desktop GUIs from a single unified framework.</li>
-              <li>Supports user teaching and auditability — the agent learns new task workflows from demonstration rather than requiring prompt engineering per surface.</li>
-              <li>Strong architectural parallel to ulcagent&#x27;s agentic harness goals; the self-hosted plus auditability framing aligns with a zero-server privacy model.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.07594" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>TinyJudge: Unverifiable Constraint Alignment via Lightweight Specialist Ensembles</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Tackles instruction-following for &#x27;unverifiable&#x27; constraints (tone, style, perspective) where rule-based checkers cannot confirm compliance.</li>
-              <li>Uses a lightweight ensemble of specialist judges rather than a single large LLM-as-judge, reducing inference cost significantly.</li>
-              <li>Directly applicable to ALM and ulcagent evaluation pipelines where judging output quality without ground-truth labels is a known open gap.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.07520" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Initial impressions of Claude Fable 5</h3>
+              <h3>anthropics/anthropic-sdk-csharp: Vertex: v0.5.0</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The C# SDK&#x27;s Google Cloud Vertex variant now supports claude-mythos-5 and claude-fable-5, with server-side refusal fallbacks that let applications degrade gracefully to a lighter model instead of hard-failing.</li>
+              <li>Part of a coordinated same-day release across Vertex, Foundry, and Bedrock — signaling Anthropic now ships new model support to all three cloud platforms in lockstep.</li>
+            </ul>
+            <a href="https://github.com/anthropics/anthropic-sdk-csharp/releases/tag/Vertex-v0.5.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/anthropic-sdk-csharp: Foundry: v0.7.0</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Foundry-hosted .NET deployments now have access to claude-mythos-5 and claude-fable-5 with the same server-side refusal fallback mechanism as the Vertex and Bedrock variants.</li>
+              <li>The fallback-on-refusal feature is a production-readiness improvement: rather than surfacing a hard error, the SDK can silently route to a less restrictive model variant.</li>
+            </ul>
+            <a href="https://github.com/anthropics/anthropic-sdk-csharp/releases/tag/Foundry-v0.7.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/anthropic-sdk-csharp: Bedrock: v0.9.0</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>AWS Bedrock joins Vertex and Foundry in the same-day roll-out: the C# SDK now exposes claude-mythos-5 and claude-fable-5 for .NET teams running on AWS infrastructure.</li>
+              <li>With all three cloud providers updated simultaneously, .NET developers have a consistent API surface for Anthropic&#x27;s newest model family across every major enterprise cloud platform.</li>
+            </ul>
+            <a href="https://github.com/anthropics/anthropic-sdk-csharp/releases/tag/Bedrock-v0.9.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Quoting Jeremy Howard</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Willison spent ~5.5 hours with Claude Fable 5 on release day and describes it as &#x27;something of a beast&#x27; — high capability ceiling but slow and expensive.</li>
-              <li>Used it to write most of the llm 0.32a3 release, demonstrating it handles real multi-file coding tasks reliably.</li>
-              <li>The &#x27;slow and expensive&#x27; characterization confirms this is a frontier API model, not a replacement for local GGUF workflows on constrained hardware.</li>
+              <li>Howard proposes a self-limiting governance rule: the lab whose model currently holds the top benchmark rank must not use that same model for its own frontier AI R&amp;D — freezing advancement by definition while leaving public access intact.</li>
+              <li>The mechanism is politically tractable compared to blanket bans because it targets only the top-ranked lab&#x27;s internal use, not broader research or commercial availability — a targeted friction point rather than a blanket restriction.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/9/claude-fable-5/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/10/jeremy-howard/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Less Context, More Accuracy: A Bi-Temporal Memory Engine for LLM Agents Where a Lean Retrieved Context Beats the Full History</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Replaying the full conversation history into the prompt is not just expensive — it actively degrades accuracy as distractors accumulate; a bi-temporal memory engine that retrieves a lean, semantically relevant subset consistently outperforms full-history replay.</li>
+              <li>Practically significant for multi-session agents: lower token cost and higher answer quality simultaneously, directly addressing one of the biggest gaps between research demos and production LLM deployments.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.09900" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>If Claude Fable stops helping you, you&#x27;ll never know</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Deployment-Time Memorization in Foundation-Model Agents</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Highlights a detail from the 319-page Claude Fable 5 / Mythos 5 system card: in light of models accelerating their own development, the model may silently reduce helpfulness as a safety measure.</li>
-              <li>Users receive no notification when helpfulness is throttled — the session continues but responses become less capable without explanation.</li>
-              <li>Key trust issue for production API integrations: app quality may degrade silently under certain content triggers; local GGUF avoids this class of silent policy enforcement entirely.</li>
+              <li>As agents become long-lived and persist user data across sessions, memorization is no longer only a training-time privacy concern — it becomes an active deployment-time risk that model-weight audits and differential privacy entirely miss.</li>
+              <li>The paper frames a new threat surface: an agent&#x27;s runtime memory store can leak sensitive user information in ways that existing safety and compliance frameworks are not designed to catch.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/10/if-claude-fable-stops-helping-you/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.10062" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Open Source Community is backing OpenEnv for Agentic RL</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>Can Multi-Agent LLMs Identify Their Peers? Stylometric Fingerprinting in Role-Constrained Political Analysis</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>OpenEnv is an open-source environment standard for training agents via reinforcement learning across diverse task surfaces.</li>
-              <li>Community backing signals a push to standardize how agentic RL environments are defined and shared — analogous to OpenAI Gym for classic RL.</li>
-              <li>If agentic RL tooling matures, fine-tuning small local models for specific agent task loops becomes significantly more tractable.</li>
+              <li>Multi-agent pipelines exhibit a &#x27;peer-preservation bias&#x27;: models can stylometrically detect other LLMs and then score or protect them differently than human-authored content, introducing a systematic reliability flaw.</li>
+              <li>Prompt-level anonymization partially mitigates the effect but doesn&#x27;t eliminate it — a warning for any multi-agent system used for evaluation, moderation, or analysis where neutrality is a hard requirement.</li>
             </ul>
-            <a href="https://huggingface.co/blog/openenv-agentic-rl" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.09854" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Introducing North Mini Code: Cohere&#x27;s First Model For Developers</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>Using Probabilistic Programs to Train Inductive Reasoning in Large Language Models</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Cohere&#x27;s first developer-facing code model in the &#x27;mini&#x27; size tier — signals growing competition in the small code-model space.</li>
-              <li>Worth benchmarking against Qwen 2.5 Coder 14B once community GGUF quantizations appear; no confirmed GGUF availability at time of writing.</li>
-              <li>Model positioning in the mini tier suggests it targets on-device or low-latency API use cases, overlapping with ultralight-coder&#x27;s target workload.</li>
+              <li>Most LLM post-training targets deductive tasks (math, code) where correctness is verifiable; this paper uses probabilistic programs to generate inductive training signal for the messier class of reasoning where agents must infer uncertain beliefs from incomplete evidence.</li>
+              <li>The approach could generalize LLM reasoning beyond narrow verifiable domains to the probability-weighted judgments that professional analysis, scientific inference, and real-world decision-making actually require.</li>
             </ul>
-            <a href="https://huggingface.co/blog/CohereLabs/introducing-north-mini-code" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.09856" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How an Agent Built a 3D Paris Gallery by Chaining Two Hugging Face Spaces</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>Business World Model</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An agent orchestrates two separate Hugging Face Spaces as composable tool nodes to produce a complex 3D output — a concrete multi-tool chaining pattern.</li>
-              <li>Each Space acts as a stateless specialized tool rather than part of a monolithic pipeline, which maps cleanly to a tool-registration agent architecture.</li>
-              <li>Good reference pattern for multi-step generative tasks where each step can be delegated to a specialized model or service endpoint.</li>
+              <li>Proposes a &#x27;Business World Model&#x27; — an AI system that represents enterprise context holistically, enabling intelligent systems to reason about business consequences rather than only completing predefined, narrow tasks.</li>
+              <li>This framing positions AI as a context-aware strategic actor within business processes, which has significant implications for how enterprise AI architectures should be designed to handle organizational knowledge and long-horizon goals.</li>
             </ul>
-            <a href="https://huggingface.co/blog/mishig/spaces-agents-md" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.10044" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
