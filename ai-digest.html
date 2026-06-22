@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - June 16, 2026 | Densanon</title>
+  <title>AI Morning Digest - June 22, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,95 +15,83 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 16, 2026</div>
+        <div class="digest-date-badge">June 22, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is anchored by a major story: the US government&#x27;s export control directive forcing Anthropic to suspend access to Fable 5 and Mythos 5 for foreign nationals — and the behind-the-scenes political fallout that followed. On the research side, new papers scrutinize LLM-as-a-Judge reliability, multi-agent orchestration, and the safety of autonomous web agents in real-world e-commerce settings. Practitioners also push back on AI job-displacement narratives with substantive evidence.</p>
+        <p class="digest-intro">Today&#x27;s digest centers on the expanding frontier of open-weight LLMs, with GLM-5.2&#x27;s 753B MIT-licensed release leading the way. Agentic tooling matures on multiple fronts — from HuggingFace&#x27;s new resource-discovery infrastructure to benchmarks for evaluating open models on real tool-calling tasks. Security and infrastructure for agents also step forward, with MosaicLeaks probing information leakage and Cloudflare adding ephemeral accounts purpose-built for agent workflows.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Statement on the US government directive to suspend access to Fable 5 and Mythos 5</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The US government invoked national security export control authority to suspend all foreign national access to Anthropic&#x27;s Fable 5 and Mythos 5 models, both inside and outside the US.</li>
-              <li>The move marks one of the first direct government interventions restricting commercial frontier AI model access on security grounds.</li>
-              <li>Simon Willison describes the directive as &#x27;nuts,&#x27; reflecting how unexpected and sweeping the order was to close industry observers.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jun/13/us-government-directive-to-suspend-access/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>&quot;They screwed us&quot;: Personality clashes sent Anthropic&#x27;s models offline</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>An Axios report draws on sources close to Anthropic and the administration to detail how personal and political friction contributed to the export control order.</li>
-              <li>The piece frames the Fable 5 / Mythos 5 suspension partly as a product of relationship breakdown rather than purely technical or security policy.</li>
-              <li>Willison identifies this as the most thorough behind-the-scenes account yet of the government-Anthropic dynamic around the shutdown.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jun/15/axios-clashes-anthropics/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Coin Flip Judge? Reliability and Bias in LLM-as-a-Judge Evaluation</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>GLM-5.2 is probably the most powerful text-only open weights LLM</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Researchers ran repeated identical evaluations across 29 tasks and 10 categories, finding significant run-to-run variance in LLM judges that undermines the trustworthiness of public leaderboards.</li>
-              <li>Unreliable judge scores propagate noise into RLHF pipelines — any team using LLM-as-a-Judge to train reward models is compounding this instability.</li>
-              <li>The study calls for standardized reliability thresholds before LLM judge rankings can be treated as ground truth in model development.</li>
+              <li>Z.ai released GLM-5.2 (753B params, 40 active via MoE) under MIT license — the largest open-weights text model available, comparable to frontier proprietary models.</li>
+              <li>At 1.51TB the model is impractical for most local setups, but the MIT license makes it a meaningful benchmark baseline and a starting point for distillation work.</li>
+              <li>Simon&#x27;s writeup covers practical context: what it beats, what it does not, and how it fits into the rapidly shifting open-weights landscape.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.13685" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/17/glm-52/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Orchestra-o1: Omnimodal Agent Orchestration</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>Beyond LoRA: Can you beat the most popular fine-tuning technique?</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Orchestra-o1 proposes a new framework for coordinating multi-agent systems across modalities, addressing task decomposition and collaboration challenges that single-agent workflows cannot handle.</li>
-              <li>The omnimodal scope means the orchestrator routes tasks to agents handling text, images, and other input types within a unified pipeline.</li>
-              <li>Enters a crowded space where multi-agent orchestration is rapidly becoming the practical default architecture for complex LLM deployments.</li>
+              <li>HuggingFace&#x27;s PEFT team compares LoRA head-to-head with newer alternatives (DoRA, VeRA, LoKr, and others) across a range of tasks and model sizes.</li>
+              <li>Findings show no single technique dominates universally — choice of method depends heavily on target task, compute budget, and model architecture.</li>
+              <li>The post includes reproducible benchmarks and guidance on when each technique is most likely to outperform baseline LoRA.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.13707" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/peft-beyond-lora" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Hybrid Open-Ended Tri-Evolution Makes Better Deep Researcher</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>MolmoMotion: Language-guided 3D motion forecasting</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Combines open-ended evolution with deep research agents via a tri-evolution loop, letting agents autonomously improve their retrieval and synthesis strategies over time rather than using a static pipeline.</li>
-              <li>Targets a core weakness of conventional RAG: the research strategy itself never adapts based on what works.</li>
-              <li>Framed as a step toward AGI-capable agents that can handle truly open-ended, multi-step information tasks in real-world environments.</li>
+              <li>AllenAI extends the Molmo multimodal family to motion forecasting: given a scene and a language instruction, the model predicts physically grounded 3D trajectories.</li>
+              <li>The approach bridges vision-language understanding and robotics planning without requiring task-specific motion datasets, using general VLM pretraining as the foundation.</li>
+              <li>Weights and a demo are available on the HuggingFace Hub, making it accessible for robotics and embodied-AI researchers.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.13710" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/allenai/molmomotion" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GLM-5.2: Built for Long-Horizon Tasks</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Z.ai&#x27;s own writeup positions GLM-5.2 as a long-context, long-horizon reasoning model, with emphasis on multi-step agentic tasks rather than single-turn benchmarks.</li>
+              <li>The model ships with a 128K context window and instruction-tuned variants optimized for coding, math, and tool-use scenarios.</li>
+              <li>Full open weights under MIT represent a shift in Z.ai&#x27;s release strategy, directly competing with Meta&#x27;s Llama family for developer mindshare.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/zai-org/glm-52-blog" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Benchmarking Web Agent Safety under E-commerce Deceptive Interfaces</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>Quoting Charity Majors</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Introduces a benchmark for testing whether autonomous web agents can resist dark patterns and deceptive UI elements in realistic e-commerce settings.</li>
-              <li>Current leading agents show measurable vulnerability to adversarial interfaces — a gap between benchmark performance and real-world deployment safety.</li>
-              <li>As agentic AI handles real purchases and form submissions, robustness against manipulative UX becomes a critical safety property, not just a usability concern.</li>
+              <li>Charity Majors argues the economics of code production inverted in 2025 — generating code became free and instant, collapsing the value placed on individual lines of code.</li>
+              <li>The scarce resource is no longer writing code but understanding, maintaining, and deleting it — shifting what engineers are paid to do.</li>
+              <li>A sharp framing with direct implications for how developer tools and AI coding assistants should be positioned going forward.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.13686" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/17/charity-majors/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -113,51 +101,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Why AI hasn&#x27;t replaced software engineers, and won&#x27;t</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Arvind Narayanan and Sayash Kapoor argue there is now enough evidence to reject the narrative that AI will automate away software engineering, even though the field is uniquely AI-susceptible.</li>
-              <li>Their analysis separates AI augmenting individual developer output from AI reducing total demand for developers — finding evidence for the former but not the latter.</li>
-              <li>A substantive counterpoint to the widespread assumption that coding assistants are a direct precursor to engineer displacement.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jun/14/why-ai-hasnt-replaced-software-engineers/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Profiling in PyTorch (Part 2): From nn.Linear to a Fused MLP</h3>
+              <h3>Is it agentic enough? Benchmarking open models on your own tooling</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Part 2 of Hugging Face&#x27;s PyTorch profiling series walks through evolving a standard nn.Linear stack into a fused MLP, with profiler output quantifying throughput gains at each step.</li>
-              <li>Fused operations reduce memory bandwidth pressure by eliminating intermediate tensor writes — directly relevant for anyone optimizing transformer inference on constrained hardware.</li>
-              <li>Practical, step-by-step guide applicable to both training and inference optimization on a tight VRAM budget.</li>
+              <li>HuggingFace introduces a framework for evaluating open-weight LLMs on tool-calling tasks specific to your own tool schemas, not just generic benchmarks.</li>
+              <li>The guide covers how to construct evaluation harnesses, measure structured-output fidelity, and compare models against each other on realistic agentic workflows.</li>
+              <li>Practical for any team selecting a local model for agent use: the methodology is reproducible and does not require proprietary infrastructure.</li>
             </ul>
-            <a href="https://huggingface.co/blog/torch-mlp-fusion" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/is-it-agentic-enough" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>olmo-eval: An evaluation workbench for the model development loop</h3>
+              <h3>MosaicLeaks: Can your research agent keep a secret?</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AllenAI open-sources olmo-eval, a modular evaluation harness designed to run inside the model development loop rather than as a standalone post-training benchmark.</li>
-              <li>Supports iterative eval during training, making it easier to catch capability regressions early and compare checkpoints systematically.</li>
-              <li>Extensible by design — teams can plug in custom tasks alongside the standard suite without forking the evaluation infrastructure.</li>
+              <li>ServiceNow researchers benchmark how much sensitive context research agents inadvertently leak when composing multi-step responses across document sets.</li>
+              <li>Results show current RAG-style agents are prone to cross-document information bleed — a significant concern for enterprise deployments handling confidential data.</li>
+              <li>The paper proposes evaluation metrics and mitigation strategies, including retrieval filtering and output auditing hooks.</li>
             </ul>
-            <a href="https://huggingface.co/blog/allenai/olmo-eval" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/ServiceNow/mosaicleaks" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Claude Fable is relentlessly proactive</h3>
+              <h3>Temporary Cloudflare Accounts for AI agents</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon Willison characterizes Claude Fable 5&#x27;s defining trait after two days of use as being &#x27;relentlessly proactive&#x27; — it deploys every available technique to reach its goal without waiting to be asked.</li>
-              <li>Illustrated through a Datasette Agent session where Fable autonomously surfaced and fixed issues that previous Claude versions would have left for the user to notice.</li>
-              <li>The behavior raises both productivity and alignment considerations: proactive agency is a force multiplier when well-targeted, but requires careful guardrails in agentic production deployments.</li>
+              <li>Cloudflare now supports ephemeral Worker accounts that agents can spin up, use, and tear down programmatically — no persistent credentials required.</li>
+              <li>Simon notes the AI agents branding is largely marketing, but the feature is genuinely useful: sandboxed compute with automatic cleanup prevents orphaned cloud resources.</li>
+              <li>Relevant for anyone building agents that need to run untrusted code or temporary HTTP endpoints in isolated environments.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/11/fable-is-relentlessly-proactive/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/21/temporary-cloudflare-accounts/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>PP-OCRv6 on Hugging Face: 50-Language OCR from 1.5M to 34.5M Parameters</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>PaddlePaddle&#x27;s PP-OCRv6 ships a 50-language OCR pipeline scaling from a 1.5M ultra-light model to a 34.5M high-accuracy variant, all available on the Hub.</li>
+              <li>The model family covers Latin, CJK, Arabic, and Devanagari scripts with competitive accuracy, making it a strong open alternative to cloud OCR APIs.</li>
+              <li>Tight integration with the HuggingFace Transformers API means it drops into existing pipelines with minimal adaptation.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/PaddlePaddle/pp-ocrv6" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>sqlite-utils 4.0rc1 adds migrations and nested transactions</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>sqlite-utils 4.0 introduces a formal migrations system — schemas can now be versioned and applied incrementally, a long-requested feature for production use.</li>
+              <li>Nested transaction support (savepoints) lands alongside schema migration, making it practical for more complex transactional workflows in Python CLI and library use.</li>
+              <li>Frequently used in AI data pipelines and LLM output logging; the migration system reduces friction when iterating on schema alongside model outputs.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Jun/21/sqlite-utils-40rc1/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
