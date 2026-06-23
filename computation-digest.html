@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - June 22, 2026 | Densanon</title>
+  <title>Computation Morning Digest - June 23, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 22, 2026</div>
+        <div class="digest-date-badge">June 23, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation digest is dominated by Linux kernel and graphics driver momentum — Valve&#x27;s open-source team is shipping real tools (RTI for Vulkan ray-tracing analysis, GCN hang recovery, Mesa 26.2 present timing) while Linux 7.2 advances BPF-based schedulable sub-schedulers. On the hardware side, AI-driven DRAM demand is now squeezing legacy DDR2 supply chains — a reminder the memory pricing crisis reaches well beyond modern SKUs.</p>
+        <p class="digest-intro">Today&#x27;s computation digest is heavy on Linux 7.2 kernel development, with meaningful performance gains on AMD EPYC Sorano, RISC-V startup overhead reductions, and EROFS filesystem improvements for AI dataset I/O. On the hardware side, COSMIC Epoch 1.1 ships a display monitor app and compositor gains, Hygon&#x27;s new &#x27;Suzhou&#x27; x86 CPU appears in GCC, and Prime Day is pushing PCIe 5.0 NVMe and RTX 5080 GPU prices to new lows.</p>
       </div>
     </section>
 
@@ -29,93 +29,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>2003-era DDR2 memory prices jump up to 60% — AI-driven DRAM shortage reaches the oldest standard still in production</h3>
+              <h3>Get a 4TB Samsung 9100 Pro SSD for just $459 in blockbuster Prime Day sale</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>DDR2 contract prices rose 55–60% in Q2 2026 and are projected to climb another 35–40% in Q3, as AI datacenters consume fab capacity across all DRAM nodes.</li>
-              <li>The shortage exposes how AI infrastructure demand creates cascading pricing pressure even on 20-year-old memory standards still used in embedded and industrial equipment.</li>
-              <li>Buyers maintaining legacy hardware dependent on DDR2 should expect sustained cost increases through the remainder of the year with no near-term relief in sight.</li>
+              <li>Samsung&#x27;s 4TB 9100 Pro (PCIe 5.0 NVMe) drops from a $1,360 MSRP to $459 — a $900 discount that puts high-end Gen 5 storage within range of Gen 4 flagship pricing.</li>
+              <li>PCIe 5.0 SSDs are now entering a meaningful price correction phase, suggesting Gen 5 adoption will accelerate through H2 2026.</li>
+              <li>For builders targeting AI/ML local workloads with large model weights, this is a notable inflection point for cost-per-GB on top-tier sequential throughput.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/dram/ddr2-memory-prices-jump-up-to-60-percent" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/save-an-amazing-usd900-off-a-4tb-samsung-9100-pro-ssd-in-blockbuster-prime-day-deal-remarkable-sale-brings-pcie-5-0-nvme-drive-from-usd1-360-down-to-just-usd459" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quake changed gaming forever 30 years ago today — seminal title established online multiplayer culture and made 3D graphics accelerators essential PC components</h3>
+              <h3>Save $250 on the cheapest RTX 5080 around this Prime Day — Gigabyte Gaming OC GeForce RTX 5080</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Released June 22, 1996, Quake&#x27;s fully 3D engine was the catalyst that turned discrete GPU cards from enthusiast curiosities into essential PC components, directly seeding the modern GPU industry.</li>
-              <li>Its TCP/IP-native networked multiplayer architecture established competitive online gaming culture and influenced the design of every FPS and online game that followed.</li>
-              <li>The id Tech 2 engine&#x27;s open licensing and 1999 source release seeded a generation of modders and indie developers who shaped modern PC game development.</li>
+              <li>The Gigabyte Gaming OC RTX 5080 comes with a factory overclock and triple-fan cooling, now $250 off with DLSS 4.5 support included.</li>
+              <li>RTX 5080 cards are finally approaching prices closer to their intended market positioning after months of elevated GPU costs post-launch.</li>
+              <li>DLSS 4.5 support on Blackwell-class cards continues to differentiate NVIDIA&#x27;s AI-upscaling pipeline for both gaming and local compute workloads.</li>
             </ul>
-            <a href="https://www.tomshardware.com/video-games/pc-gaming/quake-changed-gaming-forever-30-years-ago-today-seminal-title-established-online-multiplayer-culture-and-made-3d-graphics-accelerators-essential-pc-components" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/save-usd250-on-the-cheapest-rtx-5080-around-this-prime-day-gigabyte-gaming-oc-geforce-rtx-5080-at-stellar-pricing-on-newegg" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD Updates ROCDXG To Deliver Better ROCm Experience On WSL</h3>
+              <h3>New Hygon Model 8 &quot;Suzhou&quot; x86 CPU Support Appears In The GCC Compiler</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>librocdxg 1.2.1 improves AMD&#x27;s WSL ROCm bridge introduced in March 2026, replacing legacy closed-source components with a fully open-source architecture.</li>
-              <li>The update delivers more robust GPU compute access under Windows Subsystem for Linux, reducing friction for developers running ROCm workloads without a dedicated Linux install.</li>
-              <li>Cleaner WSL integration is increasingly important for AI/ML developers on AMD hardware who need Windows compatibility alongside Linux-based compute toolchains.</li>
+              <li>GCC now includes tuning support for the Hygon c86-4g-m8 &#x27;Suzhou&#x27; processor, marking what appears to be a new generation of China&#x27;s domestically-developed x86 silicon.</li>
+              <li>Hygon CPUs are AMD Zen 1-derived under a 2016 technology-transfer license; new model designations suggest continued internal roadmap progression despite US export restrictions.</li>
+              <li>Compiler-first support signals Hygon is targeting datacenter/server Linux deployments where GCC-compiled workloads dominate.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-librocdxg-1.2.1" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Valve Creates The Ray-Tracing Inspector &quot;RTI&quot; To Help Further Optimize Linux GPU Drivers</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Valve&#x27;s open-source Linux graphics team merged the Ray-Tracing Inspector (RTI) into Mesa 26.1 — a GUI tool for analyzing and profiling Vulkan ray-tracing pipelines on Linux.</li>
-              <li>RTI exposes bottlenecks in driver-level BVH traversal and shader dispatch, giving driver developers concrete profiling data to optimize ray-tracing performance.</li>
-              <li>Valve&#x27;s continued upstream Mesa investment signals that Linux ray tracing is a first-class engineering concern, with direct implications for Steam Deck and Linux PC gaming.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Mesa-Ray-Tracing-Inspector-RTI" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Early AMD GCN GPUs Seeing Improved GPU Recovery - Another Valve-Led Linux Improvement</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Valve engineers are upstreaming patches to improve GPU hang recovery for early AMD GCN-class Radeon cards (circa 2012–2015) in the Linux kernel.</li>
-              <li>Better recovery means fewer hard system locks when a legacy GPU faults, improving long-term reliability for users running older AMD hardware on modern Linux distributions.</li>
-              <li>This reflects Valve&#x27;s broad driver quality posture — investing in hardware generations well outside the Steam Deck&#x27;s direct support window to improve the Linux ecosystem overall.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/AMD-Early-GCN-Better-Recovery" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux 7.2 sched_ext Continues Working Toward Sub-Scheduler Support</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Linux 7.2 extends sched_ext — the BPF-based extensible scheduler — with sub-scheduler support, allowing user-space BPF programs to compose hierarchical scheduling policies.</li>
-              <li>Sub-schedulers enable workload-specific tuning (gaming latency profiles, server throughput policies) loaded and swapped at runtime without kernel recompilation.</li>
-              <li>This is foundational for systems researchers and performance engineers wanting fine-grained, programmable CPU scheduling control at production scale.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.2-sched-ext" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>zlib-rs 0.6.4 Released With Fix For Intel Raptor Lake Crash, SIMD Optimizations</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>zlib-rs 0.6.4 fixes a crash reproducible on Intel Raptor Lake CPUs (13th/14th gen) triggered by a specific SIMD code path in this Rust-based zlib replacement.</li>
-              <li>The release also ships SIMD-accelerated decompression improvements that reduce CPU overhead for applications using zlib-rs as a drop-in, including Firefox.</li>
-              <li>As the Rust ecosystem and Firefox migrate to zlib-rs for memory-safety benefits, this release is relevant to any project depending on high-performance, safe compression.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/zlib-rs-0.6.4" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Hygon-c86-4g-m8-Suzhou-GCC" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -125,15 +71,69 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Mesa 26.2 Merges Vulkan Present Timing Support For X11/XWayland</h3>
+              <h3>Linux 7.2 Showing Some Unexpected &amp; Nice Performance Gains On AMD EPYC Sorano</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Mesa 26.2 adds VK_EXT_present_timing for X11 and XWayland, giving Vulkan applications precise control over frame delivery timing relative to display scanout.</li>
-              <li>Present timing is critical for reducing input latency and eliminating tearing in high-refresh-rate gaming and video on Linux desktops running X11 or XWayland compositors.</li>
-              <li>This closes a long-standing gap versus Windows DX12 and enables Linux Vulkan apps to implement frame pacing strategies previously limited to native Wayland paths.</li>
+              <li>Early Linux 7.2 benchmarks on AMD EPYC Sorano show unexpected performance gains, particularly in networking, attributed to new cache-aware scheduling code entering in the current merge window.</li>
+              <li>Cache-aware scheduling targets NUMA-heavy server workloads where cache topology mismatches have historically penalized multi-socket throughput.</li>
+              <li>These are early-stage results (merge window not yet closed), but HPC and cloud operators running EPYC could see meaningful wins from a kernel upgrade alone.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Mesa-26.2-X11-Present-Timing" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.2--EPYC-Sorano-Network" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>EROFS With Linux 7.2 Better Handles Large Sparse AI Datasets, More Efficient I/O</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>EROFS (a read-only compressed filesystem used in Android and container images) gains Linux 7.2 enhancements targeting sparse AI dataset access patterns.</li>
+              <li>Sparse datasets common in training pipelines — where many tensor positions are zero — previously incurred unnecessary block reads; the new handling skips those I/O operations.</li>
+              <li>This is a direct kernel-level optimization for AI/ML infrastructure, reinforcing how the Linux storage stack is increasingly shaped by training and inference workload requirements.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/EROFS-Sparse-AI-Datasets" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Fwupd 2.0.21 Brings Fixes For More Than 250 Potential Security Issues Found Via AI</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Fwupd 2.0.21 backports fixes for 250+ potential security issues discovered through AI-assisted static analysis, applied to the 2.0.x LTS branch for older-system stability.</li>
+              <li>AI-driven vulnerability discovery on open-source firmware tooling is now producing real patch volumes — a meaningful example of AI as a security audit accelerant.</li>
+              <li>Fwupd is critical infrastructure on Linux laptops and servers for BIOS/UEFI/peripheral firmware updates; this patch batch significantly reduces the attack surface.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Fwupd-2.0.21-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>DeviceTree-ACPI Hybrid Mode Proposed For Improving Linux Support On Snapdragon Laptops</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A former Red Hat engineer now at Qualcomm proposed a DeviceTree-ACPI hybrid mode that would let Linux use DT for Qualcomm-specific peripherals while relying on ACPI for standard platform discovery — resolving a long-standing architectural tension on Snapdragon laptops.</li>
+              <li>Current Snapdragon-on-Linux setups require extensive DT blobs maintained out-of-tree; the hybrid approach could allow upstream ACPI paths to handle more hardware enumeration automatically.</li>
+              <li>If accepted, this would be a significant step toward Snapdragon Windows laptops becoming first-class Linux targets without per-SKU device tree maintenance.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/DT-ACPI-Hybrid-Mode-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.2 RISC-V Reduces Kernel Startup Overhead, Eswin SoC Support By Default</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Linux 7.2 merges RISC-V changes that reduce kernel startup overhead — important for embedded and edge deployments where boot time directly affects responsiveness.</li>
+              <li>The Eswin SoC (a Chinese RISC-V chip targeting embedded/industrial applications) gains mainline Linux support by default, broadening the RISC-V device ecosystem.</li>
+              <li>A candid note in the commit log that ARM64 development pace is being slowed by &#x27;AI/LLM noise&#x27; signals kernel maintainers are actively managing a surge in low-quality AI-generated patches.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.2-RISC-V" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -143,27 +143,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Miracle-WM Mir-Based Wayland Compositor Aiming For v1.0 Later This Year</h3>
+              <h3>COSMIC Epoch 1.1 Released With COSMIC-Monitor, Compositor Improvements</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Miracle-WM 0.10 ships new features for this Mir-based tiling Wayland compositor, with the project targeting a stable v1.0 release before year-end.</li>
-              <li>Miracle-WM offers a tiling window management model on top of the Mir library, competing in the space occupied by Sway and Hyprland with a distinct architectural foundation.</li>
-              <li>A v1.0 milestone would signal production-readiness for users seeking a stable, Mir-backed alternative in the growing Linux Wayland compositor ecosystem.</li>
+              <li>System76&#x27;s COSMIC desktop hits Epoch 1.1 with a new COSMIC-Monitor system monitoring application and targeted compositor performance improvements.</li>
+              <li>This is the first minor version bump since COSMIC 1.0 shipped in December 2025, signaling an increasingly stable release cadence for the Rust-based desktop environment.</li>
+              <li>The compositor improvements continue COSMIC&#x27;s pitch as a Wayland-first desktop with lower overhead than GNOME or KDE on System76 PopOS hardware.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Miracle-WM-0.10" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/COSMIC-Epoch-1.1" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>OneXPlayer Configuration Driver Merged For Linux 7.2 Along With Other New Hardware</h3>
+              <h3>BASIC09 Programming Language Front-End Developed For LLVM</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Linux 7.2&#x27;s HID subsystem pull adds a mainline configuration driver for OneXPlayer handheld gaming PCs, enabling proper button mapping and hardware controls without custom kernels.</li>
-              <li>Additional HID hardware support in this cycle benefits Linux desktop and gaming users with niche input devices previously requiring out-of-tree patches.</li>
-              <li>Mainline inclusion lowers the barrier for handheld Linux gaming and sets a precedent for other handheld PC vendors targeting Linux support.</li>
+              <li>A new LLVM front-end brings BASIC09 — a 1980 structured BASIC dialect for the Motorola 6809 — into the modern compiler ecosystem, enabling targeting of any LLVM-supported architecture.</li>
+              <li>BASIC09 was notable for structured constructs (typed variables, procedures, modules) far ahead of most BASIC dialects of the era, making it a historically interesting compiler target.</li>
+              <li>This demonstrates LLVM&#x27;s flexibility as a universal backend: the same IR pipeline that compiles Rust and C can now accept 46-year-old structured BASIC source.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.2-HID" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/BASIC09-LLVM-Front-End" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

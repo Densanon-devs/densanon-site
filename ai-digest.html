@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - June 22, 2026 | Densanon</title>
+  <title>AI Morning Digest - June 23, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 22, 2026</div>
+        <div class="digest-date-badge">June 23, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest centers on the expanding frontier of open-weight LLMs, with GLM-5.2&#x27;s 753B MIT-licensed release leading the way. Agentic tooling matures on multiple fronts — from HuggingFace&#x27;s new resource-discovery infrastructure to benchmarks for evaluating open models on real tool-calling tasks. Security and infrastructure for agents also step forward, with MosaicLeaks probing information leakage and Cloudflare adding ephemeral accounts purpose-built for agent workflows.</p>
+        <p class="digest-intro">Today&#x27;s digest centers on three converging themes: the maturation of multi-agent architectures (from debate topologies to SDLC governance), practical in-browser AI execution reaching new milestones with OPFS and Pyodide, and fresh evidence that Tree-of-Thought reasoning budgets are far less elastic than assumed. Claude Code v2.1.187 also ships notable security hardening with sandboxed credential blocking and org-level model restrictions.</p>
       </div>
     </section>
 
@@ -29,69 +29,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GLM-5.2 is probably the most powerful text-only open weights LLM</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Beyond Fixed Budgets: Characterizing the Inelasticity and Limitations of Tree-of-Thought Reasoning Strategies</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Z.ai released GLM-5.2 (753B params, 40 active via MoE) under MIT license — the largest open-weights text model available, comparable to frontier proprietary models.</li>
-              <li>At 1.51TB the model is impractical for most local setups, but the MIT license makes it a meaningful benchmark baseline and a starting point for distillation work.</li>
-              <li>Simon&#x27;s writeup covers practical context: what it beats, what it does not, and how it fits into the rapidly shifting open-weights landscape.</li>
+              <li>ToT reasoning strategies show high inelasticity — doubling the compute budget rarely doubles quality gain, and different search strategies plateau at very different ceilings.</li>
+              <li>Fixed-topology ToT is highly sensitive to role assignment and positional ordering of thoughts, meaning published benchmark numbers often don&#x27;t transfer to production prompts.</li>
+              <li>Practitioners should benchmark their own task-specific ToT configurations rather than assuming published budget-quality curves apply.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/17/glm-52/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.20599" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Beyond LoRA: Can you beat the most popular fine-tuning technique?</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>PEAR: Permutation-Equivariant Adaptive Routing Multi-Agent Debate</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>HuggingFace&#x27;s PEFT team compares LoRA head-to-head with newer alternatives (DoRA, VeRA, LoKr, and others) across a range of tasks and model sizes.</li>
-              <li>Findings show no single technique dominates universally — choice of method depends heavily on target task, compute budget, and model architecture.</li>
-              <li>The post includes reproducible benchmarks and guidance on when each technique is most likely to outperform baseline LoRA.</li>
+              <li>Fixed debate topologies in multi-agent LLM systems amplify positional bias and unreliable agents; PEAR introduces permutation-equivariant routing to dynamically reassign roles each round.</li>
+              <li>Adaptive routing reduces sensitivity to agent ordering and prevents a single low-quality model from consistently poisoning the consensus.</li>
+              <li>The approach is architecture-agnostic and can wrap existing multi-LLM debate pipelines without retraining any of the participating models.</li>
             </ul>
-            <a href="https://huggingface.co/blog/peft-beyond-lora" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.20621" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>MolmoMotion: Language-guided 3D motion forecasting</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>Specifying AI-SDLC Processes: A Protocol Language for Human-Agent Boundaries</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AllenAI extends the Molmo multimodal family to motion forecasting: given a scene and a language instruction, the model predicts physically grounded 3D trajectories.</li>
-              <li>The approach bridges vision-language understanding and robotics planning without requiring task-specific motion datasets, using general VLM pretraining as the foundation.</li>
-              <li>Weights and a demo are available on the HuggingFace Hub, making it accessible for robotics and embodied-AI researchers.</li>
+              <li>Proposes a formal protocol language for expressing human-agent responsibility splits, approval gates, and governance constraints in AI-assisted software development.</li>
+              <li>Fills a real gap: AI agents act as first-class SDLC participants but no standard spec exists for encoding what they can do autonomously vs. what requires human sign-off.</li>
+              <li>Directly applicable to codegen pipelines — teams can encode &#x27;agent writes, human approves merge&#x27; policies in a machine-verifiable format.</li>
             </ul>
-            <a href="https://huggingface.co/blog/allenai/molmomotion" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>GLM-5.2: Built for Long-Horizon Tasks</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Z.ai&#x27;s own writeup positions GLM-5.2 as a long-context, long-horizon reasoning model, with emphasis on multi-step agentic tasks rather than single-turn benchmarks.</li>
-              <li>The model ships with a 128K context window and instruction-tuned variants optimized for coding, math, and tool-use scenarios.</li>
-              <li>Full open weights under MIT represent a shift in Z.ai&#x27;s release strategy, directly competing with Meta&#x27;s Llama family for developer mindshare.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/zai-org/glm-52-blog" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.20615" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting Charity Majors</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Post-Training Recipe, More Than Model Family, Shapes Multi-Agent LLM Conversational Behavior</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Charity Majors argues the economics of code production inverted in 2025 — generating code became free and instant, collapsing the value placed on individual lines of code.</li>
-              <li>The scarce resource is no longer writing code but understanding, maintaining, and deleting it — shifting what engineers are paid to do.</li>
-              <li>A sharp framing with direct implications for how developer tools and AI coding assistants should be positioned going forward.</li>
+              <li>In multi-LLM debate and judge systems, the post-training alignment recipe (RLHF flavor, instruction-tuning style) matters more than base model family for behavioral diversity.</li>
+              <li>Models from the same family but different fine-tune runs converge toward similar outputs, reducing the value of model diversity in ensemble setups.</li>
+              <li>For genuine multi-agent behavioral diversity, you need different post-training pipelines — not just different model sizes or architectures.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/17/charity-majors/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.20632" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Less is More: Lightweight Prompt Compression for Question Answering on Edge Devices</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Aggressive prompt compression for RAG on edge/constrained devices can match or beat uncompressed accuracy by stripping retrieval noise before it reaches the LLM.</li>
+              <li>Lightweight compression (token-budget aware, no auxiliary models needed) adds minimal latency while enabling larger effective context windows on small devices.</li>
+              <li>Key insight for local-LLM deployments: compress retrieved chunks before injecting rather than truncating generation, preserving more useful context per token.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.20571" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -101,63 +95,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Is it agentic enough? Benchmarking open models on your own tooling</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>anthropics/claude-code: v2.1.187</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>HuggingFace introduces a framework for evaluating open-weight LLMs on tool-calling tasks specific to your own tool schemas, not just generic benchmarks.</li>
-              <li>The guide covers how to construct evaluation harnesses, measure structured-output fidelity, and compare models against each other on realistic agentic workflows.</li>
-              <li>Practical for any team selecting a local model for agent use: the methodology is reproducible and does not require proprietary infrastructure.</li>
+              <li>New `sandbox.credentials` setting blocks sandboxed commands from reading credential files and secret environment variables — meaningful security hardening for agentic CI pipelines.</li>
+              <li>Org admins can now restrict which models appear in the model picker, `/model` command, and `--model` flag, enabling compliance-level model governance across teams.</li>
+              <li>Together these two features make Claude Code substantially safer for shared or automated environments where secret exposure and model lock-down are real concerns.</li>
             </ul>
-            <a href="https://huggingface.co/blog/is-it-agentic-enough" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.187" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>MosaicLeaks: Can your research agent keep a secret?</h3>
+              <h3>Build real agentic apps using CUGA: two dozen working examples on a lightweight harness</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ServiceNow researchers benchmark how much sensitive context research agents inadvertently leak when composing multi-step responses across document sets.</li>
-              <li>Results show current RAG-style agents are prone to cross-document information bleed — a significant concern for enterprise deployments handling confidential data.</li>
-              <li>The paper proposes evaluation metrics and mitigation strategies, including retrieval filtering and output auditing hooks.</li>
+              <li>IBM Research&#x27;s CUGA harness ships 24 working agentic app examples with minimal boilerplate — a practical reference for teams starting multi-step agent pipelines.</li>
+              <li>The harness is intentionally lightweight with no heavy orchestration framework, and examples cover real tasks: code generation, data extraction, and tool chaining.</li>
+              <li>Open-sourced on HuggingFace and directly usable as a scaffold or study material for production agentic app patterns.</li>
             </ul>
-            <a href="https://huggingface.co/blog/ServiceNow/mosaicleaks" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/ibm-research/cuga-apps" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Temporary Cloudflare Accounts for AI agents</h3>
+              <h3>Experimenting with the proposed Cross-Origin Storage API in Transformers.js</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A proposed Cross-Origin Storage API would let browser-based ML models share a single cached copy of model weights across multiple origins, eliminating redundant downloads.</li>
+              <li>Transformers.js experimented with the API to allow different web apps to share the same downloaded model — a major improvement for user experience and bandwidth.</li>
+              <li>Currently a proposal stage feature, but if standardized it would dramatically reduce the friction of deploying in-browser LLMs and ML models at scale.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/cross-origin-storage" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>OPFS + Pyodide test harness</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Cloudflare now supports ephemeral Worker accounts that agents can spin up, use, and tear down programmatically — no persistent credentials required.</li>
-              <li>Simon notes the AI agents branding is largely marketing, but the feature is genuinely useful: sandboxed compute with automatic cleanup prevents orphaned cloud resources.</li>
-              <li>Relevant for anyone building agents that need to run untrusted code or temporary HTTP endpoints in isolated environments.</li>
+              <li>Demonstrates Pyodide (Python-in-browser via WASM) reading and writing persistent SQLite files through the Origin Private File System API — no server required.</li>
+              <li>OPFS provides browser apps true persistent local storage at file-system speed; paired with Pyodide, full Python data pipelines can run client-side with durable state.</li>
+              <li>Opens the door for privacy-first apps that run Python analytics locally with no cloud storage dependency whatsoever.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/21/temporary-cloudflare-accounts/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/23/opfs-pyodide/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>PP-OCRv6 on Hugging Face: 50-Language OCR from 1.5M to 34.5M Parameters</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>PaddlePaddle&#x27;s PP-OCRv6 ships a 50-language OCR pipeline scaling from a 1.5M ultra-light model to a 34.5M high-accuracy variant, all available on the Hub.</li>
-              <li>The model family covers Latin, CJK, Arabic, and Devanagari scripts with competitive accuracy, making it a strong open alternative to cloud OCR APIs.</li>
-              <li>Tight integration with the HuggingFace Transformers API means it drops into existing pipelines with minimal adaptation.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/PaddlePaddle/pp-ocrv6" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>sqlite-utils 4.0rc1 adds migrations and nested transactions</h3>
+              <h3>Prompt Injection as Role Confusion</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>sqlite-utils 4.0 introduces a formal migrations system — schemas can now be versioned and applied incrementally, a long-requested feature for production use.</li>
-              <li>Nested transaction support (savepoints) lands alongside schema migration, making it practical for more complex transactional workflows in Python CLI and library use.</li>
-              <li>Frequently used in AI data pipelines and LLM output logging; the migration system reduces friction when iterating on schema alongside model outputs.</li>
+              <li>Reframes prompt injection through a &#x27;role confusion&#x27; lens: attacks succeed because models fail to maintain a stable model of who is trusted to issue which instructions.</li>
+              <li>The paper argues defenses should harden role boundaries rather than filter content, since content filtering is always bypassable with clever framing.</li>
+              <li>Directly actionable for agentic system designers: explicit role-gating in system prompts is more durable than input sanitization alone.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/21/sqlite-utils-40rc1/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/22/prompt-injection-as-role-confusion/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
