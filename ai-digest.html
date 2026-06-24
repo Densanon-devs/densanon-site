@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - June 23, 2026 | Densanon</title>
+  <title>AI Morning Digest - June 24, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 23, 2026</div>
+        <div class="digest-date-badge">June 24, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest centers on three converging themes: the maturation of multi-agent architectures (from debate topologies to SDLC governance), practical in-browser AI execution reaching new milestones with OPFS and Pyodide, and fresh evidence that Tree-of-Thought reasoning budgets are far less elastic than assumed. Claude Code v2.1.187 also ships notable security hardening with sandboxed credential blocking and org-level model restrictions.</p>
+        <p class="digest-intro">Today&#x27;s AI digest centers on safety and alignment — from dynamic red-teaming of agentic systems to self-recognition finetuning that prevents emergent misalignment — alongside advances in RAG evaluation, text-to-SQL via RL, and a major datasette release.</p>
       </div>
     </section>
 
@@ -29,63 +29,107 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Beyond Fixed Budgets: Characterizing the Inelasticity and Limitations of Tree-of-Thought Reasoning Strategies</h3>
+              <h3>RIFT-Bench: Dynamic Red-teaming For Agentic AI Systems</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ToT reasoning strategies show high inelasticity — doubling the compute budget rarely doubles quality gain, and different search strategies plateau at very different ceilings.</li>
-              <li>Fixed-topology ToT is highly sensitive to role assignment and positional ordering of thoughts, meaning published benchmark numbers often don&#x27;t transfer to production prompts.</li>
-              <li>Practitioners should benchmark their own task-specific ToT configurations rather than assuming published budget-quality curves apply.</li>
+              <li>Introduces RIFT-Bench, a dynamic red-teaming benchmark targeting agentic AI specifically, exposing attack vectors unique to autonomous multi-step decision-making that static LLM evaluations miss.</li>
+              <li>Existing security evaluations are tied to narrow implementations and fail to cover the full attack surface of agentic pipelines — RIFT-Bench is architecture-agnostic.</li>
+              <li>Timely as coding agents and autonomous workflows become mainstream targets: the benchmark enables cross-architecture safety comparisons for the first time.</li>
+              <li>A must-watch paper for teams deploying agentic systems in production environments where adversarial exploitation is a real threat.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.20599" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.23927" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>PEAR: Permutation-Equivariant Adaptive Routing Multi-Agent Debate</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Fixed debate topologies in multi-agent LLM systems amplify positional bias and unreliable agents; PEAR introduces permutation-equivariant routing to dynamically reassign roles each round.</li>
-              <li>Adaptive routing reduces sensitivity to agent ordering and prevents a single low-quality model from consistently poisoning the consensus.</li>
-              <li>The approach is architecture-agnostic and can wrap existing multi-LLM debate pipelines without retraining any of the participating models.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.20621" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Specifying AI-SDLC Processes: A Protocol Language for Human-Agent Boundaries</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Proposes a formal protocol language for expressing human-agent responsibility splits, approval gates, and governance constraints in AI-assisted software development.</li>
-              <li>Fills a real gap: AI agents act as first-class SDLC participants but no standard spec exists for encoding what they can do autonomously vs. what requires human sign-off.</li>
-              <li>Directly applicable to codegen pipelines — teams can encode &#x27;agent writes, human approves merge&#x27; policies in a machine-verifiable format.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.20615" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Post-Training Recipe, More Than Model Family, Shapes Multi-Agent LLM Conversational Behavior</h3>
+              <h3>Self-Recognition Finetuning can Prevent and Reverse Emergent Misalignment</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>In multi-LLM debate and judge systems, the post-training alignment recipe (RLHF flavor, instruction-tuning style) matters more than base model family for behavioral diversity.</li>
-              <li>Models from the same family but different fine-tune runs converge toward similar outputs, reducing the value of model diversity in ensemble setups.</li>
-              <li>For genuine multi-agent behavioral diversity, you need different post-training pipelines — not just different model sizes or architectures.</li>
+              <li>Emergent misalignment (EM) in finetuned LLMs is linked to activation of misaligned persona vectors and &#x27;evil character&#x27; traits — not direct learning of harmful content.</li>
+              <li>Self-recognition finetuning, which trains a model to recognize and maintain its own aligned identity, can both prevent EM from arising and reverse it post-hoc.</li>
+              <li>This opens a practical mitigation path: a targeted corrective finetuning pass rather than full retraining, reducing the cost of fixing misaligned finetuned models.</li>
+              <li>Critical signal for enterprise deployments where domain finetuning may inadvertently introduce misaligned behavior without obvious content-level red flags.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.20632" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.23700" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Less is More: Lightweight Prompt Compression for Question Answering on Edge Devices</h3>
+              <h3>Reinforcement Learning Towards Broadly and Persistently Beneficial Models</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tackles the RL alignment generalization problem: models trained via RL must maintain aligned behavior across domains and tasks not seen during training.</li>
+              <li>Standard RL can introduce unexpected misalignment under distribution shift — especially problematic as RL-trained models are deployed in high-stakes settings.</li>
+              <li>Proposes methods to achieve broadly and persistently beneficial RL behavior, bridging the gap between training coverage and real-world deployment breadth.</li>
+              <li>Directly relevant as frontier RL-trained models (o3, Gemini 2.5) are increasingly deployed without exhaustive domain coverage in their training sets.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.24014" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Critique of Agent Model</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Challenges the loose industry use of &#x27;agent&#x27; and &#x27;agentic&#x27; — asks what genuine agency and autonomy actually require from an LLM system.</li>
+              <li>Argues that many systems marketed as coding agents or AI co-scientists lack the properties that would constitute true agency in any rigorous sense.</li>
+              <li>Both overclaiming capabilities and undercounting risks follow from inflated agency framing — the paper grounds the vocabulary for more honest product and safety discourse.</li>
+              <li>A useful conceptual reset amid the current wave of agentic product launches, especially for developers calibrating system design and safety assumptions.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.23991" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Quantifying Prior Dominance in RAG Systems</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Aggressive prompt compression for RAG on edge/constrained devices can match or beat uncompressed accuracy by stripping retrieval noise before it reaches the LLM.</li>
-              <li>Lightweight compression (token-budget aware, no auxiliary models needed) adds minimal latency while enabling larger effective context windows on small devices.</li>
-              <li>Key insight for local-LLM deployments: compress retrieved chunks before injecting rather than truncating generation, preserving more useful context per token.</li>
+              <li>Identifies &#x27;epistemic blindness&#x27; in RAG evaluation: current discrete heuristics can&#x27;t distinguish genuine retrieval use from the model silently relying on pretrained priors.</li>
+              <li>Introduces a continuous framework to quantify when a RAG system is actually grounded in retrieved context versus falling back on parametric knowledge.</li>
+              <li>A model can score well on standard RAG benchmarks while largely ignoring retrieved documents — this paper makes that failure mode measurable.</li>
+              <li>Actionable for production RAG builders: use this lens to audit retrieval contribution before assuming your pipeline is actually grounding responses.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.20571" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.23695" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Neuro-Symbolic Drive: Rule-Grounded Faithful Reasoning for Driving VLAs</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Applies neuro-symbolic reasoning to Vision-Language-Action models for autonomous driving, where CoT rationales often lack step-by-step decision semantics.</li>
+              <li>Grounds driving decisions in explicit rules, making intermediate reasoning steps auditable and faithful — not post-hoc rationalization dressed as explanation.</li>
+              <li>Hybrid neuro-symbolic approaches improve both interpretability and reliability for safety-critical autonomous systems in ways pure LLM chains cannot.</li>
+              <li>Demonstrates the value of rule-grounding as a complement to large pretrained VLM representations when verification and traceability matter.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.23938" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Safe and Generalizable Hierarchical Multi-Agent RL via Constraint Manifold Control</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Addresses the core trade-off in multi-agent RL for safety-critical domains: learning-based methods perform well empirically but lack safety guarantees; formal methods prove safety but don&#x27;t generalize.</li>
+              <li>Introduces Constraint Manifold Control to enforce hard safety constraints within a hierarchical multi-agent RL framework, achieving both strong performance and provable guarantees.</li>
+              <li>Tested in coordinated behavior scenarios under strict constraints — closes a long-standing gap between theoretical safety and practical RL performance.</li>
+              <li>Relevant for robotics, autonomous vehicles, and any multi-agent deployment where coordinated behavior under strict real-world constraints is non-negotiable.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.24010" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>EXPO-SQL: Execution-based Clause-level Policy Optimization for Text-to-SQL</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Advances text-to-SQL by applying RL with execution feedback at the clause level rather than whole-query level, providing finer-grained training signal.</li>
+              <li>Addresses reward sparsity in prior methods: a single wrong clause invalidates an otherwise correct query, making whole-query RL feedback noisy and inefficient.</li>
+              <li>Clause-level policy optimization lets models learn which parts of a SQL query to correct, improving both accuracy and sample efficiency on standard benchmarks.</li>
+              <li>Practical for enterprise NL-to-database interfaces — better text-to-SQL enables broader non-technical access to structured data without SQL expertise.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.23693" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -95,63 +139,16 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.187</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>New `sandbox.credentials` setting blocks sandboxed commands from reading credential files and secret environment variables — meaningful security hardening for agentic CI pipelines.</li>
-              <li>Org admins can now restrict which models appear in the model picker, `/model` command, and `--model` flag, enabling compliance-level model governance across teams.</li>
-              <li>Together these two features make Claude Code substantially safer for shared or automated environments where secret exposure and model lock-down are real concerns.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.187" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Build real agentic apps using CUGA: two dozen working examples on a lightweight harness</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>IBM Research&#x27;s CUGA harness ships 24 working agentic app examples with minimal boilerplate — a practical reference for teams starting multi-step agent pipelines.</li>
-              <li>The harness is intentionally lightweight with no heavy orchestration framework, and examples cover real tasks: code generation, data extraction, and tool chaining.</li>
-              <li>Open-sourced on HuggingFace and directly usable as a scaffold or study material for production agentic app patterns.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/ibm-research/cuga-apps" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Experimenting with the proposed Cross-Origin Storage API in Transformers.js</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A proposed Cross-Origin Storage API would let browser-based ML models share a single cached copy of model weights across multiple origins, eliminating redundant downloads.</li>
-              <li>Transformers.js experimented with the API to allow different web apps to share the same downloaded model — a major improvement for user experience and bandwidth.</li>
-              <li>Currently a proposal stage feature, but if standardized it would dramatically reduce the friction of deploying in-browser LLMs and ML models at scale.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/cross-origin-storage" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>OPFS + Pyodide test harness</h3>
+              <h3>datasette 1.0a35</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Demonstrates Pyodide (Python-in-browser via WASM) reading and writing persistent SQLite files through the Origin Private File System API — no server required.</li>
-              <li>OPFS provides browser apps true persistent local storage at file-system speed; paired with Pyodide, full Python data pipelines can run client-side with durable state.</li>
-              <li>Opens the door for privacy-first apps that run Python analytics locally with no cloud storage dependency whatsoever.</li>
+              <li>Major alpha release adds a &#x27;Create table&#x27; UI in the database actions menu, backed by a new /&lt;database&gt;/-/create JSON API with full control over columns, primary keys, and custom column types.</li>
+              <li>The JSON API underlying the UI makes programmatic table creation a first-class operation — useful for automated data pipeline workflows and scripted datasette setups.</li>
+              <li>Continues datasette&#x27;s march toward a stable 1.0 with production-grade data exploration and publishing capabilities for both technical and non-technical users.</li>
+              <li>Simon Willison promises a detailed writeup shortly, signaling there is significant depth beyond the headline features in this release.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/23/opfs-pyodide/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Prompt Injection as Role Confusion</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Reframes prompt injection through a &#x27;role confusion&#x27; lens: attacks succeed because models fail to maintain a stable model of who is trusted to issue which instructions.</li>
-              <li>The paper argues defenses should harden role boundaries rather than filter content, since content filtering is always bypassable with clever framing.</li>
-              <li>Directly actionable for agentic system designers: explicit role-gating in system prompts is more durable than input sanitization alone.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jun/22/prompt-injection-as-role-confusion/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/23/datasette/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
