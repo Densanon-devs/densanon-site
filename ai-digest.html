@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - June 24, 2026 | Densanon</title>
+  <title>AI Morning Digest - June 25, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 24, 2026</div>
+        <div class="digest-date-badge">June 25, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s AI digest centers on safety and alignment — from dynamic red-teaming of agentic systems to self-recognition finetuning that prevents emergent misalignment — alongside advances in RAG evaluation, text-to-SQL via RL, and a major datasette release.</p>
+        <p class="digest-intro">Today&#x27;s digest is anchored by two threads: the maturation of agentic AI systems and the surprising ways training data shapes model behavior. On the tools side, Claude Code ships a notable UX improvement with conversation rewind, NVIDIA releases a fine-tuning acceleration layer for Transformers, and a new real-world ASR benchmark raises the bar for speech recognition evaluation.</p>
       </div>
     </section>
 
@@ -29,107 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>RIFT-Bench: Dynamic Red-teaming For Agentic AI Systems</h3>
+              <h3>The Hitchhiker&#x27;s Guide to Agentic AI: From Foundations to Systems</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Introduces RIFT-Bench, a dynamic red-teaming benchmark targeting agentic AI specifically, exposing attack vectors unique to autonomous multi-step decision-making that static LLM evaluations miss.</li>
-              <li>Existing security evaluations are tied to narrow implementations and fail to cover the full attack surface of agentic pipelines — RIFT-Bench is architecture-agnostic.</li>
-              <li>Timely as coding agents and autonomous workflows become mainstream targets: the benchmark enables cross-architecture safety comparisons for the first time.</li>
-              <li>A must-watch paper for teams deploying agentic systems in production environments where adversarial exploitation is a real threat.</li>
+              <li>A full-stack practitioner&#x27;s reference covering autonomous AI system design from first principles through production deployment — the most comprehensive single treatment of agentic AI architecture to date.</li>
+              <li>Central thesis: great agentic systems are fundamentally about orchestration, not raw model capability — tool use, memory, planning, and error recovery matter more than model size alone.</li>
+              <li>Organized as a book-length treatment, making it a durable reference rather than a narrow empirical paper.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.23927" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.24937" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Self-Recognition Finetuning can Prevent and Reverse Emergent Misalignment</h3>
+              <h3>Perfect Detection, Failed Control: The Geometry of Knowing vs. Steering in Language Models</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Emergent misalignment (EM) in finetuned LLMs is linked to activation of misaligned persona vectors and &#x27;evil character&#x27; traits — not direct learning of harmful content.</li>
-              <li>Self-recognition finetuning, which trains a model to recognize and maintain its own aligned identity, can both prevent EM from arising and reverse it post-hoc.</li>
-              <li>This opens a practical mitigation path: a targeted corrective finetuning pass rather than full retraining, reducing the cost of fixing misaligned finetuned models.</li>
-              <li>Critical signal for enterprise deployments where domain finetuning may inadvertently introduce misaligned behavior without obvious content-level red flags.</li>
+              <li>Finds that detecting a behavior in model activations and steering that behavior are geometrically different problems — knowing where something lives does not mean you can modify it.</li>
+              <li>Challenges a core assumption of mechanistic interpretability: that identification implies controllability.</li>
+              <li>Has direct implications for AI safety work relying on activation patching and representation engineering.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.23700" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.24952" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Reinforcement Learning Towards Broadly and Persistently Beneficial Models</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Tackles the RL alignment generalization problem: models trained via RL must maintain aligned behavior across domains and tasks not seen during training.</li>
-              <li>Standard RL can introduce unexpected misalignment under distribution shift — especially problematic as RL-trained models are deployed in high-stakes settings.</li>
-              <li>Proposes methods to achieve broadly and persistently beneficial RL behavior, bridging the gap between training coverage and real-world deployment breadth.</li>
-              <li>Directly relevant as frontier RL-trained models (o3, Gemini 2.5) are increasingly deployed without exhaustive domain coverage in their training sets.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.24014" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Critique of Agent Model</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Challenges the loose industry use of &#x27;agent&#x27; and &#x27;agentic&#x27; — asks what genuine agency and autonomy actually require from an LLM system.</li>
-              <li>Argues that many systems marketed as coding agents or AI co-scientists lack the properties that would constitute true agency in any rigorous sense.</li>
-              <li>Both overclaiming capabilities and undercounting risks follow from inflated agency framing — the paper grounds the vocabulary for more honest product and safety discourse.</li>
-              <li>A useful conceptual reset amid the current wave of agentic product launches, especially for developers calibrating system design and safety assumptions.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.23991" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Quantifying Prior Dominance in RAG Systems</h3>
+              <h3>Small edits, large models: How Wikipedia advocacy shapes LLM values</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Identifies &#x27;epistemic blindness&#x27; in RAG evaluation: current discrete heuristics can&#x27;t distinguish genuine retrieval use from the model silently relying on pretrained priors.</li>
-              <li>Introduces a continuous framework to quantify when a RAG system is actually grounded in retrieved context versus falling back on parametric knowledge.</li>
-              <li>A model can score well on standard RAG benchmarks while largely ignoring retrieved documents — this paper makes that failure mode measurable.</li>
-              <li>Actionable for production RAG builders: use this lens to audit retrieval contribution before assuming your pipeline is actually grounding responses.</li>
+              <li>Demonstrates that coordinated Wikipedia editing by a small volunteer group measurably shifts how major LLMs discuss animal welfare — because Wikipedia is weighted heavily in most training datasets.</li>
+              <li>Quantifies the influence pathway from Wikipedia edits to LLM output, revealing a concrete and underappreciated training data manipulation vector.</li>
+              <li>Raises urgent questions about training data provenance auditing and the outsized influence of well-organized minority editors on AI values at scale.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.23695" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.24890" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Neuro-Symbolic Drive: Rule-Grounded Faithful Reasoning for Driving VLAs</h3>
+              <h3>Diagnosing and Mitigating Compounding Failures in Agentic Persuasion via Taxonomic Strategy Retrieval</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Applies neuro-symbolic reasoning to Vision-Language-Action models for autonomous driving, where CoT rationales often lack step-by-step decision semantics.</li>
-              <li>Grounds driving decisions in explicit rules, making intermediate reasoning steps auditable and faithful — not post-hoc rationalization dressed as explanation.</li>
-              <li>Hybrid neuro-symbolic approaches improve both interpretability and reliability for safety-critical autonomous systems in ways pure LLM chains cannot.</li>
-              <li>Demonstrates the value of rule-grounding as a complement to large pretrained VLM representations when verification and traceability matter.</li>
+              <li>Identifies and categorizes the compounding error problem in multi-step agentic systems: early mistakes contaminate later reasoning in ways that Multi-Agent Debate cannot fully fix.</li>
+              <li>Proposes Taxonomic Strategy Retrieval as a mitigation — retrieving relevant error-recovery strategies at each step rather than letting errors propagate unchecked.</li>
+              <li>Particularly relevant for open-ended persuasion and subjective-domain agents where deterministic debate approaches break down.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.23938" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Safe and Generalizable Hierarchical Multi-Agent RL via Constraint Manifold Control</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Addresses the core trade-off in multi-agent RL for safety-critical domains: learning-based methods perform well empirically but lack safety guarantees; formal methods prove safety but don&#x27;t generalize.</li>
-              <li>Introduces Constraint Manifold Control to enforce hard safety constraints within a hierarchical multi-agent RL framework, achieving both strong performance and provable guarantees.</li>
-              <li>Tested in coordinated behavior scenarios under strict constraints — closes a long-standing gap between theoretical safety and practical RL performance.</li>
-              <li>Relevant for robotics, autonomous vehicles, and any multi-agent deployment where coordinated behavior under strict real-world constraints is non-negotiable.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.24010" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>EXPO-SQL: Execution-based Clause-level Policy Optimization for Text-to-SQL</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Advances text-to-SQL by applying RL with execution feedback at the clause level rather than whole-query level, providing finer-grained training signal.</li>
-              <li>Addresses reward sparsity in prior methods: a single wrong clause invalidates an otherwise correct query, making whole-query RL feedback noisy and inefficient.</li>
-              <li>Clause-level policy optimization lets models learn which parts of a SQL query to correct, improving both accuracy and sample efficiency on standard benchmarks.</li>
-              <li>Practical for enterprise NL-to-database interfaces — better text-to-SQL enables broader non-technical access to structured data without SQL expertise.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.23693" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.24976" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -139,16 +83,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>datasette 1.0a35</h3>
+              <h3>anthropics/claude-code: v2.1.191</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Adds /rewind command to resume a conversation from before /clear was run — a real workflow improvement for long sessions where you want to recover context without starting over.</li>
+              <li>Fixes two background agent bugs: stopped agents no longer resurrect, and scroll position no longer jumps to the bottom while reading earlier output during streaming.</li>
+              <li>Incremental but quality-of-life meaningful release for daily Claude Code users who work in long agentic sessions.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.191" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Accelerating Transformers Fine-Tuning with NVIDIA NeMo AutoModel</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>NVIDIA&#x27;s NeMo AutoModel provides a drop-in layer over Hugging Face Transformers that applies multi-GPU parallelism and mixed-precision training automatically — no manual distributed setup required.</li>
+              <li>Targets practitioners who want GPU-accelerated fine-tuning without leaving the familiar Transformers API or setting up a full NeMo framework stack.</li>
+              <li>Practical speedups for teams running SFT or LoRA on mid-tier GPU clusters without enterprise DGX infrastructure.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/nvidia/accelerating-fine-tuning-nvidia-nemo-automodel" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Introducing the FFASR Leaderboard: Benchmarking ASR in the Real World</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A new ASR benchmark designed around real-world audio conditions — accents, noise, domain-specific vocabulary — rather than clean read-speech corpora that existing leaderboards over-optimize for.</li>
+              <li>Exposes significant gaps between leaderboard-topping models and real deployment performance, particularly for named entities and low-resource language variants.</li>
+              <li>Open leaderboard hosted on Hugging Face Spaces; models can be submitted directly for evaluation.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/ffasr-leaderboard" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Which tokens does a hybrid model predict better?</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>AllenAI analyzes where hybrid models (combining attention and state-space layers) outperform pure-transformer baselines at the token level.</li>
+              <li>Hybrid models show the largest gains on long-range dependency tokens and tokens requiring positional memory — exactly the categories SSM architectures were designed to excel at.</li>
+              <li>Provides empirical grounding for when to reach for a hybrid architecture vs. a standard transformer in practice.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/allenai/hybrid-token-prediction" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>simonw/browser-compat-db</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Major alpha release adds a &#x27;Create table&#x27; UI in the database actions menu, backed by a new /&lt;database&gt;/-/create JSON API with full control over columns, primary keys, and custom column types.</li>
-              <li>The JSON API underlying the UI makes programmatic table creation a first-class operation — useful for automated data pipeline workflows and scripted datasette setups.</li>
-              <li>Continues datasette&#x27;s march toward a stable 1.0 with production-grade data exploration and publishing capabilities for both technical and non-technical users.</li>
-              <li>Simon Willison promises a detailed writeup shortly, signaling there is significant depth beyond the headline features in this release.</li>
+              <li>Simon Willison converted Mozilla&#x27;s mdn/browser-compat-data repository — the canonical source for browser compatibility data — into a queryable SQLite database using Claude Code.</li>
+              <li>Published as an open GitHub repo, making the full MDN compatibility dataset explorable with plain SQL without a live API dependency.</li>
+              <li>Inspired by Mozilla&#x27;s new MDN MCP service; the SQLite format makes it straightforward to embed in local dev tools or offline workflows.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/23/datasette/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/24/browser-compat-db/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
