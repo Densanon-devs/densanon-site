@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - June 25, 2026 | Densanon</title>
+  <title>AI Morning Digest - June 27, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,65 +15,41 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 25, 2026</div>
+        <div class="digest-date-badge">June 27, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is anchored by two threads: the maturation of agentic AI systems and the surprising ways training data shapes model behavior. On the tools side, Claude Code ships a notable UX improvement with conversation rewind, NVIDIA releases a fine-tuning acceleration layer for Transformers, and a new real-world ASR benchmark raises the bar for speech recognition evaluation.</p>
+        <p class="digest-intro">Today&#x27;s digest is heavy on tooling and security: OpenAI unveiled its GPT-5.6 model family with a new naming scheme and significant cost cuts, while real-world AI security experiments exposed both the resilience and limits of prompt-injection defenses. On the infrastructure side, Hugging Face made vLLM server deployment a one-command operation, and Anthropic pushed meaningful quality-of-life improvements to Claude Code&#x27;s auto-mode classifier and hook system.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Hitchhiker&#x27;s Guide to Agentic AI: From Foundations to Systems</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>Quoting OpenAI (GPT-5.6 Series Preview)</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A full-stack practitioner&#x27;s reference covering autonomous AI system design from first principles through production deployment — the most comprehensive single treatment of agentic AI architecture to date.</li>
-              <li>Central thesis: great agentic systems are fundamentally about orchestration, not raw model capability — tool use, memory, planning, and error recovery matter more than model size alone.</li>
-              <li>Organized as a book-length treatment, making it a durable reference rather than a narrow empirical paper.</li>
+              <li>OpenAI launched a limited preview of GPT-5.6: Sol (flagship), Terra (balanced, 2x cheaper than GPT-5.5), and Luna (fast/affordable at lowest cost).</li>
+              <li>New model naming scheme signals a shift toward tiered product lines rather than monolithic numbered releases.</li>
+              <li>Terra matches GPT-5.5 performance at half the price — a direct shot at cost-sensitive enterprise deployments.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.24937" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/26/openai/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Perfect Detection, Failed Control: The Geometry of Knowing vs. Steering in Language Models</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>AI and Liability</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Finds that detecting a behavior in model activations and steering that behavior are geometrically different problems — knowing where something lives does not mean you can modify it.</li>
-              <li>Challenges a core assumption of mechanistic interpretability: that identification implies controllability.</li>
-              <li>Has direct implications for AI safety work relying on activation patching and representation engineering.</li>
+              <li>A German court ruled Google liable for errors in AI-generated overviews, setting a precedent that AI agents are legally extensions of the deploying organization.</li>
+              <li>Bruce Schneier argues this is the correct framing: the same liability standard that applies to human-written summaries should apply to AI-written ones.</li>
+              <li>This ruling has broad implications for any company deploying AI-generated content at scale.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.24952" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Small edits, large models: How Wikipedia advocacy shapes LLM values</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Demonstrates that coordinated Wikipedia editing by a small volunteer group measurably shifts how major LLMs discuss animal welfare — because Wikipedia is weighted heavily in most training datasets.</li>
-              <li>Quantifies the influence pathway from Wikipedia edits to LLM output, revealing a concrete and underappreciated training data manipulation vector.</li>
-              <li>Raises urgent questions about training data provenance auditing and the outsized influence of well-organized minority editors on AI values at scale.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.24890" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Diagnosing and Mitigating Compounding Failures in Agentic Persuasion via Taxonomic Strategy Retrieval</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Identifies and categorizes the compounding error problem in multi-step agentic systems: early mistakes contaminate later reasoning in ways that Multi-Agent Debate cannot fully fix.</li>
-              <li>Proposes Taxonomic Strategy Retrieval as a mitigation — retrieving relevant error-recovery strategies at each step rather than letting errors propagate unchecked.</li>
-              <li>Particularly relevant for open-ended persuasion and subjective-domain agents where deterministic debate approaches break down.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.24976" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/25/ai-and-liability/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -83,63 +59,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.191</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Adds /rewind command to resume a conversation from before /clear was run — a real workflow improvement for long sessions where you want to recover context without starting over.</li>
-              <li>Fixes two background agent bugs: stopped agents no longer resurrect, and scroll position no longer jumps to the bottom while reading earlier output during streaming.</li>
-              <li>Incremental but quality-of-life meaningful release for daily Claude Code users who work in long agentic sessions.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.191" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Accelerating Transformers Fine-Tuning with NVIDIA NeMo AutoModel</h3>
+              <h3>Run a vLLM Server on HF Jobs in One Command</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NVIDIA&#x27;s NeMo AutoModel provides a drop-in layer over Hugging Face Transformers that applies multi-GPU parallelism and mixed-precision training automatically — no manual distributed setup required.</li>
-              <li>Targets practitioners who want GPU-accelerated fine-tuning without leaving the familiar Transformers API or setting up a full NeMo framework stack.</li>
-              <li>Practical speedups for teams running SFT or LoRA on mid-tier GPU clusters without enterprise DGX infrastructure.</li>
+              <li>Hugging Face Jobs now supports spinning up a vLLM inference server with a single CLI command, no infra configuration required.</li>
+              <li>Targets researchers and developers who need ephemeral, scalable model serving without managing cloud VMs.</li>
+              <li>Integrates with HF Hub model access and secrets for private model deployments.</li>
             </ul>
-            <a href="https://huggingface.co/blog/nvidia/accelerating-fine-tuning-nvidia-nemo-automodel" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/vllm-jobs" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Introducing the FFASR Leaderboard: Benchmarking ASR in the Real World</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A new ASR benchmark designed around real-world audio conditions — accents, noise, domain-specific vocabulary — rather than clean read-speech corpora that existing leaderboards over-optimize for.</li>
-              <li>Exposes significant gaps between leaderboard-topping models and real deployment performance, particularly for named entities and low-resource language variants.</li>
-              <li>Open leaderboard hosted on Hugging Face Spaces; models can be submitted directly for evaluation.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/ffasr-leaderboard" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Which tokens does a hybrid model predict better?</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>AllenAI analyzes where hybrid models (combining attention and state-space layers) outperform pure-transformer baselines at the token level.</li>
-              <li>Hybrid models show the largest gains on long-range dependency tokens and tokens requiring positional memory — exactly the categories SSM architectures were designed to excel at.</li>
-              <li>Provides empirical grounding for when to reach for a hybrid architecture vs. a standard transformer in practice.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/allenai/hybrid-token-prediction" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>simonw/browser-compat-db</h3>
+              <h3>What happened after 2,000 people tried to hack my AI assistant</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon Willison converted Mozilla&#x27;s mdn/browser-compat-data repository — the canonical source for browser compatibility data — into a queryable SQLite database using Claude Code.</li>
-              <li>Published as an open GitHub repo, making the full MDN compatibility dataset explorable with plain SQL without a live API dependency.</li>
-              <li>Inspired by Mozilla&#x27;s new MDN MCP service; the SQLite format makes it straightforward to embed in local dev tools or offline workflows.</li>
+              <li>Fernando Irarrázaval ran a public prompt-injection challenge: 2,000 participants, 6,000 attempts, $500 in token spend — and the secret held.</li>
+              <li>Most attack vectors were standard jailbreak patterns; the assistant&#x27;s system-prompt isolation and output filtering proved surprisingly robust.</li>
+              <li>Key finding: the cost of a successful attack, not invulnerability, is the real defense metric — budget-constrained attackers gave up, determined ones may not.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/24/browser-compat-db/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/26/hack-my-ai-assistant/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Incident Report: CVE-2026-LGTM</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A satirical but technically grounded incident report depicts two competing AI code-review agents entering a 340-comment disagreement loop over a dependency PR.</li>
+              <li>Highlights a real emerging risk: multi-agent systems without escalation or deadlock-breaking logic can burn tokens and block deployments indefinitely.</li>
+              <li>The scenario is hypothetical today but mirrors real patterns already observed in autonomous agent pipelines.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Jun/26/incident-report/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.195</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Added CLAUDE_CODE_DISABLE_MOUSE_CLICKS env var to suppress click/drag/hover in fullscreen mode while preserving scroll — useful for terminal multiplexer setups.</li>
+              <li>Fixed a critical hook-matcher bug: hyphenated identifiers (e.g. code-reviewer, mcp__brave-search) were substring-matching instead of exact-matching, causing unintended hook triggers.</li>
+              <li>Users with hooks on hyphenated tool names should upgrade immediately to restore correct behavior.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.195" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.193</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>New autoMode.classifyAllShell setting routes every Bash/PowerShell command through the auto-mode classifier, not just commands matching arbitrary-code-execution patterns.</li>
+              <li>Auto-mode denial reasons now surface in transcripts, the denial toast, and /permissions recent denials — making it much easier to debug blocked commands.</li>
+              <li>Additional improvements to claude.md handling and context management for long sessions.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.193" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-agent-sdk-python: v0.2.110</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Bundles Claude CLI v2.1.191, keeping the Python SDK in sync with the latest CLI improvements.</li>
+              <li>Available immediately via pip install claude-agent-sdk==0.2.110.</li>
+              <li>Regular cadence releases — pin to an exact version in production to avoid unexpected behavior changes.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.110" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

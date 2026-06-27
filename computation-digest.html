@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - June 25, 2026 | Densanon</title>
+  <title>Computation Morning Digest - June 27, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 25, 2026</div>
+        <div class="digest-date-badge">June 27, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation landscape is marked by hardware market turbulence — Xbox sees a third price hike in two years while AMD&#x27;s 3D V-Cache revival is immediately besieged by scalpers — alongside meaningful open-source momentum from Servo 0.3, Wayland for professional artists, and a measurably faster Raspberry Pi OS kernel. On the platform side, Valve&#x27;s Steam Machine ambitions remain alive but vague, and Riot Games is quietly rethinking the invasive kernel-level anti-cheat model that has defined PC gaming security.</p>
+        <p class="digest-intro">Today&#x27;s computation digest leads with NVIDIA&#x27;s Vera vs. GB10 CPU benchmark deep-dive and a wave of meaningful Linux kernel and driver advances — from AMD Zen 6 platform prep landing in Linux 7.2 to Intel&#x27;s Vulkan descriptor heap support graduating to default-on after two months of hardening. Storage performance also gets a boost with a 10–17% Linux MD RAID5 scalability patch series hitting the kernel mailing list.</p>
       </div>
     </section>
 
@@ -29,105 +29,81 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Microsoft increases Xbox Series console prices for the third time in two years, kills off 2TB model — $100-$150 upswings on every model</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Every Xbox Series SKU gets a $100–$150 price increase, and the 2TB model is discontinued outright.</li>
-              <li>This is the third increase in two years, signaling continued pressure from component costs and tariffs on console hardware.</li>
-              <li>The pattern mirrors Apple&#x27;s MacBook price hikes, suggesting broader hardware inflation is accelerating in mid-2026.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/video-games/xbox/microsoft-increases-xbox-series-console-prices-for-the-third-time-in-two-years-kills-off-2tb-model-usd100-usd150-upswings-on-every-model" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD Ryzen 7 5800X3D re-review: Maxing out DDR4&#x27;s gaming potential</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>AMD re-released the Ryzen 7 5800X3D specifically to serve users avoiding expensive DDR5 platforms.</li>
-              <li>The re-review benchmarks the CPU against current-generation options at similar price points, providing a concrete DDR4 vs DDR5 value comparison.</li>
-              <li>3D V-Cache architecture still delivers competitive gaming performance in 2026, underlining the longevity of the design.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/amd-ryzen-7-5800x3d-2026-cpu-review" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Scalpers circle AMD&#x27;s Ryzen 7 5800X3D 10th Anniversary Edition, asking for $600 or more — re-released CPU sees inconsistent inventory on release day</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Scalpers are listing the re-released 5800X3D Anniversary Edition at nearly double MSRP on launch day.</li>
-              <li>Inconsistent retail inventory on release day created the conditions for immediate price gouging.</li>
-              <li>AMD&#x27;s decision to re-release a legacy SKU without tight supply chain controls has backfired at launch.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/scalpers-circle-amds-ryzen-7-5800x3d-10th-anniversary-edition-asking-for-usd600-or-more-re-released-cpu-sees-inconsistent-inventory-on-release-day" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Updated Raspberry Pi OS With Linux 6.18 LTS Delivers Some Performance Benefits</h3>
+              <h3>How NVIDIA GB10 CPU Performance Compares To Vera</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Raspberry Pi OS moved from Linux 6.12 to the newer 6.18 LTS kernel, with fresh Phoronix benchmarks quantifying the gains.</li>
-              <li>The kernel jump delivers measurable performance improvements across multiple workloads on Raspberry Pi hardware.</li>
-              <li>LTS kernel updates of this cadence are significant for embedded and edge deployments that depend on Raspberry Pi.</li>
+              <li>Phoronix delivers a detailed benchmark comparison of NVIDIA&#x27;s GB10 against the Vera CPU, continuing a series that began with full Vera results one month ago.</li>
+              <li>Results place GB10 in context against Vera and Ampere Altra across Linux server workloads — useful for evaluating NVIDIA&#x27;s ARM-based compute ambitions.</li>
+              <li>A concrete data point for HPC and cloud teams weighing NVIDIA&#x27;s own silicon against established ARM server options.</li>
             </ul>
-            <a href="https://www.phoronix.com/review/raspberry-pi-os-linux-618" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/review/nvidia-vera-gb10" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Don&#x27;t worry, Valve still plans to launch the Steam Machine &quot;this year&quot;</h3>
-              <span class="digest-source">Ars Technica Hardware</span>
+              <h3>More AMD Zen 6 Prepping, Many ASUS / Lenovo / HP Laptop Improvements For Linux 7.2</h3>
+              <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Valve confirmed a 2026 Steam Machine launch as of March, but provided no concrete release window.</li>
-              <li>Analyst estimates had floated a $1,000 price point driven by tariffs and component volatility.</li>
-              <li>The Steam Deck&#x27;s success established the demand case, but the Steam Machine targets a living-room form factor at a higher price tier.</li>
+              <li>x86 platform driver changes for Linux 7.2 have landed, with AMD Zen 6 (next-gen Ryzen AI) support among the notable additions.</li>
+              <li>Broad laptop coverage spans ASUS, Lenovo, and HP models running AMD Ryzen AI and Intel Core Ultra silicon.</li>
+              <li>Signals Linux&#x27;s continued pace of shipping hardware support at or near silicon launch rather than months after.</li>
             </ul>
-            <a href="https://arstechnica.com/gaming/2026/03/dont-worry-valve-still-plans-to-launch-the-steam-machine-this-year/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.2-x86-Platform-Drivers" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intel ANV Vulkan Driver Now Enables Descriptor Heaps By Default</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>VK_EXT_descriptor_heap support in Intel&#x27;s open-source ANV Vulkan driver is now on by default after ~2 months of post-experimental hardening.</li>
+              <li>Descriptor heaps are a DirectX 12-style resource management model — enabling them closes a GPU driver parity gap on Intel iGPUs and Arc.</li>
+              <li>Improves compatibility for workloads ported via DXVK and vkd3d-proton translation layers on Intel hardware.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Intel-ANV-Descriptor-Heaps-On" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>New Intel Linux Driver Patches Enable HDR Over DP MST Connections</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Intel&#x27;s Linux GPU driver couldn&#x27;t deliver HDR when monitors were connected via DisplayPort Multi-Stream Transport — daisy-chaining or docking stations.</li>
+              <li>New patches in review now close that gap, bringing full HDR capability to multi-monitor docking setups on Intel graphics.</li>
+              <li>Relevant to workstation and productivity users on Linux who route multiple displays through a single DP cable.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Intel-HDR-Over-DP-MST" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Bambu Lab A2L 3D printer review: The A1 grows up</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Bambu Lab&#x27;s A2L extends the A1 bed-slinger with a larger build volume, targeting makers who&#x27;ve outgrown the A1&#x27;s footprint.</li>
+              <li>Tom&#x27;s Hardware full review covers speed, print quality, and competitive positioning against Bambu&#x27;s own P-series and third-party alternatives.</li>
+              <li>A useful benchmark for the current mid-range consumer 3D printing market as bed-slinger designs continue to mature.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/3d-printing/bambu-lab-a2l-3d-printer-review" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Industry &amp; HPC</h2>
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Epic boss Tim Sweeney blasts Steam for putting AI tags on games — says move is &#x27;irresponsible of Valve&#x27;</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Tim Sweeney made the remarks while unveiling Unreal Engine 6, where AI-assisted tooling is a core productivity argument.</li>
-              <li>Steam&#x27;s AI content tags correlate with fewer reviews and more negative sentiment, creating a market disincentive for developers using AI tools.</li>
-              <li>The debate reflects a real policy tension: consumer transparency vs. developer adoption of AI-accelerated pipelines.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/epic-boss-tim-sweeney-blasts-steam-for-putting-ai-tags-on-games-says-move-is-irresponsible-of-valve" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Riot Vanguard finally drops its controversial always-on requirement for anti-cheat — new on-demand mode requires a strict Windows 11 security stack</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Riot is adding an on-demand mode so Vanguard kernel-level anti-cheat no longer loads at system boot.</li>
-              <li>The opt-out requires a strict Windows 11 security configuration stack, limiting who can actually use the new mode.</li>
-              <li>This is a notable policy shift that could influence how other kernel-mode anti-cheat vendors approach the always-on debate.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/video-games/pc-gaming/riot-vanguard-adds-an-on-demand-mode-that-stops-anti-cheat-loading-at-boot-on-secured-windows-11-pcs" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Academy Software Foundation Announces The &quot;Wayland For Artists Working Group&quot;</h3>
+              <h3>Linux MD RAID5 Seeing Scalability Improvements Up To 17%</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ASWF — home of OpenVDB, Open Shading Language, and OpenMoonRay — formed a dedicated working group to accelerate Wayland adoption in VFX and cinema workflows.</li>
-              <li>Professional creative tools have lagged behind consumer Linux apps in Wayland support, making this a meaningful industry push.</li>
-              <li>Coordinated standards work at the foundation level is the most credible path to closing the X11 compatibility gap for high-end creative software.</li>
+              <li>A new kernel patch series targets scalability bottlenecks in Linux&#x27;s MD software RAID5 subsystem, yielding 10–17% gains in some configurations.</li>
+              <li>Patches are on the kernel mailing list — not yet merged — but address a subsystem that powers NAS, server, and storage-heavy Linux deployments.</li>
+              <li>Continued active maintenance of MD signals the software RAID stack remains a viable alternative to hardware RAID controllers in the kernel&#x27;s long-term roadmap.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Wayland-For-Artists" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-MD-RAID5-Scalability-Work" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -137,15 +113,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Servo 0.3 Released With The Demo Browser Becoming More Useful</h3>
+              <h3>KDE Plasma 6.7.2 To Fix KWin&#x27;s Most Common Crash, Plasma 6.8 To Not Crash When Ejecting CDs</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Servo 0.3 advances the Rust-based browser engine&#x27;s demo shell (servoshell) with broader support for modern web features.</li>
-              <li>The project maintains strong potential as an embeddable engine for non-browser contexts beyond a standalone browser.</li>
-              <li>Continued incremental releases keep Servo relevant as the only major alternative browser engine architecture built in a memory-safe language.</li>
+              <li>Plasma 6.7.2 (due July) fixes KWin&#x27;s most commonly triggered crash, with fixes queued almost immediately after the 6.7.1 stable release.</li>
+              <li>Plasma 6.8 will be Wayland-only — a major Linux desktop milestone — and also resolves a crash caused by CD ejection.</li>
+              <li>Active triage cadence on KDE demonstrates mature release hygiene as the desktop heads into the Wayland-default era.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Servo-0.3-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/KDE-Plasma-This-Week-Crashes" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Shotcut 26.6 Released With HDR Improvements, Vulkan Display On Linux</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Shotcut 26.6 adds HDR workflow improvements and switches to Vulkan-based display rendering on Linux.</li>
+              <li>Positions the open-source video editor as a more viable GPU-accelerated creative option on Linux for HDR content.</li>
+              <li>Continues a trend of open-source media tools closing the hardware-accelerated pipeline gap with proprietary alternatives.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Shotcut-26.6-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Modded Steam Controller can automatically charge itself like a robot vacuum</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Ray Foss built a computer-vision-driven system using the Steam Controller&#x27;s built-in haptic motors as locomotion to navigate back to its charging puck.</li>
+              <li>Code is open on GitHub and a live webcam web app demonstrates the concept without any hardware modification.</li>
+              <li>A clever closed-loop repurposing of haptic actuators as low-bandwidth motors — worth noting for anyone working on embedded vision + actuation projects.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/peripherals/controllers-gamepads/modded-steam-controller-can-automatically-charge-itself-like-a-robot-vacuum-enthusiast-creates-github-program-that-uses-the-vibration-motor-to-walk-it-back-to-its-docking-station" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
