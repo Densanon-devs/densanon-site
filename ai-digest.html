@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - June 27, 2026 | Densanon</title>
+  <title>AI Morning Digest - June 29, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,41 +15,101 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 27, 2026</div>
+        <div class="digest-date-badge">June 29, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is heavy on tooling and security: OpenAI unveiled its GPT-5.6 model family with a new naming scheme and significant cost cuts, while real-world AI security experiments exposed both the resilience and limits of prompt-injection defenses. On the infrastructure side, Hugging Face made vLLM server deployment a one-command operation, and Anthropic pushed meaningful quality-of-life improvements to Claude Code&#x27;s auto-mode classifier and hook system.</p>
+        <p class="digest-intro">Today&#x27;s AI digest centers on the evolving architecture of intelligent agents — from how personality shapes multi-agent team outcomes to new training paradigms that give LLMs genuine &quot;what-if&quot; planning capabilities. Research also pushes into verifiability and trustworthiness: a categorical framework for building truth-preserving models, and a sharp critique of &quot;machine unlearning&quot; as an overloaded and often misleading concept.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting OpenAI (GPT-5.6 Series Preview)</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>When Does Personality Composition Matter for Multi-Agent LLM Teams?</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>OpenAI launched a limited preview of GPT-5.6: Sol (flagship), Terra (balanced, 2x cheaper than GPT-5.5), and Luna (fast/affordable at lowest cost).</li>
-              <li>New model naming scheme signals a shift toward tiered product lines rather than monolithic numbered releases.</li>
-              <li>Terra matches GPT-5.5 performance at half the price — a direct shot at cost-sensitive enterprise deployments.</li>
+              <li>Personality prompting measurably shifts agent behavior, but its impact on objective task outcomes depends heavily on the task type — not all domains benefit equally from personality diversity.</li>
+              <li>Low-agreeableness agents generate more adversarial language, which can sharpen debate-style tasks or derail cooperative workflows depending on team composition.</li>
+              <li>The findings suggest careful personality assignment in multi-agent pipelines, rather than uniform or random prompting, can improve structured reasoning tasks.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/26/openai/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.27443" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AI and Liability</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Internalizing the Future: A Unified Agentic Training Paradigm for World Model Planning</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A German court ruled Google liable for errors in AI-generated overviews, setting a precedent that AI agents are legally extensions of the deploying organization.</li>
-              <li>Bruce Schneier argues this is the correct framing: the same liability standard that applies to human-written summaries should apply to AI-written ones.</li>
-              <li>This ruling has broad implications for any company deploying AI-generated content at scale.</li>
+              <li>Current LLM agents are fundamentally reactive; this paper introduces a training paradigm that internalizes &quot;what-if&quot; world-model reasoning directly into the agent&#x27;s weights.</li>
+              <li>The approach enables genuine long-horizon planning by having agents simulate outcomes before committing to actions, closing the gap between current agents and human-style deliberative reasoning.</li>
+              <li>The unified training objective shows improved performance on sequential decision-making benchmarks without requiring separate world-model modules at inference time.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/25/ai-and-liability/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2606.27483" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AI-Model Network: Concept, Current State and Future</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes a network layer for AI models analogous to how the Internet networked computers — shifting value from individual model capability to collaborative sharing and specialization across models.</li>
+              <li>Outlines the current landscape of model APIs, routing, and orchestration as early infrastructure for this AI-model internet.</li>
+              <li>Argues that the combinatorial value of model networks will dwarf single-model capability gains, reshaping how AI products are architected.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.27382" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Odyssey: Constructing Verifiable Local Truth-Preserving Foundation Models</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Introduces ODYSSEY, a categorical mathematical framework for building foundation models that are provably local truth-preserving — outputs grounded in verifiable local contexts rather than global hallucination.</li>
+              <li>The approach decomposes model architecture into &quot;foundries&quot;: composable building blocks that specify local representations and cover sets, enabling formal verification properties.</li>
+              <li>Provides a principled path toward models whose outputs can be externally audited for factual consistency, addressing a core failure mode in current LLMs.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.27593" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Position: The Term &quot;Machine Unlearning&quot; Is Overused in LLMs</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Argues that &quot;machine unlearning&quot; conflates at least three distinct problems: regulatory data deletion, copyright/licensing compliance, and safety behavior removal — each requiring different technical solutions.</li>
+              <li>Most current &quot;unlearning&quot; methods don&#x27;t actually remove knowledge from model weights; they suppress surface outputs while underlying representations remain intact.</li>
+              <li>Calls for more precise terminology to avoid false assurances to regulators and users about what these techniques actually achieve.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.27379" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Formalizing Latent Thoughts: Four Axioms of Thought Representation in LLMs</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Introduces an axiomatic evaluation framework for latent thought representations — metrics independent of benchmark scores that expose representational failures accuracy alone masks.</li>
+              <li>Four proposed axioms assess coherence, separability, stability, and faithfulness of internal representations to the model&#x27;s stated reasoning.</li>
+              <li>High benchmark-scoring models can still have systematically incoherent internal thought representations, with implications for interpretability and trust.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.27378" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>DysLexLens: A Low-Resource LLM Framework for Analysing Dyslexic Learners Insights from Online Forums</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes DysLexLens, an LLM-based analysis framework that mines online forum discussions to surface how dyslexic learners actually experience AI tools — a population often invisible in standard UX research.</li>
+              <li>Uses low-resource techniques to handle the informal, misspelling-rich language common in dyslexia community forums without requiring domain-specific fine-tuning.</li>
+              <li>Highlights gaps in current AI writing/reading tools for dyslexic users, including poor handling of non-standard text input and lack of multi-modal alternatives.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.27619" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -59,75 +119,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Run a vLLM Server on HF Jobs in One Command</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Hugging Face Jobs now supports spinning up a vLLM inference server with a single CLI command, no infra configuration required.</li>
-              <li>Targets researchers and developers who need ephemeral, scalable model serving without managing cloud VMs.</li>
-              <li>Integrates with HF Hub model access and secrets for private model deployments.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/vllm-jobs" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>What happened after 2,000 people tried to hack my AI assistant</h3>
+              <h3>Quoting Jon Udell</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fernando Irarrázaval ran a public prompt-injection challenge: 2,000 participants, 6,000 attempts, $500 in token spend — and the secret held.</li>
-              <li>Most attack vectors were standard jailbreak patterns; the assistant&#x27;s system-prompt isolation and output filtering proved surprisingly robust.</li>
-              <li>Key finding: the cost of a successful attack, not invulnerability, is the real defense metric — budget-constrained attackers gave up, determined ones may not.</li>
+              <li>Jon Udell reframes the &quot;human in the loop&quot; metaphor: rather than humans being a checkpoint inside a machine process, agents should be recruited into a fundamentally human-driven workflow.</li>
+              <li>The distinction matters for how we design agentic systems — human authority and intent should set the loop structure, with agents as assistants rather than orchestrators.</li>
+              <li>Willison amplifies this as a useful mental model for practitioners building agent pipelines who risk inadvertently ceding control to the automation layer.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/26/hack-my-ai-assistant/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Incident Report: CVE-2026-LGTM</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A satirical but technically grounded incident report depicts two competing AI code-review agents entering a 340-comment disagreement loop over a dependency PR.</li>
-              <li>Highlights a real emerging risk: multi-agent systems without escalation or deadlock-breaking logic can burn tokens and block deployments indefinitely.</li>
-              <li>The scenario is hypothetical today but mirrors real patterns already observed in autonomous agent pipelines.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jun/26/incident-report/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.195</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Added CLAUDE_CODE_DISABLE_MOUSE_CLICKS env var to suppress click/drag/hover in fullscreen mode while preserving scroll — useful for terminal multiplexer setups.</li>
-              <li>Fixed a critical hook-matcher bug: hyphenated identifiers (e.g. code-reviewer, mcp__brave-search) were substring-matching instead of exact-matching, causing unintended hook triggers.</li>
-              <li>Users with hooks on hyphenated tool names should upgrade immediately to restore correct behavior.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.195" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.193</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>New autoMode.classifyAllShell setting routes every Bash/PowerShell command through the auto-mode classifier, not just commands matching arbitrary-code-execution patterns.</li>
-              <li>Auto-mode denial reasons now surface in transcripts, the denial toast, and /permissions recent denials — making it much easier to debug blocked commands.</li>
-              <li>Additional improvements to claude.md handling and context management for long sessions.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.193" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-agent-sdk-python: v0.2.110</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Bundles Claude CLI v2.1.191, keeping the Python SDK in sync with the latest CLI improvements.</li>
-              <li>Available immediately via pip install claude-agent-sdk==0.2.110.</li>
-              <li>Regular cadence releases — pin to an exact version in production to avoid unexpected behavior changes.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.110" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/28/jon-udell/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

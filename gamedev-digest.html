@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Dev Morning Digest - June 27, 2026 | Densanon</title>
+  <title>Game Dev Morning Digest - June 29, 2026 | Densanon</title>
   <meta name="description" content="Daily game development news digest - engines, tools, techniques, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 27, 2026</div>
+        <div class="digest-date-badge">June 29, 2026</div>
         <h1>Game Dev Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is dominated by a wave of layoffs and hardware market signals that underscore continued turbulence across major publishers and platform holders. On the tools and engine side, Godot&#x27;s Foundation published its first formal vision statement, setting a clear long-term direction for the open-source ecosystem. Meanwhile, developers are finding clever ways around cloud infrastructure constraints, with WebXR configurators running HDR-quality assets without a single cloud GPU.</p>
+        <p class="digest-intro">Today&#x27;s Game Dev digest surfaces a mix of retro preservation projects, indie developer tooling experiments, and community-driven design insights. From an N64 game engine built on modern open-source libraries to a deep dive on how information theory rescued a word game&#x27;s core loop, there is something useful for builders at every level. The community corner rounds things out with a developer seeking playtesters in Japan for a charming postbox-hunt game.</p>
       </div>
     </section>
 
@@ -29,93 +29,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Vision for the Engine</h3>
-              <span class="digest-source">Godot Engine</span>
+              <h3>Pyrite64: N64 game-engine and editor using Libdragon and tiny3d</h3>
+              <span class="digest-source">Hacker News Game Dev</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Godot Foundation published its first written vision statement, formalizing the engine&#x27;s long-term direction and priorities.</li>
-              <li>A public vision statement signals growing organizational maturity and sets expectations for contributors and studios adopting the engine.</li>
-              <li>Relevant for any team evaluating Godot as a Unity alternative — this articulates what the project is actually optimizing for.</li>
+              <li>Pyrite64 is an open-source N64 game engine and editor built on Libdragon and tiny3d, targeting real hardware and accurate emulation.</li>
+              <li>The project offers an approachable entry point for developers interested in retro console homebrew without having to wire up a low-level SDK from scratch.</li>
+              <li>It demonstrates how modern toolchain ergonomics can be applied to constrained classic hardware — a useful reference for any engine targeting resource-limited platforms.</li>
             </ul>
-            <a href="https://godotengine.org/article/godot-vision-statement-2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/HailToDodongo/pyrite64" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Adobe Acquire Topaz Labs</h3>
-              <span class="digest-source">Game From Scratch</span>
+              <h3>Painless Swift development on unsupported Linux distros</h3>
+              <span class="digest-source">Hacker News Game Dev</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adobe acquired Topaz Labs, the maker of AI-powered upscaling and image enhancement tools widely used in game asset pipelines.</li>
-              <li>The acquisition comes as Adobe faces investor pressure to double down on AI while its stock has taken a significant hit.</li>
-              <li>Studios relying on Topaz tools for texture upscaling and render cleanup should watch for integration changes or subscription shifts post-acquisition.</li>
+              <li>The post walks through using Distrobox to run a supported container image, enabling Swift toolchain installation on distros where official binaries are unavailable.</li>
+              <li>For game developers building server-side game tools or targeting Linux with Swift, this pattern sidesteps dependency hell without modifying the host environment.</li>
+              <li>The approach generalizes to any toolchain with strict OS requirements — a practical trick for cross-platform indie studios.</li>
             </ul>
-            <a href="https://gamefromscratch.com/adobe-acquire-topaz-labs/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Industry &amp; News</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Sony cuts 292 jobs at Destiny maker Bungie</h3>
-              <span class="digest-source">GamesIndustry.biz</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Sony Interactive Entertainment laid off 292 employees at Bungie, continuing a pattern of contraction at acquired studios.</li>
-              <li>Bungie&#x27;s headcount has been significantly reduced since the $3.6B Sony acquisition — these cuts compound earlier rounds.</li>
-              <li>Live-service titles face mounting pressure to justify large head counts when player retention falters.</li>
-            </ul>
-            <a href="https://www.gamesindustry.biz/sony-cuts-292-jobs-at-destiny-maker-bungie" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>PlayStation hardware sales fall to their lowest May total since 2000 | US Monthly Charts</h3>
-              <span class="digest-source">GamesIndustry.biz</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>PS5 unit sales in the US dropped 58% year-on-year in May 2026, reaching the lowest May figure since 2000.</li>
-              <li>Xbox hit its lowest ever recorded May sales, down 12% year-on-year — both major console platforms are contracting simultaneously.</li>
-              <li>Weak hardware attach rates compress the addressable market for console-exclusive titles and shift leverage toward PC and cross-platform releases.</li>
-            </ul>
-            <a href="https://www.gamesindustry.biz/playstation-hardware-sales-fall-to-their-lowest-may-total-since-2000-us-monthly-charts" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Steam Machine sticker shock, even more Ubisoft layoffs, and another Xbox price hike - Patch Notes #58</h3>
-              <span class="digest-source">Game Developer</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Valve&#x27;s Steam Machine pricing landed higher than expected, raising questions about its addressable market versus Steam Deck.</li>
-              <li>Ubisoft confirmed another round of layoffs as the publisher continues restructuring under sustained financial pressure.</li>
-              <li>A further Xbox price hike signals Microsoft is prioritizing margin over hardware volume — reinforcing Game Pass and PC as the core business.</li>
-            </ul>
-            <a href="https://www.gamedeveloper.com/business/steam-machine-sticker-shock-even-more-ubisoft-layoffs-and-another-xbox-price-hike-patch-notes-58" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Epic&#x27;s Sweeney claims Steam AI labels are &quot;really irresponsible of Valve&quot;</h3>
-              <span class="digest-source">GamesIndustry.biz</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Tim Sweeney publicly criticized Valve&#x27;s AI disclosure labels on Steam, calling them irresponsible and potentially damaging to developers using AI tools.</li>
-              <li>Valve&#x27;s policy requires games to disclose AI-generated content — Sweeney argues the stigma this creates is unjustified.</li>
-              <li>The dispute surfaces a real platform-level tension: disclosure norms for AI content are being set unilaterally by storefronts, not by industry consensus.</li>
-            </ul>
-            <a href="https://www.gamesindustry.biz/epics-sweeney-claims-steam-ai-labels-are-really-irresponsible-of-valve" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>The Attention Economy: How Games Win Mind Share in 2026</h3>
-              <span class="digest-source">80 Level</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Players have more content competing for their time than ever — the constraint is attention, not access.</li>
-              <li>The article argues that the real battleground for 2026 games is capturing initial mind share in the first few minutes of exposure, not retention systems.</li>
-              <li>Indie developers in particular need to front-load their strongest hook since player patience at the discovery layer has collapsed.</li>
-            </ul>
-            <a href="https://80.lv/articles/the-attention-economy-how-games-win-mind-share-in-2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://carette.xyz/posts/distrobox_and_swift/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -125,27 +59,57 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Miris Built a Car Configurator Without Pixel Streaming: Here&#x27;s What They Found</h3>
-              <span class="digest-source">80 Level</span>
+              <h3>How information theory saved my word game</h3>
+              <span class="digest-source">Hacker News Game Dev</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Miris delivered an interactive WebXR car configurator with HDR-grade materials to desktop, tablet, and Apple Vision Pro — from a single 1.2GB source asset, with zero cloud GPU per viewer.</li>
-              <li>The approach sidesteps Pixel Streaming&#x27;s per-session cloud costs entirely, making high-fidelity 3D interactive experiences economically viable at scale.</li>
-              <li>Relevant for any team building product visualizers, game demos, or interactive content that needs to run in-browser without a dedicated render server.</li>
+              <li>The developer applied information-theoretic principles — entropy and expected information gain — to score and guide player guesses, giving the game a mathematically grounded feedback loop.</li>
+              <li>This technique, popularized by Wordle solvers, adapts to any game mechanic where players narrow a solution space: puzzle, deduction, and hidden-information titles all benefit.</li>
+              <li>The writeup is a practical example of borrowing rigorously from adjacent fields to solve a game feel problem rather than relying on gut instinct alone.</li>
             </ul>
-            <a href="https://80.lv/articles/miris-built-a-car-configurator-without-pixel-streaming-here-s-what-they-found/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://motplot.app/helloworld" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Temtem: Developing Massively Multiplayer Creature-Collection Adventure</h3>
-              <span class="digest-source">80 Level</span>
+              <h3>Show HN: Calybris Core, a deterministic audit engine for decisions in Rust</h3>
+              <span class="digest-source">Hacker News Game Dev</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Crema discusses the technical and creative challenges of blending creature collection, survival crafting, and real-time combat in an MMO context.</li>
-              <li>Supporting both solo and co-op play in the same world required significant systems design work to avoid either mode feeling like a bolted-on afterthought.</li>
-              <li>A useful case study for any team designing hybrid social/single-player experiences where progression and world state must reconcile across both modes.</li>
+              <li>Calybris Core is a deterministic, auditable decision-execution engine in Rust — a property critical for lockstep multiplayer, replay systems, and game AI verification.</li>
+              <li>Its audit trail approach means every decision can be replayed and inspected, mapping cleanly onto game dev needs like anti-cheat, deterministic simulations, and automated regression testing.</li>
+              <li>Written in Rust, it integrates naturally as a native plugin in engines like Godot or Bevy where determinism and performance are both required.</li>
             </ul>
-            <a href="https://80.lv/articles/temtem-developing-massively-multiplayer-creature-collection-adventure/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/emirhuseynrmx/calybris-core" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>A wire-faithful, browser-based re-creation of the Atari ST game MIDI Maze</h3>
+              <span class="digest-source">Hacker News Game Dev</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>MIDI Maze (1987) was one of the first networked multiplayer games, linking Atari STs via MIDI cables — this JavaScript port preserves that wire-faithful networking model in the browser.</li>
+              <li>The project is a strong case study in faithfully emulating original network protocols and game logic, useful for anyone interested in game preservation or historical multiplayer architecture.</li>
+              <li>Running entirely in the browser makes it accessible without setup, lowering the barrier for researchers, educators, and retro enthusiasts to study this landmark piece of multiplayer history.</li>
+            </ul>
+            <a href="https://github.com/diegoparrilla/midi-maze-js" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Ask HN: Would someone in Japan try out my game?</h3>
+              <span class="digest-source">Hacker News Game Dev</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>An indie developer built a postbox-hunt game themed around Japan&#x27;s distinctive mailboxes and is seeking playtesters in Japan to validate the experience for its target audience.</li>
+              <li>The post is a candid look at the challenge indie devs face reaching culturally specific audiences without a local network or marketing budget.</li>
+              <li>Reaching niche geographic communities often requires platform-specific strategies — Japanese social platforms, regional Discord servers, local game jams — and the HN thread may surface practical advice.</li>
+            </ul>
+            <a href="https://news.ycombinator.com/item?id=48707471" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
