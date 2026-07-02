@@ -77,14 +77,14 @@
           </div>
           <div class="da-plan pro">
             <h3>Pro</h3>
-            <div class="da-price">$59 <small>one-time</small></div>
+            <div class="da-price">$59.99 <small>one-time</small></div>
             <ul>
               <li>Everything in Free</li>
               <li>Proactive meeting prep &amp; briefings</li>
               <li>Background reminders &amp; daily routines</li>
               <li>Bring-your-own cloud brain (Claude/ChatGPT) — desktop &amp; phone</li>
             </ul>
-            <a class="btn btn-primary" href="https://densanon.com/densassistant.html" id="buyBtn" style="width:100%;box-sizing:border-box;text-align:center;">Buy Pro — $59</a>
+            <a class="btn btn-primary" href="https://buy.stripe.com/4gM9AV7Q0c1E0iZh1r9sk05" id="buyBtn" style="width:100%;box-sizing:border-box;text-align:center;">Buy Pro — $59.99</a>
           </div>
         </div>
       </div>
@@ -112,8 +112,8 @@
           'Free · Windows desktop · v' + (v.version || '') + ' · no account needed';
       })
       .catch(function () {});
-    // TODO(Stripe): point #buyBtn at the Stripe Payment Link once created; on success email the
-    // buyer a license key minted with `densassistant license-keygen --email <buyer>`.
+    // #buyBtn → Stripe Payment Link (checkout.session.completed webhook → licensing.densanon.com
+    // Worker mints/emails the key from the pre-signed pool).
   </script>
 </body>
 </html>
