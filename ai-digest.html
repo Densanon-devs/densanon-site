@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - June 29, 2026 | Densanon</title>
+  <title>AI Morning Digest - July 02, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,101 +15,39 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">June 29, 2026</div>
+        <div class="digest-date-badge">July 02, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s AI digest centers on the evolving architecture of intelligent agents — from how personality shapes multi-agent team outcomes to new training paradigms that give LLMs genuine &quot;what-if&quot; planning capabilities. Research also pushes into verifiability and trustworthiness: a categorical framework for building truth-preserving models, and a sharp critique of &quot;machine unlearning&quot; as an overloaded and often misleading concept.</p>
+        <p class="digest-intro">Claude Sonnet 5 launched yesterday with performance reportedly close to Opus 4.8 but at lower cost and latency, a notable mid-tier upgrade from Anthropic. The Department of Commerce also lifted export controls on Claude Fable 5 and Mythos 5, restoring global access. On the open-weights front, Ornith-1.0 brings a self-scaffolding agentic coding model (MIT, 9B–397B variants) built on Gemma 4 and Qwen 3.5.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>When Does Personality Composition Matter for Multi-Agent LLM Teams?</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>What&#x27;s new in Claude Sonnet 5</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Personality prompting measurably shifts agent behavior, but its impact on objective task outcomes depends heavily on the task type — not all domains benefit equally from personality diversity.</li>
-              <li>Low-agreeableness agents generate more adversarial language, which can sharpen debate-style tasks or derail cooperative workflows depending on team composition.</li>
-              <li>The findings suggest careful personality assignment in multi-agent pipelines, rather than uniform or random prompting, can improve structured reasoning tasks.</li>
+              <li>Claude Sonnet 5 launched June 30 with performance described as close to Opus 4.8 — a meaningful mid-tier jump that narrows the gap between the sonnet and frontier tiers.</li>
+              <li>Willison&#x27;s breakdown focuses on the developer-facing &#x27;what&#x27;s new&#x27; docs rather than the marketing post, making it the most actionable summary of what actually changed.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.27443" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/30/claude-sonnet-5/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Internalizing the Future: A Unified Agentic Training Paradigm for World Model Planning</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>Quoting Anthropic</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Current LLM agents are fundamentally reactive; this paper introduces a training paradigm that internalizes &quot;what-if&quot; world-model reasoning directly into the agent&#x27;s weights.</li>
-              <li>The approach enables genuine long-horizon planning by having agents simulate outcomes before committing to actions, closing the gap between current agents and human-style deliberative reasoning.</li>
-              <li>The unified training objective shows improved performance on sequential decision-making benchmarks without requiring separate world-model modules at inference time.</li>
+              <li>The US Department of Commerce lifted export controls on Claude Fable 5 and Mythos 5, with Anthropic restoring global access the following day.</li>
+              <li>This policy reversal may significantly broaden the availability of frontier Anthropic models in previously restricted regions.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.27483" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AI-Model Network: Concept, Current State and Future</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Proposes a network layer for AI models analogous to how the Internet networked computers — shifting value from individual model capability to collaborative sharing and specialization across models.</li>
-              <li>Outlines the current landscape of model APIs, routing, and orchestration as early infrastructure for this AI-model internet.</li>
-              <li>Argues that the combinatorial value of model networks will dwarf single-model capability gains, reshaping how AI products are architected.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.27382" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Odyssey: Constructing Verifiable Local Truth-Preserving Foundation Models</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Introduces ODYSSEY, a categorical mathematical framework for building foundation models that are provably local truth-preserving — outputs grounded in verifiable local contexts rather than global hallucination.</li>
-              <li>The approach decomposes model architecture into &quot;foundries&quot;: composable building blocks that specify local representations and cover sets, enabling formal verification properties.</li>
-              <li>Provides a principled path toward models whose outputs can be externally audited for factual consistency, addressing a core failure mode in current LLMs.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.27593" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Position: The Term &quot;Machine Unlearning&quot; Is Overused in LLMs</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues that &quot;machine unlearning&quot; conflates at least three distinct problems: regulatory data deletion, copyright/licensing compliance, and safety behavior removal — each requiring different technical solutions.</li>
-              <li>Most current &quot;unlearning&quot; methods don&#x27;t actually remove knowledge from model weights; they suppress surface outputs while underlying representations remain intact.</li>
-              <li>Calls for more precise terminology to avoid false assurances to regulators and users about what these techniques actually achieve.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.27379" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Formalizing Latent Thoughts: Four Axioms of Thought Representation in LLMs</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Introduces an axiomatic evaluation framework for latent thought representations — metrics independent of benchmark scores that expose representational failures accuracy alone masks.</li>
-              <li>Four proposed axioms assess coherence, separability, stability, and faithfulness of internal representations to the model&#x27;s stated reasoning.</li>
-              <li>High benchmark-scoring models can still have systematically incoherent internal thought representations, with implications for interpretability and trust.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.27378" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>DysLexLens: A Low-Resource LLM Framework for Analysing Dyslexic Learners Insights from Online Forums</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Proposes DysLexLens, an LLM-based analysis framework that mines online forum discussions to surface how dyslexic learners actually experience AI tools — a population often invisible in standard UX research.</li>
-              <li>Uses low-resource techniques to handle the informal, misspelling-rich language common in dyslexia community forums without requiring domain-specific fine-tuning.</li>
-              <li>Highlights gaps in current AI writing/reading tools for dyslexic users, including poor handling of non-standard text input and lack of multi-modal alternatives.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2606.27619" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/30/anthropic/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -119,15 +57,97 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting Jon Udell</h3>
+              <h3>Hugging Face and Cerebras bring Gemma 4 to real-time voice AI</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Cerebras chip throughput combined with Gemma 4 enables sub-100ms voice AI inference — a practical path to real-time conversational agents without relying on proprietary API services.</li>
+              <li>The integration is fully open and documented on Hugging Face, lowering the barrier to building low-latency voice pipelines on open weights.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/cerebras-gemma4-voice-ai" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Ornith-1.0: Self-Scaffolding LLMs for Agentic Coding</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Jon Udell reframes the &quot;human in the loop&quot; metaphor: rather than humans being a checkpoint inside a machine process, agents should be recruited into a fundamentally human-driven workflow.</li>
-              <li>The distinction matters for how we design agentic systems — human authority and intent should set the loop structure, with agents as assistants rather than orchestrators.</li>
-              <li>Willison amplifies this as a useful mental model for practitioners building agent pipelines who risk inadvertently ceding control to the automation layer.</li>
+              <li>Ornith-1.0 is the first model from DeepReinforce: MIT-licensed open weights built on Gemma 4 and Qwen 3.5 with variants from 9B Dense up to 397B MoE, purpose-built for agentic code generation.</li>
+              <li>The self-scaffolding design means the model generates its own tool-use structure, reducing prompt engineering overhead in coding agent pipelines.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/28/jon-udell/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jun/29/ornith/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Featuring Every Eval Ever Results on Hugging Face Model Pages</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Hugging Face is surfacing community-submitted benchmark results directly on model pages, making cross-model eval comparison practical without hunting through separate leaderboards.</li>
+              <li>The &#x27;Every Eval Ever&#x27; initiative could become the de facto eval aggregator as community-run benchmarks continue to proliferate faster than official leaderboards can track.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/eee-community-evals" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Have your agent record video demos of its work with shot-scraper video</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>shot-scraper 1.10 adds a &#x27;video&#x27; command that takes a YAML storyboard and uses Playwright to record a full video of an agent&#x27;s web interactions — useful for debugging and demo creation.</li>
+              <li>Willison argues agents should produce demo videos as first-class artifacts; this tool makes it turnkey with a simple declarative storyboard config.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Jun/30/shot-scraper-video/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ScarfBench: Benchmarking AI Agents for Enterprise Java Framework Migration</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>IBM Research introduces ScarfBench, a benchmark targeting AI agents on enterprise Java migration tasks — one of the highest-value, highest-risk real-world coding agent use cases.</li>
+              <li>Enterprise framework migrations are large, multi-file, context-heavy tasks; this fills a gap left by existing benchmarks that favor greenfield or toy-scale problems.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/ibm-research/scarfbench" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Constructive Alignment: Governing Preference Dynamics in Human-AI Interaction</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Challenges the core assumption of most alignment work — that human preferences are static targets — presenting evidence they are layered and dynamically shaped by AI interaction itself.</li>
+              <li>Proposes &#x27;constructive alignment&#x27; as a framework for governing preference drift, with direct implications for RLHF pipelines and long-running agentic deployments.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.00001" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>A Single Rewrite Suffices: Empirical Lessons from Production Skill Description Optimization</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>In multi-skill enterprise agent routing, overlapping descriptions cause LLM misroutes (&#x27;skill collision&#x27;); the paper shows one targeted rewrite is sufficient to resolve most collisions.</li>
+              <li>Iterative rewriting beyond the first pass yields sharply diminishing returns — a practical finding for anyone building routing layers over large agent skill catalogs.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2606.30775" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Making Failure Safe: A Constrained, Verifiable Agent Framework for Open-Web Data Collection</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes a constrained agent architecture for LLM-generated web scrapers that adds verification steps to catch dependency errors, broken selectors, and schema mismatches before they corrupt pipelines.</li>
+              <li>Addresses a real production pain point: direct LLM scraper generation is unreliable on heterogeneous real-world pages, and this framework adds verifiable safety guarantees to the generation loop.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.00035" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
