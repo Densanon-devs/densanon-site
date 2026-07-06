@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - July 02, 2026 | Densanon</title>
+  <title>Computation Morning Digest - July 06, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 02, 2026</div>
+        <div class="digest-date-badge">July 06, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s biggest computation stories center on platform control and market pressure: Nvidia is piloting a double-dip revenue model taking a percentage of AI cloud earnings on top of hardware sales, while Meta is reportedly entering the compute rental market to challenge AWS directly. On the hardware side, Intel published initial GCC compiler patches for cross-vendor AI Compute Extensions (ACE), and OpenAI floated a 5% government equity stake as AI lab governance becomes a live policy issue.</p>
+        <p class="digest-intro">Today&#x27;s digest leads with Jim Keller&#x27;s Fab2 startup aiming to mass-produce small semiconductor fabs, and a significant Linux DRM scheduler patch delivering major GPU job-submission latency gains. Elsewhere: SpaceX&#x27;s satellite burn-up controversy heats up, ReactOS clears a Half-Life 2 milestone, and a busy day of Linux graphics driver and gaming-layer updates rounds things out.</p>
       </div>
     </section>
 
@@ -29,114 +29,123 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel Posts Initial GCC Compiler Patches For AI Compute Extensions &quot;ACE&quot;</h3>
+              <h3>Jim Keller&#x27;s startup is building a factory to mass-produce small semiconductor fabs —Atomic Semi rebrands as &#x27;Fab2&#x27; underlining intended role as a &#x27;fab fab&#x27;</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Atomic Semi, co-founded by chip architect Jim Keller and DIY fab pioneer Sam Zeloof, rebrands as Fab2 and shifts operations to Texas.</li>
+              <li>The company&#x27;s mission is to mass-produce small semiconductor fabrication tools — a factory that makes fabs.</li>
+              <li>If successful, Fab2 could lower the barrier to entry for small-scale chip fabrication significantly.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/atomic-semi-rebrands-as-fab2-and-shifts-operations-to-texas" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux DRM Scheduler Patches Yield Massive Improvement For Job Submission Latency</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel and AMD co-developed ACE (AI Compute Extensions) to standardize matrix multiplication support across x86, replacing the fragmented AMX/VNNI landscape with a cross-vendor specification.</li>
-              <li>Initial GCC patches bring compiler-level support, enabling software to target the new ISA without vendor lock-in — a meaningful step toward unified AI acceleration on commodity x86 hardware.</li>
+              <li>Patches to the Linux kernel&#x27;s Direct Rendering Manager scheduler show much lower GPU job submission latency when the system is loaded with many runnable CPU processes.</li>
+              <li>The DRM scheduler is shared across multiple graphics drivers, so AMD, Intel, and other DRM-based driver users all stand to benefit.</li>
+              <li>A meaningful systems-level win for workloads that mix heavy CPU and GPU utilization concurrently.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Intel-GCC-ACE-AI-Patches" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/DRM-Scheduler-Lower-Job-Submit" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>RISC-V RVV Vector Performance Benchmarks With The SpacemiT K3 SoC</h3>
+              <h3>SpaceX vaporizes 260 Starlink satellites in six months using Earth&#x27;s atmosphere — new environmental concerns emerge over burning 2,700-pound orbital data centers, FCC seeks to exempt satellites from regulations</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>SpaceX deorbited 260 Starlink satellites in six months via atmospheric burn-up, with hundreds more planned to follow.</li>
+              <li>Each satellite weighs roughly 2,700 pounds, raising growing environmental concern over the cumulative atmospheric impact of mass deorbiting.</li>
+              <li>The FCC is reportedly seeking to exempt satellites from certain environmental regulations as the debate grows.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/space/spacex-vaporizes-260-starlink-satellites-in-six-months-using-earths-atmosphere-new-environmental-concerns-emerge-over-burning-2-700-pound-orbital-data-centers-fcc-seeks-to-exempt-satellites-from-regulations" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>FEX 2607 Optimizing For Yet-To-Be-Released ARM 256-bit SVE2 Hardware</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>SpacemiT K3 is one of the first RISC-V SoCs to implement the RVA23 profile with full RVV vector support, making it a real benchmark target for gauging RISC-V&#x27;s competitive position against ARM and x86.</li>
-              <li>Results show meaningful vector throughput gains from RVV, signaling that RISC-V is maturing beyond embedded use into performance-sensitive compute workloads.</li>
+              <li>FEX Emulator&#x27;s July release pre-emptively adds optimizations for ARM 256-bit SVE2, targeting hardware not yet publicly available.</li>
+              <li>FEX enables running x86/x86_64 Linux software on ARM64, including Wine and Valve&#x27;s Steam Play (Proton) for Windows gaming.</li>
+              <li>The Valve-backed project continues to push ARM gaming compatibility ahead of the hardware curve.</li>
             </ul>
-            <a href="https://www.phoronix.com/review/risc-v-rvv-vector-benchmarks" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/FEX-2607-Emulator" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel hikes pricing for its flagship desktop PC chips by up to $50</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Intel raised recommended prices on its Arrow Lake Refresh flagship desktop CPUs by up to $50 with no corresponding performance improvements since their March launch.</li>
-              <li>The increase compounds pressure on an already declining PC market, arriving the same quarter that U.S. shipments fell 7% with recovery not projected until 2029.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/intel-hikes-pricing-for-its-flagship-desktop-pc-chips-by-up-to-usd50-official-core-ultra-270k-plus-and-250k-plus-product-pages-now-recommend-prices-of-up-to-usd349-and-usd229-respectively" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Industry &amp; HPC</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Nvidia offers to take a cut of AI cloud revenue on top of hardware sales in new optional financing vehicle</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Nvidia is piloting an optional financing model where it provides GPU capital in exchange for a percentage of AI cloud revenue — on top of the original hardware sale proceeds.</li>
-              <li>This repositions Nvidia from a one-time hardware vendor to an ongoing platform stakeholder, with long-term margin implications for cloud operators who accept the deal.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/nvidia-to-take-a-cut-of-ai-cloud-revenue-on-top-of-hardware-sales" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Meta reportedly plans to rent out its AI compute, sending AI stocks tumbling</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Meta is weighing entry into the cloud compute market as &quot;Meta Compute,&quot; offering either hosted AI model inference or raw GPU capacity to developers — directly competing with AWS, Azure, and GCP.</li>
-              <li>The news sent AI infrastructure stocks lower on margin-compression fears, underscoring how much existing cloud AI revenue depends on hyperscalers not being supply-side competitors.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/meta-reportedly-plans-to-rent-out-its-ai-compute" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>OpenAI mulling giving US gov&#x27;t a 5% stake in the company, days after Washington delayed GPT-5.6</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Sam Altman reportedly pitched giving the US government a 5% equity stake in OpenAI, framing it as a policy concession connected to the delayed GPT-5.6 public release.</li>
-              <li>The proposal would extend to other leading US AI labs contributing to an Alaska-style public revenue fund — a significant precedent for state co-ownership of frontier AI infrastructure.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/openai-floats-5-percent-government-stake-days-after-washington-delayed-gpt-5-6" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>U.S PC shipments drop 7%, market isn&#x27;t expected to bounce back until 2029</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>U.S. PC shipments fell 7% in the first half of 2026, driven by tariff-induced price hikes and component shortages, per Omdia research.</li>
-              <li>Recovery is not projected until 2029, suggesting a multi-year structural downturn with downstream effects across the full PC component supply chain.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/u-s-pc-shipments-drop-7-percent-market-isnt-expected-to-bounce-back-until-2029-price-hikes-and-component-shortages-take-hold-as-pc-market-declines-omdia-report-suggests" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux Kernel Developers Again Discussing AI Agent Attribution - Potentially Dropping It</h3>
+              <h3>ReactOS &quot;Open-Source Windows&quot; Project Now Capable Of Running Half-Life 2</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Linux kernel developers are debating whether to retire the &quot;Assisted-by&quot; tag that currently identifies AI-assisted patches, with some advocating to drop the requirement entirely.</li>
-              <li>The discussion reflects broader uncertainty about how open-source communities should track and govern AI contributions to critical infrastructure — a governance question with no clean precedent.</li>
+              <li>ReactOS, the open-source Windows-compatible OS, can now run Half-Life 2 — just one month after achieving Half-Life 1 compatibility.</li>
+              <li>Rapid back-to-back gains suggest accelerating progress in the project&#x27;s Win32 subsystem coverage.</li>
+              <li>Marks a notable milestone for the long-running effort to run real Windows software without Windows.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-AI-Attribution-Again" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Half-Life-2-ReactOS" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>KDE Plasma Affected By Arbitrary Code Execution To Break Sandboxes With &quot;Open New Window&quot;</h3>
+              <h3>DXVK 3.0.1 Released With More Game Fixes, Other Improvements</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A publicly disclosed but unpatched arbitrary code execution vulnerability in KDE Plasma allows attackers to break out of sandboxed environments via the &quot;Open New Window&quot; feature.</li>
-              <li>The flaw is particularly concerning for users running sandboxed applications on KDE, as a sandbox escape elevates otherwise contained exploits to full code execution on the host.</li>
+              <li>DXVK 3.0.1 ships game-specific fixes and general improvements following the major 3.0 release in late June.</li>
+              <li>DXVK is a core component of Valve&#x27;s Steam Play (Proton), translating Direct3D calls so Windows games run on Linux.</li>
+              <li>Ongoing maintenance keeps the compatibility layer current as more titles enter the Proton catalog.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/KDE-Plasma-ACE-New-Window" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/DXVK-3.0.1-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.2-rc2 Released: &quot;Things Look Very Normal&quot;</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Linux 7.2-rc2 is out for testing, with Linus describing the development cycle as stable and unremarkable.</li>
+              <li>The stable Linux 7.2 release is targeted for August 2026.</li>
+              <li>A quiet rc2 typically signals a clean merge window with fewer last-minute surprises heading toward final release.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.2-rc2-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Reviewer tests &#x27;RTX 4080M&#x27; desktop graphics card powered by salvaged laptop silicon — performs worse than slightly more expensive RX 9070 GRE but draws only 100W in games</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A desktop card built around a salvaged RTX 4080M laptop GPU sells for roughly $400 in China and trails the RX 9070 GRE in nearly every game tested.</li>
+              <li>Its standout trait is a 100W gaming TDP — dramatically lower than standard desktop GPUs at a comparable price point.</li>
+              <li>Highlights a growing gray market for repurposed mobile silicon repackaged as desktop components.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/gpus/reviewer-tests-rtx-4080m-desktop-graphics-card-powered-by-salvaged-laptop-silicon-performs-worse-than-slightly-more-expensive-rx-9070-gre-but-draws-only-100w-in-games" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>RAMpocalyse pricing prompts maker to construct his own memory using ancient Apollo-era tech — USB drive resurrects hand-threaded magnetic core memory using salvaged Russian computer parts</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A maker built a functional magnetic core memory USB drive using home CNC, 3D printing, and salvaged Russian computer parts.</li>
+              <li>The device stores only 64 bits — a working homage to Apollo-era technology, not a serious answer to RAM pricing.</li>
+              <li>Demonstrates that magnetic core memory hand-threading techniques can be recreated with modern hobbyist tooling.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/storage/rampocalyse-pricing-prompts-maker-to-construct-his-own-memory-using-ancient-apollo-era-tech-usb-drive-resurrects-hand-threaded-magnetic-core-memory-using-salvaged-russian-computer-parts" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>US Navy is flight-testing 3D printed fighter jet parts that cut repair times in half — forward-deployed 3D printers generate composite parts, flight testing to begin on operational F/A-18 Super Hornets</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The US Navy is testing 3D-printed composite patches for F/A-18 Super Hornets manufactured at forward-deployed bases, cutting repair times in half.</li>
+              <li>On-site printing removes dependency on a long logistics tail stretching thousands of miles.</li>
+              <li>Flight testing is proceeding on operational aircraft — a significant step toward certifying additive manufacturing for frontline maintenance.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/3d-printing/us-navy-testing-3d-printed-fighter-jet-parts-for-quick-repairs-composite-parts-printed-at-forward-deployed-3d-printers-to-be-flight-tested-on-operational-f-a-18-super-hornets" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

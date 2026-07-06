@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - July 02, 2026 | Densanon</title>
+  <title>AI Morning Digest - July 06, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,139 +15,113 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 02, 2026</div>
+        <div class="digest-date-badge">July 06, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Claude Sonnet 5 launched yesterday with performance reportedly close to Opus 4.8 but at lower cost and latency, a notable mid-tier upgrade from Anthropic. The Department of Commerce also lifted export controls on Claude Fable 5 and Mythos 5, restoring global access. On the open-weights front, Ornith-1.0 brings a self-scaffolding agentic coding model (MIT, 9B–397B variants) built on Gemma 4 and Qwen 3.5.</p>
+        <p class="digest-intro">Today&#x27;s pool centers on the practical reality of AI-assisted development: real cost/benefit data from building sqlite-utils 4.0 with Claude Fable, a reliability regression where newer models hallucinate tool schema fields, and Claude Code v2.1.200 flipping permission mode to Manual by default. Rounding it out: DSPy-driven prompt optimization, a new coding agent alpha, and the Current AI open-source gap map.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>What&#x27;s new in Claude Sonnet 5</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Claude Sonnet 5 launched June 30 with performance described as close to Opus 4.8 — a meaningful mid-tier jump that narrows the gap between the sonnet and frontier tiers.</li>
-              <li>Willison&#x27;s breakdown focuses on the developer-facing &#x27;what&#x27;s new&#x27; docs rather than the marketing post, making it the most actionable summary of what actually changed.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jun/30/claude-sonnet-5/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Quoting Anthropic</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The US Department of Commerce lifted export controls on Claude Fable 5 and Mythos 5, with Anthropic restoring global access the following day.</li>
-              <li>This policy reversal may significantly broaden the availability of frontier Anthropic models in previously restricted regions.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jun/30/anthropic/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Hugging Face and Cerebras bring Gemma 4 to real-time voice AI</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Cerebras chip throughput combined with Gemma 4 enables sub-100ms voice AI inference — a practical path to real-time conversational agents without relying on proprietary API services.</li>
-              <li>The integration is fully open and documented on Hugging Face, lowering the barrier to building low-latency voice pipelines on open weights.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/cerebras-gemma4-voice-ai" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Ornith-1.0: Self-Scaffolding LLMs for Agentic Coding</h3>
+              <h3>sqlite-utils 4.0rc2, mostly written by Claude Fable (for about $149.25)</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Ornith-1.0 is the first model from DeepReinforce: MIT-licensed open weights built on Gemma 4 and Qwen 3.5 with variants from 9B Dense up to 397B MoE, purpose-built for agentic code generation.</li>
-              <li>The self-scaffolding design means the model generates its own tool-use structure, reducing prompt engineering overhead in coding agent pipelines.</li>
+              <li>Claude Fable 5 drove the bulk of the work from 4.0rc1 to a stable 4.0 release on a mature SemVer project with real breaking-change constraints.</li>
+              <li>Transparent cost breakdown ($149.25 total) gives a concrete data point for AI-assisted open-source maintenance budgets.</li>
+              <li>Demonstrates AI works well even when careful compatibility review is required — not just greenfield code.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/29/ornith/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jul/5/sqlite-utils-fable/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Featuring Every Eval Ever Results on Hugging Face Model Pages</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Hugging Face is surfacing community-submitted benchmark results directly on model pages, making cross-model eval comparison practical without hunting through separate leaderboards.</li>
-              <li>The &#x27;Every Eval Ever&#x27; initiative could become the de facto eval aggregator as community-run benchmarks continue to proliferate faster than official leaderboards can track.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/eee-community-evals" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Have your agent record video demos of its work with shot-scraper video</h3>
+              <h3>Better Models: Worse Tools</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>shot-scraper 1.10 adds a &#x27;video&#x27; command that takes a YAML storyboard and uses Playwright to record a full video of an agent&#x27;s web interactions — useful for debugging and demo creation.</li>
-              <li>Willison argues agents should produce demo videos as first-class artifacts; this tool makes it turnkey with a simple declarative storyboard config.</li>
+              <li>Claude Opus 4.8 was observed injecting invented fields into the nested edits[] array of a tool call that doesn&#x27;t define those fields.</li>
+              <li>The edit content itself is usually correct, but the extra fields break strict schema validation downstream.</li>
+              <li>A useful reminder that capability gains in newer models don&#x27;t guarantee better schema discipline — test tool-call fidelity explicitly.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jun/30/shot-scraper-video/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ScarfBench: Benchmarking AI Agents for Enterprise Java Framework Migration</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>anthropics/claude-code: v2.1.200</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>IBM Research introduces ScarfBench, a benchmark targeting AI agents on enterprise Java migration tasks — one of the highest-value, highest-risk real-world coding agent use cases.</li>
-              <li>Enterprise framework migrations are large, multi-file, context-heavy tasks; this fills a gap left by existing benchmarks that favor greenfield or toy-scale problems.</li>
+              <li>AskUserQuestion dialogs no longer auto-continue by default; idle timeout must be explicitly opted into via /config.</li>
+              <li>Default permission mode is now &#x27;Manual&#x27; across the CLI, VS Code, and JetBrains — breaking change for workflows that relied on automatic continuation.</li>
+              <li>The --permission-mode manual flag and &quot;defaultMode&quot;: &quot;manual&quot; config key are both accepted.</li>
             </ul>
-            <a href="https://huggingface.co/blog/ibm-research/scarfbench" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Constructive Alignment: Governing Preference Dynamics in Human-AI Interaction</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Challenges the core assumption of most alignment work — that human preferences are static targets — presenting evidence they are layered and dynamically shaped by AI interaction itself.</li>
-              <li>Proposes &#x27;constructive alignment&#x27; as a framework for governing preference drift, with direct implications for RLHF pipelines and long-running agentic deployments.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.00001" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.200" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A Single Rewrite Suffices: Empirical Lessons from Production Skill Description Optimization</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>Using DSPy to evaluate and improve Datasette Agent&#x27;s SQL system prompts</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>In multi-skill enterprise agent routing, overlapping descriptions cause LLM misroutes (&#x27;skill collision&#x27;); the paper shows one targeted rewrite is sufficient to resolve most collisions.</li>
-              <li>Iterative rewriting beyond the first pass yields sharply diminishing returns — a practical finding for anyone building routing layers over large agent skill catalogs.</li>
+              <li>DSPy&#x27;s optimization loop was applied to the system prompt of a SQL-generating agent, finding improvements that manual iteration had missed.</li>
+              <li>The experiment was spun up same-day after a DSPy keynote at AIE, showing how quickly the tooling can be applied to real prompts.</li>
+              <li>Good reference for anyone running LLM agents over structured data who wants a systematic alternative to trial-and-error prompt tuning.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2606.30775" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jul/2/dspy-datasette-agent-prompts/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Making Failure Safe: A Constrained, Verifiable Agent Framework for Open-Web Data Collection</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>Fable&#x27;s judgement</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes a constrained agent architecture for LLM-generated web scrapers that adds verification steps to catch dependency errors, broken selectors, and schema mismatches before they corrupt pipelines.</li>
-              <li>Addresses a real production pain point: direct LLM scraper generation is unreliable on heterogeneous real-world pages, and this framework adds verifiable safety guarantees to the generation loop.</li>
+              <li>Claude Code team tip (from Cat Wu and Thariq Shihipar at AIE): give Fable and Opus latitude to make their own decisions rather than over-specifying steps.</li>
+              <li>Concrete example: don&#x27;t dictate a testing approach — Fable produces better tests when given the goal and freedom to choose the method.</li>
+              <li>Applies to Opus too, though the effect is most pronounced with Fable.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.00035" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jul/3/judgement/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>llm-coding-agent 0.1a0</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>New early-alpha Python library building a minimal coding agent on top of Willison&#x27;s LLM library, now that it has matured into an agent framework.</li>
+              <li>Uses Claude Fable 5 as the underlying model in initial experiments.</li>
+              <li>Bootstrapped from a python-lib-template; a useful reference for anyone building lightweight coding agents without heavy frameworks.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Jul/2/llm-coding-agent/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Open Source AI Gap Map</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Current AI (non-profit, $400M committed, founded at the Paris AI Action Summit Feb 2025) launched a Gap Map indexing where open-source AI alternatives are missing.</li>
+              <li>Aims to build a &#x27;public option for AI&#x27; by surfacing the highest-leverage gaps in the open-source ecosystem.</li>
+              <li>Useful resource for identifying where proprietary tools still have no viable open alternative.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Jul/3/open-source-ai-gap-map/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Building a World Map with only 500 bytes</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Codex assisted in generating a credible ASCII world map from just 445 bytes of deflate-compressed data.</li>
+              <li>Uses the browser&#x27;s native fetch + DecompressionStream API — zero runtime dependencies.</li>
+              <li>The technique is reusable for any compact data-in-JS embedding where binary size matters.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Jul/4/building-a-world-map-with-only-500-bytes/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
