@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - July 06, 2026 | Densanon</title>
+  <title>AI Morning Digest - July 08, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,113 +15,134 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 06, 2026</div>
+        <div class="digest-date-badge">July 08, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s pool centers on the practical reality of AI-assisted development: real cost/benefit data from building sqlite-utils 4.0 with Claude Fable, a reliability regression where newer models hallucinate tool schema fields, and Claude Code v2.1.200 flipping permission mode to Manual by default. Rounding it out: DSPy-driven prompt optimization, a new coding agent alpha, and the Current AI open-source gap map.</p>
+        <p class="digest-intro">Today&#x27;s mix leans toward infrastructure and tooling maturity: Tencent shipped a large permissively-licensed MoE model, Simon Willison&#x27;s sqlite-utils crossed its first major version in six years, and Hugging Face pushed updates across robotics, custom kernels, and multi-cloud storage. On the research side, papers tackled long-context serving costs, small models as classroom tutors, and giving language models narratology-aware memory for long-form fiction.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Prompt-to-Paper: Agentic AI System for Bioinformatics</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Targets three failure modes of current automated manuscript-generation systems: claims not deterministically grounded in verifiable literature, non-reproducible experimental pipelines, and downstream inconsistency.</li>
+              <li>Focused specifically on bioinformatics research, where end-to-end hypothesis-to-paper automation needs stronger literature grounding than general-purpose writing agents.</li>
+              <li>Part of a growing wave of &#x27;auto-scientist&#x27; agentic systems moving past text generation into full research-pipeline automation.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.05456" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Benchmarking KV-Cache Optimizations across Task Quality and System Performance for Long-Context Serving</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Introduces a unified benchmark for KV-cache compression techniques, which had previously been evaluated inconsistently across different models, tasks, memory budgets, and serving stacks.</li>
+              <li>Directly addresses a real production bottleneck: KV-cache growth is now a primary limiter on long-context LLM serving throughput and cost.</li>
+              <li>Gives practitioners an apples-to-apples way to pick a cache-compression strategy instead of trusting cherry-picked paper-specific comparisons.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.05399" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>CSTutorBench: Benchmarking Small Language Models as Tutors for Block-Based Programming</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Benchmarks small language models (not frontier LLMs) specifically as AI tutors for block-based/K-12 programming instruction.</li>
+              <li>Motivated by real classroom deployment constraints: privacy, cost, and avoiding lock-in to proprietary cloud models.</li>
+              <li>Useful signal for anyone building on-device or school-deployable tutoring tools — helps identify which SLM is &#x27;right-sized&#x27; rather than assuming bigger always wins.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.05571" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Narrative World Model: Narratology-Grounded Writer Memory for Long-Form Fiction</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes a memory system for long-form fiction that explicitly tracks narratological state: who knows a secret and when, event order vs. narration order, and whether setups pay off.</li>
+              <li>Targets multi-hop narrative-consistency questions that plain retrieval-augmented memory tends to miss.</li>
+              <li>Relevant to any long-form story tooling — game narrative systems, interactive fiction, or story-generation assistants — that need to reason about plot state, not just retrieve text.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.05577" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>tencent/Hy3</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tencent released Hy3, a 295B-parameter Mixture-of-Experts model with only 21B active parameters (plus a 3.8B MTP layer), licensed Apache 2.0.</li>
+              <li>Follows the Hy3 Preview from late April; this stable release incorporates feedback gathered from 50+ downstream products and teams.</li>
+              <li>Adds to the growing field of large, permissively-licensed MoE models from Chinese labs competing on cost-per-active-parameter with Western frontier models.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Jul/6/hy3/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>sqlite-utils 4.0rc2, mostly written by Claude Fable (for about $149.25)</h3>
+              <h3>sqlite-utils 4.0, now with database schema migrations</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Claude Fable 5 drove the bulk of the work from 4.0rc1 to a stable 4.0 release on a mature SemVer project with real breaking-change constraints.</li>
-              <li>Transparent cost breakdown ($149.25 total) gives a concrete data point for AI-assisted open-source maintenance budgets.</li>
-              <li>Demonstrates AI works well even when careful compatibility review is required — not just greenfield code.</li>
+              <li>First major version bump since 3.0 in November 2020 (the 124th release overall); adds built-in database schema migrations as a core feature.</li>
+              <li>Ships with some breaking changes documented in a dedicated upgrade guide, so existing users should review before updating.</li>
+              <li>Effectively absorbs the standalone sqlite-migrate project — sqlite-migrate 0.2 was retired into a compatibility shim on top of sqlite-utils 4.0.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jul/5/sqlite-utils-fable/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jul/7/sqlite-utils-4/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Better Models: Worse Tools</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>LeRobot v0.6.0: Imagine, Evaluate, Improve</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Claude Opus 4.8 was observed injecting invented fields into the nested edits[] array of a tool call that doesn&#x27;t define those fields.</li>
-              <li>The edit content itself is usually correct, but the extra fields break strict schema validation downstream.</li>
-              <li>A useful reminder that capability gains in newer models don&#x27;t guarantee better schema discipline — test tool-call fidelity explicitly.</li>
+              <li>New release of Hugging Face&#x27;s LeRobot framework for real-world robot learning, organized around an imagine-evaluate-improve development loop.</li>
+              <li>Continues HF&#x27;s push to make robotics and embodied-AI tooling as accessible and open as its NLP/model-hub libraries.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jul/4/better-models-worse-tools/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/lerobot-release-v060" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.200</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>🤗 Kernels: Major Updates</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AskUserQuestion dialogs no longer auto-continue by default; idle timeout must be explicitly opted into via /config.</li>
-              <li>Default permission mode is now &#x27;Manual&#x27; across the CLI, VS Code, and JetBrains — breaking change for workflows that relied on automatic continuation.</li>
-              <li>The --permission-mode manual flag and &quot;defaultMode&quot;: &quot;manual&quot; config key are both accepted.</li>
+              <li>Hugging Face&#x27;s Kernels library — reusable custom CUDA/Triton compute kernels for model ops — gets a major overhaul aimed at faster, more portable inference.</li>
+              <li>Part of a broader HF infrastructure push this week (alongside SageMaker and Foundry integrations) to reduce friction in deploying models to specific compute backends.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.200" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/revamped-kernels" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Using DSPy to evaluate and improve Datasette Agent&#x27;s SQL system prompts</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Run AI workloads on any cloud, store on Hugging Face: zero-egress storage with SkyPilot</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>DSPy&#x27;s optimization loop was applied to the system prompt of a SQL-generating agent, finding improvements that manual iteration had missed.</li>
-              <li>The experiment was spun up same-day after a DSPy keynote at AIE, showing how quickly the tooling can be applied to real prompts.</li>
-              <li>Good reference for anyone running LLM agents over structured data who wants a systematic alternative to trial-and-error prompt tuning.</li>
+              <li>Lets teams run training/inference on whichever cloud offers the best price or GPU availability while keeping datasets and models centrally stored on Hugging Face with zero egress fees.</li>
+              <li>Solves a concrete cost pain point — cross-cloud data egress charges — for teams practicing multi-cloud compute arbitrage.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jul/2/dspy-datasette-agent-prompts/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Fable&#x27;s judgement</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Claude Code team tip (from Cat Wu and Thariq Shihipar at AIE): give Fable and Opus latitude to make their own decisions rather than over-specifying steps.</li>
-              <li>Concrete example: don&#x27;t dictate a testing approach — Fable produces better tests when given the goal and freedom to choose the method.</li>
-              <li>Applies to Opus too, though the effect is most pronounced with Fable.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jul/3/judgement/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>llm-coding-agent 0.1a0</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>New early-alpha Python library building a minimal coding agent on top of Willison&#x27;s LLM library, now that it has matured into an agent framework.</li>
-              <li>Uses Claude Fable 5 as the underlying model in initial experiments.</li>
-              <li>Bootstrapped from a python-lib-template; a useful reference for anyone building lightweight coding agents without heavy frameworks.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jul/2/llm-coding-agent/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Open Source AI Gap Map</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Current AI (non-profit, $400M committed, founded at the Paris AI Action Summit Feb 2025) launched a Gap Map indexing where open-source AI alternatives are missing.</li>
-              <li>Aims to build a &#x27;public option for AI&#x27; by surfacing the highest-leverage gaps in the open-source ecosystem.</li>
-              <li>Useful resource for identifying where proprietary tools still have no viable open alternative.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jul/3/open-source-ai-gap-map/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Building a World Map with only 500 bytes</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Codex assisted in generating a credible ASCII world map from just 445 bytes of deflate-compressed data.</li>
-              <li>Uses the browser&#x27;s native fetch + DecompressionStream API — zero runtime dependencies.</li>
-              <li>The technique is reusable for any compact data-in-JS embedding where binary size matters.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jul/4/building-a-world-map-with-only-500-bytes/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/skypilot-hf-storage" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
