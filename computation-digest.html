@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - July 08, 2026 | Densanon</title>
+  <title>Computation Morning Digest - July 21, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 08, 2026</div>
+        <div class="digest-date-badge">July 21, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation news centers on Nvidia&#x27;s push to position its Vera/Rigel Arm CPU cores around single-threaded agentic AI performance, with toolchain support already landing upstream in GCC. Data-center economics also made headlines as Oregon regulators forced hyperscale power users to absorb a 30% rate hike. Meanwhile, an ironic new cottage industry of AI-agent-powered &quot;AI slop&quot; cleanup emerged, and the open-source systems world kept grinding on inference libraries, kernel driver hardening, and desktop Wayland readiness.</p>
+        <p class="digest-intro">China&#x27;s silicon push continues to accelerate, with Z.ai standing up a 1GW all-domestic-chip data center and SMIC&#x27;s third-gen 7nm node closing the gap with Western foundries. Meanwhile TSMC is preparing steep price hikes and Intel is trimming its Data Center group even as it lands Fortinet as a foundry customer and Google reportedly bakes Gemini&#x27;s architecture directly into silicon. Also notable: Anthropic&#x27;s $1.5B copyright settlement, AMD pushing SPIR-V as a unifying IR for ROCm, and GNOME rethinking security triage in the face of AI-generated report spam.</p>
       </div>
     </section>
 
@@ -29,123 +29,120 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Nvidia touts Vera CPU&#x27;s single-threaded performance as its agentic AI advantage, reveals next-gen &#x27;Rigel&#x27; Arm CPU cores — frames chip as a &#x27;max single-threaded CPU at scale,&#x27; not a parallel monster</h3>
+              <h3>Anthropic hit with largest-ever $1.5 billion penalty in copyright lawsuit</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Nvidia claims a 1.8x single-threaded performance uplift over x86 competitors on agentic AI workloads, and 1.5x on coding tasks.</li>
-              <li>The company is explicitly positioning Vera as optimized for single-thread latency rather than raw core-count parallelism, a break from typical server CPU marketing.</li>
-              <li>Nvidia also previewed its next-generation &#x27;Rigel&#x27; Arm CPU cores as the follow-on design.</li>
+              <li>A federal judge approved the largest-ever AI copyright settlement, with most plaintiffs accepting the $1.5B payout.</li>
+              <li>The court ruled training AI on published material is fair use, but held that Anthropic&#x27;s 7-million-book pirated library infringed authors&#x27; rights.</li>
+              <li>A subset of plaintiffs rejected the settlement as too small relative to the number of infringed titles and are pursuing a separate suit.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/nvidia-touts-vera-cpus-single-threaded-performance-as-its-agentic-ai-advantage-frames-chip-as-a-max-single-threaded-cpu-at-scale-not-a-parallel-monster" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/anthropic-slapped-with-usd1-5-billion-settlement-in-copyright-lawsuit-largest-payout-ever-court-says-that-training-ai-on-books-other-publications-is-fair-use-but-ruled-that-the-startups-7-million-book-pirated-library-infringes-authors-rights" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NVIDIA Upstreams Initial Rigel CPU Core Support Into GCC Compiler</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Initial GCC compiler support for Nvidia&#x27;s Rigel CPU core landed upstream within minutes of the chip&#x27;s public disclosure.</li>
-              <li>The rapid toolchain enablement mirrors Nvidia&#x27;s earlier Grace/Blackwell playbook of getting compiler support ready ahead of silicon availability.</li>
-              <li>Signals Nvidia is treating compiler-level readiness as a first-class part of its custom Arm CPU rollout strategy.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/NVIDIA-Rigel-Upstream-GCC" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Power company hikes data center bills by 30%, cuts residential electricity costs by 1.3% — Oregon approves change through POWER Act, pushes developments using more than 20 Megawatts of power to pay their fair share</h3>
+              <h3>Z.ai powers up a 1-gigawatt AI data center built entirely on Chinese chips, report claims</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Oregon regulators approved a 29.7% electricity rate increase for Portland General Electric customers consuming 20MW or more, targeting data centers.</li>
-              <li>The hike funds only a 1.3% cut to residential electricity rates, showing the scale mismatch between hyperscale and household power draw.</li>
-              <li>This is one of the first concrete regulatory actions forcing large AI/cloud data centers to directly subsidize local grid costs.</li>
+              <li>Chinese AI developer Z.ai (formerly Zhipu) has switched on part of a 1GW data center built entirely from domestic chips.</li>
+              <li>The facility reportedly runs multiple 10,000-chip clusters with zero Nvidia silicon.</li>
+              <li>Signals growing maturity of China&#x27;s domestic AI compute supply chain amid export restrictions.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/data-centers/power-company-hikes-data-center-bills-by-30-percent-cuts-residential-electricity-costs-by-1-3-percent-oregon-approves-change-through-power-act-pushes-developments-using-more-than-20-megawatts-of-power-to-pay-their-fair-share" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/z-ai-powers-up-1gw-ai-data-center-built-entirely-on-chinese-chips" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Cooler Master V4 and V8 3DHP Review: A masterful engineering achievement</h3>
+              <h3>TSMC eyes price hikes of up to 25% on chip production services in 2027</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Cooler Master&#x27;s new 3DHP (3D heatpipe) design is described as the biggest advancement in air cooling technology in years.</li>
-              <li>The V4 and V8 coolers built around this design carry an early-adopter price premium.</li>
-              <li>Represents a genuine thermal-engineering shift rather than an incremental cooler refresh.</li>
+              <li>TSMC reportedly plans baseline price increases of 5-10% on advanced nodes, with some services rising as much as 25% by 2027.</li>
+              <li>Cited drivers are surging demand, rising input costs, and heavy capex on new fab capacity.</li>
+              <li>Higher wafer costs would ripple through to chip designers and ultimately consumer/server hardware pricing.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/air-cooling/cooler-master-v4-and-v8-3dhp-review" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/tsmc-eyes-price-hikes-of-up-to-25-percent-on-chip-production-services-in-2027-report-claims-plans-to-raise-baseline-prices-by-5-percent-to-10-percent-on-advanced-nodes" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Industry &amp; HPC</h2>
-        <div class="digest-grid">
-
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>&#x27;Slopfix&#x27; software team charges $10,000 a week to delete AI-generated code bloat — ironically, the team uses AI agents to trim messy repositories by up to 65%</h3>
+              <h3>Intel layoffs to hit Data Center group</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Slopfix charges a flat $10,000/week fee to refactor and de-bloat AI-generated codebases.</li>
-              <li>The cleanup work is itself performed using AI coding agents, cleaning up mess left by other AI agents.</li>
-              <li>Claims up to 65% reduction in code bloat, pointing to an emerging &#x27;AI code debt&#x27; service industry.</li>
+              <li>Intel plans cuts to its Data Center group, which covers server CPUs, AI chips, and data center architecture.</li>
+              <li>The move comes just months after Intel touted record growth in the division following its 2024 downturn.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/a-team-of-engineers-called-slopfix-charges-10000-a-week-to-delete-ai-generated-code-using-ai-agents" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/policy/intel-layoffs-to-hit-data-center-group-division-focused-on-server-cpus-ai-chips-and-data-center-architecture-to-be-hit-by-an-unknown-number-of-cuts" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD ZenDNN 6.0 Brings Many Improvements For Accelerating Inference On Ryzen/EPYC CPUs</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>SMIC&#x27;s third-gen 7nm node shows smaller metal pitch than Intel 18A, higher density than TSMC N6 without EUV</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ZenDNN 6.0 is a major update to AMD&#x27;s open-source deep neural network library for CPU inference acceleration.</li>
-              <li>Spans both Ryzen consumer chips and EPYC server processors, unifying the client-to-datacenter inference story.</li>
-              <li>Reflects AMD&#x27;s continued push to make CPU-based inference a viable alternative to GPU-only deployment.</li>
+              <li>SMIC&#x27;s N+3 process reportedly beats TSMC N6 transistor density while relying on DUV rather than EUV lithography.</li>
+              <li>It also shows a smaller metal pitch than Intel&#x27;s 18A node in some measures.</li>
+              <li>Performance and power efficiency still trail true modern-generation nodes despite the density gains.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-ZenDNN-6.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/smics-third-gen-7nm-node-shows-smaller-metal-pitch-than-intel-18a-higher-transistor-density-than-tsmc-n6-without-euv-analysis-of-n-3-shows-significant-advancement-for-chinese-semi-manufacturing" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel Sunsets Quantum Intrinsics &amp; Other Open-Source Projects This Week</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Google reportedly developing &#x27;Frozen v2&#x27; chip with Gemini&#x27;s architecture etched into the silicon</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel has formally archived Quantum Intrinsics along with several other now-unmaintained open-source projects.</li>
-              <li>Part of a broader housekeeping pass trimming experimental and research-adjacent Intel open-source efforts.</li>
-              <li>Signals de-prioritization of certain speculative hardware-intrinsics work in favor of more actively maintained projects.</li>
+              <li>Google is reportedly developing a server chip, &#x27;Frozen v2,&#x27; with parts of Gemini&#x27;s model architecture hard-coded into silicon.</li>
+              <li>Engineers project 6-10x more tokens per watt versus Google&#x27;s latest TPUs.</li>
+              <li>The approach trades flexibility for efficiency by fusing model and hardware design.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Intel-Ends-Quantum-Intrinsics" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Wayland No Longer Considered Experimental For Linux Mint&#x27;s Next Cinnamon Release</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Linux Mint&#x27;s June development summary confirms Cinnamon&#x27;s Wayland support is ready to graduate from experimental status.</li>
-              <li>Marks a milestone for one of the more conservative desktop distros in the broader Linux ecosystem&#x27;s shift away from X11.</li>
-              <li>Follows years of incremental Wayland compositor work specific to the Cinnamon desktop environment.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/LinuxMint-Cinnamon-Wayland-Good" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/google-reportedly-developing-frozen-v2-chip-with-geminis-architecture-etched-into-the-silicon" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD Linux Graphics Driver Working To Clear Out All Of Its BUG()s</h3>
+              <h3>Intel Compute Runtime Continues Building Out Exciting &quot;LEO&quot;</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMDGPU maintainer Alex Deucher submitted a 30-patch series aimed at eliminating BUG() calls from the kernel graphics driver.</li>
-              <li>BUG() calls can crash or hang the kernel outright, so removing them is a direct stability and robustness improvement.</li>
-              <li>Part of ongoing upstream hardening work on AMD&#x27;s open-source Linux graphics stack.</li>
+              <li>Intel Compute Runtime 26.27.39122.11 ships alongside last week&#x27;s Intel Graphics Compiler 2.38.2 release.</li>
+              <li>The still-experimental LEO feature continues to be built out in this release.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMDGPU-Clearing-Out-BUGs" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Intel-CR-26.27.39122.11" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AMD Talks Up The Great Opportunities Of SPIR-V IR With ROCm</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Following ROCm 7.14 as the first production release built on TheRock, AMD is pushing SPIR-V adoption further.</li>
+              <li>SPIR-V would enable unified binaries that work across AMD GPU architectures and targets.</li>
+              <li>Part of a broader modernization of the ROCm compute stack, relevant to anyone targeting non-CUDA GPU inference.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/AMD-ROCm-SPIR-V-Reality-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intel Expanding Memory Options For Current Xeon 6 / Xeon 6+ Servers</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Intel is expanding RDIMM and MRDIMM memory support for current-gen Xeon 6/6+ via upcoming BIOS updates.</li>
+              <li>The move comes ahead of next-gen Diamond Rapids and as AMD&#x27;s EPYC Venice looms.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Intel-More-Xeon-6-MRDIMMs" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GNOME Changes Security Disclosure Policies Due To AI-Generated Reports</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>GNOME is revising how it triages security disclosures in response to a surge of AI/LLM-generated reports.</li>
+              <li>The change reflects a growing open-source-wide problem of low-quality, automated vulnerability submissions.</li>
+              <li>Highlights the operational burden AI tooling can place on volunteer-run security teams.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/GNOME-Security-Changes-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

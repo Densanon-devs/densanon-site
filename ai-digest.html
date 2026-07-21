@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - July 08, 2026 | Densanon</title>
+  <title>AI Morning Digest - July 21, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,134 +15,127 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 08, 2026</div>
+        <div class="digest-date-badge">July 21, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s mix leans toward infrastructure and tooling maturity: Tencent shipped a large permissively-licensed MoE model, Simon Willison&#x27;s sqlite-utils crossed its first major version in six years, and Hugging Face pushed updates across robotics, custom kernels, and multi-cloud storage. On the research side, papers tackled long-context serving costs, small models as classroom tutors, and giving language models narratology-aware memory for long-form fiction.</p>
+        <p class="digest-intro">Today&#x27;s AI feed leans heavily on practical engineering: agent-building lessons, model-routing tradeoffs, and inference-serving optimizations from Hugging Face&#x27;s blog, plus Simon Willison&#x27;s takes on coding-agent economics and the open-vs-Chinese-models debate. Hugging Face also disclosed a security incident worth tracking if you rely on the Hub.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Prompt-to-Paper: Agentic AI System for Bioinformatics</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Targets three failure modes of current automated manuscript-generation systems: claims not deterministically grounded in verifiable literature, non-reproducible experimental pipelines, and downstream inconsistency.</li>
-              <li>Focused specifically on bioinformatics research, where end-to-end hypothesis-to-paper automation needs stronger literature grounding than general-purpose writing agents.</li>
-              <li>Part of a growing wave of &#x27;auto-scientist&#x27; agentic systems moving past text generation into full research-pipeline automation.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.05456" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Benchmarking KV-Cache Optimizations across Task Quality and System Performance for Long-Context Serving</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Introduces a unified benchmark for KV-cache compression techniques, which had previously been evaluated inconsistently across different models, tasks, memory budgets, and serving stacks.</li>
-              <li>Directly addresses a real production bottleneck: KV-cache growth is now a primary limiter on long-context LLM serving throughput and cost.</li>
-              <li>Gives practitioners an apples-to-apples way to pick a cache-compression strategy instead of trusting cherry-picked paper-specific comparisons.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.05399" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>CSTutorBench: Benchmarking Small Language Models as Tutors for Block-Based Programming</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Benchmarks small language models (not frontier LLMs) specifically as AI tutors for block-based/K-12 programming instruction.</li>
-              <li>Motivated by real classroom deployment constraints: privacy, cost, and avoiding lock-in to proprietary cloud models.</li>
-              <li>Useful signal for anyone building on-device or school-deployable tutoring tools — helps identify which SLM is &#x27;right-sized&#x27; rather than assuming bigger always wins.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.05571" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Narrative World Model: Narratology-Grounded Writer Memory for Long-Form Fiction</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Proposes a memory system for long-form fiction that explicitly tracks narratological state: who knows a secret and when, event order vs. narration order, and whether setups pay off.</li>
-              <li>Targets multi-hop narrative-consistency questions that plain retrieval-augmented memory tends to miss.</li>
-              <li>Relevant to any long-form story tooling — game narrative systems, interactive fiction, or story-generation assistants — that need to reason about plot state, not just retrieve text.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.05577" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>tencent/Hy3</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Tencent released Hy3, a 295B-parameter Mixture-of-Experts model with only 21B active parameters (plus a 3.8B MTP layer), licensed Apache 2.0.</li>
-              <li>Follows the Hy3 Preview from late April; this stable release incorporates feedback gathered from 50+ downstream products and teams.</li>
-              <li>Adds to the growing field of large, permissively-licensed MoE models from Chinese labs competing on cost-per-active-parameter with Western frontier models.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jul/6/hy3/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>sqlite-utils 4.0, now with database schema migrations</h3>
+              <h3>Security incident disclosure — July 2026</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Hugging Face published a formal disclosure of a July 2026 security incident affecting the Hub.</li>
+              <li>Worth a read for anyone with model or dataset artifacts hosted on HF to check exposure.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/security-incident-july-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Model Routing Is Simple. Until It Isn&#x27;t.</h3>
+              <span class="digest-source">Hugging Face Blog (IBM Research)</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>IBM Research walks through why naive model-routing setups break down at scale.</li>
+              <li>Relevant to any multi-model architecture that dispatches queries across different-sized experts.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/ibm-research/model-routing-is-simple-until-it-isnt" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>What building Shippy taught us about building agents</h3>
+              <span class="digest-source">Hugging Face Blog (Allen AI)</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Allen AI shares lessons learned building their Shippy coding/shipping agent.</li>
+              <li>Practical field notes on which agent design decisions held up versus which didn&#x27;t.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/allenai/shippy-tech-blog" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Native-speed vLLM transformers modeling backend</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>New backend closes the gap between the transformers library and vLLM&#x27;s native serving speed.</li>
+              <li>Useful for anyone self-hosting inference who wants vLLM-class throughput without leaving the transformers ecosystem.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/native-speed-vllm-transformers-backend" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Profiling in PyTorch (Part 3): Attention is all you profile</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Third installment in HF&#x27;s PyTorch profiling series, focused specifically on attention kernels.</li>
+              <li>Good reference for diagnosing where inference time actually goes in transformer models.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/torch-attention-profile" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Introducing Cosmos 3 Edge</h3>
+              <span class="digest-source">Hugging Face Blog (NVIDIA)</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>NVIDIA&#x27;s Cosmos 3 Edge targets on-device/edge deployment of world-model-style AI.</li>
+              <li>Signals continued push toward smaller, deployable world models rather than only cloud-scale ones.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/nvidia/cosmos3edge" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Grabette: an open system to record robot-manipulation data</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Open tooling for capturing robot-manipulation demonstration data for training.</li>
+              <li>Relevant to anyone building manipulation datasets outside of closed lab pipelines.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/grabette" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>A Fireside Chat with Cat and Thariq from the Claude Code team</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>First major version bump since 3.0 in November 2020 (the 124th release overall); adds built-in database schema migrations as a core feature.</li>
-              <li>Ships with some breaking changes documented in a dedicated upgrade guide, so existing users should review before updating.</li>
-              <li>Effectively absorbs the standalone sqlite-migrate project — sqlite-migrate 0.2 was retired into a compatibility shim on top of sqlite-utils 4.0.</li>
+              <li>Anthropic&#x27;s Claude Code team discusses tool design, evals, and coding-agent security decisions.</li>
+              <li>Notable for how Anthropic uses its own coding agent internally — a look behind the curtain on dogfooding.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jul/7/sqlite-utils-4/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jul/21/cat-and-thariq/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LeRobot v0.6.0: Imagine, Evaluate, Improve</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>Reverse-engineering is cheap now</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>New release of Hugging Face&#x27;s LeRobot framework for real-world robot learning, organized around an imagine-evaluate-improve development loop.</li>
-              <li>Continues HF&#x27;s push to make robotics and embodied-AI tooling as accessible and open as its NLP/model-hub libraries.</li>
+              <li>Coding agents are lowering the cost of reverse-engineering and automating home devices.</li>
+              <li>Frames a broader shift: tasks once gated by expertise and time are now gated mostly by curiosity.</li>
             </ul>
-            <a href="https://huggingface.co/blog/lerobot-release-v060" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jul/20/cheap-reverse-engineering/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>🤗 Kernels: Major Updates</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>Who&#x27;s Afraid of Chinese Models?</h3>
+              <span class="digest-source">Simon Willison (Ben Thompson)</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Hugging Face&#x27;s Kernels library — reusable custom CUDA/Triton compute kernels for model ops — gets a major overhaul aimed at faster, more portable inference.</li>
-              <li>Part of a broader HF infrastructure push this week (alongside SageMaker and Foundry integrations) to reduce friction in deploying models to specific compute backends.</li>
+              <li>Ben Thompson&#x27;s proposal addresses the tension of US labs restricting distillation of their models while training on unlicensed data.</li>
+              <li>Argues the US should consider policy that helps open models compete more effectively against Chinese counterparts.</li>
             </ul>
-            <a href="https://huggingface.co/blog/revamped-kernels" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Run AI workloads on any cloud, store on Hugging Face: zero-egress storage with SkyPilot</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Lets teams run training/inference on whichever cloud offers the best price or GPU availability while keeping datasets and models centrally stored on Hugging Face with zero egress fees.</li>
-              <li>Solves a concrete cost pain point — cross-cloud data egress charges — for teams practicing multi-cloud compute arbitrage.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/skypilot-hf-storage" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jul/20/afraid-of-chinese-models/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

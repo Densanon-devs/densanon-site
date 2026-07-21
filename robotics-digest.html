@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - July 08, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - July 21, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,149 +15,138 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 08, 2026</div>
+        <div class="digest-date-badge">July 21, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s robotics news splits between deep-tech research on world models, occupancy mapping, and localization, and a flurry of big industry money moves — a $615M subsea acquisition, a $1.2B drone raise, and ABB rounding out its warehouse robot lineup. Humanoids remain a running thread, from Japan-vs-China competitive framing to RoboCup&#x27;s humanoid soccer finals and Boston Dynamics&#x27; World Cup publicity stunt with Atlas and Spot.</p>
+        <p class="digest-intro">Today&#x27;s pool centers on the push toward general-purpose embodied AI: unified foundation-model stacks, better-grounded world models, and a wave of humanoid manipulators (BrainCo, AGIBOT, Weave Robotics) moving from demo to deployment. Real-world constraints dominate the industry conversation — infrastructure-free operation, the limits of teleoperation for training, and Ukraine&#x27;s shift toward ground-robot-patrolled front lines — while research picks tackle continual navigation memory, EMG-driven assistive arm control, and culturally aware social robots.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Learning 4D Geometric Priors for Inference-Efficient World Action Models</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Introduces 4D geometric priors to make World Action Models (WAMs) more inference-efficient for robotic manipulation.</li>
-              <li>Argues existing video-action co-training methods over-optimize for visual appearance rather than underlying geometry and dynamics.</li>
-              <li>Goal is jointly modeling future visual dynamics and executable action sequences without the usual compute overhead.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.05468" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>GEM-Occ: From Visual Geometry Evidence to Embodied Semantic Occupancy Memory</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Builds a semantic occupancy memory for embodied indoor agents directly from visual geometry evidence.</li>
-              <li>Jointly represents occupied space, observed free space, unknown/unexplored areas, and object semantics in one structure.</li>
-              <li>Positioned against existing indoor occupancy benchmarks that the authors argue cover only a narrow slice of the problem.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.05543" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Dynamic Evaluation of Classical and Control-Aware Optimal Trajectory Planning in Robot Manipulators</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Benchmarks classical trajectory planners (cubic, quintic, trapezoidal profiles) against control-aware optimal planning on manipulators.</li>
-              <li>Measures tracking accuracy, actuator demand, and execution behavior rather than just kinematic smoothness.</li>
-              <li>Useful reference for choosing planner tradeoffs between implementation simplicity and closed-loop control performance.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.05544" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Physics-Regularized Machine Learning for Proprioceptive Vehicle Localization Using Onboard Sensors</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Combines physics-based regularization with machine learning to improve IMU-driven (proprioceptive) vehicle localization.</li>
-              <li>Targets the accuracy gap that opens up when GNSS/satellite correction signals degrade in real-world conditions.</li>
-              <li>Aims to keep pose estimation robust using onboard sensors alone, reducing dependence on external positioning signals.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.05663" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Japan Pioneered Humanoid Robots—Can It Now Catch China?</h3>
+              <h3>Building a Foundation Stack for General-Purpose Robots</h3>
               <span class="digest-source">IEEE Spectrum Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Examines Japan&#x27;s historical lead in humanoid robotics against China&#x27;s fast-scaling humanoid manufacturing and deployment push.</li>
-              <li>Draws on discussion from the Humanoids Summit in Tokyo, including a notable prediction delivered by an android exhibit itself.</li>
-              <li>Frames 2026 as an inflection point in the geopolitical race for humanoid robot dominance.</li>
+              <li>Argues robotics lacks the &#x27;pretrain on broad data&#x27; recipe that worked for LLMs, since perception, planning, and control are still built as separate systems.</li>
+              <li>X Square Robot proposes a unified foundation-model stack to replace fragmented robotics pipelines.</li>
+              <li>Frames general-purpose embodied AI as needing one trainable substrate rather than bolted-together modules.</li>
             </ul>
-            <a href="https://spectrum.ieee.org/humanoid-robots-japan" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://spectrum.ieee.org/x-square-robot-embodied-ai-stack" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Kraken Robotics acquires Covelya Group for $615M</h3>
+              <h3>Friction is key to making better robot world models</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Kraken Robotics is acquiring Covelya Group in a $615M deal, a major consolidation move in subsea/underwater robotics.</li>
-              <li>The acquisition expands Kraken&#x27;s product portfolio and total addressable market in subsea technology.</li>
-              <li>Signals continued M&amp;A consolidation across marine and defense-adjacent robotics.</li>
+              <li>Argues that &#x27;conditioning&#x27; — not just model architecture — is the underappreciated step for deploying world models on real robots.</li>
+              <li>Highlights the gap between simulated world-model performance and real physical dynamics like friction.</li>
+              <li>Suggests better physical grounding is needed before world models generalize to deployed hardware.</li>
             </ul>
-            <a href="https://www.therobotreport.com/kraken-robotics-acquires-covelya-group-for-615m/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/friction-is-key-to-making-better-robot-world-models/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quantum Systems raises $1.2B to expand drone production and deployments</h3>
+              <h3>How to avoid the teleoperation trap in robotics development</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Quantum Systems closed a $1.2 billion round, among the largest financings seen in the drone sector to date.</li>
-              <li>Proceeds will go toward expanding production capacity and strengthening supply chain resilience.</li>
-              <li>Reflects surging investor appetite for scalable, defense-capable drone manufacturers.</li>
+              <li>Flexion&#x27;s CEO argues teleoperation alone isn&#x27;t sufficient for training humanoid robots at scale.</li>
+              <li>Advocates combining teleoperation with reinforcement learning and simulation to generalize beyond demonstrated tasks.</li>
+              <li>Warns that over-reliance on teleoperated data collection can bottleneck humanoid robot learning.</li>
             </ul>
-            <a href="https://www.therobotreport.com/quantum-systems-raises-1-2b-expand-drone-production-deployments/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/how-to-avoid-teleoperation-trap-robotics-development/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ABB Robotics completes Visual SLAM AMR range with autonomous forklift launch</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>ABB launched the Flexley Stack F712 autonomous forklift, completing its Visual SLAM-based AMR lineup.</li>
-              <li>Uses camera-based vSLAM navigation rather than fixed infrastructure like magnetic tape or reflectors, and complies with safety standards.</li>
-              <li>Combines forklifts, tugs, and movers into one interoperable platform for warehouse and industrial customers.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/07/08/abb-robotics-completes-visual-slam-amr-range-with-autonomous-forklift-launch/103169/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Boston Dynamics brings its legged robots to the FIFA World Cup</h3>
+              <h3>Building robots for unpredictable, infrastructure-free environments</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Boston Dynamics and Hyundai showcased the Atlas humanoid performing soccer footwork around the 2026 FIFA World Cup.</li>
-              <li>Spot quadrupeds were deployed on patrol duty at World Cup venues, a real-world security use case.</li>
-              <li>A high-visibility marketing moment putting legged robot dexterity and reliability in front of a global audience.</li>
+              <li>Discusses design principles for robots that must operate in harsh, unstructured outdoor settings without fixed infrastructure.</li>
+              <li>Emphasizes robustness and adaptability over reliance on prepared environments like flat floors or fixed markers.</li>
             </ul>
-            <a href="https://www.therobotreport.com/boston-dynamics-brings-its-legged-robots-to-the-fifa-world-cup/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/building-robots-for-unpredictable-infrastructure-free-environments/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AGIBOT unveils four embodied AI products for real-world operations at WAIC</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>AGIBOT showcased four embodied AI products aimed at turning demos into repeatable industrial workflows.</li>
+              <li>Emphasizes moving humanoid and embodied AI from lab showcases to deployed operations, signaling continued acceleration of China&#x27;s embodied AI push.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/agibot-unveils-four-embodied-ai-products-real-world-operations-waic/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Weave Robotics launches Isaac, its first mobile humanoid robot</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Weave Robotics unveiled Isaac, a wheeled bimanual manipulator robot targeted at household and office use.</li>
+              <li>Wheeled base paired with bimanual arms suggests a focus on manipulation over legged locomotion.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/weave-robotics-launches-isaac-first-mobile-humanoid-robot/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Ground Robots Inherit the Kill Zone</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Ukrainian roboticists are pushing toward a front line patrolled largely by ground robots and drones instead of soldiers.</li>
+              <li>Remotely operated ground vehicles are being fielded at scale alongside AI-assisted sensor networks for continuous monitoring.</li>
+              <li>Real combat deployment is accelerating autonomy and teleoperation development faster than peacetime R&amp;D.</li>
+            </ul>
+            <a href="https://spectrum.ieee.org/ukraine-ground-drones" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>#RoboCup2026 – humanoid league knockout stages</h3>
-              <span class="digest-source">Robohub</span>
+              <h3>HyperDCM: Dynamic Cluster Memory Replay in Hyperbolic Space for Continual Robotic Navigation Across Scenes</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>RoboCup 2026 in Incheon, South Korea wrapped up its humanoid league, with winners decided across small, middle, and large humanoid divisions.</li>
-              <li>Team Invic placed in the top three of the small division, part of a broader field of international university and research teams.</li>
-              <li>RoboCup&#x27;s humanoid soccer competitions remain a key public benchmark for progress in autonomous humanoid locomotion and coordination.</li>
+              <li>Proposes a hyperbolic-space memory replay method to combat catastrophic forgetting in continual visual navigation.</li>
+              <li>Targets robots that must adapt across diverse, evolving environments without retraining from scratch.</li>
+              <li>Uses dynamic clustering of past experience to preserve navigation skills across scenes.</li>
             </ul>
-            <a href="https://robohub.org/robocup2026-humanoid-league-knockout-stages/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2607.16267" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>S.E.A.G.R: A Socially and Emotionally Aware Greeting Robot Framework with Dual-Layer Cultural and Affective Modulation</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes a greeting-robot framework that modulates behavior based on both cultural context and detected emotional state.</li>
+              <li>Targets human-robot interaction across users from diverse cultural backgrounds rather than a single fixed interaction style.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.16341" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Real-Time sEMG-Based Telecontrol of an Assistive Robotic Arm Using a 1D Convolutional Neural Network</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Uses surface EMG signals decoded by a 1D CNN to give users with upper-limb motor impairments intuitive real-time control.</li>
+              <li>Aims to restore autonomy for object-manipulation tasks in daily activities with a lightweight, real-time-capable model.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.16310" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
