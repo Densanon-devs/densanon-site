@@ -772,6 +772,8 @@
   .ibtnrow { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; }
   /* picker menu list: full-width stacked column in portrait, 3x2 grid in landscape */
   .menugrid { display: flex; flex-direction: column; gap: 10px; }
+  .demo-note { margin-top: 12px; padding: 8px 12px; font-size: 12px; line-height: 1.45; text-align: center;
+    color: #d8b45a; border: 1px solid rgba(216,180,90,.4); border-radius: 4px; background: rgba(216,180,90,.06); }
   .menugrid .ibtn { width: 100%; }
   .menugrid .ibtn img { width: 100%; height: auto; }
   @media (min-width: 720px) {
@@ -1537,7 +1539,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-BiHssgcL.js"></script>
+  <script type="module" crossorigin src="./assets/index-Bd5_S7xc.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -4345,12 +4347,12 @@ function showGenerals() {
   // general cards — tapping one opens the Deploy popup (run setup); the top slot always shows Daily.
   const genCards = `<div class="genwrap">${S.generals.map(plaqueCard).join('')}</div>`;
   const dailyArt = S.daily ? [...(S.daily.date || '')].reduce((a, c) => a + c.charCodeAt(0), 0) % 3 : 0;   // swaps each day
-  const dailyPanel = S.daily ? `<div class="choice bronze dailyslot">
+  const dailyPanel = (S.demo || !S.daily) ? '' : `<div class="choice bronze dailyslot">
          <b class="cyan">${si('sun',15)} Daily Commission</b> <span class="d">${S.daily.date}</span>
          <div class="d">${S.daily.general}${S.daily.mods&&S.daily.mods.length?' · '+S.daily.mods.join(', '):''}${S.daily.best?` · your best ${S.daily.best}`:''}</div>
          <div class="d" style="font-size:11px">A fixed curated run — same for everyone today. Beat your best.</div>
          <img class="daily-art" src="assets/ui/daily/d${dailyArt}.jpg" alt="">
-         <div class="dp-play" style="text-align:center;margin-top:8px">${pbtn('play','newDaily()')}</div></div>` : '';
+         <div class="dp-play" style="text-align:center;margin-top:8px">${pbtn('play','newDaily()')}</div></div>`;
   const seedField = `<div class="seedfield">
         <img src="assets/ui/btn/seed.png" alt="Seed">
         <span class="plaqueval${runCfg.seed?'':' seedempty'}" id="seedGold">${goldText(runCfg.seed||'RANDOM')}</span>
@@ -4359,17 +4361,17 @@ function showGenerals() {
   o.innerHTML = `<div class="oframe titled menu"><div class="ofbanner ofhdr wartable"><img src="assets/ui/hdr/war_table.png" alt="War Table"></div><h1>WAR TABLE</h1>${best ? '<p>Best score ' + best + '</p>' : ''}`
     + `<div class="menucols">`
     +   `<div class="mzone mzone-a">`
-    +     `<div class="menutop">${dailyPanel}</div>`
+    +     `<div class="menutop">${S.demo ? '<div class="demo-note">DEMO — one commander, Act 1 only. The full campaign, more commanders, achievements and unlockables are coming to Steam. Wishlist to be notified.</div>' : dailyPanel}</div>`
     +     `<div class="menumid">${resume}${seedField}</div>`
     +     genCards
     +   `</div>`
     +   `<div class="mzone mzone-c"><div class="menugrid">
          ${mtile('history',"showRuns()",'History')}
-         ${mtile('achievements',"showAchievements()",'Achievements')}
-         ${mtile('medals',"showMedals()",'Medals')}
+         ${S.demo ? '' : mtile('achievements',"showAchievements()",'Achievements')}
+         ${S.demo ? '' : mtile('medals',"showMedals()",'Medals')}
          ${mtile('cards',"showCards()",'Cards')}
          ${mtile('how_to_play',"showHelp()",'How to play')}
-         ${mtile('generals',"showProgression()",'Generals')}
+         ${S.demo ? '' : mtile('generals',"showProgression()",'Generals')}
        </div></div>`
     + `</div></div>`;
   o.classList.add('show');
