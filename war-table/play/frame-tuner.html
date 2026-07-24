@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>War Table — Frame Tuner</title>
+<style>
+  :root{
+    --bg:#14161a; --panel:#1c1f26; --panel2:#232732; --line:#333a47;
+    --ink:#e7e9ee; --dim:#96a0b2; --accent:#e0a63a; --accent2:#4a90d9;
+    --good:#5fbf6a; --sel:#e0a63a;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--bg);color:var(--ink);font:14px/1.4 system-ui,Segoe UI,Arial,sans-serif;
+    display:flex;min-height:100vh}
+  h1{font-size:15px;margin:0;letter-spacing:.5px;text-transform:uppercase;color:var(--accent)}
+  .stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:14px}
+  .frametabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+  .frametabs button{background:var(--panel);color:var(--dim);border:1px solid var(--line);
+    padding:7px 14px;border-radius:7px;cursor:pointer;text-transform:capitalize;font-weight:600}
+  .frametabs button.on{background:var(--accent);color:#1a1206;border-color:var(--accent)}
+  #card{position:relative;width:560px;height:560px;user-select:none;touch-action:none;
+    background:#0d0f12;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+  #artbox{position:absolute;overflow:hidden;border-radius:4px;z-index:auto;
+    background:linear-gradient(160deg,#3a4658,#20262f 60%,#161b22)}
+  #artbox .arttxt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    color:#5f6b7d;font-size:12px;letter-spacing:1px;text-transform:uppercase}
+  #frameimg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+  .el{position:absolute;z-index:3;pointer-events:auto;cursor:move}
+  .el.rect{border:1px dashed transparent}
+  .el.sel{border-color:var(--sel);background:rgba(224,166,58,.08)}
+  #namebox,#descbox{display:flex;align-items:center;justify-content:center;text-align:center;
+    overflow:hidden;padding:2% 4%}
+  #namebox span{font-weight:800;letter-spacing:.5px;line-height:1;text-shadow:0 2px 3px rgba(0,0,0,.9)}
+  #descbox span{line-height:1.15;text-shadow:0 1px 2px rgba(0,0,0,.85)}
+  .dark #namebox span,.dark #descbox span{text-shadow:none}
+  #costbox{display:flex;align-items:center;justify-content:center}
+  #costbox img{height:100%;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.7))}
+  .handle{position:absolute;width:13px;height:13px;background:var(--sel);border:2px solid #1a1206;
+    border-radius:3px;z-index:5;display:none}
+  .el.sel .handle{display:block}
+  .h-nw{left:-7px;top:-7px;cursor:nwse-resize}
+  .h-ne{right:-7px;top:-7px;cursor:nesw-resize}
+  .h-sw{left:-7px;bottom:-7px;cursor:nesw-resize}
+  .h-se{right:-7px;bottom:-7px;cursor:nwse-resize}
+  .hint{color:var(--dim);font-size:12px;text-align:center;max-width:560px}
+  .hint b{color:var(--ink)}
+  /* panel */
+  .panel{width:360px;background:var(--panel);border-left:1px solid var(--line);
+    display:flex;flex-direction:column;height:100vh;overflow-y:auto}
+  .phead{padding:16px 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel);z-index:1}
+  .psec{padding:14px 18px;border-bottom:1px solid var(--line)}
+  .psec h2{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--dim);margin:0 0 10px}
+  .elbtns{display:flex;gap:6px;margin-bottom:6px}
+  .elbtns button{flex:1;background:var(--panel2);color:var(--dim);border:1px solid var(--line);
+    padding:8px 4px;border-radius:6px;cursor:pointer;font-weight:600}
+  .elbtns button.on{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+  .row{display:flex;align-items:center;gap:8px;margin:7px 0}
+  .row label{width:78px;color:var(--dim);font-size:12px}
+  .row input[type=range]{flex:1}
+  .row .val{width:52px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .nudge{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;width:120px}
+  .nudge button{background:var(--panel2);border:1px solid var(--line);color:var(--ink);
+    border-radius:5px;padding:6px 0;cursor:pointer;font-size:13px}
+  .nudge button:active{background:var(--accent);color:#1a1206}
+  .nudge .sp{visibility:hidden}
+  .field{display:flex;gap:8px;align-items:center;margin:7px 0}
+  .field label{width:78px;color:var(--dim);font-size:12px}
+  .field input[type=text]{flex:1;background:var(--panel2);border:1px solid var(--line);
+    color:var(--ink);border-radius:6px;padding:7px 9px;font:inherit}
+  .chk{display:flex;align-items:center;gap:8px;margin:8px 0;color:var(--dim);font-size:12px}
+  textarea{width:100%;height:150px;background:#0d0f12;color:#cfe3c9;border:1px solid var(--line);
+    border-radius:8px;padding:10px;font:12px/1.5 Consolas,monospace;resize:vertical;white-space:pre}
+  .btnrow{display:flex;gap:8px;margin-top:10px}
+  .btnrow button{flex:1;padding:10px;border-radius:8px;border:1px solid var(--line);cursor:pointer;font-weight:700}
+  #copyBtn{background:var(--good);color:#08210b;border-color:var(--good)}
+  #resetBtn{background:var(--panel2);color:var(--dim)}
+  .mini{color:var(--dim);font-size:11px;margin-top:6px}
+  kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:11px}
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="frametabs" id="tabs"></div>
+    <div id="card">
+      <div id="artbox" class="el rect"><div class="arttxt">art window</div>
+        <i class="handle h-nw"></i><i class="handle h-ne"></i><i class="handle h-sw"></i><i class="handle h-se"></i></div>
+      <img id="frameimg" alt="frame">
+      <div id="namebox" class="el rect"><span>NAME</span>
+        <i class="handle h-nw"></i><i class="handle h-ne"></i><i class="handle h-sw"></i><i class="handle h-se"></i></div>
+      <div id="descbox" class="el rect"><span>desc</span>
+        <i class="handle h-nw"></i><i class="handle h-ne"></i><i class="handle h-sw"></i><i class="handle h-se"></i></div>
+      <div id="costbox" class="el"><img alt="cost">
+        <i class="handle h-se"></i></div>
+    </div>
+    <div class="hint">Click an element to select · <b>drag</b> to move · drag a <b>corner</b> to resize · arrow keys nudge (<kbd>Shift</kbd>+arrows = resize)</div>
+  </div>
+
+  <div class="panel">
+    <div class="phead"><h1>Frame Tuner</h1>
+      <div class="mini">War Table · card layout calibration</div></div>
+
+    <div class="psec">
+      <h2>Editing element</h2>
+      <div class="elbtns" id="elbtns">
+        <button data-el="cost">Cost</button>
+        <button data-el="name">Name</button>
+        <button data-el="desc">Desc</button>
+        <button data-el="art">Art</button>
+      </div>
+      <div class="row"><label>Nudge step</label>
+        <input type="range" id="step" min="1" max="20" value="4"><span class="val" id="stepv">0.4%</span></div>
+      <div style="display:flex;justify-content:center;margin-top:6px">
+        <div class="nudge">
+          <button class="sp"></button><button data-n="up">↑</button><button class="sp"></button>
+          <button data-n="left">←</button><button data-n="ctr" title="recenter horizontally">◎</button><button data-n="right">→</button>
+          <button class="sp"></button><button data-n="down">↓</button><button class="sp"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="psec" id="costsize">
+      <h2>Cost digit size</h2>
+      <div class="row"><label>Height</label>
+        <input type="range" id="csize" min="40" max="220" value="110"><span class="val" id="csizev">11.0%</span></div>
+    </div>
+
+    <div class="psec">
+      <h2>Preview content</h2>
+      <div class="field"><label>Cost</label><input type="text" id="costTxt" maxlength="2"></div>
+      <div class="field"><label>Name</label><input type="text" id="nameTxt"></div>
+      <div class="field"><label>Desc</label><input type="text" id="descTxt"></div>
+      <label class="chk"><input type="checkbox" id="darkChk"> Dark text (tan / light panels)</label>
+    </div>
+
+    <div class="psec">
+      <h2>Output — paste this back to Claude</h2>
+      <textarea id="out" readonly spellcheck="false"></textarea>
+      <div class="btnrow">
+        <button id="copyBtn">Copy FRAMES string</button>
+        <button id="resetBtn" title="reset current frame to last-saved defaults">Reset frame</button>
+      </div>
+      <div class="mini">Auto-saved in this browser. Copy sends all 6 frames at once.</div>
+    </div>
+  </div>
+
+<script>
+const FRAMES_ORDER = ["warlord","engineer","nomad","common","uncommon","rare","curse"];
+// defaults (current in-app values). cost=[cx,cy], csize=digit height fraction, name/desc/art=[x0,y0,x1,y1]
+const DEFAULTS = {
+  common:  { art:[0.124,0.113,0.908,0.679], cost:[0.186,0.093], csize:0.096, name:[0.254,0.042,0.851,0.145], desc:[0.137,0.676,0.867,0.941], dark:false, aspect:1.0 },
+  engineer:{ art:[0.185,0.171,0.855,0.707], cost:[0.184,0.116], csize:0.110, name:[0.285,0.092,0.862,0.181], desc:[0.133,0.693,0.868,0.900], dark:false, aspect:1.0 },
+  warlord: { art:[0.148,0.150,0.862,0.701], cost:[0.161,0.161], csize:0.096, name:[0.236,0.110,0.784,0.186], desc:[0.164,0.701,0.835,0.861], dark:false, aspect:1.0 },
+  uncommon:{ art:[0.107,0.127,0.902,0.689], cost:[0.142,0.091], csize:0.110, name:[0.218,0.069,0.823,0.162], desc:[0.135,0.671,0.865,0.936], dark:false, aspect:1.0 },
+  nomad:   { art:[0.120,0.124,0.891,0.670], cost:[0.156,0.110], csize:0.110, name:[0.252,0.048,0.826,0.138], desc:[0.135,0.660,0.865,0.925], dark:true,  aspect:1.0 },
+  rare:    { art:[0.148,0.129,0.867,0.691], cost:[0.188,0.124], csize:0.110, name:[0.272,0.084,0.816,0.168], desc:[0.158,0.672,0.846,0.908], dark:false, aspect:1.0 },
+  curse:   { art:[0.130,0.127,0.880,0.701], cost:[0.150,0.095], csize:0.095, name:[0.218,0.070,0.774,0.144], desc:[0.168,0.694,0.822,0.897], dark:false, nocost:true, aspect:1.0 },
+};
+const SAMPLE = {
+  common:  ["3","SCOUT PATROL","Deal 4 damage to target unit."],
+  engineer:["2","FIELD DEPOT","Build a Depot. +1 supply each turn."],
+  warlord: ["5","ARTILLERY STRIKE","Deal 6 damage split among all enemies. Pierces armor."],
+  uncommon:["1","RECON DRONE","Draw a card. Reveal the top enemy card."],
+  nomad:   ["0","SCAVENGE","Gain 2 scrap. Discard a card."],
+  rare:    ["6","ORBITAL CANNON","Deal 10 damage to any target and disable all vehicles."],
+  curse:   ["2","GRAVE CURSE","Unplayable. Clogs your hand until purged."],
+};
+const LS = "dc-frame-tuner-v1";
+const clone = o => JSON.parse(JSON.stringify(o));
+let state = load();
+let cur = "warlord";
+let selEl = "cost";
+let content = {}; // per-frame {cost,name,desc}
+
+function load(){
+  try{ const s = JSON.parse(localStorage.getItem(LS)); if(s && s.common) return Object.assign(clone(DEFAULTS), s); }catch(e){}
+  return clone(DEFAULTS);
+}
+function save(){ localStorage.setItem(LS, JSON.stringify(state)); render(); genOut(); }
+
+// ---- DOM ----
+const card = document.getElementById("card");
+const CARD = 560;
+const frameimg = document.getElementById("frameimg");
+const boxes = { art:document.getElementById("artbox"), name:document.getElementById("namebox"),
+                desc:document.getElementById("descbox"), cost:document.getElementById("costbox") };
+const costImg = boxes.cost.querySelector("img");
+
+// build tabs
+const tabs = document.getElementById("tabs");
+FRAMES_ORDER.forEach(n=>{
+  const b=document.createElement("button"); b.textContent=n; b.dataset.f=n;
+  b.onclick=()=>{ cur=n; syncTabs(); loadContent(); render(); genOut(); }; tabs.appendChild(b);
+});
+function syncTabs(){ [...tabs.children].forEach(b=>b.classList.toggle("on",b.dataset.f===cur)); }
+
+// element picker
+const elbtns=document.getElementById("elbtns");
+elbtns.querySelectorAll("button").forEach(b=> b.onclick=()=>{ selEl=b.dataset.el; syncSel(); });
+function syncSel(){
+  elbtns.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.el===selEl));
+  Object.entries(boxes).forEach(([k,el])=>el.classList.toggle("sel",k===selEl));
+  document.getElementById("costsize").style.opacity = selEl==="cost"?1:.45;
+}
+
+// content inputs
+const costTxt=document.getElementById("costTxt"), nameTxt=document.getElementById("nameTxt"),
+      descTxt=document.getElementById("descTxt"), darkChk=document.getElementById("darkChk");
+[costTxt,nameTxt,descTxt].forEach(inp=>inp.oninput=()=>{ content[cur]={cost:costTxt.value,name:nameTxt.value,desc:descTxt.value}; render(); });
+darkChk.onchange=()=>{ state[cur].dark=darkChk.checked; save(); };
+function loadContent(){
+  const c=content[cur]||{cost:SAMPLE[cur][0],name:SAMPLE[cur][1],desc:SAMPLE[cur][2]};
+  content[cur]=c; costTxt.value=c.cost; nameTxt.value=c.name; descTxt.value=c.desc;
+  darkChk.checked=state[cur].dark;
+}
+
+// csize slider
+const csize=document.getElementById("csize"), csizev=document.getElementById("csizev");
+csize.oninput=()=>{ state[cur].csize=+csize.value/1000; csizev.textContent=(+csize.value/10).toFixed(1)+"%"; save(); };
+// step slider
+const step=document.getElementById("step"), stepv=document.getElementById("stepv");
+step.oninput=()=>{ stepv.textContent=(+step.value/10).toFixed(1)+"%"; };
+function stepF(){ return (+step.value)/1000; }
+
+// nudge buttons
+document.querySelectorAll(".nudge button[data-n]").forEach(b=> b.onclick=()=>nudge(b.dataset.n));
+function nudge(dir){
+  const s=stepF(), f=state[cur];
+  if(selEl==="cost"){
+    if(dir==="left")f.cost[0]-=s; if(dir==="right")f.cost[0]+=s;
+    if(dir==="up")f.cost[1]-=s; if(dir==="down")f.cost[1]+=s;
+    // ctr: no-op for cost (circle isn't centered)
+  } else {
+    const b=f[selEl];
+    if(dir==="left"){b[0]-=s;b[2]-=s;} if(dir==="right"){b[0]+=s;b[2]+=s;}
+    if(dir==="up"){b[1]-=s;b[3]-=s;} if(dir==="down"){b[1]+=s;b[3]+=s;}
+    if(dir==="ctr"){const w=b[2]-b[0]; b[0]=0.5-w/2; b[2]=0.5+w/2;}
+  }
+  clampAll(); save();
+}
+
+// keyboard
+window.addEventListener("keydown",e=>{
+  const k=e.key; if(!k.startsWith("Arrow"))return;
+  e.preventDefault(); const s=stepF(), f=state[cur];
+  const resize=e.shiftKey;
+  if(selEl==="cost"){
+    if(resize){ if(k==="ArrowUp")f.csize+=s; if(k==="ArrowDown")f.csize-=s; f.csize=Math.max(.03,f.csize); }
+    else{ if(k==="ArrowLeft")f.cost[0]-=s; if(k==="ArrowRight")f.cost[0]+=s; if(k==="ArrowUp")f.cost[1]-=s; if(k==="ArrowDown")f.cost[1]+=s; }
+  } else {
+    const b=f[selEl];
+    if(resize){ if(k==="ArrowRight")b[2]+=s; if(k==="ArrowLeft")b[2]-=s; if(k==="ArrowDown")b[3]+=s; if(k==="ArrowUp")b[3]-=s; }
+    else{ if(k==="ArrowLeft"){b[0]-=s;b[2]-=s;} if(k==="ArrowRight"){b[0]+=s;b[2]+=s;} if(k==="ArrowUp"){b[1]-=s;b[3]-=s;} if(k==="ArrowDown"){b[1]+=s;b[3]+=s;} }
+  }
+  clampAll(); save();
+});
+
+// ---- drag / resize on card ----
+let drag=null;
+function px(e){ const r=card.getBoundingClientRect(); return {x:(e.clientX-r.left)/r.width, y:(e.clientY-r.top)/r.height}; }
+Object.entries(boxes).forEach(([k,el])=>{
+  el.addEventListener("pointerdown",e=>{
+    selEl=k; syncSel();
+    const handle=e.target.closest(".handle");
+    drag={el:k, mode:handle?"resize":"move", corner:handle?[...handle.classList].find(c=>c.startsWith("h-")):null,
+          start:px(e), orig:clone(state[cur])};
+    el.setPointerCapture(e.pointerId); e.preventDefault(); e.stopPropagation();
+  });
+});
+card.addEventListener("pointermove",e=>{
+  if(!drag)return;
+  const p=px(e), dx=p.x-drag.start.x, dy=p.y-drag.start.y, f=state[cur], o=drag.orig;
+  if(drag.el==="cost"){
+    if(drag.mode==="move"){ f.cost[0]=o.cost[0]+dx; f.cost[1]=o.cost[1]+dy; }
+    else { f.csize=Math.max(.03, o.csize + dy*1.3); }
+  } else {
+    const b=f[drag.el], ob=o[drag.el];
+    if(drag.mode==="move"){ b[0]=ob[0]+dx;b[2]=ob[2]+dx;b[1]=ob[1]+dy;b[3]=ob[3]+dy; }
+    else {
+      const c=drag.corner;
+      if(c==="h-nw"){b[0]=ob[0]+dx;b[1]=ob[1]+dy;}
+      if(c==="h-ne"){b[2]=ob[2]+dx;b[1]=ob[1]+dy;}
+      if(c==="h-sw"){b[0]=ob[0]+dx;b[3]=ob[3]+dy;}
+      if(c==="h-se"){b[2]=ob[2]+dx;b[3]=ob[3]+dy;}
+    }
+  }
+  clampAll(); render(); genOut();
+});
+card.addEventListener("pointerup",()=>{ if(drag){drag=null; save();} });
+card.addEventListener("pointercancel",()=>{ if(drag){drag=null; save();} });
+
+function clampAll(){
+  const f=state[cur];
+  f.cost[0]=clamp(f.cost[0]); f.cost[1]=clamp(f.cost[1]); f.csize=Math.max(.03,Math.min(.3,f.csize));
+  ["art","name","desc"].forEach(k=>{ const b=f[k];
+    if(b[2]<b[0]+.03)b[2]=b[0]+.03; if(b[3]<b[1]+.03)b[3]=b[1]+.03;
+    b[0]=clamp(b[0]);b[1]=clamp(b[1]);b[2]=clamp(b[2]);b[3]=clamp(b[3]); });
+}
+const clamp=v=>Math.max(0,Math.min(1,v));
+
+// ---- render ----
+function render(){
+  const f=state[cur];
+  frameimg.src = `assets/frames/${cur}.png`;
+  card.classList.toggle("dark", f.dark);
+  // art
+  place(boxes.art, f.art);
+  // name
+  place(boxes.name, f.name);
+  const nh=(f.name[3]-f.name[1])*CARD;
+  const nspan=boxes.name.querySelector("span");
+  nspan.textContent=(content[cur]?.name)||SAMPLE[cur][1];
+  nspan.style.fontSize=Math.max(9,nh*0.6)+"px";
+  nspan.style.color=f.dark?"#241d12":"#eeebe4";
+  // desc
+  place(boxes.desc, f.desc);
+  const dh=(f.desc[3]-f.desc[1])*CARD;
+  const dspan=boxes.desc.querySelector("span");
+  dspan.textContent=(content[cur]?.desc)||SAMPLE[cur][2];
+  dspan.style.fontSize=Math.max(8,dh*0.15)+"px";
+  dspan.style.color=f.dark?"#241d12":"#eeebe4";
+  // cost
+  if(f.nocost){ boxes.cost.style.display="none"; if(selEl==="cost") selEl="name"; }
+  else {
+    boxes.cost.style.display="";
+    const ch=f.csize*CARD;
+    boxes.cost.style.height=ch+"px";
+    boxes.cost.style.width="auto";
+    boxes.cost.style.left=(f.cost[0]*CARD)+"px";
+    boxes.cost.style.top=(f.cost[1]*CARD)+"px";
+    boxes.cost.style.transform="translate(-50%,-50%)";
+    const ctxt=((content[cur]?.cost)||SAMPLE[cur][0]).toString();
+    renderCostDigits(ctxt, ch);
+    csize.value=Math.round(f.csize*1000); csizev.textContent=(f.csize*100).toFixed(1)+"%";
+  }
+  var _cb=document.querySelector('#elbtns [data-el="cost"]'); if(_cb) _cb.style.cssText=f.nocost?"opacity:.35;pointer-events:none":"";
+  syncSel();
+}
+function renderCostDigits(txt, ch){
+  const box=boxes.cost;
+  [...box.querySelectorAll("img")].forEach(i=>i.remove());
+  const chars=txt.split("").filter(c=>/[0-9]/.test(c));
+  (chars.length?chars:["0"]).forEach(c=>{
+    const im=document.createElement("img"); im.src=`assets/digits/${c}.png`; im.style.height="100%"; box.insertBefore(im, box.querySelector(".handle"));
+  });
+}
+function place(el, b){
+  el.style.left=(b[0]*CARD)+"px"; el.style.top=(b[1]*CARD)+"px";
+  el.style.width=((b[2]-b[0])*CARD)+"px"; el.style.height=((b[3]-b[1])*CARD)+"px";
+  el.style.transform="none";
+}
+
+// ---- output ----
+function n3(v){ return v.toFixed(3); }
+function line(name){
+  const f=state[name], pad=(name+":").padEnd(9," ");
+  return `  ${pad} { art:[${f.art.map(n3).join(",")}], cost:[${n3(f.cost[0])},${n3(f.cost[1])}], csize:${n3(f.csize)}, name:[${f.name.map(n3).join(",")}], desc:[${f.desc.map(n3).join(",")}], dark:${f.dark}${f.nocost?', nocost:true':''}, aspect:1.0 },`;
+}
+function genOut(){
+  const order=["common","engineer","warlord","uncommon","nomad","rare","curse"];
+  document.getElementById("out").value = order.map(line).join("\n");
+}
+document.getElementById("copyBtn").onclick=()=>{
+  const ta=document.getElementById("out"); ta.select();
+  navigator.clipboard.writeText(ta.value).then(()=>{
+    const b=document.getElementById("copyBtn"); const t=b.textContent; b.textContent="Copied ✓";
+    setTimeout(()=>b.textContent=t,1200);
+  }).catch(()=>{ document.execCommand("copy"); });
+};
+document.getElementById("resetBtn").onclick=()=>{
+  if(confirm("Reset "+cur+" to default layout?")){ state[cur]=clone(DEFAULTS[cur]); loadContent(); save(); }
+};
+
+// init
+syncTabs(); syncSel(); loadContent(); render(); genOut();
+document.querySelector(`#tabs button[data-f="${cur}"]`)?.classList.add("on");
+</script>
+</body>
+</html>

@@ -15,6 +15,12 @@
     '          <a href="/densabooks.html">DensaBooks</a>',
     '        </div>',
     '      </div>',
+    '      <div class="nav-dropdown" id="gamesDropdown">',
+    '        <button class="nav-dropdown-toggle" id="gamesToggle" aria-haspopup="true" aria-expanded="false">Games <span class="nav-dropdown-arrow">&#9660;</span></button>',
+    '        <div class="nav-dropdown-menu" id="gamesMenu">',
+    '          <a href="/war-table.html">War Table</a>',
+    '        </div>',
+    '      </div>',
     '      <div class="nav-dropdown" id="resourcesDropdown">',
     '        <button class="nav-dropdown-toggle" id="resourcesToggle" aria-haspopup="true" aria-expanded="false">Resources <span class="nav-dropdown-arrow">&#9660;</span></button>',
     '        <div class="nav-dropdown-menu" id="resourcesMenu">',
@@ -47,6 +53,7 @@
     '        <a href="/services.html">Services</a>',
     '        <a href="/d-brief.html">D-Brief</a>',
     '        <a href="/densabooks.html">DensaBooks</a>',
+    '        <a href="/war-table.html">War Table</a>',
     '        <a href="/ai-digest.html">AI Digest</a>',
     '        <a href="/robotics-digest.html">Robotics Digest</a>',
     '        <a href="/computation-digest.html">Computation Digest</a>',
@@ -105,6 +112,7 @@
   // Dropdown toggles — click for mobile; hover handled by CSS on desktop
   var dropdowns = [
     { dropdown: 'productsDropdown', toggle: 'productsToggle' },
+    { dropdown: 'gamesDropdown', toggle: 'gamesToggle' },
     { dropdown: 'resourcesDropdown', toggle: 'resourcesToggle' },
   ];
 

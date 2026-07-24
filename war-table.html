@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://densanon.com/war-table.html">
+  <title>War Table — A Tactics Roguelike Deckbuilder | Densanon</title>
+  <meta name="description" content="Command an army, not a hero. War Table is a tactics roguelike deckbuilder: draw cards to reinforce a living, permadeath force and maneuver it across a fog-of-war grid. Coming soon — play the demo in your browser.">
+  <meta property="og:title" content="War Table — Command an army, not a hero">
+  <meta property="og:description" content="A tactics roguelike deckbuilder. Two fronts, one war. Play the demo in your browser.">
+  <meta property="og:image" content="https://densanon.com/war-table/media/battle.png">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    :root{ --wt-gold:#d8b45a; --wt-gold-2:#b8923a; --wt-ink:#f0e9d2; }
+    .wt-hero{ position:relative; text-align:center; padding:70px 0 30px; overflow:hidden; }
+    .wt-hero::before{ content:""; position:absolute; inset:0;
+      background:radial-gradient(120% 90% at 50% -10%, rgba(216,180,90,.10), transparent 60%); pointer-events:none; }
+    .wt-badge{ display:inline-block; font-size:.72rem; letter-spacing:.22em; text-transform:uppercase; font-weight:700;
+      color:var(--wt-gold); border:1px solid rgba(216,180,90,.4); border-radius:3px; padding:5px 12px; background:rgba(216,180,90,.06); margin-bottom:22px; }
+    .wt-logo{ max-width:340px; width:70%; height:auto; display:block; margin:0 auto 10px; filter:drop-shadow(0 4px 14px rgba(0,0,0,.5)); }
+    .wt-hero h1{ font-size:clamp(2rem,6vw,3.4rem); margin:6px 0 10px; letter-spacing:-.01em; }
+    .wt-hero h1 .g{ color:var(--wt-gold); }
+    .wt-tag{ font-size:clamp(1.05rem,2.4vw,1.35rem); color:var(--wt-ink); max-width:42ch; margin:0 auto 8px; }
+    .wt-sub{ font-size:1.02rem; color:var(--color-text-muted); max-width:60ch; margin:0 auto 30px; line-height:1.6; }
+    .wt-cta{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+    .btn-brass{ background:linear-gradient(180deg,var(--wt-gold),var(--wt-gold-2)); color:#241c07; font-weight:700; border:none; }
+    .btn-brass:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+    .btn-ghost{ background:transparent; color:var(--wt-gold); border:1px solid rgba(216,180,90,.5); }
+    .btn-ghost:hover{ background:rgba(216,180,90,.08); }
+    .wt-note{ color:var(--color-text-muted); font-size:.82rem; margin-top:14px; }
+
+    .wt-shots{ padding:34px 0 10px; }
+    .wt-shot-main{ border:1px solid var(--color-border); border-radius:12px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,.5);
+      background:var(--color-surface); }
+    .wt-shot-main img{ display:block; width:100%; height:auto; }
+    .wt-shot-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px; }
+    .wt-shot-row figure{ margin:0; border:1px solid var(--color-border); border-radius:10px; overflow:hidden; background:var(--color-surface); }
+    .wt-shot-row img{ display:block; width:100%; height:auto; }
+    .wt-shot-row figcaption{ font-size:.82rem; color:var(--color-text-muted); padding:9px 12px; border-top:1px solid var(--color-border); }
+    @media (max-width:640px){ .wt-shot-row{ grid-template-columns:1fr; } }
+
+    .wt-section{ padding:56px 0; }
+    .wt-section h2{ text-align:center; font-size:clamp(1.5rem,3.5vw,2rem); margin-bottom:8px; }
+    .wt-section .lede{ text-align:center; color:var(--color-text-muted); max-width:56ch; margin:0 auto 38px; line-height:1.6; }
+    .wt-feat{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; }
+    .wt-card{ background:var(--color-surface); border:1px solid var(--color-border); border-top:2px solid var(--wt-gold-2); border-radius:10px; padding:22px; transition:transform .2s,border-color .2s; }
+    .wt-card:hover{ transform:translateY(-3px); }
+    .wt-card .ic{ font-size:1.6rem; margin-bottom:10px; }
+    .wt-card h3{ font-size:1.1rem; margin-bottom:7px; }
+    .wt-card p{ color:var(--color-text-muted); font-size:.92rem; line-height:1.55; }
+
+    .wt-generals{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; }
+    .wt-gen{ background:var(--color-surface); border:1px solid var(--color-border); border-radius:10px; padding:20px; text-align:center; }
+    .wt-gen .nm{ color:var(--wt-gold); font-weight:700; letter-spacing:.1em; text-transform:uppercase; font-size:.95rem; margin-bottom:6px; }
+    .wt-gen p{ color:var(--color-text-muted); font-size:.88rem; line-height:1.5; margin:0; }
+
+    .wt-get{ background:var(--color-surface); border:1px solid var(--color-border); border-radius:12px; padding:34px 26px; text-align:center; }
+    .wt-get h2{ margin-bottom:8px; }
+    .wt-plats{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:22px; }
+    .wt-plat{ display:flex; flex-direction:column; gap:2px; align-items:center; min-width:120px; padding:14px 16px; border:1px solid var(--color-border); border-radius:9px; background:var(--color-bg); color:var(--color-text); text-decoration:none; transition:border-color .2s; }
+    .wt-plat:hover{ border-color:var(--wt-gold); }
+    .wt-plat .p1{ font-weight:700; font-size:.95rem; }
+    .wt-plat .p2{ font-size:.75rem; color:var(--color-text-muted); }
+    .wt-plat.soon{ opacity:.6; cursor:default; }
+    .wt-plat.soon:hover{ border-color:var(--color-border); }
+  </style>
+</head>
+<body>
+
+  <div id="site-header"></div>
+
+  <main>
+    <section class="wt-hero">
+      <div class="container">
+        <span class="wt-badge">Coming Soon · Play the Demo Now</span>
+        <img class="wt-logo" src="war-table/media/logo.png" alt="War Table">
+        <h1>Command an <span class="g">army</span>, not a hero.</h1>
+        <p class="wt-tag">A tactics roguelike deckbuilder. Two fronts, one war.</p>
+        <p class="wt-sub">Draw cards to reinforce a living, permadeath force — then maneuver it across a fog-of-war grid, flank the enemy, and grow raw recruits into medaled veterans. Every run is a new campaign.</p>
+        <div class="wt-cta">
+          <a class="btn btn-brass" href="war-table/play/">▶ Play the Demo in Your Browser</a>
+          <a class="btn btn-ghost" href="#get">Get the Beta</a>
+        </div>
+        <p class="wt-note">No download, no account — the demo runs right in your browser. Best on desktop / landscape.</p>
+      </div>
+    </section>
+
+    <section class="wt-shots">
+      <div class="container">
+        <figure class="wt-shot-main" style="margin:0">
+          <img src="war-table/media/battle.png" alt="A War Table tactical battle: units, terrain and fog of war on the grid, with a hand of cards below.">
+        </figure>
+        <div class="wt-shot-row">
+          <figure><img src="war-table/media/menu.png" alt="War Table command menu with three commanders."><figcaption>Pick your commander — each rewrites how you fight.</figcaption></figure>
+          <figure><img src="war-table/media/map.png" alt="The branching expedition map of a War Table run."><figcaption>Chart your path up the act. Your army is permadeath.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="wt-section">
+      <div class="container">
+        <h2>Two Fronts, One War</h2>
+        <p class="lede">The deck in your hand and the battle on the table are the same fight. Position is everything.</p>
+        <div class="wt-feat">
+          <div class="wt-card"><div class="ic">🃏</div><h3>Deck &amp; battlefield, fused</h3><p>Cards deploy squads, call in ordnance, bark orders, and raise structures — but nothing wins on its own. Flank, hold ground, read the fog.</p></div>
+          <div class="wt-card"><div class="ic">🎖️</div><h3>Your soldiers are the run</h3><p>Recruits earn XP, climb five ranks, and win medals that carry through the run. And it's permadeath — when one falls, they're gone.</p></div>
+          <div class="wt-card"><div class="ic">⚔️</div><h3>Command your way</h3><p>Choose a commander with its own doctrine, deck, and battlefield power. Aggression, mobility, engineering — each is a different war.</p></div>
+          <div class="wt-card"><div class="ic">🗺️</div><h3>Every fight, a new problem</h3><p>Raze a base, hold a point, survive an assault, escort a survivor — plus roaming elites, act bosses, and a few surprises we won't spoil.</p></div>
+          <div class="wt-card"><div class="ic">🔁</div><h3>Built to replay</h3><p>Win and the war gets harder. Ascension layers on pressure; medals and cards unlock as permanent additions; every run routes differently.</p></div>
+          <div class="wt-card"><div class="ic">🛡️</div><h3>Respects you</h3><p>100% offline. No servers, no accounts, no ads, no tracking. A tiny download that runs anywhere and is genuinely yours.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wt-section" style="padding-top:0">
+      <div class="container">
+        <h2>Meet the Commanders</h2>
+        <p class="lede">Each doctrine comes with its own deck, passive, and a battlefield power you charge and unleash.</p>
+        <div class="wt-generals">
+          <div class="wt-gen"><div class="nm">Warlord</div><p>Army doctrine. Build <b style="color:var(--wt-ink)">Wrath</b> from the carnage and spend it to rally the horde.</p></div>
+          <div class="wt-gen"><div class="nm">Nomad</div><p>Mobile doctrine. Your HQ is a Command Vehicle; movement builds <b style="color:var(--wt-ink)">Momentum</b> for an army-wide blitz.</p></div>
+          <div class="wt-gen"><div class="nm">Engineer</div><p>Build doctrine. Bend the grid to your will and <b style="color:var(--wt-ink)">Overcharge</b> your machines when it counts.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wt-section" id="get" style="padding-top:0">
+      <div class="container">
+        <div class="wt-get">
+          <h2>Get War Table</h2>
+          <p class="lede" style="margin-bottom:0">Play free in your browser today. Full release coming to Steam — the beta builds are available now for desktop and mobile.</p>
+          <div class="wt-plats">
+            <a class="wt-plat" href="war-table/play/"><span class="p1">▶ Browser</span><span class="p2">Play the demo now</span></a>
+            <a class="wt-plat" href="https://github.com/Densanon-devs/densanon-site/releases/download/war-table-v0.0.10/War-Table-Beta-0.0.10-setup.exe"><span class="p1">🪟 Windows</span><span class="p2">Beta installer</span></a>
+            <a class="wt-plat" href="https://github.com/Densanon-devs/densanon-site/releases/download/war-table-mobile-v0.0.10/War-Table-Beta-0.0.10.apk"><span class="p1">🤖 Android</span><span class="p2">Beta APK</span></a>
+            <span class="wt-plat soon"><span class="p1">🍎 iOS</span><span class="p2">TestFlight — soon</span></span>
+            <span class="wt-plat soon"><span class="p1">🎮 Steam</span><span class="p2">Wishlist — soon</span></span>
+          </div>
+          <p class="wt-note">Windows installer isn't code-signed yet — Windows may warn "unknown publisher." Built by Densanon LLC.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+</body>
+</html>
