@@ -59,6 +59,15 @@
     padding: 3px max(8px, env(safe-area-inset-right)) 3px max(8px, env(safe-area-inset-left));
     background: none; border: none; }
   #medalbar:empty { display: none; }
+  /* Army tab */
+  .armylist { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+  .armyrow { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border: 1px solid #3d3a29;
+    border-radius: 5px; background: rgba(30,34,22,.5); cursor: pointer; }
+  .armyrow:hover { border-color: var(--gold); }
+  .retbtn { flex: 0 0 auto; width: 34px; height: 34px; border: 1px solid #4a4630; border-radius: 5px;
+    background: rgba(0,0,0,.3); color: #8c8770; font-size: 18px; line-height: 1; cursor: pointer; }
+  .retbtn.on { color: var(--gold); border-color: var(--gold); background: rgba(216,180,90,.12); }
+  .armystats { font-family: var(--f-num); font-size: 12px; margin-top: 2px; display: flex; flex-wrap: wrap; gap: 2px 8px; }
   .medalpip { cursor: pointer; line-height: 0; display: inline-flex; position: relative; }
   .medalpip:active { transform: scale(.9); }
   /* portrait: let the top bar wrap to a second line instead of squishing everything onto one */
@@ -1537,7 +1546,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-DJJVTdHh.js"></script>
+  <script type="module" crossorigin src="./assets/index-Bbx4TR4Z.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1611,6 +1620,7 @@
 <div id="ovLegend" class="overlay" onclick="if(event.target.id==='ovLegend')this.classList.remove('show')"></div>
 <div id="ovUpgrade" class="overlay"></div>
 <div id="ovDeck" class="overlay" onclick="if(event.target.id==='ovDeck')this.classList.remove('show')"></div>
+<div id="ovArmy" class="overlay" onclick="if(event.target.id==='ovArmy')this.classList.remove('show')"></div>
 <div id="ovPopup" class="overlay" onclick="if(event.target.id==='ovPopup')this.classList.remove('show')"></div>
 <div id="ovMedal" class="overlay"></div>
 <div id="ovMedals" class="overlay" onclick="if(event.target.id==='ovMedals')this.classList.remove('show')"></div>
@@ -1629,7 +1639,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.12';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.13';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -3063,6 +3073,7 @@ function renderHud() {
       ${foe}
     </div>
     <div class="hudbtns">
+      <button class="ibtn" onclick="showArmy()" title="Army" aria-label="Army"><img src="assets/ui/btn/army.png" alt="Army" style="height:32px"></button>
       <button class="ibtn" onclick="showLegend()" title="Legend" aria-label="Legend"><img src="assets/ui/btn/legend.png" alt="Legend" style="height:32px"></button>
       <button class="ibtn" onclick="menu()" title="Menu" aria-label="Menu"><img src="assets/ui/btn/menu.png" alt="Menu" style="height:32px"></button>
     </div>`;
@@ -5369,6 +5380,45 @@ function centerOnHQ() {
   const maxT = Math.max(0, board.scrollHeight - wrap.clientHeight);
   wrap.scrollLeft = Math.max(0, Math.min(cx - wrap.clientWidth / 2, maxL));
   wrap.scrollTop = Math.max(0, Math.min(cy - (wrap.clientHeight - HAND_CLEAR) / 2, maxT));
+}
+function centerOnUnit(id) {
+  closeOv('ovArmy');
+  if (!S || !S.board) return;
+  const c = S.board.cells.find(cell => cell.u && cell.u.id === id);
+  if (!c) return;
+  const el = $('#board').querySelector(`[data-x="${c.x}"][data-y="${c.y}"]`);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+}
+function showArmy() {
+  if (typeof _dropCmd === 'function') _dropCmd();
+  const cells = (S.board && S.board.cells) || [];
+  const units = cells.map(c => c.u).filter(u => u && u.side === 'you' && !(u.tags || []).includes('structure'));
+  const retain = new Set((S.exp && S.exp.retain) || []);
+  const cap = (S.exp && S.exp.roster_cap) || 6;
+  const nRet = units.filter(u => retain.has(u.id)).length;
+  const row = u => {
+    const on = retain.has(u.id);
+    const info = CLASS_INFO[u.cls] || { n: u.cls };
+    return `<div class="armyrow" onclick="centerOnUnit('${u.id}')">
+      <button class="retbtn ${on ? 'on' : ''}" onclick="event.stopPropagation();toggleRetain('${u.id}')" title="${on ? 'Retained — tap to release' : 'Tap to retain'}">${on ? '★' : '☆'}</button>
+      <div style="flex:1;min-width:0">
+        <b class="gold">${u.rank ? u.rank + ' ' : ''}${u.name || info.n}</b> <span class="d">${info.n}${u.lvl > 1 ? ` · R${u.lvl}` : ''}</span>
+        <div class="d armystats"><span class="${u.hp < u.max * 0.35 ? 'red' : 'grn'}">HP ${u.hp}/${u.max}</span><span>AP ${u.ap}/${u.apmax}</span><span class="cyan">ATK ${u.atk}</span><span>DEF ${u.df}</span></div>
+      </div></div>`;
+  };
+  const body = units.length ? units.map(row).join('') : '<div class="d" style="text-align:center;padding:20px">No units in the field.</div>';
+  $('#ovArmy').innerHTML = oframe(
+    `<div class="choice"><b>Retain <span class="gold">${nRet}/${cap}</span></b>
+       <div class="d" style="margin-top:3px;line-height:1.5">Flag who to keep when you win — retained units get first claim on your roster slots (max ${cap}). Tap a unit to center the camera on it.</div></div>
+     <div class="armylist">${body}</div>`, 'army')
+    + `<div class="ovclose"><button class="ibtn" onclick="closeOv('ovArmy')" aria-label="Back"><img src="assets/ui/btn/return.png" alt="Back"></button></div>`;
+  $('#ovArmy').classList.add('show');
+}
+async function toggleRetain(id) {
+  const r = await api('/api/retain', { unit_id: id });
+  render(r);
+  if (r && r.ok === false && r.msg) toast(r.msg);   // e.g. "you can only retain 6 — release one first"
+  showArmy();   // reopen with the updated flags
 }
 function setCellPx(px) {
   const wrap = $('#boardwrap'), board = $('#board');
