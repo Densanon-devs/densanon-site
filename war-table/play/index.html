@@ -1537,7 +1537,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-Cbxoulce.js"></script>
+  <script type="module" crossorigin src="./assets/index-DJJVTdHh.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1629,7 +1629,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.11';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.12';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -4635,7 +4635,7 @@ function showRuns() {
       .filter(x => x[1]).map(x => `${x[0]}${x[1]}`).join('  ');
     const deckN = (r.deck||[]).reduce((a,d) => a + d.n, 0);
     const deck = (r.deck||[]).map(d => `${d.name}${d.up?`+${d.up}`:''}${d.n>1?` ×${d.n}`:''}`).join(', ') || '—';
-    const medals = (r.medals||[]).map(m => m.name).join(', ') || '—';
+    const medals = (r.medals||[]).map(m => m.name + (m.n>1 ? ' ×'+m.n : '')).join(', ') || '—';
     const roster = (r.roster||[]).map(u => `${u.rank||''} ${u.name||''} — ${(CLASS_INFO[u.cls]||{n:u.cls}).n} · HP ${u.hp}/${u.max}${u.level>1?` · rank ${u.level}/5`:''}`).join('<br>') || 'none survived';
     return `<div class="choice" style="border-color:${win?'var(--gold)':'#8a3a2f'}">
       <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">
