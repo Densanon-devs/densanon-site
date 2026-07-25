@@ -54,12 +54,10 @@
   .hudmeta { flex: 1 1 auto; min-width: 16px; overflow: hidden; text-overflow: ellipsis; }
   #hud .statline > *:not(.hudmeta) { flex: 0 0 auto; }   /* resources / gauge / chips keep their size */
   /* relics — earned medals in their own row just UNDER the top bar (StS-style), acquisition order */
-  /* medals float TRANSPARENTLY over the top-left of the board in battle — no felt band between the HUD and
-     the board (medalbar is an out-of-flow overlay so it reserves no row; the board shows through behind it). */
-  #medalbar { position: absolute; top: 4px; left: max(6px, env(safe-area-inset-left)); z-index: 6;
-    display: flex; flex-wrap: wrap; gap: 3px; max-width: 60%; background: none; border: none;
-    pointer-events: none; }
-  #medalbar .medalpip { pointer-events: auto; }
+  /* medals sit in a transparent row pinned just under the top bar (not over the board, no felt band) */
+  #medalbar { flex: 0 0 auto; display: flex; flex-wrap: wrap; gap: 3px;
+    padding: 3px max(8px, env(safe-area-inset-right)) 3px max(8px, env(safe-area-inset-left));
+    background: none; border: none; }
   #medalbar:empty { display: none; }
   .medalpip { cursor: pointer; line-height: 0; display: inline-flex; position: relative; }
   .medalpip:active { transform: scale(.9); }
@@ -1539,7 +1537,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-Bd5_S7xc.js"></script>
+  <script type="module" crossorigin src="./assets/index-Cbxoulce.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1570,7 +1568,8 @@
   <div id="hudwrap">
     <div id="hud"></div>
   </div>
-  <div id="boardwrap"><div id="medalbar"></div><div id="board"></div></div>
+  <div id="medalbar"></div>
+  <div id="boardwrap"><div id="board"></div></div>
   <div id="bottom">
     <div id="prompt"></div>
     <div id="hand"></div>
@@ -1630,7 +1629,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.10';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.11';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
