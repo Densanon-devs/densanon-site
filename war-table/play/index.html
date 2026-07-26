@@ -427,6 +427,25 @@
   .counter { position: absolute; inset: 7%; --dep: drop-shadow(0 2px 2px rgba(0,0,0,.55));
     display: flex; align-items: center; justify-content: center;
     background: url(assets/board/unit.png) center/contain no-repeat; filter: var(--dep); }
+  /* equipped cosmetic chip skins: your units read --chip-you, enemies/tribes read --chip-enemy
+     (both set on #board from the equipped slots; fall back to the default plaque). */
+  .counter.you, .counter.hq_you { background-image: var(--chip-you, url(assets/board/unit.png)); }
+  .counter.enemy, .counter.hq_enemy, .counter.tribe, .counter.neutral, .counter.raider, .counter.gator, .counter.bossunit { background-image: var(--chip-enemy, url(assets/board/unit.png)); }
+  /* board-chip picker (Settings → Board Chips) */
+  .chiprow { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 2px 0 8px; }
+  .chiptier { font: 700 12px var(--f-head); letter-spacing: .7px; text-transform: uppercase; margin: 12px 0 3px; text-align: center; }
+  .chiptile { width: 88px; text-align: center; }
+  .chiptile[onclick] { cursor: pointer; }
+  .chiptile[onclick]:active { transform: scale(.94); }
+  .chipplaque { width: 80px; height: 80px; margin: 0 auto; position: relative; display: flex; align-items: center; justify-content: center; }
+  .chipplaque:not(.locked) { filter: drop-shadow(0 2px 3px rgba(0,0,0,.5)); }
+  .chipunit { max-width: 60%; max-height: 56%; filter: drop-shadow(0 0 1.2px rgba(240,235,215,.9)) drop-shadow(0 1px 1px rgba(0,0,0,.5)); }
+  .chipplaque.locked { background: #1e2218; border: 1px dashed #45492f; border-radius: 8px; }
+  .chipq { color: #565a3f; font: 800 26px var(--f-head); }
+  .chipname { color: #cbc4ac; font: 600 12px system-ui; margin-top: 3px; }
+  .chiptile.sel .chipplaque { border-radius: 8px; box-shadow: 0 0 0 2px var(--gold), 0 0 9px 1px rgba(205,169,78,.6); }
+  .chipeq { color: var(--gold); font: 700 10px var(--f-head); letter-spacing: .4px; margin-top: 1px; }
+  .chipslot { flex: 1; }
   .counter.you     { filter: var(--dep) drop-shadow(0 0 2.5px #4f8fe0); }
   .counter.enemy   { filter: var(--dep) drop-shadow(0 0 2.5px #e0574a); }
   .counter.tribe   { filter: var(--dep) drop-shadow(0 0 2.5px var(--f-tribe)); }
@@ -1571,7 +1590,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-CI5GpFrZ.js"></script>
+  <script type="module" crossorigin src="./assets/index-D1h7Ha0w.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1649,6 +1668,7 @@
 <div id="ovPopup" class="overlay" onclick="if(event.target.id==='ovPopup')this.classList.remove('show')"></div>
 <div id="ovMedal" class="overlay"></div>
 <div id="ovMedals" class="overlay" onclick="if(event.target.id==='ovMedals')this.classList.remove('show')"></div>
+<div id="ovChips" class="overlay" onclick="if(event.target.id==='ovChips')this.classList.remove('show')"></div>
 <div id="ovAch" class="overlay" onclick="if(event.target.id==='ovAch')this.classList.remove('show')"></div>
 <div id="ovRuns" class="overlay" onclick="if(event.target.id==='ovRuns')this.classList.remove('show')"></div>
 <div id="ovSettings" class="overlay" onclick="if(event.target.id==='ovSettings')this.classList.remove('show')"></div>
@@ -1664,7 +1684,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.15';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.16';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2097,6 +2117,11 @@ function showSettings() {
       ${pbtn('how_to_play', "closeOv('ovSettings');showHelp()")}
       ${pbtn('replay_tutorial', "resetTutorial()")}
     </div>
+    ${S.demo ? '' : `<div class="choice" style="margin-top:10px">
+      <b>Board Chips</b> <span class="d" style="float:right">cosmetic</span>
+      <div class="d" style="margin:2px 0 8px;line-height:1.5">The plaque your units stand on. Win chips as run rewards, then equip one for your units and one for the enemy — independently.</div>
+      <button class="setbtn" onclick="closeOv('ovSettings');showChips()">Open chip collection ▸</button>
+    </div>`}
     <div class="choice" style="margin-top:10px">
       <b>Updates</b> <span class="d" style="float:right;font-family:var(--f-num)">v${APP_VERSION}</span>
       <div class="d" style="margin:2px 0 8px;line-height:1.5">Checks densanon.com once at launch for a newer build (anonymous, nothing else is sent). Downloading is always a manual click.</div>
@@ -2919,6 +2944,14 @@ function showRunResult() {
       </div>
       <div class="d" style="margin-top:6px">seed ${S.seed}${(S.mods&&S.mods.length)?' · '+S.mods.join(', '):''}</div>
     </div>
+    ${rs.chip_drop ? `<div class="choice" style="text-align:center;border-color:var(--gold)">
+      <div class="d" style="letter-spacing:.6px;color:${_CHIP_TC[rs.chip_drop.tier]||'#cda94e'}">◆ BOARD CHIP UNLOCKED</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:6px">
+        <div style="width:66px;height:66px;background:url(${(S.chips&&S.chips.reg[rs.chip_drop.id]&&S.chips.reg[rs.chip_drop.id].file)||'assets/board/unit.png'}) center/contain no-repeat;filter:drop-shadow(0 2px 3px rgba(0,0,0,.55))"></div>
+        <div style="text-align:left"><b class="gold" style="font:700 16px var(--f-head)">${rs.chip_drop.name}</b><div class="d" style="text-transform:capitalize;color:${_CHIP_TC[rs.chip_drop.tier]||'#b9b09a'}">${rs.chip_drop.tier} chip</div></div>
+      </div>
+      <div class="d" style="margin-top:5px">Equip it in Settings → Board Chips</div>
+    </div>` : ''}
     <div style="text-align:center">${pbtn('continue','menu()',{cls:'h'})}</div>`, win?'mission_complete':'mission_failed');
   o.classList.add('show');
 }
@@ -3264,9 +3297,20 @@ function layoutBoard() {
   board.style.backgroundSize = tblW.toFixed(1) + 'px ' + tblH.toFixed(1) + 'px';
   board.style.backgroundPosition = (cx - tblW / 2).toFixed(1) + 'px ' + (cy - tblH / 2).toFixed(1) + 'px';
 }
+function chipFile(id) {   // equipped-chip id → its image url (falls back to the default plaque)
+  const c = S && S.chips; const f = (c && c.reg && c.reg[id] && c.reg[id].file) || (c && c.default_file) || 'assets/board/unit.png';
+  return `url(${f})`;
+}
+function applyChips() {   // push the two equipped slots onto the board as CSS vars for the counters
+  const board = $('#board'); if (!board) return;
+  const eq = (S && S.chips && S.chips.equip) || { you: 'default', enemy: 'default' };
+  board.style.setProperty('--chip-you', chipFile(eq.you));
+  board.style.setProperty('--chip-enemy', chipFile(eq.enemy));
+}
 function renderBoard() {
   const b = S.board, board = $('#board'), wrap = $('#boardwrap');
   const sx = wrap.scrollLeft, sy = wrap.scrollTop;   // keep the view where it was
+  applyChips();
   board.dataset.ts = tileSel();
   layoutBoard();                                     // size the grid + table (shared with pinch-zoom)
   const nodeMap = new Map((S.nodes || []).map(n => [n.pos[0] + ',' + n.pos[1], n]));
@@ -5253,6 +5297,47 @@ function showMedals() {
       : '<div class="d" style="text-align:center;padding:8px 4px">empty</div>'}
     `, 'medals') + `<div class="ovclose"><button class="ibtn" onclick="closeOv('ovMedals')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
   $('#ovMedals').classList.add('show');
+}
+// ── board-chip collection + equip (Settings → Board Chips) ──────────
+let _chipSlot = 'you';   // which slot the picker is editing (your units / enemy units)
+function chipSlot(s) { _chipSlot = s; showChips(); }
+async function equipChip(side, id) { Sfx.play('tap'); haptic(15); const r = await api('/api/equip_chip', { side, id }); render(r); showChips(); }
+const _CHIP_TN = { common: 'Common', uncommon: 'Uncommon', rare: 'Rare', epic: 'Epic', legendary: 'Legendary' };
+const _CHIP_TC = { common: '#b9b09a', uncommon: '#6fae63', rare: '#5a8fd0', epic: '#b06fd0', legendary: '#e0b23e' };
+function showChips() {
+  _dropCmd();
+  const C = S && S.chips; if (!C) return;
+  const owned = new Set(C.owned || []);
+  const eq = C.equip || { you: 'default', enemy: 'default' };
+  const slot = _chipSlot, foe = slot === 'enemy';
+  const fileOf = id => (id === 'default' ? C.default_file : (C.reg[id] ? C.reg[id].file : C.default_file));
+  const isOwned = id => id === 'default' || owned.has(id);
+  const sampleUnit = foe ? 'heavy_tank' : 'rifleman';
+  const glow = foe ? '#e0574a' : '#4f8fe0';
+  const tile = (id) => {
+    const own = isOwned(id), sel = eq[slot] === id;
+    const nm = id === 'default' ? 'Default' : (C.reg[id] ? C.reg[id].name : id);
+    const plaque = own
+      ? `<div class="chipplaque" style="background:url(${fileOf(id)}) center/contain no-repeat"><img class="chipunit" src="assets/units/${sampleUnit}.png" alt=""></div>`
+      : `<div class="chipplaque locked"><span class="chipq">?</span></div>`;
+    return `<div class="chiptile${sel ? ' sel' : ''}" ${own ? `onclick="equipChip('${slot}','${id}')"` : ''}>`
+      + `${plaque}<div class="chipname">${own ? nm : 'Undiscovered'}</div>${sel ? '<div class="chipeq">✓ Equipped</div>' : ''}</div>`;
+  };
+  let gal = `<div class="chiptier" style="color:#c9c2aa">Base</div><div class="chiprow">${tile('default')}</div>`;
+  for (const t of (C.tiers || [])) {
+    const ids = Object.keys(C.reg).filter(id => C.reg[id].tier === t);
+    if (ids.length) gal += `<div class="chiptier" style="color:${_CHIP_TC[t]}">${_CHIP_TN[t] || t}</div><div class="chiprow">${ids.map(tile).join('')}</div>`;
+  }
+  const nOwned = (C.owned || []).length, nTot = Object.keys(C.reg).length;
+  $('#ovChips').innerHTML = oframe(`
+    <div style="display:flex;gap:8px;margin-bottom:8px">
+      <button class="setbtn chipslot" style="${!foe ? 'border-color:#4f8fe0;color:#9cc4ee' : ''}" onclick="chipSlot('you')">Your Units</button>
+      <button class="setbtn chipslot" style="${foe ? 'border-color:#e0574a;color:#e6a89f' : ''}" onclick="chipSlot('enemy')">Enemy Units</button>
+    </div>
+    ${ocap(`<b>${nOwned}/${nTot}</b> chips collected — win more as run rewards. Tap an owned chip to equip it on <b style="color:${glow}">${foe ? 'enemy' : 'your'} units</b>.`)}
+    ${gal}
+  `, 'Board Chips') + `<div class="ovclose"><button class="ibtn" onclick="closeOv('ovChips')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+  $('#ovChips').classList.add('show');
 }
 async function wsUpgrade(id) { closeOv('ovUpgrade'); render(await api('/api/upgrade', {card_id:id})); }
 async function wsRemove(id) { closeOv('ovUpgrade'); render(await api('/api/remove_card', {card_id:id})); }
