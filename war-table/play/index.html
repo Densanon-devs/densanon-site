@@ -446,6 +446,15 @@
   .chiptile.sel .chipplaque { border-radius: 8px; box-shadow: 0 0 0 2px var(--gold), 0 0 9px 1px rgba(205,169,78,.6); }
   .chipeq { color: var(--gold); font: 700 10px var(--f-head); letter-spacing: .4px; margin-top: 1px; }
   .chipslot { flex: 1; }
+  .chipsbtn { background: none; border: 0; padding: 0; cursor: pointer; display: inline-block; width: 100%; max-width: 300px; }
+  .chipsbtn img { width: 100%; height: auto; display: block; filter: drop-shadow(0 2px 4px rgba(0,0,0,.55)); transition: transform .08s; }
+  .chipsbtn:hover img { transform: translateY(-1px) scale(1.02); }
+  .chipsbtn:active img { transform: scale(.95); }
+  .chiptab { flex: 1; min-width: 0; background: none; border: 0; padding: 0; cursor: pointer; }
+  .chiptab img { width: 100%; height: auto; display: block; transition: filter .1s, transform .1s; }
+  .chiptab.off img { opacity: .55; filter: grayscale(.5) brightness(.7); }
+  .chiptab.on img { filter: drop-shadow(0 0 7px rgba(205,169,78,.8)); }
+  .chiptab:active img { transform: scale(.96); }
   .counter.you     { filter: var(--dep) drop-shadow(0 0 2.5px #4f8fe0); }
   .counter.enemy   { filter: var(--dep) drop-shadow(0 0 2.5px #e0574a); }
   .counter.tribe   { filter: var(--dep) drop-shadow(0 0 2.5px var(--f-tribe)); }
@@ -1684,7 +1693,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.16';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.17';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2117,10 +2126,9 @@ function showSettings() {
       ${pbtn('how_to_play', "closeOv('ovSettings');showHelp()")}
       ${pbtn('replay_tutorial', "resetTutorial()")}
     </div>
-    ${S.demo ? '' : `<div class="choice" style="margin-top:10px">
-      <b>Board Chips</b> <span class="d" style="float:right">cosmetic</span>
-      <div class="d" style="margin:2px 0 8px;line-height:1.5">The plaque your units stand on. Win chips as run rewards, then equip one for your units and one for the enemy — independently.</div>
-      <button class="setbtn" onclick="closeOv('ovSettings');showChips()">Open chip collection ▸</button>
+    ${S.demo ? '' : `<div class="choice" style="margin-top:10px;text-align:center">
+      <div class="d" style="margin:0 0 9px;line-height:1.5">The plaque your units stand on — win chips as run rewards, then equip one for your units and one for the enemy.</div>
+      <button class="chipsbtn" onclick="closeOv('ovSettings');showChips()" aria-label="Open chip collection"><img src="assets/ui/btn/chips.png" alt="Chips"></button>
     </div>`}
     <div class="choice" style="margin-top:10px">
       <b>Updates</b> <span class="d" style="float:right;font-family:var(--f-num)">v${APP_VERSION}</span>
@@ -2498,7 +2506,7 @@ function gameConfirm(msg, okLabel) {
 }
 
 // ornate container wrapper. `hdr` = a header-plaque key (assets/ui/hdr/<key>.png) OR plain text (fallback banner)
-const HDR_KEYS = new Set(['act1','act2','act3','act4','army','battle_spoils','battle_won','cache','camp','cards','deck','defeat','event','generals','history','how_to_play','key','medal_earned','medals','menu','mission_complete','mission_failed','more','outpost','remove','settings','shop','tribe_salvage','upgrade','workshop']);
+const HDR_KEYS = new Set(['act1','act2','act3','act4','army','battle_spoils','battle_won','cache','camp','cards','chips','deck','defeat','event','generals','history','how_to_play','key','medal_earned','medals','menu','mission_complete','mission_failed','more','outpost','remove','settings','shop','tribe_salvage','upgrade','workshop']);
 function ofBanner(hdr) {
   if (!hdr) return '';
   return HDR_KEYS.has(hdr)
@@ -5330,13 +5338,13 @@ function showChips() {
   }
   const nOwned = (C.owned || []).length, nTot = Object.keys(C.reg).length;
   $('#ovChips').innerHTML = oframe(`
-    <div style="display:flex;gap:8px;margin-bottom:8px">
-      <button class="setbtn chipslot" style="${!foe ? 'border-color:#4f8fe0;color:#9cc4ee' : ''}" onclick="chipSlot('you')">Your Units</button>
-      <button class="setbtn chipslot" style="${foe ? 'border-color:#e0574a;color:#e6a89f' : ''}" onclick="chipSlot('enemy')">Enemy Units</button>
+    <div style="display:flex;gap:10px;margin-bottom:8px;align-items:center">
+      <button class="chiptab ${!foe ? 'on' : 'off'}" onclick="chipSlot('you')" aria-label="My units"><img src="assets/ui/btn/chip_you.png" alt="My units"></button>
+      <button class="chiptab ${foe ? 'on' : 'off'}" onclick="chipSlot('enemy')" aria-label="Enemy units"><img src="assets/ui/btn/chip_enemy.png" alt="Enemy units"></button>
     </div>
     ${ocap(`<b>${nOwned}/${nTot}</b> chips collected — win more as run rewards. Tap an owned chip to equip it on <b style="color:${glow}">${foe ? 'enemy' : 'your'} units</b>.`)}
     ${gal}
-  `, 'Board Chips') + `<div class="ovclose"><button class="ibtn" onclick="closeOv('ovChips')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+  `, 'chips') + `<div class="ovclose"><button class="ibtn" onclick="closeOv('ovChips')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
   $('#ovChips').classList.add('show');
 }
 async function wsUpgrade(id) { closeOv('ovUpgrade'); render(await api('/api/upgrade', {card_id:id})); }
