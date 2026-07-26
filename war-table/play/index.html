@@ -98,7 +98,14 @@
     display: inline-flex; align-items: center; justify-content: center; font-size: 10px; color: #b8b299; }
   .foechip { font-size: 11px; padding: 1px 7px; border-radius: 4px; cursor: pointer; white-space: nowrap;
     background: rgba(200,150,60,.14); border: 1px solid rgba(200,150,60,.4); color: var(--gold); }
-  .foechip.boss { background: rgba(200,60,50,.16); border-color: rgba(200,60,50,.5); color: #e0796b; }
+  /* boss name rides in a mini TOAST pill (the ornate bronze-riveted bar) */
+  .foechip.boss { border: none; border-radius: 0; color: #f4eed8; font-weight: 700; letter-spacing: .3px;
+    padding: 3px 34px; min-height: 30px; display: inline-flex; align-items: center; gap: 4px;
+    background:
+      url(assets/ui/toast/toast_l.png) left center / auto 100% no-repeat,
+      url(assets/ui/toast/toast_r.png) right center / auto 100% no-repeat,
+      url(assets/ui/toast/toast_m.png) center center / auto 100% repeat-x;
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,.5)); }
   .foechip.obj { background: rgba(120,150,90,.14); border-color: rgba(120,150,90,.4); color: #a9c98a; }
   /* HOLD objective — ornate plate with the X/Y progress in gold-glyph characters on the plaque */
   .objhold { position: relative; display: inline-block; height: var(--pillh, 34px); flex: 0 0 auto; cursor: pointer;
@@ -350,6 +357,10 @@
   }
   @media (prefers-reduced-motion: reduce) { .stormfx { animation: none; opacity: .62; } }
   .cell.reveal-ping { box-shadow: inset 0 0 0 2px #8fd0ff, 0 0 12px 3px rgba(120,190,255,.7); animation: pulse .45s infinite; }
+  /* Army tab: locate a unit — a bright gold ring that pulses a few times, then clears */
+  .cell.locate-ping { position: relative; z-index: 5;
+    box-shadow: inset 0 0 0 3px var(--gold), 0 0 18px 6px rgba(216,180,90,.85); animation: pulse .5s ease-in-out 3; }
+  @media (prefers-reduced-motion: reduce) { .cell.locate-ping { animation: none; } }
   .shopbtn { padding: 3px 8px; font: 700 10px var(--f-head); border-radius: 5px;
     border: 1px solid #4a4636; background: #23261b; color: #cdc6ac; cursor: pointer; white-space: nowrap; }
   .shopbtn.up { border-color: #4d6b3d; color: #a7c98a; }
@@ -1546,7 +1557,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-Bbx4TR4Z.js"></script>
+  <script type="module" crossorigin src="./assets/index-UleEJMUt.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1639,7 +1650,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.13';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.14';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2964,8 +2975,8 @@ function _introObj() {   // the objective worth briefing at battle start (skirmi
   return (o && o.kind && o.kind !== 'eliminate' && o.brief && !S.boss && !S.elite) ? o : null;
 }
 function maybeShowIntro() {                 // telegraph the enemy + objective once, at battle start
-  const foe = S.boss || S.elite || S.archetype;
   const obj = _introObj();
+  const foe = S.boss || S.elite || (obj ? null : S.archetype);   // an objective level briefs the OBJECTIVE, not a generic enemy type
   if ((!foe && !obj) || S.turn !== 1) return;
   if (!S.boss && !introEnabled()) return;   // toggle only gates elite/archetype/objective intros — bosses always telegraph
   const k = (S.boss ? 'b:' : S.elite ? 'e:' : foe ? 'a:' : 'o:') + (foe ? foe.name : '') + ':' + (obj ? obj.kind : '') + ':' + (S.board ? S.board.width : 0);
@@ -2974,8 +2985,10 @@ function maybeShowIntro() {                 // telegraph the enemy + objective o
   showFoeInfo();
 }
 function showFoeInfo() {
-  const boss = S.boss, elite = S.elite, arch = S.archetype, foe = boss || elite || arch;
+  const boss = S.boss, elite = S.elite;
   const obj = _introObj();
+  const arch = obj ? null : S.archetype;   // on an objective level, don't surface the enemy TYPE — the objective is the brief
+  const foe = boss || elite || arch;
   if (!foe && !obj) return;
   const txt = boss ? boss.telegraph : (foe ? foe.desc : '');
   const lbl = boss ? 'Act Boss' : elite ? 'Elite force' : foe ? 'Enemy force' : 'Mission';
@@ -3000,6 +3013,10 @@ function showFoeInfo() {
 }
 // Portrait: pick ONE height for every battle pill so the row-1 pills (+ objective) span the
 // width and share a uniform height. Wide screens cap at 34px and space-between spreads them.
+// battles with no enemy base to raze: a boss fight (the boss pill stands in) or an objective that
+// deletes the base entirely (escape / escort / bastion / hunt / spire). Hide the BASES pill for these.
+const _NO_BASE_OBJ = new Set(['escape', 'escort', 'bastion', 'hunt', 'spire']);
+function _noBaseBattle() { return !!(typeof S !== 'undefined' && S && (S.boss || (S.objective && _NO_BASE_OBJ.has(S.objective.kind)))); }
 const _PILL_ASP = { cp:2.19, hq:2.14, bases:2.23, troops:1.97, survive:2.18, hold:2.56, waves:2.47 };   // compact _p plates (portrait)
 const _PILL_ASP_L = { cp:3.47, hq:3.43, bases:3.35, troops:3.34, survive:3.49, hold:3.66, waves:2.84 };  // wide labeled plates (landscape)
 function setPillH() {
@@ -3009,7 +3026,8 @@ function setPillH() {
   const ok = S.objective && S.objective.kind;
   if (_isPortrait()) {
     // portrait: the 4 stat pills (+ objective) alone on one row — height that spans the full width.
-    let sum = _PILL_ASP.cp + _PILL_ASP.hq + _PILL_ASP.bases + _PILL_ASP.troops, n = 4;
+    let sum = _PILL_ASP.cp + _PILL_ASP.hq + _PILL_ASP.troops, n = 3;
+    if (!_noBaseBattle()) { sum += _PILL_ASP.bases; n++; }   // BASES pill is hidden when there's no base to pursue
     if (ok === 'survive') { sum += _PILL_ASP.survive; n++; }
     else if (ok === 'hold') { sum += _PILL_ASP.hold; n++; }
     else if (ok === 'bastion') { sum += _PILL_ASP.waves; n++; }
@@ -3047,7 +3065,7 @@ function renderHud() {
   const p = S.power;
   const obj = S.objective;
   const foe = S.boss   // enemy-type chip (elite/archetype) removed — the battle intro telegraphs it; boss stays for its live enraged state
-    ? `<span class="foechip boss" onclick="showFoeInfo()">${bossFace(S.boss.id,18)||si('elite',15)} ${S.boss.name}${S.boss.enraged?' '+si('cp',13):''}</span>`
+    ? `<span class="foechip boss" onclick="showFoeInfo()">${S.boss.name}${S.boss.enraged?' '+si('cp',13):''}</span>`
     : '';
   const objChip = !obj ? ''
     : obj.kind === 'hold'
@@ -3067,7 +3085,7 @@ function renderHud() {
            onpointerdown="powPressStart()" onpointerup="powPressEnd()" onpointerleave="powPressEnd()"
            oncontextmenu="event.preventDefault();showPowerInfo();return false" title="${p.desc}">${si('cp',15)} ${p.name} <b>${p.gauge}/${p.max}</b><span class="pgtrack"><i style="width:${Math.round(100*Math.min(p.gauge,p.max)/p.max)}%"></i></span>${p.ready?' ▸GO':''}</button>`;
   $('#hud').innerHTML = `<div class="statline">
-      <div class="pillbar">${bpill('cp', S.cp+'/'+S.cp_max, '', "showPillInfo('cp')")}${bpill('hq', S.hq_hp, hpFrac<34?'danger':'', "showPillInfo('hq')")}${bpill('bases', S.bases_left, '', "showPillInfo('bases')")}${bpill('troops', S.troops.n+'/'+S.troops.cap, S.troops.n>=S.troops.cap?'full':'', "showPillInfo('troops')")}${objChip}</div>
+      <div class="pillbar">${bpill('cp', S.cp+'/'+S.cp_max, '', "showPillInfo('cp')")}${bpill('hq', S.hq_hp, hpFrac<34?'danger':'', "showPillInfo('hq')")}${_noBaseBattle() ? '' : bpill('bases', S.bases_left, '', "showPillInfo('bases')")}${bpill('troops', S.troops.n+'/'+S.troops.cap, S.troops.n>=S.troops.cap?'full':'', "showPillInfo('troops')")}${objChip}</div>
       ${gauge}
       ${S.ascension?`<span class="stat gold">A${S.ascension}</span>`:''}
       ${foe}
@@ -5386,8 +5404,9 @@ function centerOnUnit(id) {
   if (!S || !S.board) return;
   const c = S.board.cells.find(cell => cell.u && cell.u.id === id);
   if (!c) return;
-  const el = $('#board').querySelector(`[data-x="${c.x}"][data-y="${c.y}"]`);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+  centerCell(c.x, c.y);   // scroll it into the clear area (above the hand/prompt band)
+  const el = $('#boardwrap') && $('#boardwrap').querySelector(`.cell[data-x="${c.x}"][data-y="${c.y}"]`);
+  if (el) { el.classList.remove('locate-ping'); void el.offsetWidth; el.classList.add('locate-ping'); setTimeout(() => el.classList.remove('locate-ping'), 1600); }
 }
 function showArmy() {
   if (typeof _dropCmd === 'function') _dropCmd();
