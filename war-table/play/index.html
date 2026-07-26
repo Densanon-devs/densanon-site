@@ -54,8 +54,10 @@
   .hudmeta { flex: 1 1 auto; min-width: 16px; overflow: hidden; text-overflow: ellipsis; }
   #hud .statline > *:not(.hudmeta) { flex: 0 0 auto; }   /* resources / gauge / chips keep their size */
   /* relics — earned medals in their own row just UNDER the top bar (StS-style), acquisition order */
-  /* medals sit in a transparent row pinned just under the top bar (not over the board, no felt band) */
-  #medalbar { flex: 0 0 auto; display: flex; flex-wrap: wrap; gap: 3px;
+  /* medals float as a fully transparent overlay over the TOP of the board (no felt band, no row of
+     its own) — pinned just under the top bar via --medaltop (measured = hudwrap height). */
+  #medalbar { position: absolute; left: 0; right: 0; top: var(--medaltop, 44px); z-index: 6;
+    display: flex; flex-wrap: wrap; gap: 3px; margin: 0; pointer-events: none;
     padding: 3px max(8px, env(safe-area-inset-right)) 3px max(8px, env(safe-area-inset-left));
     background: none; border: none; }
   #medalbar:empty { display: none; }
@@ -68,7 +70,7 @@
     background: rgba(0,0,0,.3); color: #8c8770; font-size: 18px; line-height: 1; cursor: pointer; }
   .retbtn.on { color: var(--gold); border-color: var(--gold); background: rgba(216,180,90,.12); }
   .armystats { font-family: var(--f-num); font-size: 12px; margin-top: 2px; display: flex; flex-wrap: wrap; gap: 2px 8px; }
-  .medalpip { cursor: pointer; line-height: 0; display: inline-flex; position: relative; }
+  .medalpip { cursor: pointer; line-height: 0; display: inline-flex; position: relative; pointer-events: auto; }
   .medalpip:active { transform: scale(.9); }
   /* portrait: let the top bar wrap to a second line instead of squishing everything onto one */
   
@@ -203,7 +205,13 @@
   /* the FULL table image lives on #board (padded to fill the viewport at min zoom, so the whole
      table shows edge-to-edge fully zoomed out) and scales up with the grid as you zoom in.
      100% 100% no-repeat = one un-tiled image → no seam. */
-  #board { display: grid; gap: 0; position: relative; background: url(assets/board/table.jpg) center/cover no-repeat; }
+  #board { display: grid; gap: 0; position: relative; background: url(assets/board/table.jpg) center/cover no-repeat;
+    /* Composite the board onto its own GPU layer. The wood table stays exactly as-is, but now it (and the
+       cells) rasterize into tiles: a unit move re-rasterizes only the tiles it touched instead of repainting
+       the whole surface on the main thread, and a scroll/pan is a pure compositor shift — that main-thread
+       full-surface repaint is what produced the horizontal tearing. Paired with the per-cell content-visibility
+       culling, only near-viewport tiles stay live, so this doesn't balloon memory on big maps. */
+    transform: translateZ(0); backface-visibility: hidden; }
   /* combat tracer — a brief streak from an attacker's tile to the unit it hit, so a ranged/unseen shot
      reveals where it came from. Source end gets a pulse ring even if the shooter sits in fog. */
   .tracer { position: absolute; height: 3px; transform-origin: 0 50%; z-index: 7; pointer-events: none; border-radius: 2px;
@@ -219,7 +227,13 @@
   .cell { width: var(--cell); height: var(--cell); display: flex;
     align-items: center; justify-content: center; position: relative;
     font-size: calc(var(--cell) * 0.62); font-weight: 700;
-    background: #b3a682 center/cover no-repeat; user-select: none; }
+    background: #b3a682 center/cover no-repeat; user-select: none;
+    /* viewport culling: the browser skips rendering cells that are off-screen (only the ~viewport's
+       worth of tiles paint each frame instead of the whole map). On a large, fully-revealed map this
+       is the big win — it caps paint area AND decoded-texture memory to what's actually visible, which
+       is what caused the horizontal tearing + the long-session glitch. Intrinsic size = exact cell box,
+       so there is zero layout shift; near-viewport cells still render, so fog feather at the edge holds. */
+    content-visibility: auto; contain-intrinsic-size: var(--cell) var(--cell); }
   /* wood-tile board: base tile + per-terrain colour-tinted tile (grain kept) */
   .cell    { background-image: url(assets/board/base.png); }
   .t-plain  { background-image: url(assets/board/base.png); }
@@ -1557,7 +1571,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-UleEJMUt.js"></script>
+  <script type="module" crossorigin src="./assets/index-CI5GpFrZ.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1650,7 +1664,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.14';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.15';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -3023,6 +3037,8 @@ function setPillH() {
   const el = document.documentElement;
   const mm = window.matchMedia;
   if (!S || !S.board || !mm) { el.style.removeProperty('--pillh'); return; }
+  const hw = document.getElementById('hudwrap');   // pin the floating medal overlay right under the real top-bar height (varies when it wraps)
+  if (hw) el.style.setProperty('--medaltop', hw.offsetHeight + 'px');
   const ok = S.objective && S.objective.kind;
   if (_isPortrait()) {
     // portrait: the 4 stat pills (+ objective) alone on one row — height that spans the full width.
@@ -3095,9 +3111,14 @@ function renderHud() {
       <button class="ibtn" onclick="showLegend()" title="Legend" aria-label="Legend"><img src="assets/ui/btn/legend.png" alt="Legend" style="height:32px"></button>
       <button class="ibtn" onclick="menu()" title="Menu" aria-label="Menu"><img src="assets/ui/btn/menu.png" alt="Menu" style="height:32px"></button>
     </div>`;
-  $('#medalbar').innerHTML = (S.medals && S.medals.length)
-    ? S.medals.map(m => `<span class="medalpip" onclick="showMedalOne('${m.id}')" title="${m.name}${m.n>1?' ×'+m.n:''}">${medalIcon(m.id, 24)}${m.n>1?`<span class="medalx">×${m.n}</span>`:''}</span>`).join('')
-    : '';
+  const _mb = $('#medalbar');
+  if (S.medals && S.medals.length) {
+    _mb.style.display = '';   // shown (flex, via the stylesheet)
+    _mb.innerHTML = S.medals.map(m => `<span class="medalpip" onclick="showMedalOne('${m.id}')" title="${m.name}${m.n>1?' ×'+m.n:''}">${medalIcon(m.id, 24)}${m.n>1?`<span class="medalx">×${m.n}</span>`:''}</span>`).join('');
+  } else {
+    _mb.innerHTML = '';
+    _mb.style.display = 'none';   // no medals → collapse the bar entirely (no overlay over the board)
+  }
   setPillH();   // AFTER the row is in the DOM so it can measure the real button/chip widths
   if (window.requestAnimationFrame) requestAnimationFrame(setPillH);   // refine once plate/button images have their natural sizes
 }
@@ -3193,6 +3214,14 @@ function showRunInfo() {
 function layoutBoard() {
   const b = S && S.board; if (!b) return;
   const board = $('#board'), wrap = $('#boardwrap'); if (!board || !wrap) return;
+  // Everything this function writes (grid size, --cell, #board padding, the wood-table background size
+  // + position) is a pure function of the grid dims, the zoom (cellPx/minCellPx) and the viewport. NONE
+  // of those change when a unit merely moves — so on a large, fully-revealed map, re-setting the giant
+  // table backgroundSize/Position every single action forced a full background re-rasterize each move,
+  // which is what glitched the screen. Skip the DOM writes entirely when the inputs are unchanged.
+  const sig = b.width + 'x' + b.height + '@' + cellPx + '/' + minCellPx + ':' + wrap.clientWidth + 'x' + wrap.clientHeight;
+  if (layoutBoard._sig === sig) return;
+  layoutBoard._sig = sig;
   board.style.gridTemplateColumns = `repeat(${b.width}, var(--cell))`;
   document.documentElement.style.setProperty('--cell', cellPx + 'px');
   // pad #board so the wood fills the viewport at min zoom (table edge = screen edge) and grows past it
@@ -3210,7 +3239,14 @@ function layoutBoard() {
   const covW = cw, covH = ch + HAND_CLEAR;   // min-zoom table covers the viewport (a hand taller so no gap by the cards)
   let vW, vH;
   if (covW / covH > tblAR) { vW = covW; vH = covW / tblAR; } else { vH = covH; vW = covH * tblAR; }
-  const tblW = vW * zoomF, tblH = vH * zoomF;
+  // Table = the lockstep viewport-cover, but NEVER smaller than the grid plus a full wood border. A tall
+  // map (grid nearly as tall as the viewport) used to leave only HAND_CLEAR/2 of wood, which the padding
+  // math then spent entirely on hand-clearance — padTop fell to 0 and the grid's top row sat flush on the
+  // table edge, so scrolling up broke the board free of the wood. Forcing tblH ≥ gridH + 2·m + HAND_CLEAR
+  // (and tblW ≥ gridW + 2·m) guarantees woodY ≥ m + HAND_CLEAR/2, so there's always an m-wide wood frame
+  // on every side and the box can never exceed the table.
+  const tblW = Math.max(vW * zoomF, gridW + 2 * m);
+  const tblH = Math.max(vH * zoomF, gridH + 2 * m + HAND_CLEAR);
   // #board padding: centre the grid on the table (so it sits in the wood with an even border), and CAP
   // the pan margin to that wood border so you can never scroll past the table edge — no dark surround,
   // without inflating the table (which would break lockstep). Bias the grid up by the hand's height so
@@ -3394,7 +3430,10 @@ function renderBoard() {
     }
   }
   renderBoard._cache = { sig, cls: clsArr, inner: innerArr };
-  wrap.scrollLeft = sx; wrap.scrollTop = sy;
+  // Only touch scroll when it actually shifted. A bare `scrollLeft = x` still forces a synchronous
+  // scroll + repaint even when the value is unchanged — a needless per-move paint (and tearing trigger).
+  if (wrap.scrollLeft !== sx) wrap.scrollLeft = sx;
+  if (wrap.scrollTop !== sy) wrap.scrollTop = sy;
 }
 
 const NEED_LBL = {own_unit:'your unit', enemy:'an enemy', any_unit:'any unit', tile:'a tile'};
@@ -3696,7 +3735,7 @@ function showStormInfo(c) {
   _infoPopup(`${si('storm', 15)} Storm`, `A drifting storm. Its <b>wall batters any unit</b> caught in it each round — but the <b>eye at the centre is calm</b>, so shelter there. It rolls over <b>anything</b>, even rock, and shifts every turn. Under this tile: ${under.join(', ')}.`);
 }
 
-async function selectUnit(id) {
+async function selectUnit(id, center = true) {
   disarmEnd();
   const o = await api('/api/unit_options', {unit_id: id});
   if ((o.ap || 0) <= 0) { const u = unitById(id); deselectCmd(); if (u) showInspect(u); return; }
@@ -3705,8 +3744,10 @@ async function selectUnit(id) {
   sel = null; legal = null;
   setHandPeek(true);           // clear the hand out of the way while commanding this unit
   renderBoard(); renderHand(); renderPrompt();
-  const cc = S.board.cells.find(c => c.u && c.u.id === id);
-  if (cc) centerCell(cc.x, cc.y);   // scroll it clear of the bottom prompt/hand band
+  // Only lift the unit clear of the bottom band on a DELIBERATE tap. After a move/attack we keep the
+  // unit selected for its remaining actions but must NOT yank the camera — the player has already
+  // scrolled the map where they want it, and centerCell would pop the view back to the unit.
+  if (center) { const cc = S.board.cells.find(c => c.u && c.u.id === id); if (cc) centerCell(cc.x, cc.y); }
 }
 function deselectCmd() { cmd = null; cmdOpts = {moves:new Set(), attacks:new Set(), ap:0}; setHandPeek(false); }
 // drop a live unit selection when navigating away (menu / end turn / opening an overlay)
@@ -3758,7 +3799,7 @@ async function doRest() {
 async function reselect(id) {
   if (S.result) { deselectCmd(); return; }
   const u = unitById(id);
-  if (u && u.ap > 0) await selectUnit(id);
+  if (u && u.ap > 0) await selectUnit(id, false);   // keep it selected, but leave the camera where the player scrolled
   else { deselectCmd(); renderBoard(); renderPrompt(); }
 }
 
