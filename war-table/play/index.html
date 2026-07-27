@@ -1605,7 +1605,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-Bqhiu0dV.js"></script>
+  <script type="module" crossorigin src="./assets/index-hRpVIwWZ.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1699,7 +1699,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.18';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.19';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2934,7 +2934,9 @@ function showBattleResult() {
   Sfx.play(win ? 'victory' : 'defeat'); if (!win) screenShake(); haptic(win ? [40,60,120] : 200);
   const o = $('#ovResult');
   const kind = S.battle_kind || 'battle';
-  o.innerHTML = oframe(`<p style="margin-top:12px">${win?`The ${kind} is yours — survivors carry forward.`:'Your HQ was destroyed. The expedition ends.'}</p>
+  // result_note is the engine's own word on how it ended — e.g. you shelled your own headquarters
+  const lost = S.result_note || 'Your HQ was destroyed. The expedition ends.';
+  o.innerHTML = oframe(`<p style="margin-top:12px">${win?`The ${kind} is yours — survivors carry forward.`:lost}</p>
     <div style="text-align:center">${pbtn('continue','battleDone()',{cls:'h'})}</div>`, win?'battle_won':'defeat');
   o.classList.add('show');
 }
