@@ -42,8 +42,8 @@
   /* HUD */
   /* the whole HUD is ONE horizontal bar (scrolls if it can't fit); medals live below it */
   /* battle top wrapper — same menu-container bar treatment as the map (rust texture + barbed-wire edge) */
-  #hudwrap { position: relative; padding-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,.5);
-    background: url(assets/ui/ornate/hbarB.png) center bottom/auto 18px repeat-x,
+  #hudwrap { position: relative; padding-bottom: 7px; box-shadow: 0 2px 6px rgba(0,0,0,.5);
+    background: url(assets/ui/ornate/hbarB.png) center bottom/auto 14px repeat-x,
                 url(assets/ui/ornate/p05_mirror.png) center/300px 290px repeat; }
   #hud { padding: max(4px, env(safe-area-inset-top)) calc(42px + max(8px, env(safe-area-inset-right))) 4px max(8px, env(safe-area-inset-left));
     background: none; border-bottom: none; font-size: 12px;
@@ -76,7 +76,8 @@
   
     /* two rows: pills fill row 1, then power (left) + menu buttons (right) share row 2.
        flattening the statline lets its children + the .hudbtns wrap together in #hud. */
-    :where(body.o-portrait) #hud { flex-wrap: wrap; overflow: visible; row-gap: 4px; align-items: center; }
+    :where(body.o-portrait) #hud { flex-wrap: wrap; overflow: visible; row-gap: 2px; align-items: center;
+      padding-top: max(2px, env(safe-area-inset-top)); padding-bottom: 2px; }
      /* --pillh set in JS (setPillH) so row-1 pills + objective always fit one line */
     :where(body.o-portrait) #hud .statline { display: contents; }
   .medalx { position: absolute; right: -3px; bottom: -2px; font: 700 9px var(--f-num); color: #f1ead2;
@@ -506,6 +507,11 @@
   /* legal move/target tile — marker shape is user-selectable (see #board[data-ts]) */
   .legal { --ts: #f0c93f; --tsf: rgba(240,201,63,.45); z-index: 2; }
   .legal.foe { --ts: #ff8a6a; --tsf: rgba(255,138,106,.45); }
+  .legal.aim { --ts: #74d0ff; --tsf: rgba(116,208,255,.4); }   /* deviating-ordnance aim reticle */
+  #unitinfo .uihint { color: var(--gold); font: 10px/1.3 var(--f-head); letter-spacing: .2px; margin: -2px 0 5px; }
+  .uitoggle { padding: 3px 8px; font: 700 11px var(--f-head); letter-spacing: .3px; cursor: pointer;
+    border: 1px solid #4f6f8a; border-radius: 5px; background: rgba(20,34,44,.7); color: #9cd0ee; }
+  .uitoggle:active { transform: scale(.94); }
   #board[data-ts] .legal::after { content: ''; position: absolute; pointer-events: none; z-index: 3; animation: pulse 1s infinite; }
   #board[data-ts="A"] .legal::after { inset: 7%; border: 2.5px solid var(--ts); border-radius: 4px;
     box-shadow: 0 0 6px var(--ts), inset 0 0 6px var(--tsf); }
@@ -1599,7 +1605,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-D1h7Ha0w.js"></script>
+  <script type="module" crossorigin src="./assets/index-Bqhiu0dV.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1693,14 +1699,15 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.17';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.18';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
 let legal = null;             // {kind, set} card-target highlight
 let cmd = null;               // selected unit id (command mode)
 let powerArm = false;         // Command Power is armed, waiting for a target tap
-let cmdOpts = {moves:new Set(), attacks:new Set(), ap:0};
+let cmdOpts = {moves:new Set(), attacks:new Set(), aim:new Set(), ap:0};
+let aimMode = true;   // deviating units (rockets/artillery): aim-a-tile vs reposition
 let retain = new Set();       // hand indices marked to keep
 let animGen = 0;              // bumped on every render — cancels stale replays
 let lastBoardW = null;        // detect a new level to refit zoom + clear selection
@@ -1732,6 +1739,9 @@ async function api(path, body) {
 }
 function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('show');
   clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 1800); }
+// action-result narration ("hit X for 5", etc.) — suppressed on portrait, where it just clutters the
+// small screen over the board. Errors/rejections still toast (they go through toast() directly).
+function actionToast(m) { if (m && !_isPortrait()) toast(m); }
 
 async function refresh() { render(await api('/api/state')); }
 
@@ -3017,7 +3027,7 @@ async function firePower(target) {
   const r = await api('/api/power', target ? {target} : {});
   renderBoard(); renderPrompt();
   if (!r.ok) { toast(r.msg); Sfx.play('error'); return; }
-  if (r.msg) toast(r.msg);
+  actionToast(r.msg);
   Sfx.play('power'); screenShake(); haptic(80);
   await afterAction(r);
 }
@@ -3142,13 +3152,12 @@ function renderHud() {
            onpointerdown="powPressStart()" onpointerup="powPressEnd()" onpointerleave="powPressEnd()"
            oncontextmenu="event.preventDefault();showPowerInfo();return false" title="${p.desc}">${si('cp',15)} ${p.name} <b>${p.gauge}/${p.max}</b><span class="pgtrack"><i style="width:${Math.round(100*Math.min(p.gauge,p.max)/p.max)}%"></i></span>${p.ready?' ▸GO':''}</button>`;
   $('#hud').innerHTML = `<div class="statline">
-      <div class="pillbar">${bpill('cp', S.cp+'/'+S.cp_max, '', "showPillInfo('cp')")}${bpill('hq', S.hq_hp, hpFrac<34?'danger':'', "showPillInfo('hq')")}${_noBaseBattle() ? '' : bpill('bases', S.bases_left, '', "showPillInfo('bases')")}${bpill('troops', S.troops.n+'/'+S.troops.cap, S.troops.n>=S.troops.cap?'full':'', "showPillInfo('troops')")}${objChip}</div>
+      <div class="pillbar">${bpill('cp', S.cp+'/'+S.cp_max, '', "showPillInfo('cp')")}${bpill('hq', S.hq_hp, hpFrac<34?'danger':'', "showPillInfo('hq')")}${_noBaseBattle() ? '' : bpill('bases', S.bases_left, '', "showPillInfo('bases')")}${bpill('troops', S.troops.n+'/'+S.troops.cap, S.troops.n>=S.troops.cap?'full':'', "showArmy()")}${objChip}</div>
       ${gauge}
       ${S.ascension?`<span class="stat gold">A${S.ascension}</span>`:''}
       ${foe}
     </div>
     <div class="hudbtns">
-      <button class="ibtn" onclick="showArmy()" title="Army" aria-label="Army"><img src="assets/ui/btn/army.png" alt="Army" style="height:32px"></button>
       <button class="ibtn" onclick="showLegend()" title="Legend" aria-label="Legend"><img src="assets/ui/btn/legend.png" alt="Legend" style="height:32px"></button>
       <button class="ibtn" onclick="menu()" title="Menu" aria-label="Menu"><img src="assets/ui/btn/menu.png" alt="Menu" style="height:32px"></button>
     </div>`;
@@ -3448,7 +3457,10 @@ function renderBoard() {
     // highlight: command mode (a unit selected) OR card targeting
     let hl = '';
     if (cmd !== null) {
-      if (cmdOpts.moves.has(c.x + ',' + c.y)) hl = ' legal';
+      const hasAim = cmdOpts.aim && cmdOpts.aim.size;
+      if (hasAim && aimMode) {
+        if (cmdOpts.aim.has(c.x + ',' + c.y)) hl = ' legal aim';   // deviating ordnance: aimable tile
+      } else if (cmdOpts.moves.has(c.x + ',' + c.y)) hl = ' legal';
       else if (c.u && cmdOpts.attacks.has(c.u.id)) {
         hl = ' legal foe';
         const pv = cmdOpts.preview && cmdOpts.preview[c.u.id];   // show what this attack would do
@@ -3695,7 +3707,9 @@ function renderPrompt() {
       <div class="uihd"><b class="cyan">${info.n}</b>
         ${ibtn('info', 'showInspect(unitById(cmd))', { cls: 'xs' })}</div>
       <div class="uist">${siEm('hp')}${u.hp}/${u.max} · ATK ${u.atk} · RNG ${rng} · MV ${u.mv} · DEF ${u.df}</div>
+      ${(cmdOpts.aim && cmdOpts.aim.size) ? `<div class="uihint">${aimMode ? (cmdOpts.precise ? '◎ Precise — tap a tile for a dead-on hit' : '◎ Tap a tile to lob — the shell may drift a tile') : '🥾 Move — tap a tile to reposition'}</div>` : ''}
       <div class="uift"><span class="dim">Actions ${cmdOpts.ap}</span>
+        ${(cmdOpts.aim && cmdOpts.aim.size) ? `<button class="uitoggle" onclick="toggleAim()">${aimMode ? 'Move ▸' : 'Aim ▸'}</button>` : ''}
         ${ibtn('rest', 'doRest()', { cls: 'xs' })}
         ${ibtn('cancel', 'deselectCmd();renderBoard();renderPrompt()', { cls: 'xs' })}</div>` : '';
     return;
@@ -3763,8 +3777,15 @@ async function tapCell(x, y) {
     await fetchLegal(); renderBoard(); renderPrompt();
     return;
   }
-  // (2) a UNIT is selected → move / attack / switch to another own unit; anything else cancels
+  // (2) a UNIT is selected → move / attack / aim / switch to another own unit; anything else cancels
   if (cmd !== null) {
+    const hasAim = cmdOpts.aim && cmdOpts.aim.size;
+    if (hasAim && aimMode) {   // deviating ordnance in aim mode — tap any highlighted tile to fire
+      if (cmdOpts.aim.has(x+','+y) && !isMine(cell.u)) { await doAim(x, y); return; }
+      if (isMine(cell.u)) { await selectUnit(cell.u.id); return; }
+      deselectCmd(); renderBoard(); renderPrompt();
+      return;
+    }
     if (cmdOpts.moves.has(x+','+y)) { await doMove(x, y); return; }
     if (cell.u && cmdOpts.attacks.has(cell.u.id)) { await doAttack(cell.u.id); return; }
     if (isMine(cell.u)) { await selectUnit(cell.u.id); return; }   // tap another own unit → switch
@@ -3792,7 +3813,8 @@ async function selectUnit(id, center = true) {
   const o = await api('/api/unit_options', {unit_id: id});
   if ((o.ap || 0) <= 0) { const u = unitById(id); deselectCmd(); if (u) showInspect(u); return; }
   cmd = id;
-  cmdOpts = {moves:new Set(o.moves.map(t=>t[0]+','+t[1])), attacks:new Set(o.attacks), ap:o.ap, preview:o.preview||{}};
+  cmdOpts = {moves:new Set(o.moves.map(t=>t[0]+','+t[1])), attacks:new Set(o.attacks), aim:new Set((o.aim||[]).map(t=>t[0]+','+t[1])), precise:!!o.precise, ap:o.ap, preview:o.preview||{}};
+  aimMode = cmdOpts.aim.size > 0;   // deviating units default to aiming; the prompt offers a Move toggle
   sel = null; legal = null;
   setHandPeek(true);           // clear the hand out of the way while commanding this unit
   renderBoard(); renderHand(); renderPrompt();
@@ -3801,7 +3823,8 @@ async function selectUnit(id, center = true) {
   // scrolled the map where they want it, and centerCell would pop the view back to the unit.
   if (center) { const cc = S.board.cells.find(c => c.u && c.u.id === id); if (cc) centerCell(cc.x, cc.y); }
 }
-function deselectCmd() { cmd = null; cmdOpts = {moves:new Set(), attacks:new Set(), ap:0}; setHandPeek(false); }
+function deselectCmd() { cmd = null; cmdOpts = {moves:new Set(), attacks:new Set(), aim:new Set(), ap:0}; setHandPeek(false); }
+function toggleAim() { aimMode = !aimMode; renderBoard(); renderPrompt(); }
 // drop a live unit selection when navigating away (menu / end turn / opening an overlay)
 function _dropCmd() { if (cmd !== null) { deselectCmd(); renderBoard(); renderPrompt(); } }
 // scroll a board cell up into the clear area if it's hidden under the bottom UI band
@@ -3832,8 +3855,19 @@ async function doAttack(tid) {
   const id = cmd;
   const r = await api('/api/command_attack', {unit_id: id, target_id: tid});
   if (!r.ok) { toast(r.msg); return; }
-  if (r.msg) toast(r.msg);
+  actionToast(r.msg);
   cmdOpts = {moves:new Set(), attacks:new Set(), ap:0};   // drop stale highlight
+  await afterAction(r);
+  await reselect(id);
+}
+async function doAim(x, y) {   // deviating ordnance — lob a shell at a tile
+  disarmEnd();
+  const id = cmd;
+  const r = await api('/api/command_aim', {unit_id: id, tile:[x, y]});
+  if (!r.ok) { toast(r.msg); Sfx.play('error'); return; }
+  Sfx.play('boom'); haptic(60);
+  cmdOpts = {moves:new Set(), attacks:new Set(), aim:new Set(), ap:0};   // drop stale highlight
+  actionToast(r.msg);
   await afterAction(r);
   await reselect(id);
 }
@@ -3842,7 +3876,7 @@ async function doRest() {
   const id = cmd;
   const r = await api('/api/command_dump_ap', {unit_id: id});
   if (!r.ok) { toast(r.msg); return; }
-  if (r.msg) toast(r.msg);
+  actionToast(r.msg);
   Sfx.play('tap');
   cmdOpts = {moves:new Set(), attacks:new Set(), ap:0};
   await afterAction(r);
@@ -3858,7 +3892,7 @@ async function reselect(id) {
 async function play() {
   const hi = sel;
   const r = await api('/api/play', {hand_index: sel, targets: picked});
-  if (r.msg) toast(r.msg);
+  actionToast(r.msg);
   if (r.ok === false) { Sfx.play('error'); haptic(40); }
   else {
     Sfx.play('card');
@@ -3969,6 +4003,20 @@ async function animateEvents(events, finalR) {
       }
       continue;
     }
+    // an ENEMY firing from the fog (not yet on the board this replay) would draw a tracer from an empty
+    // tile, then "teleport" in on its next move. Reveal the shooter at its firing tile first so you see
+    // what hit you (it's flagged spotted in the final state anyway; move events reposition it after).
+    if ((ev.t === 'shot' || ev.t === 'blast') && !ev.you && ev.by != null && ev.from) {
+      if (!findUnit(ev.by)) {
+        const su = finalUnit(ev.by), c = cellAt(ev.from[0], ev.from[1]);
+        if (su && c && !c.u) {
+          su.spotted = true;                          // reads as "struck you from the fog"
+          c.u = su;
+          if (c.t == null && ev.ft != null) { c.t = ev.ft; c.vis = true; }   // lift the fog so it isn't covered
+          renderBoard();
+        }
+      }
+    }
     if (ev.t === 'shot') { playShot(ev); await sleep(arrowDwell); continue; }        // attacker → target
     if (ev.t === 'blast') { await playBlast(ev); await sleep(arrowDwell + 120); continue; }  // impact + fan-out
     const p = ev.to || ev.at;
@@ -3986,7 +4034,20 @@ async function animateEvents(events, finalR) {
     // ── step the board MODEL forward for this one event, then re-render ──
     if (ev.t === 'move' && ev.id != null) {
       const src = findUnit(ev.id), dst = cellAt(p[0], p[1]);
-      if (dst) { const unit = src ? src.u : finalUnit(ev.id); if (src) src.u = null; if (unit) dst.u = unit; }
+      if (dst) {
+        const unit = src ? src.u : finalUnit(ev.id);
+        if (src) src.u = null;
+        if (unit) {
+          dst.u = unit;
+          // an enemy emerging from the fog onto a tile that's still fogged in THIS replay board would be
+          // hidden under the fog overlay (it'd only "appear" on your next turn). Lift the fog on that tile
+          // using the final board's terrain so you actually see it arrive.
+          if (!src && dst.t == null && unit.side !== 'you') {
+            const fc = fb && fb.cells.find(c => c.x === p[0] && c.y === p[1]);
+            if (fc && fc.t != null) { dst.t = fc.t; dst.vis = true; }
+          }
+        }
+      }
     } else if (ev.t === 'hit') {
       const tc = (ev.tgt && findUnit(ev.tgt)) || cellAt(p[0], p[1]);
       if (tc && tc.u) { tc.u.hp = Math.max(0, (tc.u.hp || 0) - (ev.dmg || 0)); if (ev.dead) tc.u = null; }
