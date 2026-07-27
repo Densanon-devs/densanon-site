@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - July 21, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - July 27, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,138 +15,139 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 21, 2026</div>
+        <div class="digest-date-badge">July 27, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s pool centers on the push toward general-purpose embodied AI: unified foundation-model stacks, better-grounded world models, and a wave of humanoid manipulators (BrainCo, AGIBOT, Weave Robotics) moving from demo to deployment. Real-world constraints dominate the industry conversation — infrastructure-free operation, the limits of teleoperation for training, and Ukraine&#x27;s shift toward ground-robot-patrolled front lines — while research picks tackle continual navigation memory, EMG-driven assistive arm control, and culturally aware social robots.</p>
+        <p class="digest-intro">Today&#x27;s robotics news is dominated by big capital and hardware moves: Holiday Robotics and Travis Kalanick&#x27;s Atoms both landed nine-figure-plus raises for humanoid and industrial-automation bets, while AMD pushed new silicon into the robotics compute race against NVIDIA. On the research side, a strong slate of arXiv papers tackles core manipulation problems -- gradient-free action generation, action tokenization, and orchestrating generalist robot behavior -- alongside a RoboSoft award-winning soft robotics result and a novel optical method for updating a robot&#x27;s onboard AI.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Building a Foundation Stack for General-Purpose Robots</h3>
-              <span class="digest-source">IEEE Spectrum Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues robotics lacks the &#x27;pretrain on broad data&#x27; recipe that worked for LLMs, since perception, planning, and control are still built as separate systems.</li>
-              <li>X Square Robot proposes a unified foundation-model stack to replace fragmented robotics pipelines.</li>
-              <li>Frames general-purpose embodied AI as needing one trainable substrate rather than bolted-together modules.</li>
-            </ul>
-            <a href="https://spectrum.ieee.org/x-square-robot-embodied-ai-stack" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Friction is key to making better robot world models</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues that &#x27;conditioning&#x27; — not just model architecture — is the underappreciated step for deploying world models on real robots.</li>
-              <li>Highlights the gap between simulated world-model performance and real physical dynamics like friction.</li>
-              <li>Suggests better physical grounding is needed before world models generalize to deployed hardware.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/friction-is-key-to-making-better-robot-world-models/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>How to avoid the teleoperation trap in robotics development</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Flexion&#x27;s CEO argues teleoperation alone isn&#x27;t sufficient for training humanoid robots at scale.</li>
-              <li>Advocates combining teleoperation with reinforcement learning and simulation to generalize beyond demonstrated tasks.</li>
-              <li>Warns that over-reliance on teleoperated data collection can bottleneck humanoid robot learning.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/how-to-avoid-teleoperation-trap-robotics-development/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Building robots for unpredictable, infrastructure-free environments</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Discusses design principles for robots that must operate in harsh, unstructured outdoor settings without fixed infrastructure.</li>
-              <li>Emphasizes robustness and adaptability over reliance on prepared environments like flat floors or fixed markers.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/building-robots-for-unpredictable-infrastructure-free-environments/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AGIBOT unveils four embodied AI products for real-world operations at WAIC</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>AGIBOT showcased four embodied AI products aimed at turning demos into repeatable industrial workflows.</li>
-              <li>Emphasizes moving humanoid and embodied AI from lab showcases to deployed operations, signaling continued acceleration of China&#x27;s embodied AI push.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/agibot-unveils-four-embodied-ai-products-real-world-operations-waic/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Weave Robotics launches Isaac, its first mobile humanoid robot</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Weave Robotics unveiled Isaac, a wheeled bimanual manipulator robot targeted at household and office use.</li>
-              <li>Wheeled base paired with bimanual arms suggests a focus on manipulation over legged locomotion.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/weave-robotics-launches-isaac-first-mobile-humanoid-robot/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Ground Robots Inherit the Kill Zone</h3>
-              <span class="digest-source">IEEE Spectrum Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Ukrainian roboticists are pushing toward a front line patrolled largely by ground robots and drones instead of soldiers.</li>
-              <li>Remotely operated ground vehicles are being fielded at scale alongside AI-assisted sensor networks for continuous monitoring.</li>
-              <li>Real combat deployment is accelerating autonomy and teleoperation development faster than peacetime R&amp;D.</li>
-            </ul>
-            <a href="https://spectrum.ieee.org/ukraine-ground-drones" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>HyperDCM: Dynamic Cluster Memory Replay in Hyperbolic Space for Continual Robotic Navigation Across Scenes</h3>
+              <h3>GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes a hyperbolic-space memory replay method to combat catastrophic forgetting in continual visual navigation.</li>
-              <li>Targets robots that must adapt across diverse, evolving environments without retraining from scratch.</li>
-              <li>Uses dynamic clustering of past experience to preserve navigation skills across scenes.</li>
+              <li>Diffusion policies generate multimodal robot action sequences from demonstrations, but steering them toward deployment-time constraints has typically relied on differentiable guidance costs.</li>
+              <li>That reliance excludes many practical safety constraints, such as binary/non-differentiable ones.</li>
+              <li>GRACE combines diffusion with MPPI (a gradient-free method) to estimate the posterior mean, avoiding the need for differentiable guidance.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.16267" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2607.21661" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>S.E.A.G.R: A Socially and Emotionally Aware Greeting Robot Framework with Dual-Layer Cultural and Affective Modulation</h3>
+              <h3>Ordered Action Tokens for Visuomotor Policy Learning</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes a greeting-robot framework that modulates behavior based on both cultural context and detected emotional state.</li>
-              <li>Targets human-robot interaction across users from diverse cultural backgrounds rather than a single fixed interaction style.</li>
+              <li>Action tokenization maps continuous robot action chunks to discrete tokens and has become an important interface for modern visuomotor policies.</li>
+              <li>Existing approaches rely on analytical discretization methods that produce prohibitively long token sequences.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.16341" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2607.21670" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Real-Time sEMG-Based Telecontrol of an Assistive Robotic Arm Using a 1D Convolutional Neural Network</h3>
+              <h3>Addressing the Orchestration Gap in Generalist Robots via Physical Agency</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Uses surface EMG signals decoded by a 1D CNN to give users with upper-limb motor impairments intuitive real-time control.</li>
-              <li>Aims to restore autonomy for object-manipulation tasks in daily activities with a lightweight, real-time-capable model.</li>
+              <li>General-purpose robots need to reason about their actions by combining perception, world knowledge, planning, success detection, recovery, and low-level control.</li>
+              <li>Today&#x27;s state-of-the-art models attempt to fold all of these capabilities into a single learned policy.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.16310" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2607.21725" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Learning Diverse Humanoid Tasks via Synthetic Video Scenarios without Real World Data</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The human-like morphology of humanoid robots gives them exceptional potential for agile, versatile motor capabilities, but also introduces significant challenges in acquiring complex skills.</li>
+              <li>Traditional learning-from-demonstration methods are limited.</li>
+              <li>The approach trains diverse humanoid tasks using synthetic video scenarios rather than real-world data collection.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.21648" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Pressure-free growing robots for soft medical robotics</h3>
+              <span class="digest-source">Robohub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Researchers at the University of Leeds and collaborators from UC San Diego won the Best Paper Award at RoboSoft, the leading international soft robotics conference.</li>
+              <li>Soft robotics is gaining attention in medical applications because compliant machines offer advantages over rigid systems.</li>
+            </ul>
+            <a href="https://robohub.org/pressure-free-growing-robots-for-soft-medical-robotics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Generalist&#x27;s GEN-1 foundation model now supports a range of robot end effectors</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>GEN-1 was trained to work with new end effectors (&quot;hands&quot;), extending it beyond its original hardware configuration.</li>
+              <li>Generalist says a single base model can learn sensorimotor policies across different robots.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/generalists-gen-1-foundation-model-now-supports-a-range-of-robot-end-effectors/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Holiday Robotics raises $105M for its FRIDAY wheeled humanoid</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Holiday Robotics raised $105M for its FRIDAY wheeled humanoid.</li>
+              <li>The robot combines a wheel-based mobile base with an upper body for dexterous manipulation.</li>
+              <li>It features hot-swappable batteries.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/holiday-robotics-raises-105m-wheeled-humanoid-friday/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Travis Kalanick&#x27;s robotics company raises $1.7B, led by a16z</h3>
+              <span class="digest-source">TechCrunch Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Travis Kalanick&#x27;s robotics company Atoms raised $1.7B, led by a16z.</li>
+              <li>Uber is also among the investors in Atoms.</li>
+              <li>TechCrunch notes Atoms has so far made only vague (&quot;gauzy&quot;) claims about using industrial AI to modernize the world, without concrete technical specifics disclosed yet.</li>
+            </ul>
+            <a href="https://techcrunch.com/2026/07/22/travis-kalanicks-robotics-company-raises-1-7b-led-by-a16z/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AMD unveils Kria module for real-time control, unified memory for robots</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>AMD launched the Ryzen AI Embedded X100 and Kria AI System-on-Module (SoM).</li>
+              <li>The new hardware brings unified memory and real-time control to robotics applications.</li>
+              <li>The launch positions AMD to directly challenge NVIDIA in robotics compute.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/amd-unveils-kria-module-real-time-control-unified-memory-robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Optical Tech Would Update a Robot&#x27;s AI on the Fly</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Cornell Tech postdoctoral researcher Yifan He demonstrated an optical receiver picking up a beam from an LED positioned nearly a meter away.</li>
+              <li>The receiver&#x27;s monitor displays a QR-code-like array of squares after a brief refresh delay.</li>
+              <li>The setup points toward a method for wirelessly updating a robot&#x27;s onboard AI via optical transmission rather than physical reprogramming.</li>
+            </ul>
+            <a href="https://spectrum.ieee.org/ai-in-robotics" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

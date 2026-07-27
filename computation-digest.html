@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - July 21, 2026 | Densanon</title>
+  <title>Computation Morning Digest - July 27, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 21, 2026</div>
+        <div class="digest-date-badge">July 27, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">China&#x27;s silicon push continues to accelerate, with Z.ai standing up a 1GW all-domestic-chip data center and SMIC&#x27;s third-gen 7nm node closing the gap with Western foundries. Meanwhile TSMC is preparing steep price hikes and Intel is trimming its Data Center group even as it lands Fortinet as a foundry customer and Google reportedly bakes Gemini&#x27;s architecture directly into silicon. Also notable: Anthropic&#x27;s $1.5B copyright settlement, AMD pushing SPIR-V as a unifying IR for ROCm, and GNOME rethinking security triage in the face of AI-generated report spam.</p>
+        <p class="digest-intro">Today&#x27;s computation news is dominated by AI infrastructure economics and silicon roadmaps, with Nvidia reportedly weighing hundreds of billions in financing for OpenAI&#x27;s Ohio data center campus and AMD splitting its Zen 7 EPYC lineup into three distinct server families through 2030. Chip manufacturing news comes from CXMT&#x27;s blockbuster Shanghai IPO and a scrappy edge-AI project running a language model on a $10 microcontroller. Underneath it all is a steady wave of kernel and toolchain progress: a major KVM clean-up, a new AMD low-power core type, a FreeBSD ROCm port, and expanded RISC-V support in GNU Binutils.</p>
       </div>
     </section>
 
@@ -29,120 +29,118 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Anthropic hit with largest-ever $1.5 billion penalty in copyright lawsuit</h3>
+              <h3>AMD splits Zen 7 into three EPYC families for 2028 and starts selling server CPUs by the agent</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A federal judge approved the largest-ever AI copyright settlement, with most plaintiffs accepting the $1.5B payout.</li>
-              <li>The court ruled training AI on published material is fair use, but held that Anthropic&#x27;s 7-million-book pirated library infringed authors&#x27; rights.</li>
-              <li>A subset of plaintiffs rejected the settlement as too small relative to the number of infringed titles and are pursuing a separate suit.</li>
+              <li>AMD is splitting its next-gen Zen 7 EPYC architecture into three distinct families -- Florence, Ferrara, and Fidenza -- for its AI-focused server stack.</li>
+              <li>The roadmap extends AMD&#x27;s annual CPU, GPU, networking, and rack cadence out to 2030.</li>
+              <li>AMD is also introducing a model for selling server CPUs &#x27;by the agent&#x27; as part of the launch.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/anthropic-slapped-with-usd1-5-billion-settlement-in-copyright-lawsuit-largest-payout-ever-court-says-that-training-ai-on-books-other-publications-is-fair-use-but-ruled-that-the-startups-7-million-book-pirated-library-infringes-authors-rights" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/amd-splits-zen-7-into-three-epyc-families-for-2028-and-starts-selling-server-cpus-by-the-agent" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Z.ai powers up a 1-gigawatt AI data center built entirely on Chinese chips, report claims</h3>
+              <h3>Nvidia weighs $250 billion guarantee so OpenAI can lease SoftBank&#x27;s 10-gigawatt Ohio campus, report claims</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Chinese AI developer Z.ai (formerly Zhipu) has switched on part of a 1GW data center built entirely from domestic chips.</li>
-              <li>The facility reportedly runs multiple 10,000-chip clusters with zero Nvidia silicon.</li>
-              <li>Signals growing maturity of China&#x27;s domestic AI compute supply chain amid export restrictions.</li>
+              <li>OpenAI is in advanced talks to lease SB Energy&#x27;s 10-gigawatt data center campus in Piketon, Ohio.</li>
+              <li>Nvidia is reportedly in discussions to guarantee roughly $250 billion of the financing behind the lease.</li>
+              <li>Nvidia is separately said to be discussing a $350 billion deal to finance the chips needed to fill the site.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/z-ai-powers-up-1gw-ai-data-center-built-entirely-on-chinese-chips" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/data-centers/nvidia-weighs-250-billion-guarantee-so-openai-can-lease-softbanks-10-gigawatt-ohio-campus" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>TSMC eyes price hikes of up to 25% on chip production services in 2027</h3>
+              <h3>AI developer runs 28.9-million-parameter model on $10 ESP32-S3 microcontroller</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>TSMC reportedly plans baseline price increases of 5-10% on advanced nodes, with some services rising as much as 25% by 2027.</li>
-              <li>Cited drivers are surging demand, rising input costs, and heavy capex on new fab capacity.</li>
-              <li>Higher wafer costs would ripple through to chip designers and ultimately consumer/server hardware pricing.</li>
+              <li>A developer got a 28.9-million-parameter language model running locally on a sub-$10 ESP32-S3 microcontroller.</li>
+              <li>The project uses Google&#x27;s Per-Layer Embeddings technique to shrink the memory footprint needed for inference.</li>
+              <li>The embedding table is stored on the board&#x27;s 16MB flash memory rather than requiring onboard RAM.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/tsmc-eyes-price-hikes-of-up-to-25-percent-on-chip-production-services-in-2027-report-claims-plans-to-raise-baseline-prices-by-5-percent-to-10-percent-on-advanced-nodes" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-developer-runs-28-9-million-parameter-model-on-usd10-esp32-s3-microcontroller-uses-googles-per-layer-embeddings-technique-stores-table-on-16mb-flash-memory" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel layoffs to hit Data Center group</h3>
+              <h3>Chinese memory maker CXMT posts blistering 466% leap in Shanghai IPO</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel plans cuts to its Data Center group, which covers server CPUs, AI chips, and data center architecture.</li>
-              <li>The move comes just months after Intel touted record growth in the division following its 2024 downturn.</li>
+              <li>Chinese memory maker CXMT&#x27;s shares closed up 466% on its Shanghai IPO debut.</li>
+              <li>Its IPO prospectus splits 29.5 billion yuan in raised capital across three projects.</li>
+              <li>The bulk of the spending targets DRAM production, with no HBM project included in the prospectus.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/policy/intel-layoffs-to-hit-data-center-group-division-focused-on-server-cpus-ai-chips-and-data-center-architecture-to-be-hit-by-an-unknown-number-of-cuts" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/cxmt-closes-up-466-percent-in-shanghai-debut-with-no-hbm-project-in-its-ipo-prospectus" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SMIC&#x27;s third-gen 7nm node shows smaller metal pitch than Intel 18A, higher density than TSMC N6 without EUV</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>SMIC&#x27;s N+3 process reportedly beats TSMC N6 transistor density while relying on DUV rather than EUV lithography.</li>
-              <li>It also shows a smaller metal pitch than Intel&#x27;s 18A node in some measures.</li>
-              <li>Performance and power efficiency still trail true modern-generation nodes despite the density gains.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/smics-third-gen-7nm-node-shows-smaller-metal-pitch-than-intel-18a-higher-transistor-density-than-tsmc-n6-without-euv-analysis-of-n-3-shows-significant-advancement-for-chinese-semi-manufacturing" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Google reportedly developing &#x27;Frozen v2&#x27; chip with Gemini&#x27;s architecture etched into the silicon</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Google is reportedly developing a server chip, &#x27;Frozen v2,&#x27; with parts of Gemini&#x27;s model architecture hard-coded into silicon.</li>
-              <li>Engineers project 6-10x more tokens per watt versus Google&#x27;s latest TPUs.</li>
-              <li>The approach trades flexibility for efficiency by fusing model and hardware design.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/google-reportedly-developing-frozen-v2-chip-with-geminis-architecture-etched-into-the-silicon" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Intel Compute Runtime Continues Building Out Exciting &quot;LEO&quot;</h3>
+              <h3>AMD &quot;Low Power&quot; CPU Core Type Patches Queued Ahead Of Linux 7.3</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel Compute Runtime 26.27.39122.11 ships alongside last week&#x27;s Intel Graphics Compiler 2.38.2 release.</li>
-              <li>The still-experimental LEO feature continues to be built out in this release.</li>
+              <li>AMD&#x27;s Linux patches for a new &#x27;low power&#x27; CPU core type are now queued to land in the upcoming Linux 7.3 kernel.</li>
+              <li>This core type is positioned as a third option alongside AMD&#x27;s existing standard performance cores and dense efficiency cores.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Intel-CR-26.27.39122.11" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/AMD-Low-Power-Core-Linux-7.3" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD Talks Up The Great Opportunities Of SPIR-V IR With ROCm</h3>
+              <h3>FreeBSD Developing New NTSYNC Driver For Accelerating Windows NT Sync Primitives</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Following ROCm 7.14 as the first production release built on TheRock, AMD is pushing SPIR-V adoption further.</li>
-              <li>SPIR-V would enable unified binaries that work across AMD GPU architectures and targets.</li>
-              <li>Part of a broader modernization of the ROCm compute stack, relevant to anyone targeting non-CUDA GPU inference.</li>
+              <li>FreeBSD published its Q2 2026 status report covering the quarter&#x27;s open-source development initiatives.</li>
+              <li>Highlights include an in-progress AMD ROCm port for FreeBSD, extending GPU compute support to the OS.</li>
+              <li>FreeBSD is also developing its own NTSYNC driver for accelerating Windows NT synchronization primitives.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-ROCm-SPIR-V-Reality-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/FreeBSD-Q2-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel Expanding Memory Options For Current Xeon 6 / Xeon 6+ Servers</h3>
+              <h3>&quot;KVM Chainsaw&quot; Expected To Hit Linux 7.3 For Dealing With God Data Structure</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel is expanding RDIMM and MRDIMM memory support for current-gen Xeon 6/6+ via upcoming BIOS updates.</li>
-              <li>The move comes ahead of next-gen Diamond Rapids and as AMD&#x27;s EPYC Venice looms.</li>
+              <li>A patch series nicknamed &#x27;KVM Chainsaw&#x27; is on track to land in the Linux 7.3 merge window.</li>
+              <li>It&#x27;s a major code clean-up of the kvm_mmu structure, which had grown into an unwieldy &#x27;god data structure.&#x27;</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Intel-More-Xeon-6-MRDIMMs" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/KVM-Chainsaw-Linux-7.3" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GNOME Changes Security Disclosure Policies Due To AI-Generated Reports</h3>
+              <h3>GNU Binutils 2.47 Released With More RISC-V Extensions, New Options</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GNOME is revising how it triages security disclosures in response to a surge of AI/LLM-generated reports.</li>
-              <li>The change reflects a growing open-source-wide problem of low-quality, automated vulnerability submissions.</li>
-              <li>Highlights the operational burden AI tooling can place on volunteer-run security teams.</li>
+              <li>GNU Binutils 2.47 has been released alongside this weekend&#x27;s GNU C Library 2.44 release.</li>
+              <li>The update adds more RISC-V extension support and new options to this core set of binary utilities used across Linux and other GNU toolchain platforms.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/GNOME-Security-Changes-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/GNU-Binutils-2.47" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Ubuntu To Provide Virtualization HWE Stack For Ubuntu 26.04 LTS</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Ubuntu&#x27;s Hardware Enablement (HWE) stacks provide newer kernel and Mesa driver versions to LTS releases for better support of modern hardware.</li>
+              <li>Starting with Ubuntu 26.04 LTS, Canonical will additionally provide a dedicated virtualization HWE stack.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Ubuntu-Virtualization-HWE-Stack" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>NVIDIA &amp; Others Form The Open Secure AI Alliance</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>NVIDIA and more than two dozen other companies have launched the Open Secure AI Alliance to help keep open-source AI models secure.</li>
+              <li>Founding members span a wide range of the industry, including Microsoft, Adobe, IBM, Red Hat, SpaceX, and Palantir.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Open-Secure-AI-Alliance" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
