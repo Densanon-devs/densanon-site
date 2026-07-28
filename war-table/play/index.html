@@ -460,6 +460,7 @@
   .dbgnode { background: #23211a; color: #cfc7ad; border: 1px solid #3d3a29; border-radius: 4px;
     padding: 2px 6px; font-size: 11px; cursor: pointer; font-family: inherit; }
   .dbgnode:hover { border-color: #7fbfff; color: #fff; }
+  .dbgnode.dbg-spire { border-color: #8fd98f; color: #8fd98f; }
   .dbgnode.dbg-done { opacity: .45; }
   .dbgnode.dbg-here { border-color: #f0c93f; color: #f0c93f; font-weight: 700; }
   /* deploy screen: opens the ascension rule list rather than inlining it */
@@ -1639,7 +1640,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-CnAdnyHD.js"></script>
+  <script type="module" crossorigin src="./assets/index-BO8o6tfh.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1733,7 +1734,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.23';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.24';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2257,15 +2258,16 @@ async function showRunForecast() {
     const grid = Object.keys(rows).sort((x, y) => y - x).map(rk => {
       const cells = rows[rk].map(n => {
         const mark = n.here ? 'dbg-here' : n.visited ? 'dbg-done' : '';
-        const label = n.variant_name ? `${_NODE_ICON[n.kind] || '·'} ${n.variant_name}` : (_NODE_ICON[n.kind] || n.kind);
-        return `<button class="dbgnode ${mark}" onclick="debugGoto(${a.act},'${n.id}')" title="${n.id} — ${n.kind}${n.variant_name ? ' — ' + n.variant_name : ''}">${label}</button>`;
+        const icon = n.spire ? '🌳' : (_NODE_ICON[n.kind] || '·');
+        const label = n.variant_name ? `${icon} ${n.variant_name}` : (_NODE_ICON[n.kind] || n.kind);
+        return `<button class="dbgnode ${mark}${n.spire ? ' dbg-spire' : ''}" onclick="debugGoto(${a.act},'${n.id}')" title="${n.id} — ${n.kind}${n.variant_name ? ' — ' + n.variant_name : ''}">${label}</button>`;
       }).join('');
       return `<div class="dbgrow"><span class="dbgrk">${rk}</span>${cells}</div>`;
     }).join('');
     const b = a.boss;
     return `<div class="choice" style="margin-top:8px">
       <b class="${a.current ? 'gold' : ''}">Act ${a.act + 1} — ${a.title}${a.current ? ' (here)' : ''}</b>
-      ${b ? `<div class="d" style="margin:3px 0 6px;line-height:1.45"><b style="color:#ff8a6a">👑 ${b.name}</b> · ${b.mech} · ${b.bias}${b.perk_name ? ` · <b class="gold">${b.perk_name}</b>` : ''}</div>` : ''}
+      ${b ? `<div class="d" style="margin:3px 0 6px;line-height:1.45"><b style="color:${a.spire ? '#8fd98f' : '#ff8a6a'}">${a.spire ? '🌳' : '👑'} ${b.name}</b> · ${b.mech} · ${b.bias}${b.perk_name ? ` · <b class="gold">${b.perk_name}</b>` : ''}${a.spire ? ' <b class="gold">— replaces the act boss on this seed</b>' : ''}</div>` : ''}
       ${grid}
       <button class="setbtn dbg" style="margin-top:6px" onclick="debugCompleteAct()">Complete Act ${a.act + 1} ▸</button>
     </div>`;
