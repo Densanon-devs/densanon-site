@@ -623,6 +623,10 @@
   .idle-warn .counter::after { content: ''; position: absolute; inset: -1px; border-radius: 6px;
     box-shadow: 0 0 0 2px rgba(205,169,78,.7); pointer-events: none; animation: pulse .9s infinite; }
   #end.armed { background: #5a4212; border-color: var(--gold); color: #ffe08a; }
+  /* Nothing left to do this turn — no unit can act, no card is affordable, no power is ready. A steady
+     opacity pulse (compositor-only) rather than an animated shadow, so it costs nothing to leave on. */
+  #end.done { filter: drop-shadow(0 0 6px rgba(240,201,63,.85)) drop-shadow(0 0 12px rgba(240,201,63,.45));
+    animation: pulse 1.3s infinite; }
   .dmg { position: fixed; transform: translate(-50%,0); color:#ffb0a0; font-weight:700;
     font: 700 15px var(--f-num); pointer-events:none; z-index:30; animation: floatup .8s forwards;
     text-shadow: 0 1px 2px #000, 0 0 3px #000; }
@@ -1611,13 +1615,19 @@
     box-shadow: inset 0 0 0 3px rgba(255,206,84,.95), 0 0 7px rgba(255,206,84,.55); animation: pulse 1.4s infinite;
     display: flex; align-items: center; justify-content: center; }
   .cell.holdpoint .holdring > * { filter: drop-shadow(0 0 3px rgba(0,0,0,.9)); }   /* keep the flag legible over fog */
-  /* A multi-tile creature: each tile is a WINDOW onto one quadrant of a token drawn at full body size,
-     so the four tiles line up into a single creature instead of four copies of it. */
-  .counter.bodypart { overflow: hidden; }
-  .counter.bodypart .usym { position: absolute; width: calc(100% * var(--bsz)); height: calc(100% * var(--bsz));
-    max-width: none; max-height: none; left: calc(-100% * var(--bx)); top: calc(-100% * var(--by)); object-fit: contain; }
-  .counter.bodypart .hpbar, .counter.bodypart .cstat, .counter.bodypart .rank { display: none; }   /* one bar for the body, on its core */
-  .counter.bodycore .hpbar, .counter.bodycore .cstat { display: block; z-index: 4; }
+  /* A multi-tile creature is drawn ONCE as a single token stretched over its whole footprint — it reads as
+     one animal, not a mosaic. The core sits at the top-left of the body, so growing right and down covers
+     it exactly. The other tiles carry no art at all: one creature, one token, one health bar. */
+  /* `.counter` pins all four edges with `inset: 7%`, so width alone does nothing — release the right and
+     bottom edges and size it explicitly: N cells wide minus the same 7% inset at each outer edge. */
+  .counter.bodycore { right: auto; bottom: auto; z-index: 6; overflow: visible;
+    width: calc(var(--bsz) * 100% - 14%); height: calc(var(--bsz) * 100% - 14%); }
+  .counter.bodylimb { visibility: hidden; }
+  .cell.bigunit { content-visibility: visible; contain: none; overflow: visible; z-index: 6; }
+  /* Cell-sized markers (the spotted outline, selection ring, danger hatch) are drawn on ONE square and
+     read as a stray bracket against a creature that covers four. The token itself is unmistakable. */
+  .cell.bigunit { outline: none !important; box-shadow: none !important; }
+  .cell.bigunit::after { content: none !important; }
   /* a huge (2x2) monster — its token swells past its tile and glows */
   .counter.huge { transform: scale(1.9); z-index: 6; overflow: visible;
     filter: drop-shadow(0 0 5px rgba(190,130,225,.85)) drop-shadow(0 0 10px rgba(120,80,160,.6)); }
@@ -1640,7 +1650,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-BO8o6tfh.js"></script>
+  <script type="module" crossorigin src="./assets/index-DXyFpGxf.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1734,7 +1744,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.24';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.25';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -3272,6 +3282,19 @@ function renderHud() {
   }
   setPillH();   // AFTER the row is in the DOM so it can measure the real button/chip widths
   if (window.requestAnimationFrame) requestAnimationFrame(setPillH);   // refine once plate/button images have their natural sizes
+  markTurnSpent();
+}
+// Light up End Turn once there is genuinely nothing left to do. Not simply "CP is 0" — a 0-cost card
+// (Recon, Supply Drop, Med Pack) is still a play, and a full Command Power is still a play — so this asks
+// whether ANY action remains: a unit with actions, an affordable non-curse card, or a ready power.
+function markTurnSpent() {
+  const el = $('#end');
+  if (!el) return;
+  const live = !!(S && S.board) && !S.result;
+  const unitLeft = live && idleUnits().length > 0;
+  const cardLeft = live && (S.hand || []).some(c => c.aff && !c.curse);
+  const powerLeft = live && !!(S.power && S.power.ready && S.power.usable !== false);
+  el.classList.toggle('done', live && !unitLeft && !cardLeft && !powerLeft);
 }
 // tapping a non-button HUD stat pill (CP / HQ / Bases / Troops) explains what it is
 const PILL_INFO = {
@@ -3534,6 +3557,9 @@ function renderBoard() {
     let cls = 'cell ' + terr + dark, glyph = '';
     if (c.u) {
       glyph = counterHTML(c.u);          // cardboard counter, not a letter
+      // A creature drawn across several tiles must escape its own cell — `.cell` uses content-visibility,
+      // which brings PAINT CONTAINMENT with it and would otherwise clip the token back to one square.
+      if (c.u.body > 1 && c.u.part && c.u.part[0] === 0 && c.u.part[1] === 0) cls += ' bigunit';
       if (c.u.stale) cls += ' stale';   // last-known enemy base under fog
       if (c.u.spotted) cls += ' spotted';   // just struck you from the fog — flash it so you see what hit you
       if (cmd === c.u.id) cls += ' selu';
@@ -5225,8 +5251,9 @@ function counterHTML(u) {
   // A creature that occupies more than one tile draws one slice of itself per tile.
   const bsz = u.body || 0;
   const part = u.part || [0, 0];
-  const bodyCls = bsz > 1 ? ` bodypart${(part[0] === 0 && part[1] === 0) ? ' bodycore' : ''}` : '';
-  const bodyVar = bsz > 1 ? ` style="--bsz:${bsz};--bx:${part[0]};--by:${part[1]}"` : '';
+  const isCore = part[0] === 0 && part[1] === 0;
+  const bodyCls = bsz > 1 ? (isCore ? ' bodycore' : ' bodylimb') : '';
+  const bodyVar = (bsz > 1 && isCore) ? ` style="--bsz:${bsz}"` : '';
   const mine = u.side === 'you' || u.side === 'hq_you';
   const spent = (mine && (u.apmax || 0) > 0 && (u.ap || 0) <= 0 && !u.disabled) ? ' spent' : '';
   return `<div class="counter ${u.side}${u.boss?' bossunit':''}${bsz > 1 ? '' : huge}${bodyCls}${spent}${u.disabled?' disabled':''}"${bodyVar}>${inner}${atk}${rank}${hp}${loot}</div>`;
