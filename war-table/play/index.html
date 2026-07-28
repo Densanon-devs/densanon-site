@@ -1709,7 +1709,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.20';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.21';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -1717,7 +1717,12 @@ let legal = null;             // {kind, set} card-target highlight
 let cmd = null;               // selected unit id (command mode)
 let powerArm = false;         // Command Power is armed, waiting for a target tap
 let cmdOpts = {moves:new Set(), attacks:new Set(), aim:new Set(), ap:0};
-let aimMode = true;   // deviating units (rockets/artillery): aim-a-tile vs reposition
+// Deviating units (rockets/artillery) can either reposition or lob a shell at a tile. Each gun keeps its
+// OWN mode for the turn: every unit opens in Move — you almost always want to reposition before you fire —
+// and whatever you switch it to sticks for the rest of the turn while you go and handle the other units.
+// Cleared at end of turn, so every turn starts everyone back in Move.
+let aimModes = new Map();
+const isAiming = (id = cmd) => id !== null && !!aimModes.get(id);
 let retain = new Set();       // hand indices marked to keep
 let animGen = 0;              // bumped on every render — cancels stale replays
 let lastBoardW = null;        // detect a new level to refit zoom + clear selection
@@ -2259,7 +2264,7 @@ function render(state) {
     // leaving a fight → tear down all battle-only + transient UI so nothing floats on the map/menu
     ['unitinfo', 'prompt'].forEach(id => { const el = $('#' + id); if (el) el.innerHTML = ''; });
     if (_inBattlePrev) { const t = $('#toast'); if (t) { clearTimeout(t._h); t.classList.remove('show'); } }   // kill any leftover battle toast — but only ON exit, so map toasts still show
-    cmd = null; sel = null; legal = null; _prevCpHold = null;
+    cmd = null; sel = null; legal = null; _prevCpHold = null; aimModes.clear();   // next battle opens in Move too
   }
   _inBattlePrev = (mode === 'battle');
   // leaving the picker → tear down the run-setup overlays so the map/battle isn't hidden behind them
@@ -3479,7 +3484,7 @@ function renderBoard() {
     let hl = '';
     if (cmd !== null) {
       const hasAim = cmdOpts.aim && cmdOpts.aim.size;
-      if (hasAim && aimMode) {
+      if (hasAim && isAiming()) {
         if (cmdOpts.aim.has(c.x + ',' + c.y)) hl = ' legal aim';   // deviating ordnance: aimable tile
       } else if (cmdOpts.moves.has(c.x + ',' + c.y)) hl = ' legal';
       else if (c.u && cmdOpts.attacks.has(c.u.id)) {
@@ -3728,9 +3733,9 @@ function renderPrompt() {
       <div class="uihd"><b class="cyan">${info.n}</b>
         ${ibtn('info', 'showInspect(unitById(cmd))', { cls: 'xs' })}</div>
       <div class="uist">${siEm('hp')}${u.hp}/${u.max} · ATK ${u.atk} · RNG ${rng} · MV ${u.mv} · DEF ${u.df}</div>
-      ${(cmdOpts.aim && cmdOpts.aim.size) ? `<div class="uihint">${aimMode ? (cmdOpts.precise ? '◎ Precise — tap a tile for a dead-on hit' : '◎ Tap a tile to lob — the shell may drift a tile') : '🥾 Move — tap a tile to reposition'}</div>` : ''}
+      ${(cmdOpts.aim && cmdOpts.aim.size) ? `<div class="uihint">${isAiming() ? (cmdOpts.precise ? '◎ Precise — tap a tile for a dead-on hit' : '◎ Tap a tile to lob — the shell may drift a tile') : '🥾 Move — tap a tile to reposition'}</div>` : ''}
       <div class="uift"><span class="dim">Actions ${cmdOpts.ap}</span>
-        ${(cmdOpts.aim && cmdOpts.aim.size) ? `<button class="uitoggle" onclick="toggleAim()">${aimMode ? 'Move ▸' : 'Aim ▸'}</button>` : ''}
+        ${(cmdOpts.aim && cmdOpts.aim.size) ? `<button class="uitoggle" onclick="toggleAim()">${isAiming() ? 'Move ▸' : 'Aim ▸'}</button>` : ''}
         ${ibtn('rest', 'doRest()', { cls: 'xs' })}
         ${ibtn('cancel', 'deselectCmd();renderBoard();renderPrompt()', { cls: 'xs' })}</div>` : '';
     return;
@@ -3801,7 +3806,7 @@ async function tapCell(x, y) {
   // (2) a UNIT is selected → move / attack / aim / switch to another own unit; anything else cancels
   if (cmd !== null) {
     const hasAim = cmdOpts.aim && cmdOpts.aim.size;
-    if (hasAim && aimMode) {   // deviating ordnance in aim mode — tap any highlighted tile to fire
+    if (hasAim && isAiming()) {   // deviating ordnance in aim mode — tap any highlighted tile to fire
       if (cmdOpts.aim.has(x+','+y) && !isMine(cell.u)) { await doAim(x, y); return; }
       if (isMine(cell.u)) { await selectUnit(cell.u.id); return; }
       deselectCmd(); renderBoard(); renderPrompt();
@@ -3835,7 +3840,7 @@ async function selectUnit(id, center = true) {
   if ((o.ap || 0) <= 0) { const u = unitById(id); deselectCmd(); if (u) showInspect(u); return; }
   cmd = id;
   cmdOpts = {moves:new Set(o.moves.map(t=>t[0]+','+t[1])), attacks:new Set(o.attacks), aim:new Set((o.aim||[]).map(t=>t[0]+','+t[1])), precise:!!o.precise, ap:o.ap, preview:o.preview||{}};
-  aimMode = cmdOpts.aim.size > 0;   // deviating units default to aiming; the prompt offers a Move toggle
+  // each gun's mode lives in aimModes and is NOT reset here — it is that unit's own for the whole turn.
   sel = null; legal = null;
   setHandPeek(true);           // clear the hand out of the way while commanding this unit
   renderBoard(); renderHand(); renderPrompt();
@@ -3845,7 +3850,7 @@ async function selectUnit(id, center = true) {
   if (center) { const cc = S.board.cells.find(c => c.u && c.u.id === id); if (cc) centerCell(cc.x, cc.y); }
 }
 function deselectCmd() { cmd = null; cmdOpts = {moves:new Set(), attacks:new Set(), aim:new Set(), ap:0}; setHandPeek(false); }
-function toggleAim() { aimMode = !aimMode; renderBoard(); renderPrompt(); }
+function toggleAim() { if (cmd === null) return; aimModes.set(cmd, !isAiming()); renderBoard(); renderPrompt(); }
 // drop a live unit selection when navigating away (menu / end turn / opening an overlay)
 function _dropCmd() { if (cmd !== null) { deselectCmd(); renderBoard(); renderPrompt(); } }
 // scroll a board cell up into the clear area if it's hidden under the bottom UI band
@@ -4292,6 +4297,7 @@ async function endTurn() {
   coach('retain');                          // teach the keep-a-card ★ once, on an actual end
   disarmEnd();
   cancelSelState();
+  aimModes.clear();                         // next turn every gun opens in Move again
   toast('enemy moving…');
   Sfx.play('turn');
   const r = await api('/api/end', {retain: [...retain]});
