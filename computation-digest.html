@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - July 27, 2026 | Densanon</title>
+  <title>Computation Morning Digest - July 28, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 27, 2026</div>
+        <div class="digest-date-badge">July 28, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation news is dominated by AI infrastructure economics and silicon roadmaps, with Nvidia reportedly weighing hundreds of billions in financing for OpenAI&#x27;s Ohio data center campus and AMD splitting its Zen 7 EPYC lineup into three distinct server families through 2030. Chip manufacturing news comes from CXMT&#x27;s blockbuster Shanghai IPO and a scrappy edge-AI project running a language model on a $10 microcontroller. Underneath it all is a steady wave of kernel and toolchain progress: a major KVM clean-up, a new AMD low-power core type, a FreeBSD ROCm port, and expanded RISC-V support in GNU Binutils.</p>
+        <p class="digest-intro">Today&#x27;s computation news splits between AI&#x27;s ballooning infrastructure bill and the hardware/kernel trenches keeping machines running. Alphabet posted its first-ever negative free cash flow quarter chasing AI capex, a chip-smuggling probe put an Nvidia employee in Taiwanese custody, and a report alleges publishers&#x27; books are being bought up and shredded after LLM training runs. On the more grounded side, Linux kernel patches are squeezing out real frame-rate gains, a mystery x86 vendor is teasing exotic AMX tile counts, and one coder proved Doom can (barely) run on regular expressions alone.</p>
       </div>
     </section>
 
@@ -29,118 +29,129 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD splits Zen 7 into three EPYC families for 2028 and starts selling server CPUs by the agent</h3>
+              <h3>AMD P-State Linux Driver Patches Can Boost 1%-Low FPS Gaming Performance By 31%</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>New Linux kernel patches add per-core Energy Performance Preference (EPP) boosting for cores that have been recently busy, targeting stutter rather than average framerate</li>
+              <li>Testing shows 1%-low FPS improving by 31.8%, a significant smoothness win for Linux gaming and Steam Deck-class devices</li>
+              <li>A concrete example of scheduler/power-management tuning yielding large tail-latency gains — the same class of optimization relevant to inference-server responsiveness under bursty load</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/AMD-P-State-Better-1p-Lows" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Mysterious 16-Tile &amp; 32-Tile AMX Implementations Talked Up For More Performance</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Follow-up on an unnamed non-Intel/non-AMD x86 vendor quietly implementing Intel&#x27;s AMX (matrix-multiply) instruction set, teased cryptically on the Linux kernel mailing list since October</li>
+              <li>The same developer is now teasing 16-tile and 32-tile AMX configurations, 2-4x beyond Intel&#x27;s own 8-tile implementation</li>
+              <li>Worth watching for anyone tracking CPU-side matrix/inference acceleration as an alternative to GPU-only paths</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/16-Tile-32-Tile-AMX-Performance" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Leaked Radeon RX 9050 hints at the return of 4GB VRAM GPUs in 2026 — new budget RDNA 4 card also spotted in 8GB config with half the power of an RX 9060</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMD is splitting its next-gen Zen 7 EPYC architecture into three distinct families -- Florence, Ferrara, and Fidenza -- for its AI-focused server stack.</li>
-              <li>The roadmap extends AMD&#x27;s annual CPU, GPU, networking, and rack cadence out to 2030.</li>
-              <li>AMD is also introducing a model for selling server CPUs &#x27;by the agent&#x27; as part of the launch.</li>
+              <li>ASRock briefly listed an unannounced RX 9050 (RDNA 4) GPU in both 4GB and 8GB VRAM configurations before pulling the listing</li>
+              <li>The 8GB variant reportedly has roughly half the power/performance of the existing RX 9060</li>
+              <li>Signals AMD re-entering the ultra-budget GPU tier — relevant context for low-cost local-inference hardware, though 4GB VRAM is too small for most current local LLM use cases</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/amd-splits-zen-7-into-three-epyc-families-for-2028-and-starts-selling-server-cpus-by-the-agent" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/gpus/leaked-radeon-rx-9050-hints-at-the-return-of-4gb-vram-gpus-in-2026-new-budget-rdna-4-card-also-spotted-in-8gb-config-with-half-the-power-of-an-rx-9060" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Nvidia weighs $250 billion guarantee so OpenAI can lease SoftBank&#x27;s 10-gigawatt Ohio campus, report claims</h3>
+              <h3>16-hour Xbox outage even stopped physical games from working — company blames licensing issue for incident that prohibited gaming across three generations of console</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>OpenAI is in advanced talks to lease SB Energy&#x27;s 10-gigawatt data center campus in Piketon, Ohio.</li>
-              <li>Nvidia is reportedly in discussions to guarantee roughly $250 billion of the financing behind the lease.</li>
-              <li>Nvidia is separately said to be discussing a $350 billion deal to finance the chips needed to fill the site.</li>
+              <li>Xbox CTO confirmed a 16-hour outage was caused by an external licensing service the platform depends on, blocking both digital and physical (disc) game access across three console generations</li>
+              <li>Highlights how a single external dependency can create a systemic single point of failure even for offline/physical media</li>
+              <li>Cautionary example for any product relying on remote license validation for otherwise-local functionality</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/data-centers/nvidia-weighs-250-billion-guarantee-so-openai-can-lease-softbanks-10-gigawatt-ohio-campus" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/video-games/xbox/xbox-blames-a-licensing-service-outside-xbox-for-the-16-hour-outage-that-blocked-disc-games" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AI developer runs 28.9-million-parameter model on $10 ESP32-S3 microcontroller</h3>
+              <h3>Daring coder gets Doom running with regular expressions at 180 seconds per frame, like playing &#x27;correspondence chess with a shotgun&#x27; — nearly 14 million substitutions to render a frame at 80,000 substitutions per second</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A developer got a 28.9-million-parameter language model running locally on a sub-$10 ESP32-S3 microcontroller.</li>
-              <li>The project uses Google&#x27;s Per-Layer Embeddings technique to shrink the memory footprint needed for inference.</li>
-              <li>The embedding table is stored on the board&#x27;s 16MB flash memory rather than requiring onboard RAM.</li>
+              <li>A developer implemented a working Doom renderer using only regular-expression substitutions, running at roughly 180 seconds per frame via nearly 14 million substitutions at 80,000 substitutions/second</li>
+              <li>Demonstrates regex engines are Turing-complete in practice — an extreme but genuine proof-of-concept</li>
+              <li>Pure novelty/engineering-culture piece, illustrative rather than practically applicable</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-developer-runs-28-9-million-parameter-model-on-usd10-esp32-s3-microcontroller-uses-googles-per-layer-embeddings-technique-stores-table-on-16mb-flash-memory" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/software/programming/daring-coder-gets-doom-running-with-regular-expressions-at-180-seconds-per-frame-like-playing-correspondence-chess-with-a-shotgun-nearly-14-million-substitutions-to-render-a-frame-at-80-000-substitutions-per-second" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Industry &amp; HPC</h2>
+        <div class="digest-grid">
+
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Chinese memory maker CXMT posts blistering 466% leap in Shanghai IPO</h3>
+              <h3>Google goes cash flow negative for the first time as AI data center buildout increases capex to a staggering $44.9 billion in a single quarter — CFO warns that capex will increase in 2027 as company banks big on TPUs</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Chinese memory maker CXMT&#x27;s shares closed up 466% on its Shanghai IPO debut.</li>
-              <li>Its IPO prospectus splits 29.5 billion yuan in raised capital across three projects.</li>
-              <li>The bulk of the spending targets DRAM production, with no HBM project included in the prospectus.</li>
+              <li>Alphabet went cash-flow negative for the first time as AI data center capex hit $44.9 billion in a single quarter</li>
+              <li>CFO Anat Ashkenazi raised full-year 2026 capex guidance to $195-205 billion, with further increases signaled for 2027 driven by TPU investment</li>
+              <li>Signals continued massive infrastructure spend commitment despite short-term cash flow pressure — relevant macro context for anyone tracking compute cost/availability trends</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/cxmt-closes-up-466-percent-in-shanghai-debut-with-no-hbm-project-in-its-ipo-prospectus" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/big-tech/alphabet-goes-cash-flow-negative-for-the-first-time-as-ai-capex-doubles-to-44-9-billion-in-a-single-quarter" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD &quot;Low Power&quot; CPU Core Type Patches Queued Ahead Of Linux 7.3</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>AI companies are reportedly shredding millions of books after using them to train AI models — tech giants outsource to middlemen to secretly buy up books for training material</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMD&#x27;s Linux patches for a new &#x27;low power&#x27; CPU core type are now queued to land in the upcoming Linux 7.3 kernel.</li>
-              <li>This core type is positioned as a third option alongside AMD&#x27;s existing standard performance cores and dense efficiency cores.</li>
+              <li>Investigative report finds AI companies buying up physical books through middlemen, then destroying (shredding) them after digitizing content for training data</li>
+              <li>Suggests a workaround strategy to obtain training material while obscuring bulk-purchase intent and avoiding scrutiny</li>
+              <li>Raises copyright/ethical questions relevant to any project sourcing training or fine-tuning corpora from books or scanned text</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-Low-Power-Core-Linux-7.3" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-companies-are-reportedly-shredding-millions-of-books-to-train-models-tech-giants-outsource-to-middlemen-to-secretly-buy-up-books-for-training-material" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>FreeBSD Developing New NTSYNC Driver For Accelerating Windows NT Sync Primitives</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Nvidia employee detained in Taiwan as part of chip smuggling probe — held on suspicion of falsifying business documents, company says smuggling &#x27;a nonstarter&#x27;</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>FreeBSD published its Q2 2026 status report covering the quarter&#x27;s open-source development initiatives.</li>
-              <li>Highlights include an in-progress AMD ROCm port for FreeBSD, extending GPU compute support to the OS.</li>
-              <li>FreeBSD is also developing its own NTSYNC driver for accelerating Windows NT synchronization primitives.</li>
+              <li>Taiwanese prosecutors detained an Nvidia employee (surnamed Chang) on suspicion of falsifying business documents amid a chip-smuggling investigation</li>
+              <li>Investigators searched the employee&#x27;s home and Nvidia&#x27;s Taipei office; Nvidia calls smuggling &#x27;a nonstarter&#x27; for the company</li>
+              <li>Underscores intensifying export-control enforcement around AI chips — relevant to anyone monitoring GPU supply chain/export risk</li>
             </ul>
-            <a href="https://www.phoronix.com/news/FreeBSD-Q2-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/nvidias-taipei-office-searched-as-taiwan-detains-employee-in-ai-chip-smuggling-probe" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>&quot;KVM Chainsaw&quot; Expected To Hit Linux 7.3 For Dealing With God Data Structure</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Too many AI agents can get in each other&#x27;s way</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A patch series nicknamed &#x27;KVM Chainsaw&#x27; is on track to land in the Linux 7.3 merge window.</li>
-              <li>It&#x27;s a major code clean-up of the kvm_mmu structure, which had grown into an unwieldy &#x27;god data structure.&#x27;</li>
+              <li>Reports that enterprises deploying large numbers of AI agents see coordination failures — agents conflicting, duplicating work, or blocking each other — with &#x27;less is more&#x27; emerging as the practical lesson</li>
+              <li>Echoes Densanon&#x27;s own multi-agent branch findings (3B architect + 0.5B workers) where tool-call ceilings and coordination overhead limit gains beyond a small number of concurrent agents</li>
+              <li>Actionable for any project scaling agent counts (ultralight-coder multi-agent, densanon-core brain integration): favor fewer, well-scoped agents over many loosely coordinated ones</li>
             </ul>
-            <a href="https://www.phoronix.com/news/KVM-Chainsaw-Linux-7.3" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/ai-and-ml/2026/07/28/too-many-ai-agents-can-get-in-each-others-way/5279292" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GNU Binutils 2.47 Released With More RISC-V Extensions, New Options</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Hyperscale, hypersensitive: US teacher cuffed for applauding datacenter critics</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GNU Binutils 2.47 has been released alongside this weekend&#x27;s GNU C Library 2.44 release.</li>
-              <li>The update adds more RISC-V extension support and new options to this core set of binary utilities used across Linux and other GNU toolchain platforms.</li>
+              <li>A public zoning meeting over a proposed AI data center ended with the zoning approved, plus a physics teacher arrested for applauding datacenter critics</li>
+              <li>Signals escalating local community friction and political sensitivity around AI data center siting decisions</li>
+              <li>Relevant market/social-signal context for any business dependent on continued data center buildout or considering physical infrastructure/siting issues</li>
             </ul>
-            <a href="https://www.phoronix.com/news/GNU-Binutils-2.47" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Ubuntu To Provide Virtualization HWE Stack For Ubuntu 26.04 LTS</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Ubuntu&#x27;s Hardware Enablement (HWE) stacks provide newer kernel and Mesa driver versions to LTS releases for better support of modern hardware.</li>
-              <li>Starting with Ubuntu 26.04 LTS, Canonical will additionally provide a dedicated virtualization HWE stack.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Ubuntu-Virtualization-HWE-Stack" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>NVIDIA &amp; Others Form The Open Secure AI Alliance</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>NVIDIA and more than two dozen other companies have launched the Open Secure AI Alliance to help keep open-source AI models secure.</li>
-              <li>Founding members span a wide range of the industry, including Microsoft, Adobe, IBM, Red Hat, SpaceX, and Palantir.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Open-Secure-AI-Alliance" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/on-prem/2026/07/28/hyperscale-hypersensitive-us-teacher-cuffed-for-applauding-datacenter-critics/5279487" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

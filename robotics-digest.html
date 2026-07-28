@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - July 27, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - July 28, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 27, 2026</div>
+        <div class="digest-date-badge">July 28, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s robotics news is dominated by big capital and hardware moves: Holiday Robotics and Travis Kalanick&#x27;s Atoms both landed nine-figure-plus raises for humanoid and industrial-automation bets, while AMD pushed new silicon into the robotics compute race against NVIDIA. On the research side, a strong slate of arXiv papers tackles core manipulation problems -- gradient-free action generation, action tokenization, and orchestrating generalist robot behavior -- alongside a RoboSoft award-winning soft robotics result and a novel optical method for updating a robot&#x27;s onboard AI.</p>
+        <p class="digest-intro">Today&#x27;s robotics digest is anchored by a strong run of arXiv research on &#x27;Physical AI&#x27; -- a Real2Sim2Real VLA manipulation pipeline built on AMD ROCm, a world-cognition model for human-robot interaction, and a data-scaling-law study for high-precision manipulation. On the tools side, ROS Discourse contributors are comparing Zenoh against DDS, open-sourcing a sim-to-real validation check, and pairing custom diagnostics with rosbag2 to catch perception latency spikes -- alongside a Series B raise for autonomous surface vessels and a new open-source ROS 2 alternative to watch.</p>
       </div>
     </section>
 
@@ -29,60 +29,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation</h3>
+              <h3>Real2Sim2Real for Vision-Language-Action Manipulation: An AMD ROCm-Based Pipeline</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Diffusion policies generate multimodal robot action sequences from demonstrations, but steering them toward deployment-time constraints has typically relied on differentiable guidance costs.</li>
-              <li>That reliance excludes many practical safety constraints, such as binary/non-differentiable ones.</li>
-              <li>GRACE combines diffusion with MPPI (a gradient-free method) to estimate the posterior mean, avoiding the need for differentiable guidance.</li>
+              <li>Presents a Real2Sim2Real pipeline for training/evaluating vision-language-action (VLA) manipulation policies, built on AMD&#x27;s ROCm stack rather than the default CUDA/Nvidia path</li>
+              <li>Frames &#x27;Physical AI&#x27; (VLA + embodied agents acting in the real world) as the next major AI frontier, echoing industry statements from Nvidia&#x27;s Jensen Huang</li>
+              <li>Relevant to PIE&#x27;s fusion/planning work and to hardware-diversification questions (ROCm as a viable alternative inference/training stack) for any project not locked into CUDA</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.21661" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2607.22997" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Ordered Action Tokens for Visuomotor Policy Learning</h3>
+              <h3>WCM: World-Cognition Model for Generalizable Human-Robot Interaction</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Action tokenization maps continuous robot action chunks to discrete tokens and has become an important interface for modern visuomotor policies.</li>
-              <li>Existing approaches rely on analytical discretization methods that produce prohibitively long token sequences.</li>
+              <li>Proposes a &#x27;world-cognition model&#x27; aiming to give robots language-agent-level fluency in physical-task interaction, contrasting with current VLA policies and world-model planners that struggle to match that fluency</li>
+              <li>Targets generalizable human-robot interaction rather than narrow task-specific control</li>
+              <li>Directly relevant to Story Director&#x27;s Cardinal-style world-overseer design and Anima&#x27;s NPC behavior modeling — worth reading for architectural comparison against the existing FactLedger + NLI approach</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.21670" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2607.22999" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Addressing the Orchestration Gap in Generalist Robots via Physical Agency</h3>
+              <h3>The Curse of Precision: A Data Scaling Law for High-Precision Robotic Manipulation</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>General-purpose robots need to reason about their actions by combining perception, world knowledge, planning, success detection, recovery, and low-level control.</li>
-              <li>Today&#x27;s state-of-the-art models attempt to fold all of these capabilities into a single learned policy.</li>
+              <li>Systematically studies how data scaling laws differ between open-world generalization tasks and closed-world, high-precision tasks like robotic assembly</li>
+              <li>Finds the data-to-precision relationship for closed-world tasks is largely unexplored and behaves differently than open-world imitation-learning scaling</li>
+              <li>Conceptually relevant to any project reasoning about how much training/fine-tuning data is needed for precision-critical behaviors (e.g., ALM extraction accuracy, ultralight-coder tool-call precision)</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.21725" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Learning Diverse Humanoid Tasks via Synthetic Video Scenarios without Real World Data</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The human-like morphology of humanoid robots gives them exceptional potential for agile, versatile motor capabilities, but also introduces significant challenges in acquiring complex skills.</li>
-              <li>Traditional learning-from-demonstration methods are limited.</li>
-              <li>The approach trains diverse humanoid tasks using synthetic video scenarios rather than real-world data collection.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.21648" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Pressure-free growing robots for soft medical robotics</h3>
-              <span class="digest-source">Robohub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Researchers at the University of Leeds and collaborators from UC San Diego won the Best Paper Award at RoboSoft, the leading international soft robotics conference.</li>
-              <li>Soft robotics is gaining attention in medical applications because compliant machines offer advantages over rigid systems.</li>
-            </ul>
-            <a href="https://robohub.org/pressure-free-growing-robots-for-soft-medical-robotics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2607.23108" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -92,62 +71,69 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Generalist&#x27;s GEN-1 foundation model now supports a range of robot end effectors</h3>
+              <h3>Kraken Technology raises Series B funding for autonomous vessels</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GEN-1 was trained to work with new end effectors (&quot;hands&quot;), extending it beyond its original hardware configuration.</li>
-              <li>Generalist says a single base model can learn sensorimotor policies across different robots.</li>
+              <li>Kraken Technology secured Series B funding to continue developing uncrewed (autonomous) surface vessels and to localize manufacturing across multiple regions</li>
+              <li>Signals continued investor confidence in maritime autonomy as a robotics subsector distinct from ground/aerial autonomy</li>
+              <li>Market-intelligence data point for tracking where robotics VC funding is concentrating (autonomy + localized manufacturing trend)</li>
             </ul>
-            <a href="https://www.therobotreport.com/generalists-gen-1-foundation-model-now-supports-a-range-of-robot-end-effectors/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/kraken-technology-raises-series-b-funding-autonomous-vessels/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Learning Zenoh: A New Communication Layer for ROS 2</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Community discussion comparing Zenoh (a newer pub/sub communication layer) against ROS 2&#x27;s default DDS middleware, evaluating where Zenoh offers advantages</li>
+              <li>Highlights middleware/transport-layer tradeoffs relevant to any distributed real-time system, not just ROS</li>
+              <li>Worth a skim for densanon-core&#x27;s brain-integration JSON-RPC wire (Unity/Unreal clients) and editor&#x27;s WebSocket frontend — a potential alternative transport pattern to compare against</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/learning-zenoh-a-new-communication-layer-for-ros-2/57014" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Holiday Robotics raises $105M for its FRIDAY wheeled humanoid</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>False-green mobility on firm soil — Dual check on your URDF (PASS or FAIL both count)</h3>
+              <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Holiday Robotics raised $105M for its FRIDAY wheeled humanoid.</li>
-              <li>The robot combines a wheel-based mobile base with an upper body for dexterous manipulation.</li>
-              <li>It features hot-swappable batteries.</li>
+              <li>Open-sourced a lightweight &#x27;referee&#x27; tool that runs the same robot body description (URDF) against two soil/ground conditions to catch &#x27;false-green&#x27; mobility claims that pass on firm ground/sim but fail on soft soil</li>
+              <li>Addresses a validation gap where simulation results look fine but don&#x27;t hold under harder real-world conditions</li>
+              <li>Useful testing pattern for any project validating sim-to-real or physics-engine claims (densanon-core&#x27;s agent_sim/physics engines) — testing under a harder condition, not just the default one</li>
             </ul>
-            <a href="https://www.therobotreport.com/holiday-robotics-raises-105m-wheeled-humanoid-friday/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/false-green-mobility-on-firm-soil-dual-check-on-your-urdf-pass-or-fail-both-count/57009" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Travis Kalanick&#x27;s robotics company raises $1.7B, led by a16z</h3>
-              <span class="digest-source">TechCrunch Robotics</span>
+              <h3>Opensource Alternative to ROS 2</h3>
+              <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Travis Kalanick&#x27;s robotics company Atoms raised $1.7B, led by a16z.</li>
-              <li>Uber is also among the investors in Atoms.</li>
-              <li>TechCrunch notes Atoms has so far made only vague (&quot;gauzy&quot;) claims about using industrial AI to modernize the world, without concrete technical specifics disclosed yet.</li>
+              <li>New open-source robotics framework &#x27;Peppy&#x27; released, letting developers describe a robot stack as modular nodes in a single config, positioned for AI robots and humanoids</li>
+              <li>An early-stage alternative to ROS 2 worth tracking rather than adopting yet</li>
+              <li>Watch item for future robotics-adjacent work if a lighter-weight framework than ROS 2 becomes attractive</li>
             </ul>
-            <a href="https://techcrunch.com/2026/07/22/travis-kalanicks-robotics-company-raises-1-7b-led-by-a16z/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/opensource-alternative-to-ros-2/57008" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD unveils Kria module for real-time control, unified memory for robots</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>YERP + rosbag2 snapshot: can we capture why a ROS perception latency spike happened?</h3>
+              <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMD launched the Ryzen AI Embedded X100 and Kria AI System-on-Module (SoM).</li>
-              <li>The new hardware brings unified memory and real-time control to robotics applications.</li>
-              <li>The launch positions AMD to directly challenge NVIDIA in robotics compute.</li>
+              <li>Describes a &#x27;trigger-and-capture&#x27; pairing of a custom tool (YERP) with rosbag2&#x27;s snapshot feature to record diagnostic context specifically when a perception latency spike occurs, rather than continuously logging everything</li>
+              <li>A practical pattern for debugging intermittent real-time performance issues without full-time overhead logging</li>
+              <li>Directly applicable technique for diagnosing tick/latency spikes in Story Director&#x27;s multi-action tick system or densanon-core&#x27;s agent_sim engine — trigger-based diagnostic capture instead of always-on tracing</li>
             </ul>
-            <a href="https://www.therobotreport.com/amd-unveils-kria-module-real-time-control-unified-memory-robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Optical Tech Would Update a Robot&#x27;s AI on the Fly</h3>
-              <span class="digest-source">IEEE Spectrum Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Cornell Tech postdoctoral researcher Yifan He demonstrated an optical receiver picking up a beam from an LED positioned nearly a meter away.</li>
-              <li>The receiver&#x27;s monitor displays a QR-code-like array of squares after a brief refresh delay.</li>
-              <li>The setup points toward a method for wirelessly updating a robot&#x27;s onboard AI via optical transmission rather than physical reprogramming.</li>
-            </ul>
-            <a href="https://spectrum.ieee.org/ai-in-robotics" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/yerp-rosbag2-snapshot-can-we-capture-why-a-ros-perception-latency-spike-happened/56991" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
