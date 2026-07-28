@@ -454,6 +454,19 @@
   .chiptile.sel .chipplaque { border-radius: 8px; box-shadow: 0 0 0 2px var(--gold), 0 0 9px 1px rgba(205,169,78,.6); }
   .chipeq { color: var(--gold); font: 700 10px var(--f-head); letter-spacing: .4px; margin-top: 1px; }
   .chipslot { flex: 1; }
+  /* debug run-forecast grid */
+  .dbgrow { display: flex; align-items: center; gap: 4px; margin: 2px 0; flex-wrap: wrap; }
+  .dbgrk { width: 14px; text-align: right; color: #7a7360; font-size: 11px; flex: none; }
+  .dbgnode { background: #23211a; color: #cfc7ad; border: 1px solid #3d3a29; border-radius: 4px;
+    padding: 2px 6px; font-size: 11px; cursor: pointer; font-family: inherit; }
+  .dbgnode:hover { border-color: #7fbfff; color: #fff; }
+  .dbgnode.dbg-done { opacity: .45; }
+  .dbgnode.dbg-here { border-color: #f0c93f; color: #f0c93f; font-weight: 700; }
+  /* deploy screen: opens the ascension rule list rather than inlining it */
+  .ascrules { background: rgba(181,100,63,.12); color: #e0b7a0; border: 1px solid #b5643f; border-radius: 5px;
+    padding: 4px 9px; font: 600 11.5px var(--f-head); cursor: pointer; width: 100%; text-align: center; }
+  .ascrules:hover { background: rgba(181,100,63,.24); color: #fff; }
+  .ascrules:active { transform: scale(.98); }
   .chipsbtn { background: none; border: 0; padding: 0; cursor: pointer; display: inline-block; width: 100%; max-width: 300px; }
   .chipsbtn img { width: 100%; height: auto; display: block; filter: drop-shadow(0 2px 4px rgba(0,0,0,.55)); transition: transform .08s; }
   .chipsbtn:hover img { transform: translateY(-1px) scale(1.02); }
@@ -471,6 +484,10 @@
   .counter.hq_you   { filter: var(--dep) drop-shadow(0 0 3px #4f8fe0) drop-shadow(0 0 2px var(--gold)); }
   .counter.hq_enemy { filter: var(--dep) drop-shadow(0 0 3px #e0574a) drop-shadow(0 0 2px var(--gold)); }
   .counter.raider  { filter: var(--dep) drop-shadow(0 0 3px #ffb046) drop-shadow(0 0 2px #ffcf6a); animation: pulse 1s infinite; }
+  /* every action spent this turn — done, not broken. Deliberately lighter than .disabled below and
+     with no dashed outline, so a used-up trooper never reads as EMP-bricked. Keeps a faint friendly
+     glow so you can still pick your own units out of a crowd at a glance. */
+  .counter.spent { filter: grayscale(.8) brightness(.6) drop-shadow(0 0 2.5px rgba(79,143,224,.5)); }
   .counter.disabled { filter: grayscale(.9) brightness(.55) drop-shadow(0 2px 2px rgba(0,0,0,.55)); }   /* EMP-bricked — dead weight */
   .counter.disabled::after { content:''; position:absolute; inset:14%; border:1px dashed rgba(127,223,255,.7); border-radius:2px; }
   .loot { position: absolute; left: 12%; bottom: 16%; font-size: calc(var(--cell)*.28); line-height: 1;
@@ -1615,7 +1632,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-Ds0Y_qcs.js"></script>
+  <script type="module" crossorigin src="./assets/index-BHTW54Qb.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1709,7 +1726,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.21';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.22';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2151,10 +2168,10 @@ function showSettings() {
       ${pbtn('how_to_play', "closeOv('ovSettings');showHelp()")}
       ${pbtn('replay_tutorial', "resetTutorial()")}
     </div>
-    ${S.demo ? '' : `<div class="choice" style="margin-top:10px;text-align:center">
-      <div class="d" style="margin:0 0 9px;line-height:1.5">The plaque your units stand on — win chips as run rewards, then equip one for your units and one for the enemy.</div>
+    <div class="choice" style="margin-top:10px;text-align:center">
+      <div class="d" style="margin:0 0 9px;line-height:1.5">The plaque your units stand on — ${S.demo ? 'the demo starts you with a couple from every tier; the full game wins the rest as run rewards' : 'win chips as run rewards, then equip one for your units and one for the enemy'}.</div>
       <button class="chipsbtn" onclick="closeOv('ovSettings');showChips()" aria-label="Open chip collection"><img src="assets/ui/btn/chips.png" alt="Chips"></button>
-    </div>`}
+    </div>
     <div class="choice" style="margin-top:10px">
       <b>Updates</b> <span class="d" style="float:right;font-family:var(--f-num)">v${APP_VERSION}</span>
       <div class="d" style="margin:2px 0 8px;line-height:1.5">Checks densanon.com once at launch for a newer build (anonymous, nothing else is sent). Downloading is always a manual click.</div>
@@ -2169,7 +2186,7 @@ function showSettings() {
       <div class="d" style="margin:2px 0 8px;line-height:1.5">Erase ALL progress — achievements, ascensions, Merit, best score, unlocks, collection and run history. Ends the current run. This cannot be undone.</div>
       <button class="setbtn danger" onclick="confirmResetAll()">${si('trash',16)} Reset all progress…</button>
     </div>
-    <div class="choice" style="margin-top:10px">
+    ${S.demo ? '' : `<div class="choice" style="margin-top:10px">
       <b style="color:#7fbfff">Debug tools</b>
       <div class="d" style="margin:2px 0 8px;line-height:1.5">Review every art surface: unlock all progression/collection, and instant-win battles to blitz through nodes, bosses and variants.</div>
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px">
@@ -2178,8 +2195,9 @@ function showSettings() {
       </div>
       <button class="setbtn dbg" onclick="debugUnlockAll()">Unlock everything</button>
       ${(S && S.board) ? `<button class="setbtn dbg" onclick="debugWin()">Instant-win this battle ▸</button>` : ''}
+      ${(S && (S.mode === 'map' || S.board)) ? `<button class="setbtn dbg" onclick="closeOv('ovSettings');showRunForecast()">🗺 Run forecast — bosses, elites &amp; jump to any node ▸</button>` : ''}
       <button class="setbtn dbg" onclick="closeOv('ovSettings');showGaugeTuner()">🎚 Gauge tuner — scale &amp; move the volume dial</button>
-    </div>
+    </div>`}
     </div><div class="ovclose"><button class="ibtn" onclick="closeOv('ovSettings')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
   o.classList.add('show');
   wireGauges();
@@ -2218,6 +2236,49 @@ async function debugWin() {
   const r = await api('/api/debug_win', {});
   render(r);
 }
+// ── DEBUG: run forecast ─────────────────────────────────────────────────────────────────────────
+// The whole run laid out — which boss waits at the top of each act, which elite variant sits on which
+// node, and where you are now. Every row jumps you straight there; each act can also be skipped outright.
+const _NODE_ICON = { skirmish: '⚔', elite: '☠', boss: '👑', event: '❓', shop: '🛒', camp: '⛺', cache: '📦' };
+async function showRunForecast() {
+  const r = await api('/api/debug_forecast', {});
+  if (!r || !r.ok) { toast(r && r.msg ? r.msg : 'no run in progress'); return; }
+  const f = r.forecast;
+  const acts = f.acts.map(a => {
+    const rows = {};
+    for (const n of a.nodes) (rows[n.row] ??= []).push(n);
+    const grid = Object.keys(rows).sort((x, y) => y - x).map(rk => {
+      const cells = rows[rk].map(n => {
+        const mark = n.here ? 'dbg-here' : n.visited ? 'dbg-done' : '';
+        const label = n.variant_name ? `${_NODE_ICON[n.kind] || '·'} ${n.variant_name}` : (_NODE_ICON[n.kind] || n.kind);
+        return `<button class="dbgnode ${mark}" onclick="debugGoto(${a.act},'${n.id}')" title="${n.id} — ${n.kind}${n.variant_name ? ' — ' + n.variant_name : ''}">${label}</button>`;
+      }).join('');
+      return `<div class="dbgrow"><span class="dbgrk">${rk}</span>${cells}</div>`;
+    }).join('');
+    const b = a.boss;
+    return `<div class="choice" style="margin-top:8px">
+      <b class="${a.current ? 'gold' : ''}">Act ${a.act + 1} — ${a.title}${a.current ? ' (here)' : ''}</b>
+      ${b ? `<div class="d" style="margin:3px 0 6px;line-height:1.45"><b style="color:#ff8a6a">👑 ${b.name}</b> · ${b.mech} · ${b.bias}${b.perk_name ? ` · <b class="gold">${b.perk_name}</b>` : ''}</div>` : ''}
+      ${grid}
+      <button class="setbtn dbg" style="margin-top:6px" onclick="debugCompleteAct()">Complete Act ${a.act + 1} ▸</button>
+    </div>`;
+  }).join('');
+  $('#ovInspect').innerHTML = oframe(`<div class="d" style="margin-bottom:6px">Seed <b>${f.seed}</b> — elite variants on branches you haven't taken are a forecast: a different route can spend a once-per-run variant elsewhere.</div>${acts}`, 'settings');
+  $('#ovInspect').classList.add('show');
+}
+async function debugGoto(act, node) {
+  const r = await api('/api/debug_goto', { act, node });
+  if (r && r.ok === false) { toast(r.msg || 'could not jump'); return; }
+  closeOv('ovInspect');
+  render(r); toast(`DEBUG — jumped to ${node}`); haptic(40);
+}
+async function debugCompleteAct() {
+  const r = await api('/api/debug_complete_act', {});
+  if (r && r.ok === false) { toast(r.msg || 'could not skip'); return; }
+  closeOv('ovInspect');
+  render(r); toast(`DEBUG — ${r.msg || 'act complete'}`); haptic(40);
+}
+
 async function doResetAll() {
   closeOv('ovConfirm'); closeOv('ovSettings');
   const r = await api('/api/reset_all', {});
@@ -2382,7 +2443,8 @@ const MARKER_SETS = [
   { id:'E', label:'Dot',      img:'dot',       req:'cartographer' },
   { id:'F', label:'Glow',     img:'cell_glow', req:'comeback_kid' },
 ];
-function markerUnlocked(id){ const m = MARKER_SETS.find(x => x.id === id); if (!m) return false; if (!m.req) return true; return earnedAch().has(m.req); }
+function markerUnlocked(id){ const m = MARKER_SETS.find(x => x.id === id); if (!m) return false; if (!m.req) return true;
+  if (S && S.demo) return id === DEMO_MARKER; return earnedAch().has(m.req); }
 function tileSel(){ try { const v = localStorage.getItem('dc_tile_sel'); return (v && markerUnlocked(v)) ? v : 'B'; } catch (e) { return 'B'; } }
 function setTileSel(v){ if (!markerUnlocked(v)) return; try { localStorage.setItem('dc_tile_sel', v); } catch (e) {} const b = document.getElementById('board'); if (b) b.dataset.ts = v; }
 // switchable fog-of-war art sets — Billows is the free default; the rest are UNLOCKED by achievements
@@ -2396,7 +2458,11 @@ const FOG_SETS = [
   { id:'shroud',  label:'Shroud',  suf:'_shroud',  n:4, win:true, req:'flawless' },
   { id:'cumulus', label:'Cumulus', suf:'_cumulus', n:3, win:true, req:'turn_the_cheek' },
 ];
-function fogUnlocked(id){ const s = FOG_SETS.find(f => f.id === id); if (!s) return false; if (!s.req) return true; return earnedAch().has(s.req); }
+// The demo earns no achievements, so it would otherwise see only the one free default. Give it exactly
+// TWO of each cosmetic set — enough to show the picker works and that there is more behind it.
+const DEMO_FOG = 'lava', DEMO_MARKER = 'A';
+function fogUnlocked(id){ const s = FOG_SETS.find(f => f.id === id); if (!s) return false; if (!s.req) return true;
+  if (S && S.demo) return id === DEMO_FOG; return earnedAch().has(s.req); }
 function fogReqName(req){ return achName(req); }
 function fogSet(){ try { const v = localStorage.getItem('dc_fogset'); return (v && FOG_SETS.some(f => f.id === v) && fogUnlocked(v)) ? v : 'billow'; } catch (e) { return 'billow'; } }
 function fogWin(){ const s = FOG_SETS.find(f => f.id === fogSet()); return !!(s && s.win); }
@@ -3228,6 +3294,20 @@ function showObjInfo() {
   const o = S.objective, f = o && OBJ_INFO[o.kind]; if (!f) return;
   _infoPopup(`◎ ${OBJ_TITLE[o.kind] || 'Objective'}`, f(o));
 }
+// Every ascension rule in force at the selected tier. They are cumulative — A3 means A1 AND A2 AND A3 —
+// which is exactly why listing them inline swamped the deploy screen.
+function showAscRules() {
+  const ladder = S.ascension_ladder || [];
+  const n = Math.min(runCfg.ascension, unlockFor(runCfg.general), ladder.length);   // selectable tiers only
+  if (!n) return;
+  const rows = ladder.slice(0, n)
+    .map((r, i) => `<div style="display:flex;gap:8px;padding:3px 0;border-top:${i ? '1px solid rgba(150,132,82,.18)' : '0'}">
+        <b class="red" style="font:700 12px var(--f-num);flex:0 0 26px">A${i + 1}</b><span>${r}</span></div>`).join('');
+  _infoPopup(`Ascension ${n} — what you are fighting`,
+    `<div style="margin-bottom:6px;opacity:.8">These stack: every tier below is also in force.</div>${rows}
+     <div style="margin-top:8px;opacity:.8">Score multiplier <b class="gold">+${15 * n}%</b>.</div>`);
+}
+
 function _infoPopup(title, body) {
   Sfx.play('tap');
   $('#ovPopup').innerHTML =
@@ -4383,14 +4463,18 @@ let _plaquePrev = null;   // dev preview override {gid, stage} for tuning plaque
 let _deployAscView = 'auto';   // dev toggle: 'auto' | 'pre' | 'post' — force the deploy modifier-box state
 function selectGeneral(id) {
   runCfg.general = id;
-  runCfg.ascension = Math.max(0, Math.min(runCfg.ascension, unlockFor(id)));
+  // Ascension is earned PER COMMANDER, so carrying the last one's tier across reads as a promise the new
+  // one may not be able to keep. Start every commander at 0 and let the player step up to their own cap.
+  runCfg.ascension = 0;
   _plaquePrev = null;
   Sfx.play('tap');
   showDeploy();                          // open the Deploy popup for this general
 }
 function stepAsc(d) {
-  const cap = unlockFor(runCfg.general);
-  runCfg.ascension = Math.max(0, Math.min(runCfg.ascension + d, cap));
+  const cap = Math.min(unlockFor(runCfg.general), (S.ascension_ladder || []).length);   // this commander's ceiling
+  const next = Math.max(0, Math.min(runCfg.ascension + d, cap));
+  if (next === runCfg.ascension) { Sfx.play('error'); return; }   // already at the end — say so instead of silently doing nothing
+  runCfg.ascension = next;
   _reRunConfig();
 }
 function _reRunConfig() { if ($('#ovDeploy').classList.contains('show')) showDeploy(); else showGenerals(); }
@@ -4414,13 +4498,19 @@ function showDeploy() {
   const pUnl = _plaquePrev ? STAGE_UNL[_plaquePrev.stage] : null;
   const unlocked = unlockFor(gid);
   const postView = _deployAscView === 'post' || (_deployAscView !== 'pre' && unlocked > 0);   // dev toggle: force pre/post
-  const ascRules = (S.ascension_ladder || []).slice(0, runCfg.ascension)
-    .map((r, i) => `<div class="d" style="font-size:11px;padding:1px 0"><span class="red">A${i + 1}</span> ${r}</div>`).join('');
+  // The rules STACK, so at high tiers this was a dozen lines pushing the deploy screen out of shape.
+  // One button; the list lives in a popup over the top.
+  // Never advertise a tier this commander can't actually field: clamp to what's UNLOCKED for it, not
+  // just to what's currently selected. Switching campaign profiles changes the unlock table underneath
+  // runCfg without re-clamping it, so the selected value alone is not a safe upper bound.
+  const ascCount = Math.min(runCfg.ascension, unlocked, (S.ascension_ladder || []).length);
+  const ascRules = ascCount
+    ? `<button class="ascrules" onclick="showAscRules()">${si('info', 13) || ''} What A1–A${ascCount} change ▸</button>` : '';
   const ascRow = postView
     ? `<div style="margin:2px 0 6px">
         <div class="d" style="margin-bottom:5px">Ascension <span style="opacity:.72">· / ${Math.max(unlocked, 1)} unlocked · +${(15 * runCfg.ascension)}% score</span></div>
-        <div style="display:flex;align-items:center;gap:10px">${pbtn('minus','stepAsc(-1)',{cls:'step',label:'−'})}${metnum(runCfg.ascension)}${pbtn('plus','stepAsc(1)',{cls:'step',label:'+'})}</div>
-        ${ascRules ? `<div style="margin-top:6px;border-left:2px solid #b5643f;padding-left:8px">${ascRules}</div>` : ''}</div>` : '';
+        <div style="display:flex;align-items:center;gap:10px">${pbtn('minus','stepAsc(-1)',{cls:'step',label:'−',active:runCfg.ascension > 0 ? undefined : false})}${metnum(runCfg.ascension)}${pbtn('plus','stepAsc(1)',{cls:'step',label:'+',active:runCfg.ascension < unlocked ? undefined : false})}</div>
+        ${ascRules ? `<div style="margin-top:6px">${ascRules}</div>` : ''}</div>` : '';
   const mods = (S.modifiers || []).map(x => {
     const on = runCfg.mods.has(x.id), col = x.kind === 'buff' ? '#6f9b5a' : '#b5643f';
     return `<div onclick="toggleMod('${x.id}')" style="cursor:pointer;border:1px solid ${on ? col : '#3d3a29'};border-radius:6px;padding:6px 8px;background:${on ? 'rgba(120,120,60,.12)' : 'transparent'}">
@@ -5121,7 +5211,11 @@ function counterHTML(u) {
   const rank = lvl > 1 ? `<span class="rank">${'<i></i>'.repeat(Math.min(5, lvl-1))}</span>` : '';
   const loot = u.loot ? `<span class="loot">${si('coin',12)}</span>` : '';
   const huge = (u.tags && u.tags.includes('huge')) ? ' huge' : '';
-  return `<div class="counter ${u.side}${u.boss?' bossunit':''}${huge}${u.disabled?' disabled':''}">${inner}${atk}${rank}${hp}${loot}</div>`;
+  // Grey out YOUR units once they have nothing left this turn. apmax 0 means it never acts at all
+  // (a Power Plant, your static HQ) — those are not "spent", they are furniture, so leave them be.
+  const mine = u.side === 'you' || u.side === 'hq_you';
+  const spent = (mine && (u.apmax || 0) > 0 && (u.ap || 0) <= 0 && !u.disabled) ? ' spent' : '';
+  return `<div class="counter ${u.side}${u.boss?' bossunit':''}${huge}${spent}${u.disabled?' disabled':''}">${inner}${atk}${rank}${hp}${loot}</div>`;
 }
 
 function medalIcon(id, size) {
