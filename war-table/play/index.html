@@ -1610,6 +1610,13 @@
     box-shadow: inset 0 0 0 3px rgba(255,206,84,.95), 0 0 7px rgba(255,206,84,.55); animation: pulse 1.4s infinite;
     display: flex; align-items: center; justify-content: center; }
   .cell.holdpoint .holdring > * { filter: drop-shadow(0 0 3px rgba(0,0,0,.9)); }   /* keep the flag legible over fog */
+  /* A multi-tile creature: each tile is a WINDOW onto one quadrant of a token drawn at full body size,
+     so the four tiles line up into a single creature instead of four copies of it. */
+  .counter.bodypart { overflow: hidden; }
+  .counter.bodypart .usym { position: absolute; width: calc(100% * var(--bsz)); height: calc(100% * var(--bsz));
+    max-width: none; max-height: none; left: calc(-100% * var(--bx)); top: calc(-100% * var(--by)); object-fit: contain; }
+  .counter.bodypart .hpbar, .counter.bodypart .cstat, .counter.bodypart .rank { display: none; }   /* one bar for the body, on its core */
+  .counter.bodycore .hpbar, .counter.bodycore .cstat { display: block; z-index: 4; }
   /* a huge (2x2) monster — its token swells past its tile and glows */
   .counter.huge { transform: scale(1.9); z-index: 6; overflow: visible;
     filter: drop-shadow(0 0 5px rgba(190,130,225,.85)) drop-shadow(0 0 10px rgba(120,80,160,.6)); }
@@ -1632,7 +1639,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-BHTW54Qb.js"></script>
+  <script type="module" crossorigin src="./assets/index-CnAdnyHD.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1726,7 +1733,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.22';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.23';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -5213,9 +5220,14 @@ function counterHTML(u) {
   const huge = (u.tags && u.tags.includes('huge')) ? ' huge' : '';
   // Grey out YOUR units once they have nothing left this turn. apmax 0 means it never acts at all
   // (a Power Plant, your static HQ) — those are not "spent", they are furniture, so leave them be.
+  // A creature that occupies more than one tile draws one slice of itself per tile.
+  const bsz = u.body || 0;
+  const part = u.part || [0, 0];
+  const bodyCls = bsz > 1 ? ` bodypart${(part[0] === 0 && part[1] === 0) ? ' bodycore' : ''}` : '';
+  const bodyVar = bsz > 1 ? ` style="--bsz:${bsz};--bx:${part[0]};--by:${part[1]}"` : '';
   const mine = u.side === 'you' || u.side === 'hq_you';
   const spent = (mine && (u.apmax || 0) > 0 && (u.ap || 0) <= 0 && !u.disabled) ? ' spent' : '';
-  return `<div class="counter ${u.side}${u.boss?' bossunit':''}${huge}${spent}${u.disabled?' disabled':''}">${inner}${atk}${rank}${hp}${loot}</div>`;
+  return `<div class="counter ${u.side}${u.boss?' bossunit':''}${bsz > 1 ? '' : huge}${bodyCls}${spent}${u.disabled?' disabled':''}"${bodyVar}>${inner}${atk}${rank}${hp}${loot}</div>`;
 }
 
 function medalIcon(id, size) {
