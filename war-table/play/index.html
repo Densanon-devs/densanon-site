@@ -364,9 +364,12 @@
      It BLINK-FLASHES like lightning; each wall cell is offset (negative delay) so the ring flickers. */
   .stormfx { position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: .58; animation: stormflash 1.5s ease-in-out infinite; }
   .stormfx img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 3px rgba(150,180,255,.55)); }
+  /* Storms cover 5x5 and run forever, so this is the one animation that is always on screen. Animating a
+     drop-shadow here meant re-blurring up to 50 tiles every frame for the whole battle; brightness is a
+     cheap per-pixel pass and the opacity spikes carry the lightning read on their own. */
   @keyframes stormflash {
     0%, 66%, 100% { opacity: .5; }
-    72% { opacity: 1; filter: brightness(1.7) drop-shadow(0 0 6px rgba(170,195,255,.95)); }
+    72% { opacity: 1; filter: brightness(1.7); }
     78% { opacity: .62; }
     84% { opacity: .95; filter: brightness(1.4); }
   }
@@ -385,6 +388,10 @@
   .gaugebar { align-items: center; gap: 6px; }
   .glabel { font: 700 11px var(--f-num); color: #d8b23a; white-space: nowrap; }
   .gtrack { display: inline-flex; gap: 2px; }
+  .gcarry { color: var(--gold); margin-left: 3px; }
+  .gdrive { margin-left: 6px; font-size: 11px; opacity: .9; }
+  .gdrive.ok { color: #7fd97f; }
+  .gdrive.slow { color: #e8a45c; }
   .gpip { width: 12px; height: 9px; border-radius: 2px; background: #2b2e22;
     box-shadow: inset 0 0 0 1px #454a34; }
   .gpip.on { background: linear-gradient(#f2d264, #d8912f); box-shadow: 0 0 4px #e8b74088; }
@@ -530,7 +537,10 @@
   .fx-spawn .counter { animation: fxspawn .5s; }
   .fx-heal .counter { animation: fxheal .5s; }
   @keyframes fxheal { 0%,100%{ filter:none; } 50%{ filter: drop-shadow(0 0 7px #7fe08a) brightness(1.25); } }
-  @keyframes fxhit { 0%,100%{ transform:none; } 30%{ transform: translate(2px,-1px) rotate(-4deg); filter: brightness(1.6) drop-shadow(0 0 6px #ff9a5a); } 60%{ transform: translate(-2px,1px) rotate(3deg);} }
+  /* Fires on EVERY damaged unit, and a Barrage now catches twenty at once -- twenty simultaneous blurs
+     is a hitch on a phone. The shake is transform-only (compositor) and brightness is a cheap per-pixel
+     pass; the drop-shadow blur was the whole cost and reads as little more than a warmer flash. */
+  @keyframes fxhit { 0%,100%{ transform:none; } 30%{ transform: translate(2px,-1px) rotate(-4deg); filter: brightness(1.75); } 60%{ transform: translate(-2px,1px) rotate(3deg);} }
   @keyframes fxmove { 0%,100%{ filter:none; } 50%{ filter: drop-shadow(0 0 6px #9fd0ff); } }
   @keyframes fxspawn { 0%{ transform:scale(.3) rotate(-20deg); opacity:0; } 100%{ transform:scale(1) rotate(0); opacity:1; } }
   @keyframes shake { 0%,100%{transform:translate(0,0);} 20%{transform:translate(-4px,2px);} 40%{transform:translate(4px,-2px);} 60%{transform:translate(-3px,-2px);} 80%{transform:translate(3px,2px);} }
@@ -1605,7 +1615,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-hRpVIwWZ.js"></script>
+  <script type="module" crossorigin src="./assets/index-Ds0Y_qcs.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1699,7 +1709,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.19';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.20';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2433,6 +2443,7 @@ function showActBoss() {
     <div class="bv-info">
       <div><b class="gold" style="font-size:17px">${b.name}</b><div class="d">Act ${S.act+1} — waits for you at the top of the act</div></div>
       <div class="d" style="margin-top:10px;line-height:1.5">${b.telegraph}</div>
+      ${b.perk_name ? `<div class="d" style="margin-top:8px;line-height:1.45"><b class="gold">${b.perk_name}</b> — ${b.perk_desc}</div>` : ''}
     </div></div>
     <div class="ovclose"><button class="ibtn" onclick="closeOv('ovInspect')" aria-label="Return"><img src="assets/ui/btn/return.png" alt="Return"></button></div>`;
   $('#ovInspect').classList.add('show');
@@ -2984,10 +2995,17 @@ function toggleDanger() {
 function gaugeRow() {
   const p = S.power;
   if (!p) return '';
+  // Momentum is uncapped: the pips show progress toward the NEXT discharge, and anything banked past
+  // that shows as a "+N" carry. Everyone else's gauge stops at max, so this reads the same for them.
+  const carry = Math.max(0, p.gauge - p.max);
+  const shown = Math.min(p.gauge, p.max);
   const pips = Array.from({length: p.max}, (_, i) =>
-    `<i class="gpip ${i < p.gauge ? 'on' : ''}"></i>`).join('');
+    `<i class="gpip ${i < shown ? 'on' : ''}"></i>`).join('');
+  // Nomad only: the trajectory, and the ground you must match this turn to keep it climbing.
+  const drive = (p.drive === undefined) ? '' :
+    `<span class="gdrive ${p.moved >= p.pace && p.pace > 0 ? 'ok' : 'slow'}" title="Drive: Momentum banked per turn. Move EVERY unit to push it higher — stall even one and it halves.">▲${p.drive} · moved ${p.moved}/${p.pace}</span>`;
   return `<div class="row gaugebar" style="margin-top:5px">
-     <span class="glabel">${p.gname||'Power'} <b>${p.gauge}/${p.max}</b></span>
+     <span class="glabel">${p.gname||'Power'} <b>${shown}/${p.max}</b>${carry ? `<b class="gcarry">+${carry}</b>` : ''}${drive}</span>
      <span class="gtrack">${pips}</span>
      <button class="powbtn ${p.ready ? 'ready' : ''}" onclick="usePower()"
        onpointerdown="powPressStart()" onpointerup="powPressEnd()" onpointerleave="powPressEnd()"
@@ -3071,6 +3089,7 @@ function showFoeInfo() {
       <div class="d" style="margin-top:2px">${lbl}</div>
       ${(boss && boss.intro) ? `<div class="d" style="margin-top:6px;font-style:italic;color:${boss.color||'#c0392b'}">“${boss.intro}”</div>` : ''}
       ${txt ? `<div class="d" style="margin-top:8px;line-height:1.5">${txt}</div>` : ''}
+      ${(boss && boss.perk_name) ? `<div class="d" style="margin-top:8px;line-height:1.45"><b class="gold">${boss.perk_name}</b> — ${boss.perk_desc}</div>` : ''}
       ${obj ? `<div style="margin-top:10px;padding-top:8px;border-top:1px solid #3d3a29">
         <b class="cyan" style="font-size:13px">OBJECTIVE — ${obj.text||''}</b>
         <div class="d" style="margin-top:4px;line-height:1.5">${obj.brief}</div></div>` : ''}
