@@ -1658,6 +1658,11 @@
     width: calc(var(--bsz) * 100% - 14%); height: calc(var(--bsz) * 100% - 14%); }
   .counter.bodylimb { visibility: hidden; }
   .cell.bigunit { content-visibility: visible; contain: none; overflow: visible; z-index: 6; }
+  /* The token spills across the creature's whole footprint, so a tap on the far half would otherwise
+     land on the CORE cell (the token's owner) rather than the limb under the finger — and the core can
+     be two tiles from you, so the game answered "out of range" while you were touching the thing.
+     Let the art be click-through: the cell under the finger takes the tap. */
+  .cell.bigunit > * { pointer-events: none; }
   /* Cell-sized markers (the spotted outline, selection ring, danger hatch) are drawn on ONE square and
      read as a stray bracket against a creature that covers four. The token itself is unmistakable. */
   .cell.bigunit { outline: none !important; box-shadow: none !important; }
@@ -1684,7 +1689,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-CdP1AxoD.js"></script>
+  <script type="module" crossorigin src="./assets/index-OurVuQUp.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1778,7 +1783,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.32';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.33';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -5259,7 +5264,7 @@ const CLASS_SYM = {
   rifleman:'inf', rocket_soldier:'at', light_tank:'armor', heavy_tank:'armor2',
     
   artillery:'arty', attack_dog:'recon', tribe_warrior:'inf', sniper:'snp',
-   construction_yard:'base', power_plant:'power',
+  command_vehicle:'hq', construction_yard:'base', power_plant:'power',
   supply_depot:'supply', barracks:'barracks', repair_bay:'repair',
   outpost:'flag', turret:'turret', tribe_camp:'camp', bannerman:'flag',
      citizen:'civ', rous:'rous',
@@ -5312,7 +5317,7 @@ function medalIcon(id, size) {
 
 const CLASS_INFO = {
   construction_yard:{n:"Construction Yard",r:"Your HQ. If it's destroyed you lose. Can't move or attack."},
-  
+  command_vehicle:{n:"Command Vehicle",r:"Nomad's MOBILE HQ — March it like a unit. Lose it and you lose. Can't attack."},
   power_plant:{n:"Power Plant",r:"Building: +1 Command Point every turn (must be next to HQ). Can't move/attack."},
   supply_depot:{n:"Supply Depot",r:"Building: draw +1 card every turn (must be next to HQ)."},
   barracks:{n:"Barracks",r:"Building: reinforcements can deploy next to it (forward base), and it raises your troop cap by 2."},
