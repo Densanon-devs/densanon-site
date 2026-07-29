@@ -1,4 +1,4 @@
-# WAR TABLE — Medal art
+# TABLE OF WAR — Medal art
 
 Drop medal badges here. **Filename must equal the medal's id** (exact), e.g.
 `war_bonds.png`. Shown in menus (draft / showcase / earned popup), NOT on the

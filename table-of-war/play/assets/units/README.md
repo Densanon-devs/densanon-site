@@ -1,4 +1,4 @@
-# WAR TABLE — Unit art
+# TABLE OF WAR — Unit art
 
 Drop your unit symbols here. **Filename must equal the unit's id** (exact), e.g.
 `rifleman.svg`, `light_tank.png`. The engine draws the colored counter, HP bar,
