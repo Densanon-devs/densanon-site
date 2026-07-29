@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://densanon.com/densababy-privacy.html">
+  <title>Privacy Policy - DensaBaby by Densanon</title>
+  <meta name="description" content="Privacy policy for DensaBaby, the end-to-end encrypted baby tracker by Densanon LLC.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .legal-content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    .legal-content h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -1px;
+    }
+
+    .legal-content h1 span {
+      color: var(--color-primary);
+    }
+
+    .legal-content .last-updated {
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 40px;
+    }
+
+    .legal-content h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-top: 40px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .legal-content p {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    .legal-content ul {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    .legal-content li {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 4px;
+    }
+
+    .legal-content strong {
+      color: var(--color-text);
+    }
+
+    .legal-content a {
+      color: var(--color-primary);
+    }
+
+    .legal-content a:hover {
+      color: var(--color-primary-hover);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="site-header"></div>
+
+  <main>
+    <div class="legal-content">
+      <h1>DensaBaby Privacy <span>Policy</span></h1>
+      <p class="last-updated">DensaBaby by Densanon LLC &mdash; Last updated April 27, 2026</p>
+
+      <h2>Summary</h2>
+      <p><strong>DensaBaby uses end-to-end encryption.</strong> All baby tracking data &mdash; feedings, sleep, diapers, illness symptoms, growth measurements, vaccinations, medications, milestones, and free-text notes &mdash; is encrypted on your device with a key that we never receive and cannot derive. Densanon LLC cannot read your child's data even if compelled by court order, because we do not possess the key.</p>
+
+      <h2>What We Collect</h2>
+      <p>We distinguish between data we can see (operational metadata) and data we cannot see (encrypted health content).</p>
+
+      <p><strong>Data we can see (account operations):</strong></p>
+      <ul>
+        <li>Email address (for account authentication)</li>
+        <li>Account creation date</li>
+        <li>Last sign-in timestamp</li>
+        <li>Subscription status and billing records (handled by Stripe; we receive payment confirmation but no card data)</li>
+        <li>Server log records (IP address, request timestamps) retained for 30 days for fraud prevention and abuse mitigation, then deleted</li>
+      </ul>
+
+      <p><strong>Data we cannot see (encrypted on your device):</strong></p>
+      <ul>
+        <li>All baby tracking events (feeding, sleep, diapers, growth, illness, etc.)</li>
+        <li>Children's names, dates of birth, photos, and medical information</li>
+        <li>Caregiver names, roles, and notes</li>
+        <li>Free-text notes and observations</li>
+        <li>PDF exports and shared reports</li>
+      </ul>
+
+      <h2>How End-to-End Encryption Works</h2>
+      <p>When you create an account, your device generates an encryption key (the &ldquo;family key&rdquo;) derived from a passphrase you choose. The family key never leaves your device. Before any tracking data is uploaded for sync, your device encrypts it with the family key using AES-256-GCM. The server stores only the encrypted blob.</p>
+      <p>When another caregiver in your family signs in on their device, they enter the same family key, and their device decrypts the blob locally. The server is never able to read the underlying content.</p>
+      <p>If you forget your family key, we cannot recover your data. We strongly recommend storing the recovery code we generate during setup somewhere safe (a password manager).</p>
+
+      <h2>Local-First Storage</h2>
+      <p>DensaBaby works entirely offline. Data is stored on your device first (in WatermelonDB, a local SQLite database) and synced to our server only if you have an active Family Pro subscription and sync is enabled. Free-tier users never sync any data &mdash; everything stays on the device.</p>
+
+      <h2>Third-Party Services</h2>
+      <p>The following third-party services are used in narrow, specific roles:</p>
+      <ul>
+        <li><strong>Supabase</strong> &mdash; provides authentication and stores the encrypted blob. Cannot read content. <a href="https://supabase.com/privacy">supabase.com/privacy</a></li>
+        <li><strong>Render</strong> &mdash; hosts our backend API. Processes only encrypted data and account metadata. <a href="https://render.com/privacy">render.com/privacy</a></li>
+        <li><strong>Stripe</strong> &mdash; processes Family Pro subscription payments. Receives email and payment information per Stripe's standard checkout flow. <a href="https://stripe.com/privacy">stripe.com/privacy</a></li>
+        <li><strong>Resend</strong> &mdash; sends transactional emails (caregiver invites, password resets). Receives recipient email and message content (which contains no health data). <a href="https://resend.com/legal/privacy-policy">resend.com/legal/privacy-policy</a></li>
+        <li><strong>Apple Push Notifications / Firebase Cloud Messaging</strong> &mdash; deliver reminder notifications. Notification payloads are generic (&ldquo;Reminder: feeding&rdquo;) &mdash; no health data is exposed to Apple or Google.</li>
+      </ul>
+      <p>We do not use any analytics, advertising, crash-reporting, or behavioral tracking services.</p>
+
+      <h2>What We Do Not Do</h2>
+      <ul>
+        <li>We do not sell your data to anyone, ever, for any reason.</li>
+        <li>We do not share your data with insurers, employers, advertisers, or data brokers.</li>
+        <li>We do not use your data to train AI models.</li>
+        <li>We do not display advertising in the app.</li>
+        <li>We do not track you across other apps or websites.</li>
+        <li>We do not log or analyze your usage patterns within the app.</li>
+        <li>We do not retain encrypted data after you delete your account (see Account Deletion below).</li>
+      </ul>
+
+      <h2>Caregiver Access</h2>
+      <p>You may invite other caregivers (parents, grandparents, daycare providers, babysitters) to access your family's data. Caregivers receive the family key via a QR-code or invitation link generated on your device. Once they have the key, their device can decrypt the data the same way yours does. Densanon LLC is not involved in this exchange and does not receive a copy of the key.</p>
+      <p>Temporary caregivers (e.g., a babysitter for one evening) can be granted limited, time-boxed access via a temporary access token. The token grants read-only or limited write access to a web-based view; it expires automatically.</p>
+
+      <h2>Children's Privacy</h2>
+      <p>DensaBaby is intended for use by adult caregivers (parents, guardians, healthcare providers) to track infants and young children in their care. The app is not designed for or marketed to children. We do not knowingly collect data directly from any user under the age of 13. Data about children is entered by their adult caregiver and is encrypted such that we cannot access it.</p>
+
+      <h2>HIPAA</h2>
+      <p>Densanon LLC is not a covered entity or business associate under HIPAA. DensaBaby is a consumer wellness app, not a medical record system. The app does not establish a doctor-patient relationship. Healthcare providers who use DensaBaby (e.g., a pediatrician viewing a shared report) are using a tool to view information that the patient's caregiver has chosen to share &mdash; this is similar to a parent showing a doctor a written log.</p>
+
+      <h2>Account Deletion</h2>
+      <p>You may delete your account at any time from Settings &rarr; Account &rarr; Delete Account, or by emailing us at the address below. Upon deletion:</p>
+      <ul>
+        <li>All encrypted data associated with your account is permanently deleted from our servers within 30 days</li>
+        <li>Account metadata (email, billing records) is retained only as required for legal and tax purposes (typically 7 years for billing records under US tax law), then deleted</li>
+        <li>Local data on your device is deleted when you uninstall the app</li>
+      </ul>
+
+      <h2>Data Subject Rights (GDPR / CCPA)</h2>
+      <p>If you are in the EU, UK, or California, you have the right to:</p>
+      <ul>
+        <li>Request a copy of the data we hold about you</li>
+        <li>Request correction or deletion of that data</li>
+        <li>Object to processing</li>
+        <li>Withdraw consent at any time</li>
+      </ul>
+      <p>Note: because most baby tracking data is encrypted such that we cannot decrypt it, &ldquo;data we hold about you&rdquo; in our system is limited to account metadata (email, sign-in timestamps, subscription status). The full encrypted record can be exported from the app on your device. Send requests to <a href="mailto:admin@densanon.com">admin@densanon.com</a>.</p>
+
+      <h2>Security</h2>
+      <p>We use industry-standard security practices including:</p>
+      <ul>
+        <li>HTTPS/TLS for all network communications</li>
+        <li>AES-256-GCM for content encryption</li>
+        <li>X25519 for key exchange in caregiver invites</li>
+        <li>Argon2 for passphrase hashing</li>
+        <li>Encrypted at rest on Supabase (the encrypted blob is encrypted again at the storage layer, but this is incidental &mdash; the meaningful encryption is the client-side E2EE)</li>
+      </ul>
+      <p>No system is perfectly secure. The most likely threat to your data is loss of your device with the app installed and signed in. Use a strong device passcode. Enable Face ID / Touch ID for the app from Settings.</p>
+
+      <h2>Changes to This Policy</h2>
+      <p>If this policy changes materially, we will notify users via in-app notification and via email to the address on file at least 30 days before the change takes effect.</p>
+
+      <h2>Contact</h2>
+      <p>Questions, requests, or concerns can be directed to:</p>
+      <p>
+        <strong>Densanon LLC</strong><br>
+        <a href="mailto:admin@densanon.com">admin@densanon.com</a><br>
+        Post Falls, Idaho, USA<br>
+        <a href="https://densanon.com">densanon.com</a>
+      </p>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/layout.js"></script>
+
+</body>
+</html>
