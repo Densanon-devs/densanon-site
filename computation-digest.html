@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - July 28, 2026 | Densanon</title>
+  <title>Computation Morning Digest - July 29, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,143 +15,143 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 28, 2026</div>
+        <div class="digest-date-badge">July 29, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation news splits between AI&#x27;s ballooning infrastructure bill and the hardware/kernel trenches keeping machines running. Alphabet posted its first-ever negative free cash flow quarter chasing AI capex, a chip-smuggling probe put an Nvidia employee in Taiwanese custody, and a report alleges publishers&#x27; books are being bought up and shredded after LLM training runs. On the more grounded side, Linux kernel patches are squeezing out real frame-rate gains, a mystery x86 vendor is teasing exotic AMX tile counts, and one coder proved Doom can (barely) run on regular expressions alone.</p>
+        <p class="digest-intro">Today&#x27;s computation news is dominated by the AI-driven memory crisis: SK hynix posted a 557% profit jump, SSD prices are up roughly 220% year-over-year, and one CEO forecasts DRAM allocations to module makers could crater 70% by 2027. On the software side, the open-source world drew a hard line on AI-generated code — GCC&#x27;s steering committee will reject AI/LLM contributions outright, test cases excepted — even as two greenfield Linux desktop projects (an X11 server and a Wayland compositor) built largely via Claude keep shipping real functionality. Rounding out the day: 1,200+ AI industry insiders petitioned Washington for guardrails, Turso set its sights on Postgres after rewriting SQLite in Rust, and Valve is funding an open Vulkan driver port to Windows.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Hardware &amp; Chips</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD P-State Linux Driver Patches Can Boost 1%-Low FPS Gaming Performance By 31%</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>New Linux kernel patches add per-core Energy Performance Preference (EPP) boosting for cores that have been recently busy, targeting stutter rather than average framerate</li>
-              <li>Testing shows 1%-low FPS improving by 31.8%, a significant smoothness win for Linux gaming and Steam Deck-class devices</li>
-              <li>A concrete example of scheduler/power-management tuning yielding large tail-latency gains — the same class of optimization relevant to inference-server responsiveness under bursty load</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/AMD-P-State-Better-1p-Lows" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Mysterious 16-Tile &amp; 32-Tile AMX Implementations Talked Up For More Performance</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Follow-up on an unnamed non-Intel/non-AMD x86 vendor quietly implementing Intel&#x27;s AMX (matrix-multiply) instruction set, teased cryptically on the Linux kernel mailing list since October</li>
-              <li>The same developer is now teasing 16-tile and 32-tile AMX configurations, 2-4x beyond Intel&#x27;s own 8-tile implementation</li>
-              <li>Worth watching for anyone tracking CPU-side matrix/inference acceleration as an alternative to GPU-only paths</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/16-Tile-32-Tile-AMX-Performance" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Leaked Radeon RX 9050 hints at the return of 4GB VRAM GPUs in 2026 — new budget RDNA 4 card also spotted in 8GB config with half the power of an RX 9060</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>ASRock briefly listed an unannounced RX 9050 (RDNA 4) GPU in both 4GB and 8GB VRAM configurations before pulling the listing</li>
-              <li>The 8GB variant reportedly has roughly half the power/performance of the existing RX 9060</li>
-              <li>Signals AMD re-entering the ultra-budget GPU tier — relevant context for low-cost local-inference hardware, though 4GB VRAM is too small for most current local LLM use cases</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/gpus/leaked-radeon-rx-9050-hints-at-the-return-of-4gb-vram-gpus-in-2026-new-budget-rdna-4-card-also-spotted-in-8gb-config-with-half-the-power-of-an-rx-9060" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>16-hour Xbox outage even stopped physical games from working — company blames licensing issue for incident that prohibited gaming across three generations of console</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Xbox CTO confirmed a 16-hour outage was caused by an external licensing service the platform depends on, blocking both digital and physical (disc) game access across three console generations</li>
-              <li>Highlights how a single external dependency can create a systemic single point of failure even for offline/physical media</li>
-              <li>Cautionary example for any product relying on remote license validation for otherwise-local functionality</li>
-            </ul>
-            <a href="https://www.tomshardware.com/video-games/xbox/xbox-blames-a-licensing-service-outside-xbox-for-the-16-hour-outage-that-blocked-disc-games" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Daring coder gets Doom running with regular expressions at 180 seconds per frame, like playing &#x27;correspondence chess with a shotgun&#x27; — nearly 14 million substitutions to render a frame at 80,000 substitutions per second</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A developer implemented a working Doom renderer using only regular-expression substitutions, running at roughly 180 seconds per frame via nearly 14 million substitutions at 80,000 substitutions/second</li>
-              <li>Demonstrates regex engines are Turing-complete in practice — an extreme but genuine proof-of-concept</li>
-              <li>Pure novelty/engineering-culture piece, illustrative rather than practically applicable</li>
-            </ul>
-            <a href="https://www.tomshardware.com/software/programming/daring-coder-gets-doom-running-with-regular-expressions-at-180-seconds-per-frame-like-playing-correspondence-chess-with-a-shotgun-nearly-14-million-substitutions-to-render-a-frame-at-80-000-substitutions-per-second" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Industry &amp; HPC</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Google goes cash flow negative for the first time as AI data center buildout increases capex to a staggering $44.9 billion in a single quarter — CFO warns that capex will increase in 2027 as company banks big on TPUs</h3>
+              <h3>Memory maker SK hynix&#x27;s profit rises 557% amid global shortage, expansion costs climb to $27 billion — shares slide despite mammoth earnings as expectations outpace reality and global AI selloffs continue</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Alphabet went cash-flow negative for the first time as AI data center capex hit $44.9 billion in a single quarter</li>
-              <li>CFO Anat Ashkenazi raised full-year 2026 capex guidance to $195-205 billion, with further increases signaled for 2027 driven by TPU investment</li>
-              <li>Signals continued massive infrastructure spend commitment despite short-term cash flow pressure — relevant macro context for anyone tracking compute cost/availability trends</li>
+              <li>SK hynix posted Q2 revenue of 79.32 trillion won and operating profit of 60.54 trillion won, up 557% year-over-year, driven by the ongoing AI-fueled memory shortage</li>
+              <li>Expansion/capex spend has climbed to $27 billion as the company races to add capacity to meet demand</li>
+              <li>Shares slid anyway despite the blowout earnings, as market expectations for AI-driven memory demand now outpace even these results</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/big-tech/alphabet-goes-cash-flow-negative-for-the-first-time-as-ai-capex-doubles-to-44-9-billion-in-a-single-quarter" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/sk-hynix-operating-profit-rises-557-percent" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AI companies are reportedly shredding millions of books after using them to train AI models — tech giants outsource to middlemen to secretly buy up books for training material</h3>
+              <h3>State of play: SSD pricing one year into the AI component crisis — 220% price increases are crippling the DIY market</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Investigative report finds AI companies buying up physical books through middlemen, then destroying (shredding) them after digitizing content for training data</li>
-              <li>Suggests a workaround strategy to obtain training material while obscuring bulk-purchase intent and avoiding scrutiny</li>
-              <li>Raises copyright/ethical questions relevant to any project sourcing training or fine-tuning corpora from books or scanned text</li>
+              <li>One year into the AI-driven component shortage, NAND/SSD prices have risen roughly 220% for DIY consumers</li>
+              <li>AI datacenter demand for flash storage has crowded out consumer supply, compounding the parallel DRAM shortage</li>
+              <li>Useful benchmark data point for anyone planning hardware purchases or budgeting compute infrastructure this year</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-companies-are-reportedly-shredding-millions-of-books-to-train-models-tech-giants-outsource-to-middlemen-to-secretly-buy-up-books-for-training-material" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/ssds/state-of-play-ssd-pricing-one-year-into-the-ai-component-crisis-220-percent-price-increases-are-crippling-the-diy-market" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Nvidia employee detained in Taiwan as part of chip smuggling probe — held on suspicion of falsifying business documents, company says smuggling &#x27;a nonstarter&#x27;</h3>
+              <h3>DRAM chip supply to module makers could drop by more than 70% year-on-year in 2027, says Apacer CEO — demand for HBM and server RAM continues to devour manufacturing capacity</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Taiwanese prosecutors detained an Nvidia employee (surnamed Chang) on suspicion of falsifying business documents amid a chip-smuggling investigation</li>
-              <li>Investigators searched the employee&#x27;s home and Nvidia&#x27;s Taipei office; Nvidia calls smuggling &#x27;a nonstarter&#x27; for the company</li>
-              <li>Underscores intensifying export-control enforcement around AI chips — relevant to anyone monitoring GPU supply chain/export risk</li>
+              <li>Apacer&#x27;s CEO warns DRAM allocations to third-party module makers could fall below 30% of 2026 levels in 2027</li>
+              <li>HBM and server RAM demand tied to AI datacenter buildout is cited as the primary force devouring fab capacity</li>
+              <li>Consistent with SK hynix&#x27;s earnings and the SSD pricing story: a multi-year, AI-driven memory/storage supply crunch rather than a short-term spike</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/nvidias-taipei-office-searched-as-taiwan-detains-employee-in-ai-chip-smuggling-probe" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/ram/dram-chip-supply-to-module-makers-could-drop-by-more-than-70-percent-year-on-year-in-2027-says-apacer-ceo-demand-for-hbm-and-server-ram-continues-to-devour-manufacturing-capacity" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Too many AI agents can get in each other&#x27;s way</h3>
+              <h3>AI insiders ask Uncle Sam to help slow the race they started</h3>
               <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Reports that enterprises deploying large numbers of AI agents see coordination failures — agents conflicting, duplicating work, or blocking each other — with &#x27;less is more&#x27; emerging as the practical lesson</li>
-              <li>Echoes Densanon&#x27;s own multi-agent branch findings (3B architect + 0.5B workers) where tool-call ceilings and coordination overhead limit gains beyond a small number of concurrent agents</li>
-              <li>Actionable for any project scaling agent counts (ultralight-coder multi-agent, densanon-core brain integration): favor fewer, well-scoped agents over many loosely coordinated ones</li>
+              <li>More than 1,200 AI industry staff signed a petition asking the US government for international guardrails on automated AI research</li>
+              <li>Signers are largely employees from within the companies currently driving the AI race, an unusual source for a slow-down request</li>
+              <li>Adds to a string of AI-safety-adjacent industry petitions, though the enforcement mechanism and government response remain unclear</li>
             </ul>
-            <a href="https://www.theregister.com/ai-and-ml/2026/07/28/too-many-ai-agents-can-get-in-each-others-way/5279292" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/ai-and-ml/2026/07/29/ai-insiders-ask-uncle-sam-to-help-slow-the-race-they-started/5280323" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Hyperscale, hypersensitive: US teacher cuffed for applauding datacenter critics</h3>
+              <h3>After rewriting SQLite in Rust, Turso turns its sights on Postgres</h3>
               <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A public zoning meeting over a proposed AI data center ended with the zoning approved, plus a physics teacher arrested for applauding datacenter critics</li>
-              <li>Signals escalating local community friction and political sensitivity around AI data center siting decisions</li>
-              <li>Relevant market/social-signal context for any business dependent on continued data center buildout or considering physical infrastructure/siting issues</li>
+              <li>Turso, which previously rewrote SQLite in Rust, is now building toward Postgres compatibility on the same codebase</li>
+              <li>Goal is one shared virtual-machine core powering multiple SQL frontends, rather than separate engines per database dialect</li>
+              <li>Relevant to any Postgres-based stack watching for lighter-weight, embeddable Postgres-compatible alternatives</li>
             </ul>
-            <a href="https://www.theregister.com/on-prem/2026/07/28/hyperscale-hypersensitive-us-teacher-cuffed-for-applauding-datacenter-critics/5279487" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/databases/2026/07/29/after-rewriting-sqlite-in-rust-turso-turns-its-sights-on-postgres/5279835" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Hardware &amp; Chips</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GCC To Decline Any Significant Contributions Made Via AI/LLMs - Except For Test Cases</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The GCC Steering Committee formally adopted the GCC AI Policy Working Group&#x27;s recommendation: no &#x27;legally significant&#x27; code contributions generated via AI/LLM agents will be accepted into the compiler</li>
+              <li>Carve-out: AI-generated test cases remain acceptable, since they don&#x27;t carry the same copyright/provenance risk as compiler logic</li>
+              <li>One of the first major open-source infrastructure projects to codify an anti-AI-contribution policy, a contrast with AI-authored projects like YSERVER and Starling below</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/GCC-Declining-AI-Contributions" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Vibe Coded X11 YSERVER Gets Steam Working, Full-Screen Games With Cinnamon</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>YSERVER, a from-scratch X11 server written in Rust largely via Claude Code, has progressed enough this summer to run Steam and full-screen games under the Cinnamon desktop environment</li>
+              <li>Continues expanding X11 protocol coverage, getting more desktop environments and apps functional</li>
+              <li>A concrete data point for how far AI-assisted greenfield systems programming (a full display server, not just app code) can get in a few months</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/YSERVER-1.4" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Starling: A New Linux Desktop Written In Swift, Own Wayland Compositor &amp; Written With AI</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Starling is a new open-source Linux desktop environment written largely via Claude, using Swift and shipping its own from-scratch Wayland compositor</li>
+              <li>Joins a growing wave of AI-authored greenfield desktop/graphics projects emerging this summer, alongside YSERVER&#x27;s X11 server</li>
+              <li>Notable as a display-server-level project rather than app tooling, built substantially by an AI coding agent</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Starling-Swift-Desktop" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Valve Sponsors Work Bringing Open-Source RADV Driver To Windows</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Valve is sponsoring Collabora engineers for early-phase, exploratory work porting the open-source Radeon Vulkan &#x27;RADV&#x27; driver to Microsoft Windows</li>
+              <li>RADV is currently Linux/Mesa-only; a Windows port would give AMD GPU owners an open-source alternative to AMD&#x27;s proprietary Windows Vulkan driver</li>
+              <li>Fits Valve&#x27;s pattern of funding open graphics-stack work that also tends to benefit SteamOS/Proton compatibility</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Valve-Sponsors-RADV-Windows" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intel&#x27;s upcoming Nova Lake desktop SKU to require 65W of separate power delivery for its iGPU, leaker claims — beefy integrated graphics could require two VCCGT phases for 12 Xe3P cores</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A leaker claims a 16-core Nova Lake desktop APU with 12 Xe3P integrated GPU cores will need up to 65W of dedicated power delivery just for the iGPU</li>
+              <li>Motherboard VRMs reportedly need two separate VCCGT phases, since a single phase can&#x27;t sustain 65W continuously</li>
+              <li>Signals Intel pushing significantly more powerful integrated graphics on desktop, narrowing the gap with discrete low-end GPUs</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/cpus/intels-upcoming-nova-lake-desktop-sku-to-require-65w-of-separate-power-delivery-for-its-igpu-leaker-claims-beefy-integrated-graphics-could-require-two-vccgt-phases-for-12-xe3p-cores" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

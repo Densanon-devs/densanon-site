@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - July 28, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - July 29, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 28, 2026</div>
+        <div class="digest-date-badge">July 29, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s robotics digest is anchored by a strong run of arXiv research on &#x27;Physical AI&#x27; -- a Real2Sim2Real VLA manipulation pipeline built on AMD ROCm, a world-cognition model for human-robot interaction, and a data-scaling-law study for high-precision manipulation. On the tools side, ROS Discourse contributors are comparing Zenoh against DDS, open-sourcing a sim-to-real validation check, and pairing custom diagnostics with rosbag2 to catch perception latency spikes -- alongside a Series B raise for autonomous surface vessels and a new open-source ROS 2 alternative to watch.</p>
+        <p class="digest-intro">Today&#x27;s robotics digest centers on dexterous manipulation and physical AI hitting production: Tacta Systems unveiled a wearable-driven robotic hand for high-value manufacturing, mimic robotics put a Video-Action Model on Audi&#x27;s factory floor, and a new arXiv paper (FIRMGrasp) tackles grasp robustness under real-world friction uncertainty -- three angles on the same open problem of reliable robot touch. On the hardware side, Sapphire launched an AMD-powered embedded compute platform for physical AI, while Kall Morris validated an orbital debris-capture system aboard the ISS, a rare space-robotics milestone. Warehouse automation also saw structural consolidation as AIP merged Intelligrated, Trew, and Transnorm into one organization, and arXiv research covered steering-free drift control for four-wheel-independent vehicles and station-holding control for robotic fish in turbulent flow.</p>
       </div>
     </section>
 
@@ -29,39 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Real2Sim2Real for Vision-Language-Action Manipulation: An AMD ROCm-Based Pipeline</h3>
+              <h3>Egocentric Station Holding of Robotic Fish in Unknown Turbulent Background Flow</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Presents a Real2Sim2Real pipeline for training/evaluating vision-language-action (VLA) manipulation policies, built on AMD&#x27;s ROCm stack rather than the default CUDA/Nvidia path</li>
-              <li>Frames &#x27;Physical AI&#x27; (VLA + embodied agents acting in the real world) as the next major AI frontier, echoing industry statements from Nvidia&#x27;s Jensen Huang</li>
-              <li>Relevant to PIE&#x27;s fusion/planning work and to hardware-diversification questions (ROCm as a viable alternative inference/training stack) for any project not locked into CUDA</li>
+              <li>Addresses &#x27;station holding&#x27; (maintaining position against a current) for robotic fish in unknown, turbulent background flow using an egocentric, robot-relative sensing/control formulation rather than assuming a known flow field</li>
+              <li>Targets a real gap: most swimming-robot research has optimized swimming efficiency and maneuverability in calm or known-flow conditions, not station-keeping under unmodeled turbulence</li>
+              <li>Relevant control pattern for any project handling disturbance rejection under unknown dynamics, e.g. densanon-core&#x27;s physics/vehicle_sim engines</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.22997" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2607.24860" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>WCM: World-Cognition Model for Generalizable Human-Robot Interaction</h3>
+              <h3>Steeringless Drifting: Differential-Torque Control of a Four-Wheel Independently Driven Vehicle</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes a &#x27;world-cognition model&#x27; aiming to give robots language-agent-level fluency in physical-task interaction, contrasting with current VLA policies and world-model planners that struggle to match that fluency</li>
-              <li>Targets generalizable human-robot interaction rather than narrow task-specific control</li>
-              <li>Directly relevant to Story Director&#x27;s Cardinal-style world-overseer design and Anima&#x27;s NPC behavior modeling — worth reading for architectural comparison against the existing FactLedger + NLI approach</li>
+              <li>Demonstrates sustained drift (oversteer at the handling limit) on a four-wheel-independently-driven vehicle using only differential torque across the four wheels -- no mechanical steering input at all</li>
+              <li>Departs from conventional drift control, which relies on mechanical steering geometry plus rear-tire saturation, making it specific to emerging steer-by-wire/torque-vectoring EV chassis architectures</li>
+              <li>Useful reference for extreme-handling vehicle control work, e.g. densanon-core&#x27;s vehicle_sim engine</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.22999" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2607.24863" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Curse of Precision: A Data Scaling Law for High-Precision Robotic Manipulation</h3>
+              <h3>FIRMGrasp: A Friction-Informed Risk Margin for Robust Grasp Synthesis</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Systematically studies how data scaling laws differ between open-world generalization tasks and closed-world, high-precision tasks like robotic assembly</li>
-              <li>Finds the data-to-precision relationship for closed-world tasks is largely unexplored and behaves differently than open-world imitation-learning scaling</li>
-              <li>Conceptually relevant to any project reasoning about how much training/fine-tuning data is needed for precision-critical behaviors (e.g., ALM extraction accuracy, ultralight-coder tool-call precision)</li>
+              <li>Points out that classical grasp-quality metrics assume a single fixed friction coefficient, so they can&#x27;t predict whether a grasp actually retains force closure across the real range of friction a surface may exhibit</li>
+              <li>Proposes a friction-informed risk margin that scores grasp candidates by robustness to friction uncertainty rather than by quality under one nominal friction value</li>
+              <li>Directly relevant to dexterous-hand manipulation pipelines (see today&#x27;s TactaBot announcement) where friction mis-estimation is a common real-world grasp-failure mode</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.23108" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2607.25049" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Amortising Trajectory Optimisation for Residual MPC via Implicit Contact Differentiation</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tackles contact-rich trajectory optimization by using differentiable simulation to expose control sensitivities, instead of expensive, step-size-sensitive finite-difference gradients</li>
+              <li>Amortizes the optimization into a residual MPC formulation, aiming to make contact-rich trajectory optimization fast enough for online control rather than offline planning only</li>
+              <li>Addresses a known bottleneck -- contact discontinuities breaking gradient-based optimization -- relevant to any physics-based contact handling, including densanon-core&#x27;s tactics/agent_sim engines</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.24959" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -71,69 +83,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Kraken Technology raises Series B funding for autonomous vessels</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Robot Finger Feels in Color</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Kraken Technology secured Series B funding to continue developing uncrewed (autonomous) surface vessels and to localize manufacturing across multiple regions</li>
-              <li>Signals continued investor confidence in maritime autonomy as a robotics subsector distinct from ground/aerial autonomy</li>
-              <li>Market-intelligence data point for tracking where robotics VC funding is concentrating (autonomy + localized manufacturing trend)</li>
+              <li>Describes an optical tactile sensor that reads contact deformation in color to capture fine surface texture -- e.g. resolving the raised lettering, portrait relief, and architectural detail on a U.S. coin -- detail that force-only touch sensors miss</li>
+              <li>Positions color-based sensing as a way to close a longstanding gap in robotic fingertip perception between geometric texture-reading and simple pressure/binary contact detection</li>
+              <li>Relevant benchmark for tactile/haptic feedback work in manipulation pipelines, alongside today&#x27;s FIRMGrasp friction paper and TactaBot hand announcement</li>
             </ul>
-            <a href="https://www.therobotreport.com/kraken-technology-raises-series-b-funding-autonomous-vessels/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Learning Zenoh: A New Communication Layer for ROS 2</h3>
-              <span class="digest-source">ROS Discourse</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Community discussion comparing Zenoh (a newer pub/sub communication layer) against ROS 2&#x27;s default DDS middleware, evaluating where Zenoh offers advantages</li>
-              <li>Highlights middleware/transport-layer tradeoffs relevant to any distributed real-time system, not just ROS</li>
-              <li>Worth a skim for densanon-core&#x27;s brain-integration JSON-RPC wire (Unity/Unreal clients) and editor&#x27;s WebSocket frontend — a potential alternative transport pattern to compare against</li>
-            </ul>
-            <a href="https://discourse.openrobotics.org/t/learning-zenoh-a-new-communication-layer-for-ros-2/57014" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://spectrum.ieee.org/robot-finger" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>False-green mobility on firm soil — Dual check on your URDF (PASS or FAIL both count)</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>mimic robotics introduces ‘frontier video-action models’ to the factory floor at Audi</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Open-sourced a lightweight &#x27;referee&#x27; tool that runs the same robot body description (URDF) against two soil/ground conditions to catch &#x27;false-green&#x27; mobility claims that pass on firm ground/sim but fail on soft soil</li>
-              <li>Addresses a validation gap where simulation results look fine but don&#x27;t hold under harder real-world conditions</li>
-              <li>Useful testing pattern for any project validating sim-to-real or physics-engine claims (densanon-core&#x27;s agent_sim/physics engines) — testing under a harder condition, not just the default one</li>
+              <li>mimic robotics deployed FLUX-mimic, a Video-Action Model co-developed with Black Forest Labs, on Audi&#x27;s factory floor to let robots learn and perform complex manipulation tasks from real-world industrial data</li>
+              <li>Video-Action Models extend the video-generation lineage (Black Forest Labs is known for FLUX diffusion models) into action prediction -- a different lineage from the VLA (vision-language-action) approach used by most humanoid/manipulation stacks</li>
+              <li>A concrete industrial deployment rather than a lab demo -- a data point for how fast &#x27;physical AI&#x27; manipulation models are moving from research to production lines</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/false-green-mobility-on-firm-soil-dual-check-on-your-urdf-pass-or-fail-both-count/57009" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/07/29/mimic-robotics-introduces-frontier-video-action-models-to-the-factory-floor-at-audi/103705/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Opensource Alternative to ROS 2</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>Tacta Systems unveils AI-powered robotic hand for high-value manufacturing</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>New open-source robotics framework &#x27;Peppy&#x27; released, letting developers describe a robot stack as modular nodes in a single config, positioned for AI robots and humanoids</li>
-              <li>An early-stage alternative to ROS 2 worth tracking rather than adopting yet</li>
-              <li>Watch item for future robotics-adjacent work if a lighter-weight framework than ROS 2 becomes attractive</li>
+              <li>Tacta Systems unveiled its first product, TactaBot, combining a robotic hand with a wearable device aimed at bringing human-like dexterity and touch to industrial automation</li>
+              <li>Target markets are electronics, AI infrastructure, and automotive manufacturing -- high-value, precision-assembly use cases where dexterous manipulation has lagged behind pick-and-place robotics</li>
+              <li>One of several &#x27;AI-powered robotic hand&#x27; entrants this year; worth tracking how its wearable-driven data-capture approach compares to teleoperation/VLA data pipelines used elsewhere</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/opensource-alternative-to-ros-2/57008" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/07/29/tacta-systems-unveils-ai-powered-robotic-hand-for-high-value-manufacturing/103688/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>YERP + rosbag2 snapshot: can we capture why a ROS perception latency spike happened?</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>Kall Morris tests orbital ‘tow truck’ for space debris removal aboard International Space Station</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Describes a &#x27;trigger-and-capture&#x27; pairing of a custom tool (YERP) with rosbag2&#x27;s snapshot feature to record diagnostic context specifically when a perception latency spike occurs, rather than continuously logging everything</li>
-              <li>A practical pattern for debugging intermittent real-time performance issues without full-time overhead logging</li>
-              <li>Directly applicable technique for diagnosing tick/latency spikes in Story Director&#x27;s multi-action tick system or densanon-core&#x27;s agent_sim engine — trigger-based diagnostic capture instead of always-on tracing</li>
+              <li>Kall Morris Inc (KMI) validated its debris capture-and-relocation system aboard the ISS -- a real on-orbit test rather than a ground simulation or testbed</li>
+              <li>The system is designed to capture and relocate debris (an orbital &#x27;tow truck&#x27;), a capability distinct from the debris-tracking-only approaches most current space-safety systems rely on</li>
+              <li>Notable as one of the few debris-removal robotics systems to reach actual space-based validation rather than remaining at the concept stage, addressing one of the fastest-growing risks in the space industry</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/yerp-rosbag2-snapshot-can-we-capture-why-a-ros-perception-latency-spike-happened/56991" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/07/29/kall-morris-tests-orbital-tow-truck-for-space-debris-removal-aboard-international-space-station/103684/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Sapphire launches AMD-powered robotics platform for physical AI applications</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Sapphire Technology launched the EDGE+ Apex SOM/Carrier Robotics Platform, a production-ready compute module built on AMD&#x27;s Ryzen AI Embedded X100 series processors for embedded &#x27;physical AI&#x27; workloads</li>
+              <li>Positions AMD as a direct embedded-compute competitor to Nvidia Jetson-class platforms for on-robot inference -- an alternative for teams wanting to avoid CUDA lock-in</li>
+              <li>SOM/Carrier form factor targets production deployment rather than the dev-kit/prototyping stage, aimed at companies moving physical-AI robots from pilot to volume manufacturing</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/07/29/sapphire-launches-amd-powered-robotics-platform-for-physical-ai-applications/103679/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intelligrated, Trew and Transnorm unite to create ‘leading warehouse automation provider’</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>American Industrial Partners (AIP) completed its acquisition of Honeywell&#x27;s Warehouse and Workflow Solutions business (Intelligrated + Transnorm) and merged it with existing portfolio company Trew into one organization</li>
+              <li>Consolidates three previously separate material-handling/warehouse-automation brands under a single owner -- a structural shift in the warehouse robotics supplier market</li>
+              <li>Market-intelligence data point: private-equity roll-up of automation suppliers signals continued consolidation in the warehouse-robotics supply chain, distinct from the VC-funding pattern seen in most other robotics news</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/07/29/intelligrated-trew-and-transnorm-unite-to-create-leading-warehouse-automation-provider/103675/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
