@@ -127,6 +127,43 @@
   .powplate .powval { position: absolute; top: 50%; right: 8%; width: 30%; height: 44%; transform: translateY(-50%);
     display: flex; align-items: center; justify-content: center; pointer-events: none; }
   .powplate .powval .gtext { height: 100%; }
+  /* Progress toward the power, read along the foot of the plate. Momentum has no ceiling, so the
+     number alone cannot show how close the next Break Camp is — this can. */
+  .powplate .plgauge { position: absolute; left: 12%; right: 6%; bottom: 12%; height: 3px; border-radius: 2px;
+    background: rgba(10,10,7,.72); overflow: hidden; pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.5); }
+  .powplate .plgauge i { display: block; height: 100%; width: 0;
+    background: linear-gradient(90deg, #b8862f, var(--gold)); transition: width .28s ease; }
+  .powplate.ready .plgauge i { background: linear-gradient(90deg, var(--gold), #fff3c4); }
+  /* banked past the threshold — a second, dimmer bar shows the surplus toward the NEXT one */
+  .powplate .plgauge.over { background: rgba(120,90,20,.55); }
+  /* DRIVE METER (Nomad). The bank and the trajectory are different quantities: the plate shows what
+     you have, this shows what the column is BUILDING. Sits on the same empty holder plate the
+     nsplaque holder uses, with silver digits and the caret from the glyph set. One pip per unit that
+     still owes a move this turn — fill them all and the trajectory climbs; stall one and it halves. */
+  .drivemeter { position: relative; display: inline-block; height: var(--pillh, 34px); flex: 0 0 auto;
+    margin-right: 4px; cursor: help; filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+  .drivemeter > img { height: 100%; width: auto; display: block; }
+  .drivemeter .dm-in { position: absolute; inset: 11% 9%; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 2px; pointer-events: none; }
+  .drivemeter .dm-top { display: flex; align-items: center; justify-content: center; gap: 1px; height: 54%; }
+  /* nsplaque is near-square, so two-digit values on both sides run to the rim — step the row down
+     rather than letting the glyphs touch the frame. */
+  .drivemeter.wide .dm-top { height: 44%; }
+  .drivemeter.wider .dm-top { height: 37%; }
+  .drivemeter .dm-top .mn { display: inline-flex; align-items: center; height: 100%; }
+  .drivemeter .dm-top .mn img.md { height: 100%; width: auto; display: block; filter: drop-shadow(0 1px 1px rgba(0,0,0,.5)); }
+  .drivemeter .dm-caret { height: 62%; width: auto; display: block; }
+  .drivemeter.up   .dm-caret { filter: drop-shadow(0 0 2px rgba(127,217,127,.9)); }
+  .drivemeter.down .dm-caret { transform: rotate(180deg); filter: grayscale(.4) drop-shadow(0 0 2px rgba(232,112,92,.9)); }
+  .drivemeter .dm-pips { display: flex; gap: 2px; height: 3px; }
+  /* An unfilled pip still has to be countable — it says how many units owe a move. Dark-on-bronze
+     vanished, so give it a lit rim. */
+  .drivemeter .dm-pips i { width: 3px; height: 3px; border-radius: 1px; background: rgba(10,9,6,.85);
+    box-shadow: inset 0 0 0 1px rgba(214,190,120,.85), 0 0 0 1px rgba(0,0,0,.45); }
+  .drivemeter .dm-pips i.on { background: var(--gold); box-shadow: none; }
+  .drivemeter.up .dm-pips i.on { background: #7fd97f; }
+  .drivemeter.idle { opacity: .55; }
   .powplate:active { transform: scale(.97); }
   .powplate.ready { filter: drop-shadow(0 0 7px rgba(240,201,63,.9)) drop-shadow(0 0 3px rgba(240,201,63,.6)); animation: pulse 1.2s infinite; }
   /* portrait: swap the power/hold plates to their compact label-less versions + widen the value plaque */
@@ -1419,15 +1456,15 @@
      so a fixed px cap keeps its size while the frame shrinks — on a short window the banner ended up
      wider than the frame could carry and buried the panel under it. The plaque is also 600x184 where
      the old flat banner was 600x124, so it is 1.5x taller at the same width.
-     Overhang is capped by the overlay: .overlay sets overflow-y:auto, which makes it a scroll container
-     that clips anything above the frame, and landscape leaves only 14px of padding there. So the banner
-     may hang at most ~2.5% above. width 27% -> height 27*(184/600)*1.694 = 14% of frame height, putting
-     the bottom edge at 11.5% — clear of the panel that starts at 13.88%. */
-  .ofbanner.ofhdr.tableofwar { width: 27%; top: -2.5%; }
+     Overhang is capped by the overlay: .overlay sets overflow-y:auto, so it clips anything above the
+     frame and the banner can only rise as far as #ovGeneral's top padding (54px). width 36% -> height
+     36*(184/600)*1.694 = 18.7% of frame height; top -8% puts the bottom edge at 10.7%, clear of the
+     panel that starts at 13.88%, and lifts the plaque so it reads as a title rather than a lid. */
+  .ofbanner.ofhdr.tableofwar { width: 36%; top: -8%; }
   /* Portrait reserves 84px of frame padding for the title. The plaque at the old 500px width would be
      153px tall and bury the panel, so widen the reserve and size the banner to sit inside it. */
-  :where(body.o-portrait) .oframe.menu.titled { padding-top: 118px; }
-  :where(body.o-portrait) .oframe.titled .ofbanner.ofhdr.tableofwar { width: min(400px, 80%); top: -14px; }
+  :where(body.o-portrait) .oframe.menu.titled { padding-top: 150px; }
+  :where(body.o-portrait) .oframe.titled .ofbanner.ofhdr.tableofwar { width: min(480px, 92%); top: -18px; }
   .menucols, .oframe.menu .mzone, .menutop, .menumid { display: contents; }   /* portrait: sections flow in the oframe's one column */
   .oframe.menu .seedfield { margin: 12px auto; }
   .oframe.menu .mzone-c .menugrid { margin-top: 12px; }
@@ -1440,7 +1477,11 @@
   
     :where(body.o-portrait) .oframe.menu .dailyslot .dp-play { margin-top: 11px; }
   
-    :where(body.o-landscape) #ovGeneral { padding: 14px; }
+    /* Extra headroom at the top: .overlay sets overflow-y:auto, which clips anything above the frame,
+       so the title plaque can only overhang as far as this padding. It scales with the screen: the
+       banner's own overhang is a percentage of the frame, so a fixed px reserve would either clip it
+       on short screens or shrink the frame (which leaves the panel too small for its own text). */
+    :where(body.o-landscape) #ovGeneral { padding: clamp(16px, 9vh, 54px) 14px 14px; }
   
     /* baked from the layout editor — absolute placement (% of the container) */
     /* lock to the 537:317 aspect (cap width by BOTH viewport dims) so contents never stretch */
@@ -1701,7 +1742,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-OurVuQUp.js"></script>
+  <script type="module" crossorigin src="./assets/index-CGsokO6T.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1795,7 +1836,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.35';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.36';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -3156,7 +3197,7 @@ function gaugeRow() {
   const drive = (p.drive === undefined) ? '' :
     `<span class="gdrive ${p.moved >= p.pace && p.pace > 0 ? 'ok' : 'slow'}" title="Drive: Momentum banked per turn. Move EVERY unit to push it higher — stall even one and it halves.">▲${p.drive} · moved ${p.moved}/${p.pace}</span>`;
   return `<div class="row gaugebar" style="margin-top:5px">
-     <span class="glabel">${p.gname||'Power'} <b>${shown}/${p.max}</b>${carry ? `<b class="gcarry">+${carry}</b>` : ''}${drive}</span>
+     <span class="glabel">${p.gname||'Power'} <b>${p.uncapped ? p.gauge : shown+'/'+p.max}</b>${(!p.uncapped && carry) ? `<b class="gcarry">+${carry}</b>` : ''}${drive}</span>
      <span class="gtrack">${pips}</span>
      <button class="powbtn ${p.ready ? 'ready' : ''}" onclick="usePower()"
        onpointerdown="powPressStart()" onpointerup="powPressEnd()" onpointerleave="powPressEnd()"
@@ -3315,17 +3356,55 @@ function renderHud() {
       ? bpill('waves', obj.progress+'/'+obj.turns, 'waves', 'showObjInfo()')
       : '';   // spire / escort / escape / hunt are single-objective battles — the intro text explains them, so no HUD chip
   const POW_PLATE = { 'Overcharge': 'pow_overcharge', 'Rally the Horde': 'pow_rally', 'Break Camp': 'pow_break_camp' };
+  // Nomad only. The plate says how much Momentum is banked; this says how fast it is being built, and
+  // what this turn is about to do to that rate. Pips are the roll call: one per unit that still owes a
+  // move. Fill them all and the trajectory climbs by one; leave any unfilled and it halves.
+  const driveMeter = (!p || p.drive === undefined) ? '' : (() => {
+    const pace = p.pace || 0, moved = p.moved || 0;
+    const state = pace === 0 ? 'idle' : (p.rolled ? 'up' : 'down');
+    const chars = String(p.drive).length + String(p.drive_next).length;
+    const wide = chars > 4 ? 'wider' : (chars > 3 ? 'wide' : '');
+    const pips = pace === 0 ? ''
+      : Array.from({ length: Math.min(pace, 10) }, (_, i) => `<i class="${i < moved ? 'on' : ''}"></i>`).join('');
+    const tip = pace === 0
+      ? 'Drive: nothing owes a move this turn, so the trajectory holds.'
+      : `Drive: Momentum banked per turn. ${moved}/${pace} units have moved — move EVERY one and the trajectory climbs to ${p.drive_next}; stall even one and it halves to ${Math.floor(p.drive / 2)}.`;
+    // silver metal digits, the same set the stat pills use on style B
+    const silver = v => `<span class="mn">` + String(v).split('').map(d =>
+      `<img class="md" src="assets/digits/${d}.png" alt="${d}">`).join('') + `</span>`;
+    return `<span class="drivemeter ${state} ${wide}" title="${tip}" onclick="showPowerInfo()" aria-label="Drive ${p.drive}, ${moved} of ${pace} moved">
+      <img src="assets/ui/nsplaque.png" alt="">
+      <span class="dm-in">
+        <span class="dm-top">${silver(p.drive)}<img class="dm-caret" src="assets/ui/glyph/caret.png" alt="">${silver(p.drive_next)}</span>
+        <span class="dm-pips">${pips}</span>
+      </span></span>`;
+  })();
   const gauge = !p ? ''
     : POW_PLATE[p.name]
-      ? `<button class="powplate ${p.ready?'ready':''}" onclick="usePower()"
+      ? (() => {
+          // An uncapped gauge (Momentum) must NOT print "x/12" — 12 is the price of the power, not a
+          // ceiling, and the value routinely goes past it. Show the number, and let the bar carry the
+          // "how close am I" job: it fills toward the threshold, then tracks the surplus toward the next.
+          const cost = p.cost || p.max || 1;
+          // The bar means "is a charge banked", NOT "surplus toward the next one". Showing the surplus
+          // emptied the bar at exactly the threshold — the precise moment the power became usable — which
+          // read as losing momentum. It fills to the threshold and then stays full; the number carries
+          // how much is banked beyond it.
+          const over = p.uncapped && p.gauge > cost;
+          const pct = Math.round(100 * Math.min(p.gauge, cost) / cost);
+          const shown = p.uncapped ? String(p.gauge) : (p.gauge + '/' + p.max);
+          const label = p.uncapped
+            ? `${p.name} — ${p.gauge} ${p.gname}, needs ${cost}` : `${p.name} ${p.gauge}/${p.max}`;
+          return `<button class="powplate ${p.ready?'ready':''}" onclick="usePower()"
            onpointerdown="powPressStart()" onpointerup="powPressEnd()" onpointerleave="powPressEnd()"
-           oncontextmenu="event.preventDefault();showPowerInfo();return false" title="${p.desc}" aria-label="${p.name} ${p.gauge}/${p.max}"><img class="pl-l" src="assets/ui/btn/${POW_PLATE[p.name]}.png" alt="${p.name}"><img class="pl-p" src="assets/ui/btn/${POW_PLATE[p.name]}_p.png" alt="${p.name}"><span class="powval">${goldText(p.gauge+'/'+p.max)}</span></button>`
+           oncontextmenu="event.preventDefault();showPowerInfo();return false" title="${p.desc}" aria-label="${label}"><img class="pl-l" src="assets/ui/btn/${POW_PLATE[p.name]}.png" alt="${p.name}"><img class="pl-p" src="assets/ui/btn/${POW_PLATE[p.name]}_p.png" alt="${p.name}"><span class="powval">${goldText(shown)}</span><span class="plgauge ${over?'over':''}"><i style="width:${pct}%"></i></span></button>`;
+        })()
       : `<button class="powchip ${p.ready?'ready':''}" onclick="usePower()"
            onpointerdown="powPressStart()" onpointerup="powPressEnd()" onpointerleave="powPressEnd()"
-           oncontextmenu="event.preventDefault();showPowerInfo();return false" title="${p.desc}">${si('cp',15)} ${p.name} <b>${p.gauge}/${p.max}</b><span class="pgtrack"><i style="width:${Math.round(100*Math.min(p.gauge,p.max)/p.max)}%"></i></span>${p.ready?' ▸GO':''}</button>`;
+           oncontextmenu="event.preventDefault();showPowerInfo();return false" title="${p.desc}">${si('cp',15)} ${p.name} <b>${p.uncapped ? p.gauge : p.gauge+'/'+p.max}</b><span class="pgtrack"><i style="width:${Math.round(100*Math.min(p.gauge,(p.cost||p.max))/(p.cost||p.max))}%"></i></span>${p.ready?' ▸GO':''}</button>`;
   $('#hud').innerHTML = `<div class="statline">
       <div class="pillbar">${bpill('cp', S.cp+'/'+S.cp_max, '', "showPillInfo('cp')")}${bpill('hq', S.hq_hp, hpFrac<34?'danger':'', "showPillInfo('hq')")}${_noBaseBattle() ? '' : bpill('bases', S.bases_left, '', "showPillInfo('bases')")}${bpill('troops', S.troops.n+'/'+S.troops.cap, S.troops.n>=S.troops.cap?'full':'', "showArmy()")}${objChip}</div>
-      ${gauge}
+      ${driveMeter}${gauge}
       ${S.ascension?`<span class="stat gold">A${S.ascension}</span>`:''}
       ${foe}
     </div>
