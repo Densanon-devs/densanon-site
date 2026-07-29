@@ -870,8 +870,13 @@
   .ibtnrow { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; }
   /* picker menu list: full-width stacked column in portrait, 3x2 grid in landscape */
   .menugrid { display: flex; flex-direction: column; gap: 10px; }
-  .demo-note { margin-top: 12px; padding: 8px 12px; font-size: 12px; line-height: 1.45; text-align: center;
-    color: #d8b45a; border: 1px solid rgba(216,180,90,.4); border-radius: 4px; background: rgba(216,180,90,.06); }
+  /* Takes the daily-panel slot the landscape layout already reserves. It used to be a bare div, which the
+     `.menutop > .choice` rule never positioned — so it flowed to the top of the frame, under the ornate
+     title plate, while the region it should have filled sat empty. */
+  .choice.demo-note { display: flex; flex-direction: column; justify-content: center; text-align: center;
+    gap: 6px; color: #d8b45a; }
+  .choice.demo-note b { font: 700 15px var(--f-head); letter-spacing: .06em; color: var(--gold); }
+  .choice.demo-note span { font-size: 12px; line-height: 1.55; opacity: .92; }
   .menugrid .ibtn { width: 100%; }
   .menugrid .ibtn img { width: 100%; height: auto; }
   @media (min-width: 720px) {
@@ -1443,9 +1448,13 @@
     /* Daily AND Deploy share the same slot box (they swap in place) */
     :where(body.o-landscape) .oframe.menu .menutop > .choice { position: absolute; left: 9.5%; top: 13.56%; width: 46.93%; height: 30.6%; margin: 0; box-sizing: border-box; }
   
-    :where(body.o-landscape) .oframe.menu .menumid .resumewrap { position: absolute; left: 9.5%; top: 45.74%; width: 20.3%; height: 11.67%; margin: 0; }
+    /* Both plaques are art, so their boxes carry the artwork's own aspect — a box shaped any other way
+       stretches the plate and drags the gold overlays off the spots the art was drawn for. Widths are
+       height x (image aspect) / 1.694, the frame's locked ratio: resume.png 266:104, seed.png 600:163.
+       At 12.33% tall the pair fills the left column exactly, centred on the baked row line. */
+    :where(body.o-landscape) .oframe.menu .menumid .resumewrap { position: absolute; left: 9.5%; top: 45.26%; width: 18.62%; height: 12.33%; margin: 0; }
   
-    :where(body.o-landscape) .oframe.menu .menumid .seedfield { position: absolute; left: 29.24%; top: 45.74%; width: 27.93%; height: 11.36%; margin: 0; }
+    :where(body.o-landscape) .oframe.menu .menumid .seedfield { position: absolute; left: 29.64%; top: 45.26%; width: 26.79%; height: 12.33%; margin: 0; }
   
     :where(body.o-landscape) .oframe.menu .gcard { position: absolute; margin: 0; max-width: none; }
   
@@ -1472,6 +1481,31 @@
   
     :where(body.o-landscape) .oframe.menu .menugrid .mtile:nth-of-type(6) { left: 73.74%; top: 62.46%; }
   
+    /* ── DEMO: three tiles and one commander, so the six-tile grid and three card slots leave holes.
+       These regions are tuned for what the demo actually shows, so it reads as a composed screen
+       rather than a full menu with the middle cut out. ── */
+    :where(body.o-landscape) .oframe.menu.demo .menutop > .choice { top: 13.88%; height: 23.34%; }
+
+    /* no save to resume: centre the plaque in the left column rather than widening it into the gap */
+    :where(body.o-landscape) .oframe.menu .menumid .seedfield:first-child { left: 19.57%; }
+
+    :where(body.o-landscape) .oframe.menu.demo .menumid .resumewrap { top: 39.35%; }
+    :where(body.o-landscape) .oframe.menu.demo .menumid .seedfield { top: 39.35%; }
+    /* the demo's shorter panel leaves more room, so the lone plaque grows into it — still 600:163 */
+    :where(body.o-landscape) .oframe.menu.demo .menumid .seedfield:first-child { left: 18.3%; top: 38.76%; width: 29.34%; height: 13.5%; }
+
+    /* the lone commander sits centred under the left column, and bigger — it is the whole roster here */
+    :where(body.o-landscape) .oframe.menu.demo .gcard:nth-of-type(1) { left: 21.2%; top: 53.8%; width: 23.5%; height: 34.2%; }
+
+    /* two tiles over one, centred, filling the right column rather than hugging its top corner */
+    :where(body.o-landscape) .oframe.menu.demo .menugrid .mtile { width: 16.2%; height: 30%; }
+    :where(body.o-landscape) .oframe.menu.demo .menugrid .mtile:nth-of-type(1) { left: 57%; top: 14%; }
+    :where(body.o-landscape) .oframe.menu.demo .menugrid .mtile:nth-of-type(2) { left: 74.1%; top: 14%; }
+    :where(body.o-landscape) .oframe.menu.demo .menugrid .mtile:nth-of-type(3) { left: 65.55%; top: 53%; }
+
+    /* portrait: the demo's single commander shouldn't sit small next to the full-width bars */
+    .oframe.menu.demo .genwrap .gcard { max-width: 230px; }
+
     /* daily panel internals — absolutely placed within the panel (per the tuned layout).
        the panel needs an explicit height so the children's % offsets resolve (abs children give it no height). */
     :where(body.o-landscape) .oframe.menu .dailyslot { padding: 0; }
@@ -1650,7 +1684,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-CNGrjPcH.js"></script>
+  <script type="module" crossorigin src="./assets/index-CdP1AxoD.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1744,7 +1778,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.26';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.32';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -1832,6 +1866,8 @@ async function openExternal(url) {
 }
 async function checkForUpdate() {
   if (updateOptedOut()) return;
+  if (S.demo) return;                                  // the demo has no channel of its own, and the
+  //  beta manifest it would otherwise read hands out the FULL build — never offer that from the demo
   if (!_isTauri() && !_isAndroid()) return;            // only the packaged builds self-update
   const url = _isAndroid() ? UPDATE_URL_MOBILE : UPDATE_URL_DESKTOP;
   try {
@@ -2120,7 +2156,7 @@ function showSettings() {
   const o = $('#ovSettings');
   o.innerHTML = `<div class="oframe titled"><div class="ofbanner ofhdr"><img src="assets/ui/hdr/settings.png" alt="Settings"></div>
     <div style="text-align:center;margin:8px 0 6px">${ibtn('switch_campaign', "closeOv('ovSettings');showProfiles()")}</div>
-    ${_isTauri() ? '' : `<div class="choice">
+    ${(_isTauri() || S.demo) ? '' : `<div class="choice">
       <b>Screen orientation</b>
       <div class="d" style="margin:2px 0 6px">Phone only — locks how the game is held.</div>
       <div style="display:flex;gap:8px">${oBtn('landscape')}${oBtn('portrait')}</div>
@@ -2190,7 +2226,10 @@ function showSettings() {
       <div class="d" style="margin:0 0 9px;line-height:1.5">The plaque your units stand on — ${S.demo ? 'the demo starts you with a couple from every tier; the full game wins the rest as run rewards' : 'win chips as run rewards, then equip one for your units and one for the enemy'}.</div>
       <button class="chipsbtn" onclick="closeOv('ovSettings');showChips()" aria-label="Open chip collection"><img src="assets/ui/btn/chips.png" alt="Chips"></button>
     </div>
-    <div class="choice" style="margin-top:10px">
+    ${S.demo ? `<div class="choice" style="margin-top:10px">
+      <b>Version</b> <span class="d" style="float:right;font-family:var(--f-num)">v${APP_VERSION}</span>
+      <div class="d" style="margin:2px 0 0;line-height:1.5">This is the demo — one commander, Act 1. The full game updates itself; this build stays as it is.</div>
+    </div>` : `<div class="choice" style="margin-top:10px">
       <b>Updates</b> <span class="d" style="float:right;font-family:var(--f-num)">v${APP_VERSION}</span>
       <div class="d" style="margin:2px 0 8px;line-height:1.5">Checks densanon.com once at launch for a newer build (anonymous, nothing else is sent). Downloading is always a manual click.</div>
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px">
@@ -2198,7 +2237,7 @@ function showSettings() {
         ${toggle(!updateOptedOut(), "toggleUpdateCheck()")}
       </div>
       <button class="setbtn" onclick="checkNow()">Check for updates now</button>
-    </div>
+    </div>`}
     <div class="choice" style="margin-top:10px">
       <b class="red">Danger zone</b>
       <div class="d" style="margin:2px 0 8px;line-height:1.5">Erase ALL progress — achievements, ascensions, Merit, best score, unlocks, collection and run history. Ends the current run. This cannot be undone.</div>
@@ -2222,6 +2261,7 @@ function showSettings() {
 }
 function toggleUpdateCheck() { setUpdateOptOut(!updateOptedOut()); showSettings(); }
 async function checkNow() {
+  if (S.demo) { toast('the demo does not self-update — grab the full game for that'); return; }
   if (updateOptedOut()) { toast('auto-check is off — enable it first'); return; }
   toast('checking for updates…');
   const url = _isAndroid() ? UPDATE_URL_MOBILE : UPDATE_URL_DESKTOP;
@@ -2781,7 +2821,7 @@ let _peekConfirmFn = null;
 // public/cardface.js (loaded before this script) so the app and the offline pre-bake
 // generator use identical layout + canvas drawing. Card faces are pre-baked to
 // assets/cards/<id>.webp; a missing/dynamic one falls back to renderFace on the fly.
-const CARD_ART_IDS = ['adrenaline','air_strike','ambush','artillery_emplacement','automated_factory','barrage','battle_plan','berserker_rage','blitz','blitzkrieg','blood_frenzy','build_barracks','build_depot','build_power','build_repair','build_turret','bunker','caravan_supply','cavalry_charge','combined_arms','conscript','conscription_order','deploy_artillery','deploy_outpost','deploy_heavy','deploy_rocket','deploy_sniper','deploy_squad','deploy_tank','dig_in','doppelganger','drone_swarm','field_promotion','field_repair','flanking_maneuver','focus_fire','forced_march','fortress_protocol','frenzy','full_power','gangrene','gas_shell','grid_overload','hit_and_run','human_wave','incendiary','incite_mutiny','ion_cannon','jammed_comms','last_charge','last_stand','lightning_war','med_pack','mechanized_column','mobile_turret','modular_assembly','no_retreat','orbital_strike','outflank','outriders','overclock','overrun','overwhelming_charge','power_drain','power_surge','press_gang','proto_artillery','proto_heavy','proto_rocket','provoke','raise_banner','rally','recon','redeploy_orders','reinforce','reinforced_plating','relentless','sabotage','sapper_charge','scout_ahead','scrounge','shell_shock','shield_generator','shock_troops','smoke_screen','smoke_screen_curse','spec_ops_team','supply_drop','total_war','veteran_squad','war_cry','war_drums'];
+const CARD_ART_IDS = ['adrenaline','air_strike','ambush','barrage','battle_plan','berserker_rage','blitz','blitzkrieg','blood_frenzy','build_barracks','build_depot','build_power','build_repair','build_turret','bunker','conscript','conscription_order','deploy_artillery','deploy_outpost','deploy_heavy','deploy_rocket','deploy_sniper','deploy_squad','deploy_tank','dig_in','doppelganger','field_promotion','field_repair','focus_fire','frenzy','gangrene','gas_shell','human_wave','incendiary','ion_cannon','jammed_comms','last_charge','med_pack','no_retreat','overrun','overwhelming_charge','power_drain','press_gang','provoke','raise_banner','rally','recon','redeploy_orders','reinforce','sabotage','scout_ahead','scrounge','shell_shock','smoke_screen_curse','supply_drop','total_war','veteran_squad','war_cry','war_drums'];
 window.onCardAssetsReady = () => { scheduleBake(); try { if (typeof renderHand === 'function') renderHand(); } catch (_) {} };
 preloadFrameAssets();
 if (typeof preloadArt === 'function') preloadArt(CARD_ART_IDS);   // for any on-the-fly renderFace fallback
@@ -4134,6 +4174,13 @@ async function animateEvents(events, finalR) {
   for (const ev of events) {
     if (animGen !== my) return;
     if (ev.t === 'say') { await showBossSay(ev); continue; }        // boss talks
+    // A curse arriving is something you must NOTICE — it rots in hand or clogs the deck either way.
+    if (ev.t === 'curse') {
+      Sfx.play('curse'); haptic(60);
+      toast(`☠ CURSE — ${ev.name} ${ev.hand ? 'slipped into your HAND' : 'shuffled into your deck'}` + (ev.first ? ' · scrap them at a Workshop' : ''));
+      await sleep(900);
+      continue;
+    }
     if (ev.t === 'enemy_card') {                                    // an enemy played a card
       Sfx.play('alarm'); haptic(20);
       if (ev.first && ev.card && localStorage.getItem('dc_reveal_enemy') !== '0') {
@@ -4462,15 +4509,11 @@ const PLAQUE_REGIONS = {
   se:   { portrait:{x:11,y:24.5,w:25.5,h:44}, name:{x:37,y:14,w:50,h:12}, desc:{x:41.5,y:36,w:50,h:38} },
   sn:   { portrait:{x:12,y:19.5,w:25.5,h:44}, name:{x:40.5,y:9.5,w:50,h:12}, desc:{x:46,y:33,w:44.5,h:44} }
 };
-const PLAQUE_SPECLAY = { warlord:'sw', engineer:'se', nomad:'sn' };
-// concise doctrine lines sized to the plaque regions; the full blurb shows in the deploy panel.
-const PLAQUE_BLURB = {
-  warlord:  'First Reinforcement each turn costs 1 less. Build WRATH → Rally the Horde.',
-  engineer: 'Free Power Plant; first Build each turn free. Build CHARGE → Overcharge.',
-  nomad:    'HQ is a Command Vehicle. Moving builds MOMENTUM → Break Camp.'
-};
+// The concise doctrine line and the spec-plaque layout now travel WITH the commander (g.plaque /
+// g.plaque_lay) instead of being hardcoded here — otherwise the demo's HTML still spells out the
+// locked commanders even though the build never ships them. Full blurb shows in the deploy panel.
 function plaqueFor(id, unl) {
-  if (unl >= 12) return { img: 'spec_' + id, lay: PLAQUE_SPECLAY[id] || 'sw', badge: 'ASC 12' };
+  if (unl >= 12) return { img: 'spec_' + id, lay: ((S.generals || []).find(g => g.id === id) || {}).plaque_lay || 'sw', badge: 'ASC 12' };
   if (unl >= 6)  return { img: 'gold',         lay: 'base', badge: 'ASC ' + unl };
   if (unl >= 1)  return { img: 'silver',       lay: 'base', badge: 'ASC ' + unl };
   return             { img: 'bronze',       lay: 'base', badge: 'NEW' };
@@ -4523,7 +4566,7 @@ function deployPlaque(g, unl) {
     <div class="pc-av" style="${box(R.portrait)}"><img src="assets/ui/generals/${g.id}.jpg" alt=""></div>
     <img class="pc-plq" src="assets/ui/charcard/${p.img}.png" alt="">
     <div class="pc-name" style="${box(R.name)}">${g.name}</div>
-    <div class="pc-desc" style="${box(R.desc)}">${PLAQUE_BLURB[g.id] || g.blurb || ''}</div>
+    <div class="pc-desc" style="${box(R.desc)}">${g.plaque || g.blurb || ''}</div>
   </div>`;
 }
 function showDeploy() {
@@ -4692,10 +4735,10 @@ function showGenerals() {
         <span class="plaqueval${runCfg.seed?'':' seedempty'}" id="seedGold">${goldText(runCfg.seed||'RANDOM')}</span>
         <input id="seedIn" value="${runCfg.seed}" placeholder="" inputmode="numeric" oninput="onSeedInput(this)" aria-label="Seed">
       </div>`;
-  o.innerHTML = `<div class="oframe titled menu"><div class="ofbanner ofhdr wartable"><img src="assets/ui/hdr/war_table.png" alt="War Table"></div><h1>WAR TABLE</h1>${best ? '<p>Best score ' + best + '</p>' : ''}`
+  o.innerHTML = `<div class="oframe titled menu${S.demo ? ' demo' : ''}"><div class="ofbanner ofhdr wartable"><img src="assets/ui/hdr/war_table.png" alt="War Table"></div><h1>WAR TABLE</h1>${best ? '<p>Best score ' + best + '</p>' : ''}`
     + `<div class="menucols">`
     +   `<div class="mzone mzone-a">`
-    +     `<div class="menutop">${S.demo ? '<div class="demo-note">DEMO — one commander, Act 1 only. The full campaign, more commanders, achievements and unlockables are coming to Steam. Wishlist to be notified.</div>' : dailyPanel}</div>`
+    +     `<div class="menutop">${S.demo ? '<div class="choice demo-note"><b>DEMO</b><span>One commander, Act 1 only.<br>The full campaign, every commander, achievements and unlockables are coming to Steam.</span></div>' : dailyPanel}</div>`
     +     `<div class="menumid">${resume}${seedField}</div>`
     +     genCards
     +   `</div>`
@@ -5214,13 +5257,13 @@ const UNIT_SVG = {
 };
 const CLASS_SYM = {
   rifleman:'inf', rocket_soldier:'at', light_tank:'armor', heavy_tank:'armor2',
-  proto_rocket_soldier:'at', proto_heavy_tank:'armor2', proto_artillery_gun:'arty',
+    
   artillery:'arty', attack_dog:'recon', tribe_warrior:'inf', sniper:'snp',
-  command_vehicle:'hq', construction_yard:'base', power_plant:'power',
+   construction_yard:'base', power_plant:'power',
   supply_depot:'supply', barracks:'barracks', repair_bay:'repair',
   outpost:'flag', turret:'turret', tribe_camp:'camp', bannerman:'flag',
-  drone:'recon', walker_turret:'turret', raider:'recon', citizen:'civ', rous:'rous',
-  deer:'deer', nightwalker:'spirit', spire_heart:'heart', gator:'rous',
+     citizen:'civ', rous:'rous',
+     gator:'rous',
 };
 const CAT_COLOR = {
   Reinforcement:'#4d78ac', Ordnance:'#b8503f', Order:'#c19a3e',
@@ -5269,7 +5312,7 @@ function medalIcon(id, size) {
 
 const CLASS_INFO = {
   construction_yard:{n:"Construction Yard",r:"Your HQ. If it's destroyed you lose. Can't move or attack."},
-  command_vehicle:{n:"Command Vehicle",r:"Nomad's MOBILE HQ — March it like a unit. Lose it and you lose. Can't attack."},
+  
   power_plant:{n:"Power Plant",r:"Building: +1 Command Point every turn (must be next to HQ). Can't move/attack."},
   supply_depot:{n:"Supply Depot",r:"Building: draw +1 card every turn (must be next to HQ)."},
   barracks:{n:"Barracks",r:"Building: reinforcements can deploy next to it (forward base), and it raises your troop cap by 2."},
@@ -5283,21 +5326,21 @@ const CLASS_INFO = {
   light_tank:{n:"Light Tank",r:"Fast armor with a strong melee punch."},
   heavy_tank:{n:"Heavy Tank",r:"Slow, heavy armor — big hits, high defense."},
   artillery:{n:"Artillery",r:"Siege (range 2-4). CAN'T hit adjacent enemies — keep it back."},
-  proto_rocket_soldier:{n:"Prototype Rocket Team",r:"Rocket Soldier with extended optics — range 3, sight 4. One-shot deploy."},
-  proto_heavy_tank:{n:"Prototype Heavy Tank",r:"Up-armored Heavy Tank — +1 armor, +3 attack. One-shot deploy."},
-  proto_artillery_gun:{n:"Prototype Artillery",r:"Stationary siege gun — can't move, but sees and strikes up to 10 tiles away. One-shot deploy."},
+  
+  
+  
   attack_dog:{n:"Attack Dog",r:"Very fast scout with wide sight. Fragile — great for revealing fog."},
   tribe_warrior:{n:"Tribe Warrior",r:"Neutral guard — attacks anyone who comes close (you and the enemy)."},
   bannerman:{n:"Bannerman",r:"A standard-bearer that CANNOT attack, but projects a battle-standard AURA: friendly units within 2 tiles deal +2 damage and take −1. It ranks up as the units it steadies score kills and take hits — gaining HP only (no attack or speed), and at RANK 5 each boost grows by +1 (+3 damage / −2 taken). Fragile — its aura dies with it, so keep it screened. Comes from Raise the Banner, events, and crates."},
-  drone:{n:"Drone",r:"Engineer robotic attacker — very fast, but fragile. Deploys in swarms."},
-  walker_turret:{n:"Walker Turret",r:"Engineer mobile turret — a tough ranged gun (range 2) that, unlike a built turret, can reposition."},
-  raider:{n:"Raider",r:"A salvage-thief! It sprints for your HQ, robs your run's salvage, then flees to the map edge. KILL IT before it escapes to keep your salvage — it's fast but very fragile."},
+  
+  
+  
   citizen:{n:"The Refugee",r:`A civilian who can't fight (0 attack, slow). Escort them one tile at a time to the ${siEm('flag_goal')} safe house. If they die, the fight is lost.`},
   rous:{n:"R.O.U.S.",r:"Rodent of Unusual Size — a big, fast swamp rat. Melee only, but quick and relentless; it lunges at whoever's nearest. They keep boiling out of the maze edges, so don't linger — find the way out."},
   gator:{n:"Gator",r:"A mire predator — neutral, but hostile to everyone. Tough and hard-biting, yet slow and territorial: it lurks in the sludge and ambushes whatever strays too close, then sinks back. Keep your units out of the mire, or put it down."},
-  deer:{n:"The Deer",r:"A small, swift spirit-deer with a calm gaze. 1 HP, no attack — but fast, and it flees through the trees. It always glows visibly. Bring it down to pass... but be careful what you wish for."},
-  nightwalker:{n:"The Nightwalker",r:"What the deer becomes: a towering forest god of life and death. Huge, slow, and very hard to kill. Put it down to leave the wood."},
-  spire_heart:{n:"The Spire",r:"A vine-wrapped heart (3x3, one shared 999-HP pool, 0 defense). Every card / move / attack you make costs your HQ 1 HP, and you can only deal 333 damage to it per turn. Gas and fire hurt it too. It hardens, swells, curses you, erupts in AoE, and lances your HQ on a clear line."},
+  
+  
+  
 };
 const TERRAIN_INFO = {
   plain:"Open ground.", forest:"Forest — cover: units here take −2 damage.",
@@ -5339,7 +5382,7 @@ function terrChips(kind) {
   return `<div class="bistats">${c.join('')}</div>`;
 }
 const SIDE_LABEL = {you:"your unit", enemy:"enemy", tribe:"neutral tribe",
-  hq_you:"YOUR HQ", hq_enemy:"enemy HQ", raider:"RAIDER (salvage thief)", neutral:"neutral", gator:"GATOR (mire predator)"};
+  hq_you:"YOUR HQ", hq_enemy:"enemy HQ",  neutral:"neutral", gator:"GATOR (mire predator)"};
 
 function showInspect(u) {
   Sfx.play('tap');
