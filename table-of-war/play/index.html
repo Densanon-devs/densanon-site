@@ -1924,7 +1924,12 @@ async function refresh() { render(await api('/api/state')); }
 // the old war-table-*.json pair carries one last entry pointing here before going dormant.
 const UPDATE_URL_DESKTOP = 'https://densanon.com/table-of-war-version.json';
 const UPDATE_URL_MOBILE  = 'https://densanon.com/table-of-war-mobile-version.json';
+// Mac ships a notarized universal .dmg, Windows an NSIS .exe, so the desktop feed cannot be shared:
+// pointing a Mac at it would offer the installer for the wrong OS. iOS has no feed at all — it never
+// reaches checkForUpdate() (not Tauri, not Android), because the App Store does its updating.
+const UPDATE_URL_MAC     = 'https://densanon.com/table-of-war-mac-version.json';
 function _isTauri() { return !!(window.__TAURI__ || window.__TAURI_INTERNALS__); }
+function _isMac() { try { return /Mac/i.test(navigator.userAgent || navigator.platform || ''); } catch (e) { return false; } }
 function _isAndroid() { try { return !!(window.Capacitor && window.Capacitor.getPlatform && window.Capacitor.getPlatform() === 'android'); } catch (e) { return false; } }
 // Orientation is driven by a body class (o-landscape / o-portrait), not raw viewport media queries,
 // so the DESKTOP build can be pinned to landscape no matter the window shape. Mobile still follows
@@ -1959,7 +1964,7 @@ async function checkForUpdate() {
   if (S.demo) return;                                  // the demo has no channel of its own, and the
   //  beta manifest it would otherwise read hands out the FULL build — never offer that from the demo
   if (!_isTauri() && !_isAndroid()) return;            // only the packaged builds self-update
-  const url = _isAndroid() ? UPDATE_URL_MOBILE : UPDATE_URL_DESKTOP;
+  const url = _isAndroid() ? UPDATE_URL_MOBILE : (_isMac() ? UPDATE_URL_MAC : UPDATE_URL_DESKTOP);
   try {
     const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 5000);
     const r = await fetch(url, { signal: ctrl.signal, cache: 'no-store' }); clearTimeout(t);
@@ -2353,7 +2358,7 @@ async function checkNow() {
   if (S.demo) { toast('the demo does not self-update — grab the full game for that'); return; }
   if (updateOptedOut()) { toast('auto-check is off — enable it first'); return; }
   toast('checking for updates…');
-  const url = _isAndroid() ? UPDATE_URL_MOBILE : UPDATE_URL_DESKTOP;
+  const url = _isAndroid() ? UPDATE_URL_MOBILE : (_isMac() ? UPDATE_URL_MAC : UPDATE_URL_DESKTOP);
   try {
     const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 5000);
     const r = await fetch(url, { signal: ctrl.signal, cache: 'no-store' }); clearTimeout(t);
