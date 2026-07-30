@@ -753,10 +753,12 @@
   #unitinfo.right .uiside.r, #unitinfo:not(.right) .uiside.l { opacity: .3; }   /* dim the side it's already parked on */
   #unitinfo .uihd { display: flex; align-items: center; gap: 6px; font: 700 13px var(--f-head); letter-spacing: .2px; }
   #unitinfo .uist { color: #c3bda6; margin: 3px 0 5px; font: 10.5px/1.3 var(--f-num); }
-  #unitinfo .uift { display: flex; align-items: center; justify-content: space-between; gap: 6px;
-    /* wrap rather than overflow: with the Aim/Move toggle this row carries four controls, and the
-       panel is only ~176px wide inside its padding */
-    flex-wrap: wrap; row-gap: 7px; }
+  /* Actions count and the Aim/Move toggle share a line; the two ACTION buttons then sit in the panel's
+     bottom corners rather than floating in the middle of it. */
+  #unitinfo .uiact { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+  #unitinfo .uift { display: flex; align-items: flex-end; justify-content: space-between; gap: 6px; }
+  #unitinfo .uift-l { margin-right: auto; }
+  #unitinfo .uift-r { margin-left: auto; }
   /* aiming units carry an extra hint line and the toggle — give the panel room for both */
   #unitinfo.hasaim { width: min(300px, 74vw); }
   #unitinfo.hasaim .uihint { white-space: normal; }
@@ -1393,9 +1395,10 @@
     background: url(assets/ui/ornate/p05_mirror.png) center/300px 290px repeat; }
   .achv-content { position: relative; z-index: 1; min-height: 120px; padding: 6px 8px 12px; }
   .achv-frame .ae { position: absolute; z-index: 2; pointer-events: none; }
+  .achv-frame .ae-t { top: -8px; left: 62px; right: 62px; height: 32px; background: url(assets/ui/achv/tbar.png) center/100% 100% no-repeat; }
   .achv-frame .ae-b { bottom: -8px; left: 62px; right: 62px; height: 32px; background: url(assets/ui/achv/bbar.png) center/100% 100% no-repeat; }
-  .achv-frame .ae-l { left: 3px; top: 6px; bottom: 42px; width: 26px; background: url(assets/ui/achv/lrail.png) top center/26px auto repeat-y; }
-  .achv-frame .ae-r { right: 3px; top: 6px; bottom: 42px; width: 26px; background: url(assets/ui/achv/rrail.png) top center/26px auto repeat-y; }
+  .achv-frame .ae-l { left: 3px; top: 22px; bottom: 42px; width: 26px; background: url(assets/ui/achv/lrail.png) top center/26px auto repeat-y; }
+  .achv-frame .ae-r { right: 3px; top: 22px; bottom: 42px; width: 26px; background: url(assets/ui/achv/rrail.png) top center/26px auto repeat-y; }
   .achv-frame .ac { position: absolute; z-index: 3; width: 72px; height: auto; pointer-events: none; }
   .achv-frame .ac-tl { top: -6px; left: -6px; } .achv-frame .ac-tr { top: -6px; right: -6px; }
   .achv-frame .ac-bl { bottom: -6px; left: -6px; } .achv-frame .ac-br { bottom: -6px; right: -6px; }
@@ -1826,7 +1829,9 @@
        the pair on each line match. */
     .achv-content { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 22px; align-items: stretch; }
     .achv-content > * { min-width: 0; }
-    .achrow, .achv .unlbar { max-width: none; width: 100%; height: 100%; margin: 0; box-sizing: border-box; }
+    /* SCOPED to the achievements list. Unscoped, `.achrow` also matched #ovProg's unlock rows, which
+       stripped their max-width and stretched them across the whole widened frame. */
+    .achv-content .achrow, .achv-content .unlbar { max-width: none; width: 100%; height: 100%; margin: 0; box-sizing: border-box; }
     .achv-content .ach-div { grid-column: 1 / -1; }
   }
   @media (min-width: 1500px) { .achv { max-width: 980px; } .achv-hdr { width: min(100%, 680px); } }
@@ -1891,8 +1896,80 @@
   @media (min-width: 820px)  { #ovCardFull .bigcard { width: min(46vh, 420px); } }
   @media (min-width: 1500px) { #ovCardFull .bigcard { width: min(58vh, 520px); } }
 
+
+  /* ── desktop pass, round two ────────────────────────────────────────────────────────────────── */
+  /* Battle scrollbars: the board pans by drag, so the bars are pure visual noise over the table. */
+  #boardwrap { scrollbar-width: none; -ms-overflow-style: none; }
+  #boardwrap::-webkit-scrollbar { width: 0; height: 0; display: none; }
+  #mapscroll { scrollbar-width: none; }
+  #mapscroll::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
+  @media (min-width: 820px) {
+    /* Toasts were floating mid-screen over the board. Park them just under the top bar, which is
+       where the eye already is for CP/HQ/objective changes. --medaltop is set by setPillH() to the
+       real measured height of the HUD, so this tracks the bar even when it wraps. */
+    #toast { top: calc(var(--medaltop, 64px) + 14px); bottom: auto; }
+    /* the cancel/selection chip and the full-card viewer were both about half the size they needed */
+    .ibtn.xs img, .uitoggle { transform: scale(1.6); transform-origin: center; }
+    #prompt .ibtn img { transform: scale(1.5); transform-origin: center; }
+    /* tile / node inspect: doubled, and centred rather than pinned to the top */
+    #ovInspect > .choice { zoom: 1.9; }
+  }
+  @media (min-width: 1500px) {
+    #ovInspect > .choice { zoom: 2.2; }
+  }
+  /* Deck view fills the screen instead of sitting in a narrow column. */
+  @media (min-width: 1100px) {
+    #ovDeck .oframe:not(.menu) { max-width: min(1500px, 92vw); }
+    #ovDeck .cardgrid, #ovDeck .deckgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  }
+
+
+  /* Card view actions on ONE row. They were split across two (keep above, play/return below) because
+     the panel used to be phone-narrow; with the widened desktop panel there is room for all three side
+     by side. Still wraps, so a genuinely narrow screen stacks them as before. */
+  .cardfullbtns { display: flex; gap: 10px; justify-content: center; align-items: center;
+    flex-wrap: wrap; margin-top: 12px; }
+
+
+  /* Generals progression: each commander's unlocks get their own grid rather than one centred column. */
+  @media (min-width: 1100px) {
+    #ovProg .proggrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 18px;
+      align-items: stretch; }
+    #ovProg .proggrid > .achrow.prog { width: 100%; max-width: none; margin: 0; }
+    /* Name on its own line inside a grid cell. Sharing one row with the kind and gate chips squeezed it
+       until it ellipsised to "B.." — the unlock name is the part you actually need to read. */
+    #ovProg .proggrid .pgtop { flex-wrap: wrap; row-gap: 2px; }
+    #ovProg .proggrid .pgtop .an { flex: 1 1 100%; min-width: 0; overflow: visible; text-overflow: clip; white-space: normal; }
+  }
+
+
+  .bihold { margin-top: 4px; font: 700 12px var(--f-head); letter-spacing: .3px; color: #cbbf98; }
+  .bihold.you { color: #74b4d8; } .bihold.enemy { color: #d76b5d; }
+
+
+  /* Map top bar: the stats were flat CSS chips (#2a2c1f with a 1px border) sitting on an ornate
+     screen — the only UI in the game not on a real plate. nsplaque is the general-purpose plate the
+     drive meter already uses; the battle bar's .bpill needs per-pill art, so this is the container
+     that actually generalises. Desktop only. */
+  @media (min-width: 820px) {
+    #maphud .maprow { gap: 6px 12px; }
+    #maphud .maprow .pill {
+      background: url(assets/ui/nsplaque.png) center / 100% 100% no-repeat;
+      border: none; border-radius: 0; box-shadow: none;
+      padding: 7px 18px; line-height: 1.15;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
+    }
+  }
+
+
+  /* Map node popup: it inherits the overlay zoom, but the node art and its choice blocks were still
+     drawn at handset scale on a 1080p screen. Roughly double it. */
+  @media (min-width: 820px)  { #ovNode > *:not(.ovclose) { zoom: 1.5; } }
+  @media (min-width: 1500px) { #ovNode > *:not(.ovclose) { zoom: 1.85; } }
+
 </style>
-  <script type="module" crossorigin src="./assets/index-CIRdqMEU.js"></script>
+  <script type="module" crossorigin src="./assets/index-BU24Oz-7.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1986,7 +2063,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.39';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.40';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2077,9 +2154,18 @@ function verNewer(remote, current) {
   return false;
 }
 async function openExternal(url) {
-  try { const o = window.__TAURI__ && window.__TAURI__.opener; if (o && o.openUrl) { await o.openUrl(url); return; } } catch (e) {}
+  // Tauri first. This used to look for window.__TAURI__.opener, which is only present when
+  // `withGlobalTauri` is enabled — it is not — so the branch never ran, and execution fell through to
+  // window.open(), which does NOTHING inside the Tauri webview. The result was an update banner whose
+  // Download button appeared completely dead. main.ts now imports the opener plugin and parks it here.
+  try { if (window.__openUrl) { await window.__openUrl(url); return; } } catch (e) { console.error('[open] tauri opener failed', e); }
   try { const B = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Browser; if (B) { await B.open({ url }); return; } } catch (e) {}
-  window.open(url, '_blank');
+  const w = window.open(url, '_blank');
+  // Never fail silently again: if nothing could open the link, show it so it can be copied by hand.
+  if (!w) {
+    try { await navigator.clipboard.writeText(url); toast('link copied — paste it in your browser'); return; } catch (e) {}
+    toast('could not open the browser — ' + url);
+  }
 }
 async function checkForUpdate() {
   if (updateOptedOut()) return;
@@ -2384,11 +2470,9 @@ function showSettings() {
       <div style="display:flex;gap:8px">${oBtn('landscape')}${oBtn('portrait')}</div>
     </div>`}
     <div class="choice">
-      <b>Fullscreen</b>
-      <div class="d" style="margin:2px 0 6px">Fill the whole display — no window chrome, no desktop behind it.</div>
-      <div style="display:flex;gap:8px">
-        <button class="setbtn ${_isFullscreen() ? 'on' : ''}" onclick="setFullscreen(true)">On</button>
-        <button class="setbtn ${_isFullscreen() ? '' : 'on'}" onclick="setFullscreen(false)">Off</button>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+        <div><b>Fullscreen</b><div class="d">Fill the whole display — no window chrome, no desktop behind it.</div></div>
+        ${toggle(fullscreenWanted(), "toggleFullscreen()")}
       </div>
     </div>
     <div class="choice">
@@ -2621,7 +2705,8 @@ function render(state) {
   // (START RUN from the Deploy popup used to leave #ovDeploy open, covering the map).
   if (mode !== 'picker') { closeOv('ovGeneral'); closeOv('ovDeploy'); }
   if (mode === 'picker') { Sfx.music('menu'); setScreen(false); $('#app').style.display='flex'; showGenerals(); return; }
-  if (mode === 'map') { Sfx.music('path'); setScreen(true); renderMapScreen(); coach('map'); if (S.upgrade_fx) playForgeFx(S.upgrade_fx); else if (S.removed_fx) playRemovedFx(S.removed_fx); return; }
+  if (mode === 'map') { Sfx.music('path'); setScreen(true); renderMapScreen(); coach('map'); _playCardFx(); return; }
+  _playCardFx();   // shop and mid-battle workshop changes reveal where they happen, not on the next map
   // ── battle ──
   Sfx.music(S.boss ? 'boss' : 'battle');
   setScreen(false);
@@ -3150,6 +3235,14 @@ function peekCard(c, label, onConfirm, disabled, opts){
 function _peekConfirm(){ closeOv('ovInspect'); const f=_peekConfirmFn; _peekConfirmFn=null; if(f)f(); }
 // Forge animation — an event upgraded a card: show it full-size, hammer it with sparks.
 let _forgeT = null;
+// One entry point for the card-changed reveal, so it fires wherever the change happened — event, shop
+// or mid-battle workshop — instead of only on arrival at the map screen.
+function _playCardFx() {
+  if (S && S.upgrade_fx) { playForgeFx(S.upgrade_fx); return true; }
+  if (S && S.removed_fx) { playRemovedFx(S.removed_fx); return true; }
+  return false;
+}
+
 function playForgeFx(card){
   Sfx.play('forge'); haptic([30,40,30,40,70]);
   const sparks = Array.from({length:24},(_,i)=>{
@@ -3163,10 +3256,12 @@ function playForgeFx(card){
       <div class="forgehammer">${si('forge',44)}</div>
       <div class="forgecard">${cardDetailHTML(card)}${up}<div class="forgebadge">✦ UPGRADED ✦</div></div>
       <div class="sparks">${sparks}</div>
-      <div class="d" style="margin-top:12px;text-align:center">tap to continue</div>
+      <div style="margin-top:12px;text-align:center">${ibtn('continue', "closeOv('ovForge')")}</div>
     </div>`;
   $('#ovForge').classList.add('show');
-  clearTimeout(_forgeT); _forgeT = setTimeout(()=>closeOv('ovForge'), 2800);
+  // Deliberately NOT auto-closed. It used to dismiss itself after 2.8s, which is long enough to see
+  // that SOMETHING happened and far too short to read which card changed or what it became.
+  clearTimeout(_forgeT);
 }
 // an event scrapped a card → show the actual card with a red REMOVED stamp (tap to dismiss)
 function playRemovedFx(card){
@@ -4113,10 +4208,8 @@ function showCardFull(i) {
   const playImg = c.curse?'unplayable':c.capped?'troops_full':(c.aff?'play':'not_enough_cp');
   o.innerHTML = oframe(`<div style="text-align:center">${frameCardHTML(c, 200)}</div>
     ${tags?`<div class="ctarget" style="font-size:11px;padding:6px 12px 0;color:#b78fd0;text-align:center">${tags}</div>`:''}
-    <div style="display:flex;justify-content:center;margin-top:12px">
+    <div class="cardfullbtns">
       ${ibtn(kept?'kept':'keep','keepFromFull('+i+')',{cls:kept?'act':''})}
-    </div>
-    <div style="display:flex;gap:10px;justify-content:center;align-items:center;margin-top:8px">
       ${ibtn(playImg, playable?`_fullPlay(${i})`:'', {dis:!playable})}
       ${ibtn('return', "closeOv('ovCardFull')")}
     </div>`);
@@ -4180,10 +4273,12 @@ function renderPrompt() {
         ${ibtn('info', 'showInspect(unitById(cmd))', { cls: 'xs' })}</div>
       <div class="uist">${siEm('hp')}${u.hp}/${u.max} · ATK ${u.atk} · RNG ${rng} · MV ${u.mv} · DEF ${u.df}</div>
       ${(cmdOpts.aim && cmdOpts.aim.size) ? `<div class="uihint">${isAiming() ? (cmdOpts.precise ? '◎ Precise — tap a tile for a dead-on hit' : '◎ Tap a tile to lob — the shell may drift a tile') : '🥾 Move — tap a tile to reposition'}</div>` : ''}
-      <div class="uift"><span class="dim">Actions ${cmdOpts.ap}</span>
-        ${(cmdOpts.aim && cmdOpts.aim.size) ? `<button class="uitoggle" onclick="toggleAim()">${isAiming() ? 'Move ▸' : 'Aim ▸'}</button>` : ''}
-        ${ibtn('rest', 'doRest()', { cls: 'xs' })}
-        ${ibtn('cancel', 'deselectCmd();renderBoard();renderPrompt()', { cls: 'xs' })}</div>` : '';
+      <div class="uiact"><span class="dim">Actions ${cmdOpts.ap}</span>
+        ${(cmdOpts.aim && cmdOpts.aim.size) ? `<button class="uitoggle" onclick="toggleAim()">${isAiming() ? 'Move ▸' : 'Aim ▸'}</button>` : ''}</div>
+      <div class="uift">
+        <span class="uift-l">${ibtn('rest', 'doRest()', { cls: 'xs' })}</span>
+        <span class="uift-r">${ibtn('cancel', 'deselectCmd();renderBoard();renderPrompt()', { cls: 'xs' })}</span>
+      </div>` : '';
     return;
   }
   if (sel === null) {
@@ -4267,7 +4362,7 @@ async function tapCell(x, y) {
   // (3) nothing selected → tap your unit to command, else inspect
   if (isMine(cell.u)) { await selectUnit(cell.u.id); return; }
   if (cell.st) { showStormInfo(cell); return; }   // storm tile → describe the storm AND what's under it
-  if (cell.u) showInspect(cell.u); else if (cell.t) showTerrain(cell.t);
+  if (cell.u) showInspect(cell.u); else if (cell.t) showTerrain(cell);
 }
 // interactable tokens sit ON open ground — they are NOT a terrain type
 const ONGROUND = { crate:'a supply crate', workshop:'a workshop', node:'a command node', escape:'the exit' };
@@ -4302,6 +4397,9 @@ function deselectCmd() { cmd = null; cmdOpts = {moves:new Set(), attacks:new Set
 // webview. Persisted, and re-applied on boot — but only from a user gesture, because browsers reject
 // a programmatic request outside one, so the stored preference is re-armed on the first interaction.
 function _isFullscreen() { return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+// Default ON: the stored value is only ever '0' when the player has deliberately turned it off.
+function fullscreenWanted() { try { return localStorage.getItem('dc_fullscreen') !== '0'; } catch (e) { return true; } }
+function toggleFullscreen() { setFullscreen(!fullscreenWanted()); }
 async function setFullscreen(on) {
   try {
     if (on) {
@@ -4318,7 +4416,7 @@ async function setFullscreen(on) {
 }
 // Re-arm a stored preference on the first gesture, since a cold request would be rejected.
 (function armFullscreen() {
-  if (localStorage.getItem('dc_fullscreen') !== '1') return;
+  if (!fullscreenWanted()) return;
   const go = () => { setFullscreen(true); window.removeEventListener('pointerdown', go); };
   window.addEventListener('pointerdown', go, { once: true });
 })();
@@ -4793,6 +4891,17 @@ function cancelSel() { cancelSelState(); renderBoard(); renderHand(); renderProm
 function cancelSelState() { sel = null; picked = []; legal = null; powerArm = false; deselectCmd();
   setHandPeek(false);   // targeting ended → let the hand rise back to its resting height
 }
+// Right-click anywhere on a hand card to ★ keep it. Reuses toggleKeep, so it inherits the same rule as
+// the star itself: at the keep limit the OLDEST star moves to the card you just picked, rather than the
+// click silently doing nothing. Right-clicking a starred card clears it again.
+document.addEventListener('contextmenu', e => {
+  const el = e.target && e.target.closest && e.target.closest('#hand [data-i]');
+  if (!el) return;                       // everywhere else keeps the normal browser menu
+  e.preventDefault();
+  const i = parseInt(el.dataset.i, 10);
+  if (!Number.isNaN(i)) toggleKeep(i);
+});
+
 function toggleKeep(i) {
   if (retain.has(i)) retain.delete(i);
   else {
@@ -5511,7 +5620,7 @@ function showProgression() {
     return `<div style="margin-bottom:16px">
       <div class="prog-plaque">${deployPlaque({ id: g.id, name: g.name }, unlockFor(g.id))}</div>
       ${ocap(`highest ascension cleared: ${g.cleared_asc}<br>${meritLine}${progbar}`)}
-      <div style="margin-top:6px;display:flex;flex-direction:column;align-items:center">${rows}</div></div>`;
+      <div class="proggrid" style="margin-top:6px">${rows}</div></div>`;
   }).join('');
   $('#ovProg').innerHTML = `<div class="oframe titled"><div class="ofbanner ofhdr"><img src="assets/ui/hdr/generals.png" alt="Generals"></div>${ocap("Merit is your lifetime score with a general — it never resets. Cross a threshold, or clear an Ascension, to permanently unlock that general's card or medal.")}
     ${blocks || '<div class="d">no data</div>'}
@@ -5557,7 +5666,8 @@ function showAchievements() {
   $('#ovAch').innerHTML = `<div class="achv">
     <img class="achv-hdr" src="assets/ui/achv/header.png" alt="Achievements">
     <div class="achv-frame">
-      <div class="ae ae-b"></div><div class="ae ae-l"></div><div class="ae ae-r"></div>
+      <div class="ae ae-t"></div><div class="ae ae-b"></div><div class="ae ae-l"></div><div class="ae ae-r"></div>
+      <img class="ac ac-tl" src="assets/ui/achv/tl.png" alt=""><img class="ac ac-tr" src="assets/ui/achv/tr.png" alt="">
       <img class="ac ac-bl" src="assets/ui/achv/bl.png" alt=""><img class="ac ac-br" src="assets/ui/achv/br.png" alt="">
       <div class="achv-content">
         ${ocap(`${achIcon('trophy',14)} Earned ${done}/${ach.length} · ${lt.kills||0} kills · ${lt.distance||0} marched · ${lt.builds||0} built`)}
@@ -6041,14 +6151,31 @@ function showDeck() {
 function deckGridCard(c){
   return framedTile(c, `showCatCard('${c.id}')`, { count: c.n, up: c.up });
 }
-function showTerrain(kind) {
+function showTerrain(cellOrKind) {
   Sfx.play('tap');
+  // Takes the CELL, not just the terrain kind. A command node, crate, workshop or exit sits ON open
+  // ground rather than being a terrain type, so a terrain-only view reported "Plain" for the control
+  // point you were standing on — and never said who was holding it. Strings still work for old callers.
+  const cell = (typeof cellOrKind === 'string') ? null : cellOrKind;
+  const kind = cell ? cell.t : cellOrKind;
   const haz = (TERR_STATS[kind] || {}).haz;
+  const node = cell ? (S.nodes || []).find(n => n.pos[0] === cell.x && n.pos[1] === cell.y) : null;
+  const onGround = ONGROUND[kind] ? ONGROUND[kind].replace(/^an? /, '') : null;
+  const title = node ? 'Command node' : (onGround ? onGround.charAt(0).toUpperCase() + onGround.slice(1)
+                                                  : (TERR_NAME[kind] || kind));
+  const hold = node
+    ? (node.owner === 'you'   ? `<div class="bihold you">⚑ Held by you — +1 max CP</div>`
+     : node.owner === 'enemy' ? `<div class="bihold enemy">⚑ Held by the enemy</div>`
+     :                          `<div class="bihold">⚑ Unheld — stand next to it to take it</div>`)
+    : '';
+  const sub = node ? 'Control point' : (haz ? 'Hazard' : (onGround ? 'On the ground' : 'Terrain'));
+  const under = (node || onGround) && TERR_NAME[kind] ? `<div class="d" style="margin-top:2px">on ${TERR_NAME[kind]}</div>` : '';
   $('#ovInspect').innerHTML =
-    `<div class="biginspect" style="--ic:${haz?'#a05a3e':'#7c7a5e'}">
+    `<div class="biginspect" style="--ic:${node?'#c9a227':(haz?'#a05a3e':'#7c7a5e')}">
        <div class="cell t-${kind} bihero">${tileInner(kind)}</div>
-       <div class="biname">${TERR_NAME[kind] || kind}</div>
-       <div class="bisub">${haz ? 'Hazard' : 'Terrain'}</div>
+       <div class="biname">${title}</div>
+       <div class="bisub">${sub}</div>
+       ${hold}${under}
        ${terrChips(kind)}
        <div class="bidesc">${TERRAIN_INFO[kind] || ''}</div>
      </div>
