@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - July 29, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - July 30, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,143 +15,149 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 29, 2026</div>
+        <div class="digest-date-badge">July 30, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s robotics digest centers on dexterous manipulation and physical AI hitting production: Tacta Systems unveiled a wearable-driven robotic hand for high-value manufacturing, mimic robotics put a Video-Action Model on Audi&#x27;s factory floor, and a new arXiv paper (FIRMGrasp) tackles grasp robustness under real-world friction uncertainty -- three angles on the same open problem of reliable robot touch. On the hardware side, Sapphire launched an AMD-powered embedded compute platform for physical AI, while Kall Morris validated an orbital debris-capture system aboard the ISS, a rare space-robotics milestone. Warehouse automation also saw structural consolidation as AIP merged Intelligrated, Trew, and Transnorm into one organization, and arXiv research covered steering-free drift control for four-wheel-independent vehicles and station-holding control for robotic fish in turbulent flow.</p>
+        <p class="digest-intro">Today&#x27;s robotics digest is dominated by a regulatory shock: the FCC has banned imports of some foreign-made humanoid and mobile robots, and reaction split fast -- The Robot Report canvassed industry experts split on whether the move helps U.S. manufacturers or hinders innovation, while r/robotics argued it also bans cheap iteration, since AP reporting shows Chinese manufacturers ship more humanoids at lower prices and labs learn by breaking hardware. Elsewhere, Qualcomm doubled down on compute for embodied and agentic AI, closing its acquisition of Modular and signing a decade-long deal to supply BMW&#x27;s ADAS/cockpit silicon, while Shanghai Electric showcased humanoids and smart-factory tech at WAIC 2026. On the research side, four new arXiv papers span trust frameworks for embodied intelligence, zero-shot vision-and-language navigation, adaptive manipulation motion, and thread-based autonomous suturing.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Egocentric Station Holding of Robotic Fish in Unknown Turbulent Background Flow</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Addresses &#x27;station holding&#x27; (maintaining position against a current) for robotic fish in unknown, turbulent background flow using an egocentric, robot-relative sensing/control formulation rather than assuming a known flow field</li>
-              <li>Targets a real gap: most swimming-robot research has optimized swimming efficiency and maneuverability in calm or known-flow conditions, not station-keeping under unmodeled turbulence</li>
-              <li>Relevant control pattern for any project handling disturbance rejection under unknown dynamics, e.g. densanon-core&#x27;s physics/vehicle_sim engines</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.24860" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Steeringless Drifting: Differential-Torque Control of a Four-Wheel Independently Driven Vehicle</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Demonstrates sustained drift (oversteer at the handling limit) on a four-wheel-independently-driven vehicle using only differential torque across the four wheels -- no mechanical steering input at all</li>
-              <li>Departs from conventional drift control, which relies on mechanical steering geometry plus rear-tire saturation, making it specific to emerging steer-by-wire/torque-vectoring EV chassis architectures</li>
-              <li>Useful reference for extreme-handling vehicle control work, e.g. densanon-core&#x27;s vehicle_sim engine</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.24863" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>FIRMGrasp: A Friction-Informed Risk Margin for Robust Grasp Synthesis</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Points out that classical grasp-quality metrics assume a single fixed friction coefficient, so they can&#x27;t predict whether a grasp actually retains force closure across the real range of friction a surface may exhibit</li>
-              <li>Proposes a friction-informed risk margin that scores grasp candidates by robustness to friction uncertainty rather than by quality under one nominal friction value</li>
-              <li>Directly relevant to dexterous-hand manipulation pipelines (see today&#x27;s TactaBot announcement) where friction mis-estimation is a common real-world grasp-failure mode</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.25049" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Amortising Trajectory Optimisation for Residual MPC via Implicit Contact Differentiation</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Tackles contact-rich trajectory optimization by using differentiable simulation to expose control sensitivities, instead of expensive, step-size-sensitive finite-difference gradients</li>
-              <li>Amortizes the optimization into a residual MPC formulation, aiming to make contact-rich trajectory optimization fast enough for online control rather than offline planning only</li>
-              <li>Addresses a known bottleneck -- contact discontinuities breaking gradient-based optimization -- relevant to any physics-based contact handling, including densanon-core&#x27;s tactics/agent_sim engines</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.24959" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Robot Finger Feels in Color</h3>
-              <span class="digest-source">IEEE Spectrum Robotics</span>
+              <h3>Experts react to FCC limits on U.S. imports of new humanoid and mobile robots</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Describes an optical tactile sensor that reads contact deformation in color to capture fine surface texture -- e.g. resolving the raised lettering, portrait relief, and architectural detail on a U.S. coin -- detail that force-only touch sensors miss</li>
-              <li>Positions color-based sensing as a way to close a longstanding gap in robotic fingertip perception between geometric texture-reading and simple pressure/binary contact detection</li>
-              <li>Relevant benchmark for tactile/haptic feedback work in manipulation pipelines, alongside today&#x27;s FIRMGrasp friction paper and TactaBot hand announcement</li>
+              <li>The FCC has banned imports of some foreign-made humanoid and mobile robots into the U.S.</li>
+              <li>Industry experts quoted in the piece are split on the impact: the move could help U.S. manufacturers while also potentially hindering innovation.</li>
+              <li>Sets up the day&#x27;s throughline, echoed by today&#x27;s r/robotics discussion on how cheaper foreign robots have driven research iteration speed.</li>
             </ul>
-            <a href="https://spectrum.ieee.org/robot-finger" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/industry-reacts-fcc-ban-u-s-imports-new-humanoid-quadruped-robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>mimic robotics introduces ‘frontier video-action models’ to the factory floor at Audi</h3>
+              <h3>Qualcomm completes acquisition of software platform provider Modular</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>mimic robotics deployed FLUX-mimic, a Video-Action Model co-developed with Black Forest Labs, on Audi&#x27;s factory floor to let robots learn and perform complex manipulation tasks from real-world industrial data</li>
-              <li>Video-Action Models extend the video-generation lineage (Black Forest Labs is known for FLUX diffusion models) into action prediction -- a different lineage from the VLA (vision-language-action) approach used by most humanoid/manipulation stacks</li>
-              <li>A concrete industrial deployment rather than a lab demo -- a data point for how fast &#x27;physical AI&#x27; manipulation models are moving from research to production lines</li>
+              <li>Qualcomm has completed its acquisition of Modular Inc, a company building AI-native software infrastructure.</li>
+              <li>Modular&#x27;s platform gives developers a unified way to optimize and deploy generative and agentic AI workloads across heterogeneous computing systems.</li>
+              <li>Rounds out Qualcomm&#x27;s embodied/agentic-AI push alongside its newly announced multi-year BMW compute-silicon agreement.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/07/29/mimic-robotics-introduces-frontier-video-action-models-to-the-factory-floor-at-audi/103705/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/07/30/qualcomm-completes-acquisition-of-software-platform-provider-modular/103765/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Tacta Systems unveils AI-powered robotic hand for high-value manufacturing</h3>
+              <h3>Qualcomm to supply BMW with automotive compute platforms through next decade</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Tacta Systems unveiled its first product, TactaBot, combining a robotic hand with a wearable device aimed at bringing human-like dexterity and touch to industrial automation</li>
-              <li>Target markets are electronics, AI infrastructure, and automotive manufacturing -- high-value, precision-assembly use cases where dexterous manipulation has lagged behind pick-and-place robotics</li>
-              <li>One of several &#x27;AI-powered robotic hand&#x27; entrants this year; worth tracking how its wearable-driven data-capture approach compares to teleoperation/VLA data pipelines used elsewhere</li>
+              <li>Qualcomm and BMW Group announced a major agreement for Qualcomm to supply compute silicon for BMW&#x27;s next-generation digital cockpit and ADAS/automated-driving systems.</li>
+              <li>The agreement runs through the next decade rather than a single vehicle generation.</li>
+              <li>Described as building on years of prior technical collaboration between the two companies.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/07/29/tacta-systems-unveils-ai-powered-robotic-hand-for-high-value-manufacturing/103688/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/07/30/qualcomm-to-supply-bmw-with-automotive-compute-platforms-through-next-decade/103761/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Kall Morris tests orbital ‘tow truck’ for space debris removal aboard International Space Station</h3>
+              <h3>Shanghai Electric unveils humanoids and industrial robots and AI smart factory technologies</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Kall Morris Inc (KMI) validated its debris capture-and-relocation system aboard the ISS -- a real on-orbit test rather than a ground simulation or testbed</li>
-              <li>The system is designed to capture and relocate debris (an orbital &#x27;tow truck&#x27;), a capability distinct from the debris-tracking-only approaches most current space-safety systems rely on</li>
-              <li>Notable as one of the few debris-removal robotics systems to reach actual space-based validation rather than remaining at the concept stage, addressing one of the fastest-growing risks in the space industry</li>
+              <li>Shanghai Electric showcased humanoids, industrial robots, and AI smart-factory technologies at the 2026 World Artificial Intelligence Conference and High-Level Meeting on Global AI Governance (WAIC 2026).</li>
+              <li>Framed around high-end equipment manufacturing tasks involving confined spaces, complex objects, and fine manipulation that demand sustained, stable precision.</li>
+              <li>A Chinese industrial player expanding humanoid and smart-factory offerings the same week the FCC moved to restrict foreign humanoid imports.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/07/29/kall-morris-tests-orbital-tow-truck-for-space-debris-removal-aboard-international-space-station/103684/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/07/30/shanghai-electric-unveils-humanoids-and-industrial-robots-and-ai-smart-factory-technologies/103773/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>A robot import ban may also be a ban on cheap iteration</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Argues the new US restriction on foreign-made humanoids and quadrupeds, framed around security, will also slow research since price and availability drive iteration speed.</li>
+              <li>Cites AP reporting that Chinese manufacturers ship far more humanoids than US rivals, often at much lower prices.</li>
+              <li>Notes labs learn by breaking hardware and replacing parts, an iteration model that depends on cheap, available units.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1vakosr/a_robot_import_ban_may_also_be_a_ban_on_cheap/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Sapphire launches AMD-powered robotics platform for physical AI applications</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>If it were at an amusement park, would you want to ride it?</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Sapphire Technology launched the EDGE+ Apex SOM/Carrier Robotics Platform, a production-ready compute module built on AMD&#x27;s Ryzen AI Embedded X100 series processors for embedded &#x27;physical AI&#x27; workloads</li>
-              <li>Positions AMD as a direct embedded-compute competitor to Nvidia Jetson-class platforms for on-robot inference -- an alternative for teams wanting to avoid CUDA lock-in</li>
-              <li>SOM/Carrier form factor targets production deployment rather than the dev-kit/prototyping stage, aimed at companies moving physical-AI robots from pilot to volume manufacturing</li>
+              <li>California-based startup Satyress is developing Threehalves, a 7-foot-tall teleoperated centaur robot designed for hazardous work.</li>
+              <li>Community discussion questions why a robot built for hazardous tasks is styled like something you&#x27;d ride at an amusement park.</li>
+              <li>A design-philosophy debate about form versus function in teleoperated field robots.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/07/29/sapphire-launches-amd-powered-robotics-platform-for-physical-ai-applications/103679/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1varxei/if_it_were_at_an_amusement_park_would_you_want_to/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Towards Trustworthy Embodied Intelligence: A Systems Framework and Graded Trustworthiness Levels</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes a systems framework with graded trustworthiness levels for embodied intelligence, arguing task completion alone does not establish trustworthiness.</li>
+              <li>Motivated by embodied AI&#x27;s integration of learned perception and decision-making with real-time computation, control, and physical interaction, where failures can cause immediate physical or operational harm.</li>
+              <li>A safety/trust framing that lands the same week as the FCC&#x27;s humanoid-import restrictions and industry debate over which systems should be trusted to operate.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.26121" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intelligrated, Trew and Transnorm unite to create ‘leading warehouse automation provider’</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Embodied Agents Take Control: Minimal-Interface Zero-Shot Agents Rival Industrial-Scale Policies in Vision-and-Language Navigation</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>American Industrial Partners (AIP) completed its acquisition of Honeywell&#x27;s Warehouse and Workflow Solutions business (Intelligrated + Transnorm) and merged it with existing portfolio company Trew into one organization</li>
-              <li>Consolidates three previously separate material-handling/warehouse-automation brands under a single owner -- a structural shift in the warehouse robotics supplier market</li>
-              <li>Market-intelligence data point: private-equity roll-up of automation suppliers signals continued consolidation in the warehouse-robotics supply chain, distinct from the VC-funding pattern seen in most other robotics news</li>
+              <li>Studies embodied agents that sustain a long decision-making loop of perceiving, acting, verifying, and self-correcting over many steps in vision-and-language navigation.</li>
+              <li>Compares a minimal-interface, zero-shot agent approach against the two dominant current paradigms: task-specific workflows and industrial-scale trained embodied policies.</li>
+              <li>Reports the zero-shot agents rival industrial-scale policies, suggesting a lighter-weight path to competitive navigation performance.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/07/29/intelligrated-trew-and-transnorm-unite-to-create-leading-warehouse-automation-provider/103675/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2607.26148" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>MoMo: Dial Motion Mode in Robot Manipulation with Spatiotemporal Action Tokenization</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Addresses execution-level variation in manipulation -- not just whether a task succeeds, but how the motion should unfold given the task, object, and interaction setting.</li>
+              <li>Introduces spatiotemporal action tokenization to let a manipulation policy&#x27;s motion style be dialed rather than fixed.</li>
+              <li>Frames motion adaptation as something that can be learned, not just hand-tuned per task.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.26315" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Reeling It In: Flexible Needle Pick Up via Thread Manipulation for Autonomous Suturing</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tackles suture-needle pickup for autonomous suturing, needed when a needle is unexpectedly dropped or strategically released to adjust grasp configuration.</li>
+              <li>Notes current needle-pickup methods typically guide the robot to move straight toward the needle -- a more constrained approach than the paper&#x27;s technique.</li>
+              <li>Uses flexible needle pickup via thread manipulation as an alternate strategy to direct approach-and-grasp for surgical robotics.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.26337" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
