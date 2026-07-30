@@ -987,6 +987,20 @@
     text-align: center; font: 700 18px var(--f-num); }
   .edgebtn.ibtn { box-shadow: none; padding: 0; background: none; border: none; border-radius: 0; }
   .edgebtn.ibtn img { height: 50px; }
+  /* DESKTOP BATTLE. These float above the hand on a phone, where the hand spans the width and the
+     corners are not reachable anyway. On a desktop the hand is a narrow centred fan, so the corners
+     are dead space — put them there, out of the board's way, and 50% larger to match the screen.
+     Gated on WIDTH only, unlike the overlay zoom: whether the corners are free depends on the hand
+     being a narrow centred fan, which is a width property. A short laptop window is still a desktop.
+     Verified the cards clear the buttons horizontally at 1920/1280/1024/900 wide. */
+  @media (min-width: 820px) {
+    .edgebtn, #app.hand-peek .edgebtn { bottom: max(12px, env(safe-area-inset-bottom)); }
+    .edgebtn.deck { left: max(14px, env(safe-area-inset-left)); }
+    .edgebtn.end  { right: max(14px, env(safe-area-inset-right)); }
+    .edgebtn.ibtn img { height: 75px; }
+    /* the selected-unit card stacks above the Deck button, so it has to clear the taller art */
+    #unitinfo { bottom: 108px; }
+  }
   /* secondary / gunmetal button variant */
   button.sec { color: #e9e3d1; --bt: 12px; --cn: 24px;
     background:
@@ -1254,6 +1268,13 @@
   .oframe > h1 { text-align: center; }
   .oframe > p { text-align: center; }
   .oframe.titled { padding-top: 84px; }
+  /* DESKTOP SCALING. Keyed on width AND height: a wide-but-short window must not scale up so far the
+     frame needs scrolling. Gated at 820x620 so no phone ever matches — those layouts are hand-tuned
+     and must not move. `.menu` is excluded: in landscape it has its own aspect-locked sizing below. */
+  @media (min-width: 820px)  and (min-height: 620px) { .overlay .oframe:not(.menu) { zoom: 1.18; } }
+  @media (min-width: 1100px) and (min-height: 760px) { .overlay .oframe:not(.menu) { zoom: 1.42; } }
+  @media (min-width: 1500px) and (min-height: 900px) { .overlay .oframe:not(.menu) { zoom: 1.7; } }
+  @media (min-width: 2000px) and (min-height: 1150px) { .overlay .oframe:not(.menu) { zoom: 2; } }
   .ofbanner { position: absolute; left: 50%; top: -8px; transform: translateX(-50%); z-index: 3;
     width: min(260px, 76%); height: 54px; display: flex; align-items: center; justify-content: center;
     background: url(assets/ui/ornate/p09.png) center/100% 100% no-repeat; }
@@ -1481,12 +1502,12 @@
        so the title plaque can only overhang as far as this padding. It scales with the screen: the
        banner's own overhang is a percentage of the frame, so a fixed px reserve would either clip it
        on short screens or shrink the frame (which leaves the panel too small for its own text). */
-    :where(body.o-landscape) #ovGeneral { padding: clamp(16px, 9vh, 54px) 14px 14px; }
+    :where(body.o-landscape) #ovGeneral { padding: clamp(16px, 9vh, 90px) 14px 14px; }
   
     /* baked from the layout editor — absolute placement (% of the container) */
     /* lock to the 537:317 aspect (cap width by BOTH viewport dims) so contents never stretch */
     :where(body.o-landscape) .oframe.menu { position: relative; max-width: none; padding: 0; margin: auto;
-      --mw: min(940px, 96vw, 88vh * 1.694); width: var(--mw); height: calc(var(--mw) / 1.694); }
+      --mw: min(1400px, 96vw, 88vh * 1.694); width: var(--mw); height: calc(var(--mw) / 1.694); }
   
     :where(body.o-landscape) .oframe.menu > h1,
     :where(body.o-landscape) .oframe.menu > p { display: none; }
@@ -1499,7 +1520,14 @@
     :where(body.o-landscape) .oframe.menu .menugrid { display: contents; }
   
     /* Daily AND Deploy share the same slot box (they swap in place) */
-    :where(body.o-landscape) .oframe.menu .menutop > .choice { position: absolute; left: 9.5%; top: 13.56%; width: 46.93%; height: 30.6%; margin: 0; box-sizing: border-box; }
+    :where(body.o-landscape) .oframe.menu .menutop > .choice { position: absolute; left: 9.5%; top: 13.56%; width: 46.93%; max-width: none; height: 30.6%; margin: 0; box-sizing: border-box;
+      /* The panel is a FRACTION of the frame, so on a big screen it grows while fixed-px text inside it
+         does not — a large plate with small print. Scale the type off the frame's own width variable so
+         the two grow together. `--mw` is the aspect-locked frame width set just below. */
+      font-size: clamp(11px, calc(var(--mw, 940px) * 0.0125), 22px); }
+    :where(body.o-landscape) .oframe.menu .menutop > .choice .d,
+    :where(body.o-landscape) .oframe.menu .menutop > .choice b { font-size: 1em; }
+    :where(body.o-landscape) .oframe.menu .menutop > .choice > div { line-height: 1.5; }
   
     /* Both plaques are art, so their boxes carry the artwork's own aspect — a box shaped any other way
        stretches the plate and drags the gold overlays off the spots the art was drawn for. Widths are
@@ -1507,7 +1535,7 @@
        At 12.33% tall the pair fills the left column exactly, centred on the baked row line. */
     :where(body.o-landscape) .oframe.menu .menumid .resumewrap { position: absolute; left: 9.5%; top: 45.26%; width: 18.62%; height: 12.33%; margin: 0; }
   
-    :where(body.o-landscape) .oframe.menu .menumid .seedfield { position: absolute; left: 29.64%; top: 45.26%; width: 26.79%; height: 12.33%; margin: 0; }
+    :where(body.o-landscape) .oframe.menu .menumid .seedfield { position: absolute; left: 29.64%; top: 45.26%; width: 26.79%; max-width: none; height: 12.33%; margin: 0; }
   
     :where(body.o-landscape) .oframe.menu .gcard { position: absolute; margin: 0; max-width: none; }
   
@@ -1540,7 +1568,7 @@
     :where(body.o-landscape) .oframe.menu.demo .menutop > .choice { top: 13.88%; height: 23.34%; }
 
     /* no save to resume: centre the plaque in the left column rather than widening it into the gap */
-    :where(body.o-landscape) .oframe.menu .menumid .seedfield:first-child { left: 19.57%; }
+    :where(body.o-landscape) .oframe.menu .menumid .seedfield:first-child { left: 19.57%; max-width: none; }
 
     :where(body.o-landscape) .oframe.menu.demo .menumid .resumewrap { top: 39.35%; }
     :where(body.o-landscape) .oframe.menu.demo .menumid .seedfield { top: 39.35%; }
@@ -1742,7 +1770,7 @@
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
 </style>
-  <script type="module" crossorigin src="./assets/index-CGsokO6T.js"></script>
+  <script type="module" crossorigin src="./assets/index-MebVA8bh.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1836,7 +1864,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.36';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.37';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2277,7 +2305,6 @@ function showSettings() {
         ${S.ascension?`Ascension ${S.ascension}<br>`:''}${(S.mods&&S.mods.length)?`Modifiers: ${S.mods.join(', ')}<br>`:''}Seed ${S.seed}
       </div>
       <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:6px">${pbtn('danger','toggleDanger();showSettings()',{cls:'h'})}${toggle(dangerOn,"toggleDanger();showSettings()")}</div>
-      <div style="text-align:center">${pbtn('deck',"closeOv('ovSettings');showDeck()",{cls:'h'})}</div>
     </div>` : ''}
     <div class="setact-row">
       ${inRun ? pbtn('retreat', "confirmRetreat()") : ''}
@@ -4187,21 +4214,60 @@ async function play() {
 // Replay granular move/attack events on the board so you SEE what happened.
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 let _deferResult = false;
+// ── tap to skip the enemy replay ──
+// Even budgeted, a busy enemy turn is several seconds you might not want to sit through, so a tap
+// anywhere fast-forwards: the replay loop bails and afterAction() reconciles to the authoritative final
+// state, which it does on every path anyway. The same window also swallows the tap so it can't reach a
+// board cell — issuing a command mid-replay would fight the half-stepped board the animation is mutating.
+// Taps are left alone while an overlay is up: the enemy-card reveal and boss lines are awaited promises
+// that resolve ONLY from their own click handler, so stealing that click would hang the turn for good.
+let _skipReplay = false;
+function _overlayUp() { return !!document.querySelector('.overlay.show'); }
+function _skipTap(e) {
+  if (!turnBusy || _overlayUp()) return;
+  _skipReplay = true;
+  e.stopPropagation(); e.preventDefault();
+}
+function _eatClick(e) { if (turnBusy && !_overlayUp()) { e.stopPropagation(); e.preventDefault(); } }
+function enemySkipOn() {
+  _skipReplay = false;
+  document.addEventListener('pointerdown', _skipTap, true);
+  document.addEventListener('click', _eatClick, true);
+}
+function enemySkipOff() {
+  document.removeEventListener('pointerdown', _skipTap, true);
+  document.removeEventListener('click', _eatClick, true);
+  _skipReplay = false;
+}
 // Render the new state, play out its events, THEN reveal any win/defeat — so the
 // enemy's (or your finishing) blows always complete visually before the overlay.
+// The reconcile runs in a finally: if the replay throws part-way (or is skipped), turnBusy and
+// _deferResult used to stay set with the board half-stepped — End Turn hidden, no overlay, no way to act.
+// That is the hard version of "it lingers on the enemy turn". Now every exit reconciles to the
+// authoritative state, and a failure to even do that falls back to a full resync.
 async function afterAction(r) {
   _deferResult = true;
   const enemyPlays = (r.events || []).some(e => e.side === 'enemy');   // only lock while the enemy actually acts
-  if (enemyPlays) { turnBusy = true; disarmEnd(); updateEndBtn(); }    // hide End Turn during enemy play
+  if (enemyPlays) { turnBusy = true; disarmEnd(); updateEndBtn(); enemySkipOn(); }   // hide End Turn during enemy play
   try {
     await animateEvents(r.events, r);   // step the board through each event, one at a time
+  } catch (e) {
+    console.error('[replay] failed mid-animation', e);
   } finally {
     turnBusy = false;
+    enemySkipOff();
+    try {
+      render(r);                        // reconcile to the authoritative final state (re-shows End Turn)
+      _deferResult = false;
+      if (r.popup) showPopup(r.popup);
+      if (S.result) showBattleResult();
+    } catch (e) {
+      _deferResult = false;
+      console.error('[replay] reconcile failed', e);
+      toast('display error — resyncing');
+      refresh();
+    }
   }
-  render(r);                          // reconcile to the authoritative final state (re-shows End Turn)
-  _deferResult = false;
-  if (r.popup) showPopup(r.popup);
-  if (S.result) showBattleResult();
 }
 // Play events out on the LIVE board so the player watches each decision resolve:
 // mutate the board model for one event, re-render, flash it, pause — then the next.
@@ -4262,17 +4328,22 @@ async function playBlast(ev) {
 async function animateEvents(events, finalR) {
   if (!events || !events.length) return;
   const my = ++animGen;          // invalidate any prior in-flight replay
-  const arrowDwell = events.length > 16 ? 130 : 210;
   const fs = finalR && (finalR.state || finalR);
   const fb = fs && fs.board;
   const cellAt = (x, y) => S.board && S.board.cells.find(c => c.x === x && c.y === y);
   const findUnit = (id) => (S.board && S.board.cells.find(c => c.u && c.u.id === id)) || null;
   const finalUnit = (id) => { const fc = fb && fb.cells.find(c => c.u && c.u.id === id); return fc ? {...fc.u} : null; };
-  // events are already fog-filtered to what YOU can see: play them slow enough to
-  // follow — ~0.5s each. Only speed up if there's a big visible pile-up.
-  const per = events.length > 16 ? Math.max(500, Math.floor(9000 / events.length)) : 500;
+  // Events are already fog-filtered to what YOU can see, and you're meant to WATCH the enemy act, so a
+  // small turn plays at a readable 500ms/event. A big turn has to compress or the wait becomes the bug:
+  // measured over 1251 real enemy turns, 1 in 4 produced enough visible events to run past 5s at a flat
+  // 500ms — p90 9.5s, worst case 22s — which is what "it lingers on the enemy turn" was.
+  // This used to read Math.max(500, 9000/n), which clamped every compressed value straight back to 500
+  // and made the speed-up branch dead code. Now the whole replay is budgeted to ~5s once there is a
+  // pile-up, with a 140ms floor so it stays legible, and a tap skips the rest outright.
+  const per = Math.min(500, Math.max(140, Math.floor(5000 / Math.max(1, events.length))));
+  const arrowDwell = Math.max(90, Math.min(210, Math.round(per * 0.42)));
   for (const ev of events) {
-    if (animGen !== my) return;
+    if (animGen !== my || _skipReplay) return;   // superseded, or the player tapped to skip ahead
     if (ev.t === 'say') { await showBossSay(ev); continue; }        // boss talks
     // A curse arriving is something you must NOTICE — it rots in hand or clogs the deck either way.
     if (ev.t === 'curse') {
@@ -4367,7 +4438,7 @@ async function animateEvents(events, finalR) {
       // even when it rolls fog back over the tile), and linger a beat longer on it
       cell.scrollIntoView(ev.dead ? {behavior: 'smooth', block: 'center', inline: 'center'}
                                   : {block: 'nearest', inline: 'nearest'});
-      if (ev.dead) await sleep(260);
+      if (ev.dead) await sleep(Math.min(260, per));   // linger on a death, but not past the turn's own pace
     }
     await sleep(per);
   }
@@ -4544,29 +4615,44 @@ function idleUnits() {
 function disarmEnd() {
   if (endArmed || idleWarn.size) { endArmed = false; idleWarn = new Set(); $('#end').classList.remove('armed'); }
 }
+// _endBusy, not just turnBusy: turnBusy is not raised until afterAction() runs, i.e. AFTER the confirm
+// prompt and after /api/end has already resolved. A second tap inside that window ended the turn twice.
+let _endBusy = false;
 async function endTurn() {
-  if (turnBusy) return;                     // enemy is still acting — you can't end again yet
-  _dropCmd();                               // clear any live unit selection
-  const idle = idleUnits();
-  if (idle.length) {                        // units can STILL move/act → stop, highlight them, require a clear yes
-    idleWarn = new Set(idle.map(c => c.u.id));
-    $('#end').classList.add('armed');
-    renderBoard();                          // light up the units that still have actions behind the prompt
-    const n = idle.length;
-    const ok = await gameConfirm(`<b>${n}</b> of your unit${n > 1 ? 's' : ''} can still move or act this turn. End the turn anyway?`, 'End turn');
-    if (!ok) { disarmEnd(); return; }       // "keep playing" → drop the highlight, don't end
+  if (turnBusy || _endBusy) return;         // enemy is still acting, or this end is already in flight
+  _endBusy = true;
+  try {
+    _dropCmd();                               // clear any live unit selection
+    const idle = idleUnits();
+    if (idle.length) {                        // units can STILL move/act → stop, highlight them, require a clear yes
+      idleWarn = new Set(idle.map(c => c.u.id));
+      $('#end').classList.add('armed');
+      renderBoard();                          // light up the units that still have actions behind the prompt
+      const n = idle.length;
+      const ok = await gameConfirm(`<b>${n}</b> of your unit${n > 1 ? 's' : ''} can still move or act this turn. End the turn anyway?`, 'End turn');
+      if (!ok) { disarmEnd(); return; }       // "keep playing" → drop the highlight, don't end
+    }
+    coach('retain');                          // teach the keep-a-card ★ once, on an actual end
+    disarmEnd();
+    cancelSelState();
+    aimModes.clear();                         // next turn every gun opens in Move again
+    toast('enemy moving… tap to skip');
+    Sfx.play('turn');
+    const r = await api('/api/end', {retain: [...retain]});
+    retain.clear();
+    // no end-of-turn recap card — you watch the enemy act live, and the win/defeat
+    // overlay is held until those blows finish.
+    await afterAction(r);
+  } catch (e) {
+    // An unhandled throw here is invisible: endTurn() is an onclick handler, so the rejection is
+    // swallowed and the game just sits there on the enemy turn. Surface it and resync instead.
+    console.error('[end turn] failed', e);
+    turnBusy = false; _deferResult = false; enemySkipOff();
+    toast('end turn failed — resyncing');
+    refresh();
+  } finally {
+    _endBusy = false;
   }
-  coach('retain');                          // teach the keep-a-card ★ once, on an actual end
-  disarmEnd();
-  cancelSelState();
-  aimModes.clear();                         // next turn every gun opens in Move again
-  toast('enemy moving…');
-  Sfx.play('turn');
-  const r = await api('/api/end', {retain: [...retain]});
-  retain.clear();
-  // no more end-of-turn recap card — you watch the enemy act live (≥0.5s each),
-  // and the win/defeat overlay is held until those blows finish.
-  await afterAction(r);
 }
 
 function enemyRecap(events) {
@@ -5872,6 +5958,24 @@ function fitCell() {                 // open a battle at the floor (board fills 
   cellPx = minCellPx;
   document.documentElement.style.setProperty('--cell', cellPx + 'px');
 }
+// The fit above runs ONCE, when the battle opens. Nothing refitted the board when the window changed
+// size, so the cell size stayed pinned to whatever the window was at that moment. That reads as a
+// desktop-only fault: the desktop app opens at 1000x760 and is usually maximised afterwards, leaving the
+// board sized for the small window on a big screen. The web demo hides it because the browser window is
+// normally already at its final size before a battle starts. Refit on resize, keeping the player's
+// zoom-in as a RATIO of the floor rather than a pixel count, so a resize doesn't yank their zoom.
+let _boardRefit;
+window.addEventListener('resize', () => {
+  clearTimeout(_boardRefit);
+  _boardRefit = setTimeout(() => {
+    if (typeof S === 'undefined' || !S || !S.board) return;        // only while a battle is on screen
+    const wrap = $('#boardwrap');
+    if (!wrap || !wrap.clientWidth || !wrap.clientHeight) return;  // hidden/unlaid-out: nothing to fit to
+    const ratio = minCellPx > 0 ? cellPx / minCellPx : 1;
+    computeMinCell();
+    setCellPx(Math.round(minCellPx * ratio));                      // setCellPx re-clamps to the new floor
+  }, 150);
+});
 // scroll the battlefield so the player camp (your HQ) sits in the middle of the area above the hand fan.
 // The board is sized to COVER the viewport (computeMinCell uses max), so it overflows and pans — without
 // this a fresh battle opens on the top-left (enemy) corner. Called once per battle on entry.
