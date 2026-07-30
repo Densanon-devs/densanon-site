@@ -753,7 +753,13 @@
   #unitinfo.right .uiside.r, #unitinfo:not(.right) .uiside.l { opacity: .3; }   /* dim the side it's already parked on */
   #unitinfo .uihd { display: flex; align-items: center; gap: 6px; font: 700 13px var(--f-head); letter-spacing: .2px; }
   #unitinfo .uist { color: #c3bda6; margin: 3px 0 5px; font: 10.5px/1.3 var(--f-num); }
-  #unitinfo .uift { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  #unitinfo .uift { display: flex; align-items: center; justify-content: space-between; gap: 6px;
+    /* wrap rather than overflow: with the Aim/Move toggle this row carries four controls, and the
+       panel is only ~176px wide inside its padding */
+    flex-wrap: wrap; row-gap: 7px; }
+  /* aiming units carry an extra hint line and the toggle — give the panel room for both */
+  #unitinfo.hasaim { width: min(300px, 74vw); }
+  #unitinfo.hasaim .uihint { white-space: normal; }
   #unitinfo .uibtn { padding: 2px 8px; font-size: 11px; border-radius: 5px; }
   #unitinfo .uibtn.done { background: linear-gradient(#3a5230, #2c3f24); border-color: #5f7a44; color: #dff0cd; font-weight: 700; }
   /* a card looks like a real trading card */
@@ -1030,8 +1036,11 @@
     :where(body.o-landscape) #maphud .maprow .pill { white-space: nowrap; }
   }
   #mapscroll { flex: 1; overflow: auto; padding: 14px 8px 40px;
-    /* full-area bronze texture, static cover (no tiling → no seam), fills both orientations */
-    background: linear-gradient(rgba(16,18,12,.42), rgba(16,18,12,.42)), url(assets/nodes/_bg.jpg) center / cover; }
+    /* Bronze field. Was `url(_bg.jpg) center/cover`, but that source is only 320x320 — on a 1920px
+       screen it was a ~6x upscale, soft, with its baked vignette smeared into blobs. p05_mirror is the
+       same panel texture this view's HUD bar already uses and it MIRRORS, so it tiles seamlessly at
+       native resolution at any window size. */
+    background: linear-gradient(rgba(16,18,12,.46), rgba(16,18,12,.46)), url(assets/ui/ornate/p05_mirror.png) center / 600px 580px repeat; }
   #mapinner { position: relative; margin: 0 auto; }
   /* ── node legend ── portrait: floating centered panel (backdrop, closable); landscape: docked at right ── */
   #maplegbd { display: none; position: fixed; inset: 0; z-index: 13; background: rgba(0,0,0,.5); }
@@ -1271,10 +1280,6 @@
   /* DESKTOP SCALING. Keyed on width AND height: a wide-but-short window must not scale up so far the
      frame needs scrolling. Gated at 820x620 so no phone ever matches — those layouts are hand-tuned
      and must not move. `.menu` is excluded: in landscape it has its own aspect-locked sizing below. */
-  @media (min-width: 820px)  and (min-height: 620px) { .overlay .oframe:not(.menu) { zoom: 1.18; } }
-  @media (min-width: 1100px) and (min-height: 760px) { .overlay .oframe:not(.menu) { zoom: 1.42; } }
-  @media (min-width: 1500px) and (min-height: 900px) { .overlay .oframe:not(.menu) { zoom: 1.7; } }
-  @media (min-width: 2000px) and (min-height: 1150px) { .overlay .oframe:not(.menu) { zoom: 2; } }
   .ofbanner { position: absolute; left: 50%; top: -8px; transform: translateX(-50%); z-index: 3;
     width: min(260px, 76%); height: 54px; display: flex; align-items: center; justify-content: center;
     background: url(assets/ui/ornate/p09.png) center/100% 100% no-repeat; }
@@ -1524,7 +1529,7 @@
       /* The panel is a FRACTION of the frame, so on a big screen it grows while fixed-px text inside it
          does not — a large plate with small print. Scale the type off the frame's own width variable so
          the two grow together. `--mw` is the aspect-locked frame width set just below. */
-      font-size: clamp(11px, calc(var(--mw, 940px) * 0.0125), 22px); }
+      font-size: clamp(11px, calc(var(--mw, 940px) * 0.0168), 28px); }
     :where(body.o-landscape) .oframe.menu .menutop > .choice .d,
     :where(body.o-landscape) .oframe.menu .menutop > .choice b { font-size: 1em; }
     :where(body.o-landscape) .oframe.menu .menutop > .choice > div { line-height: 1.5; }
@@ -1685,7 +1690,7 @@
   .gcard .gc-name, .gcard .gc-desc { position: absolute; z-index: 3; display: flex; align-items: center;
     justify-content: center; pointer-events: none; overflow: hidden; }
   .gcard .gc-name .gtext { height: 58%; }
-  .gcard .gc-desc .gtext { height: 46%; }
+  .gcard .gc-desc .gtext { height: 62%; }   /* commander names read too small on a big screen */
   .gcard.sel { filter: drop-shadow(0 0 11px rgba(233,199,82,.85)); }
   /* steel glyphs — reuse the existing silver treatment (same as the number-style-B pills) */
   .gtext.steel { filter: grayscale(1) brightness(1.55) contrast(1.05) drop-shadow(0 1px 1px rgba(0,0,0,.5)); }
@@ -1769,8 +1774,125 @@
   /* landscape: the hand sits at the very bottom and the board is short — drop the toast down
      to the hand so it doesn't float over the middle of the board */
    :where(body.o-landscape) #toast { bottom: 30px; }
+
+  /* NOTE: this block lives at the END of the stylesheet on purpose. Media queries add no
+     specificity, so when it sat higher up, later base rules like `.achv { max-width: 500px }`
+     silently beat the desktop max-widths — the panel measured 750px (500 x 1.5 zoom) instead of
+     the intended width. Keep new desktop rules down here.
+
+  /* ── DESKTOP PASS ──────────────────────────────────────────────────────────────────────────────
+     At 1920x1080 every overlay was a ~404px column pinned to the top of the screen: about a quarter
+     of the width in use, rows running under the sticky close button, and type sized for a phone.
+     Three levers, in the order they matter:
+       1. the frame's max-width now GROWS with the viewport instead of sitting at 404px;
+       2. list content flows into columns once there is room, which also cuts the vertical overflow
+          that was hiding rows behind the close button;
+       3. zoom still carries type size, because it scales a whole block together — but it is applied
+          to the overlay's content wrapper generally, not only to `.oframe`. Achievements and the
+          deploy plaque are not oframes, which is exactly why they stayed phone-sized.
+     Effective width = max-width x zoom. Everything here is behind a min-width gate; portrait and
+     mobile are untouched. */
+  @media (min-width: 820px) {
+    .overlay > *:not(.ovclose):not(.menu) { zoom: 1.22; }
+    /* True centring. `.overlay` keeps justify-content:flex-start because `safe center` is broken on
+       old Safari and plain `center` clips the top of a menu taller than the screen. Auto block
+       margins do the same job safely — they centre when there is room and collapse to 0 when there
+       is not, so a long menu still scrolls from its top rather than losing its head. */
+    .overlay > *:not(.ovclose) { margin-block: auto; }
+    .overlay .oframe:not(.menu) { max-width: 520px; }
+  }
+  @media (min-width: 1100px) {
+    .overlay > *:not(.ovclose):not(.menu) { zoom: 1.38; }
+    .overlay .oframe:not(.menu) { max-width: 640px; }
+  }
+  @media (min-width: 1500px) {
+    .overlay > *:not(.ovclose):not(.menu) { zoom: 1.5; }
+    .overlay .oframe:not(.menu) { max-width: 760px; }
+  }
+  @media (min-width: 2000px) {
+    .overlay > *:not(.ovclose):not(.menu) { zoom: 1.65; }
+    .overlay .oframe:not(.menu) { max-width: 820px; }
+  }
+
+  /* Achievements: the plaque header spans a two-column list, so two achievements sit beneath it and
+     the wide screen is actually used. `break-inside: avoid` keeps a row from being split down the
+     middle by the column break. */
+  @media (min-width: 1100px) {
+    .achv { max-width: 820px; }
+    .achv-hdr { width: min(100%, 600px); }
+    /* GRID, not columns. CSS columns flow by height, so the two sides ended up with different row
+       heights and the text reflowed to fit whatever width was left — rows visibly "smushed" against
+       each other. A grid gives every cell the same width, and stretching the row to the cell makes
+       the pair on each line match. */
+    .achv-content { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 22px; align-items: stretch; }
+    .achv-content > * { min-width: 0; }
+    .achrow, .achv .unlbar { max-width: none; width: 100%; height: 100%; margin: 0; box-sizing: border-box; }
+    .achv-content .ach-div { grid-column: 1 / -1; }
+  }
+  @media (min-width: 1500px) { .achv { max-width: 980px; } .achv-hdr { width: min(100%, 680px); } }
+  @media (min-width: 2000px) { .achv { max-width: 1080px; } }
+  /* How to Play and Settings are the same shape of problem — a tall stack of `.choice` blocks. */
+  @media (min-width: 1100px) {
+    #ovHelp .oframe > .choice, #ovSettings .oframe > .choice { break-inside: avoid; }
+    #ovHelp .helpcols { column-count: 2; column-gap: 24px; }
+    /* Settings as a command panel: a fixed two-column grid of equal cells rather than a reflowing
+       list, with the wide blocks (campaign switch, debug) spanning the full width. */
+    #ovSettings .setcols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 20px; align-items: start; }
+    #ovSettings .setcols > .choice { margin: 0; height: 100%; box-sizing: border-box; }
+    #ovSettings .setcols > *:last-child { grid-column: 1 / -1; }
+  }
+
+
+  /* ── Battle HUD, map view and the smaller overlays ──────────────────────────────────────────────
+     Same complaint throughout: sized for a phone and pinned to the top of a 1080px screen. All gated
+     on width so portrait is untouched. */
+  @media (min-width: 820px) {
+    /* the hand was the worst offender — roughly a fifth of the width, unreadable at a glance */
+    #app { --hand-h: 190px; }
+    #hand .handfan { zoom: 1.7; }
+    /* top bar and the selected-unit card */
+    #hudwrap, #hud { zoom: 1.35; }
+    #unitinfo { zoom: 1.5; }
+    /* toasts and coach marks were phone-sized and bottom-pinned */
+    #toast { zoom: 1.6; bottom: 250px; }
+    #coach { zoom: 1.5; width: min(80%, 460px); }
+    /* map view: bars, buttons and the legend all scale with the window */
+    #maphud { zoom: 1.4; }
+    #maplegend { zoom: var(--legzoom, 1.35); }
+    /* the deploy screen was hard-capped at 320px regardless of viewport */
+    #ovDeploy .deploy-plaque { max-width: 520px; }
+  }
+  @media (min-width: 1500px) {
+    #app { --hand-h: 230px; }
+    #hand .handfan { zoom: 2.1; }
+    #hudwrap, #hud { zoom: 1.6; }
+    #unitinfo { zoom: 1.8; }
+    #toast { zoom: 1.9; bottom: 300px; }
+    #coach { zoom: 1.8; }
+    #maphud { zoom: 1.6; }
+    #maplegend { zoom: var(--legzoom, 1.5); }
+    #ovDeploy .deploy-plaque { max-width: 620px; }
+  }
+  /* Landscape deploy had its own 320/340 caps that beat the rule above on source order. */
+  @media (min-width: 820px) {
+    :where(body.o-landscape) #ovDeploy .deploybox[data-view="pre"] .deploy-plaque,
+    :where(body.o-landscape) #ovDeploy .deploy-plaque { max-width: 560px; }
+  }
+
+
+  /* Army roster: a single stacked column left most of a widescreen empty and pushed the list under
+     the close button. Grid it. */
+  @media (min-width: 1100px) {
+    #ovRoster .oframe > .choice { margin: 0; }
+    #ovRoster .rostergrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 18px; align-items: stretch; }
+  }
+  @media (min-width: 1700px) { #ovRoster .rostergrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  /* Card viewer: was pinned to the top of the overlay; centre it on both axes and let it grow. */
+  @media (min-width: 820px)  { #ovCardFull .bigcard { width: min(46vh, 420px); } }
+  @media (min-width: 1500px) { #ovCardFull .bigcard { width: min(58vh, 520px); } }
+
 </style>
-  <script type="module" crossorigin src="./assets/index-MebVA8bh.js"></script>
+  <script type="module" crossorigin src="./assets/index-CIRdqMEU.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -1864,7 +1986,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.38';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.39';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2175,7 +2297,11 @@ document.addEventListener('pointermove', _gaugeDrag);
 document.addEventListener('pointerup', () => { _dragGauge = null; });
 function sizeGaugeNeedle(g, c){
   c = c || gaugeCfg();
-  const gw = g.getBoundingClientRect().width || g.offsetWidth || 220;
+  // offsetWidth, NOT getBoundingClientRect(). The settings panel is CSS-zoomed on desktop, and
+  // getBoundingClientRect() reports the ZOOMED width — which was then written back as a px length on
+  // an element inside that same zoomed subtree, so the browser scaled it a second time and the needle
+  // came out zoom-times too long. offsetWidth is the layout width, the same space as the value we set.
+  const gw = g.offsetWidth || g.getBoundingClientRect().width || 220;
   const f = g.querySelector('.vg-f'); f.style.left = c.fL+'%'; f.style.top = c.fT+'%'; f.style.width = c.fW+'%'; f.style.height = c.fH+'%';
   const p = g.querySelector('.vg-p'); p.style.left = c.pL+'%'; p.style.top = c.pT+'%';
   // needle layer: 'front' = over the frame (face 1, bezel 2, needle 3); 'mid' = tucked under the frame (face 1, needle 2, bezel 3)
@@ -2251,11 +2377,20 @@ function showSettings() {
   const o = $('#ovSettings');
   o.innerHTML = `<div class="oframe titled"><div class="ofbanner ofhdr"><img src="assets/ui/hdr/settings.png" alt="Settings"></div>
     <div style="text-align:center;margin:8px 0 6px">${ibtn('switch_campaign', "closeOv('ovSettings');showProfiles()")}</div>
+    <div class="setcols">
     ${(_isTauri() || S.demo) ? '' : `<div class="choice">
       <b>Screen orientation</b>
       <div class="d" style="margin:2px 0 6px">Phone only — locks how the game is held.</div>
       <div style="display:flex;gap:8px">${oBtn('landscape')}${oBtn('portrait')}</div>
     </div>`}
+    <div class="choice">
+      <b>Fullscreen</b>
+      <div class="d" style="margin:2px 0 6px">Fill the whole display — no window chrome, no desktop behind it.</div>
+      <div style="display:flex;gap:8px">
+        <button class="setbtn ${_isFullscreen() ? 'on' : ''}" onclick="setFullscreen(true)">On</button>
+        <button class="setbtn ${_isFullscreen() ? '' : 'on'}" onclick="setFullscreen(false)">Off</button>
+      </div>
+    </div>
     <div class="choice">
       <b>Map legend highlight</b>
       <div class="d" style="margin:2px 0 6px">How a node type is marked when you spotlight it from the legend.</div>
@@ -2349,6 +2484,7 @@ function showSettings() {
       ${(S && (S.mode === 'map' || S.board)) ? `<button class="setbtn dbg" onclick="closeOv('ovSettings');showRunForecast()">🗺 Run forecast — bosses, elites &amp; jump to any node ▸</button>` : ''}
       <button class="setbtn dbg" onclick="closeOv('ovSettings');showGaugeTuner()">🎚 Gauge tuner — scale &amp; move the volume dial</button>
     </div>`}
+    </div>
     </div><div class="ovclose"><button class="ibtn" onclick="closeOv('ovSettings')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
   o.classList.add('show');
   wireGauges();
@@ -2557,6 +2693,23 @@ function showNodeInfo(kind){
   $('#ovInspect').classList.add('show');
 }
 let _nodeFilter = null;   // legend spotlight: highlight matching nodes gold, grey the rest (one at a time)
+
+// The legend is docked beside the map in landscape. On a tall window it sat at a fixed size with dead
+// space above and below it, while the map fought for room. Grow it until it fills the column — which
+// is also what stops the map sprawling, since the two share the row. Pure CSS can't do this: the scale
+// has to come from a measurement, so it is written to --legzoom and the CSS media queries consume it.
+function fitLegend() {
+  const leg = document.getElementById('maplegend');
+  const row = document.getElementById('maprow');
+  if (!leg || !row || _isPortrait()) { document.documentElement.style.removeProperty('--legzoom'); return; }
+  document.documentElement.style.setProperty('--legzoom', '1');
+  const natural = leg.offsetHeight;                       // layout height at zoom 1
+  if (!natural || !row.clientHeight) { document.documentElement.style.removeProperty('--legzoom'); return; }
+  const z = Math.max(1, Math.min(3.2, (row.clientHeight - 24) / natural));
+  document.documentElement.style.setProperty('--legzoom', z.toFixed(3));
+}
+window.addEventListener('resize', () => { clearTimeout(window._legFit); window._legFit = setTimeout(fitLegend, 120); });
+
 function renderLegend(){
   const kinds = ['skirmish','elite','event','shop','camp','cache'];
   const rows = kinds.map(k => {
@@ -2654,6 +2807,7 @@ function renderMapScreen() {
   </div>`;
   renderMapGraph();
   renderLegend();
+  requestAnimationFrame(fitLegend);   // measure once the legend has laid out
   if (S.result) showRunResult();
   else if (S.pending) showNode();
   else closeOv('ovNode');
@@ -3138,6 +3292,7 @@ async function shopUpgradeOrRemove(id){ const r=await api('/api/shop_remove',{ca
 
 function showRoster() {
   const o = $('#ovRoster');
+  // wrapped in .rostergrid so a wide screen can lay the army out in columns instead of one tall stack
   const rows = (S.roster||[]).map(u=>{
     const info = CLASS_INFO[u.cls]||{n:u.cls,r:''};
     const xp = u.xp_next!=null ? `${u.xp}/${u.xp_next} XP` : `${u.xp} XP (max rank)`;
@@ -3160,7 +3315,7 @@ function showRoster() {
       </div></div>`;
   }).join('');
   o.innerHTML = `<div class="oframe titled"><div class="ofbanner ofhdr"><img src="assets/ui/hdr/army.png" alt="Army"></div>
-    ${rows||'<div class="d">no units</div>'}</div><div class="ovclose"><button class="ibtn" onclick="closeOv('ovRoster')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+    <div class="rostergrid">${rows||'<div class="d">no units</div>'}</div></div><div class="ovclose"><button class="ibtn" onclick="closeOv('ovRoster')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
   o.classList.add('show');
 }
 
@@ -4013,7 +4168,11 @@ function renderPrompt() {
     const info = u ? (CLASS_INFO[u.cls] || {n: u.cls}) : {n: ''};
     const rng = (u && u.atk > 0) ? `${u.rmin}-${u.rmax}` : '—';
     $('#prompt').innerHTML = '';
-    $('#unitinfo').className = _uiSide() === 'right' ? 'right' : '';
+    // A unit that can BOTH move and aim gets an extra hint line and a fourth control in the footer
+    // row. The panel is sized for three, so the row overflowed its frame — flag it so the CSS can
+    // give it the width the extra content needs.
+    const hasAim = !!(cmdOpts.aim && cmdOpts.aim.size);
+    $('#unitinfo').className = (_uiSide() === 'right' ? 'right' : '') + (hasAim ? ' hasaim' : '');
     $('#unitinfo').innerHTML = u ? `
       <button class="uiside l" onclick="setUISide('left')" aria-label="Move panel to left">‹</button>
       <button class="uiside r" onclick="setUISide('right')" aria-label="Move panel to right">›</button>
@@ -4137,6 +4296,33 @@ async function selectUnit(id, center = true) {
   if (center) { const cc = S.board.cells.find(c => c.u && c.u.id === id); if (cc) centerCell(cc.x, cc.y); }
 }
 function deselectCmd() { cmd = null; cmdOpts = {moves:new Set(), attacks:new Set(), aim:new Set(), ap:0}; setHandPeek(false); }
+
+// ── fullscreen immersion ───────────────────────────────────────────────────────────────────────
+// The Fullscreen API covers every shell this ships in: browser, the Capacitor webview, and the Tauri
+// webview. Persisted, and re-applied on boot — but only from a user gesture, because browsers reject
+// a programmatic request outside one, so the stored preference is re-armed on the first interaction.
+function _isFullscreen() { return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+async function setFullscreen(on) {
+  try {
+    if (on) {
+      const el = document.documentElement;
+      await (el.requestFullscreen ? el.requestFullscreen({ navigationUI: 'hide' }) : el.webkitRequestFullscreen());
+    } else if (_isFullscreen()) {
+      await (document.exitFullscreen ? document.exitFullscreen() : document.webkitExitFullscreen());
+    }
+    localStorage.setItem('dc_fullscreen', on ? '1' : '0');
+  } catch (e) {
+    toast('fullscreen unavailable here');
+  }
+  if (document.querySelector('#ovSettings.show')) showSettings();
+}
+// Re-arm a stored preference on the first gesture, since a cold request would be rejected.
+(function armFullscreen() {
+  if (localStorage.getItem('dc_fullscreen') !== '1') return;
+  const go = () => { setFullscreen(true); window.removeEventListener('pointerdown', go); };
+  window.addEventListener('pointerdown', go, { once: true });
+})();
+
 function toggleAim() { if (cmd === null) return; aimModes.set(cmd, !isAiming()); renderBoard(); renderPrompt(); }
 // drop a live unit selection when navigating away (menu / end turn / opening an overlay)
 function _dropCmd() { if (cmd !== null) { deselectCmd(); renderBoard(); renderPrompt(); } }
@@ -4345,7 +4531,10 @@ async function animateEvents(events, finalR) {
   // This used to read Math.max(500, 9000/n), which clamped every compressed value straight back to 500
   // and made the speed-up branch dead code. Now the whole replay is budgeted to ~5s once there is a
   // pile-up, with a 140ms floor so it stays legible, and a tap skips the rest outright.
-  const per = Math.min(500, Math.max(140, Math.floor(5000 / Math.max(1, events.length))));
+  // Slowed 50% from the first budgeted version (5000/140/500). That pass was fixing the opposite
+  // problem — a flat 500ms an event meant a busy turn ran 15s+ — and it overcorrected: combat resolved
+  // too fast to read. Tap-to-skip means erring slow costs the player nothing.
+  const per = Math.min(750, Math.max(210, Math.floor(7500 / Math.max(1, events.length))));
   const arrowDwell = Math.max(90, Math.min(210, Math.round(per * 0.42)));
   for (const ev of events) {
     if (animGen !== my || _skipReplay) return;   // superseded, or the player tapped to skip ahead
@@ -5676,6 +5865,7 @@ function showHelp() {
   const topic = (head, body) => `<div class="choice"><b>${head}</b>
     <div class="d" style="line-height:1.6;font-size:12.5px;margin-top:5px">${body}</div></div>`;
   $('#ovHelp').innerHTML = `<div class="oframe titled"><div class="ofbanner ofhdr"><img src="assets/ui/hdr/how_to_play.png" alt="How to play"></div>
+    <div class="helpcols">
     ${topic('<span class="cyan">Your goal</span>', `Destroy every enemy <b>HQ</b> to clear a battle.`)}
     ${topic('<span class="cyan">Units move for free</span>', `Tap one of your units, then tap a
       <span style="color:#58d3ff">cyan</span> tile to move or a
@@ -5710,6 +5900,7 @@ function showHelp() {
     ${topic('<span class="gold">Ascension</span>', `Clear a run with a general and you unlock its next <b>Ascension</b> tier — each level piles on a new
       handicap (tougher, deadlier, more numerous enemies). <b>Ascension 6+</b> also floods the map with
       <b>more elite battles</b> and cuts your <b>between-act healing in half</b>. Climb as high as you dare for a higher score.`)}
+    </div>
     <div style="margin:16px auto 2px;max-width:340px">${pbtn('replay_tutorial','resetTutorial()')}</div>
     </div>
     <div class="ovclose"><button class="ibtn" onclick="closeOv('ovHelp')" aria-label="Back"><img src="assets/ui/btn/return.png" alt="Back"></button></div>`;
