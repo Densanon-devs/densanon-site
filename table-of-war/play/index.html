@@ -798,7 +798,6 @@
   .card.curse { --cat:#8a3a3a; }
   .card.curse .cardnm { color:#e79a9a; background:linear-gradient(#2a1a1a,#1f1414); }
   /* full-card view (tap a hand card) */
-  #ovCardFull .bigcard { width:min(80vw, 320px); margin:0 auto; }
   /* big medal inspect (tap a medal in the collection or in battle) */
   .bigmedal { width:min(84vw,320px); margin:0 auto; text-align:center; color:#e9e3d1;
     --bt:14px; --cn:30px; border:none; border-radius:0; padding:36px 22px 20px;
@@ -1532,7 +1531,7 @@
       /* The panel is a FRACTION of the frame, so on a big screen it grows while fixed-px text inside it
          does not — a large plate with small print. Scale the type off the frame's own width variable so
          the two grow together. `--mw` is the aspect-locked frame width set just below. */
-      font-size: clamp(11px, calc(var(--mw, 940px) * 0.0168), 28px); }
+      font-size: clamp(11px, calc(var(--mw, 940px) * 0.0125), 22px); }
     :where(body.o-landscape) .oframe.menu .menutop > .choice .d,
     :where(body.o-landscape) .oframe.menu .menutop > .choice b { font-size: 1em; }
     :where(body.o-landscape) .oframe.menu .menutop > .choice > div { line-height: 1.5; }
@@ -1783,6 +1782,11 @@
      silently beat the desktop max-widths — the panel measured 750px (500 x 1.5 zoom) instead of
      the intended width. Keep new desktop rules down here.
 
+  /* NOTE: every desktop rule below is gated on (pointer: fine) as well as width. Width ALONE is not a
+     desktop test — a phone held in landscape is 2340px wide, so the whole of this block was firing on
+     mobile: the daily plate's type overflowed its plate, the battle HUD was zoomed until Break Camp was
+     clipped off the bar, and a Fullscreen toggle appeared on a device that is already fullscreen.
+     Phones report a coarse pointer; mice and trackpads report a fine one. */
   /* ── DESKTOP PASS ──────────────────────────────────────────────────────────────────────────────
      At 1920x1080 every overlay was a ~404px column pinned to the top of the screen: about a quarter
      of the width in use, rows running under the sticky close button, and type sized for a phone.
@@ -1795,7 +1799,7 @@
           deploy plaque are not oframes, which is exactly why they stayed phone-sized.
      Effective width = max-width x zoom. Everything here is behind a min-width gate; portrait and
      mobile are untouched. */
-  @media (min-width: 820px) {
+  @media (min-width: 820px) and (pointer: fine) {
     .overlay > *:not(.ovclose):not(.menu) { zoom: 1.22; }
     /* True centring. `.overlay` keeps justify-content:flex-start because `safe center` is broken on
        old Safari and plain `center` clips the top of a menu taller than the screen. Auto block
@@ -1804,15 +1808,15 @@
     .overlay > *:not(.ovclose) { margin-block: auto; }
     .overlay .oframe:not(.menu) { max-width: 520px; }
   }
-  @media (min-width: 1100px) {
+  @media (min-width: 1100px) and (pointer: fine) {
     .overlay > *:not(.ovclose):not(.menu) { zoom: 1.38; }
     .overlay .oframe:not(.menu) { max-width: 640px; }
   }
-  @media (min-width: 1500px) {
+  @media (min-width: 1500px) and (pointer: fine) {
     .overlay > *:not(.ovclose):not(.menu) { zoom: 1.5; }
     .overlay .oframe:not(.menu) { max-width: 760px; }
   }
-  @media (min-width: 2000px) {
+  @media (min-width: 2000px) and (pointer: fine) {
     .overlay > *:not(.ovclose):not(.menu) { zoom: 1.65; }
     .overlay .oframe:not(.menu) { max-width: 820px; }
   }
@@ -1820,7 +1824,7 @@
   /* Achievements: the plaque header spans a two-column list, so two achievements sit beneath it and
      the wide screen is actually used. `break-inside: avoid` keeps a row from being split down the
      middle by the column break. */
-  @media (min-width: 1100px) {
+  @media (min-width: 1100px) and (pointer: fine) {
     .achv { max-width: 820px; }
     .achv-hdr { width: min(100%, 600px); }
     /* GRID, not columns. CSS columns flow by height, so the two sides ended up with different row
@@ -1834,10 +1838,10 @@
     .achv-content .achrow, .achv-content .unlbar { max-width: none; width: 100%; height: 100%; margin: 0; box-sizing: border-box; }
     .achv-content .ach-div { grid-column: 1 / -1; }
   }
-  @media (min-width: 1500px) { .achv { max-width: 980px; } .achv-hdr { width: min(100%, 680px); } }
-  @media (min-width: 2000px) { .achv { max-width: 1080px; } }
+  @media (min-width: 1500px) and (pointer: fine) { .achv { max-width: 980px; } .achv-hdr { width: min(100%, 680px); } }
+  @media (min-width: 2000px) and (pointer: fine) { .achv { max-width: 1080px; } }
   /* How to Play and Settings are the same shape of problem — a tall stack of `.choice` blocks. */
-  @media (min-width: 1100px) {
+  @media (min-width: 1100px) and (pointer: fine) {
     #ovHelp .oframe > .choice, #ovSettings .oframe > .choice { break-inside: avoid; }
     #ovHelp .helpcols { column-count: 2; column-gap: 24px; }
     /* Settings as a command panel: a fixed two-column grid of equal cells rather than a reflowing
@@ -1851,7 +1855,7 @@
   /* ── Battle HUD, map view and the smaller overlays ──────────────────────────────────────────────
      Same complaint throughout: sized for a phone and pinned to the top of a 1080px screen. All gated
      on width so portrait is untouched. */
-  @media (min-width: 820px) {
+  @media (min-width: 820px) and (pointer: fine) {
     /* the hand was the worst offender — roughly a fifth of the width, unreadable at a glance */
     #app { --hand-h: 190px; }
     #hand .handfan { zoom: 1.7; }
@@ -1867,7 +1871,7 @@
     /* the deploy screen was hard-capped at 320px regardless of viewport */
     #ovDeploy .deploy-plaque { max-width: 520px; }
   }
-  @media (min-width: 1500px) {
+  @media (min-width: 1500px) and (pointer: fine) {
     #app { --hand-h: 230px; }
     #hand .handfan { zoom: 2.1; }
     #hudwrap, #hud { zoom: 1.6; }
@@ -1879,7 +1883,7 @@
     #ovDeploy .deploy-plaque { max-width: 620px; }
   }
   /* Landscape deploy had its own 320/340 caps that beat the rule above on source order. */
-  @media (min-width: 820px) {
+  @media (min-width: 820px) and (pointer: fine) {
     :where(body.o-landscape) #ovDeploy .deploybox[data-view="pre"] .deploy-plaque,
     :where(body.o-landscape) #ovDeploy .deploy-plaque { max-width: 560px; }
   }
@@ -1887,14 +1891,12 @@
 
   /* Army roster: a single stacked column left most of a widescreen empty and pushed the list under
      the close button. Grid it. */
-  @media (min-width: 1100px) {
+  @media (min-width: 1100px) and (pointer: fine) {
     #ovRoster .oframe > .choice { margin: 0; }
     #ovRoster .rostergrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 18px; align-items: stretch; }
   }
-  @media (min-width: 1700px) { #ovRoster .rostergrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (min-width: 1700px) and (pointer: fine) { #ovRoster .rostergrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   /* Card viewer: was pinned to the top of the overlay; centre it on both axes and let it grow. */
-  @media (min-width: 820px)  { #ovCardFull .bigcard { width: min(46vh, 420px); } }
-  @media (min-width: 1500px) { #ovCardFull .bigcard { width: min(58vh, 520px); } }
 
 
   /* ── desktop pass, round two ────────────────────────────────────────────────────────────────── */
@@ -1904,7 +1906,7 @@
   #mapscroll { scrollbar-width: none; }
   #mapscroll::-webkit-scrollbar { width: 0; height: 0; display: none; }
 
-  @media (min-width: 820px) {
+  @media (min-width: 820px) and (pointer: fine) {
     /* Toasts were floating mid-screen over the board. Park them just under the top bar, which is
        where the eye already is for CP/HQ/objective changes. --medaltop is set by setPillH() to the
        real measured height of the HUD, so this tracks the bar even when it wraps. */
@@ -1915,11 +1917,11 @@
     /* tile / node inspect: doubled, and centred rather than pinned to the top */
     #ovInspect > .choice { zoom: 1.9; }
   }
-  @media (min-width: 1500px) {
+  @media (min-width: 1500px) and (pointer: fine) {
     #ovInspect > .choice { zoom: 2.2; }
   }
   /* Deck view fills the screen instead of sitting in a narrow column. */
-  @media (min-width: 1100px) {
+  @media (min-width: 1100px) and (pointer: fine) {
     #ovDeck .oframe:not(.menu) { max-width: min(1500px, 92vw); }
     #ovDeck .cardgrid, #ovDeck .deckgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
   }
@@ -1933,7 +1935,7 @@
 
 
   /* Generals progression: each commander's unlocks get their own grid rather than one centred column. */
-  @media (min-width: 1100px) {
+  @media (min-width: 1100px) and (pointer: fine) {
     #ovProg .proggrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 18px;
       align-items: stretch; }
     #ovProg .proggrid > .achrow.prog { width: 100%; max-width: none; margin: 0; }
@@ -1952,7 +1954,7 @@
      screen — the only UI in the game not on a real plate. nsplaque is the general-purpose plate the
      drive meter already uses; the battle bar's .bpill needs per-pill art, so this is the container
      that actually generalises. Desktop only. */
-  @media (min-width: 820px) {
+  @media (min-width: 820px) and (pointer: fine) {
     #maphud .maprow { gap: 6px 12px; }
     #maphud .maprow .pill {
       background: url(assets/ui/nsplaque.png) center / 100% 100% no-repeat;
@@ -1965,11 +1967,47 @@
 
   /* Map node popup: it inherits the overlay zoom, but the node art and its choice blocks were still
      drawn at handset scale on a 1080p screen. Roughly double it. */
-  @media (min-width: 820px)  { #ovNode > *:not(.ovclose) { zoom: 1.5; } }
-  @media (min-width: 1500px) { #ovNode > *:not(.ovclose) { zoom: 1.85; } }
+  @media (min-width: 820px) and (pointer: fine)  { #ovNode > *:not(.ovclose) { zoom: 1.5; } }
+  @media (min-width: 1500px) and (pointer: fine) { #ovNode > *:not(.ovclose) { zoom: 1.85; } }
+
+
+  /* Daily plate type: bigger only where there is a mouse. Raising the shared landscape clamp pushed the
+     text past the plate on a landscape PHONE, which uses the same rule — Daily Commission wrapped onto
+     two lines and the blurb ran under the PLAY button. */
+  @media (min-width: 1100px) and (pointer: fine) {
+    :where(body.o-landscape) .oframe.menu .menutop > .choice { font-size: clamp(11px, calc(var(--mw, 940px) * 0.0168), 28px); }
+  }
+
+
+  /* The key: Counters is the legend FOR the other blocks, so it reads across the top; everything it
+     explains sits below it in two columns. Desktop only — one column is right on a phone. */
+  @media (min-width: 1100px) and (pointer: fine) {
+    #ovLegend .keycols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 20px; align-items: start; }
+    #ovLegend .keycols > .choice { margin: 0; }
+    /* spans both columns, and CENTRED within that span — .choice carries a max-width, so without the
+       auto margins it just sat at the left edge of the row it was spanning */
+    #ovLegend .keycols > .keycounters { grid-column: 1 / -1; text-align: center;
+      margin-left: auto; margin-right: auto; }
+    #ovLegend .keycols > .keycounters .d { max-width: 62ch; margin-left: auto; margin-right: auto; }
+  }
+
+
+  /* several cards can change in one choice — lay them out side by side, wrapping if there are many */
+  .forgecards { display: flex; gap: 16px; justify-content: center; align-items: flex-start; flex-wrap: wrap; }
+  /* .forgecard is width:100% for the single-card case; inside the flex row that made each card claim
+     the whole width and stack. Size to content when there is more than one. */
+  .forgecards > .forgecard { width: auto; flex: 0 0 auto; }
+  /* the wrapper is sized for ONE card (max-width 340px), so a second card wrapped underneath instead of
+     sitting beside it — widen it to fit the cards it is actually carrying */
+  .forgewrap:has(.forgecard + .forgecard) { max-width: 720px; }
+  @media (min-width: 1100px) and (pointer: fine) {
+    .forgewrap { max-width: 420px; }
+    .forgewrap:has(.forgecard + .forgecard) { max-width: 880px; }
+  }
 
 </style>
-  <script type="module" crossorigin src="./assets/index-BU24Oz-7.js"></script>
+  <script type="module" crossorigin src="./assets/index-Bg4vGSV4.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2063,7 +2101,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.40';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.41';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2469,12 +2507,12 @@ function showSettings() {
       <div class="d" style="margin:2px 0 6px">Phone only — locks how the game is held.</div>
       <div style="display:flex;gap:8px">${oBtn('landscape')}${oBtn('portrait')}</div>
     </div>`}
-    <div class="choice">
+    ${_isAndroid() ? '' : `<div class="choice">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
         <div><b>Fullscreen</b><div class="d">Fill the whole display — no window chrome, no desktop behind it.</div></div>
         ${toggle(fullscreenWanted(), "toggleFullscreen()")}
       </div>
-    </div>
+    </div>`}
     <div class="choice">
       <b>Map legend highlight</b>
       <div class="d" style="margin:2px 0 6px">How a node type is marked when you spotlight it from the legend.</div>
@@ -3243,18 +3281,33 @@ function _playCardFx() {
   return false;
 }
 
-function playForgeFx(card){
+function playForgeFx(cards){
+  // takes a LIST — one event choice can upgrade two cards ("Perfect two cards"), and showing only the
+  // last of them was the reported bug
+  const list = Array.isArray(cards) ? cards : [cards];
   Sfx.play('forge'); haptic([30,40,30,40,70]);
   const sparks = Array.from({length:24},(_,i)=>{
     const a = (i/24)*6.283 + Math.random()*0.6, dist = 70+Math.random()*100;
     const delay = (0.05 + (i%3)*0.15 + Math.random()*0.1).toFixed(2);
     return `<span class="spark" style="--dx:${(Math.cos(a)*dist)|0}px;--dy:${(Math.sin(a)*dist)|0}px;animation-delay:${delay}s"></span>`;
   }).join('');
-  const up = card.up_desc?`<div class="d" style="margin-top:8px;color:#f0c94a"><b>⤴ Upgraded — ${card.up_desc}</b></div>`:'';
+  const one = c => {
+    // Draw the actual UPGRADED card face, the same way the collection does — cardDetailHTML renders a
+    // text panel (name, cost, keywords, targets), which is a description of the card rather than the
+    // card. You just earned the upgrade; you should see the thing you earned.
+    const view = Object.assign({}, c, { upgraded: true,
+      name: /\+$/.test(c.name) ? c.name : c.name + '+',
+      cost: c.up_cost != null ? c.up_cost : c.cost,
+      text: c.up_text || c.text });
+    // No ✦ UPGRADED ✦ bar: the card now shows its own upgraded name and text, so the badge was
+    // labelling something the art already says.
+    const up = c.up_desc?`<div class="d" style="margin-top:8px;color:#f0c94a;text-align:center"><b>⤴ ${c.up_desc}</b></div>`:'';
+    return `<div class="forgecard">${frameCardHTML(view, 210)}${up}</div>`;
+  };
   $('#ovForge').innerHTML = `<div class="forgewrap">
       <div class="forgeglow"></div>
       <div class="forgehammer">${si('forge',44)}</div>
-      <div class="forgecard">${cardDetailHTML(card)}${up}<div class="forgebadge">✦ UPGRADED ✦</div></div>
+      <div class="forgecards">${list.map(one).join('')}</div>
       <div class="sparks">${sparks}</div>
       <div style="margin-top:12px;text-align:center">${ibtn('continue', "closeOv('ovForge')")}</div>
     </div>`;
@@ -3264,12 +3317,13 @@ function playForgeFx(card){
   clearTimeout(_forgeT);
 }
 // an event scrapped a card → show the actual card with a red REMOVED stamp (tap to dismiss)
-function playRemovedFx(card){
+function playRemovedFx(cards){
+  const list = Array.isArray(cards) ? cards : [cards];   // the War Profiteer scrubs TWO cards in one choice
   Sfx.play('alarm'); haptic([40,60,40]);
   clearTimeout(_forgeT);
   $('#ovForge').innerHTML = `<div class="forgewrap">
-      <div class="removedcard">${frameCardHTML(card, 210)}<div class="removed-stamp">REMOVED</div></div>
-      <div class="d" style="margin-top:8px;text-align:center">Scrapped from your deck</div>
+      <div class="forgecards">${list.map(c => `<div class="removedcard">${frameCardHTML(c, 210)}<div class="removed-stamp">REMOVED</div></div>`).join('')}</div>
+      <div class="d" style="margin-top:8px;text-align:center">${list.length > 1 ? list.length + ' cards scrapped from your deck' : 'Scrapped from your deck'}</div>
       <div style="margin-top:12px">${ibtn('continue', "closeOv('ovForge')")}</div>
     </div>`;
   $('#ovForge').classList.add('show');
@@ -3603,7 +3657,10 @@ function setPillH() {
   // width to the scaling plates so nothing — especially the power gauge — ever gets cut off.
   const hud = document.getElementById('hud');
   if (!hud) { el.style.removeProperty('--pillh'); return; }
-  const scalers = [...hud.querySelectorAll('.bpill, .objhold, .powplate')];   // plates whose width = aspect × --pillh
+  // .drivemeter belongs here too. It scales off --pillh like the other plates, but was left out of this
+  // list when it was added, so its width was never counted in the fit — the row then overflowed and
+  // clipped whatever sat at the end of it, which for the Nomad is Break Camp.
+  const scalers = [...hud.querySelectorAll('.bpill, .objhold, .powplate, .drivemeter')];   // plates whose width = aspect × --pillh
   if (!scalers.length) { el.style.removeProperty('--pillh'); return; }
   let aspSum = 0;
   for (const s of scalers) {
@@ -4206,7 +4263,7 @@ function showCardFull(i) {
   const kept = retain.has(i);
   const o = $('#ovCardFull');
   const playImg = c.curse?'unplayable':c.capped?'troops_full':(c.aff?'play':'not_enough_cp');
-  o.innerHTML = oframe(`<div style="text-align:center">${frameCardHTML(c, 200)}</div>
+  o.innerHTML = oframe(`<div style="text-align:center">${frameCardHTML(c, 220)}</div>
     ${tags?`<div class="ctarget" style="font-size:11px;padding:6px 12px 0;color:#b78fd0;text-align:center">${tags}</div>`:''}
     <div class="cardfullbtns">
       ${ibtn(kept?'kept':'keep','keepFromFull('+i+')',{cls:kept?'act':''})}
@@ -4223,9 +4280,16 @@ function showCardFull(i) {
 function fitCardFull() {
   const o = $('#ovCardFull'); if (!o || !o.classList.contains('show')) return;
   const box = o.querySelector('.oframe'); if (!box) return;
-  box.style.zoom = '1';
-  const scale = Math.min(1, (window.innerHeight - 28) / box.offsetHeight, (window.innerWidth - 28) / box.offsetWidth);
-  box.style.zoom = scale < 1 ? scale.toFixed(3) : '1';
+  // Compose with the stylesheet zoom, do not replace it. This used to set zoom:1 inline before
+  // measuring and then write back a bare shrink factor — an inline value beats the stylesheet, so the
+  // desktop overlay zoom was wiped out and the hand's card view rendered at roughly two thirds the size
+  // of the same card in the collection. Clear the inline value, read what CSS actually wants, and only
+  // scale DOWN from there when it genuinely will not fit.
+  box.style.removeProperty('zoom');
+  const base = parseFloat(getComputedStyle(box).zoom) || 1;
+  const visH = box.offsetHeight * base, visW = box.offsetWidth * base;
+  const need = Math.min(1, (window.innerHeight - 28) / visH, (window.innerWidth - 28) / visW);
+  if (need < 1) box.style.zoom = (base * need).toFixed(3);
 }
 function _fullPlay(i) { closeOv('ovCardFull'); tapCard(i); }
 function keepFromFull(i) { toggleKeep(i); showCardFull(i); }   // toggle retention from the full view (works even when unspendable)
@@ -6203,7 +6267,8 @@ function showLegend() {
   const row = (chip, name) => `<div style="display:flex;gap:10px;align-items:center;padding:3px 0">
     ${chip}<span class="d">${name}</span></div>`;
   $('#ovLegend').innerHTML = oframe(`
-      <div class="choice"><b>Counters</b>
+      <div class="keycols">
+      <div class="choice keycounters"><b>Counters</b>
         <div class="d" style="margin-top:5px;line-height:1.6"><b class="you">blue = your forces</b>,
         <b class="enemy">red = enemy</b>, <b class="tribe">olive = tribes</b>, grey = neutral.
         HQs have a <b class="gold">gold border</b>. Bottom bar = HP; corner number = attack; gold pips = veteran rank.</div></div>
@@ -6247,6 +6312,7 @@ function showLegend() {
         a SECOND unit next to the enemy you're hitting (you surround it). Two units in a line get nothing —
         it's about troops around the TARGET. Beware Barrage splash when you cluster.</div>
         <div class="d" style="margin-top:6px">Tip: tap any unit or tile on the board to inspect it.</div></div>
+      </div>
      `, 'key') + `<div class="ovclose"><button class="ibtn" onclick="$('#ovLegend').classList.remove('show')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
   $('#ovLegend').classList.add('show');
 }
