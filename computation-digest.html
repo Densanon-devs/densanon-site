@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - July 30, 2026 | Densanon</title>
+  <title>Computation Morning Digest - July 31, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,143 +15,140 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 30, 2026</div>
+        <div class="digest-date-badge">July 31, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation news keeps circling the same fault line as yesterday: AI infrastructure&#x27;s real-world footprint and open source&#x27;s response to AI-written code. Georgia&#x27;s largest power utility is acquiring 30 homes via sale or eminent domain for a grid expansion that residents suspect serves a nearby data center, a fresh installment in the AI-power-crunch story. On governance, Debian is now weighing five competing proposals for how to handle AI/LLM contributions, following GCC&#x27;s committee vote to reject AI-generated code outright. Elsewhere it&#x27;s a quieter day for the Linux graphics stack: Intel Alchemist media-acceleration patches, AMD&#x27;s old-GPU format-modifier support, and Valve-backed HDR/AV1 Steam streaming, plus Huawei&#x27;s shaky bid to upstream a Vulkan driver. On the industry side, Microsoft pushes Copilot further into Classic Outlook while the FTC sues Hims &amp; Hers over health-data sharing with Meta and Snap.</p>
+        <p class="digest-intro">Today&#x27;s computation news centers on a looming supply crunch for indium phosphide, the material behind silicon photonics and co-packaged optics now in heavy AI-datacenter demand. Open-source graphics and driver work keeps moving fast — Valve is porting Linux&#x27;s RADV Vulkan driver to Windows, Nouveau is gaining NVK Vulkan Video, and Servo 0.4 improves real-world site rendering. Rounding things out: DDR5 single-DIMM gaming benchmarks, a fast-moving PS5 emulation milestone, Fedora&#x27;s default CPU-level exploit hardening, a novel no-app phone-to-phone data transfer trick, a candid look at the friction of running local AI on budget hardware, and a Linux Foundation push to standardize DPU/IPU infrastructure interfaces.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Hardware &amp; Chips</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>30 Georgia homes are being acquired via sale or eminent domain to expand power grid — one affected family member says it’s ‘for the data centers’</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Georgia&#x27;s largest power supply company is reclaiming 30 homes in the path of a power line expansion project through sale or eminent domain</li>
-              <li>The company says the project is not for a data center, but the substation the line connects to sits less than five miles from a massive data center</li>
-              <li>Another data point in the pattern of AI-driven power demand reshaping local infrastructure and property rights</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/data-centers/30-georgia-homes-are-being-reclaimed-via-sale-or-eminent-domain-to-expand-power-grid-one-affected-family-member-says-its-for-the-data-centers" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Are your motherboard&#x27;s M.2 heatsinks making good contact with your SSD? We tested 20 modern Intel and AMD motherboards to verify</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Tom&#x27;s Hardware tested 20 modern Intel and AMD motherboards to check whether stock M.2 heatsinks actually make solid contact with installed SSDs</li>
-              <li>Results were surprising: not all boards achieved proper thermal contact out of the box</li>
-              <li>Useful reference for builders relying on stock heatsinks rather than aftermarket thermal pads</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/motherboards/are-your-motherboards-m-2-heatsinks-making-good-contact-with-your-ssd-we-tested-20-modern-intel-and-amd-motherboards-to-verify" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Five Proposals Now Being Weighed For Debian AI/LLM Usage</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Debian developers are weighing five different proposals in a general resolution over how to permit or block AI/LLM usage within the project</li>
-              <li>Follows last week&#x27;s start of formal deliberation on the question</li>
-              <li>Another major open-source project, after GCC&#x27;s committee vote, working out where to draw the line on AI-assisted contributions</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Debian-GR-AI-Usage-5-Proposals" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Huawei Considers Open-Sourcing A Half-Hearted Mesa Vulkan Driver</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A Huawei engineer posted to the Mesa mailing list about potentially upstreaming a Vulkan driver developed for an in-house GPU</li>
-              <li>Phoronix reports the driver is likely dead in the water for upstreaming into Mesa in its current form</li>
-              <li>Shows continued interest from Huawei in open graphics stacks even where the submission falls short of Mesa&#x27;s bar</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Huawei-Half-Open-Mesa-Vulkan" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Patches Posted To Improve Linux Media Acceleration On Intel Alchemist GPUs</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>New patches aim to improve media acceleration for Intel Arc A-Series (DG2/Alchemist) GPUs on Linux</li>
-              <li>Alchemist remains in an awkward spot since the Xe kernel driver is only officially supported and used by default post-Alchemist</li>
-              <li>Incremental work bringing older Arc cards further in line with Intel&#x27;s modern Xe driver stack</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Intel-HuC-DG2-Alchemist-Xe" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>DRM Format Modifiers For Old AMD GPUs Coming With Linux 7.3: Thanks Valve</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Linux 7.3 will add DRM format modifier support for older AMD GPUs via the AMDGPU kernel driver</li>
-              <li>Part of this week&#x27;s batch of AMDGPU/AMDKFD driver changes, credited to Valve-backed work</li>
-              <li>Lands as the kernel nears its feature cut-off ahead of the Linux 7.3 merge window</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-AMDGPU-GFX6-Modifiers" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Steam Client Adds HDR Streaming On Steam Deck OLED, AV1 Video Streaming</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The latest Steam client beta adds HDR game streaming support for the Steam Deck OLED</li>
-              <li>The same update adds AV1 video streaming for Linux gamers</li>
-              <li>Continues Valve&#x27;s pattern of pushing streaming and codec improvements across its Linux-based ecosystem</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Steam-Beta-Video-Streaming" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Legendary Windows developer codes Task Manager for the Mac, says Apple’s ‘Activity Monitor blows’ — Microsoft gave original Windows Task Manager dev permission to reference Windows XP source code</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Dave W. Plummer, the original Windows Task Manager developer, has shared details and screenshots of a Task Manager build for Mac</li>
-              <li>Microsoft gave Plummer permission to reference the original Windows XP source code for the project</li>
-              <li>Plummer says he was motivated by his view that Apple&#x27;s built-in Activity Monitor &quot;blows&quot;</li>
-            </ul>
-            <a href="https://www.tomshardware.com/software/operating-systems/legendary-windows-developer-codes-task-manager-for-the-mac-says-he-was-inspired-by-the-fact-that-apples-activity-monitor-blows" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Industry &amp; HPC</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Microsoft makes Copilot harder to miss in Classic Outlook</h3>
-              <span class="digest-source">The Register</span>
+              <h3>Lumentum CEO warns of impending bottleneck on critical material used for silicon photonics</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Microsoft added a new Copilot button beside the ribbon in Classic Outlook to make the AI assistant harder to miss</li>
-              <li>The Register frames the move as promising consistency while raising more questions for admins</li>
-              <li>Part of Microsoft&#x27;s continued push to surface Copilot by default across its productivity apps</li>
+              <li>Lumentum CEO Michael Hurlston said at the RAISE Summit that the indium phosphide supply squeeze is on track to be worse than the recent memory-chip shortage.</li>
+              <li>Indium phosphide is a key material for silicon photonics and co-packaged optics, both increasingly used in AI datacenter networking.</li>
+              <li>Current fab and material output already lags roughly 30% below customer demand.</li>
             </ul>
-            <a href="https://www.theregister.com/on-prem/2026/07/30/microsoft-makes-copilot-harder-to-miss-in-classic-outlook/5280997" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/lumentum-ceo-says-the-indium-phosphide-shortage-will-become-worse-than-memory" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Hims &amp; Hers accused of sharing health secrets and hiding the cancel button</h3>
-              <span class="digest-source">The Register</span>
+              <h3>OPI Abstraction v0.1 Published With Aiming To Standardize DPU/IPU Ecosystems</h3>
+              <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The FTC is suing Hims &amp; Hers, alleging Meta and Snap received sensitive patient health information</li>
-              <li>Customers also reportedly faced unexpected prescription charges tied to the service</li>
-              <li>A data-sharing and cancellation-practices complaint against a health-tech company, echoing broader scrutiny of ad-tech data flows</li>
+              <li>The Linux Foundation&#x27;s Open Programmable Infrastructure (OPI) project published its first coordinated release, OPI Abstraction v0.1.</li>
+              <li>The goal is a standardized abstraction layer across DPU (data processing unit) and IPU (infrastructure processing unit) hardware from different vendors.</li>
+              <li>Aims to reduce vendor lock-in for datacenter offload hardware, mirroring how other Linux Foundation projects standardized adjacent infrastructure layers.</li>
             </ul>
-            <a href="https://www.theregister.com/legal/2026/07/30/ftc-sues-hims-hers-for-sharing-health-data-with-big-tech/5281092" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Open-Programmable-OPI-DPU-IPU" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Hardware &amp; Chips</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Streaming QR codes at 60 FPS achieves nearly 190 KB/s data rate in phone-to-phone tests</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A proof-of-concept transfers data between phones by streaming QR codes at 60 FPS through the camera, reaching close to 190 KB/s.</li>
+              <li>The method runs entirely in the browser, needing no dedicated app, network connection, device pairing, or any permission beyond camera access.</li>
+              <li>It trades speed for zero-infrastructure simplicity, useful when Bluetooth/Wi-Fi pairing isn&#x27;t available or desired.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/networking/streaming-qr-codes-at-60-fps-achieves-nearly-190-kb-s-data-rate-in-phone-to-phone-tests-browser-based-method-requires-no-app-no-networking-no-pairing-and-no-permissions-beyond-camera-access" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Valve funding port of Linux RADV Radeon Vulkan driver to Windows</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Valve is funding a port of the open-source Linux RADV Radeon Vulkan driver to Windows.</li>
+              <li>The cross-platform effort is already functional enough to run Counter-Strike 2.</li>
+              <li>Extends Valve&#x27;s open-source graphics-driver investment beyond SteamOS/Linux, potentially giving Windows AMD GPU owners an alternative driver path.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/software/linux/valve-funding-port-of-linux-radv-radeon-vulkan-driver-to-windows-cross-platform-effort-already-runs-counter-strike-2" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Setting up OpenClaw isn&#x27;t as straightforward as the internet wants you to think – running local AI on humble hardware</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tom&#x27;s Hardware tested running a local, task-automating AI setup on a budget Gorgon Point-powered Mini PC rather than a high-end workstation.</li>
+              <li>The setup process was reportedly more involved than online guides suggest, and results came back mixed rather than a clean success.</li>
+              <li>Highlights a gap between marketing claims for local-AI/agent tooling and the real friction of setting it up on consumer-grade hardware.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/setting-up-openclaw-isnt-as-straightforward-as-the-internet-wants-you-to-think-running-local-ai-on-humble-hardware" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Single-DIMM DDR5 gaming works better than you probably think</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Testing shows a single DDR5 DIMM (vs. dual-channel) costs gaming performance, but AMD&#x27;s 3D V-Cache chips lose less than 3%.</li>
+              <li>A single DDR5 DIMM still outperforms dual-channel DDR4 for gaming.</li>
+              <li>Relevant to builders and OEMs cutting costs on RAM configuration amid rising DDR5 prices.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/ddr5/single-dimm-ddr5-gaming-works-better-than-you-probably-think-amds-3d-v-cache-chips-drop-less-than-3-percent-one-ddr5-dimm-beats-dual-channel-ddr4-ram" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>PS5 emulation hits new milestone in record time, multiple 3D games now playable in Kyty</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The Kyty PS5 emulator now runs multiple 3D titles at around 30 FPS.</li>
+              <li>That level of playability was reached roughly two weeks after the first 3D titles became merely bootable, an unusually fast pace for emulator development.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/video-games/playstation/ps5-emulation-hits-new-milestone-in-record-time-multiple-3d-games-now-playable-in-kyty-performance-and-support-steadily-improving-with-30-fps-gameplay-possible-today" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Servo 0.4 Browser Engine Gets More Websites Rendering Correctly</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Servo 0.4 shipped at the end of July, improving real-world website rendering compatibility in its servoshell demo browser.</li>
+              <li>Servo is an independent, Rust-based browser engine (not derived from Chromium, WebKit, or Gecko), relevant to anyone tracking browser-engine diversity.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Servo-0.4-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Nouveau Patch For Linux 7.3 Allows For NVK Vulkan Video Atop NVIDIA NVDEC</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A patch queued for Linux 7.3 adds NVK Vulkan Video support on top of NVIDIA&#x27;s NVDEC hardware decode block via the open-source Nouveau driver.</li>
+              <li>Narrows the feature gap between the open-source NVIDIA driver stack and NVIDIA&#x27;s proprietary driver for video decode workloads.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.3-Nouveau-NVDEC" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>x86_64 Shadow Stack By Default Retargeted For Fedora 46</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Fedora&#x27;s Engineering and Steering Committee (FESCo) approved enabling x86_64 Shadow Stack, a CPU-level control-flow-integrity anti-exploit feature, by default.</li>
+              <li>The change was originally proposed for Fedora 45 but has been pushed out to Fedora 46, landing next year.</li>
+              <li>Represents a security-hardening default shift at the CPU-feature level for a major Linux distribution.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Fedora-46-Shadow-Stack-Plans" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
