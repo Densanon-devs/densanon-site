@@ -1861,12 +1861,12 @@
     #hand .handfan { zoom: 1.7; }
     /* top bar and the selected-unit card */
     #hudwrap, #hud { zoom: 1.35; }
-    #unitinfo { zoom: 1.5; }
+    #unitinfo { zoom: 1.5; width: min(300px, 40vw); }
+    #unitinfo.hasaim { width: min(360px, 46vw); }
     /* toasts and coach marks were phone-sized and bottom-pinned */
     #toast { zoom: 1.6; bottom: 250px; }
     #coach { zoom: 1.5; width: min(80%, 460px); }
     /* map view: bars, buttons and the legend all scale with the window */
-    #maphud { zoom: 1.4; }
     #maplegend { zoom: var(--legzoom, 1.35); }
     /* the deploy screen was hard-capped at 320px regardless of viewport */
     #ovDeploy .deploy-plaque { max-width: 520px; }
@@ -1875,10 +1875,11 @@
     #app { --hand-h: 230px; }
     #hand .handfan { zoom: 2.1; }
     #hudwrap, #hud { zoom: 1.6; }
-    #unitinfo { zoom: 1.8; }
+    #unitinfo { zoom: 1.8; width: min(320px, 34vw); }
+    #unitinfo.hasaim { width: min(380px, 40vw); }
+    #prompt { zoom: 1.7; }
     #toast { zoom: 1.9; bottom: 300px; }
     #coach { zoom: 1.8; }
-    #maphud { zoom: 1.6; }
     #maplegend { zoom: var(--legzoom, 1.5); }
     #ovDeploy .deploy-plaque { max-width: 620px; }
   }
@@ -1911,9 +1912,10 @@
        where the eye already is for CP/HQ/objective changes. --medaltop is set by setPillH() to the
        real measured height of the HUD, so this tracks the bar even when it wraps. */
     #toast { top: calc(var(--medaltop, 64px) + 14px); bottom: auto; }
-    /* the cancel/selection chip and the full-card viewer were both about half the size they needed */
-    .ibtn.xs img, .uitoggle { transform: scale(1.6); transform-origin: center; }
-    #prompt .ibtn img { transform: scale(1.5); transform-origin: center; }
+    /* Scale these with ZOOM, not transform. transform: scale() grows the pixels but leaves the layout
+       box at its old size, so the unit panel never grew to fit its own buttons — the name clipped to
+       "Riflema" and Cancel/Rest spilled outside the frame. zoom scales the layout too. */
+    #prompt { zoom: 1.45; }
     /* tile / node inspect: doubled, and centred rather than pinned to the top */
     #ovInspect > .choice { zoom: 1.9; }
   }
@@ -2006,6 +2008,72 @@
     .forgewrap:has(.forgecard + .forgecard) { max-width: 880px; }
   }
 
+
+  /* .ovclose is excluded from the overlay zoom so `position: sticky` keeps working — but that left the
+     close/confirm button at its phone size inside a panel scaled up around it. Scale the image to the
+     same factor by hand at each step so it reads as one of the buttons rather than a leftover. */
+  @media (min-width: 820px)  and (pointer: fine) { .overlay > .ovclose .ibtn img { height: 56px; } }
+  @media (min-width: 1100px) and (pointer: fine) { .overlay > .ovclose .ibtn img { height: 63px; } }
+  @media (min-width: 1500px) and (pointer: fine) { .overlay > .ovclose .ibtn img { height: 69px; } }
+  @media (min-width: 2000px) and (pointer: fine) { .overlay > .ovclose .ibtn img { height: 76px; } }
+
+
+  /* Map bar: the battle plates need a height, and --pillh is only set while a battle is on screen. */
+  #maphud { --pillh: 34px; }
+  #maphud .maprow { gap: 4px 7px; }
+  /* Desktop packs 14 plates across one row; the last two only fit at the full 66px pill height
+     once the gaps come in. Scoped to pointer:fine so phones keep their roomier spacing. */
+  @media (pointer: fine) { #maphud .maprow { gap: 4px 5px; } }
+  #maphud .mapseed { position: relative; display: inline-block; height: var(--pillh, 34px); flex: 0 0 auto;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+  #maphud .mapseed > img { height: 100%; width: auto; display: block; }
+  #maphud .mapseed .mapseedval { position: absolute; top: 50%; right: 6%; width: 42%; height: 42%;
+    transform: translateY(-50%); display: flex; align-items: center; justify-content: center; }
+  #maphud .mapseed .gtext { height: 100%; }
+  #maphud .mapbtns { display: inline-flex; gap: 5px; align-items: center; flex: 0 1 auto; }
+  /* How to Play and Menu sit at the far right — they leave the run state and so are not part of the
+     run's own readout. The auto margin is safe HERE and only here: the bar measures 1292 of 1878, so
+     there is real slack for it to absorb. It was what forced the whole group onto a second row back
+     when the bar was over-wide, so keep an eye on it if this row ever gains another item. */
+  #maphud .mapbtns-r { margin-left: auto; }
+  /* EVERY item on this bar is exactly --pillh tall: the plates, the buttons, and the two text chips.
+     They were three different heights before — plates at --pillh, buttons at 0.92x, and the chips
+     sized by their own text padding. */
+  #maphud .mapbtns .ibtn { height: var(--pillh, 34px); }
+  #maphud .mapbtns .ibtn img { height: 100%; width: auto; }
+  #maphud .maprow > .pill { height: var(--pillh, 34px); display: inline-flex; align-items: center;
+    box-sizing: border-box; flex: 0 0 auto; }
+  /* landscape phones get the same single bar — that is the whole point of folding the two together */
+  :where(body.o-landscape) #maphud .maprow { flex-wrap: wrap; justify-content: flex-start; }
+  /* Sized by --pillh alone, with NO zoom on #maphud. The zoom predated these plates (it was there to
+     enlarge flat CSS chips) and it divides the row's available width: at 1.6 the bar had 1168px of
+     layout to fit 2043px of content, so the buttons wrapped no matter how small they were made. */
+  /* ONE height for the whole bar. 66px at desktop; the mid breakpoint steps down because the bar needs
+     roughly 1950px of row at 66 and a 1100-1500px window does not have it. */
+  @media (min-width: 820px)  and (pointer: fine) { #maphud { --pillh: 44px; } }
+  @media (min-width: 1500px) and (pointer: fine) { #maphud { --pillh: 66px; } }
+
+
+  /* Salvage: si() writes an inline height:14px on the icon, which CSS cannot override — hence a 14px
+     symbol on a 66px bar. siEm() sizes at 1.1em instead, so the icon follows the pill's own type size.
+     The min-width reserves room for the symbol plus four digits so the plate does not resize as salvage
+     climbs into the thousands. */
+  #maphud .maprow > .pill.mapsalv { gap: 7px; justify-content: center; padding: 0 14px;
+    min-width: calc(var(--pillh, 34px) * 1.85); font-size: calc(var(--pillh, 34px) * 0.30); }
+  #maphud .maprow > .pill.mapsalv .mapsalvv { font-family: var(--f-num); font-variant-numeric: tabular-nums; }
+
+
+  /* Ascension and the Field Compass ride WITH the act rather than as their own plates. They are facts
+     about this run, like the act is, and as separate pills they were the two items that pushed the bar
+     onto a second row at high ascension. Folding them in buys back that width. */
+  #maphud .maprow > .pill.mapact { min-width: calc(var(--pillh, 34px) * 2.8); gap: 0;
+    justify-content: center; }
+  /* The act label and its title are ONE flex item: whitespace between separate flex items is
+     discarded, which ran them together as "ACT 1/4First Contact". */
+  #maphud .mapact-x { margin-left: 10px; padding-left: 10px; border-left: 1px solid rgba(233,199,82,.35);
+    white-space: nowrap; }
+  #maphud .mapact-x img, #maphud .mapact-x svg { vertical-align: -2px; }
+
 </style>
   <script type="module" crossorigin src="./assets/index-Bg4vGSV4.js"></script>
 </head>
@@ -2026,12 +2094,6 @@
   </div>
   <div id="mapctrl">
     <button id="maplegtoggle" onclick="toggleLegend()" title="Node legend" aria-label="Legend"><img src="assets/ui/btn/legend.png" alt="Legend"></button>
-    <button class="ibtn sm" onclick="showRoster()" aria-label="Army"><img src="assets/ui/btn/army.png" alt="Army"></button>
-    <button class="ibtn sm" onclick="showDeck()" aria-label="Deck"><img src="assets/ui/btn/deck.png" alt="Deck"></button>
-    <button class="ibtn sm" onclick="showCards()" aria-label="Cards"><img src="assets/ui/btn/cards.png" alt="Cards"></button>
-    <button class="ibtn sm" onclick="showMedals()" aria-label="Medals"><img src="assets/ui/btn/medals.png" alt="Medals"></button>
-    <button class="ibtn sm" onclick="showHelp()" aria-label="How to play"><img src="assets/ui/btn/how_to_play.png" alt="How to play"></button>
-    <button class="ibtn sm" onclick="menu()" aria-label="Menu"><img src="assets/ui/btn/menu.png" alt="Menu"></button>
   </div>
 </div>
 <div id="app">
@@ -2101,7 +2163,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.41';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.42';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2833,6 +2895,59 @@ function fitLegend() {
 }
 window.addEventListener('resize', () => { clearTimeout(window._legFit); window._legFit = setTimeout(fitLegend, 120); });
 
+
+// Keep the whole map bar on ONE row. 66px is the target, but the row carries up to twelve items and the
+// widest case — four-digit salvage plus the compass plus an ascension tag — needs about 1987px against
+// the 1878 a 1920 screen actually gives it. Rather than pick a height that is too small for the common
+// case or let the buttons wrap in the rare one, measure and step down only when it is needed. Same
+// approach setPillH() uses for the battle bar and fitLegend() for the legend.
+function fitMapBar() {
+  const hud = document.getElementById('maphud');
+  const row = hud && hud.querySelector('.maprow');
+  if (!row || !row.clientWidth || row.children.length < 2) return;
+  hud.style.removeProperty('--pillh');                 // back to the stylesheet's target for this width
+  // Plate widths come from their IMAGES. Measuring before those load reports a bar far narrower than it
+  // will end up, so the fit concludes everything fits and never steps down. Re-run once they are in.
+  for (const im of row.querySelectorAll('img')) {
+    if (!im.complete) {
+      im.addEventListener('load', fitMapBar, { once: true });
+      im.addEventListener('error', fitMapBar, { once: true });   // a broken plate must not stall the fit
+      return;
+    }
+  }
+  // Ask the layout whether it wrapped rather than re-deriving it from widths + gaps. Summing
+  // getBoundingClientRect().width and adding an assumed gap disagreed with the real columnGap by
+  // enough to read an overflowing bar as fitting.
+  // Flatten .mapbtns: it is itself a flex container, so How to Play / Menu can drop to a second line
+  // while .mapbtns' own top stays put. Comparing only .maprow's direct children misses that entirely.
+  const pills = () => [...row.children].flatMap(k => k.children.length && k.classList.contains('mapbtns')
+                                                     ? [...k.children] : [k]);
+  const rowCount = () => new Set(pills().map(k => Math.round(k.getBoundingClientRect().top / 12))).size;
+  // Desktop packs the bar onto ONE line. A phone screen cannot hold 12 plates on one line at any
+  // legible size, so chasing a single row there just drove every pill to the 32px floor and still
+  // wrapped. Phones get a two-row budget instead.
+  const maxRows = (window.matchMedia && window.matchMedia('(pointer: fine)').matches) ? 1 : 2;
+  let h = parseFloat(getComputedStyle(hud).getPropertyValue('--pillh')) || 34;
+  for (let i = 0; i < 20 && rowCount() > maxRows; i++) {
+    h = Math.max(32, h - 2);
+    hud.style.setProperty('--pillh', h + 'px');
+    if (h <= 32) break;                                // floor: below this it wraps rather than shrink further
+  }
+  // Only pay for the shrink if it actually bought the row. A narrow phone at max salvage + ascension
+  // + compass cannot reach the budget at any size; without this it bottomed out at the floor and
+  // stayed on the same number of rows -- smaller plates for nothing.
+  if (rowCount() > maxRows) hud.style.removeProperty('--pillh');
+  // Plate text is measured with whatever font is active RIGHT NOW. Fitting against fallback metrics
+  // and never re-checking left the bar shrunk to a size the real font did not need.
+  try {
+    if (document.fonts && document.fonts.status !== 'loaded' && !window._mapBarFontHook) {
+      window._mapBarFontHook = 1;
+      document.fonts.ready.then(() => { window._mapBarFontHook = 0; fitMapBar(); });
+    }
+  } catch (e) {}
+}
+window.addEventListener('resize', () => { clearTimeout(window._mapBarFit); window._mapBarFit = setTimeout(fitMapBar, 120); });
+
 function renderLegend(){
   const kinds = ['skirmish','elite','event','shop','camp','cache'];
   const rows = kinds.map(k => {
@@ -2917,20 +3032,31 @@ function renderMapScreen() {
   _nodeFilter = null;                              // entering the map (or continuing a run) clears the legend spotlight
   const mv = document.getElementById('mapview'); if (mv) mv.classList.remove('legopen');
   const hqp = S.hq_max ? Math.round(100*S.hq_hp/S.hq_max) : 0;
+  // One bar, built from the SAME plate art the rest of the game uses: the battle HQ and Troops plates,
+  // and the menu's seed plaque. The map used to draw its own flat CSS chips here and then repeat the
+  // navigation as a second row of buttons along the bottom — two bars for one screen's worth of state.
+  // Everything now lives on top, which also gives the map back the height the bottom bar was taking.
   $('#maphud').innerHTML = `<div class="maprow">
-    <span class="pill gold">ACT ${S.act+1}/${S.acts} <b>${S.act_title}</b></span>
-    <span class="pill dim">Seed ${S.seed}</span>
-    <span class="pill ${hqp<34?'red':'grn'}">HQ ${S.hq_hp}/${S.hq_max}</span>
-    <span class="pill">Army ${S.roster.length}/${S.roster_cap}</span>
-    <span class="pill">Deck ${S.deck_size}</span>
-    <span class="pill gold">${si('salvage',14)} ${S.salvage}</span>
-    ${S.track_jumps?`<span class="pill gold" title="Field Compass — jump to a parallel path">${si('compass',14)} ${S.track_jumps}</span>`:''}
-    ${S.ascension?`<span class="pill gold">ASC ${S.ascension}</span>`:''}
-    ${(S.medals&&S.medals.length)?`<span class="pill gold" onclick="showMedals()">${si('medal',14)} ${S.medals.length}</span>`:''}
+    <span class="pill gold mapact"><span>ACT ${S.act+1}/${S.acts} <b>${S.act_title}</b></span>${
+      S.ascension ? `<span class="mapact-x">ASC ${S.ascension}</span>` : ''}${
+      S.track_jumps ? `<span class="mapact-x" title="Field Compass — jump to a parallel path">${si('compass',13)} ${S.track_jumps}</span>` : ''}</span>
+    <span class="mapseed" title="Run seed"><img src="assets/ui/btn/seed.png" alt="Seed"><span class="mapseedval">${goldText(String(S.seed))}</span></span>
+    ${bpill('hq', S.hq_hp, hqp<34?'danger':'', "showPillInfo('hq')")}
+    ${bpill('troops', S.roster.length+'/'+S.roster_cap, S.roster.length>=S.roster_cap?'full':'', 'showRoster()')}
+    <span class="pill gold mapsalv" title="Salvage">${siEm('salvage')}<span class="mapsalvv">${S.salvage}</span></span>
+    <span class="mapbtns">
+      <button class="ibtn sm" onclick="showDeck()" aria-label="Deck"><img src="assets/ui/btn/deck.png" alt="Deck"></button>
+      <button class="ibtn sm" onclick="showCards()" aria-label="Cards"><img src="assets/ui/btn/cards.png" alt="Cards"></button>
+      ${S.demo ? '' : `<button class="ibtn sm" onclick="showMedals()" aria-label="Medals"><img src="assets/ui/btn/medals.png" alt="Medals"></button>`}
+    </span>
+    <span class="mapbtns mapbtns-r">
+      <button class="ibtn sm" onclick="showHelp()" aria-label="How to play"><img src="assets/ui/btn/how_to_play.png" alt="How to play"></button>
+      <button class="ibtn sm" onclick="menu()" aria-label="Menu"><img src="assets/ui/btn/menu.png" alt="Menu"></button>
+    </span>
   </div>`;
   renderMapGraph();
   renderLegend();
-  requestAnimationFrame(fitLegend);   // measure once the legend has laid out
+  requestAnimationFrame(() => { fitMapBar(); fitLegend(); });   // measure once the bar and legend have laid out
   if (S.result) showRunResult();
   else if (S.pending) showNode();
   else closeOv('ovNode');
@@ -3621,8 +3747,8 @@ function showFoeInfo() {
       ${obj ? `<div style="margin-top:10px;padding-top:8px;border-top:1px solid #3d3a29">
         <b class="cyan" style="font-size:13px">OBJECTIVE — ${obj.text||''}</b>
         <div class="d" style="margin-top:4px;line-height:1.5">${obj.brief}</div></div>` : ''}
-      <div style="text-align:center;margin-top:12px">${pbtn(boss?'continue':'confirm', "$('#ovInspect').classList.remove('show')", {cls:'h'})}</div>
-    </div></div>`;
+    </div></div>
+    <div class="ovclose">${ibtn(boss ? 'continue' : 'confirm', "$('#ovInspect').classList.remove('show')")}</div>`;
   $('#ovInspect').classList.add('show');
 }
 // Portrait: pick ONE height for every battle pill so the row-1 pills (+ objective) span the
