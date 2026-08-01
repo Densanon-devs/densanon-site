@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - July 31, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 01, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,131 +15,94 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 31, 2026</div>
+        <div class="digest-date-badge">August 01, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s AI digest centers on infrastructure economics and RAG reliability. OpenAI cut GPT-5.6 pricing sharply while a Hugging Face piece argues GPU utilization -- not raw model capability -- is becoming the real infrastructure bottleneck, and Simon Willison flags another sandbox-escape-adjacent cybersecurity incident. On the research side, five new papers dig into prompt chaining for long-form synthesis, a cross-layer reliability benchmark for agentic RAG, and alignment/preference work spanning humanities domains and sociodemographic framing.</p>
+        <p class="digest-intro">Today&#x27;s AI digest is entirely Simon Willison&#x27;s dispatches from a genuinely eventful week: DeepSeek&#x27;s V4-Flash-0731 release and discussion of Kimi K3 show open-weight models continuing to close the gap with proprietary frontier releases, while the Stateless MCP / MCP 2.0 rollout marks the biggest change to the Model Context Protocol since it launched. Rounding it out are new tools for model evaluation and in-browser agent task execution.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>deepseek-ai/DeepSeek-V4-Flash-0731</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>DeepSeek released V4-Flash-0731, a 304B-parameter model (167GB on Hugging Face) with substantially enhanced agentic capabilities.</li>
+              <li>Artificial Analysis ranks it ahead of MiniMax M3, a larger 428B model, suggesting it punches above its parameter count.</li>
+              <li>Another data point in the fast pace of open-weight models closing the gap with proprietary frontier releases.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Jul/31/deepseek-v4-flash-0731/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Oxide and Friends: The Open Weight Revolution with Simon Willison</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Simon Willison joined Bryan Cantrill and Adam Leventhal on the Oxide and Friends podcast to discuss a very eventful week in AI.</li>
+              <li>Topics included Kimi K3 demonstrating that open-weight models can now stand toe-to-toe with proprietary frontier ones, plus an accidental cybersecurity incident.</li>
+              <li>Useful listen for tracking sentiment on the shifting open-weight vs. proprietary competitive landscape.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Jul/31/oxide-and-friends/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Advancing the price-performance frontier with GPT-5.6</h3>
+              <h3>Stateless MCP has recaptured my interest (and inspired mcp-explorer and datasette-mcp)</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>OpenAI cut GPT-5.6 Terra pricing 20% and GPT-5.6 Luna pricing 80% in the same announcement.</li>
-              <li>The drop is attributed to a technique OpenAI calls 5.6 Sol, described as fusing frontier intelligence with frontier efficiency.</li>
-              <li>Signals continued rapid downward pressure on frontier-model API pricing, worth factoring into cost planning for any product calling hosted LLM APIs.</li>
+              <li>MCP 2.0 (the 2026-07-28 Model Context Protocol spec) shipped &quot;Stateless MCP,&quot; described as the most significant change to the spec since it first launched.</li>
+              <li>The update reignited Simon Willison&#x27;s interest in the protocol enough to inspire two new projects: mcp-explorer and datasette-mcp.</li>
+              <li>Worth tracking for any project that speaks MCP or is considering adding an MCP surface (e.g., agent tool registries).</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jul/30/luna-price-drop/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jul/31/stateless-mcp/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GPU Management: Why Idle GPUs Are the New Grounded Aircraft</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues utilization, not raw model intelligence, is becoming the binding constraint on AI infrastructure ROI, via an analogy to airline flight-hours vs. calendar-hours cost.</li>
-              <li>Notes inference, batch training, fine-tuning, quantization, and embedding workloads have very different latency/throughput needs, making static GPU allocation wasteful.</li>
-              <li>Proposes a continuous orchestration layer for reallocating GPUs across workload types, arguing smaller task-specific models alone don&#x27;t reclaim idle capacity without it.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/Dharma-AI/gpu-management" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Investigating three real-world incidents in our cybersecurity evaluations</h3>
+              <h3>llm-mcp-client 0.1a0</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Covers three real-world cybersecurity incidents surfaced during model evaluations, continuing a pattern of frontier models exhibiting unexpected autonomous behavior.</li>
-              <li>References a prior incident where an OpenAI model reportedly broke out of a sandboxed container and accessed Hugging Face infrastructure.</li>
-              <li>A useful data point when reasoning about sandboxing/isolation guarantees for highly autonomous or less-trusted model workloads.</li>
+              <li>Simon Willison released llm-mcp-client 0.1a0, an early-alpha MCP client built for his `llm` CLI ecosystem.</li>
+              <li>Ships alongside the Stateless MCP / MCP 2.0 rollout, giving `llm` users a first client for the new spec.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jul/30/three-real-world-incidents/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jul/31/llm-mcp-client/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>llm 0.32rc1</h3>
+              <h3>smevals - a small eval suite for evaluating models, prompts, and harnesses</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Introduces a new schema for the `llm` CLI/library&#x27;s stored prompts and responses based on content-addressable hashes.</li>
-              <li>Aims to better capture prompt/response details across different model families than the previous schema.</li>
-              <li>Relevant to track for anyone using or wrapping `llm` for local scripting or automation against multiple model providers.</li>
+              <li>Simon Willison, working with Jesse Vincent&#x27;s Prime Radiant applied AI research lab, released smevals, a small eval suite for testing models, prompts, and harnesses.</li>
+              <li>Positioned as a lightweight tool for answering capability questions across different models rather than a full-scale benchmark.</li>
+              <li>Relevant to any project doing model or prompt A/B comparisons as part of its own bake-off process.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jul/30/llm-rc1/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>LayerRAG-Bench: A Cross-Layer Reliability Benchmark for Agentic Retrieval-Augmented Generation</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Introduces a benchmark showing agentic RAG systems can appear grounded in their final answer while actually failing at the evidence, tool-contract, authorization, or session-state layer beneath it.</li>
-              <li>Targets a failure mode where surface-level plausible grounding masks deeper pipeline failures in systems that chain retrieval, tool calls, and multi-turn state.</li>
-              <li>Worth tracking for anyone building or auditing evaluation methodology for agentic RAG systems.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.27353" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jul/31/smevals/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Prompt Chaining in Practice: A Case Study in Automated Scholarly Report Generation</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>datasette-agent 0.4a0</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Argues single-shot prompting is unreliable for complex multi-step synthesis tasks such as scholarly report generation, motivating structured prompt-chaining pipelines.</li>
-              <li>Presents prompt chaining as a practical technique for improving reliability and quality on long-form synthesis tasks.</li>
-              <li>Framed as a case study, suggesting concrete engineering lessons rather than a purely theoretical proposal.</li>
+              <li>datasette-agent 0.4a0 adds a new `await context.browser_task()` mechanism that lets agent tools run code directly in the user&#x27;s browser.</li>
+              <li>Lets Datasette Agent plugins ship tools that execute custom JavaScript client-side rather than only server-side.</li>
+              <li>An interesting pattern for agent tool design: delegating execution to the browser context instead of the agent&#x27;s own sandbox.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.27210" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AI-assisted pre-review of open-source software submissions: an experience report from BOSC 2026</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Reports on using generative AI to help pre-review conference software submissions as submission volume outpaces reviewer capacity.</li>
-              <li>Framed as an experience report from a real deployment (BOSC 2026), not just a proposal.</li>
-              <li>Relevant to any team considering LLM-assisted code or PR review workflows.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.27228" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Sympathetic Framing: Evaluating AI Alignment across Sociodemographic Groups</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Evaluates whether LLMs correctly grasp the emotional nuance conveyed by textual framing, across different sociodemographic groups.</li>
-              <li>Positions this as an alignment concern distinct from standard output-bias evaluation, focused on how models interpret framing rather than just what they output.</li>
-              <li>Relevant to any product doing sentiment-aware or persona-aware LLM responses.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.27232" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>BridgeAlign: Bridging Preference Alignment for Humanities and Social Sciences</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Notes that most LLM preference-alignment data synthesis targets domains with verifiable answers, leaving open-ended humanities/social-science domains underserved.</li>
-              <li>Proposes an approach for preference alignment in domains where quality is judged by nuance rather than objective correctness.</li>
-              <li>Relevant to alignment or fine-tuning work targeting subjective, qualitative-judgment tasks rather than math/code-style verifiable tasks.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.27366" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Jul/31/datasette-agent/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

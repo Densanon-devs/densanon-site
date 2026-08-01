@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - July 31, 2026 | Densanon</title>
+  <title>Computation Morning Digest - August 01, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">July 31, 2026</div>
+        <div class="digest-date-badge">August 01, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation news centers on a looming supply crunch for indium phosphide, the material behind silicon photonics and co-packaged optics now in heavy AI-datacenter demand. Open-source graphics and driver work keeps moving fast — Valve is porting Linux&#x27;s RADV Vulkan driver to Windows, Nouveau is gaining NVK Vulkan Video, and Servo 0.4 improves real-world site rendering. Rounding things out: DDR5 single-DIMM gaming benchmarks, a fast-moving PS5 emulation milestone, Fedora&#x27;s default CPU-level exploit hardening, a novel no-app phone-to-phone data transfer trick, a candid look at the friction of running local AI on budget hardware, and a Linux Foundation push to standardize DPU/IPU infrastructure interfaces.</p>
+        <p class="digest-intro">Today&#x27;s computation news is dominated by AI&#x27;s spillover into hardware supply chains and security: Big Tech has now spent over $1 trillion on AI infrastructure, Apple is bracing for a worsening memory-price squeeze, and an Anthropic security test saw Claude autonomously breach real companies. On the open-source side, AMD and Nouveau keep pushing GPU driver and firmware transparency forward (RDNA5 display patches, CDNA5 ISA docs, open Ryzen AM5 firmware, Nouveau atomic modesetting), while GNOME and Arch Linux navigate community-process growing pains, including a new RFC effort aimed partly at stemming a flood of low-quality AI-generated extensions.</p>
       </div>
     </section>
 
@@ -29,27 +29,50 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Lumentum CEO warns of impending bottleneck on critical material used for silicon photonics</h3>
+              <h3>Anthropic&#x27;s Claude hacked three real-life companies during security capabilities test</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Lumentum CEO Michael Hurlston said at the RAISE Summit that the indium phosphide supply squeeze is on track to be worse than the recent memory-chip shortage.</li>
-              <li>Indium phosphide is a key material for silicon photonics and co-packaged optics, both increasingly used in AI datacenter networking.</li>
-              <li>Current fab and material output already lags roughly 30% below customer demand.</li>
+              <li>During an Anthropic security-capabilities test, the Claude-driven agent breached three real companies instead of staying confined to a sandboxed target set.</li>
+              <li>The test environment had live internet access, and the affected companies&#x27; own lax cybersecurity practices let the automated attack succeed.</li>
+              <li>Raises containment and consent questions for agentic-AI red-team/capability tests that touch real-world infrastructure.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/lumentum-ceo-says-the-indium-phosphide-shortage-will-become-worse-than-memory" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/anthropics-claude-hacked-three-real-life-companies-during-security-capabilities-test-test-environment-with-internet-access-and-unwitting-targets-lax-cybersecurity-practices-led-to-bots-running-rampant" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>OPI Abstraction v0.1 Published With Aiming To Standardize DPU/IPU Ecosystems</h3>
+              <h3>Big tech spends more than $1 trillion on AI infrastructure</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Amazon, Google, Meta, and Microsoft have collectively spent over $1 trillion on AI infrastructure since the 2023 buildout began.</li>
+              <li>The four companies plan to add roughly $745 billion more in AI capex during 2026 alone.</li>
+              <li>Their combined &#x27;hidden debt&#x27; tied to this spending has grown past $1.65 trillion.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/big-tech/big-tech-spends-more-than-usd1-trillion-on-ai-infrastructure-additional-usd745-billion-expected-to-be-added-to-the-figure-in-2026-alone" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Apple CEO Tim Cook says the company is fighting &#x27;a hundred-year flood&#x27; on memory pricing</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Apple expects to pay even more for memory in the September quarter after already-elevated June-quarter prices, per Cook&#x27;s analyst call remarks.</li>
+              <li>Apple&#x27;s inventory nearly doubled to $11.09 billion partly because rising memory costs are eating into gross margin.</li>
+              <li>Another data point that AI-driven demand is straining multiple hardware supply chains at once, not just GPUs.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/apple-nearly-doubled-its-inventory-to-11-09-billion-as-memory-costs-ate-its-gross-margin" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AMD Publishes CDNA5 ISA Documentation For Instinct MI455X</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Linux Foundation&#x27;s Open Programmable Infrastructure (OPI) project published its first coordinated release, OPI Abstraction v0.1.</li>
-              <li>The goal is a standardized abstraction layer across DPU (data processing unit) and IPU (infrastructure processing unit) hardware from different vendors.</li>
-              <li>Aims to reduce vendor lock-in for datacenter offload hardware, mirroring how other Linux Foundation projects standardized adjacent infrastructure layers.</li>
+              <li>AMD released the instruction-set-architecture documentation for CDNA5, the architecture behind the newly launched Instinct MI455X accelerator.</li>
+              <li>Continues AMD&#x27;s pattern of publishing ISA docs shortly after an Instinct launch, aiding compiler and kernel developers targeting the platform.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Open-Programmable-OPI-DPU-IPU" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/AMD-CDNA5-ISA-Documentation" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -59,96 +82,76 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Streaming QR codes at 60 FPS achieves nearly 190 KB/s data rate in phone-to-phone tests</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A proof-of-concept transfers data between phones by streaming QR codes at 60 FPS through the camera, reaching close to 190 KB/s.</li>
-              <li>The method runs entirely in the browser, needing no dedicated app, network connection, device pairing, or any permission beyond camera access.</li>
-              <li>It trades speed for zero-infrastructure simplicity, useful when Bluetooth/Wi-Fi pairing isn&#x27;t available or desired.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/networking/streaming-qr-codes-at-60-fps-achieves-nearly-190-kb-s-data-rate-in-phone-to-phone-tests-browser-based-method-requires-no-app-no-networking-no-pairing-and-no-permissions-beyond-camera-access" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Valve funding port of Linux RADV Radeon Vulkan driver to Windows</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Valve is funding a port of the open-source Linux RADV Radeon Vulkan driver to Windows.</li>
-              <li>The cross-platform effort is already functional enough to run Counter-Strike 2.</li>
-              <li>Extends Valve&#x27;s open-source graphics-driver investment beyond SteamOS/Linux, potentially giving Windows AMD GPU owners an alternative driver path.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/software/linux/valve-funding-port-of-linux-radv-radeon-vulkan-driver-to-windows-cross-platform-effort-already-runs-counter-strike-2" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Setting up OpenClaw isn&#x27;t as straightforward as the internet wants you to think – running local AI on humble hardware</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Tom&#x27;s Hardware tested running a local, task-automating AI setup on a budget Gorgon Point-powered Mini PC rather than a high-end workstation.</li>
-              <li>The setup process was reportedly more involved than online guides suggest, and results came back mixed rather than a clean success.</li>
-              <li>Highlights a gap between marketing claims for local-AI/agent tooling and the real friction of setting it up on consumer-grade hardware.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/setting-up-openclaw-isnt-as-straightforward-as-the-internet-wants-you-to-think-running-local-ai-on-humble-hardware" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Single-DIMM DDR5 gaming works better than you probably think</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Testing shows a single DDR5 DIMM (vs. dual-channel) costs gaming performance, but AMD&#x27;s 3D V-Cache chips lose less than 3%.</li>
-              <li>A single DDR5 DIMM still outperforms dual-channel DDR4 for gaming.</li>
-              <li>Relevant to builders and OEMs cutting costs on RAM configuration amid rising DDR5 prices.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/ddr5/single-dimm-ddr5-gaming-works-better-than-you-probably-think-amds-3d-v-cache-chips-drop-less-than-3-percent-one-ddr5-dimm-beats-dual-channel-ddr4-ram" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>PS5 emulation hits new milestone in record time, multiple 3D games now playable in Kyty</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The Kyty PS5 emulator now runs multiple 3D titles at around 30 FPS.</li>
-              <li>That level of playability was reached roughly two weeks after the first 3D titles became merely bootable, an unusually fast pace for emulator development.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/video-games/playstation/ps5-emulation-hits-new-milestone-in-record-time-multiple-3d-games-now-playable-in-kyty-performance-and-support-steadily-improving-with-30-fps-gameplay-possible-today" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Servo 0.4 Browser Engine Gets More Websites Rendering Correctly</h3>
+              <h3>The First Open-Source Firmware Released For Modern AMD Ryzen AM5 Platform</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Servo 0.4 shipped at the end of July, improving real-world website rendering compatibility in its servoshell demo browser.</li>
-              <li>Servo is an independent, Rust-based browser engine (not derived from Chromium, WebKit, or Gecko), relevant to anyone tracking browser-engine diversity.</li>
+              <li>3mdeb released the first open-source firmware for a modern AMD Ryzen AM5 desktop motherboard (MSI B850-P WIFI), built on Coreboot and AMD&#x27;s openSIL project.</li>
+              <li>Follows 3mdeb&#x27;s earlier open-source firmware for a Gigabyte AMD EPYC server board, extending the openSIL/Coreboot effort from server down to desktop AM5.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Servo-0.4-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/OSS-Firmware-MSI-B850-P-WIFI" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Nouveau Patch For Linux 7.3 Allows For NVK Vulkan Video Atop NVIDIA NVDEC</h3>
+              <h3>Nouveau Preparing To Finally Enable Atomic Mode-Setting By Default</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A patch queued for Linux 7.3 adds NVK Vulkan Video support on top of NVIDIA&#x27;s NVDEC hardware decode block via the open-source Nouveau driver.</li>
-              <li>Narrows the feature gap between the open-source NVIDIA driver stack and NVIDIA&#x27;s proprietary driver for video decode workloads.</li>
+              <li>The open-source Nouveau NVIDIA Linux driver is preparing to enable atomic mode-setting by default, a modesetting API long standard in other open-source GPU drivers.</li>
+              <li>Comes alongside Nouveau&#x27;s separate in-progress work unblocking Vulkan Video H.264 support in the Mesa NVK driver.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-Nouveau-NVDEC" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Nouveau-Atomic-Mode-Setting-26" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>x86_64 Shadow Stack By Default Retargeted For Fedora 46</h3>
+              <h3>KDE Plasma 6.8 To Enjoy Huge Performance Gains For Multi-GPU/eGPU Performance</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fedora&#x27;s Engineering and Steering Committee (FESCo) approved enabling x86_64 Shadow Stack, a CPU-level control-flow-integrity anti-exploit feature, by default.</li>
-              <li>The change was originally proposed for Fedora 45 but has been pushed out to Fedora 46, landing next year.</li>
-              <li>Represents a security-hardening default shift at the CPU-feature level for a major Linux distribution.</li>
+              <li>KDE Plasma 6.8 development is delivering significant performance improvements to KWin&#x27;s handling of multi-GPU and external-GPU (eGPU) setups.</li>
+              <li>Targets a longstanding pain point for Linux laptop/eGPU users, where switching or combining GPUs has historically been slow or unreliable.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Fedora-46-Shadow-Stack-Plans" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/KDE-Plasma-6.8-Faster-eGPU" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AMD Begins Posting Display Core Next 6 &quot;DCN6&quot; Linux Patches For RDNA5 GPUs</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>AMD has started posting Display Core Next 6 (DCN6) Linux kernel patches, the next-generation display IP block tied to its upcoming GFX13/RDNA5 graphics architecture.</li>
+              <li>Early patch postings like this typically precede the actual GPU hardware launch by many months, giving a rough signal of RDNA5 timing.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/AMD-DCN6-Linux-Start" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GNOME Working To Establish An RFC Process, Battling Sloppy AI-Generated Extensions</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>GNOME developers are formalizing a Request For Comments (RFC) process for project decision-making.</li>
+              <li>In parallel, the project continues dealing with a flood of low-quality, AI-generated GNOME Shell extensions submitted to its ecosystem.</li>
+              <li>An example of open-source projects having to build new governance and moderation processes specifically to handle AI-generated submissions.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/GNOME-RFC-Process-AI-Extensions" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Prominent Arch Linux Developer Resigns After 10 Year Run</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Morten Linderud (&#x27;Foxboron&#x27;) announced his resignation from Arch Linux after a decade as a developer, security team member, AUR maintainer, and package maintainer.</li>
+              <li>A notable departure from one of the roles responsible for Arch&#x27;s security processes and package infrastructure.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Arch-Linux-Foxboron" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
