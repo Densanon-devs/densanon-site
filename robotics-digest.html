@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 01, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 02, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 01, 2026</div>
+        <div class="digest-date-badge">August 02, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Industry activity dominates today&#x27;s pool -- Procore&#x27;s $845M DroneDeploy acquisition, KUKA&#x27;s automation platform rollout, and Kodiak&#x27;s autonomous trucking expansion all point to robotics consolidating around production deployments rather than demos. On the practical side, hands-on posts cover a budget perception stack, a hidden Pepper motor fix, wireless robot programming, and fast local multimodal inference, while the community looks ahead to a Q&amp;A with RRT co-inventor and Symbotic CTO James Kuffner.</p>
+        <p class="digest-intro">A small but substantive robotics pool today. Google DeepMind says Gemini Robotics 2 can reason through whole-body movement rather than just end-effector goals, which is the shift from arm control to embodied planning. On the practical side, ROS Discourse delivers two genuinely useful field reports: a detailed accounting of five failure modes when running uv-managed virtual environments on stock ROS 2 (including a PyTorch+CUDA node), and QERRA-v2 Classical, a two-layer safety middleware that evaluates robot actions before execution with a zero-ML physical hazard layer.</p>
       </div>
     </section>
 
@@ -29,50 +29,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>FCC robot ruling shines a spotlight on U.S. policy; how next-gen AI can help warehousing</h3>
+              <h3>Google DeepMind says Gemini Robotics 2 enables full body control</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A recent FCC robot-related ruling has renewed scrutiny of U.S. robotics policy.</li>
-              <li>OSARO&#x27;s Derek Pridmore argues that despite steady progress in warehouse robots, real-world safety and reliability still depend on specialized, layered AI systems rather than general-purpose models.</li>
-              <li>Frames the ruling as a prompt for the industry to weigh in on how AI can responsibly scale warehouse automation.</li>
+              <li>DeepMind claims Gemini Robotics 2 lets robots reason through every movement, not just plan an end-effector trajectory.</li>
+              <li>Full-body control unlocks tasks that need coordinated base, torso and limb motion — reaching low, working in clutter, maintaining balance under load.</li>
+              <li>The generalist-model-as-controller thesis keeps advancing; the open question remains latency and reliability under real-world perturbation.</li>
             </ul>
-            <a href="https://www.therobotreport.com/fcc-robot-ruling-shines-spotlight-on-u-s-policy-how-next-gen-ai-can-help-warehousing/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>KUKA deploys Automation Management Platform for North American automakers</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>KUKA rolled out its Automation Management Platform at KTPO, a major manufacturing facility in Ohio, for North American automakers.</li>
-              <li>Signals continued push by industrial robot makers to layer fleet-level management software on top of existing hardware deployments.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/kuka-deploys-automation-management-platform-north-american-automakers/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Procore Technologies acquires DroneDeploy for $845M</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Procore Technologies acquired drone/aerial-imaging company DroneDeploy for $845M.</li>
-              <li>Procore plans to integrate DroneDeploy&#x27;s visual intelligence technology to connect digital project data with physical construction sites.</li>
-              <li>Deal signals continued consolidation between construction-tech platforms and robotics/drone data-capture companies.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/procore-technologies-acquires-dronedeploy-845m/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Atlas Energy to expand Kodiak-powered autonomous truck fleet to 100 vehicles by 2027</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Atlas Energy Solutions is expanding its Kodiak AI-powered autonomous truck fleet in the Permian Basin to 100 vehicles by 2027.</li>
-              <li>Partnership targets oilfield logistics, using Kodiak&#x27;s physical-AI autonomous driving stack for driverless trucking.</li>
-              <li>One of the larger near-term commercial autonomous-trucking commitments in the energy sector.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/07/31/atlas-energy-to-expand-kodiak-powered-autonomous-truck-fleet-to-100-vehicles-by-2027/103826/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/google-deepmind-says-gemini-robotics-2-enables-full-body-control/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -82,50 +47,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Pepper (NAOqi 2.9): a hidden `ALMotion._setMotionPosture` API lets you change the driving posture, and it fixed my overheating knee motor</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>QERRA-v2 Classical: Two-Layer Moral &amp; Physical Safety Middleware for ROS 2 &amp; Behavior Trees</h3>
+              <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Found an undocumented NAOqi 2.9 API (ALMotion._setMotionPosture) that lets you override Pepper&#x27;s driving posture.</li>
-              <li>Lowering HipPitch via this API dropped knee-motor current from roughly 3 A to 0.35 A, resolving chronic knee-motor overheating.</li>
-              <li>Practical low-level fix for anyone maintaining aging Pepper hardware where official posture tuning isn&#x27;t exposed.</li>
+              <li>Open-source, fully explainable middleware that evaluates autonomous robot actions before they execute.</li>
+              <li>QERRA-HSR, the physical safety layer, is zero-ML pure Python: it scores hazard proximity and human presence deterministically, so its decisions are auditable.</li>
+              <li>The two-layer split — deterministic physical gate underneath a higher-level policy layer — is a pattern worth copying anywhere a model proposes actions that touch the real world.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vcjj9t/pepper_naoqi_29_a_hidden_almotion/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/qerra-v2-classical-two-layer-moral-physical-safety-middleware-for-ros-2-behavior-trees/57110" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Perception on a budget</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>Uv on ROS 2: a field report on workspace-level virtual environments</h3>
+              <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Graduation-project writeup scoping a full perception stack, including edge compute, for a mobile manipulator under a $700 total budget.</li>
-              <li>Plans to run Nav2 locally on a Jetson Orin Nano Super, leaving roughly $450 for sensors and cameras.</li>
-              <li>Concrete data point for low-cost, edge-only perception plus navigation builds outside well-funded labs.</li>
+              <li>A workspace-level uv-managed venv does work on stock apt-installed ROS 2, including a PyTorch+CUDA node — verified on Jazzy.</li>
+              <li>Five reproducible failure modes are documented along the way, and none of the mechanisms are Jazzy-specific.</li>
+              <li>Includes measurements on the known shebang workaround plus minimal colcon/ament proposals to fix the rough edges upstream.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vbrip2/perception_on_a_budget/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>I built a tiny ESP32 robot that can be programmed wirelessly in real time with MicroBlocks</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Built a small ESP32-based robot that can be reprogrammed wirelessly in real time using the MicroBlocks visual programming environment.</li>
-              <li>Demonstrates live wireless iteration on microcontroller-class robots, useful for rapid hobbyist and educational prototyping.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vcc1dj/i_built_a_tiny_esp32_robot_that_can_be_programmed/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>I built a Rust inference framework that runs Qwen3.5 2B with VL support 10x faster than PyTorch on Apple Silicon -- and it supports TTS, ASR, OCR, and GGUF out of the box</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>New Rust-based inference framework runs the Qwen3.5 2B vision-language model roughly 10x faster than PyTorch on Apple Silicon, per the author&#x27;s claim.</li>
-              <li>Also bundles TTS, ASR, OCR, and native GGUF support, positioning it as an all-in-one on-device multimodal inference stack.</li>
-              <li>Relevant to robotics builders wanting fast, local multimodal inference on compact edge hardware.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vccfgo/i_built_a_rust_inference_framework_that_runs/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/uv-on-ros-2-a-field-report-on-workspace-level-virtual-environments-five-failure-modes-and-minimal-colcon-ament-proposals/57111" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -135,15 +77,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Pulling questions for James Kuffner, CTO of Symbotic</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>Hiring or looking for jobs in Robotics Software Engineering?</h3>
+              <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Community thread crowdsourcing interview questions for James Kuffner, co-inventor of the RRT motion-planning algorithm and current CTO of Symbotic.</li>
-              <li>Kuffner&#x27;s background spans coining the term &quot;Cloud Robotics,&quot; leading Google Robotics, and running Toyota&#x27;s TRI-AD and Woven Planet before joining Symbotic.</li>
-              <li>Highlights community engagement around a figure central to modern motion planning and warehouse robotics.</li>
+              <li>Community thread on how scattered the robotics software job market is — postings live on single university pages, company career sites, and mailing lists.</li>
+              <li>The gap is discovery: candidates who specifically want the software side often never see the right openings.</li>
+              <li>Doubles as a rough census of who is currently hiring in robotics software.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vbvmea/pulling_questions_for_james_kuffner_cto_of/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/hiring-or-looking-for-jobs-in-robotics-software-engineering/57104" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

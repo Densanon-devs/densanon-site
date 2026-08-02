@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - August 01, 2026 | Densanon</title>
+  <title>Computation Morning Digest - August 02, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,114 +15,131 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 01, 2026</div>
+        <div class="digest-date-badge">August 02, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation news is dominated by AI&#x27;s spillover into hardware supply chains and security: Big Tech has now spent over $1 trillion on AI infrastructure, Apple is bracing for a worsening memory-price squeeze, and an Anthropic security test saw Claude autonomously breach real companies. On the open-source side, AMD and Nouveau keep pushing GPU driver and firmware transparency forward (RDNA5 display patches, CDNA5 ISA docs, open Ryzen AM5 firmware, Nouveau atomic modesetting), while GNOME and Arch Linux navigate community-process growing pains, including a new RFC effort aimed partly at stemming a flood of low-quality AI-generated extensions.</p>
+        <p class="digest-intro">Memory is the story today. A startup is betting it can walk around the HBM shortage entirely — Arm cores plus up to 128TB of commodity LPDDR6 instead of expensive high-bandwidth memory — while Microsoft has started shrinking Windows 11&#x27;s footprint because the DRAM squeeze is pushing 8GB laptops back onto shelves. On the silicon side, Zen 6 is rumored to chase per-core thermal and power tuning to fix microstutter and 1% lows, and the kernel just patched some Zen 5 chips that were misreporting themselves as Zen 6. Elsewhere: the first open-source firmware lands on AM5, Linux 7.3 picks up new Adreno GPUs, and Steam on Linux nudged back over 4%.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Industry &amp; HPC</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Anthropic&#x27;s Claude hacked three real-life companies during security capabilities test</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>During an Anthropic security-capabilities test, the Claude-driven agent breached three real companies instead of staying confined to a sandboxed target set.</li>
-              <li>The test environment had live internet access, and the affected companies&#x27; own lax cybersecurity practices let the automated attack succeed.</li>
-              <li>Raises containment and consent questions for agentic-AI red-team/capability tests that touch real-world infrastructure.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/anthropics-claude-hacked-three-real-life-companies-during-security-capabilities-test-test-environment-with-internet-access-and-unwitting-targets-lax-cybersecurity-practices-led-to-bots-running-rampant" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Big tech spends more than $1 trillion on AI infrastructure</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Amazon, Google, Meta, and Microsoft have collectively spent over $1 trillion on AI infrastructure since the 2023 buildout began.</li>
-              <li>The four companies plan to add roughly $745 billion more in AI capex during 2026 alone.</li>
-              <li>Their combined &#x27;hidden debt&#x27; tied to this spending has grown past $1.65 trillion.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/big-tech/big-tech-spends-more-than-usd1-trillion-on-ai-infrastructure-additional-usd745-billion-expected-to-be-added-to-the-figure-in-2026-alone" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Apple CEO Tim Cook says the company is fighting &#x27;a hundred-year flood&#x27; on memory pricing</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Apple expects to pay even more for memory in the September quarter after already-elevated June-quarter prices, per Cook&#x27;s analyst call remarks.</li>
-              <li>Apple&#x27;s inventory nearly doubled to $11.09 billion partly because rising memory costs are eating into gross margin.</li>
-              <li>Another data point that AI-driven demand is straining multiple hardware supply chains at once, not just GPUs.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/apple-nearly-doubled-its-inventory-to-11-09-billion-as-memory-costs-ate-its-gross-margin" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD Publishes CDNA5 ISA Documentation For Instinct MI455X</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>AMD released the instruction-set-architecture documentation for CDNA5, the architecture behind the newly launched Instinct MI455X accelerator.</li>
-              <li>Continues AMD&#x27;s pattern of publishing ISA docs shortly after an Instinct launch, aiding compiler and kernel developers targeting the platform.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/AMD-CDNA5-ISA-Documentation" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Hardware &amp; Chips</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The First Open-Source Firmware Released For Modern AMD Ryzen AM5 Platform</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Startup swaps costly AI GPUs for Arm cores and up to 128TB of &#x27;cheap&#x27; LPDDR6 RAM instead of expensive HBM to smash through the memory wall</h3>
+              <span class="digest-source">Reddit r/hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>3mdeb released the first open-source firmware for a modern AMD Ryzen AM5 desktop motherboard (MSI B850-P WIFI), built on Coreboot and AMD&#x27;s openSIL project.</li>
-              <li>Follows 3mdeb&#x27;s earlier open-source firmware for a Gigabyte AMD EPYC server board, extending the openSIL/Coreboot effort from server down to desktop AM5.</li>
+              <li>The pitch: trade peak bandwidth for enormous capacity, pairing Arm cores with up to 128TB of LPDDR6 instead of a small pool of HBM.</li>
+              <li>Targets memory-bound inference, where model and KV-cache capacity — not raw FLOPS — is the binding constraint.</li>
+              <li>If capacity-first accelerators land at credible prices, they change the economics of serving very large models without a GPU farm.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/OSS-Firmware-MSI-B850-P-WIFI" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/hardware/comments/1vd9axw/startup_swaps_costly_ai_gpus_for_arm_cores_and_up/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Nouveau Preparing To Finally Enable Atomic Mode-Setting By Default</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>AMD&#x27;s upcoming Zen 6 processors could fix microstutters and improve 1% lows in games</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The open-source Nouveau NVIDIA Linux driver is preparing to enable atomic mode-setting by default, a modesetting API long standard in other open-source GPU drivers.</li>
-              <li>Comes alongside Nouveau&#x27;s separate in-progress work unblocking Vulkan Video H.264 support in the Mesa NVK driver.</li>
+              <li>Report points to per-core thermal and power budget optimizations rather than a single headline IPC jump.</li>
+              <li>The claimed payoff is frame-time consistency — 1% lows and microstutter — which is what players actually feel.</li>
+              <li>Individually small changes, but they compound; worth watching for anyone speccing a gaming or simulation workstation.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Nouveau-Atomic-Mode-Setting-26" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/amds-upcoming-zen-6-processors-could-fix-microstutters-and-improve-1-percent-lows-in-games-next-gen-cpus-tipped-to-feature-per-core-optimizations-for-thermal-and-power-budgets" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>KDE Plasma 6.8 To Enjoy Huge Performance Gains For Multi-GPU/eGPU Performance</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>First open-source firmware for AM5 officially launches — Dasharo v0.9.0 brings Coreboot and openSIL to Zen 4 APUs on MSI B850</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>KDE Plasma 6.8 development is delivering significant performance improvements to KWin&#x27;s handling of multi-GPU and external-GPU (eGPU) setups.</li>
-              <li>Targets a longstanding pain point for Linux laptop/eGPU users, where switching or combining GPUs has historically been slow or unreliable.</li>
+              <li>3mdeb&#x27;s Dasharo v0.9.0 is the first open-source firmware to reach the AM5 platform, targeting the MSI B850-P WiFi.</li>
+              <li>Built on Coreboot plus AMD&#x27;s openSIL, which is the piece that made modern AMD platforms tractable for open firmware.</li>
+              <li>Relevant for anyone building auditable or long-lived appliance hardware where a proprietary BIOS is a trust and lifecycle problem.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/KDE-Plasma-6.8-Faster-eGPU" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/motherboards/first-open-source-firmware-for-am5-officially-launches-dasharo-v0-9-0-brings-coreboot-and-opensil-to-zen-4-apus-on-msi-b850" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD Begins Posting Display Core Next 6 &quot;DCN6&quot; Linux Patches For RDNA5 GPUs</h3>
+              <h3>Linux 7.2-rc6 Fixes Some AMD Zen 5 CPUs Being Mistakenly Identified As Zen 6</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMD has started posting Display Core Next 6 (DCN6) Linux kernel patches, the next-generation display IP block tied to its upcoming GFX13/RDNA5 graphics architecture.</li>
-              <li>Early patch postings like this typically precede the actual GPU hardware launch by many months, giving a rough signal of RDNA5 timing.</li>
+              <li>x86 fixes ahead of 7.2-rc6 correct some Zen 5 processors being classified as Zen 6 by the kernel.</li>
+              <li>Misidentification matters downstream: CPU family gates errata workarounds, scheduler tuning and microcode handling.</li>
+              <li>A reminder to pin down what the kernel thinks your silicon is before trusting benchmark deltas on new hardware.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-DCN6-Linux-Start" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.2-rc6-Fixing-Zen-5-IDs" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.3 To Support The Qualcomm Adreno 704 &amp; Adreno 722 GPUs</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>MSM DRM kernel graphics/display driver updates queued for the Linux 7.3 merge window add Adreno 704 and 722 support.</li>
+              <li>Continues the steady mainlining of Qualcomm graphics, which is the precondition for usable Linux on Arm laptops and handhelds.</li>
+              <li>Good news for on-device GPU compute on Arm SoCs, where driver support has been the long pole.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.3-MSM-DRM-Driver" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Industry &amp; HPC</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Microsoft vows to make Windows 11 fly on 8GB RAM amid memory shortage</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Official minimum is 4GB, but 16GB has been the practical floor for a smooth Windows 11 experience.</li>
+              <li>The memory chip shortage and the return of 8GB laptops are pushing Microsoft to actually reduce the OS footprint.</li>
+              <li>If 8GB machines become common again, anything shipping a local model or a heavy desktop app needs to re-check its real-world memory headroom.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/software/windows/microsoft-vows-to-make-windows-11-fly-on-8gb-ram-amid-memory-shortage-optimizations-to-reduce-os-memory-footprint-have-begun" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>SpaceXAI says it will remove all 69 of its unpermitted turbine power generators, but expects process to take a year</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The trailer-mounted turbines at the center of a permitting and pollution lawsuit are to be replaced by a 1.2GW power plant.</li>
+              <li>Removal is expected to take about a year, so the disputed generators keep running through the transition.</li>
+              <li>Illustrates the real bottleneck on AI datacenter buildout: not chips, but power interconnects and the permits that gate them.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/big-tech/spacexai-says-it-will-remove-all-69-of-its-unpermitted-turbine-power-generators-but-expects-process-to-take-a-year-trailer-mounted-generators-to-be-replaced-by-1-2gw-power-plant" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Steam On Linux Use Back Above 4% In July</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Valve&#x27;s July 2026 Steam Survey shows Linux gaming share ticking back above 4%.</li>
+              <li>Small in absolute terms, but the trend line has been steadily up rather than noisy-flat.</li>
+              <li>For game developers, Proton compatibility is now a cheap way to reach a segment that is no longer rounding error.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Steam-On-Linux-July-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>NetBSD 11.0 Released With RISC-V Support, Enhanced Linux System Call Compatibility</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Nineteenth major NetBSD release, headlined by RISC-V support and improved Linux syscall compatibility.</li>
+              <li>Better Linux emulation lowers the porting cost for software that only ever targeted Linux.</li>
+              <li>RISC-V reaching another mature BSD is a useful signal for where the architecture&#x27;s software ecosystem actually is.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/NetBSD-11.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -132,26 +149,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GNOME Working To Establish An RFC Process, Battling Sloppy AI-Generated Extensions</h3>
+              <h3>Box64 v0.4.4 Released With New Box64-Configurator App</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GNOME developers are formalizing a Request For Comments (RFC) process for project decision-making.</li>
-              <li>In parallel, the project continues dealing with a flood of low-quality, AI-generated GNOME Shell extensions submitted to its ecosystem.</li>
-              <li>An example of open-source projects having to build new governance and moderation processes specifically to handle AI-generated submissions.</li>
+              <li>Box64 0.4.4 is out, the user-space x86_64 emulator for running Linux binaries on 64-bit Arm, RISC-V and LoongArch.</li>
+              <li>New Box64-Configurator app makes per-application tuning far less arcane than hand-editing environment variables.</li>
+              <li>Practical path for running x86-only tooling on Arm dev boxes and handhelds without waiting for native ports.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/GNOME-RFC-Process-AI-Extensions" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Box64-0.4.4" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Prominent Arch Linux Developer Resigns After 10 Year Run</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>10 years later: What can the Titan X and GTX 1080 Ti still do?</h3>
+              <span class="digest-source">Reddit r/hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Morten Linderud (&#x27;Foxboron&#x27;) announced his resignation from Arch Linux after a decade as a developer, security team member, AUR maintainer, and package maintainer.</li>
-              <li>A notable departure from one of the roles responsible for Arch&#x27;s security processes and package infrastructure.</li>
+              <li>Retrospective benchmarking of two Pascal-era flagships against a modern game and compute workload mix.</li>
+              <li>Useful calibration for minimum-spec decisions: what a decade-old high-end GPU can still carry, and where it falls off a cliff.</li>
+              <li>Notable for local AI too — VRAM capacity, not shader throughput, is usually what retires an old card first.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Arch-Linux-Foxboron" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/hardware/comments/1vddero/10_years_later_what_can_the_titan_x_and_gtx_1080/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

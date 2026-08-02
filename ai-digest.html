@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 01, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 02, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 01, 2026</div>
+        <div class="digest-date-badge">August 02, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s AI digest is entirely Simon Willison&#x27;s dispatches from a genuinely eventful week: DeepSeek&#x27;s V4-Flash-0731 release and discussion of Kimi K3 show open-weight models continuing to close the gap with proprietary frontier releases, while the Stateless MCP / MCP 2.0 rollout marks the biggest change to the Model Context Protocol since it launched. Rounding it out are new tools for model evaluation and in-browser agent task execution.</p>
+        <p class="digest-intro">A quiet Saturday for AI news, but the through-line is governance and agent tooling. Simon Willison&#x27;s roundup of the summer&#x27;s duelling open letters maps where the open-weights fight actually stands, his July newsletter catalogs a dense model month (GPT-5.6, Claude Opus 5, Kimi K3, DeepSeek-V4-Flash) alongside accidental-cyberattack findings from lab safety testing, and Datasette Apps keeps building out the agent-tests-its-own-work loop. Plus a note on what happens socially when a coworker&#x27;s chatbot starts DMing you.</p>
       </div>
     </section>
 
@@ -29,27 +29,45 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>deepseek-ai/DeepSeek-V4-Flash-0731</h3>
+              <h3>Open letters about AI development</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>DeepSeek released V4-Flash-0731, a 304B-parameter model (167GB on Hugging Face) with substantially enhanced agentic capabilities.</li>
-              <li>Artificial Analysis ranks it ahead of MiniMax M3, a larger 428B model, suggesting it punches above its parameter count.</li>
-              <li>Another data point in the fast pace of open-weight models closing the gap with proprietary frontier releases.</li>
+              <li>Willison summarizes the past few weeks of AI open letters, originally written for his sponsors-only newsletter and now published openly.</li>
+              <li>&quot;Open Weights and American AI Leadership&quot; was shepherded by Microsoft, dated July 24th, and signed by 235 AI-adjacent companies.</li>
+              <li>Useful map of who is lobbying for what: the open-weights vs. closed-frontier split is now an explicit policy fight rather than a licensing preference.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jul/31/deepseek-v4-flash-0731/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/2/open-letters/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Oxide and Friends: The Open Weight Revolution with Simon Willison</h3>
+              <h3>July 2026 newsletter</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon Willison joined Bryan Cantrill and Adam Leventhal on the Oxide and Friends podcast to discuss a very eventful week in AI.</li>
-              <li>Topics included Kimi K3 demonstrating that open-weight models can now stand toe-to-toe with proprietary frontier ones, plus an accidental cybersecurity incident.</li>
-              <li>Useful listen for tracking sentiment on the shifting open-weight vs. proprietary competitive landscape.</li>
+              <li>Month-in-review covering GPT-5.6, Claude Opus 5, Kimi K3 and DeepSeek-V4-Flash-0730 — a dense release cycle across both closed and open-weight camps.</li>
+              <li>Also covers accidental cyberattacks caused by OpenAI and Anthropic models under test, a reminder that capability evaluations now carry real blast radius.</li>
+              <li>Worth reading as a single consolidated snapshot before making model-selection decisions this quarter.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jul/31/oxide-and-friends/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/2/july-newsletter/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Ten advances in mathematics and theoretical computer science</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Follows Anthropic&#x27;s report of Claude discovering cryptographic weaknesses using Mythos Preview, reportedly spending $100,000 on tokens for the effort.</li>
+              <li>The prompting posture is the notable part: the model was explicitly told low-hanging fruit was unacceptable and that proper research was the bar.</li>
+              <li>Signal that frontier-model research assistance is becoming a budget line item rather than a demo — cost per genuine result is now measurable.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Aug/1/ten-advances-in-mathematics/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -59,50 +77,33 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Stateless MCP has recaptured my interest (and inspired mcp-explorer and datasette-mcp)</h3>
+              <h3>datasette-apps 0.2a0</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>MCP 2.0 (the 2026-07-28 Model Context Protocol spec) shipped &quot;Stateless MCP,&quot; described as the most significant change to the spec since it first launched.</li>
-              <li>The update reignited Simon Willison&#x27;s interest in the protocol enough to inspire two new projects: mcp-explorer and datasette-mcp.</li>
-              <li>Worth tracking for any project that speaks MCP or is considering adding an MCP surface (e.g., agent tool registries).</li>
+              <li>New app_debug() tool lets the agent open an app invisibly and exercise it with JavaScript, giving the model a real feedback loop instead of writing blind.</li>
+              <li>New app_list() tool exposes which apps the user has permission to edit, so the agent can enumerate its own editable surface.</li>
+              <li>A good template for agent tool design: give the model a way to observe results and a way to discover what it is allowed to touch.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jul/31/stateless-mcp/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/1/datasette-apps/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>llm-mcp-client 0.1a0</h3>
+              <h3>Quoting Greg Brockman</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon Willison released llm-mcp-client 0.1a0, an early-alpha MCP client built for his `llm` CLI ecosystem.</li>
-              <li>Ships alongside the Stateless MCP / MCP 2.0 rollout, giving `llm` users a first client for the new spec.</li>
+              <li>At OpenAI many staff wire ChatGPT into Slack, and people dislike being pinged by a coworker&#x27;s agent — even for work they would happily do if asked directly.</li>
+              <li>The objection is social rather than technical: the request loses the relationship signal that made it acceptable.</li>
+              <li>Practical lesson for anyone shipping agents into shared workspaces — agent-initiated outreach to third parties needs different norms than agent-assisted work.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Jul/31/llm-mcp-client/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>smevals - a small eval suite for evaluating models, prompts, and harnesses</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Simon Willison, working with Jesse Vincent&#x27;s Prime Radiant applied AI research lab, released smevals, a small eval suite for testing models, prompts, and harnesses.</li>
-              <li>Positioned as a lightweight tool for answering capability questions across different models rather than a full-scale benchmark.</li>
-              <li>Relevant to any project doing model or prompt A/B comparisons as part of its own bake-off process.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jul/31/smevals/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>datasette-agent 0.4a0</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>datasette-agent 0.4a0 adds a new `await context.browser_task()` mechanism that lets agent tools run code directly in the user&#x27;s browser.</li>
-              <li>Lets Datasette Agent plugins ship tools that execute custom JavaScript client-side rather than only server-side.</li>
-              <li>An interesting pattern for agent tool design: delegating execution to the browser context instead of the agent&#x27;s own sandbox.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Jul/31/datasette-agent/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/1/greg-brockman/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
