@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 02, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 03, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,59 +15,105 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 02, 2026</div>
+        <div class="digest-date-badge">August 03, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A quiet Saturday for AI news, but the through-line is governance and agent tooling. Simon Willison&#x27;s roundup of the summer&#x27;s duelling open letters maps where the open-weights fight actually stands, his July newsletter catalogs a dense model month (GPT-5.6, Claude Opus 5, Kimi K3, DeepSeek-V4-Flash) alongside accidental-cyberattack findings from lab safety testing, and Datasette Apps keeps building out the agent-tests-its-own-work loop. Plus a note on what happens socially when a coworker&#x27;s chatbot starts DMing you.</p>
+        <p class="digest-intro">Today&#x27;s research leans heavily into agentic AI architecture and evaluation: papers tackle bounded-context long-horizon reasoning, bias-robust LLM-as-judge auditing, and rethinking how agents should learn from experience instead of relying on simple trajectory reflection. Several papers also push LLMs into doing science itself, from benchmarking AI Scientist output quality to a pipeline for generating and validating mathematical conjectures. On the practical side, Simon Willison shipped a 1.0 release of his condense-json library.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Open letters about AI development</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Willison summarizes the past few weeks of AI open letters, originally written for his sponsors-only newsletter and now published openly.</li>
-              <li>&quot;Open Weights and American AI Leadership&quot; was shepherded by Microsoft, dated July 24th, and signed by 235 AI-adjacent companies.</li>
-              <li>Useful map of who is lobbying for what: the open-weights vs. closed-frontier split is now an explicit policy fight rather than a licensing preference.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/2/open-letters/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>July 2026 newsletter</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Month-in-review covering GPT-5.6, Claude Opus 5, Kimi K3 and DeepSeek-V4-Flash-0730 — a dense release cycle across both closed and open-weight camps.</li>
-              <li>Also covers accidental cyberattacks caused by OpenAI and Anthropic models under test, a reminder that capability evaluations now carry real blast radius.</li>
-              <li>Worth reading as a single consolidated snapshot before making model-selection decisions this quarter.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/2/july-newsletter/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Ten advances in mathematics and theoretical computer science</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>OpenClaw and Ollama in Agentic AI: Toward Fully Autonomous and Scalable AI Agent Systems</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Follows Anthropic&#x27;s report of Claude discovering cryptographic weaknesses using Mythos Preview, reportedly spending $100,000 on tokens for the effort.</li>
-              <li>The prompting posture is the notable part: the model was explicitly told low-hanging fruit was unacceptable and that proper research was the bar.</li>
-              <li>Signal that frontier-model research assistance is becoming a budget line item rather than a demo — cost per genuine result is now measurable.</li>
+              <li>Argues the shift from reactive LLMs to persistent, action-capable agents has exposed architectural gaps around cleanly separating inference, orchestration, and execution layers.</li>
+              <li>Uses OpenClaw and Ollama as case studies for building toward fully autonomous, scalable agent systems.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/1/ten-advances-in-mathematics/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2607.28629" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Can AI Evaluate AI Scientists? A Benchmarking Study of Autonomous Research Generation Systems Using Automated Multi-Model Review</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tackles the open problem of evaluating and comparing the quality of papers produced by autonomous &#x27;AI Scientist&#x27; research systems.</li>
+              <li>Proposes a rigorous benchmarking method built on automated multi-model review rather than a single evaluator model.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.28631" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>LLM Framework for Discovering Major Mathematical Conjectures: AI&#x27;s Quest for the Next Riemann Hypothesis</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Presents a three-stage pipeline for systematically generating and validating mathematical conjectures, an area that has historically depended on expert intuition.</li>
+              <li>Aims at conjecture generation with &#x27;substantial mathematical potential&#x27; rather than routine theorem-proving.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.28632" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ThinkReset: Learnable Intermediate Interface Construction for Bounded-Context Long-Horizon Reasoning</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Addresses redundancy accumulation, context overflow, and error anchoring in long chain-of-thought reasoning under bounded context windows.</li>
+              <li>Argues the real bottleneck for long-horizon reasoning isn&#x27;t trajectory compression, and instead proposes a learnable intermediate interface to reset reasoning state.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.28642" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>TAPR: Enhancing LLM Performance with a Task-Aware Prompt Rewriter</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Introduces a Task-Aware Prompt Rewriter (TAPR) model that automatically reformulates user prompts to unlock more of an LLM&#x27;s capability.</li>
+              <li>Targeted at lowering the prompt-engineering skill barrier for non-expert users.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.28657" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Chain-of-Models: Cross-Model Auditing for Bias-Robust LLM Judges</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Targets cognitive-bias vulnerability in LLM-as-judge setups, where existing mitigations rely on brittle prompt-driven debiasing or evaluation that doesn&#x27;t scale.</li>
+              <li>Proposes cross-model auditing (chaining models to check each other&#x27;s judgments) as a more bias-robust alternative.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.28636" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Imbalanced Data Clustering via Targeted Data Augmentation Using GMM and LLM</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Addresses unsupervised clustering&#x27;s tendency to miss underrepresented/minority topics in NLP datasets.</li>
+              <li>Combines Gaussian Mixture Models with targeted LLM-based data augmentation to improve coverage of minority topics.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.28635" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Learning Stateful Predictive Knowledge From Experience</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Critiques the dominant approach to agent self-improvement (trajectory-level reflection) as operating only on episodic hindsight.</li>
+              <li>Proposes learning stateful predictive knowledge from experience as a different lens for how LLM agents should extract insights.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.28638" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -77,33 +123,14 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>datasette-apps 0.2a0</h3>
+              <h3>condense-json 1.0</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>New app_debug() tool lets the agent open an app invisibly and exercise it with JavaScript, giving the model a real feedback loop instead of writing blind.</li>
-              <li>New app_list() tool exposes which apps the user has permission to edit, so the agent can enumerate its own editable surface.</li>
-              <li>A good template for agent tool design: give the model a way to observe results and a way to discover what it is allowed to touch.</li>
+              <li>Simon Willison shipped the 1.0 release of condense-json, a library for condensing verbose/nested JSON structures, after about a year and a half of development.</li>
+              <li>The 1.0 milestone applied &#x27;sensible and non-disruptive&#x27; fixes rather than a rewrite.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/1/datasette-apps/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Quoting Greg Brockman</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>At OpenAI many staff wire ChatGPT into Slack, and people dislike being pinged by a coworker&#x27;s agent — even for work they would happily do if asked directly.</li>
-              <li>The objection is social rather than technical: the request loses the relationship signal that made it acceptable.</li>
-              <li>Practical lesson for anyone shipping agents into shared workspaces — agent-initiated outreach to third parties needs different norms than agent-assisted work.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/1/greg-brockman/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/2/condense-json/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

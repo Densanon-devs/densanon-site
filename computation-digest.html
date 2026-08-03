@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - August 02, 2026 | Densanon</title>
+  <title>Computation Morning Digest - August 03, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 02, 2026</div>
+        <div class="digest-date-badge">August 03, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Memory is the story today. A startup is betting it can walk around the HBM shortage entirely — Arm cores plus up to 128TB of commodity LPDDR6 instead of expensive high-bandwidth memory — while Microsoft has started shrinking Windows 11&#x27;s footprint because the DRAM squeeze is pushing 8GB laptops back onto shelves. On the silicon side, Zen 6 is rumored to chase per-core thermal and power tuning to fix microstutter and 1% lows, and the kernel just patched some Zen 5 chips that were misreporting themselves as Zen 6. Elsewhere: the first open-source firmware lands on AM5, Linux 7.3 picks up new Adreno GPUs, and Steam on Linux nudged back over 4%.</p>
+        <p class="digest-intro">The big technical story today is optical interconnects: as AI system fabrics outgrow copper, TSMC, Intel, Samsung, and GlobalFoundries are each betting on different co-packaged optics strategies. On the silicon fringe, a 240,000-transistor open-source GPU passed real-world 3D rendering tests, and an AI coding agent was used to defeat BIOS signature checks and unlock hidden firmware settings. Meanwhile GPU buyers are stuck between rising VRAM costs and no discounts, old 11GB cards are still holding up a decade later, and the Linux kernel keeps grinding forward with a space-grade Intel SoC and a big 7.2 release candidate.</p>
       </div>
     </section>
 
@@ -29,63 +29,107 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Startup swaps costly AI GPUs for Arm cores and up to 128TB of &#x27;cheap&#x27; LPDDR6 RAM instead of expensive HBM to smash through the memory wall</h3>
-              <span class="digest-source">Reddit r/hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The pitch: trade peak bandwidth for enormous capacity, pairing Arm cores with up to 128TB of LPDDR6 instead of a small pool of HBM.</li>
-              <li>Targets memory-bound inference, where model and KV-cache capacity — not raw FLOPS — is the binding constraint.</li>
-              <li>If capacity-first accelerators land at credible prices, they change the economics of serving very large models without a GPU farm.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/hardware/comments/1vd9axw/startup_swaps_costly_ai_gpus_for_arm_cores_and_up/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD&#x27;s upcoming Zen 6 processors could fix microstutters and improve 1% lows in games</h3>
+              <h3>Co-Packaged Optics (CPO) foundry roadmaps — breaking down TSMC, Intel, Samsung, and GlobalFoundries&#x27; approach to next-generation scale-up connectivity</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Report points to per-core thermal and power budget optimizations rather than a single headline IPC jump.</li>
-              <li>The claimed payoff is frame-time consistency — 1% lows and microstutter — which is what players actually feel.</li>
-              <li>Individually small changes, but they compound; worth watching for anyone speccing a gaming or simulation workstation.</li>
+              <li>AI system interconnect demands are outgrowing copper, pushing foundries toward co-packaged optics (CPO) to bring optical connectivity closer to compute.</li>
+              <li>TSMC, Intel, Samsung Foundry, and GlobalFoundries are each pursuing distinctly different CPO strategies rather than converging on one approach.</li>
+              <li>Marks an early signal of how next-gen AI accelerators will handle scale-up connectivity at the packaging level.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/amds-upcoming-zen-6-processors-could-fix-microstutters-and-improve-1-percent-lows-in-games-next-gen-cpus-tipped-to-feature-per-core-optimizations-for-thermal-and-power-budgets" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/co-packaged-optics-cpo-foundry-roadmaps-breaking-down-tsmc-intel-samsung-and-globalfoundries-approach-to-next-generation-scale-up-connectivity" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>First open-source firmware for AM5 officially launches — Dasharo v0.9.0 brings Coreboot and openSIL to Zen 4 APUs on MSI B850</h3>
+              <h3>World&#x27;s smallest GPU silicon passes real-world testing — 240,000-transistor TinyGPU v2.0 renders 3D graphics at up to 15 FPS while v3.0 prepares for 2026 release</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>3mdeb&#x27;s Dasharo v0.9.0 is the first open-source firmware to reach the AM5 platform, targeting the MSI B850-P WiFi.</li>
-              <li>Built on Coreboot plus AMD&#x27;s openSIL, which is the piece that made modern AMD platforms tractable for open firmware.</li>
-              <li>Relevant for anyone building auditable or long-lived appliance hardware where a proprietary BIOS is a trust and lifecycle problem.</li>
+              <li>TinyGPU v2.0, a 240,000-transistor standalone GPU chip, passed real-world testing and renders 3D graphics at up to 15 FPS.</li>
+              <li>The chip was fabricated via the Tiny Tapeout shared-silicon production run, a low-cost path for open/hobbyist chip designs.</li>
+              <li>A v3.0 iteration is already in prep for a 2026 release.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/motherboards/first-open-source-firmware-for-am5-officially-launches-dasharo-v0-9-0-brings-coreboot-and-opensil-to-zen-4-apus-on-msi-b850" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/gpus/worlds-smallest-gpu-silicon-passes-real-world-testing-240-000-transistor-tinygpu-v2-0-renders-3d-graphics-at-up-to-15-fps-while-v3-0-prepares-for-2026-release" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.2-rc6 Fixes Some AMD Zen 5 CPUs Being Mistakenly Identified As Zen 6</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>AI enthusiast unlocks and mods BIOS with Claude Code — AI defeats RSA-2048 signature checks and unlocks 55 hidden settings</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>x86 fixes ahead of 7.2-rc6 correct some Zen 5 processors being classified as Zen 6 by the kernel.</li>
-              <li>Misidentification matters downstream: CPU family gates errata workarounds, scheduler tuning and microcode handling.</li>
-              <li>A reminder to pin down what the kernel thinks your silicon is before trusting benchmark deltas on new hardware.</li>
+              <li>A hobbyist used Claude Code to mod an HP laptop&#x27;s BIOS, defeating its RSA-2048 signature verification.</li>
+              <li>The mod unlocked 55 hidden BIOS settings that were previously inaccessible.</li>
+              <li>Shows an AI coding agent applied to low-level firmware reverse engineering rather than typical app development.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.2-rc6-Fixing-Zen-5-IDs" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/laptops/ai-enthusiast-mods-bios-with-claude-code-ai-defeats-rsa-2048-signature-checks-and-unlocks-55-hidden-settings" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.3 To Support The Qualcomm Adreno 704 &amp; Adreno 722 GPUs</h3>
+              <h3>Gaming on the 4GB Radeon RX 6500 XT and GTX 1650 Super in 2026 — upscaling makes low-end GPUs viable for esports and internet cafes</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tests whether 4GB of VRAM on the Radeon RX 6500 XT and GTX 1650 Super is still a hard performance ceiling in 2026.</li>
+              <li>Upscaling techniques make these low-end, low-VRAM GPUs viable for esports titles and internet-cafe-style deployments.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/gpus/gaming-on-the-4gb-radeon-rx-6500-xt-and-gtx-1650-super-in-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GPU prices keep surging in 2026 — Lack of sale discounts and rising VRAM costs keep current-gen prices sky-high</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Current-gen GPU prices remain elevated in 2026, with the usual seasonal sale discounts largely absent.</li>
+              <li>Rising VRAM costs are cited as a direct driver of higher card prices.</li>
+              <li>AI-driven demand and tariffs are named as the main pressures squeezing PC builders looking for an affordable GPU.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/gpus/gpu-prices-for-current-gen-nvidia-and-amd-price-increases-why-have-the-prices-not-dropped-and-can-you-still-buy-a-cheap-gpu" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Ten years later, the iconic GTX 1080 Ti still holds up in 1080p gaming, but not without showing its age — Redux testing highlights the wonders of 11GB VRAM &amp; the woes of time</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A decade-old GTX 1080 Ti (GP102 chip) was retested across new games at multiple resolutions and still holds up at 1080p.</li>
+              <li>Its generous 11GB VRAM buffer is credited as the main reason it remains usable today.</li>
+              <li>Despite still being playable, the card is now highly power-inefficient compared to current-generation GPUs.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/gpus/ten-years-later-the-iconic-gtx-1080-ti-still-holds-up-in-1080p-gaming-but-not-without-showing-its-age-redux-testing-highlights-the-wonders-of-11gb-vram-and-the-woes-of-time" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.2-rc6 Released: &quot;This RC Is Huge&quot;</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>MSM DRM kernel graphics/display driver updates queued for the Linux 7.3 merge window add Adreno 704 and 722 support.</li>
-              <li>Continues the steady mainlining of Qualcomm graphics, which is the precondition for usable Linux on Arm laptops and handhelds.</li>
-              <li>Good news for on-device GPU compute on Arm SoCs, where driver support has been the long pole.</li>
+              <li>Linux kernel 7.2-rc6 is out for testing, with maintainers calling this release candidate unusually large.</li>
+              <li>Stable Linux 7.2 is expected roughly two weeks out.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-MSM-DRM-Driver" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.2-rc6-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.3 To Begin Laying The Groundwork For Intel Starfire</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Intel&#x27;s Starfire is a new Panther Lake-derived, space-grade SoC built for extreme environments, including survivability in space.</li>
+              <li>Linux 7.3 will merge the first Starfire-specific kernel patches, laying the early groundwork for OS support.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Intel-Starfire-Starts-Linux-7.3" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GNOME Mutter 51 Beta Released With Wayland Background Blur, Improved Frame Scheduling</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Mutter 51 and GNOME Shell 51 betas add Wayland background blur and improved frame scheduling.</li>
+              <li>The betas landed right after GNOME 51 entered its API/ABI, feature, and UI freeze, marking the run-up to the stable release.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/GNOME-Shell-Mutter-51-Beta" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -95,81 +139,14 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Microsoft vows to make Windows 11 fly on 8GB RAM amid memory shortage</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>Google Earth&#x27;s AI makeover survives one trip around the Sun</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Official minimum is 4GB, but 16GB has been the practical floor for a smooth Windows 11 experience.</li>
-              <li>The memory chip shortage and the return of 8GB laptops are pushing Microsoft to actually reduce the OS footprint.</li>
-              <li>If 8GB machines become common again, anything shipping a local model or a heavy desktop app needs to re-check its real-world memory headroom.</li>
+              <li>Google Earth&#x27;s AI-driven makeover feature has now been live for about a year.</li>
+              <li>Letting users rewrite depictions of the planet via open-ended prompts surfaced real drawbacks.</li>
             </ul>
-            <a href="https://www.tomshardware.com/software/windows/microsoft-vows-to-make-windows-11-fly-on-8gb-ram-amid-memory-shortage-optimizations-to-reduce-os-memory-footprint-have-begun" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>SpaceXAI says it will remove all 69 of its unpermitted turbine power generators, but expects process to take a year</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The trailer-mounted turbines at the center of a permitting and pollution lawsuit are to be replaced by a 1.2GW power plant.</li>
-              <li>Removal is expected to take about a year, so the disputed generators keep running through the transition.</li>
-              <li>Illustrates the real bottleneck on AI datacenter buildout: not chips, but power interconnects and the permits that gate them.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/big-tech/spacexai-says-it-will-remove-all-69-of-its-unpermitted-turbine-power-generators-but-expects-process-to-take-a-year-trailer-mounted-generators-to-be-replaced-by-1-2gw-power-plant" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Steam On Linux Use Back Above 4% In July</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Valve&#x27;s July 2026 Steam Survey shows Linux gaming share ticking back above 4%.</li>
-              <li>Small in absolute terms, but the trend line has been steadily up rather than noisy-flat.</li>
-              <li>For game developers, Proton compatibility is now a cheap way to reach a segment that is no longer rounding error.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Steam-On-Linux-July-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>NetBSD 11.0 Released With RISC-V Support, Enhanced Linux System Call Compatibility</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Nineteenth major NetBSD release, headlined by RISC-V support and improved Linux syscall compatibility.</li>
-              <li>Better Linux emulation lowers the porting cost for software that only ever targeted Linux.</li>
-              <li>RISC-V reaching another mature BSD is a useful signal for where the architecture&#x27;s software ecosystem actually is.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/NetBSD-11.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Box64 v0.4.4 Released With New Box64-Configurator App</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Box64 0.4.4 is out, the user-space x86_64 emulator for running Linux binaries on 64-bit Arm, RISC-V and LoongArch.</li>
-              <li>New Box64-Configurator app makes per-application tuning far less arcane than hand-editing environment variables.</li>
-              <li>Practical path for running x86-only tooling on Arm dev boxes and handhelds without waiting for native ports.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Box64-0.4.4" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>10 years later: What can the Titan X and GTX 1080 Ti still do?</h3>
-              <span class="digest-source">Reddit r/hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Retrospective benchmarking of two Pascal-era flagships against a modern game and compute workload mix.</li>
-              <li>Useful calibration for minimum-spec decisions: what a decade-old high-end GPU can still carry, and where it falls off a cliff.</li>
-              <li>Notable for local AI too — VRAM capacity, not shader throughput, is usually what retires an old card first.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/hardware/comments/1vddero/10_years_later_what_can_the_titan_x_and_gtx_1080/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/ai-and-ml/2026/08/03/google-earths-ai-makeover-survives-one-trip-around-the-sun/5282224" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 02, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 03, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,29 +15,106 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 02, 2026</div>
+        <div class="digest-date-badge">August 03, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">A small but substantive robotics pool today. Google DeepMind says Gemini Robotics 2 can reason through whole-body movement rather than just end-effector goals, which is the shift from arm control to embodied planning. On the practical side, ROS Discourse delivers two genuinely useful field reports: a detailed accounting of five failure modes when running uv-managed virtual environments on stock ROS 2 (including a PyTorch+CUDA node), and QERRA-v2 Classical, a two-layer safety middleware that evaluates robot actions before execution with a zero-ML physical hazard layer.</p>
+        <p class="digest-intro">Today&#x27;s research slate centers on world-action models and multi-robot coordination, with new work tackling visual robustness in manipulation policies and decentralized vision-language collaboration for robot swarms, alongside a broad survey of legged robot capabilities and a bio-inspired study of vision-based locomotion control. On the industry side, former Google DeepMind robotics leaders launched Reimagine Robotics with on-the-job learning systems, and AGIBOT claimed the top spot on an audio-visual reasoning benchmark. The ROS ecosystem sees practical activity too, from a Nav2 social-navigation stack being ported from TurtleBot3 simulation to a Unitree G1 humanoid, to an Open-RMF Summer of Code update.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Advances, challenges, and opportunities for legged robots</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Survey assesses current state-of-the-art capabilities across humanoid and quadrupedal legged robot platforms.</li>
+              <li>Frames legged robots as a lever for both societal impact (work, human interaction) and scientific discovery.</li>
+              <li>Useful reference point for tracking where locomotion research stands ahead of upcoming humanoid deployments.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.28952" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ST-WAM: Semantic-Temporal World Action Model for Robust Manipulation under Visual Distribution Shifts</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Targets a known weakness in World Action Models: pixel-generative future prediction entangles action-relevant dynamics with task-irrelevant visual detail.</li>
+              <li>Proposes semantic-temporal modeling to keep manipulation policies robust when visual conditions shift from the training distribution.</li>
+              <li>Directly relevant to world-model-based manipulation policy learning, a core research theme in embodied AI.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.28993" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>D-VLC: Decentralized Vision-Language Collaboration for Heterogeneous Embodied Multi-Robot Systems in Unknown Environments</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Replaces rule-based multi-robot coordination (predefined task models) with decentralized vision-language collaboration for heterogeneous swarms.</li>
+              <li>Targets task execution in unknown environments where predefined rule-based models break down.</li>
+              <li>Relevant to teams building multi-agent or swarm coordination without a centralized planner.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.29009" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>DART: Dual-Axis Airborne Reachability-Gated Torque-Reaction for Off-Road Vehicle Jumps</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Studies mid-air control of a 1,383 kg off-road vehicle during jump landings from crests, ledges, and ditches.</li>
+              <li>Finds the airborne phase is barely controllable via wheel angular momentum alone, motivating a torque-reaction control scheme.</li>
+              <li>Aims to reduce crash risk from mishandled landings at high speed on rugged terrain platforms.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2607.29011" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Simulated zebrafish and a vision-equipped robotic fish reveal how the body shapes brain circuits</h3>
+              <span class="digest-source">Robohub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Combines a simulated zebrafish model with a vision-equipped robotic fish (EPFL Biorobotics Lab) to study how body morphology shapes neural control circuits.</li>
+              <li>Focuses on optic-flow-based sensing: how fish estimate current speed and direction purely from visual motion to hold position.</li>
+              <li>Bio-inspired approach relevant to closed-loop, vision-based locomotion control research.</li>
+            </ul>
+            <a href="https://robohub.org/simulated-zebrafish-and-a-vision-equipped-robotic-fish-reveal-how-the-body-shapes-brain-circuits/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Google DeepMind says Gemini Robotics 2 enables full body control</h3>
+              <h3>Reimagine Robotics emerges from stealth with robots that ‘learn on the job’</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>DeepMind claims Gemini Robotics 2 lets robots reason through every movement, not just plan an end-effector trajectory.</li>
-              <li>Full-body control unlocks tasks that need coordinated base, torso and limb motion — reaching low, working in clutter, maintaining balance under load.</li>
-              <li>The generalist-model-as-controller thesis keeps advancing; the open question remains latency and reliability under real-world perturbation.</li>
+              <li>Founded by former Google DeepMind Applied Robotics leaders, now out of stealth.</li>
+              <li>Targets robots that learn tasks on the job rather than requiring dedicated robotics programmers.</li>
             </ul>
-            <a href="https://www.therobotreport.com/google-deepmind-says-gemini-robotics-2-enables-full-body-control/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/reimagine-robotics-emerges-stealth-with-robotslearn-on-the-job/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AGIBOT’s foundation model tops benchmark test for audio-visual reasoning</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>WITA-Omni Preview scored highest on the Daily-Omni audio-visual reasoning benchmark, beating models from Alibaba, Google, and ByteDance.</li>
+              <li>Recorded 85.21 percent average accuracy on the benchmark test.</li>
+              <li>Signals AGIBOT positioning multimodal foundation models as a core differentiator for embodied robotics AI.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/08/03/agibots-foundation-model-tops-benchmark-test-for-audio-visual-reasoning/103832/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -47,27 +124,14 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>QERRA-v2 Classical: Two-Layer Moral &amp; Physical Safety Middleware for ROS 2 &amp; Behavior Trees</h3>
+              <h3>Interop SIG, 06 August 2026: Google Summer of Code for Open-RMF</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Open-source, fully explainable middleware that evaluates autonomous robot actions before they execute.</li>
-              <li>QERRA-HSR, the physical safety layer, is zero-ML pure Python: it scores hazard proximity and human presence deterministically, so its decisions are auditable.</li>
-              <li>The two-layer split — deterministic physical gate underneath a higher-level policy layer — is a pattern worth copying anywhere a model proposes actions that touch the real world.</li>
+              <li>Open-RMF&#x27;s Google Summer of Code contributors will present progress on the project&#x27;s &quot;Next Generation&quot; initiative at the Aug 6 Interop SIG meeting.</li>
+              <li>Open-RMF is the ROS 2 ecosystem&#x27;s fleet-interoperability layer for multi-robot systems across vendors — a practical tooling update for anyone integrating heterogeneous fleets.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/qerra-v2-classical-two-layer-moral-physical-safety-middleware-for-ros-2-behavior-trees/57110" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Uv on ROS 2: a field report on workspace-level virtual environments</h3>
-              <span class="digest-source">ROS Discourse</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A workspace-level uv-managed venv does work on stock apt-installed ROS 2, including a PyTorch+CUDA node — verified on Jazzy.</li>
-              <li>Five reproducible failure modes are documented along the way, and none of the mechanisms are Jazzy-specific.</li>
-              <li>Includes measurements on the known shebang workaround plus minimal colcon/ament proposals to fix the rough edges upstream.</li>
-            </ul>
-            <a href="https://discourse.openrobotics.org/t/uv-on-ros-2-a-field-report-on-workspace-level-virtual-environments-five-failure-modes-and-minimal-colcon-ament-proposals/57111" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/interop-sig-06-august-2026-google-summer-of-code-for-open-rmf/57124" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -77,15 +141,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Hiring or looking for jobs in Robotics Software Engineering?</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>Structuring a Nav2 social-navigation stack for Unitree G1 — same code for sim and hardware?</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Community thread on how scattered the robotics software job market is — postings live on single university pages, company career sites, and mailing lists.</li>
-              <li>The gap is discovery: candidates who specifically want the software side often never see the right openings.</li>
-              <li>Doubles as a rough census of who is currently hiring in robotics software.</li>
+              <li>Custom Nav2 costmap layer implements proxemic zones around pedestrians so the planner routes around people in socially-aware navigation.</li>
+              <li>Validated in Gazebo on a TurtleBot3, now porting the same Nav2 stack to a Unitree G1 humanoid on real hardware.</li>
+              <li>Practical sim-to-real Nav2/ROS 2 question relevant to anyone deploying humanoid navigation stacks from simulation to physical robots.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/hiring-or-looking-for-jobs-in-robotics-software-engineering/57104" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1vdali3/structuring_a_nav2_socialnavigation_stack_for/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
