@@ -23,6 +23,8 @@ app/public/assets/audio/
 | Music bed | `mus_<mode>.m4a` | mode ∈ `main` `campaign` `battle` `boss` `safe` |
 | Variation | `sfx_<cue>_v2.wav`, `_v3` … | picked at random; `_v1` and the bare name are the same slot |
 | Music **layer** | `mus_<mode>_<layer>.m4a` | plays *on top of* `mus_<mode>`, in sync — see below |
+| Extra **song** | `mus_<mode>_v2.m4a`, `_v3` … | another song for the same mode; one is picked per visit |
+| A song's layer | `mus_<mode>_v2_<layer>.m4a` | that song's own layer |
 
 A file whose cue name is not in the list below is **ignored with a warning** by `gen:audio` — that is
 deliberate, so a typo fails loudly at build time instead of silently never playing.
@@ -66,12 +68,33 @@ A bed can ship extra files that are the **same music scored for different weight
 alternates to switch between: every layer starts on the same sample as the base, loops with it, and
 sits silent until the game fades it up. That is what lets the score follow a fight without restarting.
 
-Only two layers exist, because only two are driven by game state:
+Three layers exist, because three are driven by game state:
 
 | File | Plays over | Rises when |
 |---|---|---|
 | `mus_battle_desperate.m4a` | `mus_battle.m4a` | your HQ is ground down — nothing above 70% health, full by 25% |
+| `mus_boss_desperate.m4a` | `mus_boss.m4a` | the same, during a boss fight |
 | `mus_boss_enraged.m4a` | `mus_boss.m4a` | the boss turns |
+
+The boss bed can carry BOTH: `desperate` tracks how you are doing, `enraged` tracks what he is doing,
+and they are independent — all four combinations happen.
+
+## Several songs for one mode
+
+A mode can ship more than one song. Number them `_v2`, `_v3` and so on; `mus_battle.m4a` is song 1.
+One is chosen when you enter that mode — at random, but never the same one twice running — and it
+plays for the whole battle rather than reshuffling mid-fight. Each song carries its own layers:
+
+```
+mus_battle.m4a               song 1
+mus_battle_desperate.m4a     song 1's layer
+mus_battle_v2.m4a            song 2
+mus_battle_v2_desperate.m4a  song 2's layer
+mus_battle_v3.m4a            song 3
+```
+
+Numbering must not skip — a `_v3` with no `_v2` is reported. Loop points, if a song needs them, go in
+`loops.json` keyed by the file's own name: `{"mus_battle_v2": {"loopStart": 2.0, "loopEnd": 94.5}}`.
 
 `gen:audio` **rejects any other layer name** rather than shipping a file that would never be heard.
 

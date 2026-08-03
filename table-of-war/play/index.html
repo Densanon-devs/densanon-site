@@ -653,6 +653,45 @@
   .cell.spotted { outline: 2px solid #ff5a3b; outline-offset: -2px; box-shadow: inset 0 0 10px 2px rgba(255,90,55,.55); animation: pulse 1s infinite; }
   .intent-attack { outline: 2px solid #ff5a3b; outline-offset:-2px; }
   .intent-advance { outline: 2px solid rgba(255,170,60,.6); outline-offset:-2px; }
+  /* ── intent telegraph ─────────────────────────────────────────────────────────────────────────
+     Where each enemy is about to stand and what it is about to shoot. It is a PROJECTION (see
+     forecast_intents() in game.ts for exactly what it cannot know), so it is drawn as something
+     deliberately insubstantial — a bleached, breathing copy of the piece, never a solid counter that
+     could be misread as a unit already standing there. */
+  .ghost { position: absolute; inset: 0; pointer-events: none; z-index: 3;
+    filter: grayscale(1) brightness(2.4) drop-shadow(0 0 3px rgba(255,255,255,.5));
+    animation: ghostbob 2.6s ease-in-out infinite; }
+  .ghost .counter { animation: none; }
+  @keyframes ghostbob { 0%,100% { opacity: .28; } 50% { opacity: .5; } }
+  .cell.ghosted { outline: 1px dashed rgba(255,255,255,.35); outline-offset: -2px; }
+  /* Lives INSIDE #board in board-local pixels, so panning and zooming carry it with the grid — unlike
+     the replay's viewport-fixed #fxlayer, which can be fixed because its arrows last 400ms. */
+  #intentfx { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 6; overflow: visible; }
+  #intentfx .imove { stroke: rgba(255,206,120,.6); fill: none; stroke-linecap: round; stroke-dasharray: 4 5; }
+  #intentfx .imovehead { fill: rgba(255,206,120,.75); }
+  #intentfx .iatk { stroke: rgba(255,74,52,.9); fill: none; stroke-linecap: round;
+    filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.8)); }
+  #intentfx .iatkhead { fill: rgba(255,74,52,.95); filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.8)); }
+  /* A raider robbing your HQ costs you salvage, not hit points — so it gets the coin colour rather than
+     the blood one, and no damage badge (its projected damage is genuinely zero). */
+  #intentfx .isteal { stroke: rgba(232,198,90,.95); fill: none; stroke-linecap: round; stroke-dasharray: 7 4;
+    filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.8)); }
+  #intentfx .istealhead { fill: rgba(232,198,90,1); filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.8)); }
+  /* Incoming damage, summed over every enemy aiming at this piece — the mirror of .dmgprev, which is what
+     YOUR selected unit would deal. It sits BOTTOM-RIGHT because every other corner of a counter is already
+     spoken for: attack value top-left, rank stars top-right, .dmgprev just outside the top-right, hp bar
+     across the bottom middle and loot bottom-left. Unlike .dmgprev this is on screen unprompted and is the
+     number the turn actually turns on, so it scales with the cell instead of staying 11px at every zoom. */
+  .incdmg { position:absolute; bottom:-2px; right:-1px; z-index:4; pointer-events:none;
+    font-family: var(--f-num); font-weight:700; font-size: max(11px, calc(var(--cell)*.27));
+    color:#ffe4d6; background:#7d1f14; border:1px solid #ff6a4a; border-radius:3px;
+    padding:0 .28em; line-height:1.28; box-shadow:0 1px 2px rgba(0,0,0,.7); }
+  .incdmg.kill { background:#e23c22; color:#fff; border-color:#fff2ec;
+    box-shadow:0 1px 3px rgba(0,0,0,.8), 0 0 6px rgba(255,90,55,.8); animation: pulse 1.1s infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .ghost { animation: none; opacity: .4; }
+    .incdmg.kill { animation: none; }
+  }
   .selu { z-index: 2; }
   .selu .counter { filter: var(--dep) drop-shadow(0 0 3px var(--gold)) drop-shadow(0 0 3px var(--gold)); z-index: 2; }
   /* idle-unit ring: a STATIC ring on a pseudo-element that pulses OPACITY (GPU-composited) instead of
@@ -1697,6 +1736,9 @@
   #updateBanner .ub-dl { background: #2f6a3a; border: 1px solid #4f8f56; color: #eafbe6; font-weight: 700; padding: 6px 14px; border-radius: 6px; }
   #updateBanner .ub-x { background: #2a2c20; border: 1px solid #454838; color: #cdc6ac; padding: 6px 12px; border-radius: 6px; }
   .cell.danger { box-shadow: inset 0 0 0 2px rgba(255,60,60,.55); }
+  /* A tile an enemy can step onto AND fire from. Deeper and denser than plain danger so the two read as
+     tiers of one thing rather than two different markings — same hue, more of it. */
+  .cell.dangerfire { box-shadow: inset 0 0 0 2px rgba(190,20,20,.8); }
   /* flag objective — gold tile, white flag when empty, white glow on the unit holding it */
   .cell.holdpoint { background-image: url(assets/board/node.png); color: #fff; }
   .cell.holdpoint .counter { filter: var(--dep) drop-shadow(0 0 3px #fff) drop-shadow(0 0 3px #fff); }
@@ -1729,6 +1771,9 @@
     filter: drop-shadow(0 0 5px rgba(190,130,225,.85)) drop-shadow(0 0 10px rgba(120,80,160,.6)); }
   .cell.danger::after { content:''; position:absolute; inset:0;
     background: repeating-linear-gradient(45deg, transparent 0 5px, rgba(255,40,40,.16) 5px 8px);
+    pointer-events:none; }
+  .cell.dangerfire::after { content:''; position:absolute; inset:0;
+    background: repeating-linear-gradient(45deg, rgba(120,0,0,.22) 0 5px, rgba(190,15,15,.42) 5px 8px);
     pointer-events:none; }
   /* ornate 3-slice toast bar: bronze rivet caps + a tiled riveted body (like our frame containers) */
   #toast { position: fixed; left: 50%; bottom: 210px; transform: translateX(-50%);
@@ -2045,7 +2090,7 @@
 
 
 </style>
-  <script type="module" crossorigin src="./assets/index-CnAKhYEM.js"></script>
+  <script type="module" crossorigin src="./assets/index-2XXzKy5I.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2115,7 +2160,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.43';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.44';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2147,8 +2192,16 @@ function updateEndBtn() {
   const ourTurn = !!(S && S.board && !S.result && !turnBusy);
   b.style.display = ourTurn ? '' : 'none';
 }
-let dangerOn = true;          // danger overlay — on by default; toggle lives in the ⓘ run-info panel
+// Two independent layers, both in the ⓘ run-info panel and in Settings. They answer different questions
+// and players want them at different times: the RANGE is a map you read while planning a move, the
+// TELEGRAPH is a call-out you read before committing to one — and the telegraph draws on top of the
+// range, so anyone who finds the two together too busy can drop either without losing the other.
+const _flag = (k, dflt) => { try { const v = localStorage.getItem(k); return v === null ? dflt : v === '1'; } catch (e) { return dflt; } };
+let dangerOn = _flag('dc_danger', true);   // threat range: which tiles are covered, and from where
+let intentOn = _flag('dc_intent', true);   // telegraph: ghosts, arrows, incoming damage
 let threatSet = new Set();    // "x,y" tiles enemies can hit next turn
+let firingSet = new Set();    // "x,y" tiles an enemy could stand on AND shoot from — the ground you can deny
+let intentList = [];          // enemy intent telegraph: {id, from, to, kind, shot} — see forecast_intents()
 let cellPx = 22;
 let minCellPx = 22;   // dynamic zoom-out floor: the cell size at which the whole map/fog rectangle fits the screen
 const HAND_CLEAR = 128;   // the hand fans up over the board's bottom edge — keep the whole grid clear of it
@@ -2318,7 +2371,11 @@ const Sfx = (() => {
 
     // Decode in PARALLEL. Awaiting each file in turn was ~69 serial decodes with every music bed stuck
     // behind all 62 sound effects -- on a slow device that is seconds of silence at boot.
-    const grab = async (file) => ctx.decodeAudioData(await fetch('assets/audio/' + file).then(x => x.arrayBuffer()));
+    // Cache by FILENAME: several songs can legitimately share one layer file, and decoding the same
+    // 11 MB of PCM once per song would put three copies of it in memory for no reason.
+    const decoded = {};
+    const grab = (file) => (decoded[file] = decoded[file] ||
+      fetch('assets/audio/' + file).then(x => x.arrayBuffer()).then(a => ctx.decodeAudioData(a)));
     const jobs = [];
     for (const [cue, files] of Object.entries(manSfx)) {
       for (const f of (Array.isArray(files) ? files : [files])) {
@@ -2327,14 +2384,17 @@ const Sfx = (() => {
       }
     }
     for (const [mode, m] of Object.entries((man && man.music) || {})) {
-      if (m.file) jobs.push(grab(m.file).then(b => {
-        samples['mus_' + mode] = [b];
-        if (musicMode === mode) { const x = musicMode; musicMode = null; music(x); }   // drone -> real bed
-      }).catch(() => { /* drone stays */ }));
-      for (const [layer, file] of Object.entries(m.layers || {})) {
-        jobs.push(grab(file).then(b => { samples['mus_' + mode + '::' + layer] = [b]; })
-                            .catch(() => { /* that layer just stays silent */ }));
-      }
+      (m.variants || []).forEach((v, i) => {
+        const key = 'mus_' + mode + '#' + i;
+        if (v.file) jobs.push(grab(v.file).then(b => {
+          samples[key] = [b];
+          if (musicMode === mode && musicVariant === i) { const x = musicMode; musicMode = null; music(x); }
+        }).catch(() => { /* drone stays */ }));
+        for (const [layer, file] of Object.entries(v.layers || {})) {
+          jobs.push(grab(file).then(b => { samples[key + '::' + layer] = [b]; })
+                              .catch(() => { /* that layer just stays silent */ }));
+        }
+      });
     }
     await Promise.all(jobs);
     // A bed that started before its layers had decoded is playing without them. Restart it now they are
@@ -2503,7 +2563,9 @@ const Sfx = (() => {
   };
   let layerGains = {};   // layer name -> GainNode, for the bed playing right now
   let layerWant = {};    // layer name -> level the game last asked for; survives a bed change
-  let bedPos = {};       // mode -> where in its loop it was when we left, so returning does not restart
+  let bedPos = {};       // song key -> where in its loop it was when we left, so returning does not restart
+  let musicVariant = 0;  // which song of the current mode is playing
+  let lastVariant = {};  // mode -> the song we played last time, so we do not repeat it back to back
 
   // Equal-power crossfade. The old transition ramped the incoming bed exponentially from 0.0001, i.e.
   // from -80 dB, so it was still inaudible a second in while the outgoing bed had already dropped
@@ -2530,7 +2592,7 @@ const Sfx = (() => {
     if (musicSample) {
       const ms = musicSample;
       // remember how far into the loop we were, so coming back does not restart the track at 0:00
-      if (ms.loopLen > 0) bedPos[ms.mode] = (ms.offset - ms.loopStart + Math.max(0, t - ms.startedAt)) % ms.loopLen;
+      if (ms.loopLen > 0) bedPos[ms.key] = (ms.offset - ms.loopStart + Math.max(0, t - ms.startedAt)) % ms.loopLen;
       try {
         ms.bed.gain.cancelScheduledValues(t);
         ms.bed.gain.setValueCurveAtTime(FADE_OUT, t, XFADE);
@@ -2555,14 +2617,25 @@ const Sfx = (() => {
     if (instant) g.gain.setValueAtTime(v, ctx.currentTime);
     else g.gain.setTargetAtTime(v, ctx.currentTime, 0.8);
   }
-  function startRecordedBed(mode, base, meta) {
+  /** Pick a song for this mode: random, but never the same one twice running when there is a choice. */
+  function pickVariant(mode) {
+    const n = ((musicMeta[mode] || {}).variants || []).length;
+    if (n <= 1) return 0;
+    let i = Math.floor(Math.random() * n);
+    if (i === lastVariant[mode]) i = (i + 1 + Math.floor(Math.random() * (n - 1))) % n;
+    lastVariant[mode] = i;
+    return i;
+  }
+
+  function startRecordedBed(mode, vi, base, meta) {
     // ONE start instant shared by every layer. Starting them separately, or letting each ramp from
     // its own `currentTime`, drifts them apart and the layers phase against each other.
     const t0 = ctx.currentTime + 0.05;
+    const key = mode + '#' + vi;
     const loopStart = (meta && meta.loopStart != null) ? meta.loopStart : 0;
     const loopEnd = (meta && meta.loopEnd) ? meta.loopEnd : base.duration;
     const loopLen = Math.max(0, loopEnd - loopStart);
-    const offset = loopStart + (loopLen > 0 ? ((bedPos[mode] || 0) % loopLen) : 0);
+    const offset = loopStart + (loopLen > 0 ? ((bedPos[key] || 0) % loopLen) : 0);
     // The whole bed rides one gain so the crossfade cannot fight the per-layer levels underneath it.
     const bed = ctx.createGain();
     bed.gain.setValueAtTime(0.0001, t0);
@@ -2579,13 +2652,13 @@ const Sfx = (() => {
     const nodes = [mk(base, 1)];
     layerGains = {};
     for (const name of Object.keys((meta && meta.layers) || {})) {
-      const buf = (samples['mus_' + mode + '::' + name] || [])[0];
+      const buf = (samples['mus_' + mode + '#' + vi + '::' + name] || [])[0];
       if (!buf) continue;
       const n = mk(buf, 0.0001);
       layerGains[name] = n.g;
       nodes.push(n);
     }
-    musicSample = { mode, bed, nodes, startedAt: t0, offset, loopStart, loopLen };
+    musicSample = { mode, key, bed, nodes, startedAt: t0, offset, loopStart, loopLen };
     // re-apply whatever the game had asked for before this bed started
     for (const [name, want] of Object.entries(layerWant)) {
       if (layerGains[name]) layerGains[name].gain.setTargetAtTime(Math.max(0.0001, want), t0, 0.8);
@@ -2598,8 +2671,12 @@ const Sfx = (() => {
     if (musicMode === mode) return;
     musicMode = mode;
     stopMusic();
-    const rec = (samples['mus_' + mode] || [])[0];
-    if (rec) { startRecordedBed(mode, rec, musicMeta[mode]); return; }
+    // A fresh visit to a mode picks a song. Re-entering the SAME mode returns early above, so a
+    // battle keeps one song from start to finish rather than reshuffling on every render.
+    musicVariant = pickVariant(mode);
+    const v = ((musicMeta[mode] || {}).variants || [])[musicVariant];
+    const rec = (samples['mus_' + mode + '#' + musicVariant] || [])[0];
+    if (rec) { startRecordedBed(mode, musicVariant, rec, v); return; }
     const spec = MODES[mode]; if (!spec) return;
     musicFilter.frequency.setTargetAtTime(spec.cut, ctx.currentTime, 0.7);
     const t0 = ctx.currentTime;
@@ -2643,25 +2720,74 @@ function haptic(ms) { try { if (navigator.vibrate) navigator.vibrate(ms); } catc
 
 // ── contextual tutorial: one-time coach tips, fired the first time you hit a
 //    concept. Persisted in localStorage so they never nag a returning player. ──
+// Each tip is bound to the ACTION that makes it make sense, not to a turn counter — you are told what
+// the blue tiles mean at the moment you first make some, and what a damage badge means the first time
+// one appears. A tip fired before its concept is on screen is just a wall of text; the same words
+// beside the thing they describe are a tutorial. Fires once ever, per concept, per device.
 const COACH = {
-  battle: {h:'How battles work', t:'Your units act on <b>Action Points</b> — tap a unit, then a highlighted tile to <b>move</b> or an enemy to <b>attack</b>, all free. Your <b>cards</b> (bottom) cost <b>Command Points</b> to reinforce and command your army. Tap <b>Danger</b> anytime to see where enemies can strike.'},
+  battle: {h:'How battles work', t:'Your units act on <b>Action Points</b> — tap a unit, then a highlighted tile to <b>move</b> or an enemy to <b>attack</b>, all free. Your <b>cards</b> (bottom) cost <b>Command Points</b> to reinforce and command your army. Tap around — everything on the field explains itself.'},
   map:    {h:'The Expedition', t:'Pick your path up the act — <b>skirmishes</b>, <b>elites</b>, <b>caches</b>, <b>camps</b>, <b>outposts</b>, and the <b>boss</b> at the top. Your army is <b>permadeath</b>: units that fall are gone for the run. Bank <b>salvage</b> at outposts to buy, upgrade, and thin your deck.'},
   power:  {h:'Command Power ready', t:'Your gauge is <b>full</b> — tap the glowing <b>Power</b> button to unleash your general\'s signature ability. It costs the whole gauge, so pick your moment.'},
   retain: {h:'Keep a card', t:'At end of turn your hand is discarded — but tap the <b>★</b> on a card to <b>keep</b> it for next turn. Save a key card for the right moment.'},
+
+  // ── first-action tips ──
+  unit:   {h:'Your unit is active', t:'The <b>highlighted tiles</b> are everywhere it can walk this turn, and any enemy it can hit is <b>ringed in red</b> with the damage it would take. Its card shows <b>ATK</b>, <b>DEF</b>, <b>range</b> and <b>sight</b> — range is how far it strikes, sight is how far it lifts the fog. Each move or attack spends one <b>Action Point</b>.'},
+  inspect:{h:'Unit details', t:'Tapping any unit opens its full card — <b>HP</b>, <b>attack</b>, <b>defense</b>, <b>range</b>, <b>sight</b>, its rank, and what it does. Do it to an <b>enemy</b> before you commit: reading its reach is how you work out whether stepping up gets you hit back.'},
+  terrain:{h:'The ground matters', t:'Tapping bare ground tells you what it is. <b>Cover</b> (forest, rubble) adds <b>defense</b> to whoever stands in it. <b>High ground</b> extends a marksman\'s reach and sees further. Rough ground <b>costs more movement</b> to cross. Fighting from the right tile is often worth more than one more soldier.'},
+  move:   {h:'Ground taken', t:'That cost one <b>Action Point</b> — most units have more than one, so check the unit card before you end your turn. You can only step <b>one tile into the fog</b> at a time: your army will not march blind into ground it has never seen.'},
+  attack: {h:'First blood', t:'Damage is <b>attack minus defense</b>, and defense includes whatever cover the target is standing in. Get a <b>second unit on the far side</b> of an enemy and you <b>flank</b> it for bonus damage. A <b>✕</b> on the damage badge means the blow kills.'},
+  card:   {h:'Playing a card', t:'Cards cost <b>Command Points</b> — the CP counter, top-left — and refresh every turn. A card needing a target will highlight what it can be played on; tap the card again to put it back. Cards you cannot afford are dimmed.'},
+  danger: {h:'Reading the danger', t:'Shaded tiles are where the enemy can <b>strike next turn</b>. The <b>deeper red</b> is worse: those are tiles they can <b>move onto and fire from</b> — the ground worth taking or blocking first. Ghosts show where each enemy is heading, with arrows to what it will hit. Both layers toggle in <b>Menu</b>.'},
+  endturn:{h:'That was the enemy turn', t:'You watch every enemy decision play out — tap to skip it. Your hand was discarded and you have drawn a fresh one, with your <b>Command Points</b> refilled. Unspent points do <b>not</b> carry over, so empty your Action Points before ending a turn, and <b>★</b> a card you want to keep.'},
+
+  // Rules that bite in silence. Each of these was previously either buried in How to Play or nowhere at
+  // all: the player just saw something happen and had no way to find out why.
+  zoc:    {h:'You are in contact', t:'Standing next to an enemy puts you in its <b>zone of control</b> — you can step in, but you cannot keep moving <b>past</b> it in the same move. That is why your range stops short here. To get behind a line you have to <b>kill something and walk through the hole</b>, or go the long way around.'},
+  aim:    {h:'This one lobs its shells', t:'Artillery and rockets do not lock on — they <b>aim a tile</b>. Use the <b>Aim / Move</b> switch on the unit card: in <b>Aim</b> every visible tile is a target, and the shell may <b>drift one tile</b> when it lands, so mind your own troops. Bring it to <b>rank 5</b> and it stops drifting entirely.'},
+  death:  {h:'That soldier is gone', t:'Your army is <b>permadeath</b> — a unit lost is lost for the <b>whole run</b>, with its rank and everything you drilled into it. Reinforcement cards field <b>fresh</b> recruits at rank 1. Pull wounded units out of reach and heal them at an <b>Outpost</b> or a <b>Camp</b>; a veteran is worth far more than the ground you would spend it on.'},
+  promote:{h:'Promoted', t:'Units earn <b>XP</b> for damage and kills, and rank up to <b>5</b> — each rank adds HP and attack, and some gain more. Ranks are <b>permanent for the run</b> and carry between battles, so the soldier you keep alive early becomes the one that wins the boss fight.'},
+  hazard: {h:'That ground is hostile', t:'Fire, gas and toxic sludge <b>hurt whatever stands in them</b>, yours or theirs. They spread and burn out over time. Check the ground before you move onto it — and remember it cuts both ways: <b>herding the enemy into it</b> is a perfectly good way to win a fight.'},
+
+  // Map-screen stakes. Each of these screens already says what the buttons do; none of them said what
+  // the CHOICE costs you, which is the part a new player gets wrong.
+  shop:   {h:'The Outpost', t:'The only place to spend <b>salvage</b>. Buy cards and relics, <b>repair</b> the army, and — the one most people miss — <b>thin your deck</b>. Removing a weak card is often worth more than adding a strong one, because a smaller deck draws its best cards more often.'},
+  camp:   {h:'Make camp', t:'<b>One or the other, not both.</b> <b>Rest</b> heals your whole army and HQ to full. <b>Drill</b> gives one soldier a permanent boost for the rest of the run. Rest when you are battered heading into a boss; drill when you are healthy and want a unit that carries you there.'},
+  reward: {h:'Choosing a card', t:'Take the card that fits the deck you are building — or take <b>none</b>. Every card you add <b>dilutes your draw</b>, so a deck of a few strong cards beats a pile of decent ones. Tap a card to read it in full before you commit.'},
+  relic:  {h:'Relics', t:'Relics are <b>permanent, run-long</b> effects — they never take up a card slot and never need playing. Most rewrite a rule quietly in your favour, so read them: two that combine can change how a whole run is played.'},
+  boss:   {h:'Act boss', t:'The boss holds the top of the act, hits far harder than anything you have met, and has a <b>signature mechanic</b> — read its briefing, it tells you what that is. Beating it clears the act, hands you a <b>relic</b>, and takes you up a tier where everything gets tougher.'},
 };
 let _coachBusy = false;
+let _coachQueue = [];
+// A tip triggered while another is open is QUEUED, not dropped. Dropping it looked harmless — the tip
+// would fire again next time its trigger came round — but the generic tips retrigger on every render
+// while the action tips only fire on the one action, so the generic ones kept winning the next free slot
+// and attached themselves to the wrong moment. Measured before the queue: making your first move showed
+// "How battles work" (the battle intro, still pending), and the tip for inspecting a unit never appeared
+// at all. Marked seen at QUEUE time, so nothing can enqueue twice.
 function coach(id) {
   const c = COACH[id];
-  if (!c || _coachBusy || localStorage.getItem('dc_c_' + id) || localStorage.getItem('dc_tut_off')) return;
-  _coachBusy = true;
+  if (!c || localStorage.getItem('dc_c_' + id) || localStorage.getItem('dc_tut_off')) return;
   localStorage.setItem('dc_c_' + id, '1');
+  if (_coachBusy) { _coachQueue.push(id); return; }
+  _showCoach(id);
+}
+function _showCoach(id) {
+  const c = COACH[id];
+  if (!c) return;
+  _coachBusy = true;
   const el = $('#coach');
   el.innerHTML = `<div class="ch">${si('bulb',16)} ${c.h}</div><div class="ct">${c.t}</div>
     <div class="cbtn">${ibtn('continue','dismissCoach()')}</div>`;
   el.classList.add('show');
 }
-function dismissCoach() { $('#coach').classList.remove('show'); _coachBusy = false; }
+function dismissCoach() {
+  $('#coach').classList.remove('show');
+  _coachBusy = false;
+  const next = _coachQueue.shift();
+  if (next) setTimeout(() => _showCoach(next), 260);   // a beat, so it reads as a new card rather than a flicker
+}
 function resetTutorial() {
+  _coachQueue = [];   // anything still waiting is from the old run-through; it would fire out of context
   Object.keys(COACH).forEach(k => localStorage.removeItem('dc_c_' + k));
   localStorage.removeItem('dc_tut_off'); localStorage.removeItem('dc_seenHelp');
   toast('Tutorial tips reset — they\'ll show again as you play.');
@@ -2825,7 +2951,7 @@ function showSettings() {
         Deck: draw ${S.piles.draw} · discard ${S.piles.discard}${S.piles.exhaust?` · exhausted ${S.piles.exhaust}`:''}<br>
         ${S.ascension?`Ascension ${S.ascension}<br>`:''}${(S.mods&&S.mods.length)?`Modifiers: ${S.mods.join(', ')}<br>`:''}Seed ${S.seed}
       </div>
-      <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:6px">${pbtn('danger','toggleDanger();showSettings()',{cls:'h'})}${toggle(dangerOn,"toggleDanger();showSettings()")}</div>
+      ${dangerRows('showSettings()')}
     </div>` : ''}
     <div class="setact-row">
       ${inRun ? pbtn('retreat', "confirmRetreat()") : ''}
@@ -3038,19 +3164,31 @@ function render(state) {
   renderHud(); renderBoard(); renderHand(); renderPrompt();
   if (freshBattle) centerOnHQ();          // open the battle looking at the player camp, not the enemy corner
   updateEndBtn();                         // End Turn only shows on our turn (hidden during enemy play)
-  if (dangerOn) refreshDanger();          // keep the danger overlay current
+  if (dangerOn || intentOn) refreshDanger();   // keep whichever danger layers are on current
   if (S.result && !_deferResult) showBattleResult();   // held until enemy anim finishes
   else if (S.pending_workshop) showWorkshop();   // boss maps carry Workshops
-  else { ['ovResult','ovUpgrade'].forEach(closeOv); maybeShowIntro(); coach('battle'); }
+  else {
+    ['ovResult','ovUpgrade'].forEach(closeOv); maybeShowIntro();
+    // The boss briefing is its own overlay, so this queues behind it rather than fighting it.
+    if (S.boss) coach('boss'); else coach('battle');
+  }
   if (S.power && S.power.ready) coach('power');   // teach the Command Power when it first charges
 }
 
 async function refreshDanger() {
+  if (!dangerOn && !intentOn) { threatSet = firingSet = new Set(); intentList = []; renderBoard(); return; }
   try {
     const r = await api('/api/threat', {});
-    threatSet = new Set((r.tiles || []).map(t => t[0] + ',' + t[1]));
-  } catch (e) { threatSet = new Set(); }
+    threatSet = new Set(dangerOn ? (r.tiles || []).map(t => t[0] + ',' + t[1]) : []);
+    firingSet = new Set(dangerOn ? (r.firing || []).map(t => t[0] + ',' + t[1]) : []);
+    // The forecast describes the turn that is ABOUT to start. While the enemy is actually taking it the
+    // projection is being overtaken move by move, so hold it back until control comes back to you.
+    intentList = (intentOn && !turnBusy) ? (r.intents || []) : [];
+  } catch (e) { threatSet = new Set(); firingSet = new Set(); intentList = []; }
   renderBoard();
+  // Only once there is something to look at. Fired on an empty board the tip describes shading the
+  // player has never seen, which is exactly the wall-of-text tutorial this system exists to avoid.
+  if (threatSet.size || intentList.length) coach('danger');
 }
 
 // ── expedition map screen ──
@@ -3431,6 +3569,17 @@ function steelText(str) { return glyphText(str, 'steel'); }    // desaturated st
 function toggle(on, onclick) {
   return `<button class="tglbtn" onclick="${onclick}" role="switch" aria-checked="${on}" aria-label="toggle"><img src="assets/ui/btn/toggle_${on?'on':'off'}.png" alt=""></button>`;
 }
+// The two danger layers, shown identically in Settings and in the ⓘ run panel. `back` is the reopen call
+// so the panel you were in redraws under you. Labelled rather than icon-only: there is no art for the
+// second one, and with two switches side by side a bare ⚠ plaque no longer says which is which.
+function dangerRows(back) {
+  const row = (title, blurb, on, fn) => `<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;text-align:left">
+      <div><b>${title}</b><div class="d" style="line-height:1.45">${blurb}</div></div>
+      ${toggle(on, `${fn}();${back}`)}
+    </div>`;
+  return row('Threat range', 'Shade every tile the enemy can hit next turn — and in <b class="red">deeper red</b>, the tiles they can move onto and fire from.', dangerOn, 'toggleDanger')
+       + row('Enemy intent', 'Ghost each enemy on the tile it is heading for, with arrows to what it will strike and the damage it adds up to.', intentOn, 'toggleIntent');
+}
 function toggleReveal() { const on = localStorage.getItem('dc_reveal_enemy') !== '0'; localStorage.setItem('dc_reveal_enemy', on ? '0' : '1'); showSettings(); }
 function onSeedInput(el) {
   el.value = el.value.replace(/[^0-9]/g, '');
@@ -3515,6 +3664,19 @@ function showNode() {
   } else { closeOv('ovNode'); return; }
   o.innerHTML = oframe(o.innerHTML, ttl);   // ornate container + banner title around every node view
   o.classList.add('show');
+  // Each of these panels already says what its buttons do; none of them said what the CHOICE costs, which
+  // is the part a new player gets wrong. Deferred until the panel is closed, so the tip does not sit on
+  // top of the very cards it is telling you to read.
+  const TIP = { shop: 'shop', camp: 'camp', reward: 'reward', medal: 'relic' };
+  if (TIP[p.kind]) _coachOnClose(o, TIP[p.kind]);
+}
+/** Queue a tip for once `ov` is dismissed. Same idea as _coachAfter, for any overlay. */
+function _coachOnClose(ov, id) {
+  if (!ov || localStorage.getItem('dc_c_' + id) || localStorage.getItem('dc_tut_off')) return;
+  const tick = setInterval(() => {
+    if (ov.classList.contains('show')) return;
+    clearInterval(tick); coach(id);
+  }, 400);
 }
 // ── inspect a card in full before you commit to it (caches / spoils / shop) ──
 let _peekConfirmFn = null;
@@ -3884,8 +4046,15 @@ function showRunResult() {
 }
 function toggleDanger() {
   dangerOn = !dangerOn;
+  try { localStorage.setItem('dc_danger', dangerOn ? '1' : '0'); } catch (e) {}
   if (dangerOn) refreshDanger();
-  else { threatSet = new Set(); renderBoard(); }
+  else { threatSet = new Set(); firingSet = new Set(); renderBoard(); }
+}
+function toggleIntent() {
+  intentOn = !intentOn;
+  try { localStorage.setItem('dc_intent', intentOn ? '1' : '0'); } catch (e) {}
+  if (intentOn) refreshDanger();
+  else { intentList = []; renderBoard(); }
 }
 
 function gaugeRow() {
@@ -4238,7 +4407,7 @@ function showRunInfo() {
       ${S.ascension?`Ascension ${S.ascension}<br>`:''}${(S.mods&&S.mods.length)?`Modifiers: ${S.mods.join(', ')}<br>`:''}
       Seed ${S.seed}
     </div></div>
-    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:6px">${pbtn('danger','toggleDanger();showRunInfo()',{cls:'h'})}${toggle(dangerOn,"toggleDanger();showRunInfo()")}</div>
+    ${dangerRows('showRunInfo()')}
     <div style="text-align:center;margin-bottom:6px">${pbtn('deck',"closeOv('ovInspect');showDeck()",{cls:'h'})}</div>
     <div class="ovclose"><button class="ibtn" onclick="closeOv('ovInspect')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
   $('#ovInspect').classList.add('show');
@@ -4397,6 +4566,19 @@ function renderBoard() {
     if (isFog(c.x - 1, c.y + 1) && !S && !W) layers += edge(c, 'corner', COR.SW, { x: c.x - 1, y: c.y + 1 });
     return (veil || layers) ? `<div class="fog">${veil}${layers}</div>` : '';
   };
+  // ── intent telegraph ──
+  // A ghost of each enemy on the tile it is heading for, plus the damage about to land on each of your
+  // pieces. Damage is SUMMED per victim: three enemies converging on one unit is the thing you need to
+  // see, and one "−4" three times over reads as survivable when the total is not.
+  const showIntent = intentOn && !turnBusy;
+  const ghosts = new Map(), incoming = new Map();
+  if (showIntent) for (const it of intentList) {
+    if (it.to) {
+      const src = cellAt.get(it.from[0] + ',' + it.from[1]);
+      if (src && src.u) ghosts.set(it.to[0] + ',' + it.to[1], src.u);
+    }
+    if (it.shot) incoming.set(it.shot.id, (incoming.get(it.shot.id) || 0) + it.shot.dmg);
+  }
   const clsArr = [], innerArr = [];
   for (const c of b.cells) {
     const terr = c.t ? 't-' + c.t : 't-none';
@@ -4432,7 +4614,13 @@ function renderBoard() {
     }
     let stormfx = '';
     if (c.st && c.vis) { cls += ' storm'; const sd = (((c.x * 7 + c.y * 13) % 15) / 10).toFixed(2); stormfx = `<div class="stormfx" style="animation-delay:-${sd}s"><img src="assets/terrain/storm.png" alt=""></div>`; }   // storm WALL cell (only while you can SEE it — a remembered-tile storm is stale, so hide it): flashing overlay ON TOP of terrain + unit; the eye is open
-    if (dangerOn && threatSet.has(c.x + ',' + c.y)) cls += ' danger';
+    // Two tiers. `danger` = this tile can be hit. `dangerfire` = an enemy can STAND here and shoot from
+    // it, which is the tile you can deny by getting there first — so it wins when a tile is both.
+    if (dangerOn) {
+      const dk = c.x + ',' + c.y;
+      if (firingSet.has(dk)) cls += ' dangerfire';
+      else if (threatSet.has(dk)) cls += ' danger';
+    }
     // objective "hold" point marker — an always-on-top ring so it stays visible even while you hold it
     let objring = '';
     if (S.objective && S.objective.pos && S.objective.pos[0]===c.x && S.objective.pos[1]===c.y) {
@@ -4460,8 +4648,21 @@ function renderBoard() {
         hl = ' legal' + (legal.kind === 'enemies' ? ' foe' : '');
       else if (sel !== null) cls += ' fade';
     }
+    // the projected arrival, and what the incoming fire adds up to on the piece standing here
+    let tele = '';
+    if (showIntent) {
+      const gh = ghosts.get(c.x + ',' + c.y);
+      if (gh) { cls += ' ghosted'; tele += `<div class="ghost">${counterHTML(gh)}</div>`; }
+      const inc = c.u ? incoming.get(c.u.id) : 0;
+      if (inc > 0) {
+        const kill = inc >= c.u.hp;
+        // ✕ is the kill marker the rest of the board already uses (.dmgprev.kill), so it reads without
+        // being taught — and it is a glyph this client is known to render on every platform it ships to.
+        tele += `<span class="incdmg${kill ? ' kill' : ''}">${kill ? '✕' : ''}−${inc}</span>`;
+      }
+    }
     clsArr.push(cls + hl);
-    innerArr.push(`${glyph}${stormfx}${fogFor(c)}${objring}`);
+    innerArr.push(`${glyph}${stormfx}${fogFor(c)}${objring}${tele}`);
   }
   // incremental paint: rebuild the whole board only when the grid itself changes (new battle / resize);
   // otherwise mutate ONLY the cells whose class or contents actually changed. On a ~900-tile act-2 map
@@ -4486,6 +4687,46 @@ function renderBoard() {
   // scroll + repaint even when the value is unchanged — a needless per-move paint (and tearing trigger).
   if (wrap.scrollLeft !== sx) wrap.scrollLeft = sx;
   if (wrap.scrollTop !== sy) wrap.scrollTop = sy;
+  drawIntents(showIntent ? intentList : []);
+}
+
+// The telegraph's arrows: a dashed path to the tile each enemy is heading for, and a solid red one from
+// there to what it will shoot. Drawn in board-local pixels into an SVG that is a child of #board, the
+// same trick showTracer() uses — the browser then pans and zooms them with the grid, so no redraw is
+// needed on scroll (only when the cell size changes, which setCellPx handles).
+function drawIntents(list) {
+  const board = $('#board'); if (!board) return;
+  let svg = board.querySelector('#intentfx');
+  if (!list || !list.length) { if (svg) svg.remove(); return; }
+  if (!svg) { svg = document.createElementNS(SVGNS, 'svg'); svg.id = 'intentfx'; board.appendChild(svg); }
+  svg.setAttribute('width', board.scrollWidth); svg.setAttribute('height', board.scrollHeight);
+  const cen = (p) => {
+    const c = p && board.querySelector(`.cell[data-x="${p[0]}"][data-y="${p[1]}"]`);
+    return c ? { x: c.offsetLeft + c.offsetWidth / 2, y: c.offsetTop + c.offsetHeight / 2 } : null;
+  };
+  const out = [];
+  // Pull both ends in so an arrow points AT the pieces rather than burying them, and cap the trim at a
+  // third of the run so neighbouring tiles still get a visible stub.
+  const arrow = (a, b, cls, head, w) => {
+    if (!a || !b) return;
+    const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy);
+    if (len < 8) return;
+    const ux = dx / len, uy = dy / len, trim = Math.min(cellPx * 0.42, len / 3);
+    const ax = a.x + ux * trim, ay = a.y + uy * trim, bx = b.x - ux * trim, by = b.y - uy * trim;
+    const hl = Math.max(6, cellPx * 0.34), ang = Math.atan2(uy, ux), ha = 0.5;
+    if (Math.hypot(bx - ax, by - ay) < hl * 0.8) return;
+    out.push(`<line class="${cls}" x1="${ax.toFixed(1)}" y1="${ay.toFixed(1)}" x2="${(bx - ux * hl * 0.7).toFixed(1)}" y2="${(by - uy * hl * 0.7).toFixed(1)}" stroke-width="${w}"/>`);
+    out.push(`<polygon class="${head}" points="${bx.toFixed(1)},${by.toFixed(1)} ${(bx - hl * Math.cos(ang - ha)).toFixed(1)},${(by - hl * Math.sin(ang - ha)).toFixed(1)} ${(bx - hl * Math.cos(ang + ha)).toFixed(1)},${(by - hl * Math.sin(ang + ha)).toFixed(1)}"/>`);
+  };
+  const w = Math.max(2, Math.round(cellPx * 0.09));
+  for (const it of list) {
+    if (it.to) arrow(cen(it.from), cen(it.to), 'imove', 'imovehead', w);
+    // a theft is not an attack: gold, and it never carries a damage badge (its dmg is 0 by construction)
+    const steal = it.kind === 'steal';
+    if (it.shot) arrow(cen(it.to || it.from), cen(it.shot.at),
+                       steal ? 'isteal' : 'iatk', steal ? 'istealhead' : 'iatkhead', w + 0.6);
+  }
+  svg.innerHTML = out.join('');
 }
 
 const NEED_LBL = {own_unit:'your unit', enemy:'an enemy', any_unit:'any unit', tile:'a tile'};
@@ -4745,6 +4986,7 @@ async function tapCard(i) {
   await fetchLegal();
   setHandPeek(true);           // lower the hand so the battlefield is clear to pick a target
   renderBoard(); renderHand(); renderPrompt();
+  coach('card');               // once the targets are lit, so the tip describes what is on screen
 }
 
 async function fetchLegal() {
@@ -4794,8 +5036,23 @@ async function tapCell(x, y) {
   // (3) nothing selected → tap your unit to command, else inspect
   if (isMine(cell.u)) { await selectUnit(cell.u.id); return; }
   if (cell.st) { showStormInfo(cell); return; }   // storm tile → describe the storm AND what's under it
-  if (cell.u) showInspect(cell.u); else if (cell.t) showTerrain(cell);
+  // The inspect/terrain panels open on top of the coach tip, so the tip has to be queued behind them:
+  // showInspect/showTerrain both take over #ovInspect, and a tip fired first would be read as part of it.
+  if (cell.u) { showInspect(cell.u); _coachAfter('inspect'); }
+  else if (cell.t) { showTerrain(cell); _coachAfter('terrain'); }
 }
+// Fire a tip once the enemy replay has finished. Tips triggered from inside animateEvents would land on
+// top of a board that is still moving, and get tapped away without being read.
+function _coachSoon(id) {
+  if (localStorage.getItem('dc_c_' + id) || localStorage.getItem('dc_tut_off')) return;
+  const tick = setInterval(() => {
+    if (turnBusy) return;                           // the replay is still playing out
+    clearInterval(tick); coach(id);
+  }, 500);
+}
+// Fire a tip once the inspect panel has been read and closed. A tip that appears at the same instant as
+// a full-screen card competes with it; one that appears after they dismiss it lands.
+function _coachAfter(id) { _coachOnClose($('#ovInspect'), id); }
 // interactable tokens sit ON open ground — they are NOT a terrain type
 const ONGROUND = { crate:'a supply crate', workshop:'a workshop', node:'a command node', escape:'the exit' };
 function showStormInfo(c) {
@@ -4810,7 +5067,10 @@ function showStormInfo(c) {
 async function selectUnit(id, center = true) {
   disarmEnd();
   const o = await api('/api/unit_options', {unit_id: id});
-  if ((o.ap || 0) <= 0) { const u = unitById(id); deselectCmd(); if (u) showInspect(u); return; }
+  // Out of actions (or a structure that never had any) — this opens the SAME detail panel tapping an
+  // enemy does, so it earns the same tip. Missed on the first pass because the tip was only wired to
+  // tapCell's inspect branch, and a spent unit never reaches it.
+  if ((o.ap || 0) <= 0) { const u = unitById(id); deselectCmd(); if (u) { showInspect(u); _coachAfter('inspect'); } return; }
   cmd = id;
   cmdOpts = {moves:new Set(o.moves.map(t=>t[0]+','+t[1])), attacks:new Set(o.attacks), aim:new Set((o.aim||[]).map(t=>t[0]+','+t[1])), precise:!!o.precise, ap:o.ap, preview:o.preview||{}};
   // each gun's mode lives in aimModes and is NOT reset here — it is that unit's own for the whole turn.
@@ -4821,6 +5081,21 @@ async function selectUnit(id, center = true) {
   // unit selected for its remaining actions but must NOT yank the camera — the player has already
   // scrolled the map where they want it, and centerCell would pop the view back to the unit.
   if (center) { const cc = S.board.cells.find(c => c.u && c.u.id === id); if (cc) centerCell(cc.x, cc.y); }
+  // Explained only once the highlights are actually on screen — the tip names things the player can see.
+  coach('unit');
+  // Ordnance is a whole second interaction mode hiding behind one small switch on the unit card. Taught
+  // the moment a unit that HAS that switch is picked up, not before.
+  if (cmdOpts.aim && cmdOpts.aim.size) coach('aim');
+  // Zone of control is the rule that most often makes a move look broken: your range visibly stops short
+  // and nothing on screen says why. Fired only while it is actually biting — an enemy in contact.
+  else if (_inContact(id)) coach('zoc');
+}
+/** Is an enemy standing next to this unit? That is exactly when zone of control clips its movement. */
+function _inContact(id) {
+  const me = S.board && S.board.cells.find(c => c.u && c.u.id === id);
+  if (!me) return false;
+  return S.board.cells.some(c => c.u && !isMine(c.u) && !c.u.stale
+    && Math.max(Math.abs(c.x - me.x), Math.abs(c.y - me.y)) === 1);
 }
 function deselectCmd() { cmd = null; cmdOpts = {moves:new Set(), attacks:new Set(), aim:new Set(), ap:0}; setHandPeek(false); }
 
@@ -4879,6 +5154,7 @@ async function doMove(x, y) {
   cmdOpts = {moves:new Set(), attacks:new Set(), ap:0};   // drop stale highlight
   await afterAction(r);
   await reselect(id);
+  coach('move');
 }
 async function doAttack(tid) {
   disarmEnd();
@@ -4889,6 +5165,7 @@ async function doAttack(tid) {
   cmdOpts = {moves:new Set(), attacks:new Set(), ap:0};   // drop stale highlight
   await afterAction(r);
   await reselect(id);
+  coach('attack');
 }
 async function doAim(x, y) {   // deviating ordnance — lob a shell at a tile
   disarmEnd();
@@ -5119,7 +5396,7 @@ async function animateEvents(events, finalR) {
       continue;
     }
     if (ev.t === 'promote') {                                       // one of your units ranked up
-      Sfx.play('rank_up'); haptic([20, 40, 60]);
+      Sfx.play('rank_up'); haptic([20, 40, 60]); _coachSoon('promote');
       const pc = document.querySelector(`.cell[data-x="${ev.at[0]}"][data-y="${ev.at[1]}"]`);
       if (pc) { pc.classList.add('fx-heal'); setTimeout(() => pc.classList.remove('fx-heal'), 900); }
       toast(`★ ${ev.name} promoted — ${ev.title}`);
@@ -5216,6 +5493,11 @@ async function animateEvents(events, finalR) {
         const hard  = built || /tank|armor|vehicle|walker|mech|drone/i.test(hitSig);
         if (ev.dead) { Sfx.play(built ? 'death_structure' : 'death_unit'); screenShake(); haptic(55); }
         else { Sfx.play(hard ? 'impact_metal' : 'impact_flesh'); haptic(ev.tgt_you ? 35 : 15); }
+        // Losing a soldier is the most expensive thing that happens in a run and nothing ever said so.
+        // Queued, not shown now: the replay is still running and a card over it would be dismissed blind.
+        if (ev.dead && ev.tgt_you && !built) _coachSoon('death');
+        // A hit with no attacker is the ground doing it — fire, gas, sludge.
+        else if (ev.tgt_you && !ev.by && ev.dmg > 0) _coachSoon('hazard');
       } else if (ev.t === 'heal') { floatHeal(cell, ev.amt); Sfx.play('heal_repair'); }
       else if (ev.t === 'spawn') {
         const su = cellAt(p[0], p[1]), ssig = su && su.u ? (su.u.cls || '') + ' ' + ((su.u.tags || []).join(' ')) : '';
@@ -5454,6 +5736,7 @@ async function endTurn() {
     // no end-of-turn recap card — you watch the enemy act live, and the win/defeat
     // overlay is held until those blows finish.
     await afterAction(r);
+    coach('endturn');            // after the enemy has actually played, so the tip describes what happened
   } catch (e) {
     // An unhandled throw here is invisible: endTurn() is an onclick handler, so the rejection is
     // swallowed and the game just sits there on the enemy turn. Surface it and resync instead.
@@ -6610,6 +6893,7 @@ function setCellPx(px) {
   cellPx = Math.max(minCellPx, Math.min(minCellPx * 3, Math.round(px)));   // floor = the board-fills-the-table view; zoom IN up to 3×
   layoutBoard();   // re-size the grid AND the table together (the table scales with every zoom step)
   if (wrap && board && board.scrollWidth) { wrap.scrollLeft = fx * board.scrollWidth - cw / 2; wrap.scrollTop = fy * board.scrollHeight - (ch - HAND_CLEAR) / 2; }
+  drawIntents(intentOn && !turnBusy ? intentList : []);   // arrow geometry is in board pixels, so it has to follow the zoom
 }
 function zoom(d) { setCellPx(cellPx + d); }   // desktop / programmatic; layoutBoard handles the table + grid
 // pinch-to-zoom the battlefield (two fingers). Single-finger panning still scrolls the board.
