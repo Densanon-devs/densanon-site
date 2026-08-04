@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 03, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 04, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 03, 2026</div>
+        <div class="digest-date-badge">August 04, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s research slate centers on world-action models and multi-robot coordination, with new work tackling visual robustness in manipulation policies and decentralized vision-language collaboration for robot swarms, alongside a broad survey of legged robot capabilities and a bio-inspired study of vision-based locomotion control. On the industry side, former Google DeepMind robotics leaders launched Reimagine Robotics with on-the-job learning systems, and AGIBOT claimed the top spot on an audio-visual reasoning benchmark. The ROS ecosystem sees practical activity too, from a Nav2 social-navigation stack being ported from TurtleBot3 simulation to a Unitree G1 humanoid, to an Open-RMF Summer of Code update.</p>
+        <p class="digest-intro">Today&#x27;s roundup spans humanoid robotics from both ends of the hype cycle -- Toyota&#x27;s practical-humanoid partnership and a DeepMind-alumni startup emerging from stealth -- alongside a US-China trade dispute over humanoid robot imports, fresh funding for agricultural automation and NASA-backed actuator research, and new academic work on manipulator motion planning, humanoid skill composition, and autonomous drift racing.</p>
       </div>
     </section>
 
@@ -29,63 +29,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Advances, challenges, and opportunities for legged robots</h3>
+              <h3>Track-Guided Hierarchical Reinforcement Learning for Autonomous Vehicle Drifting with Minimum-Lap-Time Planning</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Survey assesses current state-of-the-art capabilities across humanoid and quadrupedal legged robot platforms.</li>
-              <li>Frames legged robots as a lever for both societal impact (work, human interaction) and scientific discovery.</li>
-              <li>Useful reference point for tracking where locomotion research stands ahead of upcoming humanoid deployments.</li>
+              <li>Uses a hierarchical reinforcement learning approach guided by the track layout to plan minimum-lap-time trajectories for autonomous vehicles.</li>
+              <li>Targets drift maneuvers (intentionally breaking traction on loose surfaces) rather than the grip-limited racing-line optimization used in circuit racing.</li>
+              <li>Borrows a rally-driving technique -- drifting to rapidly reorient for corner exits -- and applies it to autonomous vehicle control.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.28952" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.00113" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ST-WAM: Semantic-Temporal World Action Model for Robust Manipulation under Visual Distribution Shifts</h3>
+              <h3>Motion Planning for Mobile Manipulators Navigating Doorways via Model Predictive Control</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets a known weakness in World Action Models: pixel-generative future prediction entangles action-relevant dynamics with task-irrelevant visual detail.</li>
-              <li>Proposes semantic-temporal modeling to keep manipulation policies robust when visual conditions shift from the training distribution.</li>
-              <li>Directly relevant to world-model-based manipulation policy learning, a core research theme in embodied AI.</li>
+              <li>Presents an MPC-based motion planning framework that coordinates a mobile robot&#x27;s base and arm together rather than planning them separately.</li>
+              <li>Targets doorway navigation specifically, framed as a fundamental capability for mobile manipulators operating in human environments.</li>
+              <li>Generates dynamically feasible motion plans, addressing the tight-clearance coordination problem doorways pose for combined base-and-arm systems.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.28993" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.00206" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>D-VLC: Decentralized Vision-Language Collaboration for Heterogeneous Embodied Multi-Robot Systems in Unknown Environments</h3>
+              <h3>Developing Combined Manipulation and Locomotion Skills with Interaction Representation and Skill Composition</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Replaces rule-based multi-robot coordination (predefined task models) with decentralized vision-language collaboration for heterogeneous swarms.</li>
-              <li>Targets task execution in unknown environments where predefined rule-based models break down.</li>
-              <li>Relevant to teams building multi-agent or swarm coordination without a centralized planner.</li>
+              <li>Proposes a developmental-principles-based approach for humanoid robots to learn whole-body reactive motion policies.</li>
+              <li>Focuses on composing multiple learned skills together to build more sophisticated combined manipulation-and-locomotion behaviors.</li>
+              <li>Frames skill composition as the path to more capable humanoid behavior rather than training one policy per task.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.29009" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>DART: Dual-Axis Airborne Reachability-Gated Torque-Reaction for Off-Road Vehicle Jumps</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Studies mid-air control of a 1,383 kg off-road vehicle during jump landings from crests, ledges, and ditches.</li>
-              <li>Finds the airborne phase is barely controllable via wheel angular momentum alone, motivating a torque-reaction control scheme.</li>
-              <li>Aims to reduce crash risk from mishandled landings at high speed on rugged terrain platforms.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.29011" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Simulated zebrafish and a vision-equipped robotic fish reveal how the body shapes brain circuits</h3>
-              <span class="digest-source">Robohub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Combines a simulated zebrafish model with a vision-equipped robotic fish (EPFL Biorobotics Lab) to study how body morphology shapes neural control circuits.</li>
-              <li>Focuses on optic-flow-based sensing: how fish estimate current speed and direction purely from visual motion to hold position.</li>
-              <li>Bio-inspired approach relevant to closed-loop, vision-based locomotion control research.</li>
-            </ul>
-            <a href="https://robohub.org/simulated-zebrafish-and-a-vision-equipped-robotic-fish-reveal-how-the-body-shapes-brain-circuits/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.00208" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -95,26 +71,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Reimagine Robotics emerges from stealth with robots that ‘learn on the job’</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Walden Robotics Partners With Toyota on Practical Humanoids</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Founded by former Google DeepMind Applied Robotics leaders, now out of stealth.</li>
-              <li>Targets robots that learn tasks on the job rather than requiring dedicated robotics programmers.</li>
+              <li>Walden Robotics and Toyota are partnering on humanoid robots explicitly framed around practical, near-term goals rather than hype-driven development.</li>
+              <li>The coverage frames this as a course correction from an earlier industry-wide rush to build humanoids without realistic near-term use cases.</li>
+              <li>Signals a major automaker backing a &#x27;practical humanoid&#x27; positioning rather than a pure R&amp;D showcase robot.</li>
             </ul>
-            <a href="https://www.therobotreport.com/reimagine-robotics-emerges-stealth-with-robotslearn-on-the-job/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://spectrum.ieee.org/humanoid-robots-walden-robotics-toyota" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AGIBOT’s foundation model tops benchmark test for audio-visual reasoning</h3>
+              <h3>HEBI Robotics earns NASA SBIR grant to fast track miniaturized actuators</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>HEBI Robotics received a NASA Phase I SBIR grant specifically to accelerate development of miniaturized actuators.</li>
+              <li>The grant is described as only one piece of a broader roadmap -- HEBI is also continuing to develop its existing actuation hardware line.</li>
+              <li>Early-stage NASA SBIR funding is a concrete government-backed validation point for HEBI&#x27;s miniaturized actuation work.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/hebi-robotics-earns-nasa-sbir-grant-fast-track-miniaturized-actuators/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Former DeepMind team launches AI robotics startup with robots that learn from workers</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>WITA-Omni Preview scored highest on the Daily-Omni audio-visual reasoning benchmark, beating models from Alibaba, Google, and ByteDance.</li>
-              <li>Recorded 85.21 percent average accuracy on the benchmark test.</li>
-              <li>Signals AGIBOT positioning multimodal foundation models as a core differentiator for embodied robotics AI.</li>
+              <li>Reimagine Robotics, founded by former leaders of Google DeepMind&#x27;s Applied Robotics team, has emerged from stealth.</li>
+              <li>Core technology lets robots learn on the job from workers rather than requiring specialized robotics or ML expertise to program.</li>
+              <li>Pitch centers on end-user trainability -- &#x27;anyone can train and use&#x27; the robots -- as the key differentiator from traditional industrial robot programming.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/03/agibots-foundation-model-tops-benchmark-test-for-audio-visual-reasoning/103832/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/08/04/former-deepmind-team-launches-ai-robotics-startup-with-robots-that-learn-from-workers/103881/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Researchers unveil open-source robotic guide dog designed to assist blind and visually impaired people</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>&#x27;Milo&#x27; is described by its creators as the world&#x27;s first fully autonomous robotic guide dog, targeting both indoor and outdoor navigation for blind and visually impaired users.</li>
+              <li>The project is open-source and explicitly positioned as a lower-cost alternative to existing guide solutions.</li>
+              <li>AI-powered mobile robot design implies onboard autonomy for navigation assistance rather than remote-operated or scripted movement.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/08/04/researchers-unveil-open-source-robotic-guide-dog-designed-to-assist-blind-and-visually-impaired-people/103878/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>UK government launches £20 million funding competition for agricultural robots</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The UK government is committing £20 million specifically to accelerate development of agricultural robots and automation technology.</li>
+              <li>Explicit policy goals: improving farm productivity and reducing dependence on seasonal labour.</li>
+              <li>Announced by farming minister Stephen Morgan, making this a formal government funding initiative rather than a private R&amp;D grant.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/08/04/uk-government-launches-20-million-funding-competition-for-agricultural-robots/103870/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>China threatens retaliation after US restricts imports of new foreign-made humanoid robots</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The US FCC has added foreign-produced humanoid robots to an import-restriction list, prompting China to threaten retaliatory trade measures.</li>
+              <li>China frames the restrictions as damaging to US-China economic and trade relations, opening a new tech-trade front.</li>
+              <li>Signals humanoid robotics is now being treated as a strategic trade category via FCC action, not just a commercial product space.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/08/04/china-threatens-retaliation-after-us-restricts-imports-of-new-foreign-made-humanoid-robots/103868/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -124,32 +149,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Interop SIG, 06 August 2026: Google Summer of Code for Open-RMF</h3>
+              <h3>Announcing protoros2: use protobuf in ros2 without compromise</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Open-RMF&#x27;s Google Summer of Code contributors will present progress on the project&#x27;s &quot;Next Generation&quot; initiative at the Aug 6 Interop SIG meeting.</li>
-              <li>Open-RMF is the ROS 2 ecosystem&#x27;s fleet-interoperability layer for multi-robot systems across vendors — a practical tooling update for anyone integrating heterogeneous fleets.</li>
+              <li>New tool &#x27;protoros2&#x27; adds Protobuf serialization support to ROS 2, addressing long-standing community demand for cleaner Protobuf integration.</li>
+              <li>Positioned as solving the friction of integrating existing Protobuf tools into high-performance, production-ready ROS 2 pipelines.</li>
+              <li>Aimed at production robotics engineering teams needing serialization performance and compatibility beyond ROS&#x27;s native message formats.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/interop-sig-06-august-2026-google-summer-of-code-for-open-rmf/57124" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Structuring a Nav2 social-navigation stack for Unitree G1 — same code for sim and hardware?</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Custom Nav2 costmap layer implements proxemic zones around pedestrians so the planner routes around people in socially-aware navigation.</li>
-              <li>Validated in Gazebo on a TurtleBot3, now porting the same Nav2 stack to a Unitree G1 humanoid on real hardware.</li>
-              <li>Practical sim-to-real Nav2/ROS 2 question relevant to anyone deploying humanoid navigation stacks from simulation to physical robots.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vdali3/structuring_a_nav2_socialnavigation_stack_for/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/announcing-protoros2-use-protobuf-in-ros2-without-compromise/57152" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 03, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 04, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 03, 2026</div>
+        <div class="digest-date-badge">August 04, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s research leans heavily into agentic AI architecture and evaluation: papers tackle bounded-context long-horizon reasoning, bias-robust LLM-as-judge auditing, and rethinking how agents should learn from experience instead of relying on simple trajectory reflection. Several papers also push LLMs into doing science itself, from benchmarking AI Scientist output quality to a pipeline for generating and validating mathematical conjectures. On the practical side, Simon Willison shipped a 1.0 release of his condense-json library.</p>
+        <p class="digest-intro">Today&#x27;s pool centers on agentic reliability and memory: first-hand reports of agent tool-use breaking down on a newer model sit alongside fresh Anthropic SDK/CLI releases, plus a cluster of research on cheaper LLM evaluation, judging, and long-term memory for agents.</p>
       </div>
     </section>
 
@@ -29,91 +29,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>OpenClaw and Ollama in Agentic AI: Toward Fully Autonomous and Scalable AI Agent Systems</h3>
+              <h3>AutoFOAM: The Self-Refining Autonomous OpenFOAM Agent</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Argues the shift from reactive LLMs to persistent, action-capable agents has exposed architectural gaps around cleanly separating inference, orchestration, and execution layers.</li>
-              <li>Uses OpenClaw and Ollama as case studies for building toward fully autonomous, scalable agent systems.</li>
+              <li>Targets a real pain point: OpenFOAM&#x27;s steep learning curve and time-consuming manual configuration-file setup for CFD simulations.</li>
+              <li>Proposes an autonomous, self-refining agent to automate solver configuration — an applied case study of LLM agents driving complex engineering tooling, not just chat.</li>
+              <li>A proof point for agent architectures that iteratively self-correct against domain-specific config/DSL files rather than free text.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.28629" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.00003" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Can AI Evaluate AI Scientists? A Benchmarking Study of Autonomous Research Generation Systems Using Automated Multi-Model Review</h3>
+              <h3>Energy Efficiency of Locally Deployed LLMs: A Preliminary Quantitative GPU Power Benchmark on Consumer Hardware</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Tackles the open problem of evaluating and comparing the quality of papers produced by autonomous &#x27;AI Scientist&#x27; research systems.</li>
-              <li>Proposes a rigorous benchmarking method built on automated multi-model review rather than a single evaluator model.</li>
+              <li>Directly measures GPU power draw for local LLM inference on consumer hardware — an area the paper flags as poorly characterized versus accuracy-only benchmarks.</li>
+              <li>Reinforces the privacy/on-premise inference rationale behind local-first tooling with actual energy-cost data rather than assumptions.</li>
+              <li>Worth tracking as a preliminary result — useful reference point for weighing local vs. cloud inference cost once fuller numbers land.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.28631" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.00008" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LLM Framework for Discovering Major Mathematical Conjectures: AI&#x27;s Quest for the Next Riemann Hypothesis</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Presents a three-stage pipeline for systematically generating and validating mathematical conjectures, an area that has historically depended on expert intuition.</li>
-              <li>Aims at conjecture generation with &#x27;substantial mathematical potential&#x27; rather than routine theorem-proving.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.28632" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ThinkReset: Learnable Intermediate Interface Construction for Bounded-Context Long-Horizon Reasoning</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Addresses redundancy accumulation, context overflow, and error anchoring in long chain-of-thought reasoning under bounded context windows.</li>
-              <li>Argues the real bottleneck for long-horizon reasoning isn&#x27;t trajectory compression, and instead proposes a learnable intermediate interface to reset reasoning state.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.28642" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>TAPR: Enhancing LLM Performance with a Task-Aware Prompt Rewriter</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Introduces a Task-Aware Prompt Rewriter (TAPR) model that automatically reformulates user prompts to unlock more of an LLM&#x27;s capability.</li>
-              <li>Targeted at lowering the prompt-engineering skill barrier for non-expert users.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2607.28657" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Chain-of-Models: Cross-Model Auditing for Bias-Robust LLM Judges</h3>
+              <h3>CoT-Core: Accelerating LLM Evaluation via CoT-Aware Coreset Selection</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets cognitive-bias vulnerability in LLM-as-judge setups, where existing mitigations rely on brittle prompt-driven debiasing or evaluation that doesn&#x27;t scale.</li>
-              <li>Proposes cross-model auditing (chaining models to check each other&#x27;s judgments) as a more bias-robust alternative.</li>
+              <li>Addresses the cost of continuous LLM evaluation by selecting a representative coreset of test cases instead of running full eval suites every iteration.</li>
+              <li>Calls out a &#x27;cold start&#x27; bottleneck in existing coreset methods, implying their approach targets faster ramp-up before selection becomes effective.</li>
+              <li>A pattern worth watching for teams running frequent regression benchmarks who want to cut eval turnaround time without losing coverage.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.28636" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.00014" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Imbalanced Data Clustering via Targeted Data Augmentation Using GMM and LLM</h3>
+              <h3>Cost-Effective Automated Judging of Natural-Language Mathematical Proofs</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Addresses unsupervised clustering&#x27;s tendency to miss underrepresented/minority topics in NLP datasets.</li>
-              <li>Combines Gaussian Mixture Models with targeted LLM-based data augmentation to improve coverage of minority topics.</li>
+              <li>Tests whether cheap open-weight models can substitute for expensive frontier-model judges when grading math proofs against a ground-truth reference.</li>
+              <li>Directly relevant to anyone running LLM-as-judge pipelines who wants to cut per-eval cost without sacrificing reliability.</li>
+              <li>Framed around a concrete recurring cost problem — evaluating math-reasoning systems — rather than a generic capability claim.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.28635" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.00004" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Learning Stateful Predictive Knowledge From Experience</h3>
+              <h3>MemoryForge: Synthesize Lifelong Memory for Human-Like LLM Agents</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Critiques the dominant approach to agent self-improvement (trajectory-level reflection) as operating only on episodic hindsight.</li>
-              <li>Proposes learning stateful predictive knowledge from experience as a different lens for how LLM agents should extract insights.</li>
+              <li>Critiques static, prompt-injected persona profiles as insufficient for human-like agent behavior in role-play and user-simulation settings.</li>
+              <li>Proposes synthesizing &#x27;lifelong memory&#x27; instead of static profiles — a structural alternative to stuffing a persona description into the system prompt.</li>
+              <li>Relevant to any persona-driven agent that currently relies on a fixed character sheet rather than accumulated memory.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2607.28638" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.00007" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AgentMemBench: A Systematic Benchmark for Evaluating Long-Term Memory Management Strategies in Conversational AI Agents</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Names finite context windows as the core bottleneck preventing coherent recall across thousand-turn conversations.</li>
+              <li>Introduces a unified, reproducible benchmark comparing five distinct memory-management strategies head-to-head rather than proposing a single method.</li>
+              <li>A ready-made evaluation harness for teams choosing between competing long-term-memory approaches for conversational agents.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.00009" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -123,14 +107,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>condense-json 1.0</h3>
+              <h3>Quoting Steve Yegge</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon Willison shipped the 1.0 release of condense-json, a library for condensing verbose/nested JSON structures, after about a year and a half of development.</li>
-              <li>The 1.0 milestone applied &#x27;sensible and non-disruptive&#x27; fixes rather than a rewrite.</li>
+              <li>First-hand report that a self-built agent tool (&#x27;Gas Town&#x27;) worked well through Opus 4.6 but fell apart specifically on Opus 4.7.</li>
+              <li>Identifies a named failure mode — the &#x27;just two more things&#x27; tic — where the model keeps expanding scope instead of converging and finishing.</li>
+              <li>A concrete data point that model upgrades aren&#x27;t strictly monotonic for agentic tool-use: newer isn&#x27;t automatically better for long-running autonomous loops.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/2/condense-json/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/4/steve-yegge/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Quoting David Crawshaw&#x27;s prompt</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A concrete, minimal prompt pattern for unattended maintenance: a nightly cron job that fetches upstream changes, rebases local changes, verifies the result, and swaps in the new version.</li>
+              <li>Demonstrates an &#x27;agent as janitor&#x27; use case — routine dependency/upstream sync handled autonomously instead of manually.</li>
+              <li>Worth testing as a template for keeping forked or vendored tools in sync automatically.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Aug/3/david-crawshaw/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.221</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>New VS Code &#x27;Focus view&#x27; collapses tool-activity noise into an expandable per-turn summary with a live running-tool indicator (toggle: Ctrl+Alt+F) — directly reduces clutter in agent-heavy workflows.</li>
+              <li>New sandbox `mode: &quot;mask&quot;` option for credential files on Linux is a concrete security/isolation improvement for sandboxed agent runs.</li>
+              <li>Both changes are immediately usable in a daily-driver Claude Code setup since they affect everyday agent supervision and credential safety.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.221" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-agent-sdk-python: v0.2.129</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Breaking change: the SDK now validates skill names strictly at connect time, rejecting parentheses, commas, control characters, wildcards, leading slashes, whitespace, and surrogate code points.</li>
+              <li>Wildcard/plugin-style patterns like `skills=[&quot;plugin:*&quot;]` are explicitly called out as affected — code using those needs review before upgrading.</li>
+              <li>Actionable for anyone building on the Agent SDK: audit skill-name strings before bumping to 0.2.129 to avoid a ValueError at connection time.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.129" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
