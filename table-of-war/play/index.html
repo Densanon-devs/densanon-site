@@ -49,6 +49,12 @@
     background: none; border-bottom: none; font-size: 12px;
     display: flex; flex-wrap: nowrap; align-items: center; gap: 6px; overflow: hidden; }   /* one bar, never scrolls */
   #hud .statline { flex: 1 1 auto; min-width: 0; flex-wrap: nowrap; overflow: hidden; gap: 1px 7px; }
+  /* Legend + Menu. These used to carry an inline height:32px and were enlarged by #hud's zoom; with
+     the zoom gone they need to scale on their own or they read as postage stamps on a wide monitor.
+     Deliberately sized off the VIEWPORT rather than off --pillh: setPillH() measures this group's
+     width to work out how much room the plates get, so making it depend on --pillh would make the
+     fit solve for its own input and oscillate between two sizes on every resize. */
+  #hud .hudbtns .ibtn img { height: clamp(30px, 2.4vw, 50px); width: auto; }
   /* the run label (general · act · node · turn) is the least critical bit — it shrinks
      and ellipsises first so the resources, gauge and ⋯ menu always stay visible */
   .hudmeta { flex: 1 1 auto; min-width: 16px; overflow: hidden; text-overflow: ellipsis; }
@@ -233,7 +239,7 @@
   .nspick .nslbl { position: absolute; bottom: 7%; right: 9%; font: 700 9px sans-serif; color: #2e2008; }
 
   /* board — a printed tactical map on a felt table */
-  #boardwrap { flex: 1; overflow: auto; padding: 0; position: relative;   /* positioning context for the floating medal overlay */
+  #boardwrap { flex: 1; overflow: hidden; padding: 0; position: relative;   /* positioning context for the floating medal overlay */
     background: #17130d;   /* dark backstop only; the table image lives on #board so there is no double-image seam */
     display: flex; justify-content: safe center; align-items: safe center;
     isolation: isolate; }   /* trap the board's inner z-indexes (storm/fog/tracer) so they can't paint over the floating hand */
@@ -625,6 +631,19 @@
   #coach .cbtn { text-align: center; margin-top: 11px; }
   #coach .cbtn .ibtn img { height: 42px; width: auto; }
   @keyframes coachin { from { opacity:0; transform: translate(-50%, 10px); } to { opacity:1; transform: translate(-50%,0); } }
+  /* A tip fired ON a decision — a card draft, an outpost, the hand you are about to discard — lifts off
+     the bottom edge into the middle of the screen over its own veil. Bottom-pinned it would lie across
+     the very cards it is telling you to read, which is why these tips used to be deferred until after
+     the panel closed; deferring them made them arrive too late to act on. This is how they land on time
+     AND stay legible: read it, dismiss it, the choice is still sitting there underneath. */
+  #coachveil { position: fixed; inset: 0; z-index: 44; display: none; background: rgba(10,9,8,.6);
+    -webkit-backdrop-filter: blur(1.5px); backdrop-filter: blur(1.5px); }
+  #coachveil.show { display: block; }
+  /* over a panel, go lighter: the panel is already sitting on its own near-opaque overlay, and stacking
+     a second full-strength veil on it blacked out the thing the tip is pointing at */
+  #coachveil.onpanel { background: rgba(10,9,8,.3); }
+  #coach.mid { bottom: auto; top: 50%; transform: translate(-50%, -50%); animation: coachinmid .28s ease-out; }
+  @keyframes coachinmid { from { opacity:0; transform: translate(-50%, calc(-50% + 10px)); } to { opacity:1; transform: translate(-50%, -50%); } }
   /* boss dialogue callout (Culdcept-style talking enemy) */
   #bossSay { position: fixed; left: 50%; top: max(14px, env(safe-area-inset-top)); transform: translateX(-50%);
     z-index: 44; display: none; align-items: center; gap: 11px; width: min(94%, 500px);
@@ -890,7 +909,9 @@
   .fcard { position:relative; margin:0 auto; user-select:none; filter:drop-shadow(0 4px 10px rgba(0,0,0,.55)); }
   .upgwrap .fcard { filter:drop-shadow(0 0 11px rgba(240,200,60,.8)) drop-shadow(0 4px 10px rgba(0,0,0,.45)); }
   /* .fcbox scopes the framed-card layers so BOTH the big .fcard views and the hand's .card.framed share them */
-  .fcbox .fc-art { position:absolute; z-index:1; overflow:hidden; border-radius:7px;
+  /* translateZ(0): same clipped-box-inside-a-zoomed-overlay repaint fix as .plaque .pc-av — see the
+     note there. This one matters most, because the card view is opened constantly during a run. */
+  .fcbox .fc-art { position:absolute; z-index:1; overflow:hidden; border-radius:7px; transform:translateZ(0);
     background:radial-gradient(120% 90% at 50% 12%, color-mix(in srgb, var(--cat) 60%, #0b0d08), #090b07 78%);
     display:flex; align-items:center; justify-content:center; box-shadow:inset 0 0 22px rgba(0,0,0,.55); }
   .fcbox .fc-art .fc-glyph { display:block; width:40%; height:40%; color:color-mix(in srgb, var(--cat) 72%, #f2ecd0); opacity:.9; filter:drop-shadow(0 2px 4px rgba(0,0,0,.6)); }
@@ -931,8 +952,20 @@
     text-shadow: 0 1px 2px #000; cursor: pointer; padding: 9px 15px; border-radius: 6px; border: 1px solid #5a5763;
     background: linear-gradient(#3b3b44, #23232b);
     box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 2px 4px rgba(0,0,0,.45); transition: filter .12s, transform .1s; }
-  button:hover { filter: brightness(1.12); }
+  /* ── ONE hover treatment for every control ──────────────────────────────────────────────────────
+     There used to be four behaviours: `.plaque` ANIMATED (it alone declared a transition), `.gcard`
+     jumped the same distance with no transition, the image buttons got only this brightness filter,
+     and on the menu tiles that was faint enough to read as no response at all. Hovering a commander
+     also made History and Achievements FLICKER: a hover that introduces `filter` or `transform`
+     CREATES a stacking context, and building one up and tearing it down forces the neighbours to
+     repaint.
+     So the hover no longer introduces anything. `translateZ(0)` is declared in the BASE state, so the
+     stacking context exists at all times and hovering only changes a value the compositor can animate
+     on its own — no repaint, no flicker, and cheaper than the brightness filter this replaces.
+     One distance, one duration, everywhere. Gated on `hover: hover` so touch devices get none of it
+     and pay for none of it. */
   button:active { transform: scale(0.97); }
+  /* (moved to the end of this stylesheet — see "ONE hover treatment", part 2) */
   button:disabled { filter: grayscale(.65) brightness(.62); opacity: .7; cursor: not-allowed; }
   /* active/selected metal button — keeps the copper texture, adds a gold glow + engraved ring */
   button.act { color: #ffe789; text-shadow: 0 1px 2px #000, 0 0 4px rgba(0,0,0,.6);
@@ -943,7 +976,7 @@
     -webkit-tap-highlight-color: transparent; line-height: 0; display: inline-flex; vertical-align: middle;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,.45)); transition: transform .1s; }
   .ibtn img { height: 46px; width: auto; display: block; pointer-events: none; }
-  .ibtn:active { transform: scale(.96); }
+  /* :active handled by the unified hover block near button:hover */
   .ibtn:disabled { filter: grayscale(.65) brightness(.55); opacity: .65; cursor: not-allowed; }
   .ibtn.big img { height: 54px; }
   .ibtn.sm img { height: 38px; }
@@ -976,7 +1009,7 @@
   .pbtn img { width: 100%; height: auto; display: block; pointer-events: none; }
   .pbtn.off { filter: grayscale(.62) brightness(.58); }                         /* inactive toggle option */
   .pbtn.act { filter: drop-shadow(0 0 7px rgba(232,198,90,.75)) brightness(1.04); }  /* active toggle option */
-  .pbtn:active { transform: scale(.97); }
+  /* :active handled by the unified hover block near button:hover */
   .pbtn.step { width: auto; flex: 0 0 auto; }
   .pbtn.step img { height: 40px; width: auto; }                                 /* inline +/- ascension stepper */
   /* gold bitmap glyphs composed from the character-sheet atlas — for dynamic values on plaques */
@@ -1153,8 +1186,14 @@
   .rtok { position: relative; width: 40px; height: 40px; flex: 0 0 auto; }
 
   /* overlays */
+  /* No backdrop-filter here. It was a fullscreen grayscale+brightness composite sitting behind a
+     background that is 97.5% opaque — measured at max 4/255 and mean 0.58/255 across the frame, i.e.
+     invisible — and #ovGeneral covers itself with an opaque image anyway. Overlays open constantly
+     during play (card view, node, inspect, deck), and a full-viewport filtered composite is one of the
+     more expensive things a webview can be asked for, especially on integrated graphics. Paying that
+     every time a panel opens, for a difference nobody can see, is the wrong trade.
+     #coachveil keeps ITS blur: at .6/.3 alpha that one is genuinely visible. */
   .overlay { position: fixed; inset: 0; background: rgba(15,15,13,.975); display: none;
-    -webkit-backdrop-filter: grayscale(1) brightness(.4); backdrop-filter: grayscale(1) brightness(.4);
     flex-direction: column; align-items: center; justify-content: flex-start; padding: 20px;
     padding-top: max(20px, env(safe-area-inset-top)); overflow-y: auto; z-index: 10; }
   /* NOTE: was `justify-content: safe center` — the `safe` keyword is unsupported on Safari < 15.4
@@ -1320,7 +1359,16 @@
   /* DESKTOP SCALING. Keyed on width AND height: a wide-but-short window must not scale up so far the
      frame needs scrolling. Gated at 820x620 so no phone ever matches — those layouts are hand-tuned
      and must not move. `.menu` is excluded: in landscape it has its own aspect-locked sizing below. */
-  .ofbanner { position: absolute; left: 50%; top: -8px; transform: translateX(-50%); z-index: 3;
+  /* translateZ(0) is a WebKit repaint fix, not styling — it moves nothing. Reported on macOS: the menu
+     title's shadow FLICKERS while the pointer rolls across the menu buttons. The title carries a
+     `filter: drop-shadow(...)` (see .ofhdr below), and `button:hover { filter: brightness(1.12) }` is
+     global — so every hover and unhover builds and tears down a stacking context, forcing the shared
+     parent to repaint and the title's drop-shadow to be re-rasterized with it. Giving the banner its
+     own compositing layer takes it out of that repaint.
+     Fixed here rather than by putting a permanent `filter: brightness(1)` on every button to keep the
+     context stable: that would promote hundreds of buttons app-wide and risks bringing back the lag
+     that removing the overlay backdrop-filter just cured. */
+  .ofbanner { position: absolute; left: 50%; top: -8px; transform: translateX(-50%) translateZ(0); z-index: 3;
     width: min(260px, 76%); height: 54px; display: flex; align-items: center; justify-content: center;
     background: url(assets/ui/ornate/p09.png) center/100% 100% no-repeat; }
   .ofbanner span { font: 800 16px var(--f-head); letter-spacing: 1.8px; text-transform: uppercase;
@@ -1451,6 +1499,16 @@
         menu-button grid, all in one wide no-scroll container ── */
   .oframe.menu { max-width: 522px; }
   /* daily art (swaps per day) — edges alpha-faded so the black vignette melts into the panel */
+  /* daily leaderboard rows on the run-end card (Steam only; the panel stays a bare date line elsewhere) */
+  .dboard .dbrow { display: flex; align-items: center; gap: 8px; padding: 2px 4px; border-radius: 3px; font-size: 12.5px; }
+  .dboard .dbrow.me { background: rgba(205,169,78,.16); }
+  .dboard .dbr { width: 26px; text-align: right; color: #8f866f; font-family: var(--f-num); flex: none; }
+  .dboard .dbn { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #e2d9bd; }
+  .dboard .dbrow.me .dbn { color: var(--gold); font-weight: 700; }
+  .dboard .dbs { font-family: var(--f-num); color: #f1ead2; flex: none; }
+  /* the day's twists — the line a player taps to read what today actually is */
+  .dtwist { cursor: pointer; line-height: 1.45; margin-top: 2px; }
+  .dtwist:active { opacity: .7; }
   .daily-art { display: block; width: 100%; max-width: 132px; height: auto; margin: 8px auto 0; object-fit: cover;
     -webkit-mask-image: radial-gradient(closest-side at 50% 50%, #000 74%, rgba(0,0,0,0) 100%);
     mask-image: radial-gradient(closest-side at 50% 50%, #000 74%, rgba(0,0,0,0) 100%); }
@@ -1693,9 +1751,11 @@
   .gcard { position: relative; flex: 1 1 0; min-width: 0; max-width: 150px; border: none; background: none;
     padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent;
     filter: drop-shadow(0 3px 7px rgba(0,0,0,.5)); transition: transform .12s, filter .12s; }
-  .gcard:hover { transform: translateY(-2px); }
+  /* hover handled by the unified block near button:hover — this used to be a transitionless jump */
   .gcard .gc-frame { display: block; width: 100%; height: auto; position: relative; z-index: 2; pointer-events: none; }
-  .gcard .gc-av { position: absolute; z-index: 1; overflow: hidden; background: #12140b; }
+  /* Same clipped-box-inside-a-zoomed-overlay shape as .plaque .pc-av — see the note there. */
+  .gcard .gc-av { position: absolute; z-index: 1; overflow: hidden; background: #12140b;
+    transform: translateZ(0); }
   .gcard .gc-av img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .gcard .gc-name, .gcard .gc-desc { position: absolute; z-index: 3; display: flex; align-items: center;
     justify-content: center; pointer-events: none; overflow: hidden; }
@@ -1708,9 +1768,19 @@
   .plaque { position: relative; width: 100%; max-width: 480px; cursor: pointer; border: none;
     background: none; padding: 0; -webkit-tap-highlight-color: transparent; container-type: inline-size;
     filter: drop-shadow(0 3px 7px rgba(0,0,0,.5)); transition: transform .12s, filter .12s; }
-  .plaque:hover { transform: translateY(-2px); }
+  /* hover handled by the unified block near button:hover — this one alone used to animate */
   .plaque.sel { filter: drop-shadow(0 0 0 #f2d270) drop-shadow(0 0 11px rgba(233,199,82,.7)); }
-  .plaque .pc-av { position: absolute; z-index: 1; overflow: hidden; background: #141509; }
+  /* `translateZ(0)` on the two CLIPPED boxes below is a WebKit repaint fix, not styling — it moves
+     nothing. Reported on macOS: scroll the Generals list away and back with a trackpad and the
+     portrait and the doctrine line both vanish, while the frame image and the name plate stay. The
+     survivors are the pieces WITHOUT `overflow: hidden`; the casualties are the two with it. These
+     plaques sit inside `.overlay > * { zoom: 1.22-1.65 }`, and a clipping context inside a zoomed
+     subtree under WebKit's asynchronous (momentum) scrolling can be left with a stale clip rect —
+     which clips the content to nothing. It does not reproduce under keyboard or programmatic
+     scrolling, or in Chromium at all, because those take the synchronous path.
+     Promoting each clipped box to its own compositing layer gives it a clip that survives the scroll. */
+  .plaque .pc-av { position: absolute; z-index: 1; overflow: hidden; background: #141509;
+    transform: translateZ(0); }
   .plaque .pc-av img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .plaque .pc-plq { position: relative; z-index: 2; display: block; width: 100%; }
   .plaque .pc-name { position: absolute; z-index: 3; display: flex; align-items: center; justify-content: center;
@@ -1718,7 +1788,7 @@
     color: #f4e8c2; text-shadow: 0 1px 2px #000, 0 0 6px rgba(0,0,0,.55); pointer-events: none; }
   .plaque .pc-desc { position: absolute; z-index: 3; display: flex; align-items: center; overflow: hidden;
     font-size: clamp(8px,2.35cqw,11px); line-height: 1.28; color: #e2d6b0; text-transform: none;
-    text-shadow: 0 1px 1px #000; pointer-events: none; }
+    text-shadow: 0 1px 1px #000; pointer-events: none; transform: translateZ(0); }
   .plaque .pc-badge { position: absolute; top: 6px; right: 9px; z-index: 4; font: 800 10px var(--f-head);
     letter-spacing: 1px; color: #1a1608; background: linear-gradient(180deg,#e9c752,#b9922f);
     border-radius: 5px; padding: 1px 7px; box-shadow: 0 1px 2px rgba(0,0,0,.5); pointer-events: none; }
@@ -1873,8 +1943,12 @@
     /* the hand was the worst offender — roughly a fifth of the width, unreadable at a glance */
     #app { --hand-h: 190px; }
     #hand .handfan { zoom: 1.7; }
-    /* top bar and the selected-unit card */
-    #hudwrap, #hud { zoom: 1.35; }
+    /* The top bar is sized by --pillh alone — NO zoom. Same reasoning as #maphud below: zoom divides
+       the row's available width, so at 1.35 a 1000px window gave the bar 741px of layout to fit the
+       pills, the power plate AND the Legend/Menu buttons. setPillH() then bottomed out at its 20px
+       floor and the row still overflowed into overflow:hidden, slicing "Rally the Horde" in half and
+       leaving Legend sitting on top of it. Measured broken bands were 900-1100 and 1500-1600 — each
+       one just above a zoom step-up, which is the tell. */
     #unitinfo { zoom: 1.5; width: min(300px, 40vw); }
     #unitinfo.hasaim { width: min(360px, 46vw); }
     /* toasts and coach marks were phone-sized and bottom-pinned */
@@ -1888,7 +1962,7 @@
   @media (min-width: 1500px) and (pointer: fine) {
     #app { --hand-h: 230px; }
     #hand .handfan { zoom: 2.1; }
-    #hudwrap, #hud { zoom: 1.6; }
+    /* no #hud zoom here either — see the note at the 820px breakpoint */
     #unitinfo { zoom: 1.8; width: min(320px, 34vw); }
     #unitinfo.hasaim { width: min(380px, 40vw); }
     #prompt { zoom: 1.7; }
@@ -2089,14 +2163,37 @@
   #maphud .mapact-x img, #maphud .mapact-x svg { vertical-align: -2px; }
 
 
+  /* ── ONE hover treatment for every control, PART 2 ─────────────────────────────────────────────
+     Deliberately the LAST rule in this stylesheet. The base rules for these controls each declare
+     their own `transition` (.ibtn .1s, .gcard .12s, .chipsbtn img .08s, and so on) and several of
+     them appear further down the file than the explanatory note above. A media query adds NO
+     specificity, so at equal specificity source order decides — placed up there this block lost to
+     every one of those later declarations and the durations stayed inconsistent, which is the very
+     thing it exists to fix. Last position is what makes it authoritative.
+     See the note beside `button:active` for WHY the hover introduces nothing new. */
+  @media (hover: hover) and (pointer: fine) {
+    .ibtn, .pbtn, .gcard, .plaque, .chipsbtn, .tglbtn, .powplate, .mtile {
+      transform: translateZ(0); transition: transform .12s ease; }
+    .ibtn:hover, .pbtn:hover, .gcard:hover, .plaque:hover,
+    .chipsbtn:hover, .tglbtn:hover, .powplate:hover, .mtile:hover {
+      transform: translateY(-3px) translateZ(0); }
+    .ibtn:active, .pbtn:active, .gcard:active, .plaque:active,
+    .chipsbtn:active, .tglbtn:active, .powplate:active, .mtile:active {
+      transform: translateY(0) scale(.97) translateZ(0); }
+    /* the two static display plaques opt out — they are not controls */
+    #ovProg .prog-plaque .plaque, #ovDeploy .deploy-plaque .plaque,
+    #ovProg .prog-plaque .plaque:hover, #ovDeploy .deploy-plaque .plaque:hover {
+      transform: none; }
+  }
 </style>
-  <script type="module" crossorigin src="./assets/index-2XXzKy5I.js"></script>
+  <script type="module" crossorigin src="./assets/index-Q0u28Erk.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
 (function(){try{var pc=!!(window.__TAURI__||window.__TAURI_INTERNALS__);var port=!pc&&window.matchMedia&&window.matchMedia('(orientation: portrait)').matches;document.body.classList.add(port?'o-portrait':'o-landscape');}catch(e){try{document.body.classList.add('o-landscape');}catch(_){}}})();</script>
 <div id="updateBanner"></div>
 <button id="setBtn" onclick="toggleSettings()" title="sound &amp; settings" aria-label="Settings"><img src="assets/ui/btn/settings_gear.png" alt="Settings"></button>
+<div id="coachveil" onclick="dismissCoach()"></div>
 <div id="coach"></div>
 <div id="bossSay"></div>
 <div id="achPop"></div>
@@ -2160,7 +2257,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.44';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.45';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2238,6 +2335,10 @@ const UPDATE_URL_MAC     = 'https://densanon.com/table-of-war-mac-version.json';
 function _isTauri() { return !!(window.__TAURI__ || window.__TAURI_INTERNALS__); }
 function _isMac() { try { return /Mac/i.test(navigator.userAgent || navigator.platform || ''); } catch (e) { return false; } }
 function _isAndroid() { try { return !!(window.Capacitor && window.Capacitor.getPlatform && window.Capacitor.getPlatform() === 'android'); } catch (e) { return false; } }
+// ANY Capacitor shell — Android or iOS. Both already run the webview full-bleed (Android's MainActivity
+// is sticky-immersive; iOS has no element Fullscreen API at all), so anything that reaches for the
+// Fullscreen API there is both doomed and pointless. _isAndroid on its own kept missing the iOS half.
+function _isNativeApp() { try { return !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()); } catch (e) { return false; } }
 // Orientation is driven by a body class (o-landscape / o-portrait), not raw viewport media queries,
 // so the DESKTOP build can be pinned to landscape no matter the window shape. Mobile still follows
 // the real (locked) device orientation. Every `@media (orientation:…)` rule became `:where(body.o-…)`.
@@ -2277,6 +2378,11 @@ async function openExternal(url) {
 }
 async function checkForUpdate() {
   if (updateOptedOut()) return;
+  if (window.__WT_STEAM__) return;                     // Steam builds update THROUGH Steam. Offering an
+  //  external download would duplicate what Steam already does, steer a customer off-platform, and make
+  //  the store page's "no telemetry, fully offline" claim false. Set by src/main.ts from the WT_STEAM
+  //  build flag — see src/gate.ts. This must stay ABOVE the fetch, not merely suppress the banner:
+  //  the point is that no request leaves the machine.
   if (S.demo) return;                                  // the demo has no channel of its own, and the
   //  beta manifest it would otherwise read hands out the FULL build — never offer that from the demo
   if (!_isTauri() && !_isAndroid()) return;            // only the packaged builds self-update
@@ -2728,7 +2834,14 @@ const COACH = {
   battle: {h:'How battles work', t:'Your units act on <b>Action Points</b> — tap a unit, then a highlighted tile to <b>move</b> or an enemy to <b>attack</b>, all free. Your <b>cards</b> (bottom) cost <b>Command Points</b> to reinforce and command your army. Tap around — everything on the field explains itself.'},
   map:    {h:'The Expedition', t:'Pick your path up the act — <b>skirmishes</b>, <b>elites</b>, <b>caches</b>, <b>camps</b>, <b>outposts</b>, and the <b>boss</b> at the top. Your army is <b>permadeath</b>: units that fall are gone for the run. Bank <b>salvage</b> at outposts to buy, upgrade, and thin your deck.'},
   power:  {h:'Command Power ready', t:'Your gauge is <b>full</b> — tap the glowing <b>Power</b> button to unleash your general\'s signature ability. It costs the whole gauge, so pick your moment.'},
-  retain: {h:'Keep a card', t:'At end of turn your hand is discarded — but tap the <b>★</b> on a card to <b>keep</b> it for next turn. Save a key card for the right moment.'},
+  // Nomad only. Wrath fills on kills and Charge on Power Plants — both are stated on the thing that
+  // fills them. Momentum is the one that is genuinely unguessable: it banks a COMPOUNDING amount, halves
+  // if a single unit stands still, has no ceiling, and is a currency three of the Nomad's own cards
+  // spend. All of that lived in a `title=` tooltip, which does not exist on a phone.
+  momentum:{h:'Momentum — keep the column rolling', t:'Momentum banks at the <b>end of your turn</b>, and what it banks is your <b>Drive</b> — the meter beside the gauge. Move <b>every</b> unit that can move and Drive climbs by one; leave one standing and it <b>halves</b>. The pips are the roll call: one per unit that still owes a move. Momentum has <b>no ceiling</b>, and spending it <b>subtracts</b> the price instead of emptying you — so a column that never stalls discharges again and again.'},
+  // mid: centred over a veil rather than pinned to the bottom edge, because the bottom edge is exactly
+  // where the thing this tip is about — the hand, and the ★ on each card — is sitting.
+  retain: {h:'Keep a card', t:'At end of turn your hand is discarded — but tap the <b>★</b> on a card to <b>keep</b> it for next turn. Save a key card for the right moment.', mid:true},
 
   // ── first-action tips ──
   unit:   {h:'Your unit is active', t:'The <b>highlighted tiles</b> are everywhere it can walk this turn, and any enemy it can hit is <b>ringed in red</b> with the damage it would take. Its card shows <b>ATK</b>, <b>DEF</b>, <b>range</b> and <b>sight</b> — range is how far it strikes, sight is how far it lifts the fog. Each move or attack spends one <b>Action Point</b>.'},
@@ -2758,6 +2871,8 @@ const COACH = {
 };
 let _coachBusy = false;
 let _coachQueue = [];
+let _coachShown = null;
+const _coachWaiters = {};
 // A tip triggered while another is open is QUEUED, not dropped. Dropping it looked harmless — the tip
 // would fire again next time its trigger came round — but the generic tips retrigger on every render
 // while the action tips only fire on the one action, so the generic ones kept winning the next free slot
@@ -2768,26 +2883,74 @@ function coach(id) {
   const c = COACH[id];
   if (!c || localStorage.getItem('dc_c_' + id) || localStorage.getItem('dc_tut_off')) return;
   localStorage.setItem('dc_c_' + id, '1');
-  if (_coachBusy) { _coachQueue.push(id); return; }
-  _showCoach(id);
+  _coachQueue.push(id);
+  _coachPump();
 }
+/**
+ * A one-shot celebration modal owns the screen. It has its own Continue, it will be gone in a moment,
+ * and it is sitting on the very panel the tip is about — the first card draft is exactly when a
+ * first-run unlock fires, and the tip stacked straight on top of it. Wait it out.
+ */
+function _coachHold() { return !!_unlockBusy; }
+/** The only thing that shows a tip. Everything else queues and lets this decide when. */
+function _coachPump() {
+  if (_coachBusy || _coachHold() || !_coachQueue.length) return;
+  _showCoach(_coachQueue.shift());
+}
+/**
+ * Fire a tip and resolve once it has been DISMISSED. For the tips whose subject is about to be taken
+ * off the screen — ending the turn discards the hand the ★ tip describes — so the tip is read while
+ * the thing it is about is still there. Resolves immediately when the tip has already been seen.
+ */
+function coachWait(id) {
+  if (!COACH[id] || localStorage.getItem('dc_c_' + id) || localStorage.getItem('dc_tut_off')) return Promise.resolve();
+  return new Promise(res => {
+    _coachWaiters[id] = res;
+    coach(id);
+    // Belt and braces: if the tip did not end up on screen or in the queue, nothing will ever dismiss it,
+    // and the caller — End Turn — would be stranded by a tutorial popup. Release it now instead.
+    if (_coachShown !== id && _coachQueue.indexOf(id) < 0) _coachRelease(id);
+  });
+}
+/** Is a full-screen panel open behind the tip? Then the tip is about a choice on that panel. */
+function _coachOverPanel() { try { return !!document.querySelector('.overlay.show'); } catch (e) { return false; } }
 function _showCoach(id) {
   const c = COACH[id];
   if (!c) return;
-  _coachBusy = true;
+  _coachBusy = true; _coachShown = id;
   const el = $('#coach');
   el.innerHTML = `<div class="ch">${si('bulb',16)} ${c.h}</div><div class="ct">${c.t}</div>
     <div class="cbtn">${ibtn('continue','dismissCoach()')}</div>`;
+  // Fired ON an open panel (a card draft, an outpost) or on the hand itself, the tip centres over its own
+  // veil instead of lying across the thing it describes. Evaluated at SHOW time, not queue time — a
+  // queued tip can surface a beat after the panel that triggered it has changed.
+  // ...but never while the enemy replay is running: the veil would eat the tap that skips it.
+  const overPanel = _coachOverPanel();
+  const mid = (!!c.mid || overPanel) && !turnBusy;
+  el.classList.toggle('mid', mid);
+  $('#coachveil').classList.toggle('onpanel', mid && overPanel);
+  $('#coachveil').classList.toggle('show', mid);
   el.classList.add('show');
 }
 function dismissCoach() {
   $('#coach').classList.remove('show');
-  _coachBusy = false;
-  const next = _coachQueue.shift();
-  if (next) setTimeout(() => _showCoach(next), 260);   // a beat, so it reads as a new card rather than a flicker
+  $('#coachveil').classList.remove('show');
+  const done = _coachShown; _coachShown = null;
+  // Stay "busy" across the 260ms gap — a beat, so the next card reads as a new card rather than a
+  // flicker. Dropping busy there let a tip fired inside the gap show immediately and then be
+  // overwritten by the queued one mid-read.
+  _coachBusy = _coachQueue.length > 0;
+  if (_coachBusy) setTimeout(() => { _coachBusy = false; _coachPump(); }, 260);
+  if (done) _coachRelease(done);
+}
+/** Let go of anything awaiting this tip — never leave a caller that awaited it hanging. */
+function _coachRelease(id) {
+  const r = _coachWaiters[id];
+  if (r) { delete _coachWaiters[id]; r(); }
 }
 function resetTutorial() {
   _coachQueue = [];   // anything still waiting is from the old run-through; it would fire out of context
+  Object.keys(_coachWaiters).forEach(_coachRelease);   // and nothing may be left awaiting a tip we just dropped
   Object.keys(COACH).forEach(k => localStorage.removeItem('dc_c_' + k));
   localStorage.removeItem('dc_tut_off'); localStorage.removeItem('dc_seenHelp');
   toast('Tutorial tips reset — they\'ll show again as you play.');
@@ -2892,7 +3055,7 @@ function showSettings() {
       <div class="d" style="margin:2px 0 6px">Phone only — locks how the game is held.</div>
       <div style="display:flex;gap:8px">${oBtn('landscape')}${oBtn('portrait')}</div>
     </div>`}
-    ${_isAndroid() ? '' : `<div class="choice">
+    ${_isNativeApp() ? '' : `<div class="choice">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
         <div><b>Fullscreen</b><div class="d">Fill the whole display — no window chrome, no desktop behind it.</div></div>
         ${toggle(fullscreenWanted(), "toggleFullscreen()")}
@@ -2965,6 +3128,16 @@ function showSettings() {
     ${S.demo ? `<div class="choice" style="margin-top:10px">
       <b>Version</b> <span class="d" style="float:right;font-family:var(--f-num)">v${APP_VERSION}</span>
       <div class="d" style="margin:2px 0 0;line-height:1.5">This is the demo — one commander, Act 1. The full game updates itself; this build stays as it is.</div>
+    </div>`
+    /* Steam gets the same treatment as the demo, and it is not cosmetic. __WT_STEAM__ turns
+       checkForUpdate() into a no-op, so on Steam this panel described something that does not happen
+       ("Checks densanon.com once at launch"), offered a toggle that governed nothing, and — the part
+       that mattered — a button that really did reach densanon.com and could raise a banner with an
+       EXTERNAL download link inside Steam. That is the exact pattern the flag exists to prevent, and
+       it contradicts the store page's "no telemetry, fully offline". Steam does the updating. */
+    : window.__WT_STEAM__ ? `<div class="choice" style="margin-top:10px">
+      <b>Version</b> <span class="d" style="float:right;font-family:var(--f-num)">v${APP_VERSION}</span>
+      <div class="d" style="margin:2px 0 0;line-height:1.5">Steam keeps this build up to date. The game makes no network requests of its own — it runs entirely offline.</div>
     </div>` : `<div class="choice" style="margin-top:10px">
       <b>Updates</b> <span class="d" style="float:right;font-family:var(--f-num)">v${APP_VERSION}</span>
       <div class="d" style="margin:2px 0 8px;line-height:1.5">Checks densanon.com once at launch for a newer build (anonymous, nothing else is sent). Downloading is always a manual click.</div>
@@ -2979,13 +3152,13 @@ function showSettings() {
       <div class="d" style="margin:2px 0 8px;line-height:1.5">Erase ALL progress — achievements, ascensions, Merit, best score, unlocks, collection and run history. Ends the current run. This cannot be undone.</div>
       <button class="setbtn danger" onclick="confirmResetAll()">${si('trash',16)} Reset all progress…</button>
     </div>
-    ${S.demo ? '' : `<div class="choice" style="margin-top:10px">
+    ${_debugToolsAllowed() ? `<div class="choice" style="margin-top:10px">
       <b style="color:#7fbfff">Debug tools</b>
       <div class="d" style="margin:2px 0 8px;line-height:1.5">Review every art surface: unlock all progression/collection, and instant-win battles to blitz through nodes, bosses and variants.</div>
       <button class="setbtn dbg" onclick="debugUnlockAll()">Unlock everything</button>
       ${(S && S.board) ? `<button class="setbtn dbg" onclick="debugWin()">Instant-win this battle ▸</button>` : ''}
       ${(S && (S.mode === 'map' || S.board)) ? `<button class="setbtn dbg" onclick="closeOv('ovSettings');showRunForecast()">🗺 Run forecast — bosses, elites &amp; jump to any node ▸</button>` : ''}
-    </div>`}
+    </div>` : ''}
     </div>
     </div><div class="ovclose"><button class="ibtn" onclick="closeOv('ovSettings')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
   o.classList.add('show');
@@ -2993,6 +3166,9 @@ function showSettings() {
 }
 function toggleUpdateCheck() { setUpdateOptOut(!updateOptedOut()); showSettings(); }
 async function checkNow() {
+  // Belt and braces alongside hiding the panel: this is the ONLY remaining path that can put a request
+  // on the wire in a Steam build, and the store copy promises there isn't one.
+  if (window.__WT_STEAM__) return;
   if (S.demo) { toast('the demo does not self-update — grab the full game for that'); return; }
   if (updateOptedOut()) { toast('auto-check is off — enable it first'); return; }
   toast('checking for updates…');
@@ -3017,11 +3193,22 @@ function confirmResetAll() {
     </div></div>`;
   o.classList.add('show');
 }
+// ── who may see the cheat panel ────────────────────────────────────────────────────────────────
+// "Unlock everything" and "Instant-win this battle" exist for the art/audio review passes — they hand
+// out every achievement, ascension, unlock and collection card in one tap. On the PAID STEAM build that
+// is not a debug affordance, it is a cheat menu sitting in Settings that voids the entire progression
+// the game is built around. It was gated on `S.demo` alone, so the demo was clean and the paid product
+// shipped it. Gated on the same build flag the updater uses, which scripts/build-tauri.mjs already
+// verifies survived into the bundle — so this cannot silently regress on a Steam cut either.
+// Beta exe/APK still get the tools: those go to our own testers, and that is what they are for.
+function _debugToolsAllowed() { return !S.demo && !window.__WT_STEAM__; }
 async function debugUnlockAll() {
+  if (!_debugToolsAllowed()) return;   // the panel is the only caller, but never leave a cheat callable
   const r = await api('/api/debug_unlock_all', {});
   render(r); toast('DEBUG — everything unlocked'); haptic(40);
 }
 async function debugWin() {
+  if (!_debugToolsAllowed()) return;
   closeOv('ovSettings');
   const r = await api('/api/debug_win', {});
   render(r);
@@ -3031,6 +3218,7 @@ async function debugWin() {
 // node, and where you are now. Every row jumps you straight there; each act can also be skipped outright.
 const _NODE_ICON = { skirmish: '⚔', elite: '☠', boss: '👑', event: '❓', shop: '🛒', camp: '⛺', cache: '📦' };
 async function showRunForecast() {
+  if (!_debugToolsAllowed()) return;
   const r = await api('/api/debug_forecast', {});
   if (!r || !r.ok) { toast(r && r.msg ? r.msg : 'no run in progress'); return; }
   const f = r.forecast;
@@ -3058,12 +3246,14 @@ async function showRunForecast() {
   $('#ovInspect').classList.add('show');
 }
 async function debugGoto(act, node) {
+  if (!_debugToolsAllowed()) return;
   const r = await api('/api/debug_goto', { act, node });
   if (r && r.ok === false) { toast(r.msg || 'could not jump'); return; }
   closeOv('ovInspect');
   render(r); toast(`DEBUG — jumped to ${node}`); haptic(40);
 }
 async function debugCompleteAct() {
+  if (!_debugToolsAllowed()) return;
   const r = await api('/api/debug_complete_act', {});
   if (r && r.ok === false) { toast(r.msg || 'could not skip'); return; }
   closeOv('ovInspect');
@@ -3162,7 +3352,20 @@ function render(state) {
     _prevCpHold = S.cp_hold;
   }
   renderHud(); renderBoard(); renderHand(); renderPrompt();
-  if (freshBattle) centerOnHQ();          // open the battle looking at the player camp, not the enemy corner
+  if (freshBattle) {
+    // Re-fit BEFORE centring, on the next frame. The fitCell() above runs earlier in this function —
+    // before renderHud(), which is what writes --pillh and therefore decides the top bar's height. So
+    // that first fit measures a #boardwrap roughly a bar too tall and picks a cell the grid does not
+    // actually fit into: measured 43px where 40px was needed, leaving the bottom row of the
+    // battlefield behind the hand with nothing to correct it, since the board only refits on resize.
+    // One frame later the bar and hand are laid out and the measurement is real.
+    // refitBoard(), not fitCell(): it recomputes the floor from the settled layout but keeps the
+    // current zoom as a RATIO of it. On a fresh battle that ratio is 1, so the result is identical —
+    // except it cannot stomp a zoom that arrived first, which fitCell() here did (it resets to the
+    // floor unconditionally, and the resize test caught it turning a deliberate 2x back into 1x).
+    const settle = () => { refitBoard(); centerOnHQ(); };
+    if (window.requestAnimationFrame) requestAnimationFrame(settle); else settle();
+  }
   updateEndBtn();                         // End Turn only shows on our turn (hidden during enemy play)
   if (dangerOn || intentOn) refreshDanger();   // keep whichever danger layers are on current
   if (S.result && !_deferResult) showBattleResult();   // held until enemy anim finishes
@@ -3269,10 +3472,17 @@ function fitMapBar() {
   // wrapped. Phones get a two-row budget instead.
   const maxRows = (window.matchMedia && window.matchMedia('(pointer: fine)').matches) ? 1 : 2;
   let h = parseFloat(getComputedStyle(hud).getPropertyValue('--pillh')) || 34;
-  for (let i = 0; i < 20 && rowCount() > maxRows; i++) {
-    h = Math.max(32, h - 2);
+  // Floor is 24 on DESKTOP, 32 on touch. Measured on a windowed Mac: at 1000px the row needs 28px to
+  // make one line and at 900px it needs 24 — so a 32px floor could not reach one row at either, the
+  // bail-out below then restored the stylesheet's 44px, and the bar wrapped to two FULL-HEIGHT rows.
+  // Snapping back to the largest size precisely when nothing fits is backwards; 24px on one line beats
+  // 44px on two. Touch keeps 32: a phone already budgets two rows, its plates are thumb targets, and
+  // nothing in the report was about phones.
+  const floor = maxRows === 1 ? 24 : 32;
+  for (let i = 0; i < 24 && rowCount() > maxRows; i++) {
+    h = Math.max(floor, h - 2);
     hud.style.setProperty('--pillh', h + 'px');
-    if (h <= 32) break;                                // floor: below this it wraps rather than shrink further
+    if (h <= floor) break;                             // below this it wraps rather than shrink further
   }
   // Only pay for the shrink if it actually bought the row. A narrow phone at max salvage + ascension
   // + compass cannot reach the budget at any size; without this it bottomed out at the floor and
@@ -3287,7 +3497,10 @@ function fitMapBar() {
     }
   } catch (e) {}
 }
-window.addEventListener('resize', () => { clearTimeout(window._mapBarFit); window._mapBarFit = setTimeout(fitMapBar, 120); });
+// NOTE: no resize/fullscreen listeners here. refitBars() (defined with the battle bar, further down)
+// drives BOTH bars from a single settle loop — registering them here as well just ran fitMapBar twice
+// per frame for the same result. Kept as a named function because the render path calls it directly.
+function refitMapBar() { fitMapBar(); }
 
 function renderLegend(){
   const kinds = ['skirmish','elite','event','shop','camp','cache'];
@@ -3665,18 +3878,13 @@ function showNode() {
   o.innerHTML = oframe(o.innerHTML, ttl);   // ornate container + banner title around every node view
   o.classList.add('show');
   // Each of these panels already says what its buttons do; none of them said what the CHOICE costs, which
-  // is the part a new player gets wrong. Deferred until the panel is closed, so the tip does not sit on
-  // top of the very cards it is telling you to read.
+  // is the part a new player gets wrong. Fired as the panel OPENS — advice about a choice has to arrive
+  // while the choice is still in front of you. These used to be deferred until the panel closed so the
+  // tip would not lie across the cards it names, and that traded one problem for a worse one: the first
+  // card draft was over by the time the game explained what a card draft costs you. The tip now centres
+  // over its own veil instead (see #coach.mid), which fixes the overlap without moving the moment.
   const TIP = { shop: 'shop', camp: 'camp', reward: 'reward', medal: 'relic' };
-  if (TIP[p.kind]) _coachOnClose(o, TIP[p.kind]);
-}
-/** Queue a tip for once `ov` is dismissed. Same idea as _coachAfter, for any overlay. */
-function _coachOnClose(ov, id) {
-  if (!ov || localStorage.getItem('dc_c_' + id) || localStorage.getItem('dc_tut_off')) return;
-  const tick = setInterval(() => {
-    if (ov.classList.contains('show')) return;
-    clearInterval(tick); coach(id);
-  }, 400);
+  if (TIP[p.kind]) coach(TIP[p.kind]);
 }
 // ── inspect a card in full before you commit to it (caches / spoils / shop) ──
 let _peekConfirmFn = null;
@@ -4005,6 +4213,10 @@ function showRunResult() {
   const win = S.result === 'victory';
   if (_resultCue !== 'run:' + S.result) {             // once per result, not once per render
     _resultCue = 'run:' + S.result;
+    // A finished Daily banks to the Steam leaderboard — win OR loss, which is the whole point of a
+    // daily board. Fire-and-forget: the run has a result screen to present and must never wait on,
+    // or be broken by, the wire. Off Steam every one of these is a no-op that resolves false.
+    if (S.daily && S.daily.date) submitDailyToBoard(S.daily.date, S.score || 0);
     Sfx.play(win ? 'run_win' : 'run_lose'); if (!win) screenShake();
     // A board chip is the run's only permanent drop and had no cue at all — one fanfare, weighted by
     // tier, landing after the win/lose stinger has spoken.
@@ -4041,8 +4253,10 @@ function showRunResult() {
       </div>
       <div class="d" style="margin-top:5px">Equip it in Settings → Board Chips</div>
     </div>` : ''}
+    ${(S.daily && S.daily.date) ? `<div class="choice dboard" id="dboard"><div class="d" style="text-align:center">Daily Commission — ${S.daily.date}</div></div>` : ''}
     <div style="text-align:center">${pbtn('continue','menu()',{cls:'h'})}</div>`, win?'mission_complete':'mission_failed');
   o.classList.add('show');
+  if (S.daily && S.daily.date) renderDailyBoard(S.daily.date);
 }
 function toggleDanger() {
   dangerOn = !dangerOn;
@@ -4082,9 +4296,25 @@ function powPressStart(){ _powLong=false; _powTimer=setTimeout(()=>{ _powLong=tr
 function powPressEnd(){ if(_powTimer){ clearTimeout(_powTimer); _powTimer=null; } }
 function showPowerInfo(){
   const p = S.power; if (!p) return;
+  // An uncapped gauge (Nomad's Momentum) must not print a denominator its value can pass, and
+  // "costs the full gauge" is simply false for it — the price is subtracted and the surplus carries.
+  const amount = p.uncapped ? `<b>${p.gauge}</b> banked — ${p.name} costs <b>${p.cost}</b>`
+                            : `<b>${p.gauge}/${p.max}</b>`;
+  const how = p.ready ? '<span class="grn">ready to unleash.</span>'
+    : p.uncapped ? 'builds at the end of every turn your column keeps moving; spending it subtracts the price, so any surplus carries.'
+    : 'fills as you play (costs the full gauge).';
+  // The drive meter is a plaque of bare numbers with a tooltip no touch device will ever show. This is
+  // the one screen that can spell the rule out, and it is what a long-press on the Power button opens.
+  // The two outcomes are drive+1 and floor(drive/2), exactly as _tick_momentum computes them — NOT
+  // `drive_next`, which is the live projection of where this turn is CURRENTLY headed. Mid-stall that
+  // projection IS the halved figure, so quoting it made the sentence read "climbs to 0 … halves to 0".
+  const drive = (p.drive === undefined) ? '' :
+    `<div class="d" style="margin-top:8px">Drive <b>${p.drive}</b> — the Momentum banked at end of turn. ` + (p.pace
+      ? `<b>${p.moved}/${p.pace}</b> units have moved: move them all and Drive climbs to <b>${p.drive + 1}</b>; stall even one and it halves to <b>${Math.floor(p.drive / 2)}</b>.`
+      : `Nothing owes a move this turn, so the trajectory holds.`) + `</div>`;
   $('#ovInspect').innerHTML = `<div class="choice"><b class="gold">${si('cp',15)} ${p.name}</b>
     <div class="d" style="margin-top:6px">${p.desc}</div>
-    <div class="d" style="margin-top:8px">${p.gname} gauge: <b>${p.gauge}/${p.max}</b> — ${p.ready?'<span class="grn">ready to unleash.</span>':'fills as you play (costs the full gauge).'}</div>
+    <div class="d" style="margin-top:8px">${p.gname} gauge: ${amount} — ${how}</div>${drive}
     </div><div class="ovclose"><button class="ibtn" onclick="$('#ovInspect').classList.remove('show')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
   $('#ovInspect').classList.add('show');
 }
@@ -4202,7 +4432,19 @@ function setPillH() {
   let aspSum = 0;
   for (const s of scalers) {
     const img = s.querySelector('img.pl-l') || s.querySelector('img');
-    aspSum += (img && img.naturalWidth > 0 && img.naturalHeight > 0) ? img.naturalWidth / img.naturalHeight : 3.5;
+    const asp = (img && img.naturalWidth > 0 && img.naturalHeight > 0) ? img.naturalWidth / img.naturalHeight : 0;
+    aspSum += asp || 3.5;
+    // Pin each plate's own aspect ratio so its WIDTH follows --pillh directly, instead of being
+    // whatever the replaced <img> inside happens to have laid out to.
+    //
+    // This is the "plates fine, text wrong" bug. A plate's HEIGHT is var(--pillh), so plates always
+    // looked correct — but the value box inside is positioned in PERCENTAGES OF THE PLATE
+    // (`.bpv { right: 12.5%; width: 25%; height: 44% }`), and the plate's width came from the image's
+    // layout. Through a fullscreen transition those percentages resolve against a width that has not
+    // caught up yet, so the numbers land off-position and at the wrong scale on a correctly sized
+    // plate. With an explicit ratio the width is known the instant the height is, so there is no
+    // intermediate state for the text to be measured against.
+    if (asp) s.style.aspectRatio = String(asp);
   }
   const cs = getComputedStyle(hud);
   const padX = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);   // includes gear + notch insets
@@ -4212,9 +4454,72 @@ function setPillH() {
   for (const c of hud.querySelectorAll('.foechip, .statline > .stat')) fixed += c.getBoundingClientRect().width || 0;   // boss/objective text chips + A# tag (don't scale)
   fixed += 8 * (scalers.length + 2);                                // inter-item + surrounding gaps
   const avail = hud.clientWidth - padX - fixed;
-  el.style.setProperty('--pillh', Math.max(20, Math.min(34, avail / aspSum)).toFixed(1) + 'px');
+  // Ceiling is 64 on DESKTOP only. While #hud carried zoom:1.35/1.6 the plates only ever needed to
+  // reach 34 — the zoom did the enlarging — so this clamp sat AT its floor of 20 at every desktop
+  // width, 2560 included, and the fitter had no room left to give back when the row overflowed. With
+  // the zoom gone this number is the whole size story, so it has to be able to climb. 64 matches the
+  // map bar's 66.
+  // Touch keeps 34. The zoom was scoped to `pointer: fine`, so a phone or iPad never had one to lose;
+  // raising their ceiling too would silently inflate the iOS top bar, which nothing here asked for.
+  const cap = mm('(pointer: fine)').matches ? 64 : 34;
+  let h = Math.max(20, Math.min(cap, avail / aspSum));
+  el.style.setProperty('--pillh', h.toFixed(1) + 'px');
+  // VERIFY the result, do not just trust the arithmetic. `fixed` and `padX` are measured from the
+  // live DOM, and macOS ANIMATES a fullscreen toggle — so a pass that runs mid-transition solves for
+  // a window size that no longer exists, leaving plates too big for the window they land in and the
+  // row clipped against overflow:hidden. That is the reported "bar text out of sync after going full
+  // screen and back". Measuring the row we actually produced and stepping down until it truly fits
+  // makes the fit self-correcting no matter how stale its inputs were.
+  const sl = hud.querySelector('.statline');
+  for (let i = 0; i < 24 && sl && sl.scrollWidth > sl.clientWidth + 1 && h > 20; i++) {
+    h = Math.max(20, h - 2);
+    el.style.setProperty('--pillh', h.toFixed(1) + 'px');
+  }
 }
-window.addEventListener('resize', setPillH);
+// One synchronous pass is not enough for a fullscreen toggle — the first measurement lands
+// mid-animation. Re-run on the next frame and again once the animation has finished, so the bar ends
+// up sized for the window it actually settles into, in BOTH directions.
+// Re-fit the bars until the window has ACTUALLY stopped changing size.
+//
+// A fullscreen toggle is animated by macOS, so neither a synchronous pass nor a fixed-delay follow-up
+// can be trusted — both can land mid-flight and size the bar for a window that no longer exists.
+// Entering fullscreen was the visible half of that: the bar stayed small. A pass that measures the
+// small window computes a small --pillh, and the verify step inside setPillH() only ever SHRINKS, so
+// nothing could grow it back once the window finished expanding. Leaving fullscreen looked fine purely
+// because shrinking is the direction that verify can rescue.
+//
+// So stop guessing a delay. Re-fit every frame while the viewport is still moving, and keep going for
+// a few frames after it settles. setPillH() measures at ~0.06ms and fitMapBar() no-ops when the row
+// already fits, so this is cheap even at 60fps; the deadline is a backstop against a resize that never
+// settles. Both bars go through one loop — each is a no-op when its screen is not up.
+let _barFitGen = 0;
+function refitBars() {
+  const fit = () => { setPillH(); if (typeof fitMapBar === 'function') fitMapBar(); };
+  fit();
+  if (!window.requestAnimationFrame || !window.performance) {
+    if (typeof refitBoard === 'function') refitBoard();
+    return;
+  }
+  const gen = ++_barFitGen, deadline = performance.now() + 2500;
+  let lastW = -1, lastH = -1, steady = 0;
+  const tick = () => {
+    if (gen !== _barFitGen) return;              // a newer resize superseded this loop
+    fit();
+    const w = innerWidth, h = innerHeight;
+    steady = (w === lastW && h === lastH) ? steady + 1 : 0;
+    lastW = w; lastH = h;
+    if (steady < 8 && performance.now() < deadline) { requestAnimationFrame(tick); return; }
+    // Settled: the viewport has stopped moving AND the bars have stopped resizing, so #boardwrap's
+    // height is finally final. Only now is it safe to fit the board to it — the plain 150ms debounce
+    // on resize fires long before this and measures a height that is still about to change.
+    if (typeof refitBoard === 'function') refitBoard();
+  };
+  requestAnimationFrame(tick);
+}
+const refitHud = refitBars;                      // kept: renderHud() and older call sites use this name
+window.addEventListener('resize', refitBars);
+document.addEventListener('fullscreenchange', refitBars);
+document.addEventListener('webkitfullscreenchange', refitBars);
 window.addEventListener('resize', () => { if (typeof fitDeploy === 'function') fitDeploy(); if (typeof fitCardFull === 'function') fitCardFull(); });
 function renderHud() {
   const hpFrac = S.hq_max ? Math.round(100 * S.hq_hp / S.hq_max) : 0;
@@ -4242,9 +4547,12 @@ function renderHud() {
     const wide = chars > 4 ? 'wider' : (chars > 3 ? 'wide' : '');
     const pips = pace === 0 ? ''
       : Array.from({ length: Math.min(pace, 10) }, (_, i) => `<i class="${i < moved ? 'on' : ''}"></i>`).join('');
+    // climbs to drive+1 / halves to floor(drive/2) — the two branches of _tick_momentum. `drive_next` is
+    // the live projection (what the caret above is pointing at) and equals the halved figure while you
+    // are mid-stall, which made this read "climbs to 0 … halves to 0" on every turn before the last move.
     const tip = pace === 0
       ? 'Drive: nothing owes a move this turn, so the trajectory holds.'
-      : `Drive: Momentum banked per turn. ${moved}/${pace} units have moved — move EVERY one and the trajectory climbs to ${p.drive_next}; stall even one and it halves to ${Math.floor(p.drive / 2)}.`;
+      : `Drive: Momentum banked per turn. ${moved}/${pace} units have moved — move EVERY one and the trajectory climbs to ${p.drive + 1}; stall even one and it halves to ${Math.floor(p.drive / 2)}.`;
     // silver metal digits, the same set the stat pills use on style B
     const silver = v => `<span class="mn">` + String(v).split('').map(d =>
       `<img class="md" src="assets/digits/${d}.png" alt="${d}">`).join('') + `</span>`;
@@ -4285,8 +4593,8 @@ function renderHud() {
       ${foe}
     </div>
     <div class="hudbtns">
-      <button class="ibtn" onclick="showLegend()" title="Legend" aria-label="Legend"><img src="assets/ui/btn/legend.png" alt="Legend" style="height:32px"></button>
-      <button class="ibtn" onclick="menu()" title="Menu" aria-label="Menu"><img src="assets/ui/btn/menu.png" alt="Menu" style="height:32px"></button>
+      <button class="ibtn" onclick="showLegend()" title="Legend" aria-label="Legend"><img src="assets/ui/btn/legend.png" alt="Legend"></button>
+      <button class="ibtn" onclick="menu()" title="Menu" aria-label="Menu"><img src="assets/ui/btn/menu.png" alt="Menu"></button>
     </div>`;
   const _mb = $('#medalbar');
   if (S.medals && S.medals.length) {
@@ -4426,7 +4734,16 @@ function layoutBoard() {
   const sig = b.width + 'x' + b.height + '@' + cellPx + '/' + minCellPx + ':' + wrap.clientWidth + 'x' + wrap.clientHeight;
   if (layoutBoard._sig === sig) return;
   layoutBoard._sig = sig;
+  // Rows are declared EXPLICITLY, not left implicit. `.cell` uses `content-visibility: auto`, so an
+  // off-screen cell is culled and contributes its `contain-intrinsic-size` placeholder rather than its
+  // real box. With implicit rows the grid's height is derived from that content, and WebKit sizes the
+  // culled rows short — so #boardwrap under-reported its scrollable height and you could not pan to the
+  // bottom of the board. Measured on macOS at cell 99: #board was 1752px tall while the wrap claimed
+  // 1213px of content, leaving 539px of the required 1078px reachable — panning hit a wall halfway with
+  // the anchor and the zoom both working correctly. Chrome sizes the culled rows correctly, which is why
+  // it never showed there. Definite rows make the height h x --cell regardless of what is culled.
   board.style.gridTemplateColumns = `repeat(${b.width}, var(--cell))`;
+  board.style.gridTemplateRows = `repeat(${b.height}, var(--cell))`;
   document.documentElement.style.setProperty('--cell', cellPx + 'px');
   // pad #board so the wood fills the viewport at min zoom (table edge = screen edge) and grows past it
   // when zoomed in (pan). At min zoom the grid fits (fitCell), so padding centres it and fills the edges.
@@ -4462,11 +4779,26 @@ function layoutBoard() {
   if (gridH >= availH) { padTop = Math.min(m, Math.max(0, woodY - HAND_CLEAR / 2)); padBot = Math.min(m + HAND_CLEAR, woodY + HAND_CLEAR / 2); }
   else { padTop = Math.round((availH - gridH) / 2); padBot = Math.max(HAND_CLEAR, ch - gridH - padTop); }
   board.style.padding = padTop + 'px ' + padX + 'px ' + padBot + 'px';
-  // centre the table on the #board box so it always covers the scrollable area (grid + its capped
-  // padding). Box ≤ table by construction, so the table fully backs every pannable position.
-  const cx = (gridW + 2 * padX) / 2, cy = (gridH + padTop + padBot) / 2;
-  board.style.backgroundSize = tblW.toFixed(1) + 'px ' + tblH.toFixed(1) + 'px';
-  board.style.backgroundPosition = (cx - tblW / 2).toFixed(1) + 'px ' + (cy - tblH / 2).toFixed(1) + 'px';
+  // Centre the table on the GRID, not on the #board box.
+  //
+  // The box is deliberately asymmetric: padTop and padBot differ so the grid is biased upward and
+  // clears the hand. Centring the wood on the box therefore parked the pieces off-centre on the table
+  // by (padBot - padTop)/2 — and that gap is a function of the zoom, so the wood visibly slid around
+  // underneath the board while pinching. "The pieces sit ON the table" only holds if the two are
+  // concentric at every zoom, which is what this does.
+  //
+  // It never showed before because the fit used to be COVER: the grid always overran the viewport, so
+  // the symmetric `gridH >= availH` branch was the only one that ran. A CONTAIN fit makes the other
+  // branch reachable at floor zoom, which is what exposed it.
+  //
+  // The table is then grown to still cover the whole box from its new centre, so no pannable position
+  // can show dark surround — the property the old box-centred version was there to guarantee.
+  const cx = padX + gridW / 2, cy = padTop + gridH / 2;         // grid centre inside the box
+  const tW = Math.max(tblW, gridW + 2 * padX);                  // padX is equal on both sides
+  const tH = Math.max(tblH, gridH + 2 * Math.max(padTop, padBot));
+  board.style.backgroundSize = tW.toFixed(1) + 'px ' + tH.toFixed(1) + 'px';
+  board.style.backgroundPosition = (cx - tW / 2).toFixed(1) + 'px ' + (cy - tH / 2).toFixed(1) + 'px';
+  if (typeof applyCam === 'function') applyCam();   // the box just changed size → re-clamp and re-apply
 }
 function chipFile(id) {   // equipped-chip id → its image url (falls back to the default plaque)
   const c = S && S.chips; const f = (c && c.reg && c.reg[id] && c.reg[id].file) || (c && c.default_file) || 'assets/board/unit.png';
@@ -4480,7 +4812,6 @@ function applyChips() {   // push the two equipped slots onto the board as CSS v
 }
 function renderBoard() {
   const b = S.board, board = $('#board'), wrap = $('#boardwrap');
-  const sx = wrap.scrollLeft, sy = wrap.scrollTop;   // keep the view where it was
   applyChips();
   board.dataset.ts = tileSel();
   layoutBoard();                                     // size the grid + table (shared with pinch-zoom)
@@ -4683,10 +5014,7 @@ function renderBoard() {
     }
   }
   renderBoard._cache = { sig, cls: clsArr, inner: innerArr };
-  // Only touch scroll when it actually shifted. A bare `scrollLeft = x` still forces a synchronous
-  // scroll + repaint even when the value is unchanged — a needless per-move paint (and tearing trigger).
-  if (wrap.scrollLeft !== sx) wrap.scrollLeft = sx;
-  if (wrap.scrollTop !== sy) wrap.scrollTop = sy;
+  // No scroll to preserve any more: the view is the camera, and re-rendering cells cannot disturb it.
   drawIntents(showIntent ? intentList : []);
 }
 
@@ -4699,7 +5027,7 @@ function drawIntents(list) {
   let svg = board.querySelector('#intentfx');
   if (!list || !list.length) { if (svg) svg.remove(); return; }
   if (!svg) { svg = document.createElementNS(SVGNS, 'svg'); svg.id = 'intentfx'; board.appendChild(svg); }
-  svg.setAttribute('width', board.scrollWidth); svg.setAttribute('height', board.scrollHeight);
+  svg.setAttribute('width', board.offsetWidth); svg.setAttribute('height', board.offsetHeight);
   const cen = (p) => {
     const c = p && board.querySelector(`.cell[data-x="${p[0]}"][data-y="${p[1]}"]`);
     return c ? { x: c.offsetLeft + c.offsetWidth / 2, y: c.offsetTop + c.offsetHeight / 2 } : null;
@@ -5036,10 +5364,10 @@ async function tapCell(x, y) {
   // (3) nothing selected → tap your unit to command, else inspect
   if (isMine(cell.u)) { await selectUnit(cell.u.id); return; }
   if (cell.st) { showStormInfo(cell); return; }   // storm tile → describe the storm AND what's under it
-  // The inspect/terrain panels open on top of the coach tip, so the tip has to be queued behind them:
-  // showInspect/showTerrain both take over #ovInspect, and a tip fired first would be read as part of it.
-  if (cell.u) { showInspect(cell.u); _coachAfter('inspect'); }
-  else if (cell.t) { showTerrain(cell); _coachAfter('terrain'); }
+  // Fired WITH the panel, not after it closes. The tip explains what you are looking at, so it has to be
+  // on screen at the same time as the thing — it centres over the panel rather than covering it.
+  if (cell.u) { showInspect(cell.u); coach('inspect'); }
+  else if (cell.t) { showTerrain(cell); coach('terrain'); }
 }
 // Fire a tip once the enemy replay has finished. Tips triggered from inside animateEvents would land on
 // top of a board that is still moving, and get tapped away without being read.
@@ -5050,9 +5378,6 @@ function _coachSoon(id) {
     clearInterval(tick); coach(id);
   }, 500);
 }
-// Fire a tip once the inspect panel has been read and closed. A tip that appears at the same instant as
-// a full-screen card competes with it; one that appears after they dismiss it lands.
-function _coachAfter(id) { _coachOnClose($('#ovInspect'), id); }
 // interactable tokens sit ON open ground — they are NOT a terrain type
 const ONGROUND = { crate:'a supply crate', workshop:'a workshop', node:'a command node', escape:'the exit' };
 function showStormInfo(c) {
@@ -5070,7 +5395,7 @@ async function selectUnit(id, center = true) {
   // Out of actions (or a structure that never had any) — this opens the SAME detail panel tapping an
   // enemy does, so it earns the same tip. Missed on the first pass because the tip was only wired to
   // tapCell's inspect branch, and a spent unit never reaches it.
-  if ((o.ap || 0) <= 0) { const u = unitById(id); deselectCmd(); if (u) { showInspect(u); _coachAfter('inspect'); } return; }
+  if ((o.ap || 0) <= 0) { const u = unitById(id); deselectCmd(); if (u) { showInspect(u); coach('inspect'); } return; }
   cmd = id;
   cmdOpts = {moves:new Set(o.moves.map(t=>t[0]+','+t[1])), attacks:new Set(o.attacks), aim:new Set((o.aim||[]).map(t=>t[0]+','+t[1])), precise:!!o.precise, ap:o.ap, preview:o.preview||{}};
   // each gun's mode lives in aimModes and is NOT reset here — it is that unit's own for the whole turn.
@@ -5107,7 +5432,7 @@ function _isFullscreen() { return !!(document.fullscreenElement || document.webk
 // Default ON: the stored value is only ever '0' when the player has deliberately turned it off.
 function fullscreenWanted() { try { return localStorage.getItem('dc_fullscreen') !== '0'; } catch (e) { return true; } }
 function toggleFullscreen() { setFullscreen(!fullscreenWanted()); }
-async function setFullscreen(on) {
+async function setFullscreen(on, silent) {
   try {
     if (on) {
       const el = document.documentElement;
@@ -5117,14 +5442,23 @@ async function setFullscreen(on) {
     }
     localStorage.setItem('dc_fullscreen', on ? '1' : '0');
   } catch (e) {
-    toast('fullscreen unavailable here');
+    // Only ever surfaced for a DELIBERATE toggle. The boot-time re-arm calls this silently: the player
+    // asked for nothing, so a failure is not news — and on mobile it was news every single launch. The
+    // request always failed there, so 'dc_fullscreen' was never written, so the arm never stopped
+    // re-firing: "fullscreen unavailable here" on the first tap of every session, forever.
+    if (!silent) toast('fullscreen unavailable here');
   }
   if (document.querySelector('#ovSettings.show')) showSettings();
 }
 // Re-arm a stored preference on the first gesture, since a cold request would be rejected.
 (function armFullscreen() {
   if (!fullscreenWanted()) return;
-  const go = () => { setFullscreen(true); window.removeEventListener('pointerdown', go); };
+  // Checked inside the handler, not out here: this IIFE runs while the page is still parsing, and on a
+  // native shell window.Capacitor is injected by the bridge — reading it at parse time can miss it.
+  const go = () => {
+    if (_isNativeApp()) return;   // already full-bleed; the request would only fail, loudly
+    setFullscreen(true, true);    // silent — nobody asked for this
+  };
   window.addEventListener('pointerdown', go, { once: true });
 })();
 
@@ -5139,9 +5473,12 @@ function centerCell(x, y) {
   const wr = wrap.getBoundingClientRect(), cr = cell.getBoundingClientRect();
   const band = 160;                                   // prompt + peeked hand at the bottom
   if (cr.bottom < wr.bottom - band && cr.top > wr.top + 44) return;   // already clearly visible
-  const mid = (cr.top + cr.bottom) / 2 - wr.top + wrap.scrollTop;
+  // Both rects are VISUAL and camY is in screen pixels, so the correction is a straight subtraction —
+  // no need to undo the zoom. camPanBy clamps to the table edge for us.
   const aim = Math.max(70, (wrap.clientHeight - band) / 2);
-  wrap.scrollTo({ top: Math.max(0, mid - aim), behavior: 'smooth' });
+  const onScreenY = (cr.top + cr.bottom) / 2 - wr.top;
+  camGlide($('#board'));
+  camPanBy(0, onScreenY - aim);
 }
 
 async function doMove(x, y) {
@@ -5155,6 +5492,10 @@ async function doMove(x, y) {
   await afterAction(r);
   await reselect(id);
   coach('move');
+  // Nomad only — the server sends `drive` for the motion gauge and no other, so this is the exact
+  // signal, not a general-id guess. Taught on the first move, while the roll-call pips are counting and
+  // there is still a turn left to fill them; at end of turn the trajectory has already been decided.
+  if (S.power && S.power.drive !== undefined && S.power.pace > 0) coach('momentum');
 }
 async function doAttack(tid) {
   disarmEnd();
@@ -5427,6 +5768,12 @@ async function animateEvents(events, finalR) {
         }
       }
     }
+    // Move BEFORE the tracer draws, not after the damage lands. Following the kill afterwards showed
+    // you the aftermath — by then the shot you wanted to see had already played somewhere off-screen.
+    if (ev.t === 'shot' || ev.t === 'blast') {
+      const tp = ev.to || ev.at;
+      if (tp && camEnsureVisible(tp[0], tp[1], true)) await sleep(200);   // let the pan land first
+    }
     if (ev.t === 'shot') { playShot(ev); await sleep(arrowDwell); continue; }        // attacker → target
     if (ev.t === 'blast') { await playBlast(ev); await sleep(arrowDwell + 120); continue; }  // impact + fan-out
     const p = ev.to || ev.at;
@@ -5434,7 +5781,7 @@ async function animateEvents(events, finalR) {
     if (ev.t === 'reveal') {                 // Recon / crate Intel — show WHERE it scouted
       const cell = document.querySelector(`.cell[data-x="${p[0]}"][data-y="${p[1]}"]`);
       if (cell) {
-        cell.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});
+        camCenterOnCell(p[0], p[1], true);      // show the ground Recon just scouted
         cell.classList.add('reveal-ping'); setTimeout(() => cell.classList.remove('reveal-ping'), 900);
       }
       Sfx.play('reveal'); toast('◎ Intel — area scouted');
@@ -5516,8 +5863,12 @@ async function animateEvents(events, finalR) {
       else if (ev.t === 'capture' || ev.t === 'steal') Sfx.play(ev.side === 'you' ? 'objective_tick' : 'objective_lost');
       // follow the action — pan the KILL to centre (so a death is never missed,
       // even when it rolls fog back over the tile), and linger a beat longer on it
-      cell.scrollIntoView(ev.dead ? {behavior: 'smooth', block: 'center', inline: 'center'}
-                                  : {block: 'nearest', inline: 'nearest'});
+      // A kill always centres — it is the most expensive thing in a run and is worth the jolt even if
+      // the tile was already on screen. Any other visible damage only pulls the camera when it is off
+      // view, which also catches hazards (fire, gas, sludge) that arrive with no shot to pan on.
+      const _dx = +cell.dataset.x, _dy = +cell.dataset.y;
+      if (ev.dead) camCenterOnCell(_dx, _dy, true);
+      else if (ev.t === 'hit' && ev.dmg > 0) camEnsureVisible(_dx, _dy, true);
       // a beat for the camera to settle on the kill it just panned to. The death itself is already the
       // longest-weighted event in the turn, so this stays short rather than lingering twice.
       if (ev.dead) await sleep(180);
@@ -5567,7 +5918,9 @@ function _runUnlockQ() {
   o.classList.add('show');
   try { Sfx.fanfare(1); haptic(70); } catch (e) {}
 }
-function closeUnlock() { const o = $('#ovUnlock'); if (o) o.classList.remove('show'); _unlockBusy = false; setTimeout(_runUnlockQ, 300); }
+// _coachPump AFTER _runUnlockQ, and in that order: a second queued unlock re-raises _unlockBusy and the
+// tip keeps waiting, which is the point — tips are held while an unlock modal owns the screen.
+function closeUnlock() { const o = $('#ovUnlock'); if (o) o.classList.remove('show'); _unlockBusy = false; setTimeout(() => { _runUnlockQ(); _coachPump(); }, 300); }
 // new fog styles unlock when their gating achievement is earned
 function _checkFogUnlocks(newIds) {
   for (const f of FOG_SETS) {
@@ -5725,7 +6078,10 @@ async function endTurn() {
       const ok = await gameConfirm(`<b>${n}</b> of your unit${n > 1 ? 's' : ''} can still move or act this turn. End the turn anyway?`, 'End turn');
       if (!ok) { disarmEnd(); return; }       // "keep playing" → drop the highlight, don't end
     }
-    coach('retain');                          // teach the keep-a-card ★ once, on an actual end
+    // Teach the keep-a-card ★ once, on an actual end — and WAIT for it to be read before ending, because
+    // the end discards the hand this tip is about. Fired and forgotten it landed as the cards were being
+    // swept away and the enemy replay started under it: advice about a chance the player had just lost.
+    await coachWait('retain');
     disarmEnd();
     cancelSelState();
     aimModes.clear();                         // next turn every gun opens in Move again
@@ -5954,12 +6310,21 @@ function showGenerals() {
   // general cards — tapping one opens the Deploy popup (run setup); the top slot always shows Daily.
   const genCards = `<div class="genwrap">${S.generals.map(plaqueCard).join('')}</div>`;
   const dailyArt = S.daily ? [...(S.daily.date || '')].reduce((a, c) => a + c.charCodeAt(0), 0) % 3 : 0;   // swaps each day
+  // The twists ARE the day. Named on the panel, with the full text a tap away — a player choosing
+  // whether to spend their one Steam attempt has to be able to see what they are walking into.
+  const dtw = (S.daily && S.daily.twists) || [];
+  const twistLine = dtw.length
+    ? `<div class="d dtwist" onclick="showDailyTwists()">${dtw.map(t => `<b class="gold">${t.name}</b>`).join(' <span style="opacity:.5">+</span> ')} <span style="opacity:.6">ⓘ</span></div>` : '';
+  // Spent attempts only ever happen on Steam (new_daily refuses there); every other build keeps Play.
+  const dailyBtn = (S.daily && S.daily.locked)
+    ? `<div class="d" style="text-align:center;opacity:.75">Today's attempt is spent — <b class="gold">${S.daily.best}</b>.<br><span style="font-size:11px">One run per Commission. The next opens at midnight.</span></div>`
+    : pbtn(S.daily && S.daily.state === 'open' && S.has_save ? 'resume' : 'play', 'newDaily()');
   const dailyPanel = (S.demo || !S.daily) ? '' : `<div class="choice bronze dailyslot">
          <b class="cyan">${si('sun',15)} Daily Commission</b> <span class="d">${S.daily.date}</span>
          <div class="d">${S.daily.general}${S.daily.mods&&S.daily.mods.length?' · '+S.daily.mods.join(', '):''}${S.daily.best?` · your best ${S.daily.best}`:''}</div>
-         <div class="d" style="font-size:11px">A fixed curated run — same for everyone today. Beat your best.</div>
+         ${twistLine}
          <img class="daily-art" src="assets/ui/daily/d${dailyArt}.jpg" alt="">
-         <div class="dp-play" style="text-align:center;margin-top:8px">${pbtn('play','newDaily()')}</div></div>`;
+         <div class="dp-play" style="text-align:center;margin-top:8px">${dailyBtn}</div></div>`;
   const seedField = `<div class="seedfield">
         <img src="assets/ui/btn/seed.png" alt="Seed">
         <span class="plaqueval${runCfg.seed?'':' seedempty'}" id="seedGold">${goldText(runCfg.seed||'RANDOM')}</span>
@@ -6036,7 +6401,40 @@ async function newDaily() {
   Sfx.play('card_play');
   $('#ovGeneral').classList.remove('show'); $('#ovResult').classList.remove('show');
   retain.clear(); cancelSelState();
-  render(await api('/api/daily', {}));
+  const r = await api('/api/daily', {});
+  // Only Steam can refuse — one attempt per Commission there, freely replayable everywhere else.
+  if (r.daily_locked) { Sfx.play('ui_error'); toast("Today's Commission is already spent — the next opens at midnight."); render(r); return; }
+  render(r);
+}
+/** The day's two starting exceptions in full. The panel only has room for their names. */
+// ── Daily Commission leaderboard (Steam only) ──────────────────────────────────────────────────
+// window.__steamBoard is published by main.ts and every member no-ops off Steam, so these are called
+// unconditionally and simply do nothing on Android, the web demo, the beta exe and the Mac build.
+async function submitDailyToBoard(date, score) {
+  try { const b = window.__steamBoard; if (b) await b.submit(date, score); } catch (e) {}
+}
+/** Draw today's board into #dboard, or leave the panel as a bare date line if there is no board. */
+async function renderDailyBoard(date) {
+  const el = $('#dboard'); if (!el) return;
+  let rows = null;
+  try { const b = window.__steamBoard; if (b) rows = await b.fetch(date, 10); } catch (e) {}
+  if (!rows || !rows.length) {
+    // No board on this platform, or Steam is unreachable. Say nothing about leaderboards to a player
+    // who has none — the panel just carries the date, exactly as it rendered a moment ago.
+    return;
+  }
+  const line = r => `<div class="dbrow${r.you ? ' me' : ''}">
+      <span class="dbr">${r.rank}</span><span class="dbn">${r.name}</span>
+      <span class="dbs">${r.score}</span></div>`;
+  el.innerHTML = `<div class="d" style="text-align:center;margin-bottom:5px">Daily Commission — ${date}</div>`
+    + rows.map(line).join('');
+}
+function showDailyTwists() {
+  const d = S.daily; if (!d || !d.twists || !d.twists.length) return;
+  _infoPopup(`${si('sun',15)} Daily Commission — ${d.date}`,
+    `<div style="margin-bottom:8px">Commanding <b class="gold">${d.general}</b>${d.mods && d.mods.length ? ` · ${d.mods.join(', ')}` : ''}.</div>`
+    + d.twists.map(t => `<div style="margin-bottom:8px"><b class="gold">${t.name}</b><div style="opacity:.9">${t.desc}</div></div>`).join('')
+    + `<div style="margin-top:10px;opacity:.8">Everyone plays this exact run today — same commander, same modifiers, same exceptions, same seed.</div>`);
 }
 // Reusable inline-SVG icons (no emoji) — trophy / lock / secret-mask for achievements.
 const ACH_SVG = {
@@ -6129,8 +6527,13 @@ function showProgression() {
           <div class="ad pgdesc">${u.desc}</div>
         </div></div>`;
     }).join('');
+    // deployPlaque reads the doctrine line off the commander itself (g.plaque / g.blurb). The
+    // progression record is a different object — id, name, merit, unlocks — and carries neither, so
+    // handing it {id,name} rendered the plaque with a permanently EMPTY description panel here while
+    // the identical plaque in the Deploy popup (which gets the real commander) read fine.
+    const gen = (S.generals || []).find(x => x.id === g.id) || {};
     return `<div style="margin-bottom:16px">
-      <div class="prog-plaque">${deployPlaque({ id: g.id, name: g.name }, unlockFor(g.id))}</div>
+      <div class="prog-plaque">${deployPlaque({ ...gen, id: g.id, name: g.name }, unlockFor(g.id))}</div>
       ${ocap(`highest ascension cleared: ${g.cleared_asc}<br>${meritLine}${progbar}`)}
       <div class="proggrid" style="margin-top:6px">${rows}</div></div>`;
   }).join('');
@@ -6444,8 +6847,52 @@ function showInspect(u) {
   $('#ovInspect').classList.add('show');
 }
 // One place for a panel to open, so the cue does not have to be remembered at 29 call sites.
-function openOv(id) { const e = $('#' + id); if (e && !e.classList.contains('show')) Sfx.play('ui_open'); if (e) e.classList.add('show'); }
+function openOv(id) { const e = $('#' + id); if (e && !e.classList.contains('show')) Sfx.play('ui_open'); if (e) { e.classList.add('show'); _liftOv(e); } }
 function closeOv(id) { const e = $('#' + id); if (e && e.classList.contains('show')) Sfx.play('ui_close'); if (e) e.classList.remove('show'); }
+// Overlay stacking. Every .overlay shares `z-index: 10`, so which one wins was decided purely by
+// DOCUMENT ORDER — and #ovSettings is declared before #ovProg. Opening Settings from the Generals
+// page therefore drew it BEHIND Generals, which reads as the button doing nothing. The one opened
+// LAST is the one the player asked for, so it belongs on top.
+//
+// This watches the class attribute rather than living inside openOv(), because most overlays are put
+// up by a bare `classList.add('show')` at twenty-odd call sites — Settings among them — so lifting
+// inside openOv() would fix only the few that route through it.
+let _ovZ = 10;
+// Put `el` on top of every other open overlay. Idempotent when it is already the highest.
+function _liftOv(el) {
+  if (!el || !el.classList || !el.classList.contains('overlay')) return;
+  const others = [...document.querySelectorAll('.overlay.show')].filter(o => o !== el);
+  // Wind the counter back whenever nothing else is stacked, so it cannot climb over a long session
+  // into #coachveil's z-index (44). Closing cannot be relied on to reset it: several overlays close
+  // via an inline classList.remove('show') that never reaches closeOv().
+  if (!others.length) _ovZ = 10;
+  else if (others.every(o => (+o.style.zIndex || 10) < (+el.style.zIndex || 10))) return;   // already top
+  // …and CAP it as well as winding it back. The wind-back only fires when the stack fully empties, so
+  // a session that always keeps one overlay up can still climb — 34 nested opens would reach 44 and
+  // start covering #coachveil, and 30 would reach #setBtn (40). Capped, the worst case degrades to two
+  // overlays tying and document order deciding, which is where this started rather than something worse.
+  _ovZ = Math.min(_ovZ + 1, 39);
+  el.style.zIndex = String(_ovZ);
+  el.dataset.ovlift = '1';
+}
+(function () {
+  if (typeof MutationObserver !== 'function') return;
+  const obs = new MutationObserver(ms => {
+    for (const m of ms) {
+      const el = m.target;
+      if (!el.classList || !el.classList.contains('overlay')) continue;
+      if (el.classList.contains('show')) _liftOv(el);
+      else if (el.dataset.ovlift === '1') {
+        el.style.removeProperty('z-index');
+        delete el.dataset.ovlift;
+      }
+    }
+  });
+  const start = () => document.querySelectorAll('.overlay')
+    .forEach(o => obs.observe(o, { attributes: true, attributeFilter: ['class'] }));
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
 let wsMode = 'upgrade';
 function showWorkshop() {
   const w = S.pending_workshop;
@@ -6789,7 +7236,13 @@ function computeMinCell() {
   const margin = 6;
   const availW = wrap.clientWidth - margin * 2;
   const availH = wrap.clientHeight - HAND_CLEAR - margin * 2;
-  const fill = Math.round(Math.max(availW / w, availH / h));
+  // CONTAIN, not cover. `Math.max` here fitted the board to whichever axis needed the LARGER cell, so
+  // the floor always overran the other axis and the battlefield could be panned around at default
+  // zoom — scrolling out to empty space with no way back except more scrolling. `Math.min` fits the
+  // whole board inside the window, which is what the floor is described as everywhere else: fitCell()
+  // says "board fills the table; zoom IN only" and setCellPx() clamps to "the board-fills-the-table
+  // view". Scrolling now appears only once you actually zoom in, which is the point of a floor.
+  const fill = Math.round(Math.min(availW / w, availH / h));
   minCellPx = Math.max(5, Math.min(150, fill || 22));
   return minCellPx;
 }
@@ -6797,6 +7250,7 @@ function fitCell() {                 // open a battle at the floor (board fills 
   computeMinCell();
   cellPx = minCellPx;
   document.documentElement.style.setProperty('--cell', cellPx + 'px');
+  camZ = 1; camX = 0; camY = 0;      // a new battle starts at the fit, camera reset
 }
 // The fit above runs ONCE, when the battle opens. Nothing refitted the board when the window changed
 // size, so the cell size stayed pinned to whatever the window was at that moment. That reads as a
@@ -6804,17 +7258,25 @@ function fitCell() {                 // open a battle at the floor (board fills 
 // board sized for the small window on a big screen. The web demo hides it because the browser window is
 // normally already at its final size before a battle starts. Refit on resize, keeping the player's
 // zoom-in as a RATIO of the floor rather than a pixel count, so a resize doesn't yank their zoom.
+// The board's available height is whatever is left after the TOP BAR, and the top bar is still
+// settling for as long as refitBars() keeps re-fitting it. Fitting the board off a plain 150ms
+// debounce therefore measured #boardwrap before --pillh had stopped moving, so the board was sized
+// against a height that then changed underneath it — the board ends up mis-scaled and off-position
+// until something else forces another fit. refitBars() now calls this once the viewport AND the bars
+// have both stopped changing, which is the only moment #boardwrap's height is final.
+function refitBoard() {
+  if (typeof S === 'undefined' || !S || !S.board) return;        // only while a battle is on screen
+  const wrap = $('#boardwrap');
+  if (!wrap || !wrap.clientWidth || !wrap.clientHeight) return;  // hidden/unlaid-out: nothing to fit to
+  const ratio = minCellPx > 0 ? cellPx / minCellPx : 1;
+  computeMinCell();
+  setCellPx(Math.round(minCellPx * ratio));                      // setCellPx re-clamps to the new floor
+  if (typeof applyCam === 'function') applyCam();                // viewport changed → re-clamp the camera
+}
 let _boardRefit;
 window.addEventListener('resize', () => {
   clearTimeout(_boardRefit);
-  _boardRefit = setTimeout(() => {
-    if (typeof S === 'undefined' || !S || !S.board) return;        // only while a battle is on screen
-    const wrap = $('#boardwrap');
-    if (!wrap || !wrap.clientWidth || !wrap.clientHeight) return;  // hidden/unlaid-out: nothing to fit to
-    const ratio = minCellPx > 0 ? cellPx / minCellPx : 1;
-    computeMinCell();
-    setCellPx(Math.round(minCellPx * ratio));                      // setCellPx re-clamps to the new floor
-  }, 150);
+  _boardRefit = setTimeout(refitBoard, 150);                     // backstop; refitBars() does the real one
 });
 // scroll the battlefield so the player camp (your HQ) sits in the middle of the area above the hand fan.
 // The board is sized to COVER the viewport (computeMinCell uses max), so it overflows and pans — without
@@ -6838,10 +7300,7 @@ function centerOnHQ() {
     cx = (parseFloat(cs.paddingLeft) || 0) + (tx + 0.5) * cellPx;
     cy = (parseFloat(cs.paddingTop) || 0) + (ty + 0.5) * cellPx;
   }
-  const maxL = Math.max(0, board.scrollWidth - wrap.clientWidth);
-  const maxT = Math.max(0, board.scrollHeight - wrap.clientHeight);
-  wrap.scrollLeft = Math.max(0, Math.min(cx - wrap.clientWidth / 2, maxL));
-  wrap.scrollTop = Math.max(0, Math.min(cy - (wrap.clientHeight - HAND_CLEAR) / 2, maxT));
+  camCenterOn(cx, cy);   // cx/cy are BOARD pixels; the camera clamps itself to the table edge
 }
 function centerOnUnit(id) {
   closeOv('ovArmy');
@@ -6883,19 +7342,103 @@ async function toggleRetain(id) {
   if (r && r.ok === false && r.msg) toast(r.msg);   // e.g. "you can only retain 6 — release one first"
   showArmy();   // reopen with the updated flags
 }
+// ── CAMERA ────────────────────────────────────────────────────────────────────────────────────────
+// The board is no longer SCROLLED; it is viewed through a camera, the way an orthographic camera works
+// over a world. #boardwrap is overflow:hidden, #board keeps a FIXED layout size at the floor cell size,
+// and zoom/pan are a transform on it.
+//
+// The point is that #board's LAYOUT size never grows. Scrolling a huge element is what ran into
+// WebKit's ceiling on painting large scrolled surfaces — the board could be panned to ground the engine
+// had simply not drawn. A transform re-rasterises only what is on screen, so the ceiling stops
+// applying rather than merely moving further away.
+//
+// screen = boardPoint * camZ - cam   (transform is `translate(-cam) scale(camZ)`, applied right-to-left)
+// so a board point is recovered as (screen + cam) / camZ. Every clamp below works in SCALED pixels.
+let camX = 0, camY = 0, camZ = 1;
+const CAM_MAX = 3;                       // zoom IN up to 3x the fit, same ceiling as before
+function camBounds() {
+  const wrap = $('#boardwrap'), board = $('#board');
+  if (!wrap || !board) return { w: 0, h: 0, maxX: 0, maxY: 0, minX: 0, minY: 0 };
+  const w = board.offsetWidth * camZ, h = board.offsetHeight * camZ;
+  const vw = wrap.clientWidth, vh = wrap.clientHeight;
+  // Smaller than the viewport on an axis → lock centred on it, so the table never drifts off-centre.
+  const minX = w <= vw ? (w - vw) / 2 : 0, maxX = w <= vw ? (w - vw) / 2 : w - vw;
+  const minY = h <= vh ? (h - vh) / 2 : 0, maxY = h <= vh ? (h - vh) / 2 : h - vh;
+  return { w, h, vw, vh, minX, maxX, minY, maxY };
+}
+function applyCam() {
+  const board = $('#board'); if (!board) return;
+  const b = camBounds();
+  camX = Math.max(b.minX, Math.min(b.maxX, camX));
+  camY = Math.max(b.minY, Math.min(b.maxY, camY));
+  board.style.transformOrigin = '0 0';
+  board.style.transform = 'translate(' + (-camX).toFixed(2) + 'px,' + (-camY).toFixed(2) + 'px) scale(' + camZ.toFixed(4) + ')';
+}
+// Zoom about a screen point (defaults to the middle of the board area above the hand).
+function camZoomAt(z, sx, sy) {
+  const wrap = $('#boardwrap'); if (!wrap) return;
+  const r = wrap.getBoundingClientRect();
+  if (sx == null) { sx = wrap.clientWidth / 2; sy = (wrap.clientHeight - HAND_CLEAR) / 2; }
+  else { sx -= r.left; sy -= r.top; }
+  const nz = Math.max(1, Math.min(CAM_MAX, z));
+  const bx = (sx + camX) / camZ, by = (sy + camY) / camZ;   // board point under that screen point
+  camZ = nz;
+  camX = bx * camZ - sx; camY = by * camZ - sy;             // put it back under the same screen point
+  applyCam();
+}
+function camPanBy(dx, dy) { camX += dx; camY += dy; applyCam(); }
+// Centre the camera on a board CELL. `smooth` animates it — the replay uses that to follow a kill and
+// Recon to show the ground it scouted. There is no scrollTo() to ask for smooth behaviour any more, so
+// the move is a transform transition, cleared afterwards so ordinary pans stay instant.
+function camCenterOnCell(x, y, smooth) {
+  const board = $('#board'); if (!board) return;
+  const cell = board.querySelector('.cell[data-x="' + x + '"][data-y="' + y + '"]');
+  if (!cell) return;
+  if (smooth) camGlide(board);
+  camCenterOn(cell.offsetLeft + cell.offsetWidth / 2, cell.offsetTop + cell.offsetHeight / 2);
+}
+// Bring a cell into view ONLY if it is not already comfortably on screen, and only if you can SEE it.
+// Damage you could have watched but were not looking at is exactly what deserves the camera; damage
+// already in front of you is not, and yanking the view for that is what made scrollIntoView's
+// 'nearest' feel twitchy. Fogged tiles never pull the camera — that would show you the enemy's turn
+// through the fog you are supposed to be fighting blind against.
+function camEnsureVisible(x, y, smooth) {
+  const wrap = $('#boardwrap'), board = $('#board');
+  if (!wrap || !board) return false;
+  const c = (typeof cellAt === 'function') ? cellAt(x, y) : null;
+  if (c && !c.vis) return false;                                  // in fog: not yours to see
+  const cell = board.querySelector('.cell[data-x="' + x + '"][data-y="' + y + '"]');
+  if (!cell) return false;
+  const wr = wrap.getBoundingClientRect(), cr = cell.getBoundingClientRect();
+  const pad = 28;                                                 // an edge tile counts as not-in-view
+  const inView = cr.left >= wr.left + pad && cr.right <= wr.right - pad
+              && cr.top >= wr.top + pad && cr.bottom <= wr.bottom - HAND_CLEAR;
+  if (inView) return false;
+  camCenterOnCell(x, y, smooth);
+  return true;
+}
+function camGlide(board) {
+  board.style.transition = 'transform .32s ease-out';
+  clearTimeout(camGlide._t);
+  camGlide._t = setTimeout(() => { board.style.transition = ''; }, 380);
+}
+// Centre the camera on a point given in BOARD pixels (unscaled).
+function camCenterOn(bx, by) {
+  const wrap = $('#boardwrap'); if (!wrap) return;
+  camX = bx * camZ - wrap.clientWidth / 2;
+  camY = by * camZ - (wrap.clientHeight - HAND_CLEAR) / 2;
+  applyCam();
+}
 function setCellPx(px) {
   const wrap = $('#boardwrap'), board = $('#board');
   const cw = wrap ? wrap.clientWidth : 0, ch = wrap ? wrap.clientHeight : 0;
-  // anchor the zoom to the viewport centre: remember the content point there (as a fraction of the
-  // scrollable size), zoom, then put it back — so pinching grows the table+grid around the middle.
-  let fx = 0.5, fy = 0.5;
-  if (wrap && board && board.scrollWidth) { fx = (wrap.scrollLeft + cw / 2) / board.scrollWidth; fy = (wrap.scrollTop + (ch - HAND_CLEAR) / 2) / board.scrollHeight; }
-  cellPx = Math.max(minCellPx, Math.min(minCellPx * 3, Math.round(px)));   // floor = the board-fills-the-table view; zoom IN up to 3×
+  // No scroll anchoring here any more: zoom is the camera's job (camZoomAt), and this only re-lays the
+  // board at the FLOOR cell size. cw/ch are kept for computeMinCell's use of the viewport.
+  cellPx = Math.max(minCellPx, Math.min(minCellPx * 3, Math.round(px)));   // floor = the board-fills-the-table view; zoom IN up to 3x
   layoutBoard();   // re-size the grid AND the table together (the table scales with every zoom step)
-  if (wrap && board && board.scrollWidth) { wrap.scrollLeft = fx * board.scrollWidth - cw / 2; wrap.scrollTop = fy * board.scrollHeight - (ch - HAND_CLEAR) / 2; }
   drawIntents(intentOn && !turnBusy ? intentList : []);   // arrow geometry is in board pixels, so it has to follow the zoom
 }
-function zoom(d) { setCellPx(cellPx + d); }   // desktop / programmatic; layoutBoard handles the table + grid
+function zoom(d) { camZoomAt(camZ * (1 + d / 60)); }   // d is a legacy pixel delta; scale it into a factor
 // pinch-to-zoom the battlefield (two fingers). Single-finger panning still scrolls the board.
 function initPinch() {
   const wrap = $('#boardwrap');
@@ -6904,12 +7447,13 @@ function initPinch() {
   const dist = t => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
   let base = null;
   wrap.addEventListener('touchstart', e => {
-    if (e.touches.length === 2) base = { d: dist(e.touches) || 1, cell: cellPx };
+    if (e.touches.length === 2) base = { d: dist(e.touches) || 1, z: camZ,
+      cx: (e.touches[0].clientX + e.touches[1].clientX) / 2, cy: (e.touches[0].clientY + e.touches[1].clientY) / 2 };
   }, { passive: true });
   wrap.addEventListener('touchmove', e => {
     if (e.touches.length === 2 && base) {
       e.preventDefault();                       // we own the two-finger gesture
-      setCellPx(base.cell * (dist(e.touches) / base.d));
+      camZoomAt(base.z * (dist(e.touches) / base.d), base.cx, base.cy);
     }
   }, { passive: false });
   const clear = e => { if (!e.touches || e.touches.length < 2) base = null; };
@@ -6917,8 +7461,60 @@ function initPinch() {
   wrap.addEventListener('touchcancel', clear);
 }
 
+// Desktop zoom. The phone has pinch (initPinch above); until now the desktop had NOTHING — zoom() was
+// only reachable programmatically, so on a mouse or trackpad the battlefield was stuck at the floor.
+//
+// macOS reports a TRACKPAD PINCH as a wheel event with ctrlKey set — that is how every browser surfaces
+// the gesture — so honouring ctrl/cmd+wheel gives the trackpad the same pinch the phone has, and gives
+// a mouse user ctrl+wheel, which is the convention everywhere else. A PLAIN wheel is deliberately left
+// alone: two-finger scroll still pans, which is what a Mac user expects and what the board has always
+// done. Making the bare wheel zoom would have taken panning away to add zoom.
+//
+// Anchored to the POINTER rather than the viewport centre: the tile under the cursor stays under the
+// cursor. That is the difference between zooming and teleporting — setCellPx() re-centres on its own,
+// so the scroll is corrected afterwards.
+function initWheelZoom() {
+  const wrap = $('#boardwrap');
+  if (!wrap || wrap._wheelZoom) return;
+  wrap._wheelZoom = true;
+  // The zoom is accumulated as a FLOAT here and only rounded on the way into the DOM. setCellPx()
+  // rounds to whole pixels, so feeding its result back into the next multiply quantised the gesture to
+  // death: a real macOS trackpad pinch emits a stream of deltaY:-1 events, 41 x 1.01 = 41.41 rounds
+  // back to 41, and the zoom never moved at all. Measured: 30 consecutive deltaY:-1 events produced
+  // ZERO change, which is what made zooming feel locked — big synthetic deltas hid it in testing.
+  let fcell = 0;
+  wrap.addEventListener('wheel', e => {
+    if (typeof S === 'undefined' || !S || !S.board) return;
+    e.preventDefault();                                   // we own both gestures now
+    if (e.ctrlKey || e.metaKey) {                         // macOS reports a trackpad PINCH this way
+      // Accumulate in float: camZ is continuous, so a fine pinch cannot quantise away as it did when
+      // the zoom round-tripped through a whole-pixel cell size.
+      camZoomAt(camZ * Math.exp(-Math.max(-40, Math.min(40, e.deltaY)) * 0.01), e.clientX, e.clientY);
+    } else {
+      camPanBy(e.deltaX, e.deltaY);                       // two-finger scroll pans the camera
+    }
+  }, { passive: false });
+}
+// Keyboard fallback — a gesture nobody is told about is not discoverable, and a mouse without a wheel
+// had no way in at all. +/- step, 0 returns to the floor (the whole-board view).
+function initZoomKeys() {
+  if (window._zoomKeys) return;
+  window._zoomKeys = true;
+  window.addEventListener('keydown', e => {
+    if (typeof S === 'undefined' || !S || !S.board) return;
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    if (e.metaKey || e.altKey) return;
+    if (e.key === '+' || e.key === '=') { e.preventDefault(); camZoomAt(camZ * 1.25); }
+    else if (e.key === '-' || e.key === '_') { e.preventDefault(); camZoomAt(camZ / 1.25); }
+    else if (e.key === '0') { e.preventDefault(); camZoomAt(1); }           // back to the whole board
+  });
+}
+
 $('#end').onclick = endTurn;
 initPinch();
+initWheelZoom();
+initZoomKeys();
 window.__boot = () => { _applyOrient(); const p = refresh(); setTimeout(checkForUpdate, 2500); return p; };   // src/main.ts wires the local API, then calls this; returns the refresh promise so callers/tests can await first paint; update check runs once, non-blocking
 </script>
 </body>
