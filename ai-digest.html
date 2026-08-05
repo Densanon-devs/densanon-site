@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 04, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 05, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 04, 2026</div>
+        <div class="digest-date-badge">August 05, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s pool centers on agentic reliability and memory: first-hand reports of agent tool-use breaking down on a newer model sit alongside fresh Anthropic SDK/CLI releases, plus a cluster of research on cheaper LLM evaluation, judging, and long-term memory for agents.</p>
+        <p class="digest-intro">Today&#x27;s pool leans heavily on local/on-device deployment: a new compact agentic model (LFM2.5-2.6B) and an MLX port of MiniMax&#x27;s omni-modal generator both target running big-model capability on consumer hardware. Simon Willison&#x27;s LLM ecosystem got a major version bump (reasoning traces, server-side tools, new Claude model aliases) alongside a security-focused Claude Code release, while research picks span on-device memory-assistant benchmarking, PII-filter evaluation, and low-resource NMT for cuneiform.</p>
       </div>
     </section>
 
@@ -29,75 +29,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AutoFOAM: The Self-Refining Autonomous OpenFOAM Agent</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Targets a real pain point: OpenFOAM&#x27;s steep learning curve and time-consuming manual configuration-file setup for CFD simulations.</li>
-              <li>Proposes an autonomous, self-refining agent to automate solver configuration — an applied case study of LLM agents driving complex engineering tooling, not just chat.</li>
-              <li>A proof point for agent architectures that iteratively self-correct against domain-specific config/DSL files rather than free text.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.00003" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Energy Efficiency of Locally Deployed LLMs: A Preliminary Quantitative GPU Power Benchmark on Consumer Hardware</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Directly measures GPU power draw for local LLM inference on consumer hardware — an area the paper flags as poorly characterized versus accuracy-only benchmarks.</li>
-              <li>Reinforces the privacy/on-premise inference rationale behind local-first tooling with actual energy-cost data rather than assumptions.</li>
-              <li>Worth tracking as a preliminary result — useful reference point for weighing local vs. cloud inference cost once fuller numbers land.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.00008" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>CoT-Core: Accelerating LLM Evaluation via CoT-Aware Coreset Selection</h3>
+              <h3>TabletCraft: Bridging a 4,000-Year Cultural Gap with Bidirectional Akkadian NMT and Cuneiform Rendering</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Addresses the cost of continuous LLM evaluation by selecting a representative coreset of test cases instead of running full eval suites every iteration.</li>
-              <li>Calls out a &#x27;cold start&#x27; bottleneck in existing coreset methods, implying their approach targets faster ramp-up before selection becomes effective.</li>
-              <li>A pattern worth watching for teams running frequent regression benchmarks who want to cut eval turnaround time without losing coverage.</li>
+              <li>Targets a genuinely under-served NLP problem: half a million surviving cuneiform tablets that almost no modern reader can access, versus the usual English-centric benchmark churn.</li>
+              <li>Builds bidirectional neural machine translation between Akkadian and modern languages plus cuneiform rendering, rather than just transliteration.</li>
+              <li>A useful example of applying current NMT techniques to a low-resource, high-cultural-value language pair outside the standard benchmark treadmill.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.00014" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.02609" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Cost-Effective Automated Judging of Natural-Language Mathematical Proofs</h3>
+              <h3>MemArena: An Ego-Centric Benchmark for On-Device Agentic Personal Memory Assistants at Scale</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Tests whether cheap open-weight models can substitute for expensive frontier-model judges when grading math proofs against a ground-truth reference.</li>
-              <li>Directly relevant to anyone running LLM-as-judge pipelines who wants to cut per-eval cost without sacrificing reliability.</li>
-              <li>Framed around a concrete recurring cost problem — evaluating math-reasoning systems — rather than a generic capability claim.</li>
+              <li>Introduces an ego-centric benchmark specifically for on-device agentic personal-memory assistants handling private, activity-dense interpersonal conversations with open-weight models.</li>
+              <li>Calls out that existing memory benchmarks under-test the combination of activity density, ego-centric perspective, and long-horizon coherence together.</li>
+              <li>Directly applicable to local-first personal-memory assistant work: a ready-made eval axis for on-device memory quality beyond generic long-context benchmarks.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.00004" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.02613" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>MemoryForge: Synthesize Lifelong Memory for Human-Like LLM Agents</h3>
+              <h3>Evaluating OpenAI&#x27;s Privacy Filter: Cross-Lingual, Cross-Domain PII Detection Across 42 Benchmarks</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Critiques static, prompt-injected persona profiles as insufficient for human-like agent behavior in role-play and user-simulation settings.</li>
-              <li>Proposes synthesizing &#x27;lifelong memory&#x27; instead of static profiles — a structural alternative to stuffing a persona description into the system prompt.</li>
-              <li>Relevant to any persona-driven agent that currently relies on a fixed character sheet rather than accumulated memory.</li>
+              <li>First independent evaluation of OpenAI&#x27;s Privacy Filter (OPF), a compact 1.5B-parameter bidirectional PII detector, across 42 synthetic benchmarks spanning 22 languages and 5 domains.</li>
+              <li>Zero-shot F1 of 0.855 on AI4Privacy sets a concrete reference point for how well a small dedicated PII model performs versus larger general-purpose approaches.</li>
+              <li>Useful benchmark for anyone weighing build-vs-buy on PII redaction for pipelines handling sensitive text.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.00007" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AgentMemBench: A Systematic Benchmark for Evaluating Long-Term Memory Management Strategies in Conversational AI Agents</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Names finite context windows as the core bottleneck preventing coherent recall across thousand-turn conversations.</li>
-              <li>Introduces a unified, reproducible benchmark comparing five distinct memory-management strategies head-to-head rather than proposing a single method.</li>
-              <li>A ready-made evaluation harness for teams choosing between competing long-term-memory approaches for conversational agents.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.00009" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.02616" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -107,51 +71,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting Steve Yegge</h3>
+              <h3>Deploy local agents everywhere with LFM2.5-2.6B</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Liquid AI&#x27;s LFM2.5-2.6B targets on-device agentic AI (tool calling, multi-step workflows) via four post-training stages: SFT on agent data, teacher specialization, multi-domain distillation, and agentic RL inside real agent frameworks.</li>
+              <li>Runs at 220 tok/s on an Apple M5 Max and 113 tok/s on CPU within 2.5GB of memory, pretrained on roughly 34 trillion tokens with a 128K context window.</li>
+              <li>Beats models up to 4x its size on STEM and agentic eval suites (e.g. IFBench 59.17 vs. 34-56 for competitors) — a strong candidate for local tool-calling work.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/LiquidAI/lfm2-5-2-6b" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>New release of LLM adds support for reasoning traces, OpenAI Responses, server-side tools, and smarter logging</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>First-hand report that a self-built agent tool (&#x27;Gas Town&#x27;) worked well through Opus 4.6 but fell apart specifically on Opus 4.7.</li>
-              <li>Identifies a named failure mode — the &#x27;just two more things&#x27; tic — where the model keeps expanding scope instead of converging and finishing.</li>
-              <li>A concrete data point that model upgrades aren&#x27;t strictly monotonic for agentic tool-use: newer isn&#x27;t automatically better for long-running autonomous loops.</li>
+              <li>LLM 0.32 adds visible reasoning-trace display, OpenAI Responses API support, and server-side provider tools in one release — called the most significant update since the initial launch.</li>
+              <li>Redesigns the SQLite logging layer to be content-addressable, changing how prompts/responses get stored and deduplicated.</li>
+              <li>Practical for anyone scripting LLM calls from the CLI/Python who wants reasoning visibility and provider-side tool execution without hand-rolling it.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/4/steve-yegge/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/4/new-release-of-llm/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting David Crawshaw&#x27;s prompt</h3>
+              <h3>llm-anthropic 0.26</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A concrete, minimal prompt pattern for unattended maintenance: a nightly cron job that fetches upstream changes, rebases local changes, verifies the result, and swaps in the new version.</li>
-              <li>Demonstrates an &#x27;agent as janitor&#x27; use case — routine dependency/upstream sync handled autonomously instead of manually.</li>
-              <li>Worth testing as a template for keeping forked or vendored tools in sync automatically.</li>
+              <li>Adds three new model aliases enabled by LLM 0.32: claude-fable-5, claude-sonnet-5, and claude-opus-5.</li>
+              <li>Wires up server-side tools (WebSearch, WebFetch, CodeExecution, AnthropicMCP) through LLM&#x27;s -T flag or Python tools= parameter, making Anthropic&#x27;s hosted tools scriptable without custom plumbing.</li>
+              <li>A concrete signal that Anthropic is standardizing server-side tool execution as a first-class capability across its model lineup.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/3/david-crawshaw/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/4/llm-anthropic/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.221</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>PipeNetwork/minimax-h3-mlx</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>New VS Code &#x27;Focus view&#x27; collapses tool-activity noise into an expandable per-turn summary with a live running-tool indicator (toggle: Ctrl+Alt+F) — directly reduces clutter in agent-heavy workflows.</li>
-              <li>New sandbox `mode: &quot;mask&quot;` option for credential files on Linux is a concrete security/isolation improvement for sandboxed agent runs.</li>
-              <li>Both changes are immediately usable in a daily-driver Claude Code setup since they affect everyday agent supervision and credential safety.</li>
+              <li>Packages MiniMax-H3 (released two days prior) as an MLX port, letting the &#x27;general-purpose, omni-modal&#x27; model run locally on Apple Silicon.</li>
+              <li>Model accepts text, image, audio, and video input and can generate up to 15-second video clips with synchronized audio.</li>
+              <li>A notable case of a frontier omni-modal generation model getting a same-week local runtime, part of the broader trend of shrinking big models onto consumer hardware.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.221" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/4/minimax-h3-mlx/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-agent-sdk-python: v0.2.129</h3>
+              <h3>condense-json 1.1</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Follow-up release after integrating condense-json 1.0 into LLM surfaced new needs: the replacements object can now hold non-string values, used as structural (not just textual) replacements.</li>
+              <li>A concrete example of dogfooding driving fast iteration — the library matured directly from real integration work rather than speculative design.</li>
+              <li>Useful for anyone logging or transmitting large JSON blobs (e.g. tool-call payloads) who wants deduplication beyond simple string substitution.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Aug/3/condense-json/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.222</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Breaking change: the SDK now validates skill names strictly at connect time, rejecting parentheses, commas, control characters, wildcards, leading slashes, whitespace, and surrogate code points.</li>
-              <li>Wildcard/plugin-style patterns like `skills=[&quot;plugin:*&quot;]` are explicitly called out as affected — code using those needs review before upgrading.</li>
-              <li>Actionable for anyone building on the Agent SDK: audit skill-name strings before bumping to 0.2.129 to avoid a ValueError at connection time.</li>
+              <li>Fixes worktree-isolated sessions and their subagents being able to run destructive git commands against the main checkout - isolation now covers file edits and Bash in every session type.</li>
+              <li>Fixes PreToolUse auto-allow hooks bypassing tool restrictions specifically in background agent tasks, closing a permission-boundary gap for restrictive hook setups.</li>
+              <li>Both fixes are security-relevant for anyone running worktree-isolated or background-agent workflows and worth updating for promptly.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.129" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.222" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
