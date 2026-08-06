@@ -3,10 +3,13 @@ scrapers/*/pending_digest.json
 scrapers/*/digest_content.json
 scrapers/*/seen_articles_staged.json
 scrapers/venv/
-releases/*
-!releases/*.apk
 
 # /digest run snapshots (Part-1 pending pools cached for Part-2 analysis)
 # Canonical path is .digest_snapshots/; globs catch older/improvised/dated names.
 .digest_snapshot*/
 _snapshot*/
+
+# App binaries belong on GitHub Releases, never in the repo. The two APKs that used
+# to live here were Git-LFS-backed, so Pages published 134-byte LFS pointer stubs
+# with an APK content-type — anyone who clicked got a corrupt download.
+releases/
