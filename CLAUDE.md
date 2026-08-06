@@ -6,6 +6,10 @@ Static marketing and product site for Densanon LLC. Hosted on GitHub Pages at **
 
 Plain HTML/CSS/JS — no build step, no framework, no npm. `js/layout.js` handles shared header/footer injection.
 
+`.nojekyll` at the repo root turns Jekyll **off**. Keep it there. The site uses no Jekyll features (no front matter, no Liquid, no `_layouts`/`_includes`), but Jekyll silently deletes any file or directory whose name starts with `_` from the published site. That is not a build error — the deploy goes green and the files just 404. It already cost us `table-of-war/play/assets/nodes/_bg.jpg` and `.../ui/glyph/_map.json`.
+
+Consequence for anyone dropping in build output (e.g. the Table of War web demo under `table-of-war/play/`): `_`-prefixed assets are fine now, but only because `.nojekyll` exists. Deleting it re-breaks them silently.
+
 ## Key Files
 
 - `d-brief-version.json` — **Source of truth** for the current D-Brief app version. The mobile app fetches this on startup to check for updates. When releasing a new version, update `version`, `versionCode`, `releaseDate`, and `changelog` here.
