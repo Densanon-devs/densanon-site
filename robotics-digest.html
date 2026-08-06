@@ -17,121 +17,141 @@
       <div class="container">
         <div class="digest-date-badge">August 06, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s biggest story is DeepMind&#x27;s Gemini Robotics 2 release on Apptronik&#x27;s Apollo 2 humanoid, which nails whole-body coordination in the demo reel but lands the same week as a benchmark showing most humanoids still don&#x27;t reliably track their own body position. Alongside that, an exclusive report alleges labor trouble at cobot maker Collaborative Robotics. The rest of the pool is grassroots r/robotics build content: a VR-teleoperated semi-humanoid, DIY leg-gait math, a system ID tool, and practical actuator/sensor/video Q&amp;A from people building rovers and inspection robots.</p>
+        <p class="digest-intro">Today&#x27;s robotics research cluster is all about making foundation-model-driven perception and manipulation robust in the real world: VLA policies that know when they&#x27;re about to fail, cross-embodiment data mining at scale, and kitchen/UAV perception pipelines backed by hard benchmark numbers. On the industry side, capital and infrastructure are converging around autonomous vehicle fleets and industrialized construction, while a stray AI-math story — Claude Fable 5 cracking an 87-year-old conjecture — is a reminder that the same search-heavy capability driving these robotics gains is starting to turn up unexpected results outside robotics too.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>SAFECAST: Robust Failure Detection for VLA Policies with Contrast-Set Training and Calibration</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Combines hidden-state risk probes with functional conformal prediction and visual+language contrast-set perturbations to flag VLA policy failures under distribution shift (clutter, distractors, lighting, reworded instructions).</li>
+              <li>Delivers statistically significant ROC-AUC improvements over a state-of-the-art baseline on both real-world DROID rollouts and LIBERO simulation.</li>
+              <li>Sim-to-real calibration produces better failure probes than calibrating on real rollout data alone.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.04246" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>SiMDex: Mining Similar Egocentric Videos for Cross-Embodiment Dexterous Manipulation</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Three-layer recall-ranking-re-ranking pipeline mines task-relevant clips from a pool of roughly 32M egocentric human video samples.</li>
+              <li>Using just 1.49M mined samples (under 5% of the pool) lifted manipulation success rate from 47.7% to 61.1% versus a randomly-sampled baseline.</li>
+              <li>Operates in a morphology-agnostic action space and requires no changes to the VLA architecture or training process.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.04196" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Kitchen Robotic Manipulation utilizing Foundation Models</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Modular perception pipeline chains open-vocabulary detection, multi-view segmentation, and instance-aware 3D reconstruction using swappable foundation models (LLMDet, SAMv2, DINOv2, GeoTransformer).</li>
+              <li>Best configuration reached 89.12% ADI on a 20-scene cluttered/occluded kitchen benchmark.</li>
+              <li>Executed real sink-to-dishwasher transfer and cup-stacking tasks with no environment-specific retraining.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.04042" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Interpretable Fuzzy Inference for UAV Target Tracking Using Bounding-Box Geometry</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Derives continuous UAV yaw commands directly from YOLO bounding-box centroid, area, and aspect ratio via a compact 27-rule Takagi-Sugeno fuzzy system, avoiding deep nets or external localization.</li>
+              <li>Achieved 0.140° mean absolute error and 99.68% accuracy within ±1° tolerance across 6,169 motion-capture-labeled samples.</li>
+              <li>Lightweight enough for resource-constrained onboard compute, positioned as an interpretable alternative to data-hungry learned trackers.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.04121" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Claude Fable 5 AI finds a tiny formula that topples an 87-year-old math conjecture</h3>
+              <span class="digest-source">ScienceDaily Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Anthropic mathematician Levent Alpöge used Claude Fable 5 to find a 3D polynomial map with constant Jacobian determinant -2 that isn&#x27;t reversible, disproving the Jacobian conjecture in dimensions three and up.</li>
+              <li>The counterexample is short enough to fit in a single X post, even though the original conjecture (posed 1884, generalized 1939) had resisted mathematicians for over a century; the 2D case remains open.</li>
+              <li>The breakthrough came from searching an enormous space of polynomial mappings rather than constructing a long formal proof — a search-heavy pattern directly relevant to robotics discovery and planning problems.</li>
+            </ul>
+            <a href="https://www.sciencedaily.com/releases/2026/08/260804034634.htm" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Only 16.8% of humanoids know where their own body is...</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>Moove raises $250M to build infrastructure for autonomous vehicles</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>DeepMind released Gemini Robotics 2 this week, demonstrated on Apptronik&#x27;s Apollo 2 humanoid with whole-body coordination — walking, reaching, and grasping run as one continuous policy instead of separate walk/reach/grip routines, with no reset needed between steps (shown tying knots in trash bags and unscrewing lightbulbs).</li>
-              <li>The system was tested with two hand options (Sharpa and Inspire five-finger hands); reported dexterity task success rates range widely, from 92% on unscrewing a lightbulb down to 32% on sweeping with a dustpan.</li>
-              <li>The same week, a benchmark cited in the thread found only 16.8% of humanoid systems tested demonstrated reliable proprioception — knowing where their own body/limbs are in space — a sobering counterpoint to the polished demo reel.</li>
+              <li>$250M Series C led by Ion Pacific with Mubadala, Toyota&#x27;s Growth Fund, Woven Capital, and BlackRock participating, valuing Moove at $2.1B.</li>
+              <li>Funds &quot;Nests&quot; — robotics-first depots to charge, service, and orchestrate autonomous fleets — building on Moove&#x27;s existing fleet-ownership infrastructure.</li>
+              <li>Active Waymo depot partnerships in Phoenix and Miami, with a London expansion planned.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vgq0ho/only_168_of_humanoids_know_where_their_own_body_is/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/moove-raises-250m-to-build-infrastructure-for-autonomous-vehicles/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>EXCLUSIVE: Four Days After a Pay Complaint, Cobot Fired Its Only Woman in Sales</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>Avnet and Weston Robot partner to launch edge AI inspection platform</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Investigative report shared to r/robotics alleges Cobot (Collaborative Robotics, maker of the Proxie mobile manipulator robot) fired its only woman in sales just four days after she filed a pay complaint.</li>
-              <li>Framed as an &#x27;exclusive,&#x27; indicating original reporting rather than a company press release — a rare labor/HR story surfacing from inside a well-funded cobot startup instead of the usual product-launch coverage.</li>
-              <li>Lands amid a broader 2026 pattern of wage and labor disputes trailing high-profile robotics-startup hardware launches.</li>
+              <li>Avnet supplies an AMD Ryzen AI Embedded compute &quot;backpack&quot; for on-robot inference; Weston Robot integrates it onto mobile robot platforms with fleet-management software.</li>
+              <li>Targets complex industrial environments, enabling GPS-denied, cloud-independent autonomous inspection.</li>
+              <li>Positioned as a robots-as-a-service offering where new inspection tasks can be trained and deployed directly to the robot.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vg08qt/exclusive_four_days_after_a_pay_complaint_cobot/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Auto-generating walking gaits for legged robots is harder than it looks. Curious how others have approached this.</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Poster built real inverse kinematics for a legged-robot simulator, implementing a tripod gait for hexapods based on actual coxa/femur/tibia joint math rather than a canned animation.</li>
-              <li>The IK approach works reliably on a standard, symmetric leg layout but breaks down as soon as the leg configuration becomes asymmetric or non-standard.</li>
-              <li>Genuine technical thread soliciting how other builders have generalized gait generation beyond fixed leg geometries.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vgdym0/autogenerating_walking_gaits_for_legged_robots_is/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/avnet-and-weston-robot-partner-to-launch-edge-ai-inspection-platform/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Built a system ID + control design tool over the past year. Need real logged data to break it. Free analysis in return.</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>University of Florida opens new robotics lab dedicated to industrialized construction</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Builder spent roughly a year developing a system-identification and control-design tool and is now asking for real logged robot data to stress-test it, offering free analysis in return.</li>
-              <li>Framed as practical tooling for control engineers rather than a product pitch — the ask is for real-world data, not signups or sales.</li>
+              <li>Autodesk-fueled robotics lab launched to support UF&#x27;s new Industrialized Construction Engineering program.</li>
+              <li>Aims to address housing shortages and construction-labor declines through automation of building processes.</li>
+              <li>Part of a broader academic push to bring construction robotics research into applied engineering curricula.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vgvvjk/built_a_system_id_control_design_tool_over_the/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>We built a VR teleop setup where you move and our semi-humanoid follows. The interesting part isn&#x27;t the grab.</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Alicia-M is a semi-humanoid robot controlled via VR teleoperation: the operator moves naturally and the robot mirrors the motion directly, with no scripting or pre-coded trajectories.</li>
-              <li>Demonstrated task: the robot picks up a cup, pours from it, and sets it back down, driven live by the operator&#x27;s mirrored movement rather than a canned animation.</li>
-              <li>Posted as a team build showcase (r/robotics, Aug 6, 2026), positioning direct motion-mirroring as the core technical bet over more common scripted-grasp approaches.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vgwy78/we_built_a_vr_teleop_setup_where_you_move_and_our/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/university-of-florida-opens-new-robotics-lab-dedicated-to-industrialized-construction/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Experience with High Torque Motors like GIM6010-8?</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>Sarla Aviation adopts Siemens Xcelerator to accelerate eVTOL aircraft development</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Poster is comparing quasi-direct-drive (QDD) actuators in the ~5 Nm class for a robot build: GIM6010-8, CyberGear, Robstride 01, and CubeMars.</li>
-              <li>Leaning toward the GIM6010-8 specifically because it&#x27;s the cheapest of the four and has ODrive compatibility.</li>
-              <li>Practical actuator-selection thread useful for anyone building legged or arm robots on a budget.</li>
+              <li>Bengaluru-based eVTOL startup adopts the Siemens Xcelerator software portfolio to speed up aircraft development.</li>
+              <li>Targets next-generation electric vertical take-off and landing (eVTOL) aircraft for urban air mobility.</li>
+              <li>Part of a broader trend of urban air mobility startups leaning on established industrial design/simulation suites rather than building tooling in-house.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vgymvk/experience_with_high_torque_motors_like_gim60108/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/08/06/sarla-aviation-adopts-siemens-xcelerator-to-accelerate-evtol-aircraft-development/103956/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I need video transmission for my rover.</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>Why perception is the key to scaling industrial autonomy</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Builder is working on a small agricultural rover (15x20cm) that needs live video transmission for remote control and is asking for the most cost-effective option.</li>
-              <li>Rover specs given: drive motors rated at 170 rpm with 65mm-diameter wheels, implying a low top speed — so cost, not low-latency long-range video, is the binding constraint.</li>
+              <li>Argues that scaling industrial autonomy is now gated by perception quality — machine awareness, dynamic decision-making, and spatial precision — rather than raw motor-skill capability.</li>
+              <li>Frames multi-vehicle coordination at large scale as a perception problem as much as a control problem.</li>
+              <li>Relevant to any fleet-style autonomy deployment where the bottleneck has shifted from &quot;can it move&quot; to &quot;does it understand where everything is.&quot;</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vgyfsr/i_need_video_transmission_for_my_rover/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>How valuable is thermal imaging for autonomous inspection robots?</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Discussion on whether thermal imaging is worth adding to autonomous facility-inspection robots alongside standard cameras.</li>
-              <li>Cited use cases: spotting overheating components and electrical problems that regular visible-light cameras can&#x27;t catch.</li>
-              <li>Genuine buyer/builder research thread rather than a promotional post — a useful reference point for anyone spec&#x27;ing an inspection robot&#x27;s sensor payload.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vh18av/how_valuable_is_thermal_imaging_for_autonomous/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/why-perception-is-the-key-to-scaling-industrial-autonomy/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
