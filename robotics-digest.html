@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 05, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 06, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,107 +15,70 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 05, 2026</div>
+        <div class="digest-date-badge">August 06, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Regulation and safety dominate today&#x27;s roundup: the FCC&#x27;s new restrictions on foreign-made mobile robots are drawing industry reaction and an open-source proposal for a universal humanoid &#x27;kill switch,&#x27; while a new arXiv paper tackles the certification gap facing industrial humanoid robots head-on. Elsewhere, Zoox and the U.S. Navy both moved autonomous vehicles from prototype to deployment, Nvidia extended its Cosmos world models to robotics edge hardware, and fresh commentary questions whether humanoids can ever beat the economics of existing factory automation.</p>
+        <p class="digest-intro">Today&#x27;s biggest story is DeepMind&#x27;s Gemini Robotics 2 release on Apptronik&#x27;s Apollo 2 humanoid, which nails whole-body coordination in the demo reel but lands the same week as a benchmark showing most humanoids still don&#x27;t reliably track their own body position. Alongside that, an exclusive report alleges labor trouble at cobot maker Collaborative Robotics. The rest of the pool is grassroots r/robotics build content: a VR-teleoperated semi-humanoid, DIY leg-gait math, a system ID tool, and practical actuator/sensor/video Q&amp;A from people building rovers and inspection robots.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Light-Loco-Parkour: Versatile Perceptive Whole-Body Locomotion via Multi-Skill Distillation</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Proposes a whole-body humanoid locomotion system that distills multiple specialized skills into one versatile policy for moving through cluttered terrain.</li>
-              <li>Targets the gap between systems that track expressive whole-body motion without adapting to terrain, and systems that react to terrain but leave the arms and torso disconnected from the response.</li>
-              <li>Aims for humanoids that coordinate the whole body across obstacles rather than treating legs as the only terrain-aware part of the system.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.02653" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Semantic Haptic Feedback Enhances Dexterous Robotic Teleoperation</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Introduces a &#x27;semantic&#x27; haptic feedback approach for teleoperation that departs from trying to replicate high-fidelity real-world touch sensations.</li>
-              <li>Targets dexterous manipulation tasks, where existing high-fidelity haptic replication methods run into practical hardware and bandwidth limits.</li>
-              <li>Suggests conveying the meaning of a contact event, rather than its raw sensory fidelity, may be a more effective feedback channel for remote operators.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.02780" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Toward Certified Functional Safety for Industrial Humanoid Robots: The Fail-Passive Gap and a Feasibility Study</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Identifies a &#x27;fail-passive gap&#x27;: legged humanoid robots have no true passive-safe state the way a wheeled robot can simply stop, because balance itself requires active control.</li>
-              <li>Argues functional-safety certification, not locomotion or manipulation skill, is now the binding constraint on deploying humanoids in industrial settings.</li>
-              <li>Presents a feasibility study aimed at closing that certification gap, directly relevant as regulators increasingly scrutinize humanoid robots.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.02809" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>What Robotics Companies Think About the U.S. Foreign Robot Ban</h3>
-              <span class="digest-source">IEEE Spectrum Robotics</span>
+              <h3>Only 16.8% of humanoids know where their own body is...</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The FCC&#x27;s &#x27;Covered List,&#x27; which flags communications equipment as national-security threats, now includes mobile, networked robots weighing more than 2 kilograms.</li>
-              <li>Robotics companies are grappling with what counts as a &#x27;communicating&#x27; robot and how the rule will affect supply chains built around foreign components.</li>
-              <li>One of the first substantive industry-reaction pieces to a policy shift that could reshape sourcing for humanoid and mobile robot makers.</li>
+              <li>DeepMind released Gemini Robotics 2 this week, demonstrated on Apptronik&#x27;s Apollo 2 humanoid with whole-body coordination — walking, reaching, and grasping run as one continuous policy instead of separate walk/reach/grip routines, with no reset needed between steps (shown tying knots in trash bags and unscrewing lightbulbs).</li>
+              <li>The system was tested with two hand options (Sharpa and Inspire five-finger hands); reported dexterity task success rates range widely, from 92% on unscrewing a lightbulb down to 32% on sweeping with a dustpan.</li>
+              <li>The same week, a benchmark cited in the thread found only 16.8% of humanoid systems tested demonstrated reliable proprioception — knowing where their own body/limbs are in space — a sobering counterpoint to the polished demo reel.</li>
             </ul>
-            <a href="https://spectrum.ieee.org/fcc-covered-list-mobile-robots" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1vgq0ho/only_168_of_humanoids_know_where_their_own_body_is/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Zoox unveils production-ready robotaxi for U.S. expansion</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>EXCLUSIVE: Four Days After a Pay Complaint, Cobot Fired Its Only Woman in Sales</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Amazon-owned Zoox revealed its final production-ready robotaxi design ahead of a broader U.S. rollout.</li>
-              <li>The redesign specifically targeted rider comfort, suggesting Zoox is tuning for passenger experience as it moves from prototype to fleet-scale deployment.</li>
-              <li>Signals Zoox moving past R&amp;D demos toward actual commercial expansion in the crowded robotaxi race.</li>
+              <li>Investigative report shared to r/robotics alleges Cobot (Collaborative Robotics, maker of the Proxie mobile manipulator robot) fired its only woman in sales just four days after she filed a pay complaint.</li>
+              <li>Framed as an &#x27;exclusive,&#x27; indicating original reporting rather than a company press release — a rare labor/HR story surfacing from inside a well-funded cobot startup instead of the usual product-launch coverage.</li>
+              <li>Lands amid a broader 2026 pattern of wage and labor disputes trailing high-profile robotics-startup hardware launches.</li>
             </ul>
-            <a href="https://www.therobotreport.com/zoox-unveils-production-ready-robotaxi-for-u-s-expansion/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1vg08qt/exclusive_four_days_after_a_pay_complaint_cobot/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Auto-generating walking gaits for legged robots is harder than it looks. Curious how others have approached this.</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Poster built real inverse kinematics for a legged-robot simulator, implementing a tripod gait for hexapods based on actual coxa/femur/tibia joint math rather than a canned animation.</li>
+              <li>The IK approach works reliably on a standard, symmetric leg layout but breaks down as soon as the leg configuration becomes asymmetric or non-standard.</li>
+              <li>Genuine technical thread soliciting how other builders have generalized gait generation beyond fixed leg geometries.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1vgdym0/autogenerating_walking_gaits_for_legged_robots_is/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>U.S. Navy picks Blue Water Autonomy to use autonomous vessels for deep ocean surveys</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Built a system ID + control design tool over the past year. Need real logged data to break it. Free analysis in return.</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The U.S. Navy selected Blue Water Autonomy to supply autonomous vessels for deep-ocean survey missions.</li>
-              <li>Blue Water&#x27;s ships are designed to operate unmanned on the open ocean for months at a stretch, making long-duration autonomy the core capability being bought.</li>
-              <li>A military contract win is a strong validation signal for a maritime autonomy startup, mirroring the funding pattern already seen in ground and air robotics.</li>
+              <li>Builder spent roughly a year developing a system-identification and control-design tool and is now asking for real logged robot data to stress-test it, offering free analysis in return.</li>
+              <li>Framed as practical tooling for control engineers rather than a product pitch — the ask is for real-world data, not signups or sales.</li>
             </ul>
-            <a href="https://www.therobotreport.com/u-s-navy-picks-blue-water-autonomy-to-use-autonomous-vessels-for-deep-ocean-surveys/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Humanoids won&#x27;t scale on factory floors until costs drop</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues the race to commercialize humanoids is real, but the industry has yet to prove it can beat the economics of the fixed automation manufacturers already run.</li>
-              <li>Frames cost, not capability, as the actual gating factor for humanoid adoption on factory floors.</li>
-              <li>A useful counterpoint to the steady drumbeat of humanoid funding and launch news, questioning whether the business case holds up.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/humanoids-wont-scale-on-factory-floors-until-costs-drop/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1vgvvjk/built_a_system_id_control_design_tool_over_the/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -125,39 +88,50 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>When expressive humanoid robots are awkward, people become wary -- brain study</h3>
-              <span class="digest-source">Hacker News Robotics</span>
+              <h3>We built a VR teleop setup where you move and our semi-humanoid follows. The interesting part isn&#x27;t the grab.</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A brain-imaging study found that when humanoid robots make socially awkward expressive movements, people show heightened wariness at a neural level.</li>
-              <li>Suggests the uncanny-valley effect on trust isn&#x27;t just self-reported discomfort -- it shows up in measurable brain responses to robot body language.</li>
-              <li>Relevant to any team designing expressive or social humanoid behavior, since it implies motion quality directly affects human trust.</li>
+              <li>Alicia-M is a semi-humanoid robot controlled via VR teleoperation: the operator moves naturally and the robot mirrors the motion directly, with no scripting or pre-coded trajectories.</li>
+              <li>Demonstrated task: the robot picks up a cup, pours from it, and sets it back down, driven live by the operator&#x27;s mirrored movement rather than a canned animation.</li>
+              <li>Posted as a team build showcase (r/robotics, Aug 6, 2026), positioning direct motion-mirroring as the core technical bet over more common scripted-grasp approaches.</li>
             </ul>
-            <a href="https://theconversation.com/when-expressive-humanoid-robots-are-awkward-people-become-wary-new-brain-study-288696" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1vgwy78/we_built_a_vr_teleop_setup_where_you_move_and_our/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Nvidia releases Cosmos 3 Edge for robotics</h3>
-              <span class="digest-source">Hacker News Robotics</span>
+              <h3>Experience with High Torque Motors like GIM6010-8?</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Nvidia released Cosmos 3 Edge, extending its Cosmos world-model family specifically for edge deployment in robotics.</li>
-              <li>Positions Nvidia to supply the foundation-model layer for robot perception and planning running directly on-device rather than in the cloud.</li>
-              <li>A major compute vendor pushing world models to the edge signals a shift in how robotics companies will source their AI stack.</li>
+              <li>Poster is comparing quasi-direct-drive (QDD) actuators in the ~5 Nm class for a robot build: GIM6010-8, CyberGear, Robstride 01, and CubeMars.</li>
+              <li>Leaning toward the GIM6010-8 specifically because it&#x27;s the cheapest of the four and has ODrive compatibility.</li>
+              <li>Practical actuator-selection thread useful for anyone building legged or arm robots on a budget.</li>
             </ul>
-            <a href="https://huggingface.co/blog/nvidia/cosmos3edge" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1vgymvk/experience_with_high_torque_motors_like_gim60108/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NF humanoid disarm protocol: Fire-alarm protocol to stop humanoid robots</h3>
-              <span class="digest-source">Hacker News Robotics</span>
+              <h3>I need video transmission for my rover.</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An open-source project proposes a standardized &#x27;fire-alarm&#x27; style protocol to remotely disarm or stop humanoid robots in an emergency.</li>
-              <li>Framed as a simple, universal trigger to halt humanoid robots regardless of manufacturer or software stack, rather than a per-vendor safety feature.</li>
-              <li>Lands the same week as new FCC restrictions and academic functional-safety research, part of a broader push toward humanoid robot safety standards.</li>
+              <li>Builder is working on a small agricultural rover (15x20cm) that needs live video transmission for remote control and is asking for the most cost-effective option.</li>
+              <li>Rover specs given: drive motors rated at 170 rpm with 65mm-diameter wheels, implying a low top speed — so cost, not low-latency long-range video, is the binding constraint.</li>
             </ul>
-            <a href="https://github.com/humblelistener/NF_HDP" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1vgyfsr/i_need_video_transmission_for_my_rover/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>How valuable is thermal imaging for autonomous inspection robots?</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Discussion on whether thermal imaging is worth adding to autonomous facility-inspection robots alongside standard cameras.</li>
+              <li>Cited use cases: spotting overheating components and electrical problems that regular visible-light cameras can&#x27;t catch.</li>
+              <li>Genuine buyer/builder research thread rather than a promotional post — a useful reference point for anyone spec&#x27;ing an inspection robot&#x27;s sensor payload.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1vh18av/how_valuable_is_thermal_imaging_for_autonomous/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
