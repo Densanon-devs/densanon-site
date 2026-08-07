@@ -37,7 +37,12 @@
   html, body { margin: 0; height: 100%; background: var(--felt); color: var(--paper);
     font-family: var(--f-ui); overflow: hidden; }
   #app { display: flex; flex-direction: column; height: 100%; position: relative; --hand-h: 120px; }
-  #fxlayer { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9; overflow: visible; }
+  /* #fxlayer lives INSIDE #board (see fxLayer()), in board-local pixels, so the camera carries the
+     attack arrows with the grid. It used to be viewport-fixed with coordinates snapshotted from
+     getBoundingClientRect() — a record of where the tile was ON SCREEN at the instant the arrow was
+     created. Pan or zoom during the ~500ms it is in flight and the board slid out from under it, so
+     the arrow visibly detached from both pieces. Sits above #intentfx (z 6). */
+  #fxlayer { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 7; overflow: visible; }
 
   /* HUD */
   /* the whole HUD is ONE horizontal bar (scrolls if it can't fit); medals live below it */
@@ -258,6 +263,8 @@
     transform: translateZ(0); backface-visibility: hidden; }
   /* combat tracer — a brief streak from an attacker's tile to the unit it hit, so a ranged/unseen shot
      reveals where it came from. Source end gets a pulse ring even if the shooter sits in fog. */
+  #boardwrap.panning { cursor: grabbing; }
+  #boardwrap.panning .cell { pointer-events: none; }   /* a drag must never end in a stray selection */
   .tracer { position: absolute; height: 3px; transform-origin: 0 50%; z-index: 7; pointer-events: none; border-radius: 2px;
     background: linear-gradient(90deg, rgba(255,90,55,0), #ff5a3b 45%, #ffd48a); box-shadow: 0 0 7px 1px rgba(255,90,55,.85);
     animation: tracerfade .8s ease-out forwards; }
@@ -326,8 +333,21 @@
   .ulk .ulk-hint { font: 500 13px var(--f-ui); color: #cabf9a; line-height: 1.55; margin: 0 14px; }
   /* remembered tile — solid fog fill greyed at heavy alpha so the dimmed terrain shows through */
   .fog.veil { filter: grayscale(.92) brightness(.5); opacity: .62; }
+  /* the reveal: a lifting cloud swells and thins out. z-index clears the terrain and the unit that is
+     being uncovered underneath, and pointer-events stay off — this is a leftover, not a live layer. */
+  .fog.fogout { z-index: 5; pointer-events: none; animation: fogout .8s cubic-bezier(.25,.6,.3,1) forwards; }
+  @keyframes fogout {
+    0%   { transform: scale(1);    opacity: 1; }
+    30%  { transform: scale(1.10); opacity: .92; }
+    65%  { transform: scale(1.26); opacity: .55; }
+    100% { transform: scale(1.45); opacity: 0; }
+  }
   /* card collection — a grid of little trading cards */
   .collgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); gap: 7px; margin: 4px 0 8px; }
+  /* NO paint-skipping here — `content-visibility` was tried and reverted: skipping paint for off-screen tiles
+     means a fast scroll outruns the renderer and you scroll into unpainted black, which is worse than
+     the load time it saved. `loading=lazy` on the faces was doing the real work anyway — it took the
+     collection from 1141ms of image decode to 446ms on its own. */
   /* cache / reward card options — centered in the container */
   .nodecards { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 10px 0 8px; }
   .nodecards .gridcard { flex: 1 1 78px; max-width: 150px; }   /* grow to share the space; 2 cards bigger, 3 still fit a row */
@@ -533,6 +553,17 @@
      glow so you can still pick your own units out of a crowd at a glance. */
   .counter.spent { filter: grayscale(.8) brightness(.6) drop-shadow(0 0 2.5px rgba(79,143,224,.5)); }
   .counter.disabled { filter: grayscale(.9) brightness(.55) drop-shadow(0 2px 2px rgba(0,0,0,.55)); }   /* EMP-bricked — dead weight */
+  /* Struck dead, still on the board for a beat. The piece is held at 0 HP through the damage number and
+     the screen shake before it is removed (see animateEvents), and this is what marks it as killed
+     rather than merely standing there: it goes ashen and starts to sink. Removal is what ends it, so
+     the animation deliberately does NOT run to nothing — a piece that faded out completely and then
+     lingered as an invisible tile would read as a rendering fault. */
+  .counter.dying { animation: unitdie .42s ease-in forwards; }
+  @keyframes unitdie {
+    0%   { filter: none; transform: none; }
+    22%  { filter: brightness(2.2) saturate(.2); }
+    100% { filter: grayscale(1) brightness(.45); transform: scale(.88) translateY(3px); opacity: .55; }
+  }
   .counter.disabled::after { content:''; position:absolute; inset:14%; border:1px dashed rgba(127,223,255,.7); border-radius:2px; }
   .loot { position: absolute; left: 12%; bottom: 16%; font-size: calc(var(--cell)*.28); line-height: 1;
     text-shadow: 0 1px 1px #000; }
@@ -580,7 +611,10 @@
   .uitoggle { padding: 3px 8px; font: 700 11px var(--f-head); letter-spacing: .3px; cursor: pointer;
     border: 1px solid #4f6f8a; border-radius: 5px; background: rgba(20,34,44,.7); color: #9cd0ee; }
   .uitoggle:active { transform: scale(.94); }
-  #board[data-ts] .legal::after { content: ''; position: absolute; pointer-events: none; z-index: 3; animation: pulse 1s infinite; }
+  /* z-index 6, not 3. The fog layer is 4 and the lifting-fog animation is 5, so a legal-move marker on a
+     tile with fog spilling in from an unexplored neighbour was drawn UNDERNEATH that spill — exactly the
+     tiles at the edge of your vision, which is where you most need to see how far you can go. */
+  #board[data-ts] .legal::after { content: ''; position: absolute; pointer-events: none; z-index: 6; animation: pulse 1s infinite; }
   #board[data-ts="A"] .legal::after { inset: 7%; border: 2.5px solid var(--ts); border-radius: 4px;
     box-shadow: 0 0 6px var(--ts), inset 0 0 6px var(--tsf); }
   #board[data-ts="B"] .legal::after { inset: 12%; border: 3px solid var(--ts); border-radius: 3px; filter: drop-shadow(0 0 2px var(--ts));
@@ -691,6 +725,9 @@
   #intentfx .iatk { stroke: rgba(255,74,52,.9); fill: none; stroke-linecap: round;
     filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.8)); }
   #intentfx .iatkhead { fill: rgba(255,74,52,.95); filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.8)); }
+  /* the conditional follow-up — dashed and dimmer, because it only lands if the first target dies */
+  #intentfx .iatk.inext { stroke: rgba(255,74,52,.55); stroke-dasharray: 5 4; }
+  #intentfx .iatkhead.inext { fill: rgba(255,74,52,.6); }
   /* A raider robbing your HQ costs you salvage, not hit points — so it gets the coin colour rather than
      the blood one, and no damage badge (its projected damage is genuinely zero). */
   #intentfx .isteal { stroke: rgba(232,198,90,.95); fill: none; stroke-linecap: round; stroke-dasharray: 7 4;
@@ -722,7 +759,19 @@
      opacity pulse (compositor-only) rather than an animated shadow, so it costs nothing to leave on. */
   #end.done { filter: drop-shadow(0 0 6px rgba(240,201,63,.85)) drop-shadow(0 0 12px rgba(240,201,63,.45));
     animation: pulse 1.3s infinite; }
-  .dmg { position: fixed; transform: translate(-50%,0); color:#ffb0a0; font-weight:700;
+  /* the 3-second hover breakdown (see showHoverCard). Viewport-fixed on purpose: it is anchored to
+     where the POINTER is, not to the board, and it is dismissed by any movement — so it has nothing to
+     drift away from. z-index clears the hand (400) and sits under the overlays (10+ … 39 lifted). */
+  #hovercard { position: fixed; z-index: 8; pointer-events: none; max-width: 260px;
+    padding: 9px 11px; border-radius: 6px; background: rgba(18,19,14,.97);
+    border: 1px solid #5a5238; box-shadow: 0 6px 20px rgba(0,0,0,.75);
+    color: #e9e3d1; font-size: 12px; line-height: 1.45;
+    animation: hcin .12s ease-out both; }
+  #hovercard .hcchips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+  #hovercard .hcnote { margin-top: 6px; color: #d7a89a; }
+  @keyframes hcin { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+  /* absolute, not fixed — it is a child of #board so the camera carries it (see floatDmg) */
+  .dmg { position: absolute; transform: translate(-50%,0); color:#ffb0a0; font-weight:700;
     font: 700 15px var(--f-num); pointer-events:none; z-index:30; animation: floatup .8s forwards;
     text-shadow: 0 1px 2px #000, 0 0 3px #000; }
   .dmg.kill { color: var(--gold); font-size: 17px; }
@@ -910,10 +959,21 @@
   .upgwrap .fcard { filter:drop-shadow(0 0 11px rgba(240,200,60,.8)) drop-shadow(0 4px 10px rgba(0,0,0,.45)); }
   /* .fcbox scopes the framed-card layers so BOTH the big .fcard views and the hand's .card.framed share them */
   /* translateZ(0): same clipped-box-inside-a-zoomed-overlay repaint fix as .plaque .pc-av — see the
-     note there. This one matters most, because the card view is opened constantly during a run. */
-  .fcbox .fc-art { position:absolute; z-index:1; overflow:hidden; border-radius:7px; transform:translateZ(0);
+     note there. This one matters most, because the card view is opened constantly during a run.
+     `contain: paint` rides alongside it and does the same clip containment WITHOUT forcing a layer,
+     which matters for the exemption directly below. */
+  .fcbox .fc-art { position:absolute; z-index:1; overflow:hidden; border-radius:7px; transform:translateZ(0); contain:paint;
     background:radial-gradient(120% 90% at 50% 12%, color-mix(in srgb, var(--cat) 60%, #0b0d08), #090b07 78%);
     display:flex; align-items:center; justify-content:center; box-shadow:inset 0 0 22px rgba(0,0,0,.55); }
+  /* WebKit paints a composited descendant OUTSIDE an ancestor's filter — so on any card that is being
+     GREYED, the art window kept its full colour and the card did not read as unplayable at all. This
+     is macOS/iOS only; Chromium filters the layer correctly, which is why it never showed on Windows.
+     Reproduced in Safari with the five cases below and the same markup: with translateZ(0) the greyed
+     card stays orange, with it removed (or replaced by contain:paint alone) it greys.
+     So: drop the layer exactly where a filter sits above it. `contain: paint` above still gives these
+     the clip containment the momentum-scroll fix was for, and a greyed card is inert anyway. */
+  .card.unaff .fc-art, .gridcard.seen .fc-art, .gridcard.disabled .fc-art,
+  .collcard.seen .fc-art, .removedcard .fc-art { transform: none; }
   .fcbox .fc-art .fc-glyph { display:block; width:40%; height:40%; color:color-mix(in srgb, var(--cat) 72%, #f2ecd0); opacity:.9; filter:drop-shadow(0 2px 4px rgba(0,0,0,.6)); }
   .fcbox .fc-art .fc-glyph svg { width:100%; height:100%; display:block; }
   .fcbox .fc-art img { width:100%; height:100%; object-fit:cover; }
@@ -1249,9 +1309,16 @@
      Cards / Army viewers (declared earlier in the DOM) open ON TOP of it. */
   #ovGeneral { z-index: 8; }
   /* analog VU-meter volume dial (Settings → Sound) — star bezel + numbered face + brass needle */
-  .vgauge { position: relative; width: 100%; max-width: 244px; margin: 6px auto 2px;
+  /* `touch-action: none` is what makes a trackpad drag work. Without it the browser is free to read a
+     two-axis drag over this element as a pan/swipe gesture, take the stream, and fire `pointercancel` —
+     which ends the drag after the first update, leaving the needle wherever the initial click put it.
+     A mouse drag was unaffected, which is exactly why this looked like "maybe the trackpad". */
+  .vgauge { touch-action: none; user-select: none; -webkit-user-select: none;
+    position: relative; width: 100%; max-width: 244px; margin: 6px auto 2px;
     aspect-ratio: 2.019; touch-action: none; cursor: pointer; filter: drop-shadow(0 3px 7px rgba(0,0,0,.5)); }
-  .vgauge .vg-f { position: absolute; left: 5%; top: 22%; width: 89.5%; height: 74%; z-index: 1;
+  /* pointer-events: none so the DIAL is always the event target — _gaugeLocal reads offsetX/offsetY
+     against it, and a hit landing on this plate instead would measure from the wrong box. */
+  .vgauge .vg-f { pointer-events: none; position: absolute; left: 5%; top: 22%; width: 89.5%; height: 74%; z-index: 1;
     background: url(assets/ui/gauge/face.png) center/100% 100% no-repeat; }
   .vgauge .vg-b { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; z-index: 2; pointer-events: none; }
   .vgauge .vg-p { position: absolute; left: 50%; top: 70%; width: 0; height: 0; z-index: 3; pointer-events: none; }
@@ -1267,7 +1334,15 @@
   .overlay h1 { color: #f2ead0; font: 700 21px var(--f-head); letter-spacing: .6px;
     text-transform: uppercase; margin: 0 0 4px; }
   .overlay p { color: #f2ead0; margin: 4px 0 16px; text-align: center; font-size: 13px; }
-  .choice { width: 100%; max-width: 420px; text-align: left; margin: 7px 0; padding: 16px 19px;
+  /* `margin: 7px auto`, not `7px 0`. `.oframe` is a column flexbox with `align-items: stretch`, and a
+     stretched item that also carries a max-width does NOT centre — it sits flush against the start
+     edge. On a phone the frame is narrower than 420px so nothing showed, but once the desktop pass
+     grew `.oframe` past 800px every panel in the Outpost, camp, event and How-to-Play keyboard block
+     hugged the left rail with a third of the frame empty beside it, while the <p> and the button rows
+     (no max-width, so they fill) stayed centred — which is what made it read as broken rather than
+     narrow. Auto cross-axis margins centre a flex item and collapse to 0 when there is no room, so
+     the phone layouts are untouched. */
+  .choice { width: 100%; max-width: 420px; text-align: left; margin: 7px auto; padding: 16px 19px;
     border: none; border-radius: 0; box-shadow: none; color: #e9e3d1;
     --bt: 14px; --cn: 30px;
     background:
@@ -1507,6 +1582,16 @@
   .dboard .dbrow.me .dbn { color: var(--gold); font-weight: 700; }
   .dboard .dbs { font-family: var(--f-num); color: #f1ead2; flex: none; }
   /* the day's twists — the line a player taps to read what today actually is */
+  /* keyboard reference in How to Play */
+  /* Replay the tutorial — a footer action under the key list. The width lives here rather than in an
+     inline style so the desktop rule below can actually win; inline always beats a stylesheet. */
+  .helpfoot { max-width: 340px; margin: 16px auto 2px; }
+  .keytable { display: flex; flex-direction: column; gap: 3px; margin-top: 4px; }
+  .keyrow { display: flex; align-items: baseline; gap: 10px; }
+  .keyrow kbd { flex: 0 0 auto; min-width: 96px; font: 600 11px var(--f-num); color: #f1ead2;
+    background: #26241a; border: 1px solid #423f2d; border-bottom-width: 2px; border-radius: 4px;
+    padding: 2px 6px; text-align: center; }
+  .keyrow span { flex: 1; }
   .dtwist { cursor: pointer; line-height: 1.45; margin-top: 2px; }
   .dtwist:active { opacity: .7; }
   .daily-art { display: block; width: 100%; max-width: 132px; height: auto; margin: 8px auto 0; object-fit: cover;
@@ -1926,8 +2011,25 @@
   @media (min-width: 2000px) and (pointer: fine) { .achv { max-width: 1080px; } }
   /* How to Play and Settings are the same shape of problem — a tall stack of `.choice` blocks. */
   @media (min-width: 1100px) and (pointer: fine) {
-    #ovHelp .oframe > .choice, #ovSettings .oframe > .choice { break-inside: avoid; }
+    /* `.helpcols > .choice`, not `.oframe > .choice`. The topics live inside the .helpcols wrapper,
+       so the child combinator never matched a single one of them and `break-inside` stayed `auto` —
+       which let the column break land in the MIDDLE of a topic. The tail half then started the right
+       column with its top border cropped off: the reported "cuts the top off of a container that gets
+       put at the top of the right column". */
+    #ovHelp .helpcols > .choice, #ovSettings .oframe > .choice { break-inside: avoid; }
     #ovHelp .helpcols { column-count: 2; column-gap: 24px; }
+    /* A block that starts a column must not inherit the 7px top margin the flow gave it, or the two
+       columns start at different heights. */
+    #ovHelp .helpcols > .choice:first-child { margin-top: 0; }
+    /* The keyboard table is the widest thing in here and does not want to be a 900px-wide slab, and
+       Replay the tutorial reads as a footer action — it belongs under the keys, not above them. */
+    #ovHelp .keyblock { max-width: 620px; margin-inline: auto; }
+    /* Two up. NOT `column-count` — `.keytable` is a flex container, and multi-column has no effect on
+       one, so the keys stayed in a single tall stack with half the panel empty beside them. */
+    #ovHelp .keyblock .keytable { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px 22px; }
+    /* Replay the tutorial is a footer action, not a headline: at the desktop zoom the shipped 340px
+       plate rendered over 500px wide and dwarfed everything above it. */
+    #ovHelp .helpfoot { max-width: 210px; }
     /* Settings as a command panel: a fixed two-column grid of equal cells rather than a reflowing
        list, with the wide blocks (campaign switch, debug) spanning the full width. */
     #ovSettings .setcols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 20px; align-items: start; }
@@ -2186,7 +2288,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-Q0u28Erk.js"></script>
+  <script type="module" crossorigin src="./assets/index-T_F70n3p.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2222,7 +2324,8 @@
   <button id="deckBtn" class="edgebtn ibtn deck" onclick="showDeck()" aria-label="Deck"><img src="assets/ui/btn/deck.png" alt="Deck"></button>
   <button id="end" class="edgebtn ibtn end" onclick="endTurn()" aria-label="End Turn"><img src="assets/ui/btn/end_turn.png" alt="End Turn"></button>
   <div id="unitinfo"></div>   <!-- selected-unit card, above the Deck button -->
-  <svg id="fxlayer" xmlns="http://www.w3.org/2000/svg"></svg>   <!-- attack arrows -->
+  <!-- attack arrows are NOT declared here any more: fxLayer() creates #fxlayer as a child of #board so
+       the camera pans and zooms them with the grid. A second element with this id would shadow it. -->
 </div>
 
 <div id="ovRoster" class="overlay" onclick="if(event.target.id==='ovRoster')this.classList.remove('show')"></div>
@@ -2257,7 +2360,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.45';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.47';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2300,6 +2403,10 @@ let threatSet = new Set();    // "x,y" tiles enemies can hit next turn
 let firingSet = new Set();    // "x,y" tiles an enemy could stand on AND shoot from — the ground you can deny
 let intentList = [];          // enemy intent telegraph: {id, from, to, kind, shot} — see forecast_intents()
 let cellPx = 22;
+// Battle-open curtain: while true, renderBoard() draws EVERY tile as unexplored fog regardless of what
+// you can actually see. Held for a beat at the start of a battle, then dropped — the reveal then runs
+// through the ordinary fog-lift animation, so the fight opens by being uncovered.
+let _openFog = false, _openFogT = 0, _openFogWatch = 0;
 let minCellPx = 22;   // dynamic zoom-out floor: the cell size at which the whole map/fog rectangle fits the screen
 const HAND_CLEAR = 128;   // the hand fans up over the board's bottom edge — keep the whole grid clear of it
 
@@ -2581,8 +2688,11 @@ const Sfx = (() => {
     // units — silhouettes, not the 32 classes
     move_infantry: r => noise(0.13, 0.21, 1500, 0, r),
     move_vehicle:  r => { tone(88, 0.20, 'sawtooth', 0.10, 132, 0, r); noise(0.18, 0.09, 700, 0, r); },
-    move_heavy:    r => { tone(52, 0.34, 'sawtooth', 0.16, 44, 0, r); noise(0.30, 0.11, 420, 0, r);
-                          knock(190, 0.10, 0.10, 4, 0.14, r); },
+    // 0.68s, doubled along with the glide it is timed against — the slide is meant to last exactly as
+    // long as the engine note, so lengthening one without the other would break the pairing. Stretched
+    // by DURATION, not by rate: rate would have dropped a 52Hz sawtooth to 26Hz and made it inaudible.
+    move_heavy:    r => { tone(52, 0.68, 'sawtooth', 0.16, 44, 0, r); noise(0.60, 0.11, 420, 0, r);
+                          knock(190, 0.10, 0.10, 4, 0.14, r); knock(190, 0.10, 0.07, 4, 0.42, r); },
     unit_deploy:   r => { knock(280, 0.07, 0.20, 4, 0, r); tone(330, 0.09, 'square', 0.12, 550, 0.03, r);
                           tone(560, 0.08, 'square', 0.08, 680, 0.08, r); },
     fire_light:    r => { noise(0.07, 0.34, 4200, 0, r, 'highpass'); knock(240, 0.05, 0.22, 3, 0, r); },
@@ -2973,19 +3083,95 @@ async function confirmRetreat() {
 const GAUGE_DEF = { fL:5, fT:22, fW:89.5, fH:74, pL:50, pT:86.5, nlPct:34, hbPct:3, rmin:-164, rmax:-19, nd:'needle_arrow', nz:'mid' };
 function gaugeCfg(){ try { const v = localStorage.getItem('dc_gauge_cfg'); if (v) return Object.assign({}, GAUGE_DEF, JSON.parse(v)); } catch(e){} return Object.assign({}, GAUGE_DEF); }
 function _gaugeAngle(v, c){ c = c || gaugeCfg(); return c.rmin + (c.rmax - c.rmin) * Math.max(0, Math.min(100, v)) / 100; }
-let _dragGauge = null;
+// The CHANNEL being dragged ('sfx' / 'mus'), never the element.
+//
+// It used to hold the node. Anything that re-renders the Settings panel mid-drag replaces that node, and
+// every remaining pointermove then wrote to a detached ghost: the needle froze wherever the first click
+// put it while the drag went on invisibly underneath. The very first pointer gesture of a session does
+// exactly that — setFullscreen() re-arms on it and calls showSettings() — so the dial was reliably dead
+// on the first drag you ever made. Resolving the live element each move survives any re-render.
+let _dragCh = null;
+// The dial's true on-screen origin, captured at pointerdown. See _gaugeDrag: it is the one measurement
+// that lets a pointer event landing ANYWHERE be converted into dial coordinates without asking
+// getBoundingClientRect, which cannot be trusted inside Settings' `zoom`.
+let _dragOrigin = null;
 function volGauge(ch, pct, disabled){
   return `<div class="vgauge${disabled?' dis':''}" data-ch="${ch}" data-v="${pct}">
     <div class="vg-f"></div><img class="vg-b" src="assets/ui/gauge/bezel.png" alt="">
     <div class="vg-p"><img class="vg-n" alt=""></div></div>`;
 }
+function _gaugeEl(ch){ return ch ? document.querySelector('.vgauge[data-ch="' + ch + '"]') : null; }
+// Where the pointer is in the DIAL'S OWN coordinate space, or null if it cannot be worked out locally.
+//
+// This is the whole fix for "the dial doesn't follow the drag on a Mac". The angle used to be measured
+// between a pivot derived from getBoundingClientRect() and the pointer's clientX/clientY — which only
+// works if those two are in the same coordinate space. Settings is CSS-`zoom: 1.5` on desktop, and
+// under zoom WebKit reports the rect UNZOOMED while the pointer stays in true viewport coordinates.
+// Measured in Safari: a 244x121 dial reports a 246x123 rect whose own centre hit-tests to the heading
+// ABOVE it. So the pivot was tens of pixels from where you were actually pointing, the angle was
+// nonsense, and the value pinned to an end of its range — which reads exactly like a dead drag.
+// Chromium reports the rect zoomed (366x181 for the same dial), so it worked there and only there,
+// which is why this looked like a trackpad problem for three builds.
+//
+// offsetX/offsetY are relative to the event target in that element's own space, so they never cross the
+// zoom boundary. Walking offsetLeft/offsetTop up to the dial converts a hit on a child into dial space.
+// Total zoom applied to `el` by itself and every ancestor. `zoom` does not inherit as a computed value,
+// so each level contributes independently and they multiply.
+function _cumZoom(el){
+  let z = 1;
+  for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
+    const v = parseFloat(getComputedStyle(n).zoom);
+    if (v && isFinite(v) && v > 0) z *= v;
+  }
+  return z > 0 ? z : 1;
+}
+function _gaugeLocal(g, e){
+  let t = e.target;
+  if (!t || !(t === g || g.contains(t)) || e.offsetX === undefined) return null;
+  let x = e.offsetX, y = e.offsetY;
+  while (t && t !== g) { x += t.offsetLeft; y += t.offsetTop; t = t.offsetParent; }
+  return t === g ? { x, y } : null;
+}
 function _gaugeDrag(e){
-  const g = _dragGauge; if (!g) return;
+  const g = _gaugeEl(_dragCh); if (!g) return;
   const c = gaugeCfg();
-  const r = g.getBoundingClientRect();
-  const px = r.left + r.width*(c.pL/100), py = r.top + r.height*(c.pT/100);
+  // Measured in both engines, at the dial's VISUAL centre inside Settings' `zoom: 1.5`:
+  //
+  //             offsetX   offsetWidth   rect.width   actual visual width
+  //   Chromium    183         244           366              366
+  //   WebKit      184         246           246              368
+  //
+  // So offsetX is in VISUAL units in both — but neither offsetWidth (layout, both) nor rect.width
+  // (visual in Chromium, layout in WebKit) can be paired with it portably. The visual size has to be
+  // derived: layout size x the cumulative zoom of the ancestor chain, which is right on both.
+  // The scale would cancel out of an angle if it applied to the whole expression, but it does not —
+  // it applies to the PIVOT and not to offsetX — so getting it wrong tilts every reading.
+  const k = _cumZoom(g);
   const cx = e.touches?e.touches[0].clientX:e.clientX, cy = e.touches?e.touches[0].clientY:e.clientY;
-  let a = Math.atan2(cy-py, cx-px) * 180/Math.PI;
+  let loc = _gaugeLocal(g, e);
+  // CALIBRATE, once, on the way in. A pointerdown lands ON the dial, so offsetX/offsetY give its position
+  // in dial space AND clientX/clientY give the same point in viewport space — subtract them and you have
+  // the dial's true visual origin. Every later event can then be converted with plain arithmetic no
+  // matter what it targets.
+  //
+  // This is what makes the drag survive: the moment the Settings panel re-renders (which it does on the
+  // first pointer gesture of a session), pointer capture is lost and the moves target whatever happens to
+  // be under the cursor — so `loc` is null for the rest of the drag and the old code fell back to
+  // getBoundingClientRect, which under zoom is exactly the measurement that was wrong to begin with.
+  if (loc && cx !== undefined) _dragOrigin = { x: cx - loc.x, y: cy - loc.y };
+  else if (!loc && _dragOrigin && cx !== undefined) loc = { x: cx - _dragOrigin.x, y: cy - _dragOrigin.y };
+
+  let dx, dy;
+  if (loc) {
+    dx = loc.x - g.offsetWidth  * k * (c.pL/100);
+    dy = loc.y - g.offsetHeight * k * (c.pT/100);
+  } else {
+    // Nothing to calibrate from (a move with no prior press). The rect is the only thing left.
+    const r = g.getBoundingClientRect();
+    dx = cx - (r.left + r.width*(c.pL/100));
+    dy = cy - (r.top + r.height*(c.pT/100));
+  }
+  let a = Math.atan2(dy, dx) * 180/Math.PI;
   if (a > 150) a -= 360;
   const v = Math.max(0, Math.min(100, (a - c.rmin) / (c.rmax - c.rmin) * 100));
   g.dataset.v = v;
@@ -2994,7 +3180,8 @@ function _gaugeDrag(e){
   if (g.dataset.ch === 'sfx') Sfx.setSfx(v/100); else if (g.dataset.ch === 'mus') Sfx.setMusic(v/100);
 }
 document.addEventListener('pointermove', _gaugeDrag);
-document.addEventListener('pointerup', () => { _dragGauge = null; });
+document.addEventListener('pointerup', () => { _dragCh = null; _dragOrigin = null; });
+document.addEventListener('pointercancel', () => { _dragCh = null; _dragOrigin = null; });
 function sizeGaugeNeedle(g, c){
   c = c || gaugeCfg();
   // offsetWidth, NOT getBoundingClientRect(). The settings panel is CSS-zoomed on desktop, and
@@ -3020,7 +3207,15 @@ function wireGauges(){
   document.querySelectorAll('.vgauge').forEach(g => {
     sizeGaugeNeedle(g, c);
     requestAnimationFrame(() => sizeGaugeNeedle(g, gaugeCfg()));   // re-measure after layout
-    g.onpointerdown = e => { if (g.classList.contains('dis')) return; _dragGauge = g; _gaugeDrag(e); e.preventDefault(); };
+    g.onpointerdown = e => {
+      if (g.classList.contains('dis')) return;
+      _dragCh = g.dataset.ch;
+      // Explicit capture keeps the whole gesture pointed at this element even if the pointer leaves it
+      // or the panel re-renders underneath. Wrapped because a detached node throws.
+      try { g.setPointerCapture(e.pointerId); } catch (_) {}
+      _gaugeDrag(e);
+      e.preventDefault();
+    };
   });
 }
 // ── in-app gauge tuner (Settings → Debug) — scale/move the dial + needle live ──
@@ -3157,6 +3352,8 @@ function showSettings() {
       <div class="d" style="margin:2px 0 8px;line-height:1.5">Review every art surface: unlock all progression/collection, and instant-win battles to blitz through nodes, bosses and variants.</div>
       <button class="setbtn dbg" onclick="debugUnlockAll()">Unlock everything</button>
       ${(S && S.board) ? `<button class="setbtn dbg" onclick="debugWin()">Instant-win this battle ▸</button>` : ''}
+      ${(S && S.board) ? ((_cmdTarget()) ? `<button class="setbtn dbg" onclick="debugPromote()">★ Promote ${_cmdLabel()} one rank ▸</button>`
+        : `<button class="setbtn dbg" disabled>★ Promote a unit — select one on the board first</button>`) : ''}
       ${(S && (S.mode === 'map' || S.board)) ? `<button class="setbtn dbg" onclick="closeOv('ovSettings');showRunForecast()">🗺 Run forecast — bosses, elites &amp; jump to any node ▸</button>` : ''}
     </div>` : ''}
     </div>
@@ -3212,6 +3409,26 @@ async function debugWin() {
   closeOv('ovSettings');
   const r = await api('/api/debug_win', {});
   render(r);
+}
+// The label for the currently selected unit, so the promote button names its target rather than saying
+// "the selected unit" and leaving you to remember which one that was.
+function _cmdLabel() {
+  const u = _cmdTarget();
+  if (!u) return 'unit';
+  const info = CLASS_INFO[u.cls] || { n: u.cls };
+  return `${u.name || info.n}${u.lvl > 1 ? ` (rank ${u.lvl})` : ''}`;
+}
+// DEBUG: rank the selected unit up one step. It goes through the same promotion path a kill takes, so
+// the gain persists into the roster exactly as an earned rank does — which is what makes it permanent
+// rather than a stat edit that evaporates at the end of the battle.
+async function debugPromote() {
+  const u = _cmdTarget();
+  if (!_debugToolsAllowed() || !u) return;
+  const r = await api('/api/debug_promote', { unit_id: u.id });
+  if (r.ok === false) { toast(r.msg); Sfx.play('ui_error'); return; }
+  closeOv('ovSettings');
+  Sfx.play('acquire'); haptic(40);
+  await afterAction(r);            // the promote event animates like any other
 }
 // ── DEBUG: run forecast ─────────────────────────────────────────────────────────────────────────
 // The whole run laid out — which boss waits at the top of each act, which elite variant sits on which
@@ -3338,8 +3555,9 @@ function render(state) {
   if (freshBattle) {   // new battle: refit zoom, drop stale selection, recentre on your camp
     _lastBattleSig = bsig;
     lastBoardW = S.board.width;
-    cancelSelState();
+    cancelSelState(); _lastCmd = null;   // nothing from the last battle is selectable in this one
     fitCell();
+    openFogCurtain();
     _prevCpHold = null;                   // don't toast a control-point "change" on battle entry
   }
   // control-point feedback: holding a battlefield ◆ point grants +1 max CP — call it out when it flips.
@@ -3921,15 +4139,22 @@ function runBake(){
 // Card layers: art window (gradient + %-sized category glyph) behind, then the face image —
 // pre-baked assets/cards/<id>.webp (browser-managed, scales to any card count), falling back
 // to a runtime canvas bake (faceMiss) if that file isn't present.
-function framedInner(c, w){
+function framedInner(c, w, lazy){
   const frame = frameFor(c), F = FRAMES[frame] || FRAMES.common;
   const cat = CAT_COLOR[c.cat] || '#7a7458';
   const glyph = (CAT_GLYPH[c.cat] || '').replace('width="1em" height="1em"', 'width="100%" height="100%"');
   const pc = r => `left:${(r[0]*100).toFixed(2)}%;top:${(r[1]*100).toFixed(2)}%;width:${((r[2]-r[0])*100).toFixed(2)}%;height:${((r[3]-r[1])*100).toFixed(2)}%`;
   const cid = _faceCid(c); _cardData[cid] = c;
   const src = c.id ? `assets/cards/${cid}.webp` : 'assets/cards/__nobake__.webp';   // <id>[_up].webp; missing → canvas fallback via faceMiss
+  // `lazy` is for the long scrolling GRIDS (collection, deck tuning), never the hand or a card view.
+  // Measured on the full collection: 93 faces cost 1141ms of image DECODE alone — the markup itself
+  // builds in 23ms, so essentially all of "the collection takes a while to render" was decoding ninety
+  // pictures at once, most of them scrolled well out of sight. loading=lazy defers everything outside
+  // the viewport (in-view images still load eagerly, so nothing visible is delayed) and decoding=async
+  // keeps whatever does decode off the critical path.
+  const defer = lazy ? ' loading="lazy" decoding="async"' : '';
   return `<div class="fc-art" style="${pc(F.art)};--cat:${cat}"><span class="fc-glyph">${glyph}</span></div>
-    <img class="fc-face" src="${src}" data-cid="${cid}" onerror="faceMiss(this)" alt="">`;
+    <img class="fc-face" src="${src}" data-cid="${cid}" onerror="faceMiss(this)"${defer} alt="">`;
 }
 function frameCardHTML(c, w){
   w = w || 250;
@@ -3944,7 +4169,7 @@ function framedTile(c, onclick, opts){
   opts = opts || {};
   const badge = opts.count > 1 ? `<div class="fc-badges"><span class="temp">×${opts.count}</span></div>` : '';
   const up = opts.up ? `<span class="fc-up">+</span>` : '';
-  return `<div class="gridcard fcbox ${opts.dim||''}"${onclick?` onclick="${onclick}"`:''}>${framedInner(c, GRID_CARD_W)}${badge}${up}</div>`;
+  return `<div class="gridcard fcbox ${opts.dim||''}"${onclick?` onclick="${onclick}"`:''}>${framedInner(c, GRID_CARD_W, opts.lazy)}${badge}${up}</div>`;
 }
 function cardDetailHTML(c){
   const cp = c.cp != null ? c.cp : c.cost;
@@ -4068,7 +4293,7 @@ let _catCards = {};                        // flat id→card map for the collect
 function cardCell(c){                       // one card tile in the collection grid
   if (!c.owned && !c.seen) return `<div class="gridcard"><img src="assets/ui/card_locked.png" alt="locked" style="width:100%;height:100%;display:block"></div>`;
   // owned → full colour; seen-from-an-enemy but not owned → revealed, greyed out
-  return framedTile(c, `showCatCard('${c.id}')`, { dim: c.owned ? '' : 'seen' });
+  return framedTile(c, `showCatCard('${c.id}')`, { dim: c.owned ? '' : 'seen', lazy: true });
 }
 let _catUp = false;
 function showCatCard(id, up){
@@ -4141,7 +4366,7 @@ function shopDeckPick(mode){
   const cards = (p.deck||[]).slice().sort((a,b)=>(RARITY_ORDER[a.rarity]-RARITY_ORDER[b.rarity])||a.name.localeCompare(b.name));
   const grid = cards.map(c=>{
     const ok = usable(c) && afford;
-    return framedTile(c, `shopPick('${mode}','${c.id}')`, { count: c.n, up: c.up, dim: ok ? '' : 'disabled' });
+    return framedTile(c, `shopPick('${mode}','${c.id}')`, { count: c.n, up: c.up, dim: ok ? '' : 'disabled', lazy: true });
   }).join('');
   const title = mode==='upgrade' ? '⬆ Upgrade a card' : '✕ Remove a card';
   const hint = mode==='upgrade' ? `Tap a card to upgrade it — ${siEm('salvage')}${cost} each.` : `Tap a card to scrap it and thin your deck — ${siEm('salvage')}${cost}.`;
@@ -4908,10 +5133,17 @@ function renderBoard() {
       const src = cellAt.get(it.from[0] + ',' + it.from[1]);
       if (src && src.u) ghosts.set(it.to[0] + ',' + it.to[1], src.u);
     }
-    if (it.shot) incoming.set(it.shot.id, (incoming.get(it.shot.id) || 0) + it.shot.dmg);
+    // `next` is what this attacker turns to once `shot` has killed its target. Counted the same way, so
+    // the piece it moves on to shows the damage coming for it instead of being drawn as safe right up
+    // until the blow lands.
+    for (const sh of [it.shot, it.next]) if (sh) incoming.set(sh.id, (incoming.get(sh.id) || 0) + sh.dmg);
   }
-  const clsArr = [], innerArr = [];
-  for (const c of b.cells) {
+  const clsArr = [], innerArr = [], fogArr = [];
+  // The battle opens under a closed board: every tile is drawn as unexplored fog for a beat, then the
+  // curtain drops and your ground is revealed through the same animation any other reveal uses. The
+  // fight starts by being uncovered rather than by simply being there.
+  const cells = _openFog ? b.cells.map(c => ({ x: c.x, y: c.y, t: null, vis: false, u: null })) : b.cells;
+  for (const c of cells) {
     const terr = c.t ? 't-' + c.t : 't-none';
     const dark = (c.t && c.t !== 'void' && !c.vis) ? ' dark' : '';   // only REMEMBERED terrain greys; never void/fog (else the darkened void outlines the map shape)
     let cls = 'cell ' + terr + dark, glyph = '';
@@ -4994,6 +5226,11 @@ function renderBoard() {
     }
     clsArr.push(cls + hl);
     innerArr.push(`${glyph}${stormfx}${fogFor(c)}${objring}${tele}`);
+    // How covered this tile is: 2 unexplored, 1 remembered-under-veil, 0 clear. A reveal is any DECREASE.
+    // The old test — "the markup had a .fog and now it does not" — only caught tiles that ended up
+    // COMPLETELY clear, and almost none do: a freshly revealed tile still carries fog spilling in from
+    // its neighbours, so the common case (walk forward, ground opens up) never animated at all.
+    fogArr.push((c.t == null || c.t === 'void') ? 2 : (c.vis ? 0 : 1));
   }
   // incremental paint: rebuild the whole board only when the grid itself changes (new battle / resize);
   // otherwise mutate ONLY the cells whose class or contents actually changed. On a ~900-tile act-2 map
@@ -5006,16 +5243,54 @@ function renderBoard() {
     board.innerHTML = b.cells.map((c, i) => `<div class="${clsArr[i]}" data-x="${c.x}" data-y="${c.y}" onclick="tapCell(${c.x},${c.y})">${innerArr[i]}</div>`).join('');
     renderBoard._els = [...board.querySelectorAll('.cell')];
   } else {
-    const oc = cache.cls, oi = cache.inner;
+    const oc = cache.cls, oi = cache.inner, of = cache.fog;
     for (let i = 0; i < b.cells.length; i++) {
+      const c = b.cells[i];
       const el = els[i]; if (!el) continue;
       if (clsArr[i] !== oc[i]) el.className = clsArr[i];
-      if (innerArr[i] !== oi[i]) el.innerHTML = innerArr[i];
+      if (innerArr[i] !== oi[i]) {
+        // Ground being REVEALED is the single most informative thing that happens on this board, and it
+        // used to happen between two frames with no cue at all — the fog was simply not there any more.
+        // The outgoing fog is kept and played out, so the reveal is something you can watch and locate.
+        const lifting = of && fogArr[i] < of[i];   // this tile got MORE revealed than it was
+        el.innerHTML = innerArr[i];
+        if (lifting) fogLift(el, oi[i], c.x, c.y);
+      }
     }
   }
-  renderBoard._cache = { sig, cls: clsArr, inner: innerArr };
+  renderBoard._cache = { sig, cls: clsArr, inner: innerArr, fog: fogArr };
   // No scroll to preserve any more: the view is the camera, and re-rendering cells cannot disturb it.
   drawIntents(showIntent ? intentList : []);
+}
+
+// Play the fog off a tile that has just been revealed: the cloud swells a little, then goes.
+//
+// It re-mounts the tile's OWN outgoing fog markup rather than a generic puff, because the fog is a
+// windowed slice of a per-set sheet — each tile shows its own piece of a continuous cloud, and a stand-in
+// would visibly be the wrong picture. The element is a leftover: it is already gone from the model, takes
+// no pointer events, and removes itself when the animation ends (with a timeout backstop, since
+// animationend does not fire if the tile is re-rendered out from under it).
+function fogLift(el, oldHTML, x, y) {
+  if (_reducedMotion()) return;
+  const t = document.createElement('template');
+  t.innerHTML = oldHTML;
+  // `.fog.fill` is the full-tile cloud — the one that covers unexplored ground and, at lower opacity,
+  // veils remembered ground. Prefer it over a bare `.fog`, which on a revealed tile is only the wisps
+  // spilling in from its neighbours and would animate a sliver instead of the tile.
+  const fog = t.content.querySelector('.fog.fill') || t.content.querySelector('.fog');
+  if (!fog) return;
+  fog.classList.add('fogout');
+  // A few tiles open at once when a unit walks forward. A small deterministic stagger keeps them from
+  // popping in lockstep, which reads as one rectangular flash rather than fog clearing.
+  const step = ((x * 7 + y * 13) % 4) * 55;
+  if (step) fog.style.animationDelay = step + 'ms';
+  el.appendChild(fog);
+  const gone = () => fog.remove();
+  fog.addEventListener('animationend', gone, { once: true });
+  setTimeout(gone, 1400 + step);   // backstop: animationend never fires if the tile is re-rendered
+}
+function _reducedMotion() {
+  return !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 }
 
 // The telegraph's arrows: a dashed path to the tile each enemy is heading for, and a solid red one from
@@ -5053,6 +5328,9 @@ function drawIntents(list) {
     const steal = it.kind === 'steal';
     if (it.shot) arrow(cen(it.to || it.from), cen(it.shot.at),
                        steal ? 'isteal' : 'iatk', steal ? 'istealhead' : 'iatkhead', w + 0.6);
+    // The follow-up, drawn thinner: it only happens if the first target actually dies, so it is a
+    // consequence rather than a promise and should not read as loudly as the shot that causes it.
+    if (it.next) arrow(cen(it.to || it.from), cen(it.next.at), 'iatk inext', 'iatkhead inext', Math.max(1.5, w * 0.7));
   }
   svg.innerHTML = out.join('');
 }
@@ -5109,6 +5387,28 @@ function layoutHand() {
     el.classList.toggle('focus', Math.round(d) === 0);
   });
 }
+// Close the board, then open it. Re-entrant: a second battle starting inside the pause replaces the
+// first curtain rather than stacking two timers that would fight over the flag.
+const OPEN_FOG_MS = 1000;
+function openFogCurtain() {
+  if (_reducedMotion()) { _openFog = false; return; }
+  clearTimeout(_openFogT); clearInterval(_openFogWatch);
+  _openFog = true;
+  // The mission briefing opens over the battle at the same moment. The hold used to run underneath it,
+  // so by the time you had read the brief and closed it the board was already open and the reveal had
+  // happened behind the panel — the one moment it exists to be watched. Wait for the panel to go, THEN
+  // start counting. A battle with no briefing starts its hold on the first tick, as before.
+  _openFogWatch = setInterval(() => {
+    if (_overlayUp()) return;
+    clearInterval(_openFogWatch); _openFogWatch = 0;
+    _openFogT = setTimeout(() => {
+      _openFog = false;
+      // The cache still holds the all-fogged frame, so this render diffs against it and every tile you
+      // can see lifts through the normal animation — no separate opening effect to keep in step with it.
+      try { renderBoard(); } catch (e) { console.error('[fog] curtain', e); }
+    }, OPEN_FOG_MS);
+  }, 120);
+}
 function handLowered() {
   return document.getElementById('app').classList.contains('hand-peek');
 }
@@ -5127,6 +5427,12 @@ function cardDown(e, i) {
   _cardGesture = { i, el, pos, pid: e.pointerId, x: e.clientX, y: e.clientY,
                    axis: null, dx: 0, dy: 0, focus0: handFocus, min: handLowered() };
   const g = _cardGesture;
+  // Capture from the FIRST event. It used to wait until a drag had travelled 8px and picked an axis,
+  // which left a window where a fast flick — a trackpad throws these constantly — could leave the card
+  // before capture existed. The pointerup then landed on some other element, cardUp() never ran for
+  // this card, and the gesture was stranded: #hand kept its `lifting`/`dragging` classes and the card
+  // kept its inline transform, which is the stuck, glitched hand.
+  try { el.setPointerCapture(e.pointerId); } catch (_) {}
   g.lpTimer = setTimeout(() => {                          // hold still → open the big card
     if (_cardGesture === g && !g.axis && !g.min) { g.longPressed = true; showCardFull(i); }
   }, 420);
@@ -5139,7 +5445,6 @@ function cardMove(e, i) {
     if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;     // wait for a clear direction
     clearTimeout(g.lpTimer);                              // a drag cancels the long-press
     g.axis = Math.abs(dy) > Math.abs(dx) ? 'y' : 'x';
-    try { g.el.setPointerCapture(g.pid); } catch (_) {}   // keep events as the finger leaves the card
     if (g.axis === 'y') { $('#hand').classList.add('lifting'); g.el.classList.add('lift'); }
     else $('#hand').classList.add('dragging');
   }
@@ -5156,15 +5461,27 @@ function cardMove(e, i) {
   g.el.style.opacity = String(1 - up / 520);
 }
 function cardCancel() { if (_cardGesture) { clearTimeout(_cardGesture.lpTimer); cardReset(_cardGesture); } _cardGesture = null; }
+// Backstop. Pointer capture dies with the element that holds it, so a hand re-render mid-drag (the
+// board animates, renderHand() rebuilds the fan) destroys g.el and no pointerup can ever reach it.
+// Nothing else would clear the gesture, and the next drag would start on top of a half-finished one.
+// When cardUp() has already run this sees a null gesture and does nothing.
+window.addEventListener('pointerup', () => { if (_cardGesture) cardCancel(); });
+window.addEventListener('pointercancel', () => { if (_cardGesture) cardCancel(); });
 function cardReset(g) {
   $('#hand').classList.remove('lifting', 'dragging');
   if (g.el) { g.el.classList.remove('lift'); g.el.style.opacity = ''; }
   handDrag = 0; layoutHand();
 }
 function cardUp(e, i) {
-  const g = _cardGesture; _cardGesture = null;
-  if (!g || g.i !== i) return;
+  const g = _cardGesture;
+  if (!g) return;
+  _cardGesture = null;
   clearTimeout(g.lpTimer);
+  try { g.el.releasePointerCapture(g.pid); } catch (_) {}
+  // Ending on a DIFFERENT card used to return here having already nulled the gesture — so nothing
+  // ever removed the lift classes or the inline transform, and the hand stayed visibly broken until
+  // the next full re-render. Reset it instead of walking away from it.
+  if (g.i !== i) { cardReset(g); return; }
   $('#hand').classList.remove('lifting', 'dragging');
   g.el.classList.remove('lift'); g.el.style.opacity = '';
   if (g.longPressed) { handDrag = 0; layoutHand(); return; }   // long-press already opened the big card
@@ -5422,7 +5739,20 @@ function _inContact(id) {
   return S.board.cells.some(c => c.u && !isMine(c.u) && !c.u.stale
     && Math.max(Math.abs(c.x - me.x), Math.abs(c.y - me.y)) === 1);
 }
-function deselectCmd() { cmd = null; cmdOpts = {moves:new Set(), attacks:new Set(), aim:new Set(), ap:0}; setHandPeek(false); }
+// `_lastCmd` outlives the deselect. Opening any panel calls _dropCmd(), so by the time Settings has
+// rendered there is no selection left for the debug Promote button to name — it read "select one on the
+// board first" no matter which unit you had just clicked. Remembering the outgoing id costs nothing and
+// is validated against the live board before use, so a stale one simply resolves to nothing.
+let _lastCmd = null;
+function deselectCmd() { if (cmd !== null) _lastCmd = cmd; cmd = null; cmdOpts = {moves:new Set(), attacks:new Set(), aim:new Set(), ap:0}; setHandPeek(false); }
+// The unit a debug action should act on: the live selection, or the one the panel-opening deselect just
+// took away. Re-looked-up every time, so a dead or departed unit is never actionable.
+function _cmdTarget() {
+  const id = cmd || _lastCmd;
+  if (!id || !S || !S.board) return null;
+  const c = S.board.cells.find(x => x.u && x.u.id === id);
+  return (c && (c.u.side === 'you' || c.u.side === 'hq_you')) ? c.u : null;
+}
 
 // ── fullscreen immersion ───────────────────────────────────────────────────────────────────────
 // The Fullscreen API covers every shell this ships in: browser, the Capacitor webview, and the Tauri
@@ -5538,8 +5868,22 @@ async function reselect(id) {
 }
 
 async function play() {
-  const hi = sel;
-  const r = await api('/api/play', {hand_index: sel, targets: picked});
+  const hi = sel, tgts = picked;
+  // The target is DECLARED the moment we get here — every path into play() has either collected the
+  // last target or needed none. So the aim prompt, its cancel button and the lit target tiles have
+  // nothing left to offer, and they go now.
+  //
+  // They used to survive the whole animation. cancelSelState() ran at the END of this function, and
+  // even then it only cleared the STATE — nothing redrew the prompt until render(), which
+  // afterAction() reaches only in its `finally`, after `await animateEvents(...)`. So an ordnance card
+  // left a "cancel" button sitting over its own shell flight, offering to call off something that had
+  // already resolved.
+  //
+  // The state is captured first because cancelSelState() nulls both of these, and the API call still
+  // needs them.
+  cancelSelState();
+  renderBoard(); renderPrompt();
+  const r = await api('/api/play', {hand_index: hi, targets: tgts});
   actionToast(r.msg);
   if (r.ok === false) { Sfx.play('ui_error'); haptic(40); }
   else {
@@ -5549,7 +5893,6 @@ async function play() {
     // the played card left the hand → shift the kept-★ indices so the star stays on the same card
     retain = new Set([...retain].filter(x => x !== hi).map(x => x > hi ? x - 1 : x));
   }
-  cancelSelState();
   await afterAction(r);   // renders, plays events, then any popup + win/defeat
 }
 
@@ -5587,10 +5930,36 @@ function enemySkipOff() {
 // _deferResult used to stay set with the board half-stepped — End Turn hidden, no overlay, no way to act.
 // That is the hard version of "it lingers on the enemy turn". Now every exit reconciles to the
 // authoritative state, and a failure to even do that falls back to a full resync.
+// Adopt everything about the new state EXCEPT the board — the CP gauge, the hand, troops, salvage, the
+// command gauge — and repaint those panels now.
+//
+// The cost is PAID the moment the card resolves, so that is when the interface has to say so. It did
+// not: render() is the only thing that updates the HUD and the hand, and afterAction() reaches it in
+// its `finally`, AFTER `await animateEvents(...)`. So playing a 3-CP ordnance left the gauge showing
+// the old total and the spent card still sitting in the fan for the entire shell flight, and then
+// everything snapped at once when the dust settled — the numbers arriving as a surprise after the
+// event they belonged to.
+//
+// The BOARD is deliberately excluded. Stepping it forward one event at a time is the replay's whole
+// job, and adopting the final board here would give away every blow before it played. Keeping the same
+// board OBJECT also matters: animateEvents mutates its cells in place.
+//
+// `result` is held back for the same reason — afterAction defers the win/defeat overlay until the last
+// blow has landed, and a HUD that already knew the outcome would undercut that.
+function adoptOffBoard(r) {
+  const st = (r && (r.state || r)) || null;
+  if (!st || !st.board || !S || !S.board) return;      // not a battle response — nothing to split
+  const { board: _drop, result: _hold, ...rest } = st;
+  S = { ...S, ...rest };
+  renderHud(); renderHand();
+}
 async function afterAction(r) {
   _deferResult = true;
   const enemyPlays = (r.events || []).some(e => e.side === 'enemy');   // only lock while the enemy actually acts
   if (enemyPlays) { turnBusy = true; disarmEnd(); updateEndBtn(); enemySkipOn(); }   // hide End Turn during enemy play
+  // Only for YOUR actions. On the enemy phase the costs being settled are theirs, and pre-announcing
+  // what their turn did to your hand before you have watched it happen is the same spoiler as the board.
+  else if (r.ok !== false) adoptOffBoard(r);
   try {
     await animateEvents(r.events, r);   // step the board through each event, one at a time
   } catch (e) {
@@ -5617,19 +5986,98 @@ async function afterAction(r) {
 // mutate the board model for one event, re-render, flash it, pause — then the next.
 // (Previously the board snapped to the final state first, so everything looked
 //  simultaneous. Now it's decision → display → decision → display.)
+// ── how a piece gets from one tile to the next ───────────────────────────────────────────────────
+//
+// Moves used to be a teleport: the model changed, renderBoard() ran, and the piece was simply somewhere
+// else, with its cue firing at the instant of departure.
+//
+// Foot and light units HOP — up, across, down — and the cue and the tile flash fire on the LANDING,
+// because that is the moment the move actually happens to the board.
+//
+// Heavy things do not hop. They GLIDE, at constant speed, and their cue starts as they set off with the
+// slide timed to the length of that cue — so the engine note and the travel are the same event rather
+// than a noise followed by a movement. move_heavy is a 0.34s synth voice (tone .34 / noise .30 / a knock
+// at .14), which is where 340 comes from; the others are listed for the same reason even though only the
+// heavy one drives a duration.
+//
+// `heavy` is the same test that already picked the cue, so the pieces that sound heavy are the ones that
+// move heavy, with no second definition to drift from it.
+const MOVE_FX = {
+  heavy:    { cue: 'move_heavy',    ms: 680 },
+  vehicle:  { cue: 'move_vehicle',  ms: 200 },
+  infantry: { cue: 'move_infantry', ms: 130 },
+};
+const HOP_MS = 920;
+function moveKind(sig) {
+  if (/armor|siege|walker|tank|heavy|mech/i.test(sig)) return 'heavy';
+  if (/vehicle|drone|fast|raider|rider/i.test(sig)) return 'vehicle';
+  return 'infantry';
+}
+function animateMove(cell, from, sig, side, flash) {
+  const kind = moveKind(sig), fx = MOVE_FX[kind], heavy = kind === 'heavy';
+  // theirs is mixed back so a six-unit advance does not swamp your own moves
+  const opts = side === 'you' ? undefined : { gain: 0.7 };
+  const cue = () => Sfx.play(fx.cue, opts);
+  const board = $('#board');
+  const src = (from && board) ? board.querySelector(`.cell[data-x="${from[0]}"][data-y="${from[1]}"]`) : null;
+  const piece = cell.querySelector('.counter') || cell.firstElementChild;
+  const dx = src ? src.offsetLeft - cell.offsetLeft : 0;
+  const dy = src ? src.offsetTop - cell.offsetTop : 0;
+  // No source tile, nothing to move, no Web Animations (jsdom), or motion turned down: keep the old
+  // behaviour exactly — cue and flash at once, piece already in place.
+  if (!piece || !piece.animate || (!dx && !dy) || _reducedMotion()) { cue(); flash(); return 0; }
+
+  if (heavy) { cue(); flash(); }             // it announces itself as it sets off
+  const dur = heavy ? fx.ms : HOP_MS;
+  const lift = Math.max(10, cellPx * 0.95);   // most of a tile — the arc has to read as a leap, not a bump
+  const frames = heavy
+    ? [{ transform: `translate(${dx}px,${dy}px)` },
+       { transform: 'translate(0px,0px)' }]
+    : [{ transform: `translate(${dx}px,${dy}px)`, offset: 0 },
+       { transform: `translate(${(dx / 2).toFixed(1)}px,${(dy / 2 - lift).toFixed(1)}px) scale(1.07)`, offset: .5 },
+       { transform: 'translate(0px,0px) scale(1)', offset: 1 }];
+  // The piece leaves its own tile mid-hop, so the tile has to out-rank its neighbours for the duration
+  // or the arc is drawn underneath whatever it passes over.
+  const z0 = cell.style.zIndex;
+  cell.style.zIndex = '30';
+  const restore = () => { cell.style.zIndex = z0; };
+  try {
+    piece.animate(frames, { duration: dur, easing: heavy ? 'linear' : 'cubic-bezier(.42,0,.4,1)' });
+  } catch (_) { cue(); flash(); restore(); return 0; }
+  // On a timer rather than on the animation's `finished` promise: a re-render mid-flight destroys the
+  // element, and the cue for a move that really happened must not go down with it.
+  setTimeout(() => { restore(); if (!heavy) { cue(); flash(); } }, dur);
+  return dur;   // the replay holds at least this long, or the next event tears the piece off mid-travel
+}
+
 // ── attack arrows: show what struck what (and how a blast fans out) ──
 const SVGNS = 'http://www.w3.org/2000/svg';
+// The arrows are drawn into an SVG that is a CHILD of #board, in board-local pixels — the same trick
+// showTracer() and drawIntents() use. Board-local means the camera transform on #board applies to them
+// for free: pan or zoom mid-flight and the arrow stays welded to the two tiles it connects. Viewport
+// coordinates could not do that; they froze the tiles' on-screen position at creation time, so moving
+// the camera during a shot slid the board out from under the arrow.
+function fxLayer() {
+  const board = $('#board'); if (!board) return null;
+  let svg = board.querySelector('#fxlayer');
+  if (!svg) { svg = document.createElementNS(SVGNS, 'svg'); svg.id = 'fxlayer'; board.appendChild(svg); }
+  svg.setAttribute('width', board.offsetWidth); svg.setAttribute('height', board.offsetHeight);
+  return svg;
+}
 function cellCenter(x, y) {
-  const cell = document.querySelector(`.cell[data-x="${x}"][data-y="${y}"]`);
+  const board = $('#board');
+  const cell = board && board.querySelector(`.cell[data-x="${x}"][data-y="${y}"]`);
   if (!cell) return null;
-  const r = cell.getBoundingClientRect();
-  return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+  return { x: cell.offsetLeft + cell.offsetWidth / 2, y: cell.offsetTop + cell.offsetHeight / 2 };
 }
 function drawArrow(a, b, opt) {
-  const layer = $('#fxlayer');
+  const layer = fxLayer();
   if (!layer || !a || !b) return;
   opt = opt || {};
-  const color = opt.color || '#ffd36a', w = opt.width || 3, dur = opt.dur || 460;
+  // Stroke and head are now board-local too, so they must scale with the grid or a zoomed-out board
+  // gets hairlines and a zoomed-in one gets slabs. Calibrated so cellPx 40 reproduces the old widths.
+  const k = Math.max(0.5, cellPx / 40);
+  const color = opt.color || '#ffd36a', w = (opt.width || 3) * k, dur = opt.dur || 460;
   const len = Math.hypot(b.x - a.x, b.y - a.y);
   if (len < 4) return;
   const g = document.createElementNS(SVGNS, 'g');
@@ -5672,7 +6120,9 @@ async function playBlast(ev) {
   const col = ev.you ? '#8fd0ff' : '#ff8a5a';
   Sfx.play('fire_launch');                                // it leaves the tube before it lands
   if (ev.from) drawArrow(cellCenter(ev.from[0], ev.from[1]), cen, { color: col, width: 3.4, dur: 500 });
-  else if (cen) drawArrow({ x: cen.x, y: cen.y - 74 }, cen, { color: col, width: 3.4, dur: 440 });  // ordnance from above
+  // ordnance from above — the drop height is board-local now, so it is measured in TILES rather than
+  // in a fixed 74 screen pixels that meant "two tiles" at one zoom level and "half a tile" at another
+  else if (cen) drawArrow({ x: cen.x, y: cen.y - cellPx * 1.85 }, cen, { color: col, width: 3.4, dur: 440 });
   await sleep(150);
   for (const t of (ev.tiles || [])) {                     // fan out to each thing it caught
     const tp = cellCenter(t[0], t[1]);
@@ -5703,6 +6153,32 @@ async function animateEvents(events, finalR) {
   // Now each event carries a WEIGHT and the same total is allocated in proportion. The turn takes as
   // long as it used to -- min(7500, 750/event) -- but a kill inside a busy turn gets ~600ms while the
   // distant shuffles get the 130ms floor. Tap-to-skip still drops the rest outright.
+  // Will this event be WATCHED? Replay time only buys something if you can see what it bought.
+  //
+  // Fog was already handled server-side — 46.5% of enemy events never reach the client at all. What was
+  // not handled is ground you can see but are not LOOKING at: off-camera movement was paced, and once a
+  // move cost at least a full hop animation, a turn spent seconds animating pieces outside the viewport.
+  // Shots, blasts and hits are always "seen" because the replay deliberately pans to them
+  // (camEnsureVisible); movement never pans, so a move off-camera is genuinely watched by nobody.
+  const _inView = (x, y) => {
+    const wrap = $('#boardwrap'), board = $('#board');
+    if (!wrap || !board) return true;                       // can't tell → assume yes, never skip blind
+    const el = board.querySelector('.cell[data-x="' + x + '"][data-y="' + y + '"]');
+    if (!el) return false;
+    const wr = wrap.getBoundingClientRect(), cr = el.getBoundingClientRect();
+    return cr.right > wr.left && cr.left < wr.right && cr.bottom > wr.top && cr.top < wr.bottom - HAND_CLEAR;
+  };
+  const willWatch = (ev, q) => {
+    if (!q) return true;
+    const c = S.board && S.board.cells.find(k => k.x === q[0] && k.y === q[1]);
+    if (c && c.vis === false) return false;                 // fogged ground: nothing to look at
+    if (ev.t === 'shot' || ev.t === 'blast' || ev.t === 'hit') return true;   // the camera is sent there
+    // BOTH ends. Testing only the destination meant a unit walking OUT of view was treated as unwatched
+    // and flicked past in 30ms — but you were looking straight at where it started, so it vanished off
+    // its tile with no travel at all, and whatever it did next came from a position you never saw it
+    // reach. A move is unwatched only when neither end of it is on screen.
+    return _inView(q[0], q[1]) || (!!ev.from && _inView(ev.from[0], ev.from[1]));
+  };
   const yours = (S.board ? S.board.cells.filter(c => c.u && c.u.side === 'you') : []).map(c => [c.x, c.y]);
   const nearYou = (q) => !!q && yours.some(o => Math.max(Math.abs(o[0] - q[0]), Math.abs(o[1] - q[1])) <= 3);
   // Cues with their own dwell (a boss line, a curse, a promotion) are not paced from this budget.
@@ -5792,6 +6268,9 @@ async function animateEvents(events, finalR) {
     // What was HIT, captured here because the model step below clears the unit off a fatal blow --
     // by the time the cue is chosen there is nothing left on the tile to ask.
     let hitSig = '';
+    let dyingCell = null;   // set on a fatal hit; the piece is not cleared until the cues have played
+    let moveDur = 0;        // how long this event's travel animation needs; the pace below waits for it
+    const watched = willWatch(ev, ev.to || ev.at);   // is anyone actually going to see this happen?
     if (ev.t === 'move' && ev.id != null) {
       const src = findUnit(ev.id), dst = cellAt(p[0], p[1]);
       if (dst) {
@@ -5813,7 +6292,12 @@ async function animateEvents(events, finalR) {
       if (tc && tc.u) {
         hitSig = (tc.u.cls || '') + ' ' + ((tc.u.tags || []).join(' '));   // BEFORE the tile is cleared
         tc.u.hp = Math.max(0, (tc.u.hp || 0) - (ev.dmg || 0));
-        if (ev.dead) tc.u = null;
+        // A kill used to clear the tile HERE, in the same model step as the damage — so the piece
+        // vanished on the very next renderBoard(), before the damage number floated and before the
+        // screen shook. The unit was simply gone and then the board shuddered at an empty tile, which
+        // read as a rendering glitch rather than as a death. Hold it on the board at 0 HP instead and
+        // let the cues play over it; the tile is cleared below, after they have.
+        if (ev.dead) { tc.u.dying = true; dyingCell = tc; }
       }
     } else if (ev.t === 'spawn') {
       const c = cellAt(p[0], p[1]);
@@ -5826,8 +6310,10 @@ async function animateEvents(events, finalR) {
     const cell = document.querySelector(`.cell[data-x="${p[0]}"][data-y="${p[1]}"]`);
     if (cell) {
       const cls = ev.t === 'hit' ? 'fx-hit' : ev.t === 'spawn' ? 'fx-spawn' : ev.t === 'heal' ? 'fx-heal' : 'fx-move';
-      cell.classList.add(cls);
-      setTimeout(() => cell.classList.remove(cls), per + 200);
+      // A hop lands AFTER its animation, and the tile flash belongs to the arrival, not the departure.
+      // Everything else still flashes the moment it happens.
+      const flash = () => { cell.classList.add(cls); setTimeout(() => cell.classList.remove(cls), per + 200); };
+      if (ev.t !== 'move') flash();
       if (ev.t === 'hit') {
         floatDmg(cell, ev.dmg, ev.dead);
         // a ranged hit on YOUR unit → streak from the attacker's tile so you can see where it came from
@@ -5853,12 +6339,8 @@ async function animateEvents(events, finalR) {
                  ev.side === 'you' ? undefined : { gain: 0.7 });
       }
       else if (ev.t === 'move') {
-        // Enemy movement used to be silent -- you watched the whole enemy turn play out with no sound
-        // at all. Theirs is mixed a little back so a six-unit advance does not swamp your own moves.
         const mu = cellAt(p[0], p[1]), msig = mu && mu.u ? (mu.u.cls || '') + ' ' + ((mu.u.tags || []).join(' ')) : '';
-        Sfx.play(/armor|siege|walker|tank|heavy|mech/i.test(msig) ? 'move_heavy'
-               : /vehicle|drone|fast|raider|rider/i.test(msig)   ? 'move_vehicle' : 'move_infantry',
-                 ev.side === 'you' ? undefined : { gain: 0.7 });
+        moveDur = animateMove(cell, ev.from, msig, ev.side, flash) || 0;
       }
       else if (ev.t === 'capture' || ev.t === 'steal') Sfx.play(ev.side === 'you' ? 'objective_tick' : 'objective_lost');
       // follow the action — pan the KILL to centre (so a death is never missed,
@@ -5867,13 +6349,32 @@ async function animateEvents(events, finalR) {
       // the tile was already on screen. Any other visible damage only pulls the camera when it is off
       // view, which also catches hazards (fire, gas, sludge) that arrive with no shot to pan on.
       const _dx = +cell.dataset.x, _dy = +cell.dataset.y;
-      if (ev.dead) camCenterOnCell(_dx, _dy, true);
-      else if (ev.t === 'hit' && ev.dmg > 0) camEnsureVisible(_dx, _dy, true);
+      // A death used to CENTRE the camera unconditionally — even on a unit already in plain view, so a
+      // kill two tiles off centre yanked the whole board across to put it in the middle. A death is not
+      // more worth looking at than a hit if you are already looking at it; what matters is whether you
+      // can see it at all. Both now go through the same "only if it is off screen" test.
+      if (ev.dead || (ev.t === 'hit' && ev.dmg > 0)) camEnsureVisible(_dx, _dy, true);
       // a beat for the camera to settle on the kill it just panned to. The death itself is already the
       // longest-weighted event in the turn, so this stays short rather than lingering twice.
-      if (ev.dead) await sleep(180);
+      // The death itself, in order: the damage number has floated and the screen has shaken over a piece
+      // that is still standing at 0 HP; hold a beat on that, then take it off the board.
+      if (ev.dead) {
+        await sleep(260);
+        if (dyingCell) { dyingCell.u = null; dyingCell = null; renderBoard(); }
+        await sleep(150);                    // and a shorter beat on the empty ground it left
+      }
     }
-    await sleep(per);
+    // Pacing is weighted, and movement is weighted LOWEST — distant shuffling gets as little as ~130ms.
+    // That is shorter than the travel animation, so on a busy turn the next event re-rendered the board
+    // and destroyed the piece mid-flight: a heavy unit's glide was cut off before it had visibly gone
+    // anywhere, which read as heavy units not sliding at all. So a move that will be WATCHED is given at
+    // least as long as its animation needs.
+    //
+    // A move nobody is looking at gets none of that. It still happens — the model steps, the board
+    // re-renders, the cue plays so an advance you can hear but not see still registers — it simply is
+    // not waited on. That matters most now the animations are long: without it a ten-move turn spent
+    // nine seconds on hops, most of them outside the viewport.
+    await sleep(watched ? Math.max(per, moveDur) : Math.min(per, 30));
   }
 }
 let _achQueue = [], _achBusy = false;
@@ -6011,14 +6512,21 @@ function showTracer(from, to) {
   board.appendChild(line); board.appendChild(src);
   setTimeout(() => { line.remove(); src.remove(); }, 820);
 }
+// Into #board in board-local pixels, for the same reason the attack arrows moved there: this number
+// floats for 800ms, and pinned to the viewport it slid off its own tile the moment the camera moved.
+// The replay pans the camera to follow a shot, so it was drifting on its own without any help.
 function floatDmg(cell, dmg, dead) {
-  const r = cell.getBoundingClientRect();
+  const board = $('#board'); if (!board || !cell) return;
   const d = document.createElement('div');
   d.className = 'dmg' + (dead ? ' kill' : '');
   d.textContent = dead ? '✕' : ('-' + dmg);
-  d.style.left = (r.left + r.width / 2) + 'px';
-  d.style.top = r.top + 'px';
-  document.body.appendChild(d);
+  d.style.left = (cell.offsetLeft + cell.offsetWidth / 2) + 'px';
+  d.style.top = cell.offsetTop + 'px';
+  // Type size is board-local now, so it has to track the grid or it is unreadable zoomed out and
+  // enormous zoomed in. The 15/17px defaults are what cellPx 40 produces.
+  const k = Math.max(0.55, cellPx / 40);
+  d.style.fontSize = ((dead ? 17 : 15) * k).toFixed(1) + 'px';
+  board.appendChild(d);
   setTimeout(() => d.remove(), 760);
 }
 function showPopup(text, title) {
@@ -6705,7 +7213,7 @@ function counterHTML(u) {
   const bodyVar = (bsz > 1 && isCore) ? ` style="--bsz:${bsz}"` : '';
   const mine = u.side === 'you' || u.side === 'hq_you';
   const spent = (mine && (u.apmax || 0) > 0 && (u.ap || 0) <= 0 && !u.disabled) ? ' spent' : '';
-  return `<div class="counter ${u.side}${u.boss?' bossunit':''}${bsz > 1 ? '' : huge}${bodyCls}${spent}${u.disabled?' disabled':''}"${bodyVar}>${inner}${atk}${rank}${hp}${loot}</div>`;
+  return `<div class="counter ${u.side}${u.boss?' bossunit':''}${bsz > 1 ? '' : huge}${bodyCls}${spent}${u.disabled?' disabled':''}${u.dying?' dying':''}"${bodyVar}>${inner}${atk}${rank}${hp}${loot}</div>`;
 }
 
 function medalIcon(id, size) {
@@ -6934,8 +7442,13 @@ function showSummary() {
 async function dismissSummary() { closeOv('ovSummary'); render(await api('/api/dismiss_summary', {})); }
 
 function showHelp() {
-  const topic = (head, body) => `<div class="choice"><b>${head}</b>
+  const topic = (head, body, cls) => `<div class="choice ${cls || ''}"><b>${head}</b>
     <div class="d" style="line-height:1.6;font-size:12.5px;margin-top:5px">${body}</div></div>`;
+  // Keyboard control, listed from the same table the handler switches on — a shortcut nobody is told
+  // about may as well not exist, and two hand-maintained lists drift the first time one is added.
+  const keys = `<div class="keytable">${HOTKEY_HELP
+    .map(([k, what]) => `<div class="keyrow"><kbd>${k}</kbd><span>${what}</span></div>`).join('')}</div>
+    <div class="d" style="margin-top:6px;opacity:.8">Right-drag the battlefield to pan it; the wheel zooms.</div>`;
   $('#ovHelp').innerHTML = `<div class="oframe titled"><div class="ofbanner ofhdr"><img src="assets/ui/hdr/how_to_play.png" alt="How to play"></div>
     <div class="helpcols">
     ${topic('<span class="cyan">Your goal</span>', `Destroy every enemy <b>HQ</b> to clear a battle.`)}
@@ -6973,7 +7486,8 @@ function showHelp() {
       handicap (tougher, deadlier, more numerous enemies). <b>Ascension 6+</b> also floods the map with
       <b>more elite battles</b> and cuts your <b>between-act healing in half</b>. Climb as high as you dare for a higher score.`)}
     </div>
-    <div style="margin:16px auto 2px;max-width:340px">${pbtn('replay_tutorial','resetTutorial()')}</div>
+    ${topic('<span class="cyan">Keyboard</span>', keys, 'keyblock')}
+    <div class="helpfoot">${pbtn('replay_tutorial','resetTutorial()')}</div>
     </div>
     <div class="ovclose"><button class="ibtn" onclick="closeOv('ovHelp')" aria-label="Back"><img src="assets/ui/btn/return.png" alt="Back"></button></div>`;
   openOv('ovHelp');
@@ -7402,25 +7916,62 @@ function camCenterOnCell(x, y, smooth) {
 // already in front of you is not, and yanking the view for that is what made scrollIntoView's
 // 'nearest' feel twitchy. Fogged tiles never pull the camera — that would show you the enemy's turn
 // through the fog you are supposed to be fighting blind against.
+// Look up a board cell by coordinate.
+//
+// There were two `cellAt` helpers and BOTH were local — a Map built inside renderBoard() and a function
+// inside animateEvents(). The two module-level callers therefore guarded with
+// `typeof cellAt === 'function'`, which on an undeclared identifier is simply false, so they took the
+// `null` branch every single time. That silently killed camEnsureVisible's fog check: the comment there
+// promises that a fogged tile never pulls the camera — showing you the enemy's turn through the fog —
+// and the test for it had never once run.
+function boardCellAt(x, y) {
+  return (S && S.board && S.board.cells.find(c => c.x === x && c.y === y)) || null;
+}
 function camEnsureVisible(x, y, smooth) {
   const wrap = $('#boardwrap'), board = $('#board');
   if (!wrap || !board) return false;
-  const c = (typeof cellAt === 'function') ? cellAt(x, y) : null;
+  const c = boardCellAt(x, y);
   if (c && !c.vis) return false;                                  // in fog: not yours to see
   const cell = board.querySelector('.cell[data-x="' + x + '"][data-y="' + y + '"]');
   if (!cell) return false;
   const wr = wrap.getBoundingClientRect(), cr = cell.getBoundingClientRect();
   const pad = 28;                                                 // an edge tile counts as not-in-view
-  const inView = cr.left >= wr.left + pad && cr.right <= wr.right - pad
-              && cr.top >= wr.top + pad && cr.bottom <= wr.bottom - HAND_CLEAR;
-  if (inView) return false;
-  camCenterOnCell(x, y, smooth);
+  const L = wr.left + pad, R = wr.right - pad;
+  const T = wr.top + pad, B = wr.bottom - HAND_CLEAR;             // the bottom strip is under the hand fan
+  if (cr.left >= L && cr.right <= R && cr.top >= T && cr.bottom <= B) return false;
+  // Move the LEAST that brings it inside, rather than centring on it. Centring threw the whole
+  // battlefield across the screen for something one tile past the edge — the tile you were watching
+  // jumped to the far side of the view, which reads as the camera snapping away from the fight rather
+  // than following it. A minimum pan keeps everything you were already looking at where it was and
+  // just brings the new thing in.
+  let dx = 0, dy = 0;
+  if (cr.left < L) dx = cr.left - L; else if (cr.right > R) dx = cr.right - R;
+  if (cr.top < T) dy = cr.top - T;  else if (cr.bottom > B) dy = cr.bottom - B;
+  if (!dx && !dy) return false;
+  if (smooth) camGlide(board);
+  camPanBy(dx, dy);                                               // applyCam() clamps to camBounds()
   return true;
 }
+// Ends on `transitionend`, not on a stopwatch. It used to clear the transition 380ms after being ASKED
+// for a 320ms glide — 60ms of slack, measured from the call rather than from when the animation actually
+// starts. That is fine on an idle thread (sampled: a full glide lands in ~330ms and the property is
+// cleared at ~410ms, safely after) and wrong exactly when it matters: during a replay the main thread is
+// busy drawing arrows and re-rendering cells, the transition starts a few frames late, and removing
+// `transition` mid-flight cancels it — so the camera jumps straight to the end. A glide that snaps only
+// when the game is busy is the one you actually notice.
 function camGlide(board) {
-  board.style.transition = 'transform .32s ease-out';
   clearTimeout(camGlide._t);
-  camGlide._t = setTimeout(() => { board.style.transition = ''; }, 380);
+  if (camGlide._el && camGlide._done) camGlide._el.removeEventListener('transitionend', camGlide._done);
+  board.style.transition = 'transform .32s ease-out';
+  const done = (e) => {
+    if (e && e.propertyName && e.propertyName !== 'transform') return;
+    board.style.transition = '';
+    board.removeEventListener('transitionend', done);
+    clearTimeout(camGlide._t);
+  };
+  camGlide._el = board; camGlide._done = done;
+  board.addEventListener('transitionend', done);
+  camGlide._t = setTimeout(done, 1200);   // backstop: a glide that never starts must not leave it armed
 }
 // Centre the camera on a point given in BOARD pixels (unscaled).
 function camCenterOn(bx, by) {
@@ -7486,14 +8037,299 @@ function initWheelZoom() {
   wrap.addEventListener('wheel', e => {
     if (typeof S === 'undefined' || !S || !S.board) return;
     e.preventDefault();                                   // we own both gestures now
-    if (e.ctrlKey || e.metaKey) {                         // macOS reports a trackpad PINCH this way
-      // Accumulate in float: camZ is continuous, so a fine pinch cannot quantise away as it did when
-      // the zoom round-tripped through a whole-pixel cell size.
+    if (e.ctrlKey || e.metaKey || _isMouseWheel(e)) {
+      // ctrl/cmd+wheel is how macOS reports a trackpad PINCH; a mouse wheel now zooms in its own
+      // right. Accumulate in float: camZ is continuous, so a fine pinch cannot quantise away as it did
+      // when the zoom round-tripped through a whole-pixel cell size.
       camZoomAt(camZ * Math.exp(-Math.max(-40, Math.min(40, e.deltaY)) * 0.01), e.clientX, e.clientY);
     } else {
-      camPanBy(e.deltaX, e.deltaY);                       // two-finger scroll pans the camera
+      camPanBy(e.deltaX, e.deltaY);                       // trackpad two-finger scroll still pans
     }
   }, { passive: false });
+}
+/**
+ * Is this wheel event a MOUSE wheel rather than a trackpad two-finger scroll?
+ *
+ * The bare wheel zooms now, which it could not before: until right-drag existed, scroll was the only
+ * way to pan on a desktop, so making it zoom would have taken panning away to add zoom. Right-drag
+ * replaces it, and the wheel is free.
+ *
+ * But a Mac trackpad reports two-finger scroll through the SAME event, and there two-finger scrolling
+ * is the native way to pan — the Mac build ships and advertises exactly that. So the two are told
+ * apart rather than one being sacrificed:
+ *
+ *   * deltaMode !== 0 means the browser is reporting LINES or PAGES, which only a classic wheel does
+ *     (Firefox reports deltaY: ±3 in line mode — small, so a magnitude test alone would misread it).
+ *   * otherwise a wheel gives large, whole-number, purely vertical steps (±100 or ±120 in Chrome),
+ *     where a trackpad gives a stream of small and often fractional deltas, usually with some deltaX.
+ *
+ * Ambiguity resolves to PAN, because a wrongly-zooming trackpad is far more jarring than a wheel that
+ * pans one notch.
+ */
+function _isMouseWheel(e) {
+  if (e.deltaMode !== 0) return true;
+  const now = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+  const f = _isMouseWheel;   // state hangs off the function so this stays self-contained
+  // Anything small, fractional, or carrying a horizontal component is unmistakably a trackpad.
+  // A FLICK begins exactly that way and only then ramps into large whole numbers, so latch on it:
+  // for a short while afterwards, treat everything as trackpad. That momentum tail is what a bare
+  // magnitude test misreads — measured on the Mac, a quick two-finger flick cleared the old 40 and
+  // zoomed the battlefield when the player meant to pan. A real wheel has no such precursor.
+  if (e.deltaX !== 0 || !Number.isInteger(e.deltaY) || Math.abs(e.deltaY) < 100) {
+    f._tp = now + 400;
+    return false;
+  }
+  if (now < (f._tp || 0)) { f._tp = now + 400; return false; }   // still inside a trackpad gesture
+  return true;
+}
+/**
+ * Right-button drag pans the battlefield, on any desktop platform and with any mouse.
+ *
+ * Uses pointer capture so the drag survives leaving the board — releasing over the HUD or off the
+ * window would otherwise strand the camera mid-pan with the button still held.
+ *
+ * Nothing here can disturb selection: the cells are wired with onclick, which is left-button only, and
+ * the document-level contextmenu handler already suppresses the menu that a right-press would raise.
+ */
+function initDragPan() {
+  const wrap = $('#boardwrap');
+  if (!wrap || wrap._dragPan) return;
+  wrap._dragPan = true;
+  let last = null;
+  wrap.addEventListener('pointerdown', e => {
+    if (e.button !== 2 || typeof S === 'undefined' || !S || !S.board) return;
+    e.preventDefault();
+    last = { x: e.clientX, y: e.clientY };
+    wrap.classList.add('panning');
+    try { wrap.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+  wrap.addEventListener('pointermove', e => {
+    if (!last) return;
+    e.preventDefault();
+    // Negated: dragging right should carry the battlefield right with the cursor, which means moving
+    // the CAMERA left. Un-negated it feels like pushing a scrollbar rather than grabbing the table.
+    camPanBy(last.x - e.clientX, last.y - e.clientY);
+    last = { x: e.clientX, y: e.clientY };
+  });
+  const stop = e => {
+    if (!last) return;
+    last = null;
+    wrap.classList.remove('panning');
+    try { wrap.releasePointerCapture(e.pointerId); } catch (_) {}
+  };
+  wrap.addEventListener('pointerup', stop);
+  wrap.addEventListener('pointercancel', stop);
+  wrap.addEventListener('lostpointercapture', stop);
+  bindHoverCard(wrap);
+}
+// ── rest the pointer on a piece and it explains itself ───────────────────────────────────────────
+//
+// Three seconds, deliberately: short enough to find by accident while you are reading the board, long
+// enough that it never fires while you are actually doing something. Tapping a unit still opens the
+// full inspector — this is the glance version, for working out what that thing over there is without
+// giving up your current selection.
+//
+// Mouse only. `hover: hover` is the honest test for a pointer that can rest somewhere without
+// committing; a touch screen has no such state, and the tap-to-inspect it already has is the better
+// answer there anyway.
+//
+// Wired as ONE delegated listener on #boardwrap rather than per cell. renderBoard() rewrites cell
+// innerHTML on every action, so per-cell handlers would be rebound hundreds of times a turn — and the
+// timer would be destroyed along with the element it was attached to.
+const HOVER_MS = 2000;
+let _hovTimer = 0, _hovKey = '';
+function bindHoverCard(wrap) {
+  if (!wrap || !window.matchMedia || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  wrap.addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse') return;
+    const cell = e.target && e.target.closest ? e.target.closest('.cell') : null;
+    const key = cell ? cell.dataset.x + ',' + cell.dataset.y : '';
+    if (key === _hovKey) return;                 // same tile — let the timer keep running
+    _hovKey = key;
+    hideHoverCard();
+    if (!cell) return;
+    const x = +cell.dataset.x, y = +cell.dataset.y;
+    _hovTimer = setTimeout(() => showHoverCard(x, y, cell), HOVER_MS);
+  });
+  // Anything that is an ACTION cancels it: leaving the board, clicking, panning, zooming.
+  ['pointerleave', 'pointerdown', 'wheel'].forEach(t =>
+    wrap.addEventListener(t, () => { _hovKey = ''; hideHoverCard(); }, { passive: true }));
+}
+function hideHoverCard() {
+  clearTimeout(_hovTimer); _hovTimer = 0;
+  const el = document.getElementById('hovercard');
+  if (el) el.remove();
+}
+function showHoverCard(x, y, cell) {
+  const c = boardCellAt(x, y);
+  const u = c && c.u;
+  if (!u || turnBusy || _overlayUp()) return;
+  const info = CLASS_INFO[u.cls] || { n: u.cls };
+  const mine = (u.side === 'you' || u.side === 'hq_you');
+  const name = u.boss ? u.boss : (u.name ? `${u.rank || ''} ${u.name}`.trim() : info.n);
+  const rng = u.atk > 0 ? `${u.rmin}-${u.rmax}` : '—';
+  const chips = [
+    `<span class="bichip">${siEm('hp')}<b>${u.hp}/${u.max}</b></span>`,
+    `<span class="bichip">ATK <b>${u.atk}</b></span>`,
+    `<span class="bichip">RNG <b>${rng}</b></span>`,
+    `<span class="bichip">MOVE <b>${u.mv}</b></span>`,
+    `<span class="bichip">DEF <b>${u.df}</b></span>`];
+  if ((u.apmax || 0) > 0) chips.push(`<span class="bichip">Actions <b>${u.ap}/${u.apmax}</b></span>`);
+  if ((u.lvl || 1) > 1) chips.push(`<span class="bichip gold">&#9733; Rank <b>${u.lvl}/5</b></span>`);
+  // The two states that change what an attack is worth, and the one that means it cannot act at all.
+  const notes = [];
+  if (u.flanked === true) notes.push('△ Flanked — attacks on it hit +2');
+  if (u.disabled) notes.push('EMP — cannot act');
+  if (u.stale) notes.push('Last known position — not currently in sight');
+  const el = document.createElement('div');
+  el.id = 'hovercard';
+  el.innerHTML = `<b class="${mine ? 'cyan' : 'red'}">${name}</b>`
+    + (u.name && !u.boss ? `<div class="d">${info.n}</div>` : '')
+    + `<div class="hcchips">${chips.join('')}</div>`
+    + (notes.length ? `<div class="d hcnote">${notes.join('<br>')}</div>` : '');
+  document.body.appendChild(el);
+  // Above the tile by preference, below it if that would run off the top; clamped horizontally so a
+  // piece at the board edge still gets a fully readable card.
+  const r = cell.getBoundingClientRect(), b = el.getBoundingClientRect();
+  const left = Math.max(6, Math.min(window.innerWidth - b.width - 6, r.left + r.width / 2 - b.width / 2));
+  const above = r.top - b.height - 8;
+  el.style.left = left + 'px';
+  el.style.top = (above >= 6 ? above : Math.min(window.innerHeight - b.height - 6, r.bottom + 8)) + 'px';
+}
+// ── keyboard control ─────────────────────────────────────────────────────────────────────────────
+//
+// A full desktop layer over what was a touch-first UI. The hand already tracks a focused card for its
+// fan layout (`handFocus`), so the arrow keys drive the thing the layout was already built around
+// rather than inventing a second notion of "selected".
+//
+// Rules that keep it out of the way:
+//   * never while typing — the seed box and the campaign-rename field are real text inputs.
+//   * never with ctrl/alt/meta — those belong to the browser and the OS.
+//   * while an overlay is open, only Escape does anything. A stray D while reading the deck should
+//     not quietly re-aim the hand behind it.
+const HOTKEY_HELP = [
+  ['←  →   or  A  D', 'Move along your hand'],
+  ['↓  or  S', 'Look at the focused card · again to close'],
+  ['↑  or  W', 'Play the focused card'],
+  ['1 – 9', 'Jump straight to that card'],
+  ['Tab', 'Danger overlays on / off'],
+  ['Q', 'Aim / Move, on the selected unit'],
+  ['F', 'Command Power'],
+  ['E', 'End turn'],
+  ['T', 'Your army'],
+  ['R', 'Your deck'],
+  ['G', 'Relics'],
+  ['+  −  0', 'Zoom in · out · whole board'],
+  ['Esc', 'Cancel, or close what is open'],
+];
+function _typingInto(t) {
+  return !!(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable));
+}
+function _topOverlay() {
+  const open = [...document.querySelectorAll('.overlay.show')];
+  if (!open.length) return null;
+  // The stacking layer sets an explicit z-index as overlays open; highest wins, falling back to
+  // document order for any that predate it.
+  return open.reduce((a, b) => ((+b.style.zIndex || 10) >= (+a.style.zIndex || 10) ? b : a));
+}
+// The affirmative control of whatever is in front of you. Buttons are found by aria-label and image
+// alt, which is what these panels already carry for screen readers — no new markup, and nothing to keep
+// in sync as panels are added. Ordered by preference so a panel offering both Take and Skip takes.
+//
+// A disabled Confirm (the cache before you have picked, an unaffordable buy) is deliberately NOT matched
+// and NOT fallen past: Space must never quietly do the second-best thing on a panel whose real answer is
+// unavailable. It does nothing, exactly as clicking the greyed button would.
+const AFFIRM_WORDS = /^(confirm|take|take this card|ok|okay|continue|accept|yes|done|start|play|buy|equip|claim|rest|deploy|next)\b/i;
+function affirm(ov) {
+  const root = ov || document.getElementById('coach');
+  if (!root || (!ov && !root.classList.contains('show'))) return false;
+  const btns = [...root.querySelectorAll('button')].filter(b => b.offsetParent !== null);
+  const label = b => ((b.getAttribute('aria-label') || '') + ' ' +
+                      ((b.querySelector('img') || {}).alt || '')).trim();
+  const hit = btns.find(b => AFFIRM_WORDS.test(label(b)));
+  if (!hit) return false;
+  if (hit.disabled) return true;            // matched, but not available — swallow the key, do nothing
+  hit.click();
+  return true;
+}
+function initHotkeys() {
+  if (window._hotkeys) return;
+  window._hotkeys = true;
+  window.addEventListener('keydown', e => {
+    if (_typingInto(e.target) || e.ctrlKey || e.altKey || e.metaKey) return;
+
+    // Escape and Space are the only keys that reach through an open panel: Escape is the No, Space is
+    // the Yes. Every panel in the game already has both — a Return/Close and a Confirm/Take/Continue —
+    // but only one of them was reachable from the keyboard, so a keyboard player could back out of a
+    // card draft and could not accept one.
+    const ov = _topOverlay();
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      if (ov) { closeOv(ov.id); return; }
+      if (sel !== null || cmd !== null || powerArm) { cancelSel(); return; }
+      toggleSettings();
+      return;
+    }
+    if (e.key === ' ' || e.key === 'Spacebar') {
+      // Always swallow it. Space is the browser's page-scroll key and #boardwrap is scrollable; letting
+      // it through would jog the battlefield out from under the camera.
+      e.preventDefault();
+      if (affirm(ov)) return;
+      if (ov) return;                       // a panel with nothing to accept just stays put
+    }
+    if (ov) return;
+    if (typeof S === 'undefined' || !S || !S.board) return;   // battle keys only, on the battlefield
+
+    const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    const hand = S.hand || [];
+    const step = d => {
+      if (!hand.length) return;
+      handFocus = Math.max(0, Math.min(hand.length - 1, handFocus + d));
+      layoutHand();
+      Sfx.play('ui_tap');
+    };
+
+    switch (k) {
+      case 'arrowleft': case 'ArrowLeft': case 'a': e.preventDefault(); step(-1); return;
+      case 'arrowright': case 'ArrowRight': case 'd': e.preventDefault(); step(1); return;
+      case 'ArrowDown': case 's': {
+        e.preventDefault();
+        // Down looks at the card; down again puts it away. The overlay check above already returned,
+        // so reaching here means nothing is open and this can only be the opening move.
+        const c = hand[handFocus];
+        if (c) peekCard(c, 'Play', () => { closeOv('ovInspect'); void tapCard(handFocus); }, !c.aff || c.curse, { noDetail: false });
+        return;
+      }
+      case 'ArrowUp': case 'w':
+        e.preventDefault();
+        if (hand[handFocus]) void tapCard(handFocus);
+        return;
+      case 'Tab': {
+        e.preventDefault();
+        // One key for "show me the threat", not two. Either layer on counts as on, so the first press
+        // always turns the whole thing off rather than half of it.
+        const on = dangerOn || intentOn;
+        if (dangerOn === on) toggleDanger();
+        if (intentOn === on) toggleIntent();
+        return;
+      }
+      case 'q':
+        e.preventDefault();
+        // Only means anything for a unit that HAS the switch; toggleAim already no-ops otherwise.
+        if (cmd !== null) toggleAim();
+        return;
+      case 'f': e.preventDefault(); if (S.power && S.power.ready) void usePower(); return;
+      case 'e': e.preventDefault(); if (!turnBusy) void endTurn(); return;
+      case 't': e.preventDefault(); showArmy(); return;
+      case 'r': e.preventDefault(); showDeck(); return;
+      case 'g': e.preventDefault(); showMedals(); return;
+    }
+    // 1-9 jump straight to a card, which beats tapping right four times on a full hand.
+    if (k >= '1' && k <= '9') {
+      const i = Number(k) - 1;
+      if (i < hand.length) { e.preventDefault(); handFocus = i; layoutHand(); Sfx.play('ui_tap'); }
+    }
+  });
 }
 // Keyboard fallback — a gesture nobody is told about is not discoverable, and a mouse without a wheel
 // had no way in at all. +/- step, 0 returns to the floor (the whole-board view).
@@ -7514,7 +8350,9 @@ function initZoomKeys() {
 $('#end').onclick = endTurn;
 initPinch();
 initWheelZoom();
+initDragPan();
 initZoomKeys();
+initHotkeys();
 window.__boot = () => { _applyOrient(); const p = refresh(); setTimeout(checkForUpdate, 2500); return p; };   // src/main.ts wires the local API, then calls this; returns the refresh promise so callers/tests can await first paint; update check runs once, non-blocking
 </script>
 </body>
