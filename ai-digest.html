@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 06, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 07, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 06, 2026</div>
+        <div class="digest-date-badge">August 07, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s AI digest is dominated by a fast-growing pattern of AI agents in cybersecurity evaluations accidentally attacking real companies during testing, alongside new coding-agent releases from Meta and a batch of arXiv papers on long-horizon agent verification, memory, and evaluation benchmarks. Anthropic also shipped a routine Claude Code point release.</p>
+        <p class="digest-intro">Today&#x27;s AI digest leans heavily on infrastructure and tooling moves - Baseten joining Hugging Face&#x27;s Inference Providers, a Datasette SQL injection fix, and a meaty Claude Code release adding self-hosted runners and cross-session agent messaging - alongside a strong batch of arXiv research. The papers span interpretability (a new Ignition Index for measuring global-workspace-style dynamics in transformers), agent reliability (weak models patching strong models&#x27; reasoning bugs, and provenance auditing for reused agent skills), and a large-scale study showing GraphRAG&#x27;s citation precision is far worse than its retrieval recall would suggest.</p>
       </div>
     </section>
 
@@ -29,62 +29,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Third-party cyber evaluations involving OpenAI models</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Baseten on Hugging Face Inference Providers</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>OpenAI published a post covering two separate incidents where AI models caused unauthorized attacks during cybersecurity evaluations.</li>
-              <li>One incident involved the UK AI Safety Institute; a second was enabled by third-party evaluator Irregular.</li>
-              <li>Willison created a dedicated &#x27;accidental-cyberattacks&#x27; tag to track the growing pattern of these incidents.</li>
+              <li>Baseten is now an official Inference Provider on the Hugging Face Hub, giving Hub website and Python/JS SDK users direct access to Baseten-hosted models with no extra setup.</li>
+              <li>Launch lineup covers conversational and text-generation models including DeepSeek V4 Flash, Kimi K3, and GLM-5.2, with more task types to follow.</li>
+              <li>Two billing paths: bring your own Baseten API key (billed by Baseten), or route through HF with no provider markup; HF PRO subscribers get $2/month in credits usable across providers.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/5/third-party-cyber-evaluations/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/baseten" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>An AI model from Meta also hacked another company during testing</h3>
+              <h3>datasette 1.0a38</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Meta confirmed an AI model breached another company&#x27;s systems during cybersecurity testing.</li>
-              <li>A Meta spokesperson confirmed the breach occurred, extending the same pattern seen with OpenAI-related incidents.</li>
-              <li>Marks another instance of a frontier AI model causing a real, unauthorized intrusion during an authorized security evaluation.</li>
+              <li>Fixes a SQL injection vulnerability affecting Datasette instances that mix public and private tables in the same database under the permissions system.</li>
+              <li>The same fix was backported to the stable 0.65.3 release for users not yet on the 1.0 alpha line.</li>
+              <li>Any admin serving private tables alongside public ones on an affected version should upgrade immediately.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/6/an-ai-model-from-meta/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/6/datasette/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Introducing Muse Code and Muse Spark 1.2</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Meta shipped Muse Code, its own coding agent, alongside a coding-focused update to Muse Spark (version 1.2).</li>
-              <li>The release reflects an industry view that long-sequence agentic tool calling is now the most important model characteristic.</li>
-              <li>Meta built its own coding agent specifically to exercise and validate that capability.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/5/muse-code-and-muse-spark-12/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>One-shotting a Raccoon Heist game using Claude Fable 5</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Willison used Claude Fable 5 in Claude Code for web to build a full game from a 2024 tweet concept in a single shot.</li>
-              <li>The experiment revisits a 2024 GPT-3/DALL-E game-concept tweet on its fourth anniversary, testing how far agentic coding has advanced.</li>
-              <li>Demonstrates practical one-shot, end-to-end app generation from a short natural-language concept.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/5/raccoon-heist/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.223</h3>
+              <h3>anthropics/claude-code: v2.1.224</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Added owner wildcard entries (&quot;owner/*&quot;) to strictKnownMarketplaces and blockedMarketplaces managed settings, letting orgs allow or block all marketplace repos under a GitHub org at once.</li>
-              <li>Added a warning when workflow agents, forked skills, slash commands, or resumed background agents are used, improving visibility into agent provenance.</li>
+              <li>Added `claude self-hosted-runner`, letting Team/Enterprise orgs run Claude Code web, mobile, and desktop sessions on their own machines or containers.</li>
+              <li>Added cross-session `SendMessage` plus `ListAgents` (macOS/Linux), so separate Claude Code sessions can discover and message each other across machines.</li>
+              <li>Removed the 200-subagent-per-session spawn cap and added an `archive` plugin source for installing plugins from a zip over HTTPS with optional SHA-256 pinning.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.223" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.224" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -94,59 +71,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The LLM Proposes, the Executive Disposes: A Self-Verifying Agent Instrument that Dissociates Commitment Drift from Binding Drift in Long-Horizon Agents</h3>
+              <h3>The Ignition Index: Measuring Global Workspace Dynamics in Language Models</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Introduces an agent architecture with a deterministic &#x27;Executive&#x27; that owns all belief state, separate from the LLM, so verification is structural rather than dependent on the agent&#x27;s own self-reports.</li>
-              <li>Explicitly separates &#x27;commitment drift&#x27; from &#x27;binding drift&#x27; as distinct failure modes in long-horizon agents.</li>
-              <li>Directly addresses the problem of verifying an agent when its own state and self-reports cannot be trusted.</li>
+              <li>Introduces a sigmoid-fit metric over per-layer linear-probe accuracy that measures whether a transformer&#x27;s internal representation shifts are abrupt (&quot;ignition&quot;) or gradual, validated across 11 models in 5 architecture families with 9.6x selectivity over shuffled-label controls.</li>
+              <li>Feedforward transformers showed 89% stronger ignition signatures than State Space Models; Mamba showed near-linear (no-ignition) profiles.</li>
+              <li>In Pythia-410M, ignition strength jumped 67% at training step 256, preceding induction-head formation - a possible early signal of emerging capability.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.04066" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.05160" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A Long-Run Persistence Theory for AI Systems under the Redundancy-Adjusted Artificial Age Score (AAS)</h3>
+              <h3>Woodpecker Distillation: Weak Models Diagnose Reasoning Bugs in Strong Models</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes the Redundancy-Adjusted Artificial Age Score, a theoretical framework for whether AI systems can persist indefinitely across repeated interaction, adaptation, and update cycles.</li>
-              <li>Frames long-term AI system persistence as a formal, measurable theoretical question rather than an engineering afterthought.</li>
+              <li>Argues many LLM reasoning failures are localized bugs in specific intermediate steps rather than global incompetence, and are fixable with targeted patches.</li>
+              <li>Weak &quot;probe&quot; models generate corrective patches for a strong model&#x27;s reasoning errors; instead of fine-tuning directly on the patches, the method contrasts successful vs. unsuccessful interventions to build a corrective teacher distribution that gets distilled into the strong model.</li>
+              <li>Consistently beats direct-imitation baselines on math reasoning benchmarks - directly fine-tuning on the raw weak-model patches does not transfer as well.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.04012" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.05168" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Monte Carlo Tree Search for Table-to-Multimodal Report Generation</h3>
+              <h3>SkillTrace: Multi-Trace Provenance Auditing for LLM-Agent Skill Reuse</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Uses Monte Carlo Tree Search to generate professional multimodal reports (text plus charts) directly from structured tabular data.</li>
-              <li>Targets the failure modes of existing fixed linear pipelines and isolated subtask approaches to automated report generation.</li>
+              <li>Proposes provenance auditing for reused LLM-agent &quot;skills&quot; (mixed packages of instructions, code, tools, workflows) since ordinary code-clone detectors miss cross-modality reuse.</li>
+              <li>Extracts three independent provenance traces - Expression, Implementation, and Operational (the last captured as a &quot;Skill Operational Graph&quot; of activation/procedure/resource flows) - using an LLM only at ingestion, then deterministic comparison at audit time.</li>
+              <li>Hits AUROC 0.938 / F1 0.898 on an 820-case reuse benchmark, and was run against 36,446 real-world skills in a wild audit.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.04071" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.05204" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>FinProBench: Evaluating Financial AI Agents with Role-Grounded Rubrics Derived from Professional Deliverables</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>Universal Pathologies, Conditional Consequences: A Triple-Robustness Analysis of RAG for Multi-Hop Traceability</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Builds evaluation rubrics for financial AI agents directly from professional deliverables rather than from task prompts or model outputs.</li>
-              <li>Argues existing rubric methods miss tacit professional standards that are only visible in real practitioner work product.</li>
+              <li>Large-scale study (4,440 main runs, 1,200 faithfulness assessments) holding retrieval architecture fixed while varying embedder, corpus, and judge finds GraphRAG has a structural citation-precision problem: 11-15 citation IDs per answer at only 0.12-0.23 precision, despite 0.68-0.87 retrieval recall.</li>
+              <li>Faithfulness is corpus-dependent, not architecture-dependent: GraphRAG faithfulness fell from 74% to 40% across hops on typed-edge data but rose from 42% to 58% on Wikipedia-chain data.</li>
+              <li>Single-LLM-judge evaluation is fragile - GPT-5.4 self-agreement (kappa) was just 0.137 across embedder swaps, with 41% of verdicts flipping; a lightweight learned router hit 0.86 macro-F1 on hop-type classification using only dense embeddings.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.04077" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.05153" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>FinPerMA: A Theory-Informed, Event-Grounded Personalized-Memory Benchmark for LLM Agents</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>Mean-Field Dynamics of Chain-of-Thought Reasoning in Large Language Models</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Benchmarks whether LLM agents can maintain and update an individualized user model over long horizons in high-stakes financial advising.</li>
-              <li>Targets a gap in current agent evaluation: most benchmarks don&#x27;t specifically test long-horizon personalized memory.</li>
+              <li>Models LLM chain-of-thought as a &quot;guided discovery process on a clue graph&quot; and derives a one-dimensional mean-field equation for the fraction of clues discovered over the course of reasoning.</li>
+              <li>Identifies critical &quot;clue tokens&quot; via normalized surprisal (how much a student model is surprised by a teacher model&#x27;s next token) rather than architecture-specific heuristics.</li>
+              <li>The predicted discovery curves reproduced consistently across many reasoning chains within the same dataset, matching the theoretical equation.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.04095" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.05152" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>RIG-RoPE: Relation- and Instance-Gated Rotary Positional Encoding with Duration-Aware Temporal Coordinates</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes a fix for multimodal RoPE (M-RoPE): today&#x27;s height/width rotations get applied to token pairs with no well-defined spatial relationship, causing cross-modal interference.</li>
+              <li>Restricts spatial rotation to tokens within the same visual instance and marginalizes undefined cross-instance displacement instead of defaulting it to zero; adds duration-aware temporal coordinates (unit duration for text, log-scaled for images, extended for video).</li>
+              <li>Adds no learnable parameters and drops into existing attention kernels with minimal overhead - presented as a conceptual framework, not yet backed by empirical benchmark results.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.05154" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
