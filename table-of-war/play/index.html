@@ -132,7 +132,11 @@
   /* Engineer's Overcharge power — ornate plate; gauge value in gold glyphs, glows when ready */
   .powplate { position: relative; display: inline-block; height: var(--pillh, 34px); flex: 0 0 auto; cursor: pointer; padding: 0;
     background: none; border: none; -webkit-tap-highlight-color: transparent;
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); transition: filter .15s, transform .1s; }
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); transition: filter .15s, transform .1s;
+    /* Isolated for the same reason as .counter: this element carries a `::before { z-index: -1 }`
+       glow, and a filter is not a safe thing to hang that on — anything that later animates the
+       filter to none drops the glow behind the nearest isolated ancestor. */
+    isolation: isolate; }
   .powplate > img { height: 100%; width: auto; display: block; }
   .powplate .pl-p { display: none; }
   .powplate .powval { position: absolute; top: 50%; right: 8%; width: 30%; height: 44%; transform: translateY(-50%);
@@ -176,7 +180,27 @@
   .drivemeter.up .dm-pips i.on { background: #7fd97f; }
   .drivemeter.idle { opacity: .55; }
   .powplate:active { transform: scale(.97); }
-  .powplate.ready { filter: drop-shadow(0 0 7px rgba(240,201,63,.9)) drop-shadow(0 0 3px rgba(240,201,63,.6)); animation: pulse 1.2s infinite; }
+  /* ── PULSING GLOWS: the glow is its own element, never a filter on the thing that glows ─────────
+     These four used to be `filter: drop-shadow(...)` plus `animation: pulse`, on the piece itself.
+     That is the most expensive shape a web animation can take: `drop-shadow` is a blur derived from
+     the element's RASTERISED CONTENT, so animating anything on that element makes the browser
+     re-derive the blur every single frame, forever, for as long as the thing is on screen.
+     `opacity` and `transform` are the only two properties the compositor can animate without touching
+     the element again.
+     So the glow moved OUT into a pseudo-element behind the piece — a radial gradient, which is a plain
+     texture uploaded once — and the animation now touches nothing but that texture's opacity. The
+     piece keeps only its static depth shadow, which rasterises once and never again.
+     The glow element is SHAPED LIKE THE PIECE — inset to its silhouette with a matching corner radius —
+     and the light comes from `box-shadow`, which spreads outward from that shape. A radial gradient was
+     tried first and was visibly wrong: a circle around a square chip, washing over its edge. box-shadow
+     is still a blur, but it is blurred from a KNOWN RECTANGLE rather than derived from rasterised
+     content, and because nothing about this element changes but its opacity it is blurred exactly once
+     and then composited for free forever after. */
+  .powplate.ready { filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+  .powplate.ready::before {
+    content: ''; position: absolute; inset: 8% 4%; z-index: -1; pointer-events: none; border-radius: 8px;
+    box-shadow: 0 0 8px 2px rgba(240,201,63,.9), 0 0 14px 4px rgba(240,201,63,.45);
+    animation: pulse 1.2s infinite; }
   /* portrait: swap the power/hold plates to their compact label-less versions + widen the value plaque */
   
     :where(body.o-portrait) .objhold .pl-l,
@@ -195,7 +219,8 @@
   .powchip .pgtrack { width: 30px; height: 5px; background: #14160d; border-radius: 3px; overflow: hidden; display: inline-block; }
   .powchip .pgtrack i { display: block; height: 100%; background: var(--gold); }
   /* battle stat nameplates — HQ / BASES / TROOPS; value engraved on the right plaque in dark gold-glyphs */
-  .bpill { position: relative; display: inline-block; height: var(--pillh, 34px); flex: 0 0 auto; filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+  .bpill { position: relative; display: inline-block; height: var(--pillh, 34px); flex: 0 0 auto; filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
+    isolation: isolate; }   /* holds its own `::before { z-index: -1 }` glow — see .counter */
   .bpill > img { height: 100%; width: auto; display: block; }
   .bpill .pl-p { display: none; }                          /* landscape: wide labeled plate */
   .bpill .bpv { position: absolute; top: 47%; right: 12.5%; width: 25%; height: 44%; transform: translateY(-50%);
@@ -227,7 +252,11 @@
   .bpill .bpv .mn { display: inline-flex; align-items: center; height: 100%; }                                   /* silver metal */
   .bpill .bpv .mn img.md { height: 100%; width: auto; display: block; filter: drop-shadow(0 1px 1px rgba(0,0,0,.5)); }
   .bpill .bpv .mn img.msl { height: 80%; width: auto; align-self: center; filter: grayscale(1) brightness(1.55) contrast(1.05); }
-  .bpill.danger { filter: drop-shadow(0 0 5px rgba(215,70,60,.9)) drop-shadow(0 1px 2px rgba(0,0,0,.5)); animation: pulse 1.3s infinite; }
+  .bpill.danger { filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+  .bpill.danger::before {
+    content: ''; position: absolute; inset: 8% 4%; z-index: -1; pointer-events: none; border-radius: 8px;
+    box-shadow: 0 0 6px 2px rgba(215,70,60,.92), 0 0 12px 4px rgba(215,70,60,.45);
+    animation: pulse 1.3s infinite; }
   .bpill.full { filter: drop-shadow(0 0 5px rgba(230,190,80,.75)) drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
   /* settings: battle-number style picker — each chip is an ornate plaque showcasing a sample in its style */
   .nspick { position: relative; flex: 1 1 0; padding: 0; border: none; background: none; cursor: pointer;
@@ -244,7 +273,10 @@
   .nspick .nslbl { position: absolute; bottom: 7%; right: 9%; font: 700 9px sans-serif; color: #2e2008; }
 
   /* board — a printed tactical map on a felt table */
-  #boardwrap { flex: 1; overflow: hidden; padding: 0; position: relative;   /* positioning context for the floating medal overlay */
+  /* touch-action: none so a one-finger drag reaches touchmove as a PAN. Without it the browser may
+     claim the gesture for its own scroll/overscroll handling and the board never sees the move —
+     `overflow: hidden` stops the container scrolling but does not stop the browser trying. */
+  #boardwrap { flex: 1; overflow: hidden; padding: 0; position: relative; touch-action: none;   /* positioning context for the floating medal overlay */
     background: #17130d;   /* dark backstop only; the table image lives on #board so there is no double-image seam */
     display: flex; justify-content: safe center; align-items: safe center;
     isolation: isolate; }   /* trap the board's inner z-indexes (storm/fog/tracer) so they can't paint over the floating hand */
@@ -259,8 +291,15 @@
        cells) rasterize into tiles: a unit move re-rasterizes only the tiles it touched instead of repainting
        the whole surface on the main thread, and a scroll/pan is a pure compositor shift — that main-thread
        full-surface repaint is what produced the horizontal tearing. Paired with the per-cell content-visibility
-       culling, only near-viewport tiles stay live, so this doesn't balloon memory on big maps. */
-    transform: translateZ(0); backface-visibility: hidden; }
+       culling, only near-viewport tiles stay live, so this doesn't balloon memory on big maps.
+
+       `will-change` states the promotion outright instead of implying it. The translateZ(0) below was the
+       only hint until the camera landed, and applyCam() then began writing an INLINE transform over it —
+       inline beats the stylesheet, so the hint was gone and the tearing came back. Relying on the shape
+       of a transform is fragile in both directions: `translate3d(x,y,0) scale(z)` is a 3D function whose
+       result is still a 2D matrix, so it reads back from getComputedStyle as `matrix(...)` and cannot be
+       checked that way either. will-change does not care what applyCam writes. */
+    will-change: transform; transform: translateZ(0); backface-visibility: hidden; }
   /* combat tracer — a brief streak from an attacker's tile to the unit it hit, so a ranged/unseen shot
      reveals where it came from. Source end gets a pulse ring even if the shooter sits in fog. */
   #boardwrap.panning { cursor: grabbing; }
@@ -287,6 +326,13 @@
     content-visibility: auto; contain-intrinsic-size: var(--cell) var(--cell); }
   /* wood-tile board: base tile + per-terrain colour-tinted tile (grain kept) */
   .cell    { background-image: url(assets/board/base.png); }
+  /* An unexplored tile is covered corner to corner by an opaque cloud (`.fog.fill`, inset 0, a JPG at
+     background-size cover), so the wood underneath is painted and then completely hidden — on a mostly
+     unexplored map that is a large share of the tiles on screen drawing a texture nobody can see.
+     The flat colour stays: it costs nothing next to an image draw, and it is the fallback if the cloud
+     texture ever fails to load. Applied from a predicate, not from the presence of a `.fog.fill` —
+     remembered tiles carry one too, veiled at .62 opacity, and their terrain must read through it. */
+  .cell.fogsolid { background-image: none; }
   .t-plain  { background-image: url(assets/board/base.png); }
   .t-forest { background-image: url(assets/board/forest.png); }
   .t-hill   { background-image: url(assets/board/hill.png); }
@@ -344,10 +390,10 @@
   }
   /* card collection — a grid of little trading cards */
   .collgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); gap: 7px; margin: 4px 0 8px; }
-  /* NO paint-skipping here — `content-visibility` was tried and reverted: skipping paint for off-screen tiles
-     means a fast scroll outruns the renderer and you scroll into unpainted black, which is worse than
-     the load time it saved. `loading=lazy` on the faces was doing the real work anyway — it took the
-     collection from 1141ms of image decode to 446ms on its own. */
+  /* Nothing is deferred on this grid — not paint, not image loading. Both were tried and both moved the
+     cost onto the SCROLL, which is the one moment it must never land on: `content-visibility` produced
+     unpainted black when a fast scroll outran the renderer, and lazy images produced cards popping in
+     row by row. The decode is paid once, up front, by warmAssets() while the menu is idle. */
   /* cache / reward card options — centered in the container */
   .nodecards { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 10px 0 8px; }
   .nodecards .gridcard { flex: 1 1 78px; max-width: 150px; }   /* grow to share the space; 2 cards bigger, 3 still fit a row */
@@ -425,18 +471,49 @@
   .cell.storm { box-shadow: inset 0 0 9px 2px rgba(190,205,255,.55); }
   /* storm wall overlay — a translucent storm icon ON TOP of whatever's on the tile (terrain + unit).
      It BLINK-FLASHES like lightning; each wall cell is offset (negative delay) so the ring flickers. */
-  .stormfx { position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: .58; animation: stormflash 1.5s ease-in-out infinite; }
+  /* THE STORM. Same principle as the pulsing glows, at fifty times the scale — this is the single most
+     expensive effect in the game and the only one that is always on screen.
+     It used to be ONE element per storm tile, each animating opacity AND `filter: brightness()`, wrapped
+     around an <img> carrying a static `drop-shadow`. Animating a filter forces the browser to re-derive
+     that blur from the rasterised content every frame; doing it on up to fifty tiles at once, forever,
+     is a permanent tax for as long as a storm is visible.
+     Now NOTHING animates a filter. The icon keeps its original opacity beat — surging to full and
+     falling back, which was always most of the effect — and opacity is one of the two properties the
+     compositor can animate without touching the element again, so the drop-shadow inside is rasterised
+     once into the layer and simply composited from then on. The brightness step is replaced by a
+     separate pane of light over the tile, also opacity-only. That is what lightning is anyway: not the
+     ground growing brighter, but light arriving on top of it.
+     A first attempt held the icon still and used only the light pane; it lost the surge and read as a
+     much weaker effect, which the side-by-side showed immediately.
+     The per-tile stagger that ripples the flash across the wall rides on a custom property, because
+     animation-delay does not inherit to a pseudo-element but a variable does. */
+  .stormfx { position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: .58;
+    animation: stormbeat 1.5s ease-in-out infinite; animation-delay: var(--sd, 0s); }
   .stormfx img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 3px rgba(150,180,255,.55)); }
+  .stormfx::after {
+    content: ''; position: absolute; inset: -12%; pointer-events: none; opacity: 0;
+    background: radial-gradient(circle, rgba(219,235,255,.92) 0%, rgba(158,196,255,.5) 44%, rgba(158,196,255,0) 76%);
+    animation: stormflash 1.5s ease-in-out infinite; animation-delay: var(--sd, 0s); }
   /* Storms cover 5x5 and run forever, so this is the one animation that is always on screen. Animating a
      drop-shadow here meant re-blurring up to 50 tiles every frame for the whole battle; brightness is a
      cheap per-pixel pass and the opacity spikes carry the lightning read on their own. */
-  @keyframes stormflash {
+  /* The icon's original beat, with the two `filter: brightness` steps simply deleted — the opacity
+     numbers are untouched, so the rhythm is identical. */
+  @keyframes stormbeat {
     0%, 66%, 100% { opacity: .5; }
-    72% { opacity: 1; filter: brightness(1.7); }
+    72% { opacity: 1; }
     78% { opacity: .62; }
-    84% { opacity: .95; filter: brightness(1.4); }
+    84% { opacity: .95; }
   }
-  @media (prefers-reduced-motion: reduce) { .stormfx { animation: none; opacity: .62; } }
+  /* The light, on the same beat — this is what the brightness steps used to do. */
+  @keyframes stormflash {
+    0%, 66%, 100% { opacity: 0; }
+    72% { opacity: .8; }
+    78% { opacity: .12; }
+    84% { opacity: .45; }
+    91% { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .stormfx, .stormfx::after { animation: none; } .stormfx { opacity: .62; } .stormfx::after { opacity: .22; } }
   .cell.reveal-ping { box-shadow: inset 0 0 0 2px #8fd0ff, 0 0 12px 3px rgba(120,190,255,.7); animation: pulse .45s infinite; }
   /* Army tab: locate a unit — a bright gold ring that pulses a few times, then clears */
   .cell.locate-ping { position: relative; z-index: 5;
@@ -497,7 +574,14 @@
   /* neutral ornate wood counter tile; faction shown by a coloured glow (not tile colour) */
   .counter { position: absolute; inset: 7%; --dep: drop-shadow(0 2px 2px rgba(0,0,0,.55));
     display: flex; align-items: center; justify-content: center;
-    background: url(assets/board/unit.png) center/contain no-repeat; filter: var(--dep); }
+    background: url(assets/board/unit.png) center/contain no-repeat; filter: var(--dep);
+    /* The raider and boss glows are `::before { z-index: -1 }`, which only stays INSIDE the counter
+       while the counter is a stacking context — and it was one purely as a side effect of having a
+       filter. Every fx animation below sets `filter: none` on its 0%/100% keyframes, so for the first
+       and last frame of a move the context vanished, the glow escaped to the nearest one out
+       (#board), and the piece was drawn behind the tiles. Hold the context explicitly instead of
+       inheriting it from an unrelated property. */
+    isolation: isolate; }
   /* equipped cosmetic chip skins: your units read --chip-you, enemies/tribes read --chip-enemy
      (both set on #board from the equipped slots; fall back to the default plaque). */
   .counter.you, .counter.hq_you { background-image: var(--chip-you, url(assets/board/unit.png)); }
@@ -547,7 +631,11 @@
   .counter.gator   { filter: var(--dep) drop-shadow(0 0 3px #5a7d2e) drop-shadow(0 0 2px #86b14a); }   /* swamp predator */
   .counter.hq_you   { filter: var(--dep) drop-shadow(0 0 3px #4f8fe0) drop-shadow(0 0 2px var(--gold)); }
   .counter.hq_enemy { filter: var(--dep) drop-shadow(0 0 3px #e0574a) drop-shadow(0 0 2px var(--gold)); }
-  .counter.raider  { filter: var(--dep) drop-shadow(0 0 3px #ffb046) drop-shadow(0 0 2px #ffcf6a); animation: pulse 1s infinite; }
+  .counter.raider  { filter: var(--dep); }
+  .counter.raider::before {
+    content: ''; position: absolute; inset: 6%; z-index: -1; pointer-events: none; border-radius: 13%;
+    box-shadow: 0 0 4px 1px rgba(255,176,70,.95), 0 0 9px 3px rgba(255,207,106,.55);
+    animation: pulse 1s infinite; }
   /* every action spent this turn — done, not broken. Deliberately lighter than .disabled below and
      with no dashed outline, so a used-up trooper never reads as EMP-bricked. Keeps a faint friendly
      glow so you can still pick your own units out of a crowd at a glance. */
@@ -567,7 +655,11 @@
   .counter.disabled::after { content:''; position:absolute; inset:14%; border:1px dashed rgba(127,223,255,.7); border-radius:2px; }
   .loot { position: absolute; left: 12%; bottom: 16%; font-size: calc(var(--cell)*.28); line-height: 1;
     text-shadow: 0 1px 1px #000; }
-  .counter.bossunit { filter: var(--dep) drop-shadow(0 0 4px #ff5a4a) drop-shadow(0 0 3px #ff7a5a); animation: pulse 1.1s infinite; }
+  .counter.bossunit { filter: var(--dep); }
+  .counter.bossunit::before {
+    content: ''; position: absolute; inset: 6%; z-index: -1; pointer-events: none; border-radius: 13%;
+    box-shadow: 0 0 5px 1px rgba(255,90,74,.95), 0 0 11px 4px rgba(255,122,90,.55);
+    animation: pulse 1.1s infinite; }
   .progbar { height: 8px; border-radius: 4px; background: #23261a; border: 1px solid #3a3d2c; overflow: hidden; }
   .progbar > i { display: block; height: 100%; background: linear-gradient(90deg, #b9922f, #e8c65a); }
   .bossreveal { display: flex; align-items: center; gap: 10px; margin-top: 6px; padding: 6px 10px; cursor: pointer;
@@ -631,12 +723,14 @@
   .fx-hit .counter { animation: fxhit .4s; } .fx-move .counter { animation: fxmove .4s; }
   .fx-spawn .counter { animation: fxspawn .5s; }
   .fx-heal .counter { animation: fxheal .5s; }
-  @keyframes fxheal { 0%,100%{ filter:none; } 50%{ filter: drop-shadow(0 0 7px #7fe08a) brightness(1.25); } }
+  @keyframes fxheal { 0%,100%{ filter: var(--dep); } 50%{ filter: var(--dep) drop-shadow(0 0 7px #7fe08a) brightness(1.25); } }
   /* Fires on EVERY damaged unit, and a Barrage now catches twenty at once -- twenty simultaneous blurs
      is a hitch on a phone. The shake is transform-only (compositor) and brightness is a cheap per-pixel
      pass; the drop-shadow blur was the whole cost and reads as little more than a warmer flash. */
   @keyframes fxhit { 0%,100%{ transform:none; } 30%{ transform: translate(2px,-1px) rotate(-4deg); filter: brightness(1.75); } 60%{ transform: translate(-2px,1px) rotate(3deg);} }
-  @keyframes fxmove { 0%,100%{ filter:none; } 50%{ filter: drop-shadow(0 0 6px #9fd0ff); } }
+  /* `filter: none` here also threw away --dep, so the piece lost its drop shadow and flattened
+     against the tile at each end of the hop. Animate FROM the resting filter, not from nothing. */
+  @keyframes fxmove { 0%,100%{ filter: var(--dep); } 50%{ filter: var(--dep) drop-shadow(0 0 6px #9fd0ff); } }
   @keyframes fxspawn { 0%{ transform:scale(.3) rotate(-20deg); opacity:0; } 100%{ transform:scale(1) rotate(0); opacity:1; } }
   @keyframes shake { 0%,100%{transform:translate(0,0);} 20%{transform:translate(-4px,2px);} 40%{transform:translate(4px,-2px);} 60%{transform:translate(-3px,-2px);} 80%{transform:translate(3px,2px);} }
   .shaking { animation: shake .32s; }
@@ -1912,6 +2006,15 @@
     width: calc(var(--bsz) * 100% - 14%); height: calc(var(--bsz) * 100% - 14%); }
   .counter.bodylimb { visibility: hidden; }
   .cell.bigunit { content-visibility: visible; contain: none; overflow: visible; z-index: 6; }
+  /* A travelling piece is a child of the tile it is moving TO, translated back onto the tile it came
+     FROM, so for most of its flight it is drawn well outside its own cell box. `content-visibility` on
+     .cell brings paint containment with it, which CLIPS a cell's contents to that box — so the piece was
+     erased for the whole journey and only wiped into view as it re-entered its destination tile. It read
+     as the unit sinking behind the board and sliding back out at the target.
+     Nothing about z-index could have fixed it: containment clips before stacking is ever consulted.
+     Same exemption bigunit needs above, for exactly the same reason, applied for the hop's duration
+     only — every other tile keeps its culling, which is what caps paint area on a big map. */
+  .cell.travelling { content-visibility: visible; contain: none; overflow: visible; }
   /* The token spills across the creature's whole footprint, so a tap on the far half would otherwise
      land on the CORE cell (the token's owner) rather than the limb under the finger — and the core can
      be two tiles from you, so the game answered "out of range" while you were touching the thing.
@@ -2265,6 +2368,38 @@
   #maphud .mapact-x img, #maphud .mapact-x svg { vertical-align: -2px; }
 
 
+  /* ── GRAPHICS QUALITY ───────────────────────────────────────────────────────────────────────────
+     Three levels, applied as a class on <html>. Deliberately at the END of the stylesheet so these
+     always win over the base rules they are overriding.
+
+     BALANCED changes nothing you can see standing still — it removes per-frame GPU work only. The
+     targets are animations that pulse an element which ALSO carries a `filter`: opacity is free on the
+     compositor, but a filter underneath it has to be re-applied every single frame. .stormfx is the
+     worst of them, animating `filter: brightness` across up to fifty tiles at once, forever.
+
+     PERFORMANCE additionally stops things MOVING: the fog lift, the travel arcs, the ghost bob, the
+     marker pulses. Everything still happens and every cue still fires — the board simply steps rather
+     than glides.
+
+     Full is the default and nothing below applies. */
+  .gfx-balanced .stormfx, .gfx-balanced .stormfx::after { animation: none; }
+  .gfx-balanced .stormfx { opacity: .6; }
+  .gfx-balanced .stormfx::after { opacity: .2; }
+  /* The four glows are their own elements now and animate nothing but opacity, so Balanced no longer
+     has to strip them to remove per-frame filter work — that is gone at every level. It holds them at
+     a steady brightness instead, which drops four compositor animations without losing the marking. */
+  .gfx-balanced .counter.raider::before, .gfx-balanced .counter.bossunit::before,
+  .gfx-balanced .powplate.ready::before, .gfx-balanced .bpill.danger::before { animation: none; opacity: .8; }
+  .gfx-balanced .counter.spotted, .gfx-balanced .cell.spotted { animation: none; }
+
+  .gfx-perf .fog.fogout { animation: none; display: none; }
+  .gfx-perf #board[data-ts] .legal::after { animation: none; }
+  .gfx-perf .ghost { animation: none; }
+  .gfx-perf .cell.reveal-ping, .gfx-perf .cell.locate-ping { animation: none; }
+  .gfx-perf .counter.dying { animation: none; filter: grayscale(1) brightness(.45); opacity: .55; }
+  .gfx-perf #hand .card { transition: none; }
+  .gfx-perf .oframe, .gfx-perf .choice { box-shadow: none; }
+
   /* ── ONE hover treatment for every control, PART 2 ─────────────────────────────────────────────
      Deliberately the LAST rule in this stylesheet. The base rules for these controls each declare
      their own `transition` (.ibtn .1s, .gcard .12s, .chipsbtn img .08s, and so on) and several of
@@ -2288,7 +2423,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-T_F70n3p.js"></script>
+  <script type="module" crossorigin src="./assets/index-DDDgUdRN.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2360,7 +2495,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.47';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.57';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -3311,6 +3446,17 @@ function showSettings() {
       </div>
       ${dangerRows('showSettings()')}
     </div>` : ''}
+    <div class="choice">
+      <b>Graphics</b>
+      <div class="d" style="margin:2px 0 8px;line-height:1.5">For a machine that is struggling — an old
+        laptop, or one driving a television. <b>Balanced</b> looks identical standing still; it only stops
+        effects that redo GPU work every frame. <b>Performance</b> also stops things moving: the board
+        steps instead of gliding. Every cue and every sound still happens.</div>
+      <div style="display:flex;gap:6px">
+        ${GFX_LEVELS.map(v => `<button class="setbtn ${gfxLevel()===v?'dbg':''}" style="flex:1"
+          onclick="setGfxLevel('${v}')">${gfxLevel()===v?'◉':'○'} ${GFX_LABEL[v]}</button>`).join('')}
+      </div>
+    </div>
     <div class="setact-row">
       ${inRun ? pbtn('retreat', "confirmRetreat()") : ''}
       ${pbtn('how_to_play', "closeOv('ovSettings');showHelp()")}
@@ -3355,6 +3501,7 @@ function showSettings() {
       ${(S && S.board) ? ((_cmdTarget()) ? `<button class="setbtn dbg" onclick="debugPromote()">★ Promote ${_cmdLabel()} one rank ▸</button>`
         : `<button class="setbtn dbg" disabled>★ Promote a unit — select one on the board first</button>`) : ''}
       ${(S && (S.mode === 'map' || S.board)) ? `<button class="setbtn dbg" onclick="closeOv('ovSettings');showRunForecast()">🗺 Run forecast — bosses, elites &amp; jump to any node ▸</button>` : ''}
+      <button class="setbtn dbg" onclick="perfMeter();showSettings()">${_perfOn ? '◉' : '○'} Frame-time meter — what the display is actually managing</button>
     </div>` : ''}
     </div>
     </div><div class="ovclose"><button class="ibtn" onclick="closeOv('ovSettings')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
@@ -3531,7 +3678,7 @@ function render(state) {
   // leaving the picker → tear down the run-setup overlays so the map/battle isn't hidden behind them
   // (START RUN from the Deploy popup used to leave #ovDeploy open, covering the map).
   if (mode !== 'picker') { closeOv('ovGeneral'); closeOv('ovDeploy'); }
-  if (mode === 'picker') { Sfx.music('main'); setScreen(false); $('#app').style.display='flex'; showGenerals(); return; }
+  if (mode === 'picker') { Sfx.music('main'); setScreen(false); $('#app').style.display='flex'; showGenerals(); warmAssets(); return; }
   if (mode === 'map') {
     // Decided HERE and nowhere else. A shop or a camp is a breather, and so is the run-end summary.
     const pk = S.pending && S.pending.kind;
@@ -4139,22 +4286,20 @@ function runBake(){
 // Card layers: art window (gradient + %-sized category glyph) behind, then the face image —
 // pre-baked assets/cards/<id>.webp (browser-managed, scales to any card count), falling back
 // to a runtime canvas bake (faceMiss) if that file isn't present.
-function framedInner(c, w, lazy){
+function framedInner(c, w){
   const frame = frameFor(c), F = FRAMES[frame] || FRAMES.common;
   const cat = CAT_COLOR[c.cat] || '#7a7458';
   const glyph = (CAT_GLYPH[c.cat] || '').replace('width="1em" height="1em"', 'width="100%" height="100%"');
   const pc = r => `left:${(r[0]*100).toFixed(2)}%;top:${(r[1]*100).toFixed(2)}%;width:${((r[2]-r[0])*100).toFixed(2)}%;height:${((r[3]-r[1])*100).toFixed(2)}%`;
   const cid = _faceCid(c); _cardData[cid] = c;
   const src = c.id ? `assets/cards/${cid}.webp` : 'assets/cards/__nobake__.webp';   // <id>[_up].webp; missing → canvas fallback via faceMiss
-  // `lazy` is for the long scrolling GRIDS (collection, deck tuning), never the hand or a card view.
-  // Measured on the full collection: 93 faces cost 1141ms of image DECODE alone — the markup itself
-  // builds in 23ms, so essentially all of "the collection takes a while to render" was decoding ninety
-  // pictures at once, most of them scrolled well out of sight. loading=lazy defers everything outside
-  // the viewport (in-view images still load eagerly, so nothing visible is delayed) and decoding=async
-  // keeps whatever does decode off the critical path.
-  const defer = lazy ? ' loading="lazy" decoding="async"' : '';
+  // No lazy-loading here, deliberately. It was tried and removed: the full collection is 93 faces and
+  // ~1.1s of image DECODE, and deferring them did cut that — but only by moving it onto the SCROLL,
+  // where cards popped in row by row while someone was looking at them. There is no network involved;
+  // these are local files inside the app. The cost is paid once, up front, by warmAssets() while the
+  // menu is idle, and every grid then renders from a warm cache and scrolls without a single pop.
   return `<div class="fc-art" style="${pc(F.art)};--cat:${cat}"><span class="fc-glyph">${glyph}</span></div>
-    <img class="fc-face" src="${src}" data-cid="${cid}" onerror="faceMiss(this)"${defer} alt="">`;
+    <img class="fc-face" src="${src}" data-cid="${cid}" onerror="faceMiss(this)" alt="">`;
 }
 function frameCardHTML(c, w){
   w = w || 250;
@@ -4169,7 +4314,7 @@ function framedTile(c, onclick, opts){
   opts = opts || {};
   const badge = opts.count > 1 ? `<div class="fc-badges"><span class="temp">×${opts.count}</span></div>` : '';
   const up = opts.up ? `<span class="fc-up">+</span>` : '';
-  return `<div class="gridcard fcbox ${opts.dim||''}"${onclick?` onclick="${onclick}"`:''}>${framedInner(c, GRID_CARD_W, opts.lazy)}${badge}${up}</div>`;
+  return `<div class="gridcard fcbox ${opts.dim||''}"${onclick?` onclick="${onclick}"`:''}>${framedInner(c, GRID_CARD_W)}${badge}${up}</div>`;
 }
 function cardDetailHTML(c){
   const cp = c.cp != null ? c.cp : c.cost;
@@ -4293,7 +4438,7 @@ let _catCards = {};                        // flat id→card map for the collect
 function cardCell(c){                       // one card tile in the collection grid
   if (!c.owned && !c.seen) return `<div class="gridcard"><img src="assets/ui/card_locked.png" alt="locked" style="width:100%;height:100%;display:block"></div>`;
   // owned → full colour; seen-from-an-enemy but not owned → revealed, greyed out
-  return framedTile(c, `showCatCard('${c.id}')`, { dim: c.owned ? '' : 'seen', lazy: true });
+  return framedTile(c, `showCatCard('${c.id}')`, { dim: c.owned ? '' : 'seen' });
 }
 let _catUp = false;
 function showCatCard(id, up){
@@ -4366,7 +4511,7 @@ function shopDeckPick(mode){
   const cards = (p.deck||[]).slice().sort((a,b)=>(RARITY_ORDER[a.rarity]-RARITY_ORDER[b.rarity])||a.name.localeCompare(b.name));
   const grid = cards.map(c=>{
     const ok = usable(c) && afford;
-    return framedTile(c, `shopPick('${mode}','${c.id}')`, { count: c.n, up: c.up, dim: ok ? '' : 'disabled', lazy: true });
+    return framedTile(c, `shopPick('${mode}','${c.id}')`, { count: c.n, up: c.up, dim: ok ? '' : 'disabled' });
   }).join('');
   const title = mode==='upgrade' ? '⬆ Upgrade a card' : '✕ Remove a card';
   const hint = mode==='upgrade' ? `Tap a card to upgrade it — ${siEm('salvage')}${cost} each.` : `Tap a card to scrap it and thin your deck — ${siEm('salvage')}${cost}.`;
@@ -4847,7 +4992,7 @@ function markTurnSpent() {
 }
 // tapping a non-button HUD stat pill (CP / HQ / Bases / Troops) explains what it is
 const PILL_INFO = {
-  cp:     ['Command Points', `Spent to play cards. A little refills at the start of each of your turns — hold <b>◆ nodes</b> and captured <b>outposts</b> to earn more.`],
+  cp:     ['Command Points', `Spent to play cards. A little refills at the start of each of your turns — hold <b>nodes</b> and captured <b>outposts</b> to earn more.`],
   hq:     ['HQ Integrity', `Your headquarters' health. If it's destroyed you lose the battle — the plate glows <b class="red">red</b> when it's critical.`],
   bases:  ['Enemy Bases', `How many enemy <b>HQs</b> are still standing. Destroy every one to win the battle.`],
   troops: ['Troops', `Units in the field vs your <b>supply cap</b>. At the cap you can't deploy more — raise it by building <b>Barracks</b> and capturing <b>Outposts</b>.`],
@@ -4856,24 +5001,24 @@ function showPillInfo(key) {
   const e = PILL_INFO[key]; if (!e) return;
   let body = e[1];
   if (key === 'cp' && S && S.cp_total > 0) {   // spell out the control points on this map + how many you hold
-    body += `<div style="margin-top:8px">This map has <b>${S.cp_total}</b> control point${S.cp_total>1?'s':''} (<b>◆</b>). Hold one — a unit beside it with no enemy adjacent — for <b>+1 max CP</b> each. You hold <b class="gold">${S.cp_hold||0}/${S.cp_total}</b>.</div>`;
+    body += `<div style="margin-top:8px">This map has <b>${S.cp_total}</b> control point${S.cp_total>1?'s':''}. Hold one — a unit beside it with no enemy adjacent — for <b>+1 max CP</b> each. You hold <b class="gold">${S.cp_hold||0}/${S.cp_total}</b>.</div>`;
   }
   _infoPopup(e[0], body);
 }
 // tapping the mission objective chip explains what this battle's objective is + your progress
 const OBJ_INFO = {
   survive: o => `Hold out for <b>${o.turns}</b> turns without losing your HQ — you don't have to destroy anything. <b>${o.progress}/${o.turns}</b> so far.`,
-  hold:    o => `Keep one of your units on the marked <b>◆ objective tile</b>, with no enemy right next to it, for <b>${o.turns}</b> turns. Progress <b class="red">resets to zero</b> if an enemy contests it. <b>${o.progress}/${o.turns}</b> held.`,
+  hold:    o => `Keep one of your units on the marked <b>objective tile</b>, with no enemy right next to it, for <b>${o.turns}</b> turns. Progress <b class="red">resets to zero</b> if an enemy contests it. <b>${o.progress}/${o.turns}</b> held.`,
   escort:  o => `Walk the <b>refugee</b> to the safe house — move them onto the goal and keep them alive.${o.citizen?` Refugee HP <b>${o.citizen.hp}/${o.citizen.max}</b>.`:''}`,
   escape:  () => `A way out is <b>hidden</b> on the map. Scout the edges to reveal it, then walk a unit onto it.`,
   bastion: o => `Break <b>all ${o.turns}</b> escalating enemy waves without your HQ falling. <b>${o.progress}/${o.turns}</b> broken.`,
   hunt:    o => `${o.text}. Track the roaming quarry across the map and bring it down.`,
-  spire:   o => `Wear down the <b>Spire</b> until it falls — but only so much damage lands each turn, so it's a war of attrition. <b>${o.hp}/${o.max}</b> HP left.`,
+  spire:   o => `Wear down the <b>Living Heart</b> until it falls — but only so much damage lands each turn, so it's a war of attrition. <b>${o.hp}/${o.max}</b> HP left.`,
 };
-const OBJ_TITLE = { survive:'Survive', hold:'Hold the Point', escort:'Escort', escape:'Escape', bastion:'Bastion', hunt:'The Hunt', spire:'Slay the Spire' };
+const OBJ_TITLE = { survive:'Survive', hold:'Hold the Point', escort:'Escort', escape:'Escape', bastion:'Bastion', hunt:'The Hunt', spire:'The Living Heart' };
 function showObjInfo() {
   const o = S.objective, f = o && OBJ_INFO[o.kind]; if (!f) return;
-  _infoPopup(`◎ ${OBJ_TITLE[o.kind] || 'Objective'}`, f(o));
+  _infoPopup(`${OBJ_TITLE[o.kind] || 'Objective'}`, f(o));
 }
 // Every ascension rule in force at the selected tier. They are cumulative — A3 means A1 AND A2 AND A3 —
 // which is exactly why listing them inline swamped the deploy screen.
@@ -4959,6 +5104,11 @@ function layoutBoard() {
   const sig = b.width + 'x' + b.height + '@' + cellPx + '/' + minCellPx + ':' + wrap.clientWidth + 'x' + wrap.clientHeight;
   if (layoutBoard._sig === sig) return;
   layoutBoard._sig = sig;
+  // Past this line the grid really is being rewritten, so the camera's cached measurements are stale.
+  // This signature is built from every input that can change the board's size (grid dims, cellPx,
+  // minCellPx, and the wrap's own box), which makes it exactly the right trigger — anything that would
+  // move those numbers has already been folded into it above.
+  camInvalidate();
   // Rows are declared EXPLICITLY, not left implicit. `.cell` uses `content-visibility: auto`, so an
   // off-screen cell is culled and contributes its `contain-intrinsic-size` placeholder rather than its
   // real box. With implicit rows the grid's height is derived from that content, and WebKit sizes the
@@ -5080,10 +5230,22 @@ function renderBoard() {
   const SIDE3 = { S: 0, W: 90, N: 180, E: 270 };        // side3 asset open=S (open toward the clear side)
   const OPP = { N: 'S', S: 'N', E: 'W', W: 'E' };
   const evar = (c) => 'edge' + (1 + fogHash(c.x, c.y) % 2);   // masked-D edge, 2 variants
+  // Which of this cell's four sides face off the grid. Shared with fogSolid() below rather than written
+  // twice: the two must agree about what a full-fill cell is, and a silent disagreement shows up as
+  // missing wood on the table, which is the kind of thing that reads as an asset bug.
+  const offSides = (c) => ['N', 'E', 'S', 'W'].filter(d => OFF(c.x + (d === 'E' ? 1 : d === 'W' ? -1 : 0), c.y + (d === 'S' ? 1 : d === 'N' ? -1 : 0)));
+  // True only when the cell's ENTIRE box is under opaque cloud, so the wood tile beneath cannot be seen:
+  // unrevealed or off-map void, AND not on the outer ring. Ring cells return edge wisps instead of a
+  // fill and the table deliberately shows through them.
+  //
+  // Deliberately NOT "has a .fog.fill" — a remembered tile also gets a fill, with `veil` on it at .62
+  // opacity, and its terrain is meant to read through. That one is why this is a predicate and not a
+  // querySelector.
+  const fogSolid = (c) => (c.t == null || c.t === 'void') && !offSides(c).length;
   const fogFor = (c) => {
     // whole board fogged: every unrevealed play cell AND off-map void renders fog (hides the map shape)
     if (c.t == null || c.t === 'void') {
-      const off = ['N', 'E', 'S', 'W'].filter(d => OFF(c.x + (d === 'E' ? 1 : d === 'W' ? -1 : 0), c.y + (d === 'S' ? 1 : d === 'N' ? -1 : 0)));
+      const off = offSides(c);
       // windowed: cell shows its window into its 4×4 section's sheet (continuous within the section).
       // (Every fog set is win:true; the non-win branch is a defensive fallback — f0 is the only fill tile kept.)
       const fill = FWIN
@@ -5147,6 +5309,11 @@ function renderBoard() {
     const terr = c.t ? 't-' + c.t : 't-none';
     const dark = (c.t && c.t !== 'void' && !c.vis) ? ' dark' : '';   // only REMEMBERED terrain greys; never void/fog (else the darkened void outlines the map shape)
     let cls = 'cell ' + terr + dark, glyph = '';
+    // Fully under cloud → don't paint the wood tile nobody can see. There is nothing else to skip: the
+    // serializer already withholds terrain and units for unrevealed ground (serialize.ts builds the cell
+    // with `t: null` and `u: null`), so the fog is standing in for content the client was never sent
+    // rather than covering content it drew.
+    if (fogSolid(c)) cls += ' fogsolid';
     if (c.u) {
       glyph = counterHTML(c.u);          // cardboard counter, not a letter
       // A creature drawn across several tiles must escape its own cell — `.cell` uses content-visibility,
@@ -5176,7 +5343,7 @@ function renderBoard() {
       else if (TERR_GLYPH[c.t]) { glyph = TERR_GLYPH[c.t]; cls += ' terrglyph'; }
     }
     let stormfx = '';
-    if (c.st && c.vis) { cls += ' storm'; const sd = (((c.x * 7 + c.y * 13) % 15) / 10).toFixed(2); stormfx = `<div class="stormfx" style="animation-delay:-${sd}s"><img src="assets/terrain/storm.png" alt=""></div>`; }   // storm WALL cell (only while you can SEE it — a remembered-tile storm is stale, so hide it): flashing overlay ON TOP of terrain + unit; the eye is open
+    if (c.st && c.vis) { cls += ' storm'; const sd = (((c.x * 7 + c.y * 13) % 15) / 10).toFixed(2); stormfx = `<div class="stormfx" style="--sd:-${sd}s"><img src="assets/terrain/storm.png" alt=""></div>`; }   // storm WALL cell (only while you can SEE it — a remembered-tile storm is stale, so hide it): flashing overlay ON TOP of terrain + unit; the eye is open
     // Two tiers. `danger` = this tile can be hit. `dangerfire` = an enemy can STAND here and shoot from
     // it, which is the tile you can deny by getting there first — so it wins when a tile is both.
     if (dangerOn) {
@@ -5186,7 +5353,7 @@ function renderBoard() {
     }
     // objective "hold" point marker — an always-on-top ring so it stays visible even while you hold it
     let objring = '';
-    if (S.objective && S.objective.pos && S.objective.pos[0]===c.x && S.objective.pos[1]===c.y) {
+    if (_isObjTile(c)) {
       cls += ' holdpoint';
       // ring + flag both live in the on-top overlay so the WHOLE marker shows through the fog (not just an
       // empty ring); drop the flag when one of your units is standing on the point so it doesn't cover them.
@@ -5289,9 +5456,38 @@ function fogLift(el, oldHTML, x, y) {
   fog.addEventListener('animationend', gone, { once: true });
   setTimeout(gone, 1400 + step);   // backstop: animationend never fires if the tile is re-rendered
 }
+// Motion is off when the SYSTEM asks for it, or when the player has chosen the Performance preset.
+// Everything that animates checks this one place.
 function _reducedMotion() {
+  if (gfxLevel() === 'perf') return true;
   return !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 }
+// ── graphics quality ────────────────────────────────────────────────────────────────────────────
+// For hardware that is not keeping up — an old laptop, a machine driving a television, anything that
+// has started to throttle. Measured on a 2017 i7 the game holds 60fps with the whole budget to spare
+// and cutting the rendered pixels FOURFOLD changed nothing, so this is not here to fix a deficit that
+// exists on a healthy machine. It is here for the one that is already struggling, where the cheapest
+// thing to give up is work repeated every frame.
+const GFX_LEVELS = ['full', 'balanced', 'perf'];
+const GFX_LABEL = { full: 'Full', balanced: 'Balanced', perf: 'Performance' };
+function gfxLevel() {
+  try { const v = localStorage.getItem('dc_gfx'); return GFX_LEVELS.indexOf(v) >= 0 ? v : 'full'; }
+  catch (_) { return 'full'; }
+}
+function setGfxLevel(v) {
+  if (GFX_LEVELS.indexOf(v) < 0) return;
+  try { localStorage.setItem('dc_gfx', v); } catch (_) {}
+  applyGfx();
+  // Only repaint the panel if it is actually open. It used to call showSettings() unconditionally,
+  // which OPENED Settings over the board as a side effect of changing a setting.
+  try { const o = $('#ovSettings'); if (o && o.classList.contains('show')) showSettings(); } catch (_) {}
+}
+function applyGfx() {
+  const v = gfxLevel(), r = document.documentElement;
+  r.classList.toggle('gfx-balanced', v === 'balanced' || v === 'perf');
+  r.classList.toggle('gfx-perf', v === 'perf');
+}
+applyGfx();
 
 // The telegraph's arrows: a dashed path to the tile each enemy is heading for, and a solid red one from
 // there to what it will shoot. Drawn in board-local pixels into an SVG that is a child of #board, the
@@ -5590,7 +5786,7 @@ function renderPrompt() {
       <div class="uihd"><b class="cyan">${info.n}</b>
         ${ibtn('info', 'showInspect(unitById(cmd))', { cls: 'xs' })}</div>
       <div class="uist">${siEm('hp')}${u.hp}/${u.max} · ATK ${u.atk} · RNG ${rng} · MV ${u.mv} · DEF ${u.df}</div>
-      ${(cmdOpts.aim && cmdOpts.aim.size) ? `<div class="uihint">${isAiming() ? (cmdOpts.precise ? '◎ Precise — tap a tile for a dead-on hit' : '◎ Tap a tile to lob — the shell may drift a tile') : '🥾 Move — tap a tile to reposition'}</div>` : ''}
+      ${(cmdOpts.aim && cmdOpts.aim.size) ? `<div class="uihint">${isAiming() ? (cmdOpts.precise ? 'Precise — tap a tile for a dead-on hit' : 'Tap a tile to lob — the shell may drift a tile') : 'Move — tap a tile to reposition'}</div>` : ''}
       <div class="uiact"><span class="dim">Actions ${cmdOpts.ap}</span>
         ${(cmdOpts.aim && cmdOpts.aim.size) ? `<button class="uitoggle" onclick="toggleAim()">${isAiming() ? 'Move ▸' : 'Aim ▸'}</button>` : ''}</div>
       <div class="uift">
@@ -5680,7 +5876,11 @@ async function tapCell(x, y) {
   }
   // (3) nothing selected → tap your unit to command, else inspect
   if (isMine(cell.u)) { await selectUnit(cell.u.id); return; }
+  // Special tiles describe themselves AND report what is under them, so nothing is hidden by taking
+  // precedence here. The objective goes first: it is the thing the whole battle is being scored on.
+  if (_isObjTile(cell)) { showObjTileInfo(cell); return; }
   if (cell.st) { showStormInfo(cell); return; }   // storm tile → describe the storm AND what's under it
+  if (cell.eye) { showStormEyeInfo(cell); return; }   // the calm centre carries no `st` of its own
   // Fired WITH the panel, not after it closes. The tip explains what you are looking at, so it has to be
   // on screen at the same time as the thing — it centres over the panel rather than covering it.
   if (cell.u) { showInspect(cell.u); coach('inspect'); }
@@ -5697,13 +5897,38 @@ function _coachSoon(id) {
 }
 // interactable tokens sit ON open ground — they are NOT a terrain type
 const ONGROUND = { crate:'a supply crate', workshop:'a workshop', node:'a command node', escape:'the exit' };
-function showStormInfo(c) {
+// The ground a special tile is sitting on, and whoever is standing on it. Shared by every describer
+// below so the storm, its eye and the objective all report their tile the same way.
+function _underTile(c) {
   const under = [];
   under.push(ONGROUND[c.t] ? `${ONGROUND[c.t]} on <b>open ground</b>`
     : (c.t && c.t !== 'plain' && c.t !== 'void') ? `terrain is <b>${TERR_NAME[c.t] || c.t}</b>`
     : `<b>open ground</b>`);
   if (c.u) under.push(`${isMine(c.u) ? 'your' : 'an enemy'} <b>${(CLASS_INFO[c.u.cls] || { n: c.u.cls }).n}</b> stands here`);
-  _infoPopup(`${si('storm', 15)} Storm`, `A drifting storm. Its <b>wall batters any unit</b> caught in it each round — but the <b>eye at the centre is calm</b>, so shelter there. It rolls over <b>anything</b>, even rock, and shifts every turn. Under this tile: ${under.join(', ')}.`);
+  return under.join(', ');
+}
+function showStormInfo(c) {
+  _infoPopup('Storm', `A drifting storm. Its <b>wall batters any unit</b> caught in it each round — but the <b>eye at the centre is calm</b>, so shelter there. It rolls over <b>anything</b>, even rock, and shifts every turn. Under this tile: ${_underTile(c)}.`);
+}
+// The calm centre. It carries no `st` — that is precisely what makes it the eye — so before this it fell
+// through to the terrain view and reported open ground, on the one tile the storm text tells you to run to.
+function showStormEyeInfo(c) {
+  _infoPopup('Storm — the eye', `The <b>calm centre</b> of the storm. Units here are <b>not battered</b> — this is the tile to shelter on, and the eight tiles around it are the wall. The storm <b>shifts every turn</b>, so the eye moves with it and this ground will not stay safe. Under this tile: ${_underTile(c)}.`);
+}
+// Is this the tile the mission turns on? renderBoard draws the marker from the same test, so the ring on
+// the board and the panel behind a tap can never disagree about which tile is the objective.
+function _isObjTile(c) {
+  const o = S.objective;
+  return !!(o && o.pos && o.pos[0] === c.x && o.pos[1] === c.y);
+}
+// Tapping the objective used to describe the ground it happens to stand on — "Open Ground" — with nothing
+// to say it was the objective at all, while the HUD counted down against that very tile.
+function showObjTileInfo(c) {
+  const o = S.objective, f = o && OBJ_INFO[o.kind];
+  const storm = c.st ? ' A <b>storm wall</b> is over it right now.' : c.eye ? ' It sits in the <b>eye</b> of a storm.' : '';
+  _infoPopup(`${OBJ_TITLE[(o || {}).kind] || 'Objective'}`,
+    `${f ? f(o) : 'The tile this mission turns on.'}
+     <div style="margin-top:7px">This is <b>the objective tile</b>. Under it: ${_underTile(c)}.${storm}</div>`);
 }
 
 async function selectUnit(id, center = true) {
@@ -6040,7 +6265,8 @@ function animateMove(cell, from, sig, side, flash) {
   // or the arc is drawn underneath whatever it passes over.
   const z0 = cell.style.zIndex;
   cell.style.zIndex = '30';
-  const restore = () => { cell.style.zIndex = z0; };
+  cell.classList.add('travelling');   // and lift the paint clip, or the arc is not drawn at all
+  const restore = () => { cell.style.zIndex = z0; cell.classList.remove('travelling'); };
   try {
     piece.animate(frames, { duration: dur, easing: heavy ? 'linear' : 'cubic-bezier(.42,0,.4,1)' });
   } catch (_) { cue(); flash(); restore(); return 0; }
@@ -7163,7 +7389,7 @@ const UNIT_SVG = {
   turret: '<path d="M5 19 A7 7 0 0 1 19 19 Z"/><path d="M12 12 L20.5 7"/>',
   camp:   '<path d="M12 4 L5 20 M12 4 L19 20 M8 15 H16"/>',
   civ:    '<circle cx="12" cy="6.5" r="2.6"/><path d="M12 9 V16 M12 12 L8.5 19 M12 12 L15.5 19"/>',
-  rous:   '<ellipse cx="11" cy="14" rx="7" ry="4.5"/><circle cx="18" cy="12" r="2.4"/><path d="M4 15 Q1 15 1.5 12" fill="none"/><path d="M19.6 11 L21.5 9.5 M19.6 13 L21.5 14.5" stroke-width="1.4"/>',
+  bog_rat: '<ellipse cx="11" cy="14" rx="7" ry="4.5"/><circle cx="18" cy="12" r="2.4"/><path d="M4 15 Q1 15 1.5 12" fill="none"/><path d="M19.6 11 L21.5 9.5 M19.6 13 L21.5 14.5" stroke-width="1.4"/>',
   deer:   '<circle cx="12" cy="13" r="3.2"/><path d="M12 9.8 V5.5"/><path d="M12 6.5 L9.5 3.5 M12 6.5 L14.5 3.5 M10.6 5 L8.5 4.2 M13.4 5 L15.5 4.2"/><path d="M12 16 V20 M10 15.5 L9 20 M14 15.5 L15 20"/>',
   spirit: '<circle cx="12" cy="10" r="4.5"/><path d="M12 5.5 L9 1.5 M12 5.5 L15 1.5 M8.5 4 L5.5 2.5 M15.5 4 L18.5 2.5 M9.5 3 L7 0.8 M14.5 3 L17 0.8"/><path d="M12 14.5 V22 M8.5 14 L6.5 22 M15.5 14 L17.5 22"/><circle cx="10.4" cy="9.5" r="0.7" fill="#241d10" stroke="none"/><circle cx="13.6" cy="9.5" r="0.7" fill="#241d10" stroke="none"/>',
   heart:  '<path d="M12 20 C6 15 3 11.5 3 8.2 A4.2 4.2 0 0 1 12 6 A4.2 4.2 0 0 1 21 8.2 C21 11.5 18 15 12 20 Z"/><path d="M6 4 Q3 6 4 9 M18 4 Q21 6 20 9 M12 21 Q10 23 7 22 M12 21 Q14 23 17 22" fill="none" stroke-width="1.5"/>',
@@ -7176,8 +7402,8 @@ const CLASS_SYM = {
   command_vehicle:'hq', construction_yard:'base', power_plant:'power',
   supply_depot:'supply', barracks:'barracks', repair_bay:'repair',
   outpost:'flag', turret:'turret', tribe_camp:'camp', bannerman:'flag',
-     citizen:'civ', rous:'rous',
-     gator:'rous',
+     citizen:'civ', bog_rat:'bog_rat',
+     gator:'bog_rat',
 };
 const CAT_COLOR = {
   Reinforcement:'#4d78ac', Ordnance:'#b8503f', Order:'#c19a3e',
@@ -7249,8 +7475,8 @@ const CLASS_INFO = {
   
   
   
-  citizen:{n:"The Refugee",r:`A civilian who can't fight (0 attack, slow). Escort them one tile at a time to the ${siEm('flag_goal')} safe house. If they die, the fight is lost.`},
-  rous:{n:"R.O.U.S.",r:"Rodent of Unusual Size — a big, fast swamp rat. Melee only, but quick and relentless; it lunges at whoever's nearest. They keep boiling out of the maze edges, so don't linger — find the way out."},
+  citizen:{n:"The Refugee",r:`A civilian who can't fight (0 attack, slow). Escort them one tile at a time to the marked safe house. If they die, the fight is lost.`},
+  bog_rat:{n:"Bog Rat",r:"A big, fast swamp rat — melee only, but quick and relentless, and it lunges at whoever is nearest. They keep boiling out of the maze edges, so don't linger: find the way out."},
   gator:{n:"Gator",r:"A mire predator — neutral, but hostile to everyone. Tough and hard-biting, yet slow and territorial: it lurks in the sludge and ambushes whatever strays too close, then sinks back. Keep your units out of the mire, or put it down."},
   
   
@@ -7267,6 +7493,9 @@ const TERRAIN_INFO = {
   emp:"EMP field — TRIGGERS on entry: a unit that steps in loses its remaining actions this turn.",
   smoke:"Smoke screen — friendly cover: blocks line of sight and shields whoever hides in it (−2 damage).",
   escape:"...this ground is oddly still. Quiet. Not like the rest of the swamp at all.",
+  node:"Command node — a control point. You hold it by having a unit on or beside it while the enemy has none: a CP node raises your maximum CP, a draw node your hand size. If both sides stand next to it, it is contested and NEITHER side holds it.",
+  workshop:"Workshop — move a unit onto it to upgrade a card, or remove one from your deck.",
+  void:"Off the battlefield. Impassable, and it blocks line of sight.",
 };
 // terrain display names + stat lines for the detail view (mirrors engine terrain defs)
 const TERR_NAME = { plain:'Open Ground', forest:'Forest', hill:'Hill', water:'Water', rock:'Rock',
@@ -7280,6 +7509,11 @@ function tileInner(kind) {
   if (kind === 'crate')    return `<span class="token crate">${(S.inter&&S.inter.crate)?`<img src="assets/interactables/${S.inter.crate}">`:si('cache',40)}</span>`;
   if (kind === 'workshop') return `<span class="token workshop">${(S.art&&S.art.repair_bay)?`<img src="assets/units/${S.art.repair_bay}">`:si('shop',40)}</span>`;
   if (kind === 'emp')      return `<span class="token emp">${(S.inter&&S.inter.emp)?`<img src="assets/interactables/${S.inter.emp}">`:(si('emp',40)||TERR_GLYPH.emp)}</span>`;
+  // A node's art comes from S.inter, like the crate and the workshop — NOT from S.terr, because a node is
+  // a token standing on open ground rather than a terrain type. Without this case the detail panel fell
+  // through to the terrain lookups, found nothing for 'node', and drew an empty tile: the panel named the
+  // control point and stated who held it above a blank square.
+  if (kind === 'node')     return `<span class="token node">${(S.inter&&S.inter.node)?`<img src="assets/interactables/${S.inter.node}">`:'<span class="terrglyph" style="font-size:52px">◆</span>'}</span>`;
   if (S.terr && S.terr[kind]) return `<img class="terr" src="assets/terrain/${S.terr[kind]}" alt="">`;
   if (TERR_GLYPH[kind])    return `<span class="terrglyph t-${kind}" style="font-size:52px">${TERR_GLYPH[kind]}</span>`;
   return '';
@@ -7328,15 +7562,21 @@ function showInspect(u) {
       : (u.xp ? ` · ${u.xp} XP` : '');
     chips.push(`<span class="bichip gold">&#9733; Rank <b>${u.lvl||1}/5</b>${xpTxt}</span>`);
   }
-  const it = {attack:`${siEm('skirmish')} will attack`, advance:'→ advancing', hold:'· holding',
-    steal:`${siEm('coin')} heading for your HQ to rob salvage`, flee:`${siEm('nomad')} fleeing to the edge with your salvage`}[u.intent];
+  // Plain words. Each of these used to lead with an icon, and at 1em against a sentence they read as
+  // specks rather than symbols — the `hold` line did not even have one, just the leftover separator, so
+  // it rendered as "Intent: · holding". The line is already coloured and labelled; it needs no glyph.
+  const it = {attack:'will attack', advance:'advancing', hold:'holding',
+    steal:'heading for your HQ to rob salvage', flee:'fleeing to the edge with your salvage'}[u.intent];
   const intent = u.intent ? `<div class="binote red">Intent: ${it}</div>` : '';
   const flank = (u.flanked === true)
-    ? (mine ? `<div class="binote red">△ Flanked — enemy attacks on it hit +2. Pull back or clear one.</div>`
-            : `<div class="binote grn">⚔ Flanked — your attacks on it hit +2 (you have it surrounded).</div>`)
+    ? (mine ? `<div class="binote red">Flanked — enemy attacks on it hit +2. Pull back or clear one.</div>`
+            : `<div class="binote grn">Flanked — your attacks on it hit +2 (you have it surrounded).</div>`)
     : '';
   const desc = u.boss ? 'A named enemy commander — raze it to win the act. It has a signature mechanic; tap the boss banner up top for its intel.' : info.r;
-  const tags = (u.tags||[]).length ? `<div class="bidesc" style="color:#9a9575;font-size:11.5px;margin-top:8px">${(u.tags||[]).join(' · ')}</div>` : '';
+  // No tag list. These are the ENGINE's own tags — `structure`, `tribe_camp`, `hq` — printed verbatim,
+  // underscores and all. They are how the rules identify a unit internally, not anything a player acts
+  // on, and everything they hinted at is already said properly above: the faction in the subtitle, the
+  // behaviour in the description, the numbers in the chips.
   const terrPanel = terr ? `
        <div class="biterr">
          <div class="cell t-${terr} biswatch">${tileInner(terr)}</div>
@@ -7349,7 +7589,7 @@ function showInspect(u) {
        <div class="bisub">${sub}</div>${subname}
        <div class="bistats">${chips.join('')}</div>
        ${desc?`<div class="bidesc">${desc}</div>`:''}
-       ${intent}${flank}${tags}${terrPanel}
+       ${intent}${flank}${terrPanel}
      </div>
      <div class="ovclose"><button class="ibtn" onclick="closeOv('ovInspect')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
   $('#ovInspect').classList.add('show');
@@ -7461,7 +7701,7 @@ function showHelp() {
     ${topic('<span class="cyan">Cards are your overlay</span>', `Tap a card to play it — they cost
       <b>Command Points (CP)</b>, which refill a little each turn. Cards bring
       reinforcements, ordnance, orders and buildings.`)}
-    ${topic('<span class="cyan">Capture ground</span>', `Stand next to a <b>◆ node</b> or an
+    ${topic('<span class="cyan">Capture ground</span>', `Stand next to a <b>node</b> or an
       <b>outpost</b> to take it — each one you hold gives more CP / Troops.`)}
     ${topic('<span class="cyan">Command Power</span>', `Your general has a signature <b>${si('cp',13)} Power</b>
       that fills as you play. When the gauge is full, tap it to unleash — it costs the whole gauge.`)}
@@ -7639,10 +7879,13 @@ function showTerrain(cellOrKind) {
   const onGround = ONGROUND[kind] ? ONGROUND[kind].replace(/^an? /, '') : null;
   const title = node ? 'Command node' : (onGround ? onGround.charAt(0).toUpperCase() + onGround.slice(1)
                                                   : (TERR_NAME[kind] || kind));
+  // A node is either a CP node or a DRAW node (game.ts counts them separately, by `kind`). This said
+  // "+1 max CP" for both, so a draw node advertised a reward it does not give.
+  const gain = node && node.kind === 'draw' ? '+1 card draw' : '+1 max CP';
   const hold = node
-    ? (node.owner === 'you'   ? `<div class="bihold you">⚑ Held by you — +1 max CP</div>`
-     : node.owner === 'enemy' ? `<div class="bihold enemy">⚑ Held by the enemy</div>`
-     :                          `<div class="bihold">⚑ Unheld — stand next to it to take it</div>`)
+    ? (node.owner === 'you'   ? `<div class="bihold you">Held by you — ${gain}</div>`
+     : node.owner === 'enemy' ? `<div class="bihold enemy">Held by the enemy</div>`
+     :                          `<div class="bihold">Unheld — stand a unit on or beside it to take it</div>`)
     : '';
   const sub = node ? 'Control point' : (haz ? 'Hazard' : (onGround ? 'On the ground' : 'Terrain'));
   const under = (node || onGround) && TERR_NAME[kind] ? `<div class="d" style="margin-top:2px">on ${TERR_NAME[kind]}</div>` : '';
@@ -7756,7 +7999,22 @@ function computeMinCell() {
   // whole board inside the window, which is what the floor is described as everywhere else: fitCell()
   // says "board fills the table; zoom IN only" and setCellPx() clamps to "the board-fills-the-table
   // view". Scrolling now appears only once you actually zoom in, which is the point of a floor.
-  const fill = Math.round(Math.min(availW / w, availH / h));
+  const byW = availW / w, byH = availH / h;
+  const contain = Math.min(byW, byH);
+  // …but CONTAIN alone is not enough on a short, wide screen. A 22x14 board height-binds, and on a
+  // phone in landscape that lands at 15px per tile with 62% of the width left empty — measured, and
+  // exactly what the board looked like: a small rectangle marooned in the middle of the table.
+  //
+  // So the floor is also allowed to grow until a tile is at least readable, capped by the WIDTH so the
+  // board can never overflow horizontally — you only ever pan vertically, which is the axis a hand of
+  // cards already trains you to expect. This is safe now in a way it was not before: the camera clamps
+  // to camBounds, so overflowing an axis can no longer strand you in empty space, and the one-finger
+  // drag is back.
+  //
+  // Deliberately a FLOOR, not a rescale: where contain already gives a readable tile it wins untouched.
+  // Measured effect — desktop 39px (unchanged), tablet 28 -> 30, phone 15 -> 30.
+  const MIN_READABLE_CELL = 30;   // below this a tile is neither readable nor reliably tappable
+  const fill = Math.round(Math.max(contain, Math.min(byW, MIN_READABLE_CELL)));
   minCellPx = Math.max(5, Math.min(150, fill || 22));
   return minCellPx;
 }
@@ -7870,11 +8128,42 @@ async function toggleRetain(id) {
 // so a board point is recovered as (screen + cam) / camZ. Every clamp below works in SCALED pixels.
 let camX = 0, camY = 0, camZ = 1;
 const CAM_MAX = 3;                       // zoom IN up to 3x the fit, same ceiling as before
-function camBounds() {
+// The camera's layout inputs, measured once per LAYOUT instead of once per touch event.
+//
+// applyCam() runs on every touchmove — and a pinch runs it through camZoomAt(), which measured the wrap
+// again on top. Each of offsetWidth / clientWidth / getBoundingClientRect() is a layout READ, and a
+// layout read issued straight after a style write forces a synchronous reflow. With
+// `content-visibility: auto` on every tile a reflow is the most expensive thing in the frame: the engine
+// has to re-decide which cells are on screen before it can answer. So a pinch was paying for several
+// full reflows per frame, on a surface of hundreds of tiles.
+//
+// None of these values move during a gesture. The transform changes; the grid does not. They are
+// re-measured only when layoutBoard() actually rewrites the grid, or the window changes shape — and
+// layoutBoard's own signature already covers every input that can change the board's size.
+let _camMx = null;
+function camInvalidate() { _camMx = null; }
+function camMetrics() {
+  if (_camMx) return _camMx;
   const wrap = $('#boardwrap'), board = $('#board');
-  if (!wrap || !board) return { w: 0, h: 0, maxX: 0, maxY: 0, minX: 0, minY: 0 };
-  const w = board.offsetWidth * camZ, h = board.offsetHeight * camZ;
-  const vw = wrap.clientWidth, vh = wrap.clientHeight;
+  if (!wrap || !board) return null;
+  const r = wrap.getBoundingClientRect();
+  // offsetWidth/Height are LAYOUT boxes — the inline transform does not affect them, so these stay the
+  // board's unscaled size and every caller keeps applying camZ itself.
+  _camMx = { bw: board.offsetWidth, bh: board.offsetHeight,
+             vw: wrap.clientWidth, vh: wrap.clientHeight, left: r.left, top: r.top };
+  return _camMx;
+}
+// layoutBoard() covers every case where the BOARD changes size, but the wrap's own box can move without
+// it — rotating the phone, entering fullscreen, the Android keyboard, the URL bar sliding away. Those
+// arrive as a resize whether or not the grid needs relaying, and a stale `left`/`top` would make a pinch
+// zoom about the wrong point.
+window.addEventListener('resize', camInvalidate);
+window.addEventListener('orientationchange', camInvalidate);
+function camBounds() {
+  const m = camMetrics();
+  if (!m) return { w: 0, h: 0, vw: 0, vh: 0, maxX: 0, maxY: 0, minX: 0, minY: 0 };
+  const w = m.bw * camZ, h = m.bh * camZ;
+  const vw = m.vw, vh = m.vh;
   // Smaller than the viewport on an axis → lock centred on it, so the table never drifts off-centre.
   const minX = w <= vw ? (w - vw) / 2 : 0, maxX = w <= vw ? (w - vw) / 2 : w - vw;
   const minY = h <= vh ? (h - vh) / 2 : 0, maxY = h <= vh ? (h - vh) / 2 : h - vh;
@@ -7886,14 +8175,20 @@ function applyCam() {
   camX = Math.max(b.minX, Math.min(b.maxX, camX));
   camY = Math.max(b.minY, Math.min(b.maxY, camY));
   board.style.transformOrigin = '0 0';
-  board.style.transform = 'translate(' + (-camX).toFixed(2) + 'px,' + (-camY).toFixed(2) + 'px) scale(' + camZ.toFixed(4) + ')';
+  // translate3d, NOT translate. #board's stylesheet carries `transform: translateZ(0)` to hold it on its
+  // own compositor layer — that promotion is what stopped the horizontal tearing when panning a large
+  // board, and it is the whole reason the rule exists. An INLINE transform overrides the stylesheet one,
+  // and a purely 2D transform is not a promotion hint, so writing `translate(...) scale(...)` here
+  // silently dropped the board back onto the main thread: every pan and pinch frame re-rasterised the
+  // entire wood surface and all its tiles, and the tearing came back exactly as before.
+  // Keeping a Z component preserves the layer, so the gesture is a compositor transform again.
+  board.style.transform = 'translate3d(' + (-camX).toFixed(2) + 'px,' + (-camY).toFixed(2) + 'px,0) scale(' + camZ.toFixed(4) + ')';
 }
 // Zoom about a screen point (defaults to the middle of the board area above the hand).
 function camZoomAt(z, sx, sy) {
-  const wrap = $('#boardwrap'); if (!wrap) return;
-  const r = wrap.getBoundingClientRect();
-  if (sx == null) { sx = wrap.clientWidth / 2; sy = (wrap.clientHeight - HAND_CLEAR) / 2; }
-  else { sx -= r.left; sy -= r.top; }
+  const m = camMetrics(); if (!m) return;
+  if (sx == null) { sx = m.vw / 2; sy = (m.vh - HAND_CLEAR) / 2; }
+  else { sx -= m.left; sy -= m.top; }
   const nz = Math.max(1, Math.min(CAM_MAX, z));
   const bx = (sx + camX) / camZ, by = (sy + camY) / camZ;   // board point under that screen point
   camZ = nz;
@@ -7975,9 +8270,9 @@ function camGlide(board) {
 }
 // Centre the camera on a point given in BOARD pixels (unscaled).
 function camCenterOn(bx, by) {
-  const wrap = $('#boardwrap'); if (!wrap) return;
-  camX = bx * camZ - wrap.clientWidth / 2;
-  camY = by * camZ - (wrap.clientHeight - HAND_CLEAR) / 2;
+  const m = camMetrics(); if (!m) return;
+  camX = bx * camZ - m.vw / 2;
+  camY = by * camZ - (m.vh - HAND_CLEAR) / 2;
   applyCam();
 }
 function setCellPx(px) {
@@ -7990,24 +8285,84 @@ function setCellPx(px) {
   drawIntents(intentOn && !turnBusy ? intentList : []);   // arrow geometry is in board pixels, so it has to follow the zoom
 }
 function zoom(d) { camZoomAt(camZ * (1 + d / 60)); }   // d is a legacy pixel delta; scale it into a factor
-// pinch-to-zoom the battlefield (two fingers). Single-finger panning still scrolls the board.
+// Touch: one finger drags the battlefield, two fingers pinch to zoom.
+//
+// The one-finger drag is NOT optional polish — it is the only way to pan on a phone. Before the camera
+// rewrite `#boardwrap` was a scroll container and a drag scrolled it natively, which is why the old
+// comment here said "single-finger panning still scrolls the board". The camera replaced that with a
+// transform and set `overflow: hidden`, so there is no longer anything to scroll: two-finger pinch
+// zoomed, and nothing panned at all. On a large map that left most of the battlefield unreachable.
+//
+// A drag has to stay distinguishable from a TAP, because tapping a tile is how the whole game is
+// played. So a touch only becomes a pan after it has moved past a threshold, and once it has, the
+// click that the browser synthesises on release is swallowed — otherwise every pan would end by
+// selecting whichever tile happened to be under the finger.
+const TOUCH_PAN_SLOP = 8;   // px of movement before a touch stops being a tap and becomes a drag
 function initPinch() {
   const wrap = $('#boardwrap');
   if (!wrap || wrap._pinch) return;
   wrap._pinch = true;
   const dist = t => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
-  let base = null;
+  let base = null;      // two-finger pinch
+  let drag = null;      // one-finger pan
+  let unarm = null;     // tears down the post-pan click trap; see `clear` below
+  const disarm = () => { if (unarm) { unarm(); unarm = null; } };
+
   wrap.addEventListener('touchstart', e => {
-    if (e.touches.length === 2) base = { d: dist(e.touches) || 1, z: camZ,
-      cx: (e.touches[0].clientX + e.touches[1].clientX) / 2, cy: (e.touches[0].clientY + e.touches[1].clientY) / 2 };
+    disarm();           // a new touch is a new gesture: never let it be eaten by the last pan's trap
+    if (e.touches.length === 2) {
+      drag = null;      // a second finger landed: this is a pinch, not a pan
+      base = { d: dist(e.touches) || 1, z: camZ,
+        cx: (e.touches[0].clientX + e.touches[1].clientX) / 2, cy: (e.touches[0].clientY + e.touches[1].clientY) / 2 };
+    } else if (e.touches.length === 1 && typeof S !== 'undefined' && S && S.board) {
+      const t = e.touches[0];
+      drag = { x: t.clientX, y: t.clientY, moved: false };
+    }
   }, { passive: true });
+
   wrap.addEventListener('touchmove', e => {
     if (e.touches.length === 2 && base) {
       e.preventDefault();                       // we own the two-finger gesture
       camZoomAt(base.z * (dist(e.touches) / base.d), base.cx, base.cy);
+      return;
     }
+    if (e.touches.length !== 1 || !drag) return;
+    const t = e.touches[0];
+    const dx = t.clientX - drag.x, dy = t.clientY - drag.y;
+    // Until the finger has travelled far enough this is still a tap in progress; do nothing, so a
+    // slightly imprecise tap on a tile is not read as a one-pixel pan.
+    if (!drag.moved && Math.hypot(dx, dy) < TOUCH_PAN_SLOP) return;
+    drag.moved = true;
+    e.preventDefault();
+    // Negated, as on the desktop right-drag: the ground follows the finger, so the camera moves the
+    // other way. Un-negated it feels like dragging a scrollbar rather than the table.
+    camPanBy(-dx, -dy);
+    drag.x = t.clientX; drag.y = t.clientY;
   }, { passive: false });
-  const clear = e => { if (!e.touches || e.touches.length < 2) base = null; };
+
+  const clear = e => {
+    if (!e.touches || e.touches.length < 2) base = null;
+    if (drag && drag.moved) {
+      // Swallow the click the browser fires after the drag. preventDefault on touchmove suppresses it
+      // on most engines, but not all, and a pan that ends by selecting a tile is a worse bug than the
+      // one this fixes — so it is caught explicitly, in the capture phase before the cell's own onclick
+      // can see it.
+      //
+      // The trap MUST be disarmed on the next touchstart, and the timeout is not enough on its own.
+      // WebKit is one of the engines that fires no click at all after a finger has travelled, so on the
+      // platform we actually ship to, the trap is usually never sprung — it just sits there armed. Pan,
+      // then tap a tile within the window, and it would eat that tap instead: the pan works and the very
+      // next order silently does nothing, which reads as the game ignoring you. A fresh touch is always
+      // a new deliberate gesture, and any stale synthetic click would have arrived before it, so a new
+      // touch is the honest signal that the trap is no longer wanted.
+      disarm();
+      const eat = ev => { ev.stopPropagation(); ev.preventDefault(); disarm(); };
+      document.addEventListener('click', eat, { capture: true });
+      const t = setTimeout(disarm, 400);
+      unarm = () => { document.removeEventListener('click', eat, { capture: true }); clearTimeout(t); };
+    }
+    if (!e.touches || e.touches.length === 0) drag = null;
+  };
   wrap.addEventListener('touchend', clear);
   wrap.addEventListener('touchcancel', clear);
 }
@@ -8178,7 +8533,7 @@ function showHoverCard(x, y, cell) {
   if ((u.lvl || 1) > 1) chips.push(`<span class="bichip gold">&#9733; Rank <b>${u.lvl}/5</b></span>`);
   // The two states that change what an attack is worth, and the one that means it cannot act at all.
   const notes = [];
-  if (u.flanked === true) notes.push('△ Flanked — attacks on it hit +2');
+  if (u.flanked === true) notes.push('Flanked — attacks on it hit +2');
   if (u.disabled) notes.push('EMP — cannot act');
   if (u.stale) notes.push('Last known position — not currently in sight');
   const el = document.createElement('div');
@@ -8252,6 +8607,92 @@ function affirm(ov) {
   hit.click();
   return true;
 }
+// ── warm the image cache while nothing is happening ─────────────────────────────────────────────
+//
+// Every picture in this game is a local file inside the app — 18MB of card faces, 10MB of medals. None
+// of it needs fetching lazily, and deferring it only relocates the cost to the moment someone is
+// actually looking: cards popping in row by row as the collection scrolls. Paid instead during an idle
+// menu, which is otherwise doing nothing, it is invisible.
+//
+// Deliberately gentle. Three at a time, handing the thread back between batches via
+// requestIdleCallback, so this can never itself be the reason a menu stutters — the whole point is to
+// move work AWAY from the moments that matter, not to invent a new one. If the browser never goes idle
+// it simply makes no progress, which is the right behaviour.
+const _warm = { started: false, done: 0, total: 0 };
+function warmAssets() {
+  if (_warm.started) return; _warm.started = true;
+  const urls = [];
+  for (const id of CARD_ART_IDS) { urls.push('assets/cards/' + id + '.webp'); urls.push('assets/cards/' + id + '_up.webp'); }
+  const manifest = (m, dir) => { try { for (const k in (m || {})) if (m[k]) urls.push(dir + m[k]); } catch (_) {} };
+  manifest(typeof S !== 'undefined' && S && S.medal_art, 'assets/medals/');
+  manifest(typeof S !== 'undefined' && S && S.boss_art, 'assets/bosses/');
+  _warm.total = urls.length;
+  let i = 0, inFlight = 0;
+  const idle = window.requestIdleCallback || (fn => setTimeout(() => fn({ timeRemaining: () => 8 }), 24));
+  const pump = (deadline) => {
+    while (i < urls.length && inFlight < 3) {
+      const img = new Image();
+      const fin = () => {
+        inFlight--; _warm.done++;
+        if (i >= urls.length) return;
+        // hand the thread back the moment the browser wants it
+        if (deadline && typeof deadline.timeRemaining === 'function' && deadline.timeRemaining() <= 0) idle(pump);
+        else pump(deadline);
+      };
+      img.onload = () => { (img.decode ? img.decode().catch(() => {}) : Promise.resolve()).then(fin); };
+      img.onerror = fin;            // an upgraded variant that was never baked is not an error
+      img.src = urls[i++]; inFlight++;
+    }
+  };
+  idle(pump);
+}
+
+// ── frame-time meter ─────────────────────────────────────────────────────────────────────────────
+//
+// The reason this exists rather than a profiler: the machines this has to run well on are old Intel
+// Macs driving Retina panels off integrated graphics, and what costs them is COMPOSITING — 3200x1800
+// of it per frame — which a JS profiler cannot see at all. Measured in headless Chrome the whole game
+// is sub-3ms per operation and holds 60fps, while the same build on the real display is visibly
+// sluggish. Frame time is the only number that describes what a player actually feels.
+//
+// Off unless asked for: `?perf=1` on the URL, or the toggle in Settings > Debug.
+let _perfOn = false, _perfEl = null, _perfGaps = [];
+function perfMeter(on) {
+  _perfOn = on === undefined ? !_perfOn : !!on;
+  if (!_perfOn) { if (_perfEl) { _perfEl.remove(); _perfEl = null; } return _perfOn; }
+  if (_perfEl) return _perfOn;
+  _perfEl = document.createElement('div');
+  _perfEl.id = 'perfmeter';
+  _perfEl.style.cssText = 'position:fixed;left:6px;top:6px;z-index:60;pointer-events:none;'
+    + 'background:rgba(10,10,8,.82);color:#8fd08f;font:11px/1.45 ui-monospace,monospace;'
+    + 'padding:5px 8px;border-radius:4px;white-space:pre;min-width:150px';
+  document.body.appendChild(_perfEl);
+  let last = performance.now(), shown = last;
+  const tick = () => {
+    if (!_perfOn || !_perfEl) return;
+    const n = performance.now();
+    _perfGaps.push(n - last); last = n;
+    if (_perfGaps.length > 240) _perfGaps.shift();
+    if (n - shown > 400 && _perfGaps.length > 8) {
+      shown = n;
+      const g = [..._perfGaps].sort((a, b) => a - b);
+      const med = g[g.length >> 1], p95 = g[(g.length * 0.95) | 0], worst = g[g.length - 1];
+      const bad = _perfGaps.filter(x => x > 20).length;
+      _perfEl.style.color = med > 20 ? '#ff7a5a' : bad > _perfGaps.length * 0.1 ? '#e8c65a' : '#8fd08f';
+      _perfEl.textContent =
+        'fps    ' + (1000 / med).toFixed(0).padStart(5) + '\n' +
+        'median ' + med.toFixed(1).padStart(5) + 'ms\n' +
+        'p95    ' + p95.toFixed(1).padStart(5) + 'ms\n' +
+        'worst  ' + worst.toFixed(1).padStart(5) + 'ms\n' +
+        '>20ms  ' + String(bad).padStart(3) + '/' + _perfGaps.length;
+    }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+  return _perfOn;
+}
+try { if (/[?&]perf=1/.test(location.search)) addEventListener('load', () => perfMeter(true)); } catch (_) {}
+
 function initHotkeys() {
   if (window._hotkeys) return;
   window._hotkeys = true;
@@ -8354,6 +8795,6 @@ initDragPan();
 initZoomKeys();
 initHotkeys();
 window.__boot = () => { _applyOrient(); const p = refresh(); setTimeout(checkForUpdate, 2500); return p; };   // src/main.ts wires the local API, then calls this; returns the refresh promise so callers/tests can await first paint; update check runs once, non-blocking
-</script>
+</script>
 </body>
 </html>
