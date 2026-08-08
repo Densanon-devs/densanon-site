@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 07, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 08, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,131 +15,63 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 07, 2026</div>
+        <div class="digest-date-badge">August 08, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s robotics research skews toward making manipulation and navigation more robust under real-world conditions: bridging the human-to-robot embodiment gap for video-taught skills, anticipating wrist-camera dynamics for fine manipulation, planning safely for underwater vehicles with no external localization, and accepting that household service robots will fail and need to fail gracefully. On the industry side, capital and scale are the story - a $900M shipbuilding-automation deal, Brain Corp crossing 50,000 deployed robots, a 46-robot BMW E-Drive line, and a data-center manufacturer posting a 12x welding productivity jump from just 58 cobots. Rounding it out, a new open-source ROS 2 tool brings pandas-style analysis to robot bag data.</p>
+        <p class="digest-intro">Humanoid robotics hit a funding and public-market milestone today — Unitree&#x27;s ~$9B IPO and Mitsubishi&#x27;s market entry — while Google pushed Gemini Robotics 2 to close the dexterity gap; on the practical side, warehouse/manufacturing robots and ROS/Gazebo tooling kept maturing.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>VLAff: Vision-Language-Affordance Model for Unified Actionable Affordances</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Proposes a unified Vision-Language-Affordance model to bridge the embodiment gap between human demonstration videos and robot manipulators.</li>
-              <li>Learns object-centric actionable affordances rather than raw action trajectories, aiming to make human video data directly reusable for robot skill learning.</li>
-              <li>Targets the core bottleneck in scaling robot learning from human video: humans and robots don&#x27;t share a body, so raw imitation doesn&#x27;t transfer cleanly.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.05215" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Failing Gracefully: Mitigating Impact of Inevitable Robot Failures</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Focuses on household service robots, which face frequent failure modes: software crashes, hardware degradation, and unpredictable interactions with people and pets.</li>
-              <li>Treats failure as effectively inevitable in unstructured home environments and studies how to mitigate its impact rather than only trying to prevent it.</li>
-              <li>Relevant to any consumer robot deployment where perfect uptime isn&#x27;t achievable and graceful degradation matters more than avoiding failure entirely.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.05313" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Unified Planning-Learning Framework for Robust UUV Navigation Under Partial Observability</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Combines persistent occupancy mapping, global clearance-aware planning, and risk-aware local control into one framework for underwater vehicle navigation.</li>
-              <li>Runs as an observation-only autonomy system with no external localization infrastructure, built for dynamic, partially observable underwater environments.</li>
-              <li>Unifies planning and learning components instead of treating global path planning and local control as separate stages.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.05365" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>World-to-Wrist: Task-Conditioned Future Wrist Modeling for Fine-Grained Robot Manipulation</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Points out that most vision-language-action models treat main-view and wrist-mounted camera images as interchangeable, missing their distinct roles in fine-grained manipulation.</li>
-              <li>Introduces task-conditioned future wrist-view modeling so the policy anticipates how wrist-local interactions will unfold before acting.</li>
-              <li>Targets manipulation tasks like grasping, insertion, and fine adjustment, where the close-up wrist camera view matters most for success.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.05369" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AI agents create virtual playgrounds to help robots get crucial training data</h3>
-              <span class="digest-source">Robohub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>MIT CSAIL system uses three cooperating AI agents to assemble objects, walls, and overall layout into a realistic 3D scene reconstruction.</li>
-              <li>Generated indoor-space recreations let robots rehearse skills and try multiple task strategies in simulation before running on real hardware.</li>
-              <li>Aimed at cutting the cost of real-world trial-and-error data collection by automatically generating higher-fidelity practice environments.</li>
-            </ul>
-            <a href="https://robohub.org/ai-agents-create-virtual-playgrounds-to-help-robots-get-crucial-training-data/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>HII signs up to $900M agreement with Path Robotics, GrayMatter Robotics</h3>
+              <h3>Unitree targets $9 billion valuation in landmark IPO as humanoid robot race accelerates</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Unitree priced its IPO at an approximate $9B valuation, becoming the first mainland-China-listed humanoid robot manufacturer.</li>
+              <li>Signals accelerating investor appetite for humanoid robotics despite ongoing US-China tech tensions.</li>
+              <li>Sets a public-market valuation benchmark that rival humanoid makers will be compared against.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/08/07/unitree-targets-9-billion-valuation-in-landmark-ipo-as-humanoid-robot-race-accelerates/104008/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Building robots that survive the warehouse</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Agreement worth up to $900M expands HII&#x27;s HYPER Program, a shipbuilding automation initiative.</li>
-              <li>Path Robotics (autonomous welding) and GrayMatter Robotics (AI-driven surface finishing) both joined the HYPER Program earlier in 2026 and are now scaling under this deal.</li>
-              <li>Signals continued heavy defense-industrial investment in robotic welding and finishing to address shipyard labor shortages.</li>
+              <li>Nomagic argues its real competitive moat is accumulated production data from messy, real-world warehouse deployments, not the picking hardware itself.</li>
+              <li>Frames warehouse-robot robustness as a data-flywheel problem: edge cases surface in live operations, not lab testing.</li>
             </ul>
-            <a href="https://www.therobotreport.com/hii-signs-up-to-900m-agreement-with-path-robotics-graymatter-robotics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/building-robots-that-survive-warehouse/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Brain Corp reports 68 percent growth and surpasses 50,000 autonomous robots worldwide</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Tacta Systems takes aim at high-skilled manufacturing work with TactaBot</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Brain Corp, which builds the operating systems behind fleets of autonomous floor-care and similar robots, reports 68% growth and has now surpassed 50,000 deployed robots worldwide.</li>
-              <li>Fleet spans retail, logistics, airports, commercial cleaning, and inventory operations - positioned as recurring operational infrastructure rather than one-off pilots.</li>
-              <li>Milestone covers first-half 2026 momentum, suggesting the robot-as-a-service model is scaling past early-adopter volumes.</li>
+              <li>Tacta unveiled a three-part system built around a robotic hand designed for fine manufacturing tasks.</li>
+              <li>The system lets operators teach the robot new dexterous skills directly, rather than relying on pre-programmed motion paths.</li>
+              <li>Targets high-skilled manufacturing roles that have resisted automation because of manipulation complexity.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/07/brain-corp-reports-68-percent-growth-and-surpasses-50000-autonomous-robots-worldwide/104006/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/tacta-systems-takes-aim-high-skilled-manufacturing-work-tactabot/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>PIA Automation to build BMW E-Drive assembly line with 46 robots and digital twin technology</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Avatar Robotics raises seed round to address industrial labor constraints</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>New E-Drive assembly line at BMW&#x27;s Steyr, Austria plant: 78 processing stations, 27 robotic cells, and 46 industrial robots across more than 5,600 square meters on two levels.</li>
-              <li>Combines digital twin technology with the physical build-out, letting BMW simulate and validate the line before installation.</li>
-              <li>Described as one of the largest projects in PIA Automation&#x27;s history, reflecting the scale of current EV drivetrain production investment.</li>
+              <li>Raised $6.5M in seed funding to scale humanoid robots with remote teleoperation for industrial supply chains.</li>
+              <li>Bets on teleoperation as a bridge strategy while full autonomy for industrial manipulation matures.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/06/pia-automation-to-build-bmw-e-drive-assembly-line-with-46-robots-and-digital-twin-technology/103954/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Data center infrastructure company Tate boosts welding productivity 12-fold with fleet of 58 Hirebotics cobots</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Data center infrastructure maker Tate deployed 58 Hirebotics Cobot Welder systems across manufacturing plants in Arkansas, Virginia, and Kentucky.</li>
-              <li>Reports a 12-fold increase in welding productivity from the cobot fleet.</li>
-              <li>A cobot welding case study at meaningful fleet scale rather than a single pilot cell, in a sector riding the current data-center buildout boom.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/07/data-center-infrastructure-company-tate-boosts-welding-productivity-12-fold-with-fleet-of-58-hirebotics-cobots/103993/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/avatar-robotics-raises-6-5-m-seed-round-address-industrial-labor-constraints/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -149,15 +81,64 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Rosbag Resurrector — a pandas-like analysis + ML-export workbench for ROS 2 bags</h3>
+              <h3>[Open Source] GZ Weather System – Realistic Rain &amp; Snow Simulation for Gazebo Sim</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>New open-source tool treats ROS 2 (MCAP) bag files like a pandas DataFrame instead of building yet another 3D viewer.</li>
-              <li>Includes a DuckDB index across many bags at once, health/QC validation, semantic frame search, and cross-bag overlay.</li>
-              <li>Aimed at the analysis side of robotics development - querying and validating large bag collections - rather than single-bag visualization.</li>
+              <li>New open-source rain and snow simulation package for Gazebo Sim (Harmonic), built on Gazebo&#x27;s built-in ParticleEmitter system.</li>
+              <li>Provides lightweight, reusable weather worlds for stress-testing perception and navigation stacks under adverse conditions.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/rosbag-resurrector-a-pandas-like-analysis-ml-export-workbench-for-ros-2-bags/57209" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/open-source-gz-weather-system-realistic-rain-snow-simulation-for-gazebo-sim/57225" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>frontier_exploration_ros2: Modern Autonomous Exploration System for ROS 2</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>New open-source C++ autonomous-exploration framework for ROS 2 and Nav2, evolved from classic WFD (wavefront frontier detection) exploration.</li>
+              <li>Focuses on improving frontier-selection quality over the traditional approach for more efficient unknown-space coverage.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/frontier-exploration-ros2-modern-autonomous-exploration-system-for-ros-2/57222" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Mitsubishi joins the humanoid robot race, at a 1k unit per month pace</h3>
+              <span class="digest-source">Hacker News Robotics (Electrek)</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Mitsubishi enters the humanoid robot market with plans to manufacture at a 1,000-unit-per-month production pace.</li>
+              <li>Adds a major legacy industrial conglomerate to a field previously dominated by startups (Figure, Unitree, Agility) and Tesla.</li>
+            </ul>
+            <a href="https://electrek.co/2026/08/07/mitsubishi-joins-the-humanoid-robot-race-at-a-1000-unit-per-month-pace/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Gemini Robotics 2 Expands Google&#x27;s AI Capabilities for Humanoid Robots</h3>
+              <span class="digest-source">Hacker News Robotics (Bloomberg)</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Google expanded Gemini Robotics with a new model generation aimed at improving dexterity, historically a weak point for foundation-model-driven robot control.</li>
+              <li>Positions Gemini as a general-purpose &#x27;brain&#x27; layer hardware makers can build on, competing with vertically integrated robotics stacks.</li>
+            </ul>
+            <a href="https://www.bloomberg.com/news/articles/2026-07-30/google-unveils-gemini-ai-for-robots-struggling-with-dexterity" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>One Startup Built a (Mostly) China-Free Robot</h3>
+              <span class="digest-source">Hacker News Robotics (Wired)</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Profiles a startup&#x27;s effort to source robot components outside China, highlighting how deep the industry&#x27;s dependency on Chinese supply chains runs (motors, actuators, batteries).</li>
+              <li>Underscores supply-chain resilience becoming a hard design constraint for robotics companies, not just a geopolitical talking point.</li>
+            </ul>
+            <a href="https://www.wired.com/story/how-one-startup-built-a-mostly-china-free-robot/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
