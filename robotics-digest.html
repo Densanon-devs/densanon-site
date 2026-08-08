@@ -17,12 +17,42 @@
       <div class="container">
         <div class="digest-date-badge">August 08, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Humanoid robotics hit a funding and public-market milestone today — Unitree&#x27;s ~$9B IPO and Mitsubishi&#x27;s market entry — while Google pushed Gemini Robotics 2 to close the dexterity gap; on the practical side, warehouse/manufacturing robots and ROS/Gazebo tooling kept maturing.</p>
+        <p class="digest-intro">A big industry day: Unitree priced China&#x27;s first mainland-listed humanoid IPO at a $9B valuation as Mitsubishi and Tacta Systems both entered the dexterous-manipulation race, while Google DeepMind&#x27;s unified whole-body policy and a pair of hands-on sensing experiments pushed the research edge on tactile and locomotion control.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Gemini Robotics Released One Policy from Feet to Fingertips</h3>
+              <span class="digest-source">topicqueue (Substack)</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Google DeepMind&#x27;s Gemini Robotics 2 runs locomotion and manipulation under a single learned policy instead of separate balance and manipulation controllers (the split approach used by Figure), letting a robot walk-to-grasp-to-place as one continuous behavior.</li>
+              <li>One checkpoint drives multiple embodiments with completely different kinematics: Apptronik Apollo 2 with 22-DOF SharpaWave hands, Apollo 2 with Inspire hands, and a Franka Duo with a parallel-jaw Robotiq gripper — cross-embodiment generality Figure&#x27;s Helix 02 doesn&#x27;t have since it&#x27;s locked to Figure&#x27;s own fleet.</li>
+              <li>DeepMind itself flags that multi-finger dexterous manipulation still lags well behind whole-body and gripper tasks, so the 22-DOF hand demos read as showcase-grade rather than production-grade; training data volume and parameter counts remain undisclosed, and access is early-access-partner only.</li>
+            </ul>
+            <a href="https://topicqueue.substack.com/p/gemini-robotics-released-one-policy" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>How do you give a microgripper a sense of touch?</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A monolithic 3D microgripper is fabricated directly on the tip of an optical fiber using two-photon polymerization — the whole device (three compliant fingers plus an integrated force sensor) fits in under 100 micrometers, small enough for cellular-scale manipulation.</li>
+              <li>Force sensing comes from optical interferometry: spectral readings from the fiber are fed to a neural network trained to predict axial grasp force, reportedly accurate to within about 2.7% of the calibrated max force, without any separate electronic strain gauge on the gripper itself.</li>
+              <li>Because actuation and sensing ride on a single optical fiber, the gripper can be threaded through a surgical needle or steerable catheter, positioning it for minimally invasive interrogation of biological microstructures like villi, alveoli, or single cells.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1vir7vk/how_do_you_give_a_microgripper_a_sense_of_touch/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
       <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
@@ -33,22 +63,23 @@
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Unitree priced its IPO at an approximate $9B valuation, becoming the first mainland-China-listed humanoid robot manufacturer.</li>
-              <li>Signals accelerating investor appetite for humanoid robotics despite ongoing US-China tech tensions.</li>
-              <li>Sets a public-market valuation benchmark that rival humanoid makers will be compared against.</li>
+              <li>Unitree priced its IPO at a $9.04B (61B yuan) valuation on Shanghai&#x27;s STAR Market, raising roughly $900M by selling 40.45M shares at 150.8 yuan each — the first mainland-listed humanoid robot manufacturer in China, with DeepSeek as a strategic investor.</li>
+              <li>Humanoid sales (867.8M yuan) overtook Unitree&#x27;s namesake quadruped business as its largest revenue segment in 2025, while total revenue more than quadrupled to 1.7B yuan — though Q1 2026 adjusted profit fell 52.6% as R&amp;D and marketing spend ramped.</li>
+              <li>For scale: Tesla&#x27;s unlisted Optimus division is estimated at $30-180B, so Unitree&#x27;s public listing is notable less for valuation size and more for being the first direct-investable pure-play in humanoid robotics.</li>
             </ul>
             <a href="https://roboticsandautomationnews.com/2026/08/07/unitree-targets-9-billion-valuation-in-landmark-ipo-as-humanoid-robot-race-accelerates/104008/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Building robots that survive the warehouse</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Mitsubishi joins the humanoid robot race, at a 1k unit per month pace</h3>
+              <span class="digest-source">Electrek</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Nomagic argues its real competitive moat is accumulated production data from messy, real-world warehouse deployments, not the picking hardware itself.</li>
-              <li>Frames warehouse-robot robustness as a data-flywheel problem: edge cases surface in live operations, not lab testing.</li>
+              <li>Mitsubishi is partnering with University of Tokyo startup Highlanders on &quot;HL Human,&quot; a 19-DOF humanoid with high-output electric actuators, targeting production of up to 1,000 units/month at a converted former Kyoto engine plant, with mass production possible as early as 2027.</li>
+              <li>First deployments are internal: the robots will work Mitsubishi&#x27;s own manufacturing, logistics, construction, and disaster-response lines — and will even help build additional units of themselves, with human workers helping train them on the job.</li>
+              <li>It&#x27;s the second major Japanese heavy-industry entrant (after Toyota-adjacent efforts) converting existing auto/engine manufacturing capacity directly into humanoid production capacity rather than building greenfield robot factories.</li>
             </ul>
-            <a href="https://www.therobotreport.com/building-robots-that-survive-warehouse/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://electrek.co/2026/08/07/mitsubishi-joins-the-humanoid-robot-race-at-a-1000-unit-per-month-pace/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
@@ -56,11 +87,23 @@
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Tacta unveiled a three-part system built around a robotic hand designed for fine manufacturing tasks.</li>
-              <li>The system lets operators teach the robot new dexterous skills directly, rather than relying on pre-programmed motion paths.</li>
-              <li>Targets high-skilled manufacturing roles that have resisted automation because of manipulation complexity.</li>
+              <li>TactaBot is a three-part system: the Tacta Hand (5 fingers, 15 DOF, 25N lift per fingertip, fluidic-tendon actuation for thin heat-free fingers, 30M cycle life), the Tacta Glove for skill capture, and a Dexterous Intelligence model trained on the captured data.</li>
+              <li>The teaching glove packs 256 tactile sensors per fingertip — each smaller than a grain of sand — sensing the full human touch dynamic range (250 to 700,000 Pa) plus temperature to 0.1°C, streaming force/motion/video/temperature wirelessly as workers do real tasks.</li>
+              <li>This is a direct real-world instance of learning-from-demonstration via tactile teleoperation gloves rather than sim-to-real or teleoperated joysticks; targets electronics manufacturing and other high-skill work, first units shipping early 2027.</li>
             </ul>
             <a href="https://www.therobotreport.com/tacta-systems-takes-aim-high-skilled-manufacturing-work-tactabot/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Building robots that survive the warehouse</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Nomagic (Physical AI for warehouse picking/packing/sorting, expanding into North America under former Mujin go-to-market lead Josh Cloer) argues its real competitive moat isn&#x27;t the picking algorithm but production data — the long tail of messy real-warehouse conditions is what separates robots that generalize from ones that only work in the demo.</li>
+              <li>Frames warehouse robotics as a deployment-data flywheel problem rather than a pure-perception problem: robots that have absorbed more edge cases from live customer sites outperform ones tuned only on curated benchmarks.</li>
+              <li>Signals continued warehouse-robotics land grab as North American 3PLs face labor shortages — competing directly with Mujin&#x27;s bin-picking platform approach in the same market.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/building-robots-that-survive-warehouse/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
@@ -68,10 +111,23 @@
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Raised $6.5M in seed funding to scale humanoid robots with remote teleoperation for industrial supply chains.</li>
-              <li>Bets on teleoperation as a bridge strategy while full autonomy for industrial manipulation matures.</li>
+              <li>Avatar Robotics raised a $6.5M seed (AlleyCorp lead) for semi-humanoid mobile manipulators run via remote teleoperation, using a human-in-the-loop strategy where operators complete tasks while the system logs data to progressively train autonomous policies.</li>
+              <li>Already processed over 900,000 products in live customer facilities including a global beauty retailer, and is scaling with a multi-billion-dollar warehouse operator on sorting/picking — real production traction, not just a pilot.</li>
+              <li>Founded 2024 by MIT grads with autonomous-vehicle/drone backgrounds (ex-Cruise, Tesla, Apple) — another data point for teleop-to-autonomy as the pragmatic bootstrap path competitors like Avatar and Figure are converging on.</li>
             </ul>
             <a href="https://www.therobotreport.com/avatar-robotics-raises-6-5-m-seed-round-address-industrial-labor-constraints/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>One Startup Built a (Mostly) China-Free Robot</h3>
+              <span class="digest-source">Wired</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Indian startup Ati Robotics builds humanoid robots assembled in India with an almost entirely non-Chinese supply chain, sourcing the bulk of components — including actuators — from local and other non-Chinese suppliers, with only a handful of parts still Chinese-sourced.</li>
+              <li>The strategy looked overly cautious months ago but now reads as foresight as the Trump administration escalates restrictions on Chinese robotics technology and components (magnets, actuators, motors).</li>
+              <li>Ati&#x27;s playbook — identify critical components early, build relationships with alternative suppliers across multiple countries, and accept higher upfront costs — is emerging as a template other robotics startups may need to copy for supply-chain resilience.</li>
+            </ul>
+            <a href="https://www.wired.com/story/how-one-startup-built-a-mostly-china-free-robot/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -81,25 +137,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>[Open Source] GZ Weather System – Realistic Rain &amp; Snow Simulation for Gazebo Sim</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>Autoresearch for Robotics Hardware</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>New open-source rain and snow simulation package for Gazebo Sim (Harmonic), built on Gazebo&#x27;s built-in ParticleEmitter system.</li>
-              <li>Provides lightweight, reusable weather worlds for stress-testing perception and navigation stacks under adverse conditions.</li>
+              <li>Poster ran 120 autonomous &quot;autoresearch&quot; agents to discover a physics model for a robotic actuator, claiming the agents completed in about 1.5 hours what would normally take weeks of manual system-identification work.</li>
+              <li>Building this into an open-source tool aimed at hardware co-design, where an engineer steers the research direction in natural language while agents handle the parameter sweeps and model fitting.</li>
+              <li>Part of a broader 2026 trend of applying agentic/autoresearch frameworks (cf. academic efforts like AutoRA and ENPIRE) to physical-system identification rather than just software or literature review — worth tracking as a way to cut actuator characterization time in small robotics teams.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/open-source-gz-weather-system-realistic-rain-snow-simulation-for-gazebo-sim/57225" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>frontier_exploration_ros2: Modern Autonomous Exploration System for ROS 2</h3>
-              <span class="digest-source">ROS Discourse</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>New open-source C++ autonomous-exploration framework for ROS 2 and Nav2, evolved from classic WFD (wavefront frontier detection) exploration.</li>
-              <li>Focuses on improving frontier-selection quality over the traditional approach for more efficient unknown-space coverage.</li>
-            </ul>
-            <a href="https://discourse.openrobotics.org/t/frontier-exploration-ros2-modern-autonomous-exploration-system-for-ros-2/57222" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1vi3ju0/autoresearch_for_robotics_hardware/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -109,36 +155,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Mitsubishi joins the humanoid robot race, at a 1k unit per month pace</h3>
-              <span class="digest-source">Hacker News Robotics (Electrek)</span>
+              <h3>Active spine vs rigid (cheetah) experiment</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Mitsubishi enters the humanoid robot market with plans to manufacture at a 1,000-unit-per-month production pace.</li>
-              <li>Adds a major legacy industrial conglomerate to a field previously dominated by startups (Figure, Unitree, Agility) and Tesla.</li>
+              <li>Hobbyist experiment directly testing whether an active (actuated) spine improves quadruped locomotion versus the rigid trunk MIT deliberately chose for Cheetah 3 and Mini Cheetah — a real open question in legged-robot design, not just a build log.</li>
+              <li>Echoes current research: a 2026 arXiv paper on &quot;S-Cheetah&quot; (a quadruped with a 3-DOF bio-inspired active spine trained via reinforcement learning with dedicated spine-undulation and spine-steering rewards) hit 6.9 m/s peak speed and 7.2 rad/s turning rate, plus an emergent feline-style aerial self-righting behavior — well beyond typical rigid-trunk designs.</li>
+              <li>Rigid trunks (MIT&#x27;s choice) trade away that extra agility for lower control complexity and mechanical robustness, so this is a live cost/benefit tradeoff in quadruped design, not a settled question — worth watching for the poster&#x27;s promised results.</li>
             </ul>
-            <a href="https://electrek.co/2026/08/07/mitsubishi-joins-the-humanoid-robot-race-at-a-1000-unit-per-month-pace/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Gemini Robotics 2 Expands Google&#x27;s AI Capabilities for Humanoid Robots</h3>
-              <span class="digest-source">Hacker News Robotics (Bloomberg)</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Google expanded Gemini Robotics with a new model generation aimed at improving dexterity, historically a weak point for foundation-model-driven robot control.</li>
-              <li>Positions Gemini as a general-purpose &#x27;brain&#x27; layer hardware makers can build on, competing with vertically integrated robotics stacks.</li>
-            </ul>
-            <a href="https://www.bloomberg.com/news/articles/2026-07-30/google-unveils-gemini-ai-for-robots-struggling-with-dexterity" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>One Startup Built a (Mostly) China-Free Robot</h3>
-              <span class="digest-source">Hacker News Robotics (Wired)</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Profiles a startup&#x27;s effort to source robot components outside China, highlighting how deep the industry&#x27;s dependency on Chinese supply chains runs (motors, actuators, batteries).</li>
-              <li>Underscores supply-chain resilience becoming a hard design constraint for robotics companies, not just a geopolitical talking point.</li>
-            </ul>
-            <a href="https://www.wired.com/story/how-one-startup-built-a-mostly-china-free-robot/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1vip6mk/active_spine_vs_rigid_cheetah_experiment/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
