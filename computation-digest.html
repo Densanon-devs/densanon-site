@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - August 08, 2026 | Densanon</title>
+  <title>Computation Morning Digest - August 09, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,71 +15,119 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 08, 2026</div>
+        <div class="digest-date-badge">August 09, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">AI&#x27;s compute appetite is reshaping hardware economics — DRAM pricing has reverted to 2007 levels and AWS is rationing CPU capacity for agentic workloads — while AI systems are increasingly writing low-level code and designing novel biological sequences, raising real capability and safety questions.</p>
+        <p class="digest-intro">AI infrastructure&#x27;s physical footprint is the story today: Amazon is standing up a dedicated 7.65GW gas plant just to feed one Texas AI data center, permitted for 33 million tons of annual CO2. Underneath that, steady low-level engineering keeps moving — Intel&#x27;s Mesa GPU driver work and new Linux hybrid-core scheduler patches — while Infleqtion makes the case for neutral-atom hardware as a shared platform across quantum computing, sensing, and timing. Rounding things out: a rare hand-cut Intel 8080 photomask surfaces looking for a restorer, and researchers flag ransomware crews shifting their social-engineering target from CEOs to IT managers.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Industry &amp; HPC</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Scientist says RAM pricing has risen to normalized 2007 levels, AI shortage undid 20 years of progress in a matter of months</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Per-GB DRAM pricing has reverted to 2007 levels, reversing roughly two decades of exponential price decline within a few months.</li>
-              <li>Driver is AI datacenter demand for HBM/DRAM capacity, which is pulling fab output away from commodity DDR modules.</li>
-              <li>First sustained reversal in the long-running memory cost curve — directly relevant to budgeting hardware for local inference builds.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/ram/scientist-says-ram-pricing-has-reverted-to-normalized-2007-levels-memory-prices-have-been-falling-exponentially-for-decades-but-the-ai-shortage-undid-20-years-of-progress-in-a-matter-of-months" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Amazon cracks down on &#x27;CPU waste&#x27; among engineers as agentic AI crunch intensifies</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>AWS is pressuring internal engineering teams to shut down or right-size low-utilization EC2 instances as agentic-AI workloads spike CPU demand.</li>
-              <li>Signals a broader capacity crunch extending beyond GPUs: CPU instances are becoming contended as agent-based AI systems scale out.</li>
-              <li>Cloud CPU cost and availability may tighten industry-wide, not just GPU allocation, as agentic workloads proliferate.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/amazon-cracks-down-on-cpu-waste-among-engineers-as-agentic-ai-crunch-intensifies-cpu-demand-makes-low-utilization-ec2-instances-a-hot-commodity" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Hardware &amp; Chips</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>China&#x27;s memory-making champion smashes DDR5-8800 barrier on AMD platform — CXMT chips close the gap with SK hynix</h3>
+              <h3>Amazon&#x27;s new 7.65GW Texas AI data center power plant could become the largest source of CO₂ pollution in the US</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>CXMT, China&#x27;s leading domestic DRAM maker, demonstrated overclocked DDR5-8800 kits on AMD platforms, narrowing the performance gap with SK hynix.</li>
-              <li>Shows China&#x27;s memory industry closing the technical gap with established Korean/US suppliers faster than expected.</li>
-              <li>A more competitive third DRAM supplier could ease long-term pricing pressure amid the current memory shortage.</li>
+              <li>A custom 35-turbine, 7.65GW natural-gas plant is being built specifically to power one AI data center — generating capacity on the scale of several nuclear reactors dedicated to a single site.</li>
+              <li>Permits authorize up to 33 million tons of CO2 emissions annually, which would rank it among the largest single greenhouse-gas sources in the US if run at capacity.</li>
+              <li>Signals a broader hyperscaler pattern of building dedicated off-grid gas generation rather than waiting on utility grid buildout to meet AI training/inference power demand.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/ram/chinas-memory-making-champion-smashes-ddr5-8800-barrier-on-amd-platform-cxmt-chips-close-the-gap-with-sk-hynix" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/data-centers/amazons-new-7-65gw-texas-ai-data-center-power-plant-could-become-the-largest-source-of-co2-pollution-in-the-us-custom-35-turbine-gas-plant-authorized-to-emit-33-million-tons-of-annual-greenhouse-gases" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NASA modded space station&#x27;s laptops so everyone could use the same charger</h3>
+              <h3>Intel Core Ultra 7 270K Plus vs AMD Ryzen 7 7700X3D faceoff</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NASA retrofitted all ISS laptops to use a single standardized power connector, eliminating redundant chargers and cables.</li>
-              <li>Reduced launch mass and cut failure points by standardizing on one connector across a heterogeneous laptop fleet.</li>
-              <li>A clean real-world case study in hardware standardization under extreme mass, reliability, and serviceability constraints.</li>
+              <li>Pits AMD&#x27;s stacked 3D V-Cache design against Intel&#x27;s latest Core Ultra hybrid architecture in the upper-mid-range desktop tier.</li>
+              <li>Comparison spans gaming, productivity/multithreaded throughput, power consumption, and price-to-performance rather than a single synthetic benchmark.</li>
+              <li>A useful current snapshot of how the two platforms&#x27; design philosophies (cache-heavy vs. hybrid P/E-core) trade off now that both have matured past launch reviews.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/space/nasa-modded-space-stations-laptops-so-everyone-could-use-the-same-charger-standardizing-iss-chargers-eliminated-useless-weight-and-reduced-failure-points" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/intel-core-ultra-7-270k-plus-vs-amd-ryzen-7-7700x3d-faceoff" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Open-source stealth USB hides an encrypted partition behind an 8GB decoy drive</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>&#x27;Phantom Drive&#x27; presents as an ordinary 8GB drive until a specifically named text file containing the password is written to it, which triggers the hidden partition to mount.</li>
+              <li>The password never touches flash storage — custom firmware intercepts it in transit and hashes it directly in the microcontroller&#x27;s SRAM, leaving no on-disk credential trace.</li>
+              <li>A practical plausible-deniability storage design built entirely on cheap, commodity USB microcontroller hardware and open-source firmware.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/usb-flash-drives/open-source-stealth-usb-hides-an-encrypted-partition-behind-an-8gb-decoy-drive-phantom-drive-appears-as-a-regular-usb-stick-until-you-create-a-text-file-to-unlock-the-hidden-data" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Owner of original Intel 8080 pre-production layout seeks restorer</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The rubylith mask is a hand-cut photomask artifact from the 8080&#x27;s original layout process, showing all ~5,000 transistors and interconnect routing of the 2MHz CPU.</li>
+              <li>Predates EDA-generated photolithography masks — a physical record of how chip layout was actually done by hand in the mid-1970s.</li>
+              <li>Highlights how fragile these early semiconductor artifacts are and how small the remaining pool of people with the conservation skills to restore them has become.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/cpus/owner-of-original-intel-8080-pre-production-layout-seeks-restorer-handcrafted-rubylith-mask-shows-5-000-transistors-and-interconnect-patterns-of-the-fabled-2-mhz-cpu" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Mesa 26.3 Intel Driver Code Enables Large GRF Mode For Newer GPUs</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Large GRF (general register file) mode increases per-thread register allocation on Intel&#x27;s Alchemist/DG2 and Battlemage/Xe2 GPUs, reducing register spilling during shader compilation.</li>
+              <li>The same patch set adds VRT (variable register/thread) support for the next-gen Xe3 architecture — driver groundwork landing ahead of that hardware&#x27;s mainstream availability.</li>
+              <li>Compiler-level register allocation changes like this typically translate directly into measurable shader throughput gains on register-pressure-heavy compute and gaming workloads.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Intel-Large-GRF-Mode-Mesa-26.3" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>FreeBSD 14.5 Beta 1 Released With Various Backports, Security Fixes</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Targets the 14.x (N-1) stable branch, backporting security fixes and improvements from the FreeBSD 15 development line without requiring a major-version upgrade.</li>
+              <li>Reflects FreeBSD&#x27;s dual-track maintenance model — stable 14.x plus current 15.x — giving production and server deployments a lower-risk security-patch path.</li>
+              <li>Beta 1 means the release is feature-frozen and moving toward general availability, useful for ops teams planning update windows.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/FreeBSD-14.5-Beta-1" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.3 To Better Handle Cluster Load Balancing On Intel Hybrid CPUs</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Intel-authored patches improve the kernel&#x27;s cluster-aware scheduler specifically for hybrid P-core/E-core/LP-E-core topologies on modern Core Ultra chips.</li>
+              <li>Better cluster load balancing should reduce cases where the scheduler misplaces threads on slower E-cores or thrashes work between clusters, improving throughput and responsiveness.</li>
+              <li>Landing directly in upstream Linux for the 7.3 merge window rather than as a downstream distro patch means the fix reaches essentially every distribution eventually.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.3-Better-Intel-Hybrid" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Industry &amp; HPC</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Ransomware gangs skip the CEO, head straight for the 40-something IT manager</h3>
+              <span class="digest-source">The Register</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Ransomware crews are increasingly targeting mid-level IT/system administrators directly rather than executives, since that&#x27;s who holds the credentialed access to critical systems and backups.</li>
+              <li>Reflects attacker reconnaissance maturing to org-chart-level targeting — social engineering aimed at whoever can actually pull the plug or restore from backup, not just the nominal decision-maker.</li>
+              <li>Underscores that basic incident-response fundamentals (immediate network isolation, prompt law-enforcement notification) still aren&#x27;t universally rehearsed even at organizations that should know better.</li>
+            </ul>
+            <a href="https://www.theregister.com/security/2026/08/09/ransomware-gangs-skip-the-ceo-head-straight-for-the-40-something-it-manager/5284499" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -89,69 +137,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel&#x27;s proposed orbital data centers would manage thousands of simple LEO satellites</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>Matt Kinsella (Infleqtion): Why Neutral Atoms Power Sensors, Clocks, and Computers Alike</h3>
+              <span class="digest-source">The Quantum Insider</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel proposes a two-tier satellite network: powerful high-orbit &#x27;data center&#x27; satellites managing large constellations of simple LEO satellites.</li>
-              <li>Moves compute and coordination off the ground and off individual satellites, cutting reliance on terrestrial control centers.</li>
-              <li>Early-stage architecture concept rather than a deployed system — worth tracking as space-based compute infrastructure matures.</li>
+              <li>Infleqtion is building neutral-atom qubit hardware as a shared physical platform across three product lines at once: quantum computing, quantum sensing, and precision timing/clocks.</li>
+              <li>CEO argues the diversification is technically synergistic, not just a business hedge — atom-trapping and control advances made for one product line (e.g., clocks) feed directly into the others (e.g., qubit coherence).</li>
+              <li>Positions neutral-atom architectures against superconducting and trapped-ion competitors, which lack comparable adjacent sensing/timing markets to cross-subsidize R&amp;D spend.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/space/intels-proposed-orbital-data-centers-would-manage-thousands-of-simple-leo-satellites-two-tier-network-puts-the-brains-of-satellite-constellations-in-higher-orbit" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AI creates 16 new viruses that never existed in nature after learning DNA&#x27;s pattern from 9 trillion nucleotides</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Evo genomic AI models, trained on roughly 9 trillion DNA nucleotides, designed novel bacteriophage genomes; 16 proved viable and could infect and reproduce in E. coli.</li>
-              <li>Demonstrates generative models can now design functional biological sequences, not just predict or classify existing ones.</li>
-              <li>Researchers explicitly flag that dual-use biosecurity guardrails lag behind the demonstrated technical capability.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-creates-16-new-viruses-that-never-existed-in-nature-after-learning-dnas-pattern-from-9-trillion-nucleotides-experts-warn-such-applications-are-way-ahead-of-necessary-guardrails" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AI Helped Create A DirectX 11 Driver For QEMU VMs</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A new DirectX 11 driver for QEMU, improving GPU acceleration for Windows guest VMs, was built with substantial help from Claude Opus 5 and Claude Fable 5.</li>
-              <li>A concrete example of frontier coding models handling a low-level graphics driver project rather than just application-level code.</li>
-              <li>A useful real-world data point on how far AI-assisted systems-level development has progressed.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Triton-DirectX-11-QEMU-Driver" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Hardware researcher spins up &#x27;CPU deoptimization&#x27; project to find the slowest single x86 instruction</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Researcher Christopher Domas built a public &#x27;CPU Deoptimization&#x27; leaderboard cataloging the slowest-executing x86 instruction sequences, inverting the usual optimization goal.</li>
-              <li>Current worst offender takes roughly 198 billion cycles (about 62 seconds) to execute a single instruction sequence.</li>
-              <li>A genuinely useful resource for understanding pathological microarchitectural worst cases: cache misses, pipeline stalls, and microcode traps.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/hardware-researcher-spins-up-cpu-deoptimization-project-to-find-the-slowest-machine-code-worst-offender-takes-198-billion-cycles-to-execute" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>HWMON Fixes For Linux 7.2-rc7: &quot;Most Of Them Fixing Critical Or High Severity Bugs&quot;</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>This week&#x27;s hardware-monitoring (HWMON) subsystem fixes in the Linux kernel skew toward critical or high-severity bugs, many originally surfaced by AI/LLM coding-agent bug hunters.</li>
-              <li>Reflects a growing trend of automated agents finding real defects in mature open-source kernel code, not just style or lint issues.</li>
-              <li>Part of a broader pattern this release cycle — similar AI-driven fixes also landed in the input subsystem — of AI-assisted vulnerability discovery feeding upstream kernel patches.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.2-rc7-HWMON" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://thequantuminsider.com/2026/08/08/matt-kinsella-infleqtion-why-neutral-atoms-power-sensors-clocks-and-computers-alike/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
