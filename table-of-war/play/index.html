@@ -2423,7 +2423,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-DDDgUdRN.js"></script>
+  <script type="module" crossorigin src="./assets/index-B5Al0axB.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2495,7 +2495,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.57';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.58';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -3385,6 +3385,11 @@ function showSettings() {
       <div class="d" style="margin:2px 0 6px">Phone only — locks how the game is held.</div>
       <div style="display:flex;gap:8px">${oBtn('landscape')}${oBtn('portrait')}</div>
     </div>`}
+    ${(S && (S.mode === 'map' || S.board)) ? `<div class="choice">
+      <b>This run</b>
+      <div class="d" style="margin:2px 0 8px;line-height:1.5">The rules in force — modifiers, ascension tiers and, in a Commission, the day's exceptions — with what each one actually does.</div>
+      <button class="setbtn" onclick="closeOv('ovSettings');showRunInfo()">Run details</button>
+    </div>` : ''}
     ${_isNativeApp() ? '' : `<div class="choice">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
         <div><b>Fullscreen</b><div class="d">Fill the whole display — no window chrome, no desktop behind it.</div></div>
@@ -3488,11 +3493,11 @@ function showSettings() {
       </div>
       <button class="setbtn" onclick="checkNow()">Check for updates now</button>
     </div>`}
-    <div class="choice" style="margin-top:10px">
+    ${_debugToolsAllowed() ? `<div class="choice" style="margin-top:10px">
       <b class="red">Danger zone</b>
       <div class="d" style="margin:2px 0 8px;line-height:1.5">Erase ALL progress — achievements, ascensions, Merit, best score, unlocks, collection and run history. Ends the current run. This cannot be undone.</div>
       <button class="setbtn danger" onclick="confirmResetAll()">${si('trash',16)} Reset all progress…</button>
-    </div>
+    </div>` : ''}
     ${_debugToolsAllowed() ? `<div class="choice" style="margin-top:10px">
       <b style="color:#7fbfff">Debug tools</b>
       <div class="d" style="margin:2px 0 8px;line-height:1.5">Review every art surface: unlock all progression/collection, and instant-win battles to blitz through nodes, bosses and variants.</div>
@@ -5075,6 +5080,29 @@ function showBigMedal(id, allBtn) {
   $('#ovInspect').classList.add('show');
 }
 function showMedalOne(id) { showBigMedal(id, true); }   // battle medal-bar tap → big view + "all medals"
+// What rules are in force, and what each one DOES.
+//
+// Reported from the Steam build: a Commission's modifiers were invisible once the run had started. The
+// curses at least turned up under Medals, but "Thick Fog" and "Scarcity" appeared nowhere — no sign
+// they were on, and no way to find out what they meant. A leaderboard mode where you cannot read the
+// rules you are being scored under is the wrong way round.
+//
+// Names alone are not enough either. "Scarcity" does not tell you your troop cap is two lower, and that
+// is exactly the number a player is staring at in the HUD wondering why it says 4.
+function runRulesBlock() {
+  const mods = (S.mod_detail && S.mod_detail.length) ? S.mod_detail : null;
+  const asc = S.ascension ? (S.ascension_ladder || []).slice(0, S.ascension) : [];
+  const daily = S.daily_twists || [];
+  if (!mods && !asc.length && !daily.length) return '';
+  const row = (n, d) => `<div style="margin-bottom:7px"><b class="gold">${n}</b>${d ? `<div class="d" style="line-height:1.5">${d}</div>` : ''}</div>`;
+  return `<div class="choice" style="margin-top:8px"><b class="gold">Rules in force</b>
+    <div style="margin-top:7px">
+      ${S.daily_date ? `<div class="d" style="margin-bottom:7px">Daily Commission — <b>${S.daily_date}</b>. Everyone plays this exact run today.</div>` : ''}
+      ${daily.map(t => row(t.name, t.desc)).join('')}
+      ${mods ? mods.map(m => row(m.name, m.desc)).join('') : ''}
+      ${asc.map((d, i) => row('Ascension ' + (i + 1), d)).join('')}
+    </div></div>`;
+}
 function showRunInfo() {
   $('#ovInspect').innerHTML = `<div class="choice"><b class="gold">Run details</b>
     <div class="d" style="margin-top:6px;line-height:1.8">
@@ -5082,9 +5110,10 @@ function showRunInfo() {
       Map ${S.map.w}×${S.map.h} · Era ${S.era} · Turn ${S.turn}<br>
       Hand ${S.hand_size}/${S.draw_target} · keep ${S.retain_cap}<br>
       Deck: draw ${S.piles.draw} · discard ${S.piles.discard}${S.piles.exhaust?` · exhausted ${S.piles.exhaust}`:''}<br>
-      ${S.ascension?`Ascension ${S.ascension}<br>`:''}${(S.mods&&S.mods.length)?`Modifiers: ${S.mods.join(', ')}<br>`:''}
+      ${S.ascension?`Ascension ${S.ascension}<br>`:''}
       Seed ${S.seed}
     </div></div>
+    ${runRulesBlock()}
     ${dangerRows('showRunInfo()')}
     <div style="text-align:center;margin-bottom:6px">${pbtn('deck',"closeOv('ovInspect');showDeck()",{cls:'h'})}</div>
     <div class="ovclose"><button class="ibtn" onclick="closeOv('ovInspect')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
@@ -7052,7 +7081,14 @@ function showGenerals() {
   // Spent attempts only ever happen on Steam (new_daily refuses there); every other build keeps Play.
   const dailyBtn = (S.daily && S.daily.locked)
     ? `<div class="d" style="text-align:center;opacity:.75">Today's attempt is spent — <b class="gold">${S.daily.best}</b>.<br><span style="font-size:11px">One run per Commission. The next opens at midnight.</span></div>`
-    : pbtn(S.daily && S.daily.state === 'open' && S.has_save ? 'resume' : 'play', 'newDaily()');
+    // The label and the ACTION have to agree. This said "resume" whenever a Commission had been opened
+    // today and any save existed — then called newDaily(), which clear_save()s and starts the day over.
+    // So after abandoning a Commission for an ordinary run, the button offered to resume and instead
+    // destroyed the campaign you had going. Resume now resumes, and only when the saved run IS today's
+    // Commission (serialize checks the snapshot's own daily stamp, not merely that one was opened).
+    : (S.daily && S.daily.resumable)
+      ? pbtn('resume', 'continueRun()')
+      : pbtn('play', 'newDaily()');
   const dailyPanel = (S.demo || !S.daily) ? '' : `<div class="choice bronze dailyslot">
          <b class="cyan">${si('sun',15)} Daily Commission</b> <span class="d">${S.daily.date}</span>
          <div class="d">${S.daily.general}${S.daily.mods&&S.daily.mods.length?' · '+S.daily.mods.join(', '):''}${S.daily.best?` · your best ${S.daily.best}`:''}</div>
@@ -7148,8 +7184,8 @@ async function submitDailyToBoard(date, score) {
   try { const b = window.__steamBoard; if (b) await b.submit(date, score); } catch (e) {}
 }
 /** Draw today's board into #dboard, or leave the panel as a bare date line if there is no board. */
-async function renderDailyBoard(date) {
-  const el = $('#dboard'); if (!el) return;
+async function renderDailyBoard(date, elId) {
+  const el = $('#' + (elId || 'dboard')); if (!el) return;
   let rows = null;
   try { const b = window.__steamBoard; if (b) rows = await b.fetch(date, 10); } catch (e) {}
   if (!rows || !rows.length) {
@@ -7168,7 +7204,12 @@ function showDailyTwists() {
   _infoPopup(`${si('sun',15)} Daily Commission — ${d.date}`,
     `<div style="margin-bottom:8px">Commanding <b class="gold">${d.general}</b>${d.mods && d.mods.length ? ` · ${d.mods.join(', ')}` : ''}.</div>`
     + d.twists.map(t => `<div style="margin-bottom:8px"><b class="gold">${t.name}</b><div style="opacity:.9">${t.desc}</div></div>`).join('')
-    + `<div style="margin-top:10px;opacity:.8">Everyone plays this exact run today — same commander, same modifiers, same exceptions, same seed.</div>`);
+    + `<div style="margin-top:10px;opacity:.8">Everyone plays this exact run today — same commander, same modifiers, same exceptions, same seed.</div>`
+    // The standings had exactly one way in: finishing a Commission. Until you did, the leaderboard did
+    // not exist anywhere in the game — you could not see what you were playing against, or that there
+    // was a board at all. It fills in async and stays empty off Steam, where there is no board to show.
+    + `<div class="dboard" id="dboardpop"></div>`);
+  if (d.date) renderDailyBoard(d.date, 'dboardpop');
 }
 // Reusable inline-SVG icons (no emoji) — trophy / lock / secret-mask for achievements.
 const ACH_SVG = {
