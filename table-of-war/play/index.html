@@ -2423,7 +2423,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-B5Al0axB.js"></script>
+  <script type="module" crossorigin src="./assets/index-a38rEhPD.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2495,7 +2495,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.58';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.59';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -7081,14 +7081,13 @@ function showGenerals() {
   // Spent attempts only ever happen on Steam (new_daily refuses there); every other build keeps Play.
   const dailyBtn = (S.daily && S.daily.locked)
     ? `<div class="d" style="text-align:center;opacity:.75">Today's attempt is spent — <b class="gold">${S.daily.best}</b>.<br><span style="font-size:11px">One run per Commission. The next opens at midnight.</span></div>`
-    // The label and the ACTION have to agree. This said "resume" whenever a Commission had been opened
-    // today and any save existed — then called newDaily(), which clear_save()s and starts the day over.
-    // So after abandoning a Commission for an ordinary run, the button offered to resume and instead
-    // destroyed the campaign you had going. Resume now resumes, and only when the saved run IS today's
-    // Commission (serialize checks the snapshot's own daily stamp, not merely that one was opened).
-    : (S.daily && S.daily.resumable)
-      ? pbtn('resume', 'continueRun()')
-      : pbtn('play', 'newDaily()');
+    // One action, two labels. newDaily() RESUMES today's Commission when one is already under way and
+    // only builds a fresh run when there is none, so this button cannot restart a run in progress no
+    // matter which word it is wearing. That was the hole: on the same fixed seed a player could walk
+    // away from a bad start as often as they liked and bank only the attempt that suited them.
+    // Resume is also no longer continueRun() — that loads the ORDINARY campaign, which is a different
+    // save entirely now.
+    : pbtn((S.daily && S.daily.resumable) ? 'resume' : 'play', 'newDaily()');
   const dailyPanel = (S.demo || !S.daily) ? '' : `<div class="choice bronze dailyslot">
          <b class="cyan">${si('sun',15)} Daily Commission</b> <span class="d">${S.daily.date}</span>
          <div class="d">${S.daily.general}${S.daily.mods&&S.daily.mods.length?' · '+S.daily.mods.join(', '):''}${S.daily.best?` · your best ${S.daily.best}`:''}</div>
