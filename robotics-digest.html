@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 09, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 10, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,41 +15,141 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 09, 2026</div>
+        <div class="digest-date-badge">August 10, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">A light day with just two items, both from ROS Discourse: a new VSCode Dev Container Feature for ROS2 workspaces, and a community discussion on adding a CPU shared-memory backend for rosidl::Buffer to speed up large payload transport.</p>
+        <p class="digest-intro">Today&#x27;s robotics research centers on policy learning and embodied control — from adaptive VLA inference that balances reasoning depth against real-time speed, to Lyapunov-guided sim-to-real transfer and learning-based haptic feedback for surgical robots. On the tooling side, ROS 2 keeps powering practical builds, from vision-driven robotic arms to an early agentic pipeline generator, while the community spotlight lands on vision-based tactile sensing and a real-time underwater vision system running live on a moving ROV.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Fast and Accurate: An Adaptive VLA Inference Framework through Environment-aware Model Selection</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes an adaptive Vision-Language-Action (VLA) framework that selects models based on environment conditions to balance reasoning depth and inference speed.</li>
+              <li>Builds on dual-system VLA architectures pairing fast reactive control with slower deliberative reasoning.</li>
+              <li>Targets the core embodied-AI tradeoff between long-horizon reasoning and real-time closed-loop responsiveness.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.06434" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>LyEvO: Lyapunov-Guided Evolutionary Optimization for Safe and Robust Sim-to-Real Policy Learning</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>LyEvO is a physics-grounded, Lyapunov-guided evolutionary optimization framework for training safe, robust control policies in simulation.</li>
+              <li>Aims to systematically assess a policy&#x27;s readiness for real-world deployment, a known gap in current sim-to-real transfer methods.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.06481" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>A Disturbance in the Force: Force Actuation on the RAVEN II Surgical Robot with Parallel Motor-Cable Units</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Addresses the decades-old challenge of haptic feedback on surgical robots via force actuation on the RAVEN II platform&#x27;s parallel motor-cable units.</li>
+              <li>Uses learning-based force estimation from robot states rather than adding extra physical sensors.</li>
+              <li>Reports the learning-based approach shows desirable accuracy while avoiding added sensor hardware.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.06488" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>SyncSBC: Decentralized Swarm Behavior Prediction for Synchronized Autonomous Control</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes decentralized prediction of swarm-level behavior derived purely from local, limited-sensing agent perception.</li>
+              <li>Targets synchronized autonomous control without any centralized coordination.</li>
+              <li>Addresses an underexplored gap: how individual swarm agents infer emergent group-level behavior from local information alone.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.06587" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Analog Devices returns as strategic sponsor to aid MassRobotics startups</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Analog Devices returns as a strategic sponsor of the MassRobotics startup program via its Analog Garage initiative.</li>
+              <li>Sponsorship includes participation in industry events such as RoboBusiness.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/analog-devices-returns-strategic-sponsor-aid-massrobotics-startups/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ROS2 Dev Container Feature + Workspace Update</h3>
+              <h3>ROS 2 Based Face Tracking Display Control with PiPER Robotic Arm</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Moves ROS2 dev environment setup from a monolithic pre-built Docker image to a modular VSCode Dev Container Feature, so developers can compose it into their own base images instead of inheriting a fixed one.</li>
-              <li>The companion VSCode ROS2 Workspace Template was updated to consume the new feature directly, cutting setup friction for new ROS2 projects and reducing duplicated Dockerfile maintenance.</li>
-              <li>Signals a broader shift in ROS tooling toward declarative, devcontainer.json-based environment configuration rather than hand-rolled Docker images per project.</li>
+              <li>Combines an AgileX PiPER 6-DoF robotic arm, an Orbbec RGB-D camera, and ROS 2 into a vision-based smart ergonomic workstation.</li>
+              <li>Uses YOLOv5-Face plus depth perception to detect the user&#x27;s 3D position in real time.</li>
+              <li>Drives the robotic arm to automatically adjust display orientation based on the tracked user position.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/ros2-dev-container-feature-workspace-update/57243" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/ros-2-based-face-tracking-display-control-with-piper-robotic-arm/57270" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Has a CPU shared-memory backend for rosidl::Buffer been explored?</h3>
+              <h3>Exploring a human-reviewed ROS 2 agentic pipeline generator</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets a concrete performance pain point: large variable-length payloads like images and point clouds currently incur serialization and copy overhead through rosidl::Buffer&#x27;s existing backends.</li>
-              <li>Proposes a CPU shared-memory backend so same-host publishers and subscribers could exchange large messages without redundant copies, which matters for high-bandwidth sensor pipelines (e.g., LiDAR, camera streams).</li>
-              <li>The thread notes overlap with existing zero-copy mechanisms already in ROS2 (loaned messages, intra-process comms), pointing to a need for design coordination before implementation to avoid duplicating infrastructure.</li>
+              <li>EdgeAI Forge is a prototype local-first architecture for generating, testing, benchmarking, and documenting ROS 2 and machine-vision pipelines.</li>
+              <li>Initial workflow targets a ROS 2 vision pipeline generator that turns plain-language requirements (e.g., read USB camera frames, run object detection) into working pipelines.</li>
+              <li>Explicitly built around human review in the loop rather than fully autonomous code generation.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/has-a-cpu-shared-memory-backend-for-rosidl-buffer-been-explored/57240" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/exploring-a-human-reviewed-ros-2-agentic-pipeline-generator/57268" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Vision-based tactile sensing is becoming the default for high-precision robot fingertips — and the reason is structural, not hype</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Argues vision-based tactile sensing (VBTS) is becoming the default for dexterous robot fingertips for structural, not marketing, reasons.</li>
+              <li>Analysis is grounded in the UMI tactile-skin stack, including DM-Tac W and XTac UMI G1 hardware.</li>
+              <li>Core mechanism described: a camera positioned behind a deformable gel layer captures contact deformation for tactile sensing.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1vkfnp9/visionbased_tactile_sensing_is_becoming_the/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Built a Real-Time Underwater Image Processing System – 4K 60FPS Part2</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Demonstrates real-time underwater image processing running live on a moving ROV during an actual field test, not offline post-processing.</li>
+              <li>Pipeline runs at 4K/60FPS with NVIDIA CUDA acceleration.</li>
+              <li>Second installment (Part 2) of an ongoing real-time underwater vision system build.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1vj4oym/built_a_realtime_underwater_image_processing/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

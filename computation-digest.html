@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - August 09, 2026 | Densanon</title>
+  <title>Computation Morning Digest - August 10, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 09, 2026</div>
+        <div class="digest-date-badge">August 10, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">AI infrastructure&#x27;s physical footprint is the story today: Amazon is standing up a dedicated 7.65GW gas plant just to feed one Texas AI data center, permitted for 33 million tons of annual CO2. Underneath that, steady low-level engineering keeps moving — Intel&#x27;s Mesa GPU driver work and new Linux hybrid-core scheduler patches — while Infleqtion makes the case for neutral-atom hardware as a shared platform across quantum computing, sensing, and timing. Rounding things out: a rare hand-cut Intel 8080 photomask surfaces looking for a restorer, and researchers flag ransomware crews shifting their social-engineering target from CEOs to IT managers.</p>
+        <p class="digest-intro">Today&#x27;s computation news is dominated by the scale of AI infrastructure spending running headlong into local resistance: hyperscalers are committing nearly $2 trillion to AI hardware and memory even as US data center bans surge past 500. On the kernel and silicon side, Linux continues rapid hardware enablement work across Apple M1 power tuning, new Qualcomm Kuno SoC patches, and even fresh optimizations for decades-old AMD Athlon XP systems, while Meta pushes into open local-agent models with its 30B Muse Glimmer release.</p>
       </div>
     </section>
 
@@ -29,87 +29,99 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Amazon&#x27;s new 7.65GW Texas AI data center power plant could become the largest source of CO₂ pollution in the US</h3>
+              <h3>Hyperscalers commit nearly $2 trillion to secure AI hardware and memory — Google leads $811 billion spending surge while Apple trails at $57 billion</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A custom 35-turbine, 7.65GW natural-gas plant is being built specifically to power one AI data center — generating capacity on the scale of several nuclear reactors dedicated to a single site.</li>
-              <li>Permits authorize up to 33 million tons of CO2 emissions annually, which would rank it among the largest single greenhouse-gas sources in the US if run at capacity.</li>
-              <li>Signals a broader hyperscaler pattern of building dedicated off-grid gas generation rather than waiting on utility grid buildout to meet AI training/inference power demand.</li>
+              <li>Hyperscalers&#x27; long-term purchase commitments for AI hardware and memory total nearly $2 trillion, with Google leading at $811 billion.</li>
+              <li>Apple trails far behind at just $57 billion, underscoring the spending gulf between AI-infrastructure buyers and consumer electronics makers.</li>
+              <li>The scale of commitments marks a tectonic shift where cloud service providers now overwhelm traditional consumer electronics spending.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/data-centers/amazons-new-7-65gw-texas-ai-data-center-power-plant-could-become-the-largest-source-of-co2-pollution-in-the-us-custom-35-turbine-gas-plant-authorized-to-emit-33-million-tons-of-annual-greenhouse-gases" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/hyperscalers-commit-nearly-usd2-trillion-to-secure-ai-hardware-and-memory-google-leads-usd811-billion-spending-surge-while-apple-trails-at-usd57-billion" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel Core Ultra 7 270K Plus vs AMD Ryzen 7 7700X3D faceoff</h3>
+              <h3>AI data center bans surge past 500 nationwide as local US politicians begin blocking new developments — growing public outrage and bipartisan pushback threaten big tech expansion plans</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Pits AMD&#x27;s stacked 3D V-Cache design against Intel&#x27;s latest Core Ultra hybrid architecture in the upper-mid-range desktop tier.</li>
-              <li>Comparison spans gaming, productivity/multithreaded throughput, power consumption, and price-to-performance rather than a single synthetic benchmark.</li>
-              <li>A useful current snapshot of how the two platforms&#x27; design philosophies (cache-heavy vs. hybrid P/E-core) trade off now that both have matured past launch reviews.</li>
+              <li>Local bans on new AI data center developments in the US have surged past 500 as of July, per recent analysis.</li>
+              <li>Growing bipartisan political pressure and public outrage are directly threatening big tech&#x27;s data center expansion plans.</li>
+              <li>Highlights a widening gap between hyperscaler infrastructure ambitions and local government willingness to approve projects.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/intel-core-ultra-7-270k-plus-vs-amd-ryzen-7-7700x3d-faceoff" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/data-centers/ai-data-center-bans-surge-past-500-nationwide-as-local-us-politicians-begin-blocking-new-developments-growing-public-outrage-and-bipartisan-pushback-threaten-big-tech-expansion-plans" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Open-source stealth USB hides an encrypted partition behind an 8GB decoy drive</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>&#x27;Phantom Drive&#x27; presents as an ordinary 8GB drive until a specifically named text file containing the password is written to it, which triggers the hidden partition to mount.</li>
-              <li>The password never touches flash storage — custom firmware intercepts it in transit and hashes it directly in the microcontroller&#x27;s SRAM, leaving no on-disk credential trace.</li>
-              <li>A practical plausible-deniability storage design built entirely on cheap, commodity USB microcontroller hardware and open-source firmware.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/usb-flash-drives/open-source-stealth-usb-hides-an-encrypted-partition-behind-an-8gb-decoy-drive-phantom-drive-appears-as-a-regular-usb-stick-until-you-create-a-text-file-to-unlock-the-hidden-data" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Owner of original Intel 8080 pre-production layout seeks restorer</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The rubylith mask is a hand-cut photomask artifact from the 8080&#x27;s original layout process, showing all ~5,000 transistors and interconnect routing of the 2MHz CPU.</li>
-              <li>Predates EDA-generated photolithography masks — a physical record of how chip layout was actually done by hand in the mid-1970s.</li>
-              <li>Highlights how fragile these early semiconductor artifacts are and how small the remaining pool of people with the conservation skills to restore them has become.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/owner-of-original-intel-8080-pre-production-layout-seeks-restorer-handcrafted-rubylith-mask-shows-5-000-transistors-and-interconnect-patterns-of-the-fabled-2-mhz-cpu" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Mesa 26.3 Intel Driver Code Enables Large GRF Mode For Newer GPUs</h3>
+              <h3>Meta Publishes Muse Glimmer As 30B Open Agentic Model</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Large GRF (general register file) mode increases per-thread register allocation on Intel&#x27;s Alchemist/DG2 and Battlemage/Xe2 GPUs, reducing register spilling during shader compilation.</li>
-              <li>The same patch set adds VRT (variable register/thread) support for the next-gen Xe3 architecture — driver groundwork landing ahead of that hardware&#x27;s mainstream availability.</li>
-              <li>Compiler-level register allocation changes like this typically translate directly into measurable shader throughput gains on register-pressure-heavy compute and gaming workloads.</li>
+              <li>Meta Superintelligence Labs released Muse Glimmer, a 30-billion-parameter model built for always-on local agent workflows.</li>
+              <li>Model weights are fully open-source under an Apache 2.0 license.</li>
+              <li>Positions Meta in the open, on-device/local agentic AI space rather than a closed cloud-only offering.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Intel-Large-GRF-Mode-Mesa-26.3" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Meta-Muse-Glimmer" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>FreeBSD 14.5 Beta 1 Released With Various Backports, Security Fixes</h3>
+              <h3>Apple M1 Series SoCs To See ~1 Watt Power Savings With Linux 7.3</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets the 14.x (N-1) stable branch, backporting security fixes and improvements from the FreeBSD 15 development line without requiring a major-version upgrade.</li>
-              <li>Reflects FreeBSD&#x27;s dual-track maintenance model — stable 14.x plus current 15.x — giving production and server deployments a lower-risk security-patch path.</li>
-              <li>Beta 1 means the release is feature-frozen and moving toward general availability, useful for ops teams planning update windows.</li>
+              <li>The upcoming Linux 7.3 kernel brings roughly 1 watt of power savings to Apple M1 series SoCs.</li>
+              <li>M1 remains the best-supported generation of Apple Silicon on Linux.</li>
+              <li>Comes alongside Linux 7.3 also adding initial support for Apple M3 Pro/Max/Ultra SoCs.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/FreeBSD-14.5-Beta-1" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Apple-M1-Power-Savings-Linux-73" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.3 To Better Handle Cluster Load Balancing On Intel Hybrid CPUs</h3>
+              <h3>Qualcomm Posts Linux Patches For Kuno SoC Support: Cortex-A7 Platform In 2026</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel-authored patches improve the kernel&#x27;s cluster-aware scheduler specifically for hybrid P-core/E-core/LP-E-core topologies on modern Core Ultra chips.</li>
-              <li>Better cluster load balancing should reduce cases where the scheduler misplaces threads on slower E-cores or thrashes work between clusters, improving throughput and responsiveness.</li>
-              <li>Landing directly in upstream Linux for the 7.3 merge window rather than as a downstream distro patch means the fix reaches essentially every distribution eventually.</li>
+              <li>Qualcomm engineers posted 15 patches to the Linux kernel enabling support for its new Kuno SoC.</li>
+              <li>Kuno is built on a Cortex-A7 platform, with a reference development platform targeted for 2026.</li>
+              <li>Early kernel enablement work signals Qualcomm getting Linux support in place ahead of hardware availability.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-Better-Intel-Hybrid" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Qualcomm-Kuno-SoC-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Minor Optimization Coming For AMD Athlon XP Era Systems Running Linux</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A Linux kernel optimization targets roughly two-decade-old CPUs that have SSE but lack SSE2.</li>
+              <li>Beneficiaries include AMD Athlon XP, early Sempron models, and some Intel Celeron/Pentium III chips.</li>
+              <li>Shows continued low-level kernel performance tuning even for long-legacy hardware architectures.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-WMB-SSE-Optimization" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Old SGI Drivers Being Removed In Linux 7.3 Over Security Concerns</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Old Silicon Graphics (SGI) drivers are being pulled from mainline Linux 7.3 due to security concerns.</li>
+              <li>The removal follows a broader pattern of dropping old-hardware drivers amid noise generated by AI/LLM coding agents.</li>
+              <li>Reflects kernel maintainers pushing back on low-value automated contributions cluttering legacy driver code.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/SGI-GRU-Being-Removed" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Windows 11&#x27;s built-in weather app hogs more than 1.2 gigabytes of RAM just to tell the forecast — memory-sucking web wrapper filled with ads masquerades as an actual application</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Windows 11&#x27;s native MSN Weather app consumes over 1.2GB of RAM just to display a forecast.</li>
+              <li>It runs as a Chromium-based web wrapper spawning multiple background subprocesses, using roughly 5x more memory than macOS&#x27;s weather app.</li>
+              <li>The app is also filled with ads despite masquerading as a native, lightweight application.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/software/windows/windows-11s-built-in-weather-app-hogs-more-than-1-2-gigabytes-of-ram-just-to-tell-the-forecast-memory-sucking-web-wrapper-filled-with-ads-masquerades-as-an-actual-application" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -119,33 +131,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Ransomware gangs skip the CEO, head straight for the 40-something IT manager</h3>
+              <h3>London still dominates Britain&#x27;s datacenter map, but the regions are powering up</h3>
               <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Ransomware crews are increasingly targeting mid-level IT/system administrators directly rather than executives, since that&#x27;s who holds the credentialed access to critical systems and backups.</li>
-              <li>Reflects attacker reconnaissance maturing to org-chart-level targeting — social engineering aimed at whoever can actually pull the plug or restore from backup, not just the nominal decision-maker.</li>
-              <li>Underscores that basic incident-response fundamentals (immediate network isolation, prompt law-enforcement notification) still aren&#x27;t universally rehearsed even at organizations that should know better.</li>
+              <li>London holds roughly two-thirds of the UK&#x27;s total datacenter capacity.</li>
+              <li>Multimegawatt datacenter projects are increasingly being developed in regions beyond the M25, outside London.</li>
+              <li>Signals a geographic diversification trend in UK datacenter/HPC infrastructure investment.</li>
             </ul>
-            <a href="https://www.theregister.com/security/2026/08/09/ransomware-gangs-skip-the-ceo-head-straight-for-the-40-something-it-manager/5284499" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Matt Kinsella (Infleqtion): Why Neutral Atoms Power Sensors, Clocks, and Computers Alike</h3>
-              <span class="digest-source">The Quantum Insider</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Infleqtion is building neutral-atom qubit hardware as a shared physical platform across three product lines at once: quantum computing, quantum sensing, and precision timing/clocks.</li>
-              <li>CEO argues the diversification is technically synergistic, not just a business hedge — atom-trapping and control advances made for one product line (e.g., clocks) feed directly into the others (e.g., qubit coherence).</li>
-              <li>Positions neutral-atom architectures against superconducting and trapped-ion competitors, which lack comparable adjacent sensing/timing markets to cross-subsidize R&amp;D spend.</li>
-            </ul>
-            <a href="https://thequantuminsider.com/2026/08/08/matt-kinsella-infleqtion-why-neutral-atoms-power-sensors-clocks-and-computers-alike/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/systems/2026/08/10/london-still-dominates-britains-datacenter-map-but-the-regions-are-powering-up/5284693" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
