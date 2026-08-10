@@ -2495,7 +2495,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.59';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.60';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -5104,17 +5104,23 @@ function runRulesBlock() {
     </div></div>`;
 }
 function showRunInfo() {
+  // Half of this only exists during a BATTLE. `level`, `map`, `turn`, `hand_size` and `piles` are all
+  // absent from the map payload, so reading S.level.index there threw — and because the button ran
+  // closeOv() first, the panel it was opening died silently and the whole thing read as "Settings just
+  // closes". This function had never been called by anything until it was given a button, so nothing
+  // had ever exercised it outside a battle.
+  const inBattle = !!(S && S.level && S.map && S.piles);
   $('#ovInspect').innerHTML = `<div class="choice"><b class="gold">Run details</b>
     <div class="d" style="margin-top:6px;line-height:1.8">
-      <b>L${S.level.index}</b> — ${S.level.title}<br>
+      ${inBattle ? `<b>L${S.level.index}</b> — ${S.level.title}<br>
       Map ${S.map.w}×${S.map.h} · Era ${S.era} · Turn ${S.turn}<br>
       Hand ${S.hand_size}/${S.draw_target} · keep ${S.retain_cap}<br>
-      Deck: draw ${S.piles.draw} · discard ${S.piles.discard}${S.piles.exhaust?` · exhausted ${S.piles.exhaust}`:''}<br>
+      Deck: draw ${S.piles.draw} · discard ${S.piles.discard}${S.piles.exhaust?` · exhausted ${S.piles.exhaust}`:''}<br>` : ''}
       ${S.ascension?`Ascension ${S.ascension}<br>`:''}
       Seed ${S.seed}
     </div></div>
     ${runRulesBlock()}
-    ${dangerRows('showRunInfo()')}
+    ${inBattle ? dangerRows('showRunInfo()') : ''}
     <div style="text-align:center;margin-bottom:6px">${pbtn('deck',"closeOv('ovInspect');showDeck()",{cls:'h'})}</div>
     <div class="ovclose"><button class="ibtn" onclick="closeOv('ovInspect')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
   $('#ovInspect').classList.add('show');
@@ -7187,9 +7193,16 @@ async function renderDailyBoard(date, elId) {
   const el = $('#' + (elId || 'dboard')); if (!el) return;
   let rows = null;
   try { const b = window.__steamBoard; if (b) rows = await b.fetch(date, 10); } catch (e) {}
-  if (!rows || !rows.length) {
-    // No board on this platform, or Steam is unreachable. Say nothing about leaderboards to a player
-    // who has none — the panel just carries the date, exactly as it rendered a moment ago.
+  // null means there is NO board to talk to — off Steam, or Steam unreachable. Say nothing about
+  // leaderboards to a player who has none; the panel just carries the date.
+  if (rows === null) return;
+  // An EMPTY board is a completely different thing, and treating the two the same is why the standings
+  // looked broken. `fetchDailyBoard` returns null for "no board" and [] for "board, no entries yet" —
+  // both drew nothing, so on the very day the feature went live, with nobody having finished a
+  // Commission yet, it was indistinguishable from the leaderboard not existing at all.
+  if (!rows.length) {
+    el.innerHTML = `<div class="d" style="text-align:center;margin-bottom:5px">Daily Commission — ${date}</div>`
+      + `<div class="d" style="text-align:center;opacity:.85">No scores yet today — finish the Commission and the mark is yours.</div>`;
     return;
   }
   const line = r => `<div class="dbrow${r.you ? ' me' : ''}">
