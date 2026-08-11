@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - August 10, 2026 | Densanon</title>
+  <title>Computation Morning Digest - August 11, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 10, 2026</div>
+        <div class="digest-date-badge">August 11, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation news is dominated by the scale of AI infrastructure spending running headlong into local resistance: hyperscalers are committing nearly $2 trillion to AI hardware and memory even as US data center bans surge past 500. On the kernel and silicon side, Linux continues rapid hardware enablement work across Apple M1 power tuning, new Qualcomm Kuno SoC patches, and even fresh optimizations for decades-old AMD Athlon XP systems, while Meta pushes into open local-agent models with its 30B Muse Glimmer release.</p>
+        <p class="digest-intro">Today&#x27;s computation news splits between AI-infrastructure policy/finance and low-level Linux performance work. On the policy side, the FCC is weighing an import ban on Chinese optical transceivers (56% of the global market) that feed AI interconnects, a House member is pushing enforcement of chipmaker customer due-diligence rules, and Nvidia is lining up $500 billion in financing to bankroll its own customers&#x27; data center buildouts. On the kernel side, Linux 7.3 prep continues apace — a Meta engineer&#x27;s memory-management patches show up to a 12.8x benchmark improvement, the open-source NVIDIA &quot;Nova&quot; driver gains ground, and Claude Opus made a notable appearance debugging a real hardware audio bug.</p>
       </div>
     </section>
 
@@ -29,99 +29,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Hyperscalers commit nearly $2 trillion to secure AI hardware and memory — Google leads $811 billion spending surge while Apple trails at $57 billion</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Hyperscalers&#x27; long-term purchase commitments for AI hardware and memory total nearly $2 trillion, with Google leading at $811 billion.</li>
-              <li>Apple trails far behind at just $57 billion, underscoring the spending gulf between AI-infrastructure buyers and consumer electronics makers.</li>
-              <li>The scale of commitments marks a tectonic shift where cloud service providers now overwhelm traditional consumer electronics spending.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/hyperscalers-commit-nearly-usd2-trillion-to-secure-ai-hardware-and-memory-google-leads-usd811-billion-spending-surge-while-apple-trails-at-usd57-billion" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AI data center bans surge past 500 nationwide as local US politicians begin blocking new developments — growing public outrage and bipartisan pushback threaten big tech expansion plans</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Local bans on new AI data center developments in the US have surged past 500 as of July, per recent analysis.</li>
-              <li>Growing bipartisan political pressure and public outrage are directly threatening big tech&#x27;s data center expansion plans.</li>
-              <li>Highlights a widening gap between hyperscaler infrastructure ambitions and local government willingness to approve projects.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/data-centers/ai-data-center-bans-surge-past-500-nationwide-as-local-us-politicians-begin-blocking-new-developments-growing-public-outrage-and-bipartisan-pushback-threaten-big-tech-expansion-plans" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Meta Publishes Muse Glimmer As 30B Open Agentic Model</h3>
+              <h3>Up To 12.8x Improvement Observed For gup_test With New Linux MM Patches</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Meta Superintelligence Labs released Muse Glimmer, a 30-billion-parameter model built for always-on local agent workflows.</li>
-              <li>Model weights are fully open-source under an Apache 2.0 license.</li>
-              <li>Positions Meta in the open, on-device/local agentic AI space rather than a closed cloud-only offering.</li>
+              <li>Meta kernel engineer Rik van Riel&#x27;s newest memory-management patches yield up to a 12.8x speedup on the gup_test benchmark.</li>
+              <li>The work batches lookups inside follow_page_mask(), the kernel routine that translates virtual addresses to their corresponding struct page.</li>
+              <li>Continues van Riel&#x27;s long track record of squeezing performance gains out of core Linux memory-management code paths.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Meta-Muse-Glimmer" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-Batch-Follow-Page-Mask" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Apple M1 Series SoCs To See ~1 Watt Power Savings With Linux 7.3</h3>
+              <h3>Raspberry Pi AXI PMU Driver Under Review For The Mainline Linux Kernel</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The upcoming Linux 7.3 kernel brings roughly 1 watt of power savings to Apple M1 series SoCs.</li>
-              <li>M1 remains the best-supported generation of Apple Silicon on Linux.</li>
-              <li>Comes alongside Linux 7.3 also adding initial support for Apple M3 Pro/Max/Ultra SoCs.</li>
+              <li>A driver for the Broadcom AXI performance monitoring unit (PMU) is under review for mainline Linux, covering Raspberry Pi 1 through Pi 5.</li>
+              <li>PMU support has been missing from mainline for years despite being present on every Raspberry Pi model to date.</li>
+              <li>A Google engineer is driving the mainlining effort, which would give Pi developers standard kernel-level performance counters for the first time.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Apple-M1-Power-Savings-Linux-73" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Raspberry-Pi-AXI-PMU-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Qualcomm Posts Linux Patches For Kuno SoC Support: Cortex-A7 Platform In 2026</h3>
+              <h3>FastFlowLM 1.0 Released Now As Part Of The AMD ROCm Umbrella</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Qualcomm engineers posted 15 patches to the Linux kernel enabling support for its new Kuno SoC.</li>
-              <li>Kuno is built on a Cortex-A7 platform, with a reference development platform targeted for 2026.</li>
-              <li>Early kernel enablement work signals Qualcomm getting Linux support in place ahead of hardware availability.</li>
+              <li>FastFlowLM hit its 1.0 release and is now officially folded into AMD&#x27;s ROCm software umbrella.</li>
+              <li>It&#x27;s open-source software for running vision, audio, embedding, and MoE LLMs on AMD Ryzen AI NPUs.</li>
+              <li>Formal ROCm inclusion signals AMD consolidating its NPU inference stack under one officially supported toolchain rather than leaving it third-party.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Qualcomm-Kuno-SoC-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/FastFlowLM-1.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Minor Optimization Coming For AMD Athlon XP Era Systems Running Linux</h3>
+              <h3>Open-Source NVIDIA &quot;Nova&quot; Driver Sees More Functionality For Linux 7.3</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A Linux kernel optimization targets roughly two-decade-old CPUs that have SSE but lack SSE2.</li>
-              <li>Beneficiaries include AMD Athlon XP, early Sempron models, and some Intel Celeron/Pentium III chips.</li>
-              <li>Shows continued low-level kernel performance tuning even for long-legacy hardware architectures.</li>
+              <li>New DRM Rust core and driver changes for the open-source &quot;Nova&quot; NVIDIA driver were sent to DRM-Next, targeting the Linux 7.3 merge window.</li>
+              <li>Nova is being built as the Rust-based successor path for open-source NVIDIA GPU support on Linux.</li>
+              <li>Part of a broader wave of Rust-language DRM infrastructure landing in the kernel alongside other Rust GPU drivers.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-WMB-SSE-Optimization" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/NVIDIA-Nova-Rust-Linux-7.3" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Old SGI Drivers Being Removed In Linux 7.3 Over Security Concerns</h3>
+              <h3>Claude Opus Helped Debug &amp; Fix Lack Of Audio On Linux For HP OmniBook X Flip 14</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Old Silicon Graphics (SGI) drivers are being pulled from mainline Linux 7.3 due to security concerns.</li>
-              <li>The removal follows a broader pattern of dropping old-hardware drivers amid noise generated by AI/LLM coding agents.</li>
-              <li>Reflects kernel maintainers pushing back on low-value automated contributions cluttering legacy driver code.</li>
+              <li>The HP OmniBook X Flip 14 (AMD Ryzen AI 300 &quot;Strix Point&quot;) had no working audio on mainline Linux, despite most Strix Point laptops working fine.</li>
+              <li>Claude Opus 5 was used as the debugging assistant to track down and help fix the missing-audio issue.</li>
+              <li>A concrete case study of an AI coding model directly assisting kernel/driver-level hardware debugging rather than just application code.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/SGI-GRU-Being-Removed" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/HP-X-Flip-14-Linux-Audio" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Windows 11&#x27;s built-in weather app hogs more than 1.2 gigabytes of RAM just to tell the forecast — memory-sucking web wrapper filled with ads masquerades as an actual application</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>Linux 7.3 Bringing A KCFI Optimization To Benefit Older Intel CPUs</h3>
+              <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Windows 11&#x27;s native MSN Weather app consumes over 1.2GB of RAM just to display a forecast.</li>
-              <li>It runs as a Chromium-based web wrapper spawning multiple background subprocesses, using roughly 5x more memory than macOS&#x27;s weather app.</li>
-              <li>The app is also filled with ads despite masquerading as a native, lightweight application.</li>
+              <li>Linux 7.3 is set to merge a Kernel Control Flow Integrity (KCFI) optimization aimed specifically at older Intel processors.</li>
+              <li>KCFI is a security-hardening feature; this change reduces its performance overhead on legacy Intel silicon.</li>
+              <li>Part of the same 7.3 merge window doing hardware-enablement and optimization work spanning old and new CPUs alike.</li>
             </ul>
-            <a href="https://www.tomshardware.com/software/windows/windows-11s-built-in-weather-app-hogs-more-than-1-2-gigabytes-of-ram-just-to-tell-the-forecast-memory-sucking-web-wrapper-filled-with-ads-masquerades-as-an-actual-application" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.3-KCFI-Optimization" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -131,15 +107,57 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>London still dominates Britain&#x27;s datacenter map, but the regions are powering up</h3>
-              <span class="digest-source">The Register</span>
+              <h3>FCC proposes import ban on Chinese optical transceivers — blockade targets key AI interconnects as China holds 56% global market share</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>London holds roughly two-thirds of the UK&#x27;s total datacenter capacity.</li>
-              <li>Multimegawatt datacenter projects are increasingly being developed in regions beyond the M25, outside London.</li>
-              <li>Signals a geographic diversification trend in UK datacenter/HPC infrastructure investment.</li>
+              <li>The FCC is drafting a proposal to expand Secure Networks Act coverage to new-model optical transceivers manufactured in China.</li>
+              <li>China currently holds a 56% global market share in optical transceivers, components that are key interconnects for AI data center clusters.</li>
+              <li>A ban would force US AI infrastructure buyers to requalify supply chains for a critical, currently China-dominated networking component.</li>
             </ul>
-            <a href="https://www.theregister.com/systems/2026/08/10/london-still-dominates-britains-datacenter-map-but-the-regions-are-powering-up/5284693" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/fcc-proposes-import-ban-on-chinese-optical-transceivers-blockade-targets-key-ai-interconnects-as-china-holds-56-percent-global-market-share" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Nvidia teams up with financial giants to create $500 billion AI infrastructure funds — six investment firms to enable access to long-term funding at attractive rates</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Nvidia is arranging financing through six major investment firms to back a combined $500 billion in AI infrastructure funds.</li>
+              <li>The goal is to give data center builders access to long-term funding at more attractive rates than they&#x27;d secure independently.</li>
+              <li>Deepens Nvidia&#x27;s role beyond chip supplier into orchestrating the capital stack behind its own customers&#x27; AI buildouts.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-teams-up-with-financial-giants-to-create-usd500-billion-ai-infrastructure-funds-six-investment-firms-to-enable-access-to-long-term-funding-at-attractive-rates" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>US lawmaker wants gov&#x27;t to enforce regulation to ensure &#x27;chipmakers conduct adequate due diligence on their customers&#x27; — House member calls for Biden-era export control to be enforced</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Congressman John Moolenaar is pressing the Commerce Department&#x27;s Bureau of Industry and Security to clarify enforcement status of the Foundry Due Diligence Rule.</li>
+              <li>The rule, dating to the Biden administration, would require chipmakers to vet who is actually buying their chips before fabrication.</li>
+              <li>Signals continued congressional pressure to tighten semiconductor export-control enforcement rather than let existing rules lapse quietly.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/u-s-lawmaker-wants-govt-to-enforce-regulation-to-ensure-chipmakers-conduct-adequate-due-diligence-on-their-customers-house-member-calls-for-biden-era-export-control-to-be-enforced" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Modder adds Radeon RX 9070 XT eGPU to Steam Machine, runs Crimson Desert at over 100 FPS on High — moves boot drive to USB-C port, leverages M.2 to OCuLink adaptor and eGPU dock</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A modder connected a Radeon RX 9070 XT eGPU to Valve&#x27;s Steam Machine via an M.2-to-OCuLink adapter and external eGPU dock.</li>
+              <li>The boot drive was relocated to the Steam Machine&#x27;s USB-C port to free up the M.2 slot for the OCuLink adapter.</li>
+              <li>The mod pushed Crimson Desert past 100 FPS on High settings, showing real desktop-GPU-class performance is achievable on the compact console-like hardware.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/gpus/modder-adds-radeon-rx-9070-xt-egpu-to-steam-machine-runs-crimson-desert-at-over-100-fps-on-high-moves-boot-drive-to-usb-c-port-leverages-m-2-to-oculink-adaptor-and-egpu-dock" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

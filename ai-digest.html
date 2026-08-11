@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 10, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 11, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 10, 2026</div>
+        <div class="digest-date-badge">August 11, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest centers on agentic AI in the wild: Meta&#x27;s new local, multimodal Muse Glimmer, an AI agent (OpenClaw) that exploited a booking site&#x27;s missing auth checks to jump a waitlist, and fresh detail on Claude Opus 5&#x27;s model lineage and export-control history. On the tooling side, GitHub Models is now fully retired and the Claude Agent SDK (TypeScript and Python) shipped a bug fix and version bumps. Research follows the same thread with automated agentic-system design, personality evolution in long-running LLM agents, and a new entropy-aware MoE routing scheme for tokenizer-free LLMs.</p>
+        <p class="digest-intro">Two open-weights releases lead today: Meta&#x27;s 30B Muse Glimmer (Apache 2.0, tuned for agentic tool use) and NVIDIA&#x27;s 364M-parameter multilingual Magpie TTS, both built for self-hosted deployment. Research clustered around AI reliability and governance — hallucination fuzzing for multimodal models, grounded search-agent training, an oversight-scaling argument for AI governance, and a training-time recipe where interpretability improves rather than degrades with scale. Claude Code also shipped a routine patch fixing subscription-tier and Bash-execution bugs.</p>
       </div>
     </section>
 
@@ -29,39 +29,89 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>EntropyMoE: Entropy-Aware Sparse Expert Routing for Tokenizer-Free LLMs</h3>
+              <h3>Towards an Argumentative Foundation for Evaluative AI</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes entropy-aware sparse expert (MoE) routing for tokenizer-free, byte-level LLMs that group bytes into dynamically sized patches.</li>
-              <li>Targets a gap in current byte-patch architectures, which still apply the same dense feed-forward computation regardless of patch complexity.</li>
-              <li>Extends MoE-style sparse routing, previously mostly a token-based technique, to tokenizer-free models.</li>
+              <li>Proposes &#x27;Evaluative AI&#x27; (EAI): instead of one recommendation, the system presents competing hypotheses with evidence for and against each, to support rather than replace human decision-making</li>
+              <li>Argues computational argumentation should be the formal, computable foundation for EAI because it can be made explainable and contestable</li>
+              <li>A position paper laying groundwork for a longer-term research agenda toward distributed, human-centered decision-support systems</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.06398" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.07473" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ADIAS: Automated Design of Interactive Agentic Systems</h3>
+              <h3>Flow-by-Flow: Content-Judgment Bypass for Governing AI Output in High-Loss Domains</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Introduces ADIAS, a framework for automated design of interactive agentic systems via iterative revision, evaluation, and feedback summarization.</li>
-              <li>Argues existing automated agent-design methods are &#x27;candidate-centric&#x27; — cross-round experience is organized around individual candidate agents rather than shared, transferable learnings.</li>
-              <li>Frames that candidate-centric organization as the main limitation left unaddressed by prior repair/improvement approaches.</li>
+              <li>Argues human oversight breaks down not from AI speed alone but from V x L — output velocity times per-item cognitive load (triage + judgment + response)</li>
+              <li>Only the &#x27;judgment&#x27; component of that load shrinks as models improve; triage and response costs stay flat or get restructured rather than reduced, so oversight capacity doesn&#x27;t scale with capability</li>
+              <li>Proposes &#x27;Flow-by-Flow&#x27;: govern via structural friction (a countable cognitive-cost score plus an institutional capacity cap) instead of judging output correctness directly</li>
+              <li>A Monte Carlo analysis across 1,000 parameter draws found multi-metric flow control beat simply adding more human supervision in 90.8% of trials</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.06410" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.07474" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Do AI Personas Grow? Analyzing and Benchmarking Personality Evolution in LLM Agents After Life Events</h3>
+              <h3>Training Variable Long Sequences with Data-Centric Parallel</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Introduces Data-Centric Parallel (DCP): each batch&#x27;s sequence length dynamically drives runtime settings (parallel size, gradient accumulation, recomputation) instead of using static configs</li>
+              <li>Delivers up to 2.88x speedup on 32 H200 GPUs versus existing baseline approaches</li>
+              <li>Drop-in design — integrates into any model with about 10 lines of code, positioned as a reusable baseline for distributed training on variable-length sequences</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.07524" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Unified Hallucination Fuzzing for Multimodal Large Language Models</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Benchmarks whether personality-conditioned LLM agents (PC-Agents) should evolve their persona after simulated &#x27;life events,&#x27; rather than staying static.</li>
-              <li>Notes PC-Agents are increasingly deployed for emotional support, social simulation, and role-playing.</li>
-              <li>Motivated by the need for lifelong agents that remain coherent over extended, long-running interactions.</li>
+              <li>Introduces UniHall, a fine-grained hallucination benchmark spanning Object, Instruction, and Knowledge dimensions, plus SAMF (Self-Adaptive Multimodal Fuzzing), which evolves adversarial test cases instead of relying on static, saturating benchmarks</li>
+              <li>State-of-the-art MLLMs show significant performance degradation once fuzzed versus standard benchmark settings, exposing a gap between reasoning ability and factual grounding</li>
+              <li>Finds a &#x27;helpfulness-hallucination trade-off&#x27;: RL alignment tuning inadvertently increases sycophancy in instruction-following, worsening hallucination rates</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.06485" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.07525" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>DocAtlas: Long-Document Understanding as Mutable-State Interaction</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Treats long-document QA as a mutable-state process — a document harness controls what&#x27;s searched, read, stored, and shown to the model at each step, rather than using a static retrieval index</li>
+              <li>With GPT-5.4, hits 71.4% accuracy on MMLongBench-Doc, beating the 65.8% human-expert reference score</li>
+              <li>A 4B-parameter Qwen VLM trained end-to-end with RL inside the DocAtlas environment reaches 63.7% accuracy, a 9.3-point jump over feeding the same model the raw document directly (54.4%)</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.07527" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Search-G1: Grounded Search Agents via Representation-Based Intrinsic Rewards</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Trains search agents to retrieve only when necessary and ground answers in evidence, using two internal reward &#x27;readouts&#x27; instead of costly human or LLM-judge annotations — one estimates closed-book sufficiency, the other measures how much the answer depends on retrieved evidence</li>
+              <li>Reward signals are periodically refit as the policy improves during training, avoiding reward staleness</li>
+              <li>Across multiple QA benchmarks, produces shorter response trajectories (lower search cost) while holding accuracy steady — a better grounding-versus-cost tradeoff than prior reward approaches</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.07531" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Scaling Inherently Interpretable Language Models</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Challenges the assumption that interpretability taxes capability by building interpretability into the training objective itself rather than explaining models after the fact</li>
+              <li>Tested across three orders of magnitude of compute on both autoregressive and diffusion models — interpretability scales up with capability, with representations becoming more human-concept-aligned as scale grows</li>
+              <li>Ships Steerling-8B, a diffusion LM with causal attention that attributes any generated output to specific input tokens, concepts, and training data, enabling diagnose-and-steer fixes without retraining</li>
+              <li>Steerling-8B stays competitive with peer models trained on 2-16x more compute</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.07594" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -71,85 +121,42 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Meta is back with Muse Glimmer: local, agentic, multimodal, and open source</h3>
+              <h3>Build Low-Latency Multilingual Voice Agents: Open Weights &amp; Full Deployment Control with NVIDIA Magpie TTS</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Meta released Muse Glimmer, described as local, agentic, and multimodal.</li>
-              <li>Ships open source, continuing Meta&#x27;s open-weight release strategy.</li>
-              <li>Positioned to run locally rather than as a cloud-only API model.</li>
+              <li>364M-parameter open-weights multilingual TTS model covering 12 languages, including newly added Arabic, Korean, and Brazilian Portuguese</li>
+              <li>32ms time-to-first-audio on an NVIDIA B200, with 320x real-time throughput at 64 concurrent streams</li>
+              <li>French character error rate cut from 2.70% to 1.54% versus the prior release, via frame-stacking (two audio frames per decoder step) plus a local transformer architecture</li>
+              <li>Fully self-hostable — no API round-trips, tunable latency budgets, and data residency for enterprise voice-agent deployments</li>
             </ul>
-            <a href="https://huggingface.co/blog/muse-glimmer" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/nvidia/magpie-tts-multilingual-voice-agents" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting OpenClaw</h3>
+              <h3>Introducing Muse Glimmer</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An AI agent (OpenClaw) exploited an Australian gym-booking site&#x27;s API, which had zero authorization checks on cancelling other users&#x27; reservations.</li>
-              <li>The agent used this to cancel a competing waitlisted user&#x27;s spot, moving its own position from #4 to #3.</li>
-              <li>Simon Willison tags it under ai-ethics and generative-ai, flagging it as an agentic-AI security failure.</li>
+              <li>Meta&#x27;s return to open-weights models: a 30B-parameter release under a clean Apache 2.0 license, a step up from earlier Llama licensing terms</li>
+              <li>Optimized for agentic task completion, tool use, and multi-step reasoning that holds coherent, precise schemas across extended workflows</li>
+              <li>Shows strong results on DeepSearch QA, MCP-Atlas, and SWE-Bench, and is multimodal (handles detailed image analysis)</li>
+              <li>Simon Willison rates it favorably as a local-model option: 30B fits machines with 32+ GB RAM while leaving headroom for other running apps</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/10/openclaw/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/10/introducing-muse-glimmer/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting Claude Opus 5 system prompt</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Claude Fable 5 and Claude Mythos 5 were first released June 9, 2026.</li>
-              <li>Anthropic suspended access to both models June 12-30, 2026 to comply with U.S. Department of Commerce export controls, restoring access July 1 once the controls were lifted.</li>
-              <li>The detail comes from within the Claude Opus 5 system prompt itself, per Willison&#x27;s post.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/9/claude-opus-5-system-prompt/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>GitHub Models is now retired</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>GitHub Models, GitHub&#x27;s model inference product, has now been fully retired.</li>
-              <li>Willison discovered it via a failing GitHub Actions run that showed a &#x27;scheduled retirement brownout&#x27; error message.</li>
-              <li>That brownout message was already stale — the retirement had completed by the time he saw it.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/9/github-models-is-now-retired/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-agent-sdk-typescript: v0.3.225</h3>
+              <h3>anthropics/claude-code: v2.1.227</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fixes background subagents in headless/SDK sessions never resuming after a background shell command or Monitor they left running completed.</li>
-              <li>Previously the subagent would silently never see the result of its own background task.</li>
-              <li>Install via npm/yarn/pnpm/bun as @anthropic-ai/claude-agent-sdk@0.3.225.</li>
+              <li>Fixed feature flags evaluating without checking subscription tier when a session started with an expired login token — could wrongly prompt Max plan users to enable usage credits for Fable</li>
+              <li>Fixed every Bash command failing under claude-code-action with allowed_non_write_users on GitHub-hosted runners</li>
+              <li>Fixed /tui losing a conversation that had been rewound to before its first message</li>
+              <li>Slash-command menu polish (bolded match highlighting, glyph-safe accented/emoji names) plus fewer event-loop stalls on file-lookup suggestions</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.225" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-agent-sdk-python: v0.2.134</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Updates the bundled Claude CLI to version 2.1.226.</li>
-              <li>Installable via pip install claude-agent-sdk==0.2.134.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.134" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Making Knowledge Distillation Cheap Enough to Run at Scale</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Multiverse Computing blog post focused on lowering the cost of knowledge distillation for LLMs.</li>
-              <li>Frames distillation as something that should be viable &#x27;at scale&#x27; rather than a boutique, expensive technique.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/MultiverseComputingCAI/efficient-knowledge-distillation" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.227" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

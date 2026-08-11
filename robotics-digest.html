@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 10, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 11, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 10, 2026</div>
+        <div class="digest-date-badge">August 11, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s robotics research centers on policy learning and embodied control — from adaptive VLA inference that balances reasoning depth against real-time speed, to Lyapunov-guided sim-to-real transfer and learning-based haptic feedback for surgical robots. On the tooling side, ROS 2 keeps powering practical builds, from vision-driven robotic arms to an early agentic pipeline generator, while the community spotlight lands on vision-based tactile sensing and a real-time underwater vision system running live on a moving ROV.</p>
+        <p class="digest-intro">Today&#x27;s research is dominated by embodied AI: a self-correcting world model for vision-and-language navigation and a Claude-Code-style agentic loop ported to robot-policy improvement both push on closing the loop between perception, action, and correction. On the industry side, capital and deployment scale are the story — Hadrian&#x27;s $1.37B raise pushes its valuation to $7.87B, Tate has put 58 cobot welders into live production, and AES&#x27;s Maximo system has now completed 180,000 robotic solar panel installations at commercial scale. Tactile sensing and simulation-based cybersecurity tooling round out the day&#x27;s practical advances.</p>
       </div>
     </section>
 
@@ -29,50 +29,52 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Fast and Accurate: An Adaptive VLA Inference Framework through Environment-aware Model Selection</h3>
+              <h3>SC$^{2}$-WM: A Self-Correcting World Model with Closed-Loop Feedback for Vision-and-Language Navigation in Continuous Environments</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes an adaptive Vision-Language-Action (VLA) framework that selects models based on environment conditions to balance reasoning depth and inference speed.</li>
-              <li>Builds on dual-system VLA architectures pairing fast reactive control with slower deliberative reasoning.</li>
-              <li>Targets the core embodied-AI tradeoff between long-horizon reasoning and real-time closed-loop responsiveness.</li>
+              <li>Targets Vision-and-Language Navigation in Continuous Environments (VLN-CE), where agents must make fine-grained navigation decisions under partial observability.</li>
+              <li>Identifies that most existing VLN-CE methods rely on open-loop execution with no mechanism to detect or correct errors mid-task.</li>
+              <li>Proposes a self-correcting world model with closed-loop feedback to catch and fix navigation errors during execution rather than after failure.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.06434" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.07548" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LyEvO: Lyapunov-Guided Evolutionary Optimization for Safe and Robust Sim-to-Real Policy Learning</h3>
+              <h3>Self Supervised Learning from Automatically Generated Demonstrations for Visual Robotic Manipulation</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>LyEvO is a physics-grounded, Lyapunov-guided evolutionary optimization framework for training safe, robust control policies in simulation.</li>
-              <li>Aims to systematically assess a policy&#x27;s readiness for real-world deployment, a known gap in current sim-to-real transfer methods.</li>
+              <li>Targets a core manipulation bottleneck: object-specific programming, manual data annotation, and calibrated perception pipelines slow real-world deployment.</li>
+              <li>Proposes learning from demonstration as a faster alternative to hand-engineered pipelines, but automates demonstration generation instead of relying on costly human-collected data.</li>
+              <li>Uses self-supervision to cut the labeling burden for training visual manipulation policies.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.06481" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.07553" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A Disturbance in the Force: Force Actuation on the RAVEN II Surgical Robot with Parallel Motor-Cable Units</h3>
+              <h3>You Don&#x27;t Need To Stay in The Loop: An Agentic Robotics Loop for Robot-Policy Improvement</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Addresses the decades-old challenge of haptic feedback on surgical robots via force actuation on the RAVEN II platform&#x27;s parallel motor-cable units.</li>
-              <li>Uses learning-based force estimation from robot states rather than adding extra physical sensors.</li>
-              <li>Reports the learning-based approach shows desirable accuracy while avoiding added sensor hardware.</li>
+              <li>Ports the software coding-agent architecture behind Claude Code and Codex — a main agent orchestrating subagents and tools — directly to robot-policy improvement.</li>
+              <li>Frames robot-policy iteration as a closed loop where a manager agent, analysis subagents, and execution tools replace manual policy tuning.</li>
+              <li>Notable as an explicit design-pattern transfer from agentic coding tools into embodied robotics workflows.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.06488" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.07555" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SyncSBC: Decentralized Swarm Behavior Prediction for Synchronized Autonomous Control</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
+              <h3>A &#x27;5-in-1&#x27; seed-sized surgical robot</h3>
+              <span class="digest-source">Robohub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes decentralized prediction of swarm-level behavior derived purely from local, limited-sensing agent perception.</li>
-              <li>Targets synchronized autonomous control without any centralized coordination.</li>
-              <li>Addresses an underexplored gap: how individual swarm agents infer emergent group-level behavior from local information alone.</li>
+              <li>Developed by researchers at Nanyang Technological University (NTU Singapore).</li>
+              <li>The robot is seed-sized and can navigate soft, uneven internal surfaces.</li>
+              <li>Performs five distinct surgical functions wirelessly from a single platform.</li>
+              <li>Aimed at making surgery and medical treatment more precise and less invasive.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.06587" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://robohub.org/a-5-in-1-seed-sized-surgical-robot/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -82,74 +84,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Analog Devices returns as strategic sponsor to aid MassRobotics startups</h3>
+              <h3>Hadrian raises $1.37B to accelerate U.S. defense, aerospace manufacturing</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Analog Devices returns as a strategic sponsor of the MassRobotics startup program via its Analog Garage initiative.</li>
-              <li>Sponsorship includes participation in industry events such as RoboBusiness.</li>
+              <li>The raise values Hadrian at $7.87 billion.</li>
+              <li>It is Hadrian&#x27;s second funding round in 2026, following a round in January.</li>
+              <li>Capital is earmarked for scaling U.S. defense and aerospace manufacturing capacity.</li>
             </ul>
-            <a href="https://www.therobotreport.com/analog-devices-returns-strategic-sponsor-aid-massrobotics-startups/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ROS 2 Based Face Tracking Display Control with PiPER Robotic Arm</h3>
-              <span class="digest-source">ROS Discourse</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Combines an AgileX PiPER 6-DoF robotic arm, an Orbbec RGB-D camera, and ROS 2 into a vision-based smart ergonomic workstation.</li>
-              <li>Uses YOLOv5-Face plus depth perception to detect the user&#x27;s 3D position in real time.</li>
-              <li>Drives the robotic arm to automatically adjust display orientation based on the tracked user position.</li>
-            </ul>
-            <a href="https://discourse.openrobotics.org/t/ros-2-based-face-tracking-display-control-with-piper-robotic-arm/57270" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/hadrian-raises-1-37b-accelerate-u-s-manufacturing/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Exploring a human-reviewed ROS 2 agentic pipeline generator</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>Tate deploys 58 Hirebotics cobot welders across multiple facilities</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>EdgeAI Forge is a prototype local-first architecture for generating, testing, benchmarking, and documenting ROS 2 and machine-vision pipelines.</li>
-              <li>Initial workflow targets a ROS 2 vision pipeline generator that turns plain-language requirements (e.g., read USB camera frames, run object detection) into working pipelines.</li>
-              <li>Explicitly built around human review in the loop rather than fully autonomous code generation.</li>
+              <li>58 collaborative welding robots deployed company-wide, not a single pilot line.</li>
+              <li>Replaces traditional hand welding with an agile, cloud-connected automation network.</li>
+              <li>Built on Hirebotics&#x27; cobot welding platform, spanning multiple facilities.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/exploring-a-human-reviewed-ros-2-agentic-pipeline-generator/57268" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Vision-based tactile sensing is becoming the default for high-precision robot fingertips — and the reason is structural, not hype</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues vision-based tactile sensing (VBTS) is becoming the default for dexterous robot fingertips for structural, not marketing, reasons.</li>
-              <li>Analysis is grounded in the UMI tactile-skin stack, including DM-Tac W and XTac UMI G1 hardware.</li>
-              <li>Core mechanism described: a camera positioned behind a deformable gel layer captures contact deformation for tactile sensing.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vkfnp9/visionbased_tactile_sensing_is_becoming_the/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/tate-deploys-58-hirebotics-cobot-welders-across-multiple-facilities/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Built a Real-Time Underwater Image Processing System – 4K 60FPS Part2</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>Interview with Maximo&#x27;s Nick Hegeman: 180,000 robotic installations of solar panels and counting</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Demonstrates real-time underwater image processing running live on a moving ROV during an actual field test, not offline post-processing.</li>
-              <li>Pipeline runs at 4K/60FPS with NVIDIA CUDA acceleration.</li>
-              <li>Second installment (Part 2) of an ongoing real-time underwater vision system build.</li>
+              <li>AES, a global energy company, has already moved its Maximo system from prototype to full commercial deployment on utility-scale solar construction sites.</li>
+              <li>Maximo has completed 180,000 robotic solar panel installations to date.</li>
+              <li>Contrasts with most of the current &#x27;physical AI&#x27; conversation, which is still prototype-stage — this is operating at commercial scale now.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vj4oym/built_a_realtime_underwater_image_processing/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/08/10/interview-with-maximos-nick-hegeman-180000-robotic-installations-of-solar-panels-and-counting/104039/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>PlusAI reaches &#x27;93.4 percent safety readiness&#x27; ahead of autonomous truck launch</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Reports a 93.4% &#x27;Safety Case Readiness&#x27; score.</li>
+              <li>Targeting commercial launch of factory-built driverless trucks in 2027.</li>
+              <li>Published updated H1 2026 performance figures showing measurable safety improvements.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/08/10/plusai-reaches-93-4-percent-safety-readiness-ahead-of-autonomous-truck-launch/104033/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Electronic skin gives robots and prosthetics &#x27;human-like touch sensing&#x27;</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Hanyang University ERICA researchers developed a vertically integrated dual-gate transistor design for tactile sensing.</li>
+              <li>Aims to deliver reliable touch sensing with high density, large-area integration — an improvement over conventional tribotronic (touch-to-electrical) devices.</li>
+              <li>Targets both robotic and prosthetic applications for tactile feedback.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/08/10/electronic-skin-gives-robots-and-prosthetics-human-like-touch-sensing/104036/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>VicOne releases free NVIDIA Isaac Sim cybersecurity extension based on DEF CON 34 research</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The free &#x27;Radeis Extension&#x27; plugs into NVIDIA Isaac Sim.</li>
+              <li>Lets developers test robot cyber safety in simulation before physical deployment.</li>
+              <li>Built directly on DEF CON 34 security research findings.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/vicone-releases-free-nviida-isaac-sim-cybersecurity-extension-based-def-con-34-research/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
