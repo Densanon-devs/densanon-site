@@ -2495,7 +2495,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.60';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.61';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2911,6 +2911,10 @@ const Sfx = (() => {
     battle:   { freqs: [55, 82.41, 110, 164.81],   type: 'sawtooth', gain: 0.05, cut: 480,  trem: 0.16 },
     boss:     { freqs: [55, 110, 138.59, 207.65],  type: 'sawtooth', gain: 0.08, cut: 720,  trem: 0.22 },
     safe:     { freqs: [130.81, 196, 261.63, 392], type: 'triangle', gain: 0.05, cut: 1700, trem: 0.05 },
+    // camp and outpost were one 'safe' bed until the score split them: the camp is a low jazz trio, the
+    // outpost is brighter and a fifth up. 'safe' stays for the run summary, which is neither place.
+    camp:     { freqs: [98, 146.83, 196, 293.66],  type: 'triangle', gain: 0.05, cut: 1400, trem: 0.05 },
+    outpost:  { freqs: [146.83, 220, 293.66, 440], type: 'triangle', gain: 0.05, cut: 1900, trem: 0.06 },
   };
   let layerGains = {};   // layer name -> GainNode, for the bed playing right now
   let layerWant = {};    // layer name -> level the game last asked for; survives a bed change
@@ -3685,9 +3689,12 @@ function render(state) {
   if (mode !== 'picker') { closeOv('ovGeneral'); closeOv('ovDeploy'); }
   if (mode === 'picker') { Sfx.music('main'); setScreen(false); $('#app').style.display='flex'; showGenerals(); warmAssets(); return; }
   if (mode === 'map') {
-    // Decided HERE and nowhere else. A shop or a camp is a breather, and so is the run-end summary.
+    // Decided HERE and nowhere else. A shop or a camp is a breather, and so is the run-end summary —
+    // but they are three DIFFERENT breathers now that the score has a bed for each: the outpost is the
+    // shop, the camp is its own, and the summary keeps 'safe' because it is neither place.
     const pk = S.pending && S.pending.kind;
-    Sfx.music((pk === 'shop' || pk === 'camp' || S.result) ? 'safe' : 'campaign');
+    Sfx.music(S.result ? 'safe' : pk === 'shop' ? 'outpost' : pk === 'camp' ? 'camp' : 'campaign');
+    _updateMusicLayers();          // the map's act layers, same as the battle's intensity layers
     setScreen(true); renderMapScreen(); coach('map'); _playCardFx(); return;
   }
   _playCardFx();   // shop and mid-battle workshop changes reveal where they happen, not on the next map
@@ -4353,8 +4360,9 @@ let _forgeT = null;
 // or mid-battle workshop — instead of only on arrival at the map screen.
 // Drive the music layers from state the game already tracks. Each is a no-op until the matching
 // layer file exists, so this is safe to run whether or not stems have been delivered.
-//   battle -> `desperate` rises as your HQ is ground down
-//   boss   -> `enraged` follows the boss turning
+//   battle   -> `desperate` rises as your HQ is ground down
+//   boss     -> `enraged` follows the boss turning
+//   campaign -> the three act layers STACK, so the map thickens as the run goes on
 function _updateMusicLayers() {
   try {
     if (!S) return;
@@ -4362,6 +4370,12 @@ function _updateMusicLayers() {
     // nothing above 70% health, full by 25% — a slope, so it swells rather than switching on
     Sfx.setLayer('desperate', Math.max(0, Math.min(1, (0.70 - hp) / 0.45)));
     Sfx.setLayer('enraged', S.boss && S.boss.enraged ? 1 : 0);
+    // Act I is the bed alone. These are steps rather than a slope because an act IS a step, and each
+    // one is a different instrument arriving — they add up rather than replacing each other.
+    const act = S.act | 0;
+    Sfx.setLayer('twofronts',    act >= 1 ? 1 : 0);
+    Sfx.setLayer('encirclement', act >= 2 ? 1 : 0);
+    Sfx.setLayer('conquest',     act >= 3 ? 1 : 0);
   } catch (e) {}
 }
 
@@ -8848,6 +8862,6 @@ initDragPan();
 initZoomKeys();
 initHotkeys();
 window.__boot = () => { _applyOrient(); const p = refresh(); setTimeout(checkForUpdate, 2500); return p; };   // src/main.ts wires the local API, then calls this; returns the refresh promise so callers/tests can await first paint; update check runs once, non-blocking
-</script>
+</script>
 </body>
 </html>
