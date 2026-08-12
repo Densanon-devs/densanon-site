@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 11, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 12, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 11, 2026</div>
+        <div class="digest-date-badge">August 12, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s research is dominated by embodied AI: a self-correcting world model for vision-and-language navigation and a Claude-Code-style agentic loop ported to robot-policy improvement both push on closing the loop between perception, action, and correction. On the industry side, capital and deployment scale are the story — Hadrian&#x27;s $1.37B raise pushes its valuation to $7.87B, Tate has put 58 cobot welders into live production, and AES&#x27;s Maximo system has now completed 180,000 robotic solar panel installations at commercial scale. Tactile sensing and simulation-based cybersecurity tooling round out the day&#x27;s practical advances.</p>
+        <p class="digest-intro">Research this cycle clusters around making autonomous systems safer under uncertainty: a failure-aware world-action model that learns from bad actions instead of discarding them, a Unitree G1 humanoid planner for whole-body movement through confined spaces, a constrained-RL approach to human-following in crowds, and a statistical framework showing how coarse operational data can make AV safety claims dangerously optimistic. On the industry side, capital keeps flowing into autonomy at scale — Cambridge Aerospace raised a $300M Series C for its drone interceptors, and DAF/Einride and PlusAI both pushed their autonomous-trucking timelines toward 2027 commercial launch — while a KIT-built disassembly robot points at a more circular approach to electronics recycling. On the tooling side, the ROS community is leaning on LLMs and better dependency tooling to make debugging and workspace management less painful.</p>
       </div>
     </section>
 
@@ -29,52 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SC$^{2}$-WM: A Self-Correcting World Model with Closed-Loop Feedback for Vision-and-Language Navigation in Continuous Environments</h3>
+              <h3>FACT: Failure-Aware Causal Training for World-Action Models</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets Vision-and-Language Navigation in Continuous Environments (VLN-CE), where agents must make fine-grained navigation decisions under partial observability.</li>
-              <li>Identifies that most existing VLN-CE methods rely on open-loop execution with no mechanism to detect or correct errors mid-task.</li>
-              <li>Proposes a self-correcting world model with closed-loop feedback to catch and fix navigation errors during execution rather than after failure.</li>
+              <li>Most world-action models train almost exclusively on successful demonstrations and have no signal for what happens after a bad action; FACT instead conditions predictions on the executed action and treats failures as valid future targets rather than discarding them.</li>
+              <li>Predicts both future video frames and task progress, using failure rollouts as a supervisory signal; at inference the progress predictor can score candidate actions using both success and failure outcomes.</li>
+              <li>Outperforms baselines on simulated and real-world bimanual manipulation, improves as more failure data is added, and reduces the &#x27;success-biased&#x27; hallucination where the model predicts a good outcome even from a bad action.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.07548" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.10232" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Self Supervised Learning from Automatically Generated Demonstrations for Visual Robotic Manipulation</h3>
+              <h3>Whole-Body Planning for Humanoids Navigating Confined Spaces via Self-Collision Avoidance References</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets a core manipulation bottleneck: object-specific programming, manual data annotation, and calibrated perception pipelines slow real-world deployment.</li>
-              <li>Proposes learning from demonstration as a faster alternative to hand-engineered pipelines, but automates demonstration generation instead of relying on costly human-collected data.</li>
-              <li>Uses self-supervision to cut the labeling burden for training visual manipulation policies.</li>
+              <li>Targets humanoid locomotion in tight spaces where dense obstacles and self-collision bounds break standard trajectory optimizers; validated on a Unitree G1.</li>
+              <li>Three-stage pipeline: kinematic path planning over reachable rigid-body volumes, differentiable collision avoidance folded into reachability-constrained optimization, then residual RL trained on the optimized trajectories for real-world robustness.</li>
+              <li>Handles confinement ratios below 1.5 and 12-18 second multi-contact tasks (multiple foot/hand contacts) where standard baseline optimizers simply fail to find a feasible trajectory.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.07553" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.10220" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>You Don&#x27;t Need To Stay in The Loop: An Agentic Robotics Loop for Robot-Policy Improvement</h3>
+              <h3>Navigating the Proximity-Safety Balance: Constraint Decomposition for Human Following in Pedestrian Crowds</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Ports the software coding-agent architecture behind Claude Code and Codex — a main agent orchestrating subagents and tools — directly to robot-policy improvement.</li>
-              <li>Frames robot-policy iteration as a closed loop where a manager agent, analysis subagents, and execution tools replace manual policy tuning.</li>
-              <li>Notable as an explicit design-pattern transfer from agentic coding tools into embodied robotics workflows.</li>
+              <li>Reframes &#x27;follow a person through a crowd&#x27; as a multi-constraint RL problem instead of one dense reward, splitting it into a sparse following reward plus separate, interpretable cost constraints for safety margins.</li>
+              <li>Feeds uncertainty estimates about pedestrian motion prediction directly into the RL cost terms, rather than relying on a fixed safety buffer, so the robot can adapt closeness to how predictable nearby pedestrians are.</li>
+              <li>Validated on a real robot deployment and shown to hold up in out-of-distribution crowd scenarios; accepted to IROS 2026.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.07555" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.10056" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A &#x27;5-in-1&#x27; seed-sized surgical robot</h3>
-              <span class="digest-source">Robohub</span>
+              <h3>The Impact of Operational-Data Fidelity when Assessing Safety-Critical Autonomous-Vehicle Software</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Developed by researchers at Nanyang Technological University (NTU Singapore).</li>
-              <li>The robot is seed-sized and can navigate soft, uneven internal surfaces.</li>
-              <li>Performs five distinct surgical functions wirelessly from a single platform.</li>
-              <li>Aimed at making surgery and medical treatment more precise and less invasive.</li>
+              <li>Shows that reliability claims for safety-critical AV software can be &#x27;dangerously optimistic&#x27; when the operational data behind them isn&#x27;t granular enough, even when the assessor tries to be conservative.</li>
+              <li>Extends conservative Bayesian inference (CBI) to explicitly test how much data coarseness erodes the validity of a reliability claim, rather than assuming conservative math alone protects against bad data.</li>
+              <li>Delivers what the authors call the first conservative estimates of how data fidelity affects these assessments — relevant to anyone certifying AV software off field logs rather than fine-grained event data.</li>
             </ul>
-            <a href="https://robohub.org/a-5-in-1-seed-sized-surgical-robot/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.10025" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -84,75 +83,81 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Hadrian raises $1.37B to accelerate U.S. defense, aerospace manufacturing</h3>
+              <h3>Defense drone developer Cambridge Aerospace raises $300M</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The raise values Hadrian at $7.87 billion.</li>
-              <li>It is Hadrian&#x27;s second funding round in 2026, following a round in January.</li>
-              <li>Capital is earmarked for scaling U.S. defense and aerospace manufacturing capacity.</li>
+              <li>$300M Series C led by DFJ Growth (with Lux, Accel, Lakestar, Never Lift, Ora Global, and Elad Gil &amp; Co.), pushing the two-year-old company&#x27;s valuation to $3.4B — its second raise in 2026 after a $200M Series B in April.</li>
+              <li>Builds Skyhammer, a drone-based interceptor with 30+ km range and 700 km/h top speed for countering drones and low-speed missiles; funds go toward manufacturing scale-up and its next-gen Starhammer system, targeted for 2027.</li>
+              <li>Recently landed U.K. Ministry of Defence contracts for low-cost interceptors, part of the broader counter-drone buildout.</li>
             </ul>
-            <a href="https://www.therobotreport.com/hadrian-raises-1-37b-accelerate-u-s-manufacturing/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/defense-drone-developer-cambridge-aerospace-raises-300m/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Tate deploys 58 Hirebotics cobot welders across multiple facilities</h3>
+              <h3>DAF Trucks to integrate Einride Driver to scale autonomous electric freight</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>58 collaborative welding robots deployed company-wide, not a single pilot line.</li>
-              <li>Replaces traditional hand welding with an agile, cloud-connected automation network.</li>
-              <li>Built on Hirebotics&#x27; cobot welding platform, spanning multiple facilities.</li>
+              <li>DAF (PACCAR), Einride, and Dutch research institute TNO are jointly defining the safe interfaces needed to run Einride&#x27;s SAE Level 4 autonomous driving software on DAF&#x27;s electric trucks.</li>
+              <li>Interface testing and validation runs through 2026, with full software integration and commissioning targeted for 2027 — a staged path, not an immediate deployment claim.</li>
+              <li>Einride supplies the AI freight-intelligence stack plus one of the largest electric heavy-duty fleets; it went public via SPAC in June 2026 and just acquired Flipturn to build out North American heavy-duty charging.</li>
             </ul>
-            <a href="https://www.therobotreport.com/tate-deploys-58-hirebotics-cobot-welders-across-multiple-facilities/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/daf-trucks-integrates-einride-driver-scale-autonomous-electric-freight/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Interview with Maximo&#x27;s Nick Hegeman: 180,000 robotic installations of solar panels and counting</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>AES, a global energy company, has already moved its Maximo system from prototype to full commercial deployment on utility-scale solar construction sites.</li>
-              <li>Maximo has completed 180,000 robotic solar panel installations to date.</li>
-              <li>Contrasts with most of the current &#x27;physical AI&#x27; conversation, which is still prototype-stage — this is operating at commercial scale now.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/10/interview-with-maximos-nick-hegeman-180000-robotic-installations-of-solar-panels-and-counting/104039/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>PlusAI reaches &#x27;93.4 percent safety readiness&#x27; ahead of autonomous truck launch</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Reports a 93.4% &#x27;Safety Case Readiness&#x27; score.</li>
-              <li>Targeting commercial launch of factory-built driverless trucks in 2027.</li>
-              <li>Published updated H1 2026 performance figures showing measurable safety improvements.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/10/plusai-reaches-93-4-percent-safety-readiness-ahead-of-autonomous-truck-launch/104033/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Electronic skin gives robots and prosthetics &#x27;human-like touch sensing&#x27;</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Hanyang University ERICA researchers developed a vertically integrated dual-gate transistor design for tactile sensing.</li>
-              <li>Aims to deliver reliable touch sensing with high density, large-area integration — an improvement over conventional tribotronic (touch-to-electrical) devices.</li>
-              <li>Targets both robotic and prosthetic applications for tactile feedback.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/10/electronic-skin-gives-robots-and-prosthetics-human-like-touch-sensing/104036/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>VicOne releases free NVIDIA Isaac Sim cybersecurity extension based on DEF CON 34 research</h3>
+              <h3>PlusAI reaches key milestones ahead of launching its autonomous trucks</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The free &#x27;Radeis Extension&#x27; plugs into NVIDIA Isaac Sim.</li>
-              <li>Lets developers test robot cyber safety in simulation before physical deployment.</li>
-              <li>Built directly on DEF CON 34 security research findings.</li>
+              <li>H1 2026 metrics: Safety Case Readiness rose from 90.1% to 93.4%, autonomous-miles percentage from 99.2% to 99.8%, and remote-assistance-free trips from 79% to 85.2% — concrete progress markers toward a factory-built driverless truck launch.</li>
+              <li>Shipped SuperDrive 6.0, adding night driving and construction-zone handling, and integrated NVIDIA&#x27;s Alpamayo foundation model plus DRIVE Hyperion; picked up four ISO certifications supporting commercial deployment.</li>
+              <li>Running commercial fleet trials with International/Ryder on Texas&#x27;s I-35 and deployed its first trucks in Southern Europe with Sesé; targets 100% Safety Case Readiness before a 2027 commercial launch.</li>
             </ul>
-            <a href="https://www.therobotreport.com/vicone-releases-free-nviida-isaac-sim-cybersecurity-extension-based-def-con-34-research/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/plusai-reaches-key-milestones-ahead-launch-autonomous-trucks/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Robot Recycler Salvages Parts From Broken Machines</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>KIT (Karlsruhe Institute of Technology) researchers built a disassembly robot that combines CAD/mathematical defect prediction with robotic manipulation, testing each part&#x27;s actual degrees-of-freedom movement to diagnose what&#x27;s broken rather than assuming from spec.</li>
+              <li>Adapts its strategy live: if a screw is stuck, it switches to milling or another method instead of persisting, while still trying to preserve valuable parts undamaged.</li>
+              <li>Long-term vision from the team is a &#x27;100-armed&#x27; disassembly factory line aimed at making repair cheaper than manufacturing new units; presented at ICRA 2026 in Vienna.</li>
+            </ul>
+            <a href="https://spectrum.ieee.org/recycling-robot" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Analyzing rosbags with LLMs and SQL + queryable Nav2 behavior trees</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Compares two ROS-community approaches to LLM-assisted rosbag analysis: mcap-mcp-server, which loads rosbag data into a queryable database so LLMs can just write SQL instead of needing bespoke analysis tools, and Pixel Robotics&#x27; bt-rosbag-analysis agent skill.</li>
+              <li>The database-first approach covers standard rosbag data (trajectories, laser scans, tf) as well as extended Nav2 behavior-tree logs, all through the same SQL interface.</li>
+              <li>Signals a broader shift in ROS tooling toward letting the LLM write SQL against structured logs rather than building dedicated natural-language-to-robotics-analysis tools.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/analyzing-rosbags-with-llms-and-sql-queryable-nav2-behavior-trees/57339" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>rostree v1.0.0: explore your ROS 2 dependency graph from the terminal, or in your browser</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Fixes a structural bug in earlier versions: a ROS dependency graph is a DAG, not a tree, but 0.2.2 expanded every path separately, producing tens of thousands of duplicate nodes; v1.0 expands each package once at first appearance.</li>
+              <li>Performance impact is dramatic — unlimited-depth traversal drops from 58,002 lines/10.29s to 251 lines/0.21s, roughly 50x faster with orders of magnitude less output.</li>
+              <li>Ships as a CLI, an interactive TUI, and a Python API, with package discovery done once into an index and memoized package.xml parsing.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/rostree-v1-0-0-explore-your-ros-2-dependency-graph-from-the-terminal-or-in-your-browser/57315" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

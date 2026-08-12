@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - August 11, 2026 | Densanon</title>
+  <title>Computation Morning Digest - August 12, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,131 +15,131 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 11, 2026</div>
+        <div class="digest-date-badge">August 12, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation news splits between AI-infrastructure policy/finance and low-level Linux performance work. On the policy side, the FCC is weighing an import ban on Chinese optical transceivers (56% of the global market) that feed AI interconnects, a House member is pushing enforcement of chipmaker customer due-diligence rules, and Nvidia is lining up $500 billion in financing to bankroll its own customers&#x27; data center buildouts. On the kernel side, Linux 7.3 prep continues apace — a Meta engineer&#x27;s memory-management patches show up to a 12.8x benchmark improvement, the open-source NVIDIA &quot;Nova&quot; driver gains ground, and Claude Opus made a notable appearance debugging a real hardware audio bug.</p>
+        <p class="digest-intro">Today&#x27;s computation news is dominated by supply-chain and roadmap moves: China&#x27;s grip on the AI-photonics supply chain complicates a looming U.S. transceiver ban, YMTC cracked the global NAND top three as AI servers eat half of all flash output, Samsung pushed its 1.4nm node out to 2029, and Intel&#x27;s CEO teased a return to the memory business with a stacked memory-on-CPU concept. On the Linux side, the 7.2 kernel is reverting a regressive DRM scheduler change, Intel shipped microcode fixing eight security issues across six CPU generations, and a Fedora/Framework Panther Lake performance mystery got dug into.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Hardware &amp; Chips</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Up To 12.8x Improvement Observed For gup_test With New Linux MM Patches</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Meta kernel engineer Rik van Riel&#x27;s newest memory-management patches yield up to a 12.8x speedup on the gup_test benchmark.</li>
-              <li>The work batches lookups inside follow_page_mask(), the kernel routine that translates virtual addresses to their corresponding struct page.</li>
-              <li>Continues van Riel&#x27;s long track record of squeezing performance gains out of core Linux memory-management code paths.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-Batch-Follow-Page-Mask" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Raspberry Pi AXI PMU Driver Under Review For The Mainline Linux Kernel</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A driver for the Broadcom AXI performance monitoring unit (PMU) is under review for mainline Linux, covering Raspberry Pi 1 through Pi 5.</li>
-              <li>PMU support has been missing from mainline for years despite being present on every Raspberry Pi model to date.</li>
-              <li>A Google engineer is driving the mainlining effort, which would give Pi developers standard kernel-level performance counters for the first time.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Raspberry-Pi-AXI-PMU-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>FastFlowLM 1.0 Released Now As Part Of The AMD ROCm Umbrella</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>FastFlowLM hit its 1.0 release and is now officially folded into AMD&#x27;s ROCm software umbrella.</li>
-              <li>It&#x27;s open-source software for running vision, audio, embedding, and MoE LLMs on AMD Ryzen AI NPUs.</li>
-              <li>Formal ROCm inclusion signals AMD consolidating its NPU inference stack under one officially supported toolchain rather than leaving it third-party.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/FastFlowLM-1.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Open-Source NVIDIA &quot;Nova&quot; Driver Sees More Functionality For Linux 7.3</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>New DRM Rust core and driver changes for the open-source &quot;Nova&quot; NVIDIA driver were sent to DRM-Next, targeting the Linux 7.3 merge window.</li>
-              <li>Nova is being built as the Rust-based successor path for open-source NVIDIA GPU support on Linux.</li>
-              <li>Part of a broader wave of Rust-language DRM infrastructure landing in the kernel alongside other Rust GPU drivers.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/NVIDIA-Nova-Rust-Linux-7.3" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Claude Opus Helped Debug &amp; Fix Lack Of Audio On Linux For HP OmniBook X Flip 14</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The HP OmniBook X Flip 14 (AMD Ryzen AI 300 &quot;Strix Point&quot;) had no working audio on mainline Linux, despite most Strix Point laptops working fine.</li>
-              <li>Claude Opus 5 was used as the debugging assistant to track down and help fix the missing-audio issue.</li>
-              <li>A concrete case study of an AI coding model directly assisting kernel/driver-level hardware debugging rather than just application code.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/HP-X-Flip-14-Linux-Audio" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux 7.3 Bringing A KCFI Optimization To Benefit Older Intel CPUs</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Linux 7.3 is set to merge a Kernel Control Flow Integrity (KCFI) optimization aimed specifically at older Intel processors.</li>
-              <li>KCFI is a security-hardening feature; this change reduces its performance overhead on legacy Intel silicon.</li>
-              <li>Part of the same 7.3 merge window doing hardware-enablement and optimization work spanning old and new CPUs alike.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-KCFI-Optimization" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Industry &amp; HPC</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>FCC proposes import ban on Chinese optical transceivers — blockade targets key AI interconnects as China holds 56% global market share</h3>
+              <h3>How optical interconnects and silicon photonics emerged as AI&#x27;s next hot commodity — looming US-China summit puts photonics into the crosshairs</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The FCC is drafting a proposal to expand Secure Networks Act coverage to new-model optical transceivers manufactured in China.</li>
-              <li>China currently holds a 56% global market share in optical transceivers, components that are key interconnects for AI data center clusters.</li>
-              <li>A ban would force US AI infrastructure buyers to requalify supply chains for a critical, currently China-dominated networking component.</li>
+              <li>The U.S. wants Chinese-made optical transceivers, a key interconnect component for AI data centers, excluded from future infrastructure buildouts.</li>
+              <li>China currently dominates the fast-growing photonics supply chain, making a clean ban logistically difficult to execute without disrupting AI cluster networking.</li>
+              <li>The issue is escalating into a trade-war flashpoint ahead of a planned U.S.-China summit, joining GPUs and lithography tools on the export-control fault line.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/fcc-proposes-import-ban-on-chinese-optical-transceivers-blockade-targets-key-ai-interconnects-as-china-holds-56-percent-global-market-share" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/photonics/how-optical-interconnects-and-silicon-photonics-emerged-as-ais-next-hot-commodity-looming-us-china-summit-puts-photonics-into-the-crosshairs" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Nvidia teams up with financial giants to create $500 billion AI infrastructure funds — six investment firms to enable access to long-term funding at attractive rates</h3>
+              <h3>YMTC breaks into the top three NAND makers for the first time as AI servers swallow 48% of all flash — Chinese vendor has 14% share, according to research</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Nvidia is arranging financing through six major investment firms to back a combined $500 billion in AI infrastructure funds.</li>
-              <li>The goal is to give data center builders access to long-term funding at more attractive rates than they&#x27;d secure independently.</li>
-              <li>Deepens Nvidia&#x27;s role beyond chip supplier into orchestrating the capital stack behind its own customers&#x27; AI buildouts.</li>
+              <li>YMTC climbed to third place among global NAND flash makers with 14% market share, behind Samsung (25%) and SK hynix (22%), ahead of Micron.</li>
+              <li>AI servers now account for 48% of all flash memory consumption, meaning a sanctioned Chinese vendor&#x27;s rise is happening inside the same boom U.S. export controls are meant to gate.</li>
+              <li>Shows domestic Chinese chipmakers gaining commercial ground in memory even as advanced-logic and lithography restrictions stay in place.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-teams-up-with-financial-giants-to-create-usd500-billion-ai-infrastructure-funds-six-investment-firms-to-enable-access-to-long-term-funding-at-attractive-rates" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/ymtc-breaks-into-the-top-three-nand-makers-for-the-first-time" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>US lawmaker wants gov&#x27;t to enforce regulation to ensure &#x27;chipmakers conduct adequate due diligence on their customers&#x27; — House member calls for Biden-era export control to be enforced</h3>
+              <h3>Samsung Foundry updates process roadmap to move 1.4nm node to 2029 — high-NA EUV will enable 1nm-class and smaller nodes in 2030 and beyond</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Congressman John Moolenaar is pressing the Commerce Department&#x27;s Bureau of Industry and Security to clarify enforcement status of the Foundry Due Diligence Rule.</li>
-              <li>The rule, dating to the Biden administration, would require chipmakers to vet who is actually buying their chips before fabrication.</li>
-              <li>Signals continued congressional pressure to tighten semiconductor export-control enforcement rather than let existing rules lapse quietly.</li>
+              <li>Samsung Foundry delayed its 1.4nm-class (SF1.4) node to 2029, extending SF2 into one of the longest-lived process nodes in the company&#x27;s history.</li>
+              <li>High-NA EUV lithography is now slated to enable 1nm-class and smaller nodes starting in 2030, later than earlier roadmap targets.</li>
+              <li>Signals that leading-edge node cadence is slowing across the industry, not just at Intel, as EUV tooling costs and yield ramps stretch out timelines.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/u-s-lawmaker-wants-govt-to-enforce-regulation-to-ensure-chipmakers-conduct-adequate-due-diligence-on-their-customers-house-member-calls-for-biden-era-export-control-to-be-enforced" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/samsung-foundry-updates-process-roadmap-to-move-1-4nm-node-to-2029-high-na-euv-will-enable-1nm-class-and-smaller-nodes-in-2030-and-beyond" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intel CEO hints at return to the memory business — says market is ripe for innovation, hints at stacking memory and CPU</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Lip-Bu Tan said the memory market is &quot;ripe for innovation&quot; and referenced a personal project around a new memory architecture.</li>
+              <li>The concept described involves physically stacking memory with CPU silicon rather than conventional off-die DRAM/HBM packaging.</li>
+              <li>Would reverse Intel&#x27;s prior retreat from memory, having sold its NAND business to SK hynix in 2020 and killed Optane in 2022.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/dram/intel-ceo-hints-at-return-to-the-memory-business-says-market-is-ripe-for-innovation-hints-at-stacking-memory-and-cpu" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Hardware &amp; Chips</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.2 To Revert Back To The FIFO DRM Scheduler Policy Due To &quot;Fair&quot; Regressions</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Linux 7.2 had switched the Direct Rendering Manager (DRM) scheduler&#x27;s default from FIFO to a new &quot;fair&quot; policy, intended to improve fairness for AMDGPU and other DRM drivers.</li>
+              <li>The &quot;fair&quot; policy caused measurable regressions, so the default is being reverted back to FIFO before the change ships broadly.</li>
+              <li>An example of a kernel graphics-scheduling change getting caught and rolled back during its own merge cycle rather than shipping with known regressions.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.2-Reverting-DRM-Fair" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intel CPU Microcode 20260811 Release Fixes Eight Security Issues</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Intel&#x27;s 20260811 microcode update fixes eight distinct security issues across its CPU lineup.</li>
+              <li>It&#x27;s the first microcode release to ship images for the new Bartlett Lake and Wildcat Lake platforms.</li>
+              <li>Coverage extends back to 10th-gen Core processors, meaning the fixes span roughly six generations of hardware still deployed in the field.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Intel-CPU-Microcode-20260811" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Analyzing Fedora&#x27;s Slow Performance On The Framework Laptop 13 Pro With Intel Panther Lake</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Follow-up to a six-distro benchmark on the Framework Laptop 13 Pro (Panther Lake) that found CachyOS fastest and, more surprisingly, Fedora Workstation 44 running slower than expected.</li>
+              <li>The investigation focuses on power-management daemons (thermald/tuned) as the likely source of Fedora&#x27;s underperformance on identical hardware.</li>
+              <li>A concrete data point for anyone deploying Fedora specifically on new Panther Lake silicon, where default power-governor behavior may need tuning.</li>
+            </ul>
+            <a href="https://www.phoronix.com/review/fedora-pantherlake-thermald-tuned" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intel LLM-Scaler Ready With Muse Glimmer Support, Other LLMs &amp; Features</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>LLM-Scaler, born out of Intel&#x27;s Project Battlematrix, is a Docker-based, pre-configured stack for running generative AI on Arc (Pro) B-series GPUs.</li>
+              <li>This week&#x27;s update adds Muse Glimmer model support plus additional LLM and feature coverage.</li>
+              <li>Bundles vLLM, ComfyUI, SGLang and other popular inference/serving tools together, lowering the setup barrier for AI workloads on Intel&#x27;s Arc GPUs specifically.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Intel-LLM-Scaler-Muse-Glimmer" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>QEMU 11.1 Released With Numerous Improvements</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>QEMU 11.1 shipped with a batch of feature enhancements and fixes across the open-source emulation/virtualization stack.</li>
+              <li>Continues QEMU&#x27;s role as the machine-emulation backbone underneath KVM and other Linux virtualization front-ends.</li>
+              <li>Regular six-month cadence release, keeping pace with new guest architectures and device models.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/QEMU-11.1-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -149,15 +149,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Modder adds Radeon RX 9070 XT eGPU to Steam Machine, runs Crimson Desert at over 100 FPS on High — moves boot drive to USB-C port, leverages M.2 to OCuLink adaptor and eGPU dock</h3>
+              <h3>Passenger returning from DEF CON 34 spoofs Delta Wi-Fi network while in flight using pentest tool — pilots tell ground crew to alert corporate security after attendee from hacking conference brings the party to the sky</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A modder connected a Radeon RX 9070 XT eGPU to Valve&#x27;s Steam Machine via an M.2-to-OCuLink adapter and external eGPU dock.</li>
-              <li>The boot drive was relocated to the Steam Machine&#x27;s USB-C port to free up the M.2 slot for the OCuLink adapter.</li>
-              <li>The mod pushed Crimson Desert past 100 FPS on High settings, showing real desktop-GPU-class performance is achievable on the compact console-like hardware.</li>
+              <li>A passenger used a pentest tool to run deauthentication attacks against Delta&#x27;s inflight Wi-Fi and stand up an &quot;evil twin&quot; hotspot that redirected victims to a phishing page.</li>
+              <li>Pilots noticed the anomaly and had ground crew alert corporate security; flight-safety avionics were not affected since only the passenger Wi-Fi service was targeted.</li>
+              <li>A real-world instance of commodity Wi-Fi deauth/evil-twin tooling, popularized at DEF CON, being deployed opportunistically outside a lab or CTF setting.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/gpus/modder-adds-radeon-rx-9070-xt-egpu-to-steam-machine-runs-crimson-desert-at-over-100-fps-on-high-moves-boot-drive-to-usb-c-port-leverages-m-2-to-oculink-adaptor-and-egpu-dock" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/cyber-security/passenger-returning-from-def-con-34-spoofs-delta-wi-fi-network-while-in-flight-using-pentest-tool-pilots-tell-ground-crew-to-alert-corporate-security-after-attendee-from-hacking-conference-brings-the-party-to-the-sky" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
