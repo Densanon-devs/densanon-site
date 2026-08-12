@@ -68,16 +68,23 @@ A bed can ship extra files that are the **same music scored for different weight
 alternates to switch between: every layer starts on the same sample as the base, loops with it, and
 sits silent until the game fades it up. That is what lets the score follow a fight without restarting.
 
-Three layers exist, because three are driven by game state:
+Six layers exist, because six are driven by game state:
 
 | File | Plays over | Rises when |
 |---|---|---|
 | `mus_battle_desperate.m4a` | `mus_battle.m4a` | your HQ is ground down — nothing above 70% health, full by 25% |
 | `mus_boss_desperate.m4a` | `mus_boss.m4a` | the same, during a boss fight |
 | `mus_boss_enraged.m4a` | `mus_boss.m4a` | the boss turns |
+| `mus_campaign_twofronts.m4a` | `mus_campaign.m4a` | act II |
+| `mus_campaign_encirclement.m4a` | `mus_campaign.m4a` | act III |
+| `mus_campaign_conquest.m4a` | `mus_campaign.m4a` | act IV |
 
 The boss bed can carry BOTH: `desperate` tracks how you are doing, `enraged` tracks what he is doing,
 and they are independent — all four combinations happen.
+
+The campaign's three **stack** rather than replacing each other: act III is two fronts *plus*
+encirclement, act IV is all three. They are steps, not a slope, because an act is a step — and each
+one is a different instrument arriving. Act I is the bed alone.
 
 ## Several songs for one mode
 
