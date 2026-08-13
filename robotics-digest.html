@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 12, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 13, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 12, 2026</div>
+        <div class="digest-date-badge">August 13, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Research this cycle clusters around making autonomous systems safer under uncertainty: a failure-aware world-action model that learns from bad actions instead of discarding them, a Unitree G1 humanoid planner for whole-body movement through confined spaces, a constrained-RL approach to human-following in crowds, and a statistical framework showing how coarse operational data can make AV safety claims dangerously optimistic. On the industry side, capital keeps flowing into autonomy at scale — Cambridge Aerospace raised a $300M Series C for its drone interceptors, and DAF/Einride and PlusAI both pushed their autonomous-trucking timelines toward 2027 commercial launch — while a KIT-built disassembly robot points at a more circular approach to electronics recycling. On the tooling side, the ROS community is leaning on LLMs and better dependency tooling to make debugging and workspace management less painful.</p>
+        <p class="digest-intro">Research this cycle leans into data efficiency and safety: a single-demonstration offline-to-online RL recipe (MiDAS) that adapts a pretrained VLA policy on real hardware in hours, a diffusion model that generates interpretable goal-conditioned traffic scenarios for AV simulation, a rule-based safety guard that cuts end-to-end driving collisions without retraining, and a robotic ultrasound controller that finally handles the oblique probe angles echocardiography needs. Industry news splits between hard numbers and a strategy pivot: Q2 A3 order data shows demand broadening well beyond automotive into semiconductors, life sciences, and food; Honda revealed its post-ASIMO humanoid bet is a teleoperated &#x27;Avatar&#x27; hand rather than another autonomous robot; a Stratom-led team won a $15.9M Army contract for a modular autonomous resupply system; and new Wood Mackenzie modeling puts 2035 global robot electricity demand near France&#x27;s entire nuclear output. Community picks continue the embedded-perception thread — on-device digit recognition on an ESP32-S3 and a real-time VIO/SLAM camera module for robot and drone obstacle mapping.</p>
       </div>
     </section>
 
@@ -29,51 +29,53 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>FACT: Failure-Aware Causal Training for World-Action Models</h3>
+              <h3>Adaptation of Generalist Robot Policies with Minimal Data</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Most world-action models train almost exclusively on successful demonstrations and have no signal for what happens after a bad action; FACT instead conditions predictions on the executed action and treats failures as valid future targets rather than discarding them.</li>
-              <li>Predicts both future video frames and task progress, using failure rollouts as a supervisory signal; at inference the progress predictor can score candidate actions using both success and failure outcomes.</li>
-              <li>Outperforms baselines on simulated and real-world bimanual manipulation, improves as more failure data is added, and reduces the &#x27;success-biased&#x27; hallucination where the model predicts a good outcome even from a bad action.</li>
+              <li>Introduces MiDAS, an offline-to-online RL recipe that anchors a pretrained VLA to a new task via behavior cloning on just one or a few demonstrations, then improves it with value-based online RL on a residual policy.</li>
+              <li>On the LIBERO and RoboCasa benchmarks, MiDAS recovers strong task performance from as little as one demonstration, outperforming baselines and generalizing beyond the demonstrated conditions.</li>
+              <li>On a real bimanual YAM robot, a fragile single-demo policy improved its robustness and learned new successful behaviors after roughly 6 hours of autonomous online interaction.</li>
+              <li>Authors describe it as the first reliable demonstration of robot policy adaptation from a single task demonstration.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.10232" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.11363" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Whole-Body Planning for Humanoids Navigating Confined Spaces via Self-Collision Avoidance References</h3>
+              <h3>Top-down Traffic Scenario Generation via Joint Initial-Goal Diffusion and Trajectory Infilling</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets humanoid locomotion in tight spaces where dense obstacles and self-collision bounds break standard trajectory optimizers; validated on a Unitree G1.</li>
-              <li>Three-stage pipeline: kinematic path planning over reachable rigid-body volumes, differentiable collision avoidance folded into reachability-constrained optimization, then residual RL trained on the optimized trajectories for real-world robustness.</li>
-              <li>Handles confinement ratios below 1.5 and 12-18 second multi-contact tasks (multiple foot/hand contacts) where standard baseline optimizers simply fail to find a feasible trajectory.</li>
+              <li>Proposes TrafficDiffuser, which jointly generates initial and goal state pairs for traffic agents via diffusion, instead of treating agent placement and trajectory generation as separate steps.</li>
+              <li>Making goal states explicit gives initial agent positions an interpretable reason for being there and reduces trajectory generation to a simpler infilling problem.</li>
+              <li>Evaluated on the Argoverse 2 motion prediction dataset; the generated high-level scenarios can constrain trajectory generation to specific driving modes and plug into existing trajectory generators.</li>
+              <li>Cuts speed-distribution distance by 55.3% and off-road rate by 2.8% versus the next-best agent-initialization approach.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.10220" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.11407" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Navigating the Proximity-Safety Balance: Constraint Decomposition for Human Following in Pedestrian Crowds</h3>
+              <h3>From Self-Normal-Positioning to Omni-Directional Tracking: Real-Time Surface Modeling Enabled Probe Tilt Control for Robotic Ultrasound Imaging</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Reframes &#x27;follow a person through a crowd&#x27; as a multi-constraint RL problem instead of one dense reward, splitting it into a sparse following reward plus separate, interpretable cost constraints for safety margins.</li>
-              <li>Feeds uncertainty estimates about pedestrian motion prediction directly into the RL cost terms, rather than relying on a fixed safety buffer, so the robot can adapt closeness to how predictable nearby pedestrians are.</li>
-              <li>Validated on a real robot deployment and shown to hold up in out-of-distribution crowd scenarios; accepted to IROS 2026.</li>
+              <li>Most robotic ultrasound systems only hold the probe perpendicular to the skin, which fails for exams like echocardiography that need oblique probe angles; this framework instead tracks arbitrary orientations.</li>
+              <li>Fuses multi-view RGB-D point clouds into a real-time quadratic local-surface model, then encodes the desired imaging direction relative to that surface normal so the probe can follow non-normal angles.</li>
+              <li>Achieved mean angular tracking error of 1.06 ± 0.66 degrees and recovered non-normal tilts up to 44.39 ± 2.59 degrees, acquiring the target heart-chamber view in both phantom and in-vivo tests.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.10056" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.11409" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Impact of Operational-Data Fidelity when Assessing Safety-Critical Autonomous-Vehicle Software</h3>
+              <h3>Herding End-to-End Autonomous Driving via Neuro-Symbolic Safety Guards</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Shows that reliability claims for safety-critical AV software can be &#x27;dangerously optimistic&#x27; when the operational data behind them isn&#x27;t granular enough, even when the assessor tries to be conservative.</li>
-              <li>Extends conservative Bayesian inference (CBI) to explicitly test how much data coarseness erodes the validity of a reliability claim, rather than assuming conservative math alone protects against bad data.</li>
-              <li>Delivers what the authors call the first conservative estimates of how data fidelity affects these assessments — relevant to anyone certifying AV software off field logs rather than fine-grained event data.</li>
+              <li>End-to-end driving agents learn statistical patterns rather than the physical conditions that guarantee safety, so they can still break basic traffic rules despite high average scores; this paper adds a lightweight rule-based guard at the final command interface instead of retraining the model.</li>
+              <li>The guard checks each outgoing driving command against explicit safety rules and swaps in the nearest safe alternative only when needed — no learned component, no retraining, and every intervention is traceable to the rule that triggered it.</li>
+              <li>Applied to TransFuser v6 on the Fail2Drive and Bench2Drive long-tail benchmarks: +15% Success Rate and up to 53% fewer safety-critical collisions, while preserving the original Driving Score.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.10025" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.11451" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -83,81 +85,83 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Defense drone developer Cambridge Aerospace raises $300M</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Robot orders increase to $622 million in Q2 as automation demand broadens across industries</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>$300M Series C led by DFJ Growth (with Lux, Accel, Lakestar, Never Lift, Ora Global, and Elad Gil &amp; Co.), pushing the two-year-old company&#x27;s valuation to $3.4B — its second raise in 2026 after a $200M Series B in April.</li>
-              <li>Builds Skyhammer, a drone-based interceptor with 30+ km range and 700 km/h top speed for countering drones and low-speed missiles; funds go toward manufacturing scale-up and its next-gen Starhammer system, targeted for 2027.</li>
-              <li>Recently landed U.K. Ministry of Defence contracts for low-cost interceptors, part of the broader counter-drone buildout.</li>
+              <li>North American companies ordered 8,940 robots worth $622M in Q2 2026, per new A3 data — up 4.3% in units and 21.3% in revenue year-over-year; H1 2026 totals reached 17,995 units / $1.166B.</li>
+              <li>Growth is broad outside automotive: Semi &amp; Electronics/Photonics orders rose 35% in H1 (38% YoY in Q2 alone), Life Sciences/Pharma/Biomed rose 32%, and Automotive Component rose 24% — while Automotive OEM orders fell 25%.</li>
+              <li>Collaborative robots: 2,774 cobots worth $114M were ordered in H1 (15.4% of units), making up 43.7% of Life Sciences orders and 36.5% of Semi/Electronics orders.</li>
+              <li>A3 EVP Alex Shikany: &quot;The breadth of growth outside Automotive OEM is an important trend we&#x27;ll continue to watch.&quot;</li>
             </ul>
-            <a href="https://www.therobotreport.com/defense-drone-developer-cambridge-aerospace-raises-300m/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/08/13/robot-orders-increase-to-622-million-in-q2-as-automation-demand-broadens-across-industries/104092/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>DAF Trucks to integrate Einride Driver to scale autonomous electric freight</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Honda’s new ‘Avatar’ humanoid robot suggests the spirit of ASIMO is very much alive</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>DAF (PACCAR), Einride, and Dutch research institute TNO are jointly defining the safe interfaces needed to run Einride&#x27;s SAE Level 4 autonomous driving software on DAF&#x27;s electric trucks.</li>
-              <li>Interface testing and validation runs through 2026, with full software integration and commissioning targeted for 2027 — a staged path, not an immediate deployment claim.</li>
-              <li>Einride supplies the AI freight-intelligence stack plus one of the largest electric heavy-duty fleets; it went public via SPAC in June 2026 and just acquired Flipturn to build out North American heavy-duty charging.</li>
+              <li>Avatar is a teleoperated system, not an autonomous humanoid — the human operator keeps the decision-making loop while AI assists physical execution; it was demoed hands-on at Humanoids Summit 2026.</li>
+              <li>The hand alone: 16 actuated joints (up to 180°/s), 50N continuous fingertip force, 288 tactile-sensor channels across fingers/palm, and six-axis force sensors at the fingertips, tested through 450,000+ durability cycles including 24,000 cycles lifting 5kg loads.</li>
+              <li>Demonstrated dexterity spans threading a needle and using scissors up to tightening screws and handling heavy objects.</li>
+              <li>Honda never abandoned humanoid R&amp;D after ASIMO left public view — engineers from that program carried the expertise into Avatar, but Honda split &quot;fully autonomous humanoid&quot; into separate teleoperation-plus-AI-assist technologies instead.</li>
             </ul>
-            <a href="https://www.therobotreport.com/daf-trucks-integrates-einride-driver-scale-autonomous-electric-freight/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/08/13/hondas-new-avatar-humanoid-robot-suggests-the-spirit-of-asimo-is-very-much-alive/104083/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>PlusAI reaches key milestones ahead of launching its autonomous trucks</h3>
+              <h3>Strengthening U.S. Army sustainment: TALUS to deliver autonomous distribution</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>H1 2026 metrics: Safety Case Readiness rose from 90.1% to 93.4%, autonomous-miles percentage from 99.2% to 99.8%, and remote-assistance-free trips from 79% to 85.2% — concrete progress markers toward a factory-built driverless truck launch.</li>
-              <li>Shipped SuperDrive 6.0, adding night driving and construction-zone handling, and integrated NVIDIA&#x27;s Alpamayo foundation model plus DRIVE Hyperion; picked up four ISO certifications supporting commercial deployment.</li>
-              <li>Running commercial fleet trials with International/Ryder on Texas&#x27;s I-35 and deployed its first trucks in Southern Europe with Sesé; targets 100% Safety Case Readiness before a 2027 commercial launch.</li>
+              <li>Stratom Inc. (a Boulder, CO Service-Disabled Veteran-Owned Small Business) leads a team — ND Defense, Forterra, GS Engineering, Waltonen Engineering — on a $15.9M U.S. Army Project Sustainment contract for an 18-month prototype.</li>
+              <li>TALUS is a modular autonomous distribution system meant to resupply dispersed forces in contested environments, reducing soldier exposure while extending operational reach; it integrates militarized commercial-off-the-shelf tech and Forterra&#x27;s AutoDrive autonomy stack.</li>
+              <li>Modular architecture supports multiple logistics/energy missions and varied payloads; the prototype phase ends with a soldier-run operational evaluation during a Transformation in Contact Combat Training Center rotation that will inform broader fielding decisions.</li>
             </ul>
-            <a href="https://www.therobotreport.com/plusai-reaches-key-milestones-ahead-launch-autonomous-trucks/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/strengthening-u-s-army-sustainment-talus-to-deliver-autonomous-distribution/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Robot Recycler Salvages Parts From Broken Machines</h3>
-              <span class="digest-source">IEEE Spectrum Robotics</span>
+              <h3>Robots could consume as much electricity as 35 million US homes by 2035</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>KIT (Karlsruhe Institute of Technology) researchers built a disassembly robot that combines CAD/mathematical defect prediction with robotic manipulation, testing each part&#x27;s actual degrees-of-freedom movement to diagnose what&#x27;s broken rather than assuming from spec.</li>
-              <li>Adapts its strategy live: if a screw is stuck, it switches to milling or another method instead of persisting, while still trying to preserve valuable parts undamaged.</li>
-              <li>Long-term vision from the team is a &#x27;100-armed&#x27; disassembly factory line aimed at making repair cheaper than manufacturing new units; presented at ICRA 2026 in Vienna.</li>
+              <li>Wood Mackenzie projects combined robotics electricity demand hits 363 TWh/year by 2035 (357 TWh industrial, 6 TWh humanoid) — roughly equal to France&#x27;s entire 2025 nuclear output (373 TWh) and about 35 million average US households.</li>
+              <li>Industrial robot fleet grows from 5M units today (78 TWh/yr) to a projected 16M units by 2035 at a 12% CAGR; humanoid stock grows at over 90% CAGR, exceeding 10M units with 4M+ annual shipments by 2035.</li>
+              <li>Estimates use a $0.14/kWh global average industrial tariff and deliberately exclude robot AI-training infrastructure, to avoid double-counting against data-center demand.</li>
+              <li>The report frames power availability itself — not just chips or manufacturing capacity — as an emerging brake on robot adoption, compounding existing grid pressure from AI data centers.</li>
             </ul>
-            <a href="https://spectrum.ieee.org/recycling-robot" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/08/12/robots-could-consume-as-much-electricity-as-35-million-us-homes-by-2035/104073/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <h2 class="digest-section-title">Community Highlights</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Analyzing rosbags with LLMs and SQL + queryable Nav2 behavior trees</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>Building a 5-digit Recognition System on ESP32-S3</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Compares two ROS-community approaches to LLM-assisted rosbag analysis: mcap-mcp-server, which loads rosbag data into a queryable database so LLMs can just write SQL instead of needing bespoke analysis tools, and Pixel Robotics&#x27; bt-rosbag-analysis agent skill.</li>
-              <li>The database-first approach covers standard rosbag data (trajectories, laser scans, tf) as well as extended Nav2 behavior-tree logs, all through the same SQL interface.</li>
-              <li>Signals a broader shift in ROS tooling toward letting the LLM write SQL against structured logs rather than building dedicated natural-language-to-robotics-analysis tools.</li>
+              <li>Runs a complete 5-digit recognition pipeline (e.g., reading meter displays) entirely on-device on an ESP32-S3 using TensorFlow Lite Micro — no PC or cloud inference in the loop.</li>
+              <li>Shows that low-cost microcontroller hardware (an ESP32-S3 dev board) can now run a full digit-recognition model standalone, useful for offline/embedded meter-reading style applications.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/analyzing-rosbags-with-llms-and-sql-queryable-nav2-behavior-trees/57339" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1vn5cml/building_a_5digit_recognition_system_on_esp32s3/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>rostree v1.0.0: explore your ROS 2 dependency graph from the terminal, or in your browser</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>SLAM Camera Board + Obstacle Mapping</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fixes a structural bug in earlier versions: a ROS dependency graph is a DAG, not a tree, but 0.2.2 expanded every path separately, producing tens of thousands of duplicate nodes; v1.0 expands each package once at first appearance.</li>
-              <li>Performance impact is dramatic — unlimited-depth traversal drops from 58,002 lines/10.29s to 251 lines/0.21s, roughly 50x faster with orders of magnitude less output.</li>
-              <li>Ships as a CLI, an interactive TUI, and a Python API, with package discovery done once into an index and memoized package.xml parsing.</li>
+              <li>Mighty Camera runs visual-inertial odometry (VIO) on-device in real time in a tiny package, giving accurate camera-motion tracking without external infrastructure.</li>
+              <li>Combines that motion estimate with the live camera feed to estimate depth and build a 3D obstacle map, computed on the board/SDK itself.</li>
+              <li>Pitched as a drop-in perception module a robot or drone can use for obstacle-aware navigation.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/rostree-v1-0-0-explore-your-ros-2-dependency-graph-from-the-terminal-or-in-your-browser/57315" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1vmfavq/slam_camera_board_obstacle_mapping/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

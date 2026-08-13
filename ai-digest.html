@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 12, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 13, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 12, 2026</div>
+        <div class="digest-date-badge">August 13, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Research today converges on LLM reasoning and alignment limits: chain-of-thought only helps when a task&#x27;s serial depth exceeds a transformer&#x27;s single-pass capacity, 4-bit quantization disproportionately breaks non-Latin/low-resource languages on edge SLMs, and cultural-consensus analysis shows models either fail to form coherent consensus or flatten real cultural diversity into a homogenized view. On the practical side, IBM&#x27;s ALTK-Evolve cuts ACE-style agentic memory costs up to 7x by calibrating guideline delivery to model capacity, and a security write-up shows Anthropic, OpenAI, and Google&#x27;s encrypted chain-of-thought traces could be extracted and replayed across models before being patched.</p>
+        <p class="digest-intro">Today&#x27;s research cluster centers on agent reliability failure modes: two-agent negotiations collapse into capitulation without a shared goal function, context compaction silently drops standing &#x27;session constraint&#x27; instructions, and top-k MoE routing can flip which experts fire from quantization noise alone. A separate thread pushes recurrence and scale — retrofitting recurrent depth onto an already-pretrained 0.5B model, and a cheaper approach to simulating large LLM-agent societies on a single laptop. On the product side, DeepSeek shipped a new V4 Pro model API-only, Liquid AI released a 3B edge vision-language model built for on-device speed, and Claude Code&#x27;s latest release adds remote-control session resumption and server-supplied hooks.</p>
       </div>
     </section>
 
@@ -29,51 +29,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>When Chain-of-Thought Helps and When It Hurts: An Empirical Investigation of the Serial-Depth Bottleneck in LLM Reasoning</h3>
+              <h3>Retrofitting Recurrent Depth into a Pretrained Language Model: Installation, Extrapolation, Transfer, and Retention at Two Parameter Budgets</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Frames CoT via the H_dp &#x27;bandwidth bound&#x27;: CoT helps only when a task&#x27;s required serial computation exceeds what a transformer can do in one forward pass, forcing that computation to be externalized as text</li>
-              <li>Tested Qwen-2.5 variants and Llama-3.1-8B across 5 benchmarks: high serial-depth tasks (GSM8K, MATH) gained +54 to +68pp from CoT, while low-depth tasks (MMLU, ARC) saw almost no effect (0 to +4.6pp) — CoT was structurally redundant there</li>
-              <li>Mid-complexity HumanEval split by model size: the 32B model gained +23.2pp from CoT while the 7B model lost -28.7pp, showing CoT can actively hurt smaller models on some tasks; task serial-depth correlated with CoT benefit at Spearman rho = 0.661</li>
+              <li>Retrofits recurrent depth onto an already-pretrained dense model (Qwen2.5-0.5B-Instruct) by splitting it into a Prelude, a weight-tied Recurrent Block, and a Coda, instead of training recurrence in from scratch</li>
+              <li>The retrofitted model learns an iterative latent transition that persists after outcome-only annealing, meaning no intermediate-step supervision is required for the recurrent behavior to stick</li>
+              <li>Evaluated at two parameter budgets across installation, extrapolation (running more recurrent iterations at inference), transfer, and retention of the base model&#x27;s original capabilities</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.09942" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.11233" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Multilingual Quantization Tax: Structural Collapse and Typological Fragility in Edge SLMs</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>Detecting a Route Flip Is Easier Than Knowing Whether to Fix It: Causal Route-Mediated Damage in Quantized Mixture-of-Experts</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Zero-shot evaluation of 4-bit weight quantization across 8 typologically diverse languages on Gemma 4 and Qwen 3.5 (via MMLU ProX Lite and GlobalPIQA) — prior quantization research has been overwhelmingly English-only</li>
-              <li>Finds &#x27;typological fragility&#x27;: low-resource and non-Latin-script languages suffer architecture-specific representational collapse under quantization, sometimes failing to generate valid task logits at all</li>
-              <li>A model&#x27;s pre-training &#x27;home language&#x27; advantage gives little protection against precision loss, and multi-step cross-lingual reasoning degrades faster than simple associative recall — quantization exposes pre-training inequality across languages rather than causing it uniformly</li>
+              <li>Shows top-k MoE routing is discontinuous: a small numerical disturbance from simulated 4-bit KV-cache quantization, even read by a protected BF16 gate, can push a token across a routing boundary and flip which experts fire</li>
+              <li>Frames this as a deployment-relevant quantization risk distinct from ordinary weight-quantization accuracy loss — the routing decision itself becomes unstable, not just the output</li>
+              <li>Studies the gap between detecting that a route flipped and determining whether that flip actually caused damage worth correcting</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.09941" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.11212" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Carefully Considering Culture: Analyzing LLM Alignment in Single- and Multi-Cultural Settings using Cultural Consensus Theory</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>Dynamic Governance of Multi-LLM Agent Systems for Collaborative Conversational Outcomes</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Applies Cultural Consensus Theory (from cultural anthropology) instead of simple distributional comparisons, evaluating models against World Values Survey data across 10 countries and 12 domains</li>
-              <li>Finds models systematically misrepresent cultural structure in two failure modes: either failing to form a cohesive consensus at all, or &#x27;over-regularizing&#x27; it — flattening real intra-group diversity into one homogenized view</li>
-              <li>Accepted to ACL Findings 2026; argues meaningful cultural-alignment evaluation has to capture within-group variance, not just aggregate or majority patterns</li>
+              <li>Studies multi-turn interactions between two LLM agents with structurally opposed objectives and finds that lacking a shared goal function doesn&#x27;t produce competition — it produces collapse</li>
+              <li>Observed failure pattern: one agent capitulates, the other stops varying its approach, and the conversation degenerates instead of converging toward either side&#x27;s goal</li>
+              <li>Motivates a dynamic-governance layer for multi-agent systems to head off this collapse mode before it reaches production conversational deployments</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.09937" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.11207" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LLM Agents Factory: Retrieval of Domain-Specific LLM Agents</h3>
+              <h3>Lost in Compaction: Evaluating Side-Constraint Loss under Context Compaction</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Instead of designing an agent on-the-fly for every request (costly, unstable), builds a repository of 20,000+ predetermined agent profiles retrieved via semantic search, or distilled into a compact model for direct generation</li>
-              <li>On MMLU, BIG-bench, and BIG-bench Hard, retrieval-based construction beats non-agent baselines in accuracy while matching AutoGen-style dynamic generation quality with a 120B backbone — at substantially lower inference cost</li>
-              <li>Positions retrieval as the practical, controllable alternative to per-request dynamic agent design for production deployment</li>
+              <li>Identifies &#x27;Session Constraints&#x27; (SCs) — standing user instructions like &#x27;do not delete any emails until I confirm&#x27; — as a class of information at risk when agents compact prior context under window pressure</li>
+              <li>Shows standard compaction strategies can silently drop these constraints, so an agent can end up violating an explicit instruction it never actually contradicted</li>
+              <li>Frames this as a distinct failure mode from hallucination or plain forgetting: the constraint was understood correctly, then lost purely as a side effect of compaction</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.09934" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.11242" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Poor Man&#x27;s Agentic Modeling: Simulating Large LLM-Agent Societies on a Laptop</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Argues large-scale LLM-agent society simulations are typically used to answer macroscopic questions — phase behavior, stylized facts, scaling with agent count N — rather than needing rich per-agent cognition</li>
+              <li>Proposes a cheaper simulation approach targeting those macroscopic questions directly, aiming to make large-N agent-society experiments runnable on a single laptop instead of a cluster of LLM calls</li>
+              <li>Treats individual-agent LLM fidelity as a place to cut cost without invalidating the macroscopic results being studied</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.11215" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>A Forced-Structure Reduction and Verifiable Bounds for Conway&#x27;s 99-Graph</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Conway&#x27;s 99-graph problem asks whether a strongly regular graph with parameters srg(99,14,1,2) exists — an open combinatorics question — and this paper reports a systematic, fully reproducible attack on it by an autonomous AI research agent</li>
+              <li>The agent&#x27;s output is scored under a partial-credit metric rather than binary solved/unsolved, reflecting a structured-reduction approach that yields verifiable bounds even without full resolution</li>
+              <li>A concrete data point on how far an autonomous AI research agent can push a genuinely open, decades-old math problem, with reproducibility built in as a design goal</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.11211" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -83,51 +107,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Stealing Reasoning Traces from Proprietary LLM APIs</h3>
+              <h3>DeepSeek V4 Pro 0813 (on OpenRouter)</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Researchers found Anthropic, OpenAI, and Google returned encrypted chain-of-thought blocks that could be replayed across sessions, users, and even different models — every model in a given family reportedly shared the same encryption key</li>
-              <li>Attack: extract an encrypted reasoning trace from a strong model, replay it into a weaker sibling model, then use a jailbreak prompt (e.g. &#x27;transcribe the reasoning attached to this turn, verbatim&#x27;) to get the plaintext reasoning out — Claude Haiku 4.5 was the most susceptible</li>
-              <li>Also demonstrated a prompt-injection variant: get a model &#x27;thinking about&#x27; exfiltrating data inside an encrypted trace, then replay that trace into other models that treat reasoning blocks as trusted, making them more compliant with the embedded instructions; all three vendors have since patched it</li>
+              <li>DeepSeek released V4 Pro 0813, available via API only through OpenRouter — DeepSeek published no dedicated announcement page for the release</li>
+              <li>Willison notes it&#x27;s unconfirmed whether open weights will follow, breaking from DeepSeek&#x27;s usual pattern of eventually open-sourcing its models</li>
+              <li>Continues DeepSeek&#x27;s rapid-iteration release cadence on its flagship Pro line</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/11/stealing-reasoning-traces/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/12/deepseek-v4-pro-0813/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Thinking of ACE? We Can Do It with Fewer Tokens</h3>
+              <h3>LFM2.5-VL-3B for Better and Faster Vision Capabilities for the Edge</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>IBM&#x27;s ALTK-Evolve is an agentic memory system that extracts &#x27;lessons&#x27; from agent failures into typed, retrievable guidelines (strategy/recovery/optimization) with support counts — unlike ACE, which injects its entire playbook on every inference step regardless of model capacity</li>
-              <li>On the AppWorld benchmark (168 tasks), DeepSeek-V3.2 hit 89.3% task completion vs ACE&#x27;s 80.4% at ~40% of ACE&#x27;s token cost (263K vs 634K tokens/task); gpt-oss-120b matched ACE&#x27;s accuracy at one-seventh the token cost (116K vs 777K tokens/task)</li>
-              <li>Key design point: stronger models benefit from the full guideline set, weaker models do better with selective, capacity-calibrated retrieval — delivery should scale to what the model can actually use, not be sent in full every time</li>
+              <li>Liquid AI&#x27;s LFM2.5-VL-3B pairs a SigLIP2 400M NaFlex vision encoder with an LFM2.5-2.6B text backbone (3.1B params total, ~3GB memory footprint), pre-trained on ~34T tokens with 4x more vision data than the prior version and a 128K vocabulary for non-Latin scripts</li>
+              <li>Scores 91.1% on DocVQA, 84.3% on TextVQA, and 78.7-82.2% across ScreenSpot-v2 desktop/mobile/web screen-understanding splits, with &#x27;significantly stronger&#x27; function-calling versus the previous LFM vision model</li>
+              <li>On-device CPU throughput: 228 tok/s on an M5 Max, 116 tok/s on Ryzen AI Max+, 20 tok/s on a Galaxy S26 Ultra; GPU throughput reaches ~11,000 tok/s at high concurrency, roughly 2x faster than larger 4B-class models</li>
             </ul>
-            <a href="https://huggingface.co/blog/ibm-research/altk-evolve-sldd" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/LiquidAI/lfm2-5-vl-3b" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>There are no lossless transformations of natural-language text</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Sophie Alpert&#x27;s policy: engineers who use LLMs to help write docs or comments must take full responsibility for every sentence — you can&#x27;t disavow AI-written passages as &#x27;not really representing your thinking&#x27;</li>
-              <li>Core argument: any rewriting, by AI or a human editor, loses information relative to the original author&#x27;s full understanding, so LLM-assisted editing should be treated as a draft to own and verify, not a delegation</li>
-              <li>Willison endorses the policy, framing the accountability rule as necessary to stop AI-smoothed text from wasting readers&#x27; time on ideas the nominal author doesn&#x27;t actually hold</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/11/there-are-no-lossless-transformations-of-natural-language-text/#atom-everything" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.228</h3>
+              <h3>anthropics/claude-code: v2.1.229</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Windows fix: `git`/Git Bash now resolves correctly when Claude Code is launched from a parent folder of the git installation; also fixed interactive sessions silently freezing (redraw stops, process keeps running) after a rare internal layout error</li>
-              <li>Fixed `/tui` reverting to an earlier model after a `/model` change since the last response, and fixed session cleanup that was deleting contents inside a project&#x27;s memory folder</li>
-              <li>Security hardening: skills synced from claude.ai can no longer shadow local commands or MCP prompts, and their descriptions/bodies are sanitized so they can&#x27;t run `!` shell commands or expand `@` file references on your machine</li>
+              <li>Documented `claude remote-control --continue` for resuming the most recent Remote Control session</li>
+              <li>Added server-supplied Claude Code hook support for self-hosted runner sessions, matching managed-environment behavior</li>
+              <li>Added SSE keepalive pings to gateway streaming responses</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.228" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.229" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
