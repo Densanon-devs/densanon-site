@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 13, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 14, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,131 +15,88 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 13, 2026</div>
+        <div class="digest-date-badge">August 14, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s research cluster centers on agent reliability failure modes: two-agent negotiations collapse into capitulation without a shared goal function, context compaction silently drops standing &#x27;session constraint&#x27; instructions, and top-k MoE routing can flip which experts fire from quantization noise alone. A separate thread pushes recurrence and scale — retrofitting recurrent depth onto an already-pretrained 0.5B model, and a cheaper approach to simulating large LLM-agent societies on a single laptop. On the product side, DeepSeek shipped a new V4 Pro model API-only, Liquid AI released a 3B edge vision-language model built for on-device speed, and Claude Code&#x27;s latest release adds remote-control session resumption and server-supplied hooks.</p>
+        <p class="digest-intro">Today&#x27;s AI digest leans heavily on practical tooling: Claude Code ships subagent forking and background-by-default agent spawns, while the Python data-tooling world gets updates across sqlite-utils, llm-gemini, and alchemy-utils. Hugging Face rounds things out with a large-scale ICML reproduction study and a robotics data pipeline combining Strands Agents and LeRobot.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Retrofitting Recurrent Depth into a Pretrained Language Model: Installation, Extrapolation, Transfer, and Retention at Two Parameter Budgets</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Retrofits recurrent depth onto an already-pretrained dense model (Qwen2.5-0.5B-Instruct) by splitting it into a Prelude, a weight-tied Recurrent Block, and a Coda, instead of training recurrence in from scratch</li>
-              <li>The retrofitted model learns an iterative latent transition that persists after outcome-only annealing, meaning no intermediate-step supervision is required for the recurrent behavior to stick</li>
-              <li>Evaluated at two parameter budgets across installation, extrapolation (running more recurrent iterations at inference), transfer, and retention of the base model&#x27;s original capabilities</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.11233" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Detecting a Route Flip Is Easier Than Knowing Whether to Fix It: Causal Route-Mediated Damage in Quantized Mixture-of-Experts</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Shows top-k MoE routing is discontinuous: a small numerical disturbance from simulated 4-bit KV-cache quantization, even read by a protected BF16 gate, can push a token across a routing boundary and flip which experts fire</li>
-              <li>Frames this as a deployment-relevant quantization risk distinct from ordinary weight-quantization accuracy loss — the routing decision itself becomes unstable, not just the output</li>
-              <li>Studies the gap between detecting that a route flipped and determining whether that flip actually caused damage worth correcting</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.11212" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Dynamic Governance of Multi-LLM Agent Systems for Collaborative Conversational Outcomes</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Studies multi-turn interactions between two LLM agents with structurally opposed objectives and finds that lacking a shared goal function doesn&#x27;t produce competition — it produces collapse</li>
-              <li>Observed failure pattern: one agent capitulates, the other stops varying its approach, and the conversation degenerates instead of converging toward either side&#x27;s goal</li>
-              <li>Motivates a dynamic-governance layer for multi-agent systems to head off this collapse mode before it reaches production conversational deployments</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.11207" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Lost in Compaction: Evaluating Side-Constraint Loss under Context Compaction</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Identifies &#x27;Session Constraints&#x27; (SCs) — standing user instructions like &#x27;do not delete any emails until I confirm&#x27; — as a class of information at risk when agents compact prior context under window pressure</li>
-              <li>Shows standard compaction strategies can silently drop these constraints, so an agent can end up violating an explicit instruction it never actually contradicted</li>
-              <li>Frames this as a distinct failure mode from hallucination or plain forgetting: the constraint was understood correctly, then lost purely as a side effect of compaction</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.11242" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Poor Man&#x27;s Agentic Modeling: Simulating Large LLM-Agent Societies on a Laptop</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues large-scale LLM-agent society simulations are typically used to answer macroscopic questions — phase behavior, stylized facts, scaling with agent count N — rather than needing rich per-agent cognition</li>
-              <li>Proposes a cheaper simulation approach targeting those macroscopic questions directly, aiming to make large-N agent-society experiments runnable on a single laptop instead of a cluster of LLM calls</li>
-              <li>Treats individual-agent LLM fidelity as a place to cut cost without invalidating the macroscopic results being studied</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.11215" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>A Forced-Structure Reduction and Verifiable Bounds for Conway&#x27;s 99-Graph</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Conway&#x27;s 99-graph problem asks whether a strongly regular graph with parameters srg(99,14,1,2) exists — an open combinatorics question — and this paper reports a systematic, fully reproducible attack on it by an autonomous AI research agent</li>
-              <li>The agent&#x27;s output is scored under a partial-credit metric rather than binary solved/unsolved, reflecting a structured-reduction approach that yields verifiable bounds even without full resolution</li>
-              <li>A concrete data point on how far an autonomous AI research agent can push a genuinely open, decades-old math problem, with reproducibility built in as a design goal</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.11211" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>DeepSeek V4 Pro 0813 (on OpenRouter)</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>DeepSeek released V4 Pro 0813, available via API only through OpenRouter — DeepSeek published no dedicated announcement page for the release</li>
-              <li>Willison notes it&#x27;s unconfirmed whether open weights will follow, breaking from DeepSeek&#x27;s usual pattern of eventually open-sourcing its models</li>
-              <li>Continues DeepSeek&#x27;s rapid-iteration release cadence on its flagship Pro line</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/12/deepseek-v4-pro-0813/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>LFM2.5-VL-3B for Better and Faster Vision Capabilities for the Edge</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Liquid AI&#x27;s LFM2.5-VL-3B pairs a SigLIP2 400M NaFlex vision encoder with an LFM2.5-2.6B text backbone (3.1B params total, ~3GB memory footprint), pre-trained on ~34T tokens with 4x more vision data than the prior version and a 128K vocabulary for non-Latin scripts</li>
-              <li>Scores 91.1% on DocVQA, 84.3% on TextVQA, and 78.7-82.2% across ScreenSpot-v2 desktop/mobile/web screen-understanding splits, with &#x27;significantly stronger&#x27; function-calling versus the previous LFM vision model</li>
-              <li>On-device CPU throughput: 228 tok/s on an M5 Max, 116 tok/s on Ryzen AI Max+, 20 tok/s on a Galaxy S26 Ultra; GPU throughput reaches ~11,000 tok/s at high concurrency, roughly 2x faster than larger 4B-class models</li>
-            </ul>
-            <a href="https://huggingface.co/blog/LiquidAI/lfm2-5-vl-3b" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.229</h3>
+              <h3>anthropics/claude-code: v2.1.232</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Documented `claude remote-control --continue` for resuming the most recent Remote Control session</li>
-              <li>Added server-supplied Claude Code hook support for self-hosted runner sessions, matching managed-environment behavior</li>
-              <li>Added SSE keepalive pings to gateway streaming responses</li>
+              <li>Claude Code v2.1.232 turns on subagent forking by default: a subagent_type: &quot;fork&quot; subagent now inherits the full parent conversation and prompt cache instead of starting from scratch.</li>
+              <li>Non-teammate agent spawns in interactive sessions now default to running in the background rather than blocking the foreground session.</li>
+              <li>A new @ mention syntax lets users reference another Claude session by name directly in a prompt, easing multi-session workflows.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.229" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.232" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>sqlite-utils 4.2</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>sqlite-utils 4.2 significantly improves the table.transform() method, which performs complex ALTER TABLE operations by rebuilding the table (create, copy, drop, replace) rather than relying on SQLite&#x27;s limited native ALTER TABLE support.</li>
+              <li>transform() now preserves a broader set of table attributes across that rebuild than earlier versions did.</li>
+              <li>Relevant for anyone scripting schema migrations against SQLite databases via the sqlite-utils CLI or Python library.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Aug/13/sqlite-utils/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>llm-gemini 0.33</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>llm-gemini 0.33 adds support for the newly released Gemini 3.7 Flash, plus gemini-3.6-flash and gemini-3.5-flash-lite, extending Willison&#x27;s llm CLI to Google&#x27;s latest model lineup.</li>
+              <li>The release also adds two embedding models, gemini-embedding-2 and gemini-embedding-001, bringing Gemini embeddings into the same plugin.</li>
+              <li>The jump from 3.5 to 3.7 Flash variants in one release cycle points to a fast iteration pace on Google&#x27;s Flash-tier models.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Aug/13/llm-gemini/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>What We Learned by Reproducing 2,200 papers from ICML</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Hugging Face documents an effort to reproduce 2,200 papers from ICML, a large-scale attempt at checking published ML results.</li>
+              <li>Reproduction studies at this scale are useful signal for practitioners deciding which published results are solid enough to build on.</li>
+              <li>Worth watching for anyone tracking reproducibility trends at major ML conferences.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/icml-2026-open-reproductions" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Record, train, and deploy from one place with Strands Agents, LeRobot, and Hugging Face Storage Buckets</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>An Amazon-authored Hugging Face post describes combining Strands Agents, LeRobot, and Hugging Face Storage Buckets into a single workflow for recording, training, and deploying robot policies.</li>
+              <li>Uses Hugging Face Storage Buckets as the data backbone for a streaming data loop, reflecting growing convergence between agent frameworks and robotics-learning stacks.</li>
+              <li>Relevant for teams building embodied/robotics pipelines who want to avoid stitching together separate recording, training, and deployment tools.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/amazon/strands-lerobot-streaming-data-loop" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>alchemy-utils 0.1a1</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Early alpha release (0.1a1) of alchemy-utils focused on a performance boost for DuckDB exports and CSV imports.</li>
+              <li>Narrowly-scoped, early-stage release; worth tracking for DuckDB-based data pipelines but not yet a mature tool.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Aug/13/alchemy-utils/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

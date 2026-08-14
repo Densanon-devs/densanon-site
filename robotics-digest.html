@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 13, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 14, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 13, 2026</div>
+        <div class="digest-date-badge">August 14, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Research this cycle leans into data efficiency and safety: a single-demonstration offline-to-online RL recipe (MiDAS) that adapts a pretrained VLA policy on real hardware in hours, a diffusion model that generates interpretable goal-conditioned traffic scenarios for AV simulation, a rule-based safety guard that cuts end-to-end driving collisions without retraining, and a robotic ultrasound controller that finally handles the oblique probe angles echocardiography needs. Industry news splits between hard numbers and a strategy pivot: Q2 A3 order data shows demand broadening well beyond automotive into semiconductors, life sciences, and food; Honda revealed its post-ASIMO humanoid bet is a teleoperated &#x27;Avatar&#x27; hand rather than another autonomous robot; a Stratom-led team won a $15.9M Army contract for a modular autonomous resupply system; and new Wood Mackenzie modeling puts 2035 global robot electricity demand near France&#x27;s entire nuclear output. Community picks continue the embedded-perception thread — on-device digit recognition on an ESP32-S3 and a real-time VIO/SLAM camera module for robot and drone obstacle mapping.</p>
+        <p class="digest-intro">Humanoid robotics dominates today&#x27;s industry news, with Unitree&#x27;s IPO oversubscribed more than 5,000 times and LG partnering with Nvidia on a 2027 humanoid unveiling, while Schaeffler and Sony signal the supply chain and component ecosystem catching up. Space and warehouse automation both saw major moves, with Northrop Grumman launching a satellite-servicing spacecraft and AutoStore locking in a global supply deal with Amazon. On the research side, new arXiv papers push on manipulation generalization, functional affordance grounding, open-vocabulary navigation, and the human factors of supervising multi-robot fleets.</p>
       </div>
     </section>
 
@@ -29,53 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Adaptation of Generalist Robot Policies with Minimal Data</h3>
+              <h3>RoboSynChallenge: Mastering Real-World Dexterity via Generalizing Synthesized Manipulation Skills</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Introduces MiDAS, an offline-to-online RL recipe that anchors a pretrained VLA to a new task via behavior cloning on just one or a few demonstrations, then improves it with value-based online RL on a residual policy.</li>
-              <li>On the LIBERO and RoboCasa benchmarks, MiDAS recovers strong task performance from as little as one demonstration, outperforming baselines and generalizing beyond the demonstrated conditions.</li>
-              <li>On a real bimanual YAM robot, a fragile single-demo policy improved its robustness and learned new successful behaviors after roughly 6 hours of autonomous online interaction.</li>
-              <li>Authors describe it as the first reliable demonstration of robot policy adaptation from a single task demonstration.</li>
+              <li>Targets generalizable robotic manipulation, a persistent bottleneck in embodied AI research.</li>
+              <li>Frames the core limitation as scarce and narrow real-world training data rather than model architecture.</li>
+              <li>Proposes synthesizing manipulation skills that generalize rather than relying solely on collected demonstrations.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.11363" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.12416" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Top-down Traffic Scenario Generation via Joint Initial-Goal Diffusion and Trajectory Infilling</h3>
+              <h3>FUSE: Active Functional Affordance Grounding through Adaptive Semantic-Geometric Evidence Acquisition</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes TrafficDiffuser, which jointly generates initial and goal state pairs for traffic agents via diffusion, instead of treating agent placement and trajectory generation as separate steps.</li>
-              <li>Making goal states explicit gives initial agent positions an interpretable reason for being there and reduces trajectory generation to a simpler infilling problem.</li>
-              <li>Evaluated on the Argoverse 2 motion prediction dataset; the generated high-level scenarios can constrain trajectory generation to specific driving modes and plug into existing trajectory generators.</li>
-              <li>Cuts speed-distribution distance by 55.3% and off-road rate by 2.8% versus the next-best agent-initialization approach.</li>
+              <li>Addresses function-based object interaction (what an object can be used for) instead of identity-based recognition.</li>
+              <li>Introduces active perception: the agent seeks additional observations when functional evidence is ambiguous.</li>
+              <li>Combines semantic and geometric evidence rather than relying on either alone, aimed at improving affordance grounding accuracy.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.11407" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.12683" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>From Self-Normal-Positioning to Omni-Directional Tracking: Real-Time Surface Modeling Enabled Probe Tilt Control for Robotic Ultrasound Imaging</h3>
+              <h3>SAP-Nav: Spatial Semantic Representation Meets Active Perception for Hierarchical Open-Vocabulary Object Navigation</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Most robotic ultrasound systems only hold the probe perpendicular to the skin, which fails for exams like echocardiography that need oblique probe angles; this framework instead tracks arbitrary orientations.</li>
-              <li>Fuses multi-view RGB-D point clouds into a real-time quadratic local-surface model, then encodes the desired imaging direction relative to that surface normal so the probe can follow non-normal angles.</li>
-              <li>Achieved mean angular tracking error of 1.06 ± 0.66 degrees and recovered non-normal tilts up to 44.39 ± 2.59 degrees, acquiring the target heart-chamber view in both phantom and in-vivo tests.</li>
+              <li>Tackles open-vocabulary navigation where instructions can reference scene-, room-, region-, or instance-level cues in unseen environments.</li>
+              <li>Builds on and extends prior work (LangMap) with a hierarchical spatial-semantic representation.</li>
+              <li>Pairs the representation with active perception, so the agent adapts what it looks for as it explores.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.11409" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.12707" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Herding End-to-End Autonomous Driving via Neuro-Symbolic Safety Guards</h3>
+              <h3>Attune: A Self-Annotation Tool for Understanding Robot Operator Attention Profiles</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>End-to-end driving agents learn statistical patterns rather than the physical conditions that guarantee safety, so they can still break basic traffic rules despite high average scores; this paper adds a lightweight rule-based guard at the final command interface instead of retraining the model.</li>
-              <li>The guard checks each outgoing driving command against explicit safety rules and swaps in the nearest safe alternative only when needed — no learned component, no retraining, and every intervention is traceable to the rule that triggered it.</li>
-              <li>Applied to TransFuser v6 on the Fail2Drive and Bench2Drive long-tail benchmarks: +15% Success Rate and up to 53% fewer safety-critical collisions, while preserving the original Driving Score.</li>
+              <li>Focuses on the human side of robotics: how operators supervise multiple robots in a fleet simultaneously.</li>
+              <li>Introduces a self-annotation tool to study where and how operator attention is allocated across robots.</li>
+              <li>Positions attention management as a fundamental design challenge for multi-robot supervision interfaces as fleets scale.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.11451" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.12650" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -85,83 +83,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Robot orders increase to $622 million in Q2 as automation demand broadens across industries</h3>
+              <h3>Unitree IPO oversubscribed more than 5,000 times as investors pile into humanoid robotics</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>North American companies ordered 8,940 robots worth $622M in Q2 2026, per new A3 data — up 4.3% in units and 21.3% in revenue year-over-year; H1 2026 totals reached 17,995 units / $1.166B.</li>
-              <li>Growth is broad outside automotive: Semi &amp; Electronics/Photonics orders rose 35% in H1 (38% YoY in Q2 alone), Life Sciences/Pharma/Biomed rose 32%, and Automotive Component rose 24% — while Automotive OEM orders fell 25%.</li>
-              <li>Collaborative robots: 2,774 cobots worth $114M were ordered in H1 (15.4% of units), making up 43.7% of Life Sciences orders and 36.5% of Semi/Electronics orders.</li>
-              <li>A3 EVP Alex Shikany: &quot;The breadth of growth outside Automotive OEM is an important trend we&#x27;ll continue to watch.&quot;</li>
+              <li>Unitree&#x27;s IPO priced at 150.8 yuan (about $22.4) per share, raising approximately $900 million.</li>
+              <li>Demand exceeded 5,000x subscription, signaling intense investor appetite for humanoid robotics exposure.</li>
+              <li>Underscores China&#x27;s position as a major hub for humanoid robot manufacturing and public-market interest in the sector.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/13/robot-orders-increase-to-622-million-in-q2-as-automation-demand-broadens-across-industries/104092/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/08/14/unitree-ipo-oversubscribed-more-than-5000-times-as-investors-pile-into-humanoid-robotics/104171/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Honda’s new ‘Avatar’ humanoid robot suggests the spirit of ASIMO is very much alive</h3>
+              <h3>LG to unveil new Nvidia-powered humanoid robot in early 2027</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Avatar is a teleoperated system, not an autonomous humanoid — the human operator keeps the decision-making loop while AI assists physical execution; it was demoed hands-on at Humanoids Summit 2026.</li>
-              <li>The hand alone: 16 actuated joints (up to 180°/s), 50N continuous fingertip force, 288 tactile-sensor channels across fingers/palm, and six-axis force sensors at the fingertips, tested through 450,000+ durability cycles including 24,000 cycles lifting 5kg loads.</li>
-              <li>Demonstrated dexterity spans threading a needle and using scissors up to tightening screws and handling heavy objects.</li>
-              <li>Honda never abandoned humanoid R&amp;D after ASIMO left public view — engineers from that program carried the expertise into Avatar, but Honda split &quot;fully autonomous humanoid&quot; into separate teleoperation-plus-AI-assist technologies instead.</li>
+              <li>LG is developing a bipedal humanoid built on Nvidia&#x27;s Isaac GR00T open reasoning humanoid foundation model.</li>
+              <li>LG and Nvidia signed a memorandum of understanding on August 13 formalizing the partnership.</li>
+              <li>Public unveiling is targeted for Q1 2027, adding another major electronics manufacturer to the humanoid race.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/13/hondas-new-avatar-humanoid-robot-suggests-the-spirit-of-asimo-is-very-much-alive/104083/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/08/14/lg-to-unveil-new-nvidia-powered-humanoid-robot-in-early-2027/104173/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Strengthening U.S. Army sustainment: TALUS to deliver autonomous distribution</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Stratom Inc. (a Boulder, CO Service-Disabled Veteran-Owned Small Business) leads a team — ND Defense, Forterra, GS Engineering, Waltonen Engineering — on a $15.9M U.S. Army Project Sustainment contract for an 18-month prototype.</li>
-              <li>TALUS is a modular autonomous distribution system meant to resupply dispersed forces in contested environments, reducing soldier exposure while extending operational reach; it integrates militarized commercial-off-the-shelf tech and Forterra&#x27;s AutoDrive autonomy stack.</li>
-              <li>Modular architecture supports multiple logistics/energy missions and varied payloads; the prototype phase ends with a soldier-run operational evaluation during a Transformation in Contact Combat Training Center rotation that will inform broader fielding decisions.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/strengthening-u-s-army-sustainment-talus-to-deliver-autonomous-distribution/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Robots could consume as much electricity as 35 million US homes by 2035</h3>
+              <h3>Northrop Grumman launches robotic spacecraft to repair and extend life of satellites</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Wood Mackenzie projects combined robotics electricity demand hits 363 TWh/year by 2035 (357 TWh industrial, 6 TWh humanoid) — roughly equal to France&#x27;s entire 2025 nuclear output (373 TWh) and about 35 million average US households.</li>
-              <li>Industrial robot fleet grows from 5M units today (78 TWh/yr) to a projected 16M units by 2035 at a 12% CAGR; humanoid stock grows at over 90% CAGR, exceeding 10M units with 4M+ annual shipments by 2035.</li>
-              <li>Estimates use a $0.14/kWh global average industrial tariff and deliberately exclude robot AI-training infrastructure, to avoid double-counting against data-center demand.</li>
-              <li>The report frames power availability itself — not just chips or manufacturing capacity — as an emerging brake on robot adoption, compounding existing grid pressure from AI data centers.</li>
+              <li>The Mission Robotic Vehicle is designed to service satellites in orbit rather than let them be replaced.</li>
+              <li>Capabilities include repairing, upgrading, and repositioning satellites after their original fuel is depleted.</li>
+              <li>Represents a concrete commercial application of space robotics for extending costly satellite asset lifespans.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/12/robots-could-consume-as-much-electricity-as-35-million-us-homes-by-2035/104073/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Building a 5-digit Recognition System on ESP32-S3</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Runs a complete 5-digit recognition pipeline (e.g., reading meter displays) entirely on-device on an ESP32-S3 using TensorFlow Lite Micro — no PC or cloud inference in the loop.</li>
-              <li>Shows that low-cost microcontroller hardware (an ESP32-S3 dev board) can now run a full digit-recognition model standalone, useful for offline/embedded meter-reading style applications.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vn5cml/building_a_5digit_recognition_system_on_esp32s3/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/08/14/northrop-grumman-launches-robotic-spacecraft-to-repair-and-extend-life-of-satellites/104165/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SLAM Camera Board + Obstacle Mapping</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>Schaeffler unveils formed strain wave gearboxes for humanoid robots</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Mighty Camera runs visual-inertial odometry (VIO) on-device in real time in a tiny package, giving accurate camera-motion tracking without external infrastructure.</li>
-              <li>Combines that motion estimate with the live camera feed to estimate depth and build a 3D obstacle map, computed on the board/SDK itself.</li>
-              <li>Pitched as a drop-in perception module a robot or drone can use for obstacle-aware navigation.</li>
+              <li>Schaeffler is expanding into humanoid robot components with formed strain wave gearboxes.</li>
+              <li>Strain wave gearboxes are key actuator components, and actuators make up around half of a humanoid&#x27;s total manufacturing cost.</li>
+              <li>Signals established industrial motion-technology suppliers entering the humanoid supply chain as the market scales.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vmfavq/slam_camera_board_obstacle_mapping/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/08/14/schaeffler-unveils-formed-strain-wave-gearboxes-for-humanoid-robots/104157/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AutoStore signs global supply agreement with Amazon</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>AutoStore and Amazon established a framework for Amazon to procure AutoStore automation systems globally.</li>
+              <li>The agreement sets terms for future supply rather than a one-time purchase, pointing to an ongoing relationship.</li>
+              <li>Potentially expands AutoStore&#x27;s reach given Amazon&#x27;s scale in warehouse and fulfillment operations.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/08/14/autostore-signs-global-supply-agreement-with-amazon/104162/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Sony robot hand patent hints at renewed interest in humanoid robotics</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Sony filed a US patent (US 2026/0225261 A1) for a robotic hand featuring a human-like opposable thumb.</li>
+              <li>Suggests continuing internal R&amp;D into humanoid and embodied robotics at a company not currently known as a humanoid player.</li>
+              <li>Adds to a wave of major electronics firms, alongside LG&#x27;s Nvidia partnership, signaling humanoid ambitions.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/08/14/sony-robot-hand-patent-hints-at-renewed-interest-in-humanoid-robotics/104150/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
