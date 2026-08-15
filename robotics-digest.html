@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 14, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 15, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,143 +15,149 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 14, 2026</div>
+        <div class="digest-date-badge">August 15, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Humanoid robotics dominates today&#x27;s industry news, with Unitree&#x27;s IPO oversubscribed more than 5,000 times and LG partnering with Nvidia on a 2027 humanoid unveiling, while Schaeffler and Sony signal the supply chain and component ecosystem catching up. Space and warehouse automation both saw major moves, with Northrop Grumman launching a satellite-servicing spacecraft and AutoStore locking in a global supply deal with Amazon. On the research side, new arXiv papers push on manipulation generalization, functional affordance grounding, open-vocabulary navigation, and the human factors of supervising multi-robot fleets.</p>
+        <p class="digest-intro">Today&#x27;s industry stories share a theme of closing the gap between robot capability and real-world deployment: Treble Technologies argues robots need natural sound perception to earn trust the way vision and locomotion already have, Protolabs shows the manufacturing side is already compressed to under-24-hour CAD-to-part turnaround, and Neros Technologies closes a $250M Series C to get its defense drones into combat theaters by year&#x27;s end. On the tooling side, the ROS Discourse community is wrestling with fleet-scale friction, from AMR gridlock in narrow industrial corridors to Metriplane&#x27;s push toward regression-testing recorded robot failures. Meanwhile hobbyists keep advancing real fundamentals, with a peer-reviewed RL obstacle-avoidance toolkit hitting v1.4, a Rust behavior-tree library crossing 100,000 downloads, and a home-built robot chaining navigation, perception, and manipulation into one autonomous loop.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>RoboSynChallenge: Mastering Real-World Dexterity via Generalizing Synthesized Manipulation Skills</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Targets generalizable robotic manipulation, a persistent bottleneck in embodied AI research.</li>
-              <li>Frames the core limitation as scarce and narrow real-world training data rather than model architecture.</li>
-              <li>Proposes synthesizing manipulation skills that generalize rather than relying solely on collected demonstrations.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.12416" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>FUSE: Active Functional Affordance Grounding through Adaptive Semantic-Geometric Evidence Acquisition</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Addresses function-based object interaction (what an object can be used for) instead of identity-based recognition.</li>
-              <li>Introduces active perception: the agent seeks additional observations when functional evidence is ambiguous.</li>
-              <li>Combines semantic and geometric evidence rather than relying on either alone, aimed at improving affordance grounding accuracy.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.12683" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>SAP-Nav: Spatial Semantic Representation Meets Active Perception for Hierarchical Open-Vocabulary Object Navigation</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Tackles open-vocabulary navigation where instructions can reference scene-, room-, region-, or instance-level cues in unseen environments.</li>
-              <li>Builds on and extends prior work (LangMap) with a hierarchical spatial-semantic representation.</li>
-              <li>Pairs the representation with active perception, so the agent adapts what it looks for as it explores.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.12707" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Attune: A Self-Annotation Tool for Understanding Robot Operator Attention Profiles</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Focuses on the human side of robotics: how operators supervise multiple robots in a fleet simultaneously.</li>
-              <li>Introduces a self-annotation tool to study where and how operator attention is allocated across robots.</li>
-              <li>Positions attention management as a fundamental design challenge for multi-robot supervision interfaces as fleets scale.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.12650" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Unitree IPO oversubscribed more than 5,000 times as investors pile into humanoid robotics</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Why robots that can’t communicate naturally won’t be adopted</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Unitree&#x27;s IPO priced at 150.8 yuan (about $22.4) per share, raising approximately $900 million.</li>
-              <li>Demand exceeded 5,000x subscription, signaling intense investor appetite for humanoid robotics exposure.</li>
-              <li>Underscores China&#x27;s position as a major hub for humanoid robot manufacturing and public-market interest in the sector.</li>
+              <li>Gunnar Petur Hauksson, co-founder and COO of Reykjavik-based Treble Technologies, argues robots need robust natural-language and sound perception, not just vision and locomotion, to win real-world adoption.</li>
+              <li>Notes hearing accounts for roughly 15-20% of the brain&#x27;s sensory processing, yet dominant training simulators like NVIDIA Isaac Sim remain largely silent, visual-only environments.</li>
+              <li>Sound is governed by wave physics and is highly sensitive to geometry and materials, making physically accurate acoustic training data far harder to obtain and scale than visual data -- the gap Treble&#x27;s own simulation platform is built to close.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/14/unitree-ipo-oversubscribed-more-than-5000-times-as-investors-pile-into-humanoid-robotics/104171/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/why-robots-that-cant-communicate-naturally-wont-be-adopted-says-treble/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LG to unveil new Nvidia-powered humanoid robot in early 2027</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>How Protolabs turns CAD files into parts in under 24 hours</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>LG is developing a bipedal humanoid built on Nvidia&#x27;s Isaac GR00T open reasoning humanoid foundation model.</li>
-              <li>LG and Nvidia signed a memorandum of understanding on August 13 formalizing the partnership.</li>
-              <li>Public unveiling is targeted for Q1 2027, adding another major electronics manufacturer to the humanoid race.</li>
+              <li>Protolabs CTO and Chief AI Officer Marc Kermisch, who has 25+ years in digital transformation, describes compressing the CAD-to-physical-part pipeline to under 24 hours across CNC machining, injection molding, 3D printing, and sheet metal fabrication.</li>
+              <li>Automated quoting and AI-driven design-for-manufacturability checks catch issues before a part ever reaches the shop floor, rather than bouncing a design back after a failed production run.</li>
+              <li>Frames the strategy as folding software and cloud tooling directly into traditional manufacturing workflows so pricing and production quotes return automatically instead of through manual review.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/14/lg-to-unveil-new-nvidia-powered-humanoid-robot-in-early-2027/104173/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/how-protolabs-turns-cad-files-into-parts-under-24-hours/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Northrop Grumman launches robotic spacecraft to repair and extend life of satellites</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Neros Technologies raises $250M to deploy its defense drones by the end of 2026</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Mission Robotic Vehicle is designed to service satellites in orbit rather than let them be replaced.</li>
-              <li>Capabilities include repairing, upgrading, and repositioning satellites after their original fuel is depleted.</li>
-              <li>Represents a concrete commercial application of space robotics for extending costly satellite asset lifespans.</li>
+              <li>Series C raised $250 million at a $2.5 billion valuation, co-led by Sequoia Capital and the American Strategic Technology Fund.</li>
+              <li>Archer AI (an FPV strike drone with terminal guidance and GPS-denied position holding) and Bandit (a counter-drone interceptor for Class 2/3 threats like Shahed-style systems) are both slated for combat-theater deployment by end of 2026.</li>
+              <li>Neros already holds contracts with the US Army, Marine Corps, and all Special Operations Command components plus six allied nations, and is targeting 1 million drones per year by 2028.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/14/northrop-grumman-launches-robotic-spacecraft-to-repair-and-extend-life-of-satellites/104165/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/neros-technologies-raises-250m-to-deploy-its-defense-drones-by-the-end-of-2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Schaeffler unveils formed strain wave gearboxes for humanoid robots</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Video Friday: Lift Happens</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Schaeffler is expanding into humanoid robot components with formed strain wave gearboxes.</li>
-              <li>Strain wave gearboxes are key actuator components, and actuators make up around half of a humanoid&#x27;s total manufacturing cost.</li>
-              <li>Signals established industrial motion-technology suppliers entering the humanoid supply chain as the market scales.</li>
+              <li>DARPA&#x27;s Heavy Lift Challenge wrapped up, with the recap footage showing several attempts ending in crashes and battery fires alongside the working entries.</li>
+              <li>Monumental&#x27;s construction robots laid roughly 20,000 bricks building a semi-detached home, one of the more concrete hardware demos in the roundup.</li>
+              <li>Stanford&#x27;s Biomimetics and Dexterous Manipulation Lab and Honeybee Robotics are testing gecko-inspired adhesives in space conditions via a NASA-backed payload; separately, HKUST is developing drone delivery to moving vehicles and open windows.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/14/schaeffler-unveils-formed-strain-wave-gearboxes-for-humanoid-robots/104157/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://spectrum.ieee.org/video-friday-darpa-heavy-lift-challenge" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ROS News for the week of August 10th, 2026</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>ROSCon Global 2026 (Toronto, Sept 22-24) has just 10 days left of regular-price tickets; six regional ROSCons are also on the calendar through December, from Edinburgh and Singapore to Valencia, Bologna, Nivelles, and Istanbul.</li>
+              <li>New community tools this week: a Nav2 semantic-segmentation costmap layer, the Fingermod parametric 3D-printed gripper configurator, a browser-based Feetech servo test bench (NORI MotorLab), a launch-file linter (lint_launch), and rostree v1.0.0, a ROS 2 dependency-graph explorer.</li>
+              <li>Weekly Waffle PR-triage meetings continue drawing new contributors, with the next session set for August 20 at 16:30 UTC.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/ros-news-for-the-week-of-august-10th-2026/57415" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AutoStore signs global supply agreement with Amazon</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Congestion-aware traffic planning for dense and narrow industrial environments</h3>
+              <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AutoStore and Amazon established a framework for Amazon to procure AutoStore automation systems globally.</li>
-              <li>The agreement sets terms for future supply rather than a one-time purchase, pointing to an ongoing relationship.</li>
-              <li>Potentially expands AutoStore&#x27;s reach given Amazon&#x27;s scale in warehouse and fulfillment operations.</li>
+              <li>An engineer evaluating Open-RMF for a semiconductor-fab-style facility reports AMRs converging on the same shortest-path route through narrow bidirectional corridors, causing repeated head-on conflicts and rising deadlock risk as fleet density grows.</li>
+              <li>Argues Open-RMF&#x27;s negotiation mechanism only engages after robots have already committed to colliding routes, so it can&#x27;t prevent congestion upfront -- proposes a route_cost function blending travel time, predicted lane occupancy, and route overlap.</li>
+              <li>Outlines a four-layer fix: schedule-aware route planning, bottleneck reservation/admission control for narrow corridors, localized (not fleet-wide) replanning, and negotiation only as a last resort.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/14/autostore-signs-global-supply-agreement-with-amazon/104162/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/congestion-aware-traffic-planning-for-dense-and-narrow-industrial-environments/57410" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Sony robot hand patent hints at renewed interest in humanoid robotics</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Metriplane v0.3.0: turn recorded workcell incidents into repeatable regression tests</h3>
+              <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Sony filed a US patent (US 2026/0225261 A1) for a robotic hand featuring a human-like opposable thumb.</li>
-              <li>Suggests continuing internal R&amp;D into humanoid and embodied robotics at a company not currently known as a humanoid player.</li>
-              <li>Adds to a wave of major electronics firms, alongside LG&#x27;s Nvidia partnership, signaling humanoid ambitions.</li>
+              <li>Open-source tool that replays recorded robot/manufacturing state into an inspectable incident report plus an automated regression test verifying a specific failure stays caught.</li>
+              <li>v0.3.0 adds a Source Adapter SDK with bounded reproducible paths for ManiSkill and robomimic recordings, plus a proof-of-concept ROS 2/MCAP and TF2 integration -- still synthetic, so the maintainer isn&#x27;t yet claiming general rosbag compatibility.</li>
+              <li>Now source-indexed for ROS 2 Jazzy via rosdistro and installable with pip install metriplane==0.3.0; the demo shows catching an AGV that misses a 60-second arrival deadline at an outfeed station by correlating PLC and ROS 2 data.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/14/sony-robot-hand-patent-hints-at-renewed-interest-in-humanoid-robotics/104150/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/metriplane-v0-3-0-turn-recorded-workcell-incidents-into-repeatable-regression-tests/57409" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Bonsai just hit a 100,000 downloads on crates.io 🎉</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Bonsai, a Rust library for building deterministic AI behavior trees, crossed 100,000 downloads on crates.io a little over 4 years after starting as a side project.</li>
+              <li>The author&#x27;s demo shows it running in two very different contexts, including driving bot behavior in a Titanfall 2 gameplay clip -- the same behavior-tree engine spanning game AI and real robot control.</li>
+              <li>Deterministic behavior trees remain a popular complement to learned/RL policies for robotics logic that needs to stay predictable and debuggable.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1vp0pml/bonsai_just_hit_a_100000_downloads_on_cratesio/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>I turned my master&#x27;s thesis on RL obstacle avoidance into an open-source manipulator toolkit — it&#x27;s peer-reviewed now and just hit v1.4</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Open-source manipulator toolkit grew out of a master&#x27;s thesis using reinforcement learning to keep robot arms clear of kinematic singularities while avoiding moving, not just static, obstacles.</li>
+              <li>The underlying research is now peer-reviewed and published, and the toolkit itself just reached v1.4.</li>
+              <li>Targets a real integration pain point the author says other practitioners hit too: combining collision and singularity avoidance when obstacles are dynamic rather than fixed.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1vok5xe/i_turned_my_masters_thesis_on_rl_obstacle/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Built a small autonomous household robot that can complete tasks end to end</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Self-built XLeRobot (3D-printed parts, low-cost servos) now completes a full autonomous household task end to end: explore the room, localize a target object, approach it, and manipulate it with its arm.</li>
+              <li>Chains navigation, perception, and manipulation into a single closed loop rather than demoing each capability in isolation.</li>
+              <li>Built on the open-hardware XLeRobot platform, showing how accessible full-stack home-robot experimentation has become for hobbyists on a budget.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1vp27ra/built_a_small_autonomous_household_robot_that_can/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

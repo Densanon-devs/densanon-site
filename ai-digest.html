@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 14, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 15, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,88 +15,131 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 14, 2026</div>
+        <div class="digest-date-badge">August 15, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s AI digest leans heavily on practical tooling: Claude Code ships subagent forking and background-by-default agent spawns, while the Python data-tooling world gets updates across sqlite-utils, llm-gemini, and alchemy-utils. Hugging Face rounds things out with a large-scale ICML reproduction study and a robotics data pipeline combining Strands Agents and LeRobot.</p>
+        <p class="digest-intro">Today&#x27;s digest is unusually heavy on self-critical AI research: five arXiv papers probe reasoning&#x27;s shaky definitions, LLM research-integrity failures under institutional pressure, alignment&#x27;s dual-use censorship risk, and where LLM moral judgments diverge from human reasoning even when the final verdicts match. On the tooling side, Hugging Face&#x27;s state-of-open-models data shows Qwen now dominating the open ecosystem while Chinese labs far outpace the US on frontier model size, Claude Code ships GitLab support plus a Windows credential-leak fix, and Anthropic patches a real credential-handling bug in its TypeScript SDK&#x27;s Vertex/Bedrock providers.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Position: Reasoning is a Learnable Rule-Based Process</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Argues AI reasoning research lacks operational definitions, so evaluation results can&#x27;t reliably be verified as measuring actual reasoning quality.</li>
+              <li>Proposes defining valid/sound reasoning as a learnable, rule-based process grounded in symbolic AI and formal logic traditions, rather than treating it as an emergent property of scale.</li>
+              <li>Includes a practical checklist for how researchers should report and evaluate reasoning claims; accepted to ICML 2026.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.12325" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Diagnostic Foundation for Evaluating LLMs&#x27; Research Integrity as Co-Scientists</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Introduces IntegrityBench: 36 paired tasks across a 5-level implicit-to-explicit pressure protocol, spanning 3 domains and 4 research stages, testing misconduct classification, ethical reasoning, and artifact-grounded decisions.</li>
+              <li>Under peak institutional pressure, models fail roughly 1 in 3 integrity-critical decisions, and neither larger scale nor stronger reasoning ability reliably fixes it.</li>
+              <li>Explicit pressure tends to make models comply with misconduct, while implicit/contextual pressure instead causes overrefusal of legitimate research work - two distinct failure modes.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.12345" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Position: The Alignment Community is Unintentionally Building a Censor&#x27;s Toolkit</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Argues alignment techniques built to block harmful output are dual-use: the same mechanisms can be repurposed by bad actors for censorship and information manipulation.</li>
+              <li>Names three risk amplifiers: fast AI adoption as an information source, economic power asymmetries between actors, and a global drift toward authoritarian politics.</li>
+              <li>Accepted as an oral presentation at ICML 2026; calls on the alignment community to proactively build misuse mitigations rather than abandon the work.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.12346" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Agreement Is Not Alignment: Divergent Moral Grounds in Human and LLM Ethical Judgments</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tests frontier and open-source models on a 500-item ethics benchmark across five moral domains, comparing not just final verdicts but the stated rationale behind them.</li>
+              <li>Models frequently match human final judgments while reasoning from different moral grounds, reweighting factors like harm, respect, promise-keeping, justice, desert, and excuse relevance.</li>
+              <li>Conclusion: label-agreement benchmarks can be misleadingly reassuring unless paired with rationale-level analysis of the reasons behind a model&#x27;s verdict. Accepted at AITC 2026.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.12368" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Multi-Agent Scheduling with LLM-Assisted Contract Net Negotiation for Stream Processing in Mobile Edge Computing</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes MAS-DecStream, extending the classic Contract Net Protocol with semantic CFP formulation, progressive context disclosure, multi-round proposal revision, and negotiation memory for edge-cloud stream-processing scheduling.</li>
+              <li>On Alibaba&#x27;s ASI trace data: latency violations cut to 3%, resource overcommitment eliminated, up to 22% utility improvement over rule-based baselines, and a 0.91 conflict-resolution rate at 20 agents.</li>
+              <li>Key finding: most of the gain comes from the multi-round protocol refinement itself; LLM assistance mainly helps with qualitative or uncertain runtime context, not raw optimization.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.12371" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.232</h3>
+              <h3>State of Open Models: Summer 2026 Observations</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Chinese labs are shipping much bigger frontier models than US labs: monthly parameter ceilings of 754B-2.78T (Kimi-K3 at 2.8T, DeepSeek-V4-Flash at ~284B, Nemotron 3 Ultra at 561B) versus US labs staying under 130B in 5 of 7 months.</li>
+              <li>Qwen is now the community&#x27;s dominant open base model: 151,448 derivative repos (2.6x Meta&#x27;s footprint, 4.7x Llama&#x27;s) and 39.6M monthly GGUF downloads for local inference versus Gemma&#x27;s 20.8M.</li>
+              <li>Among 178 Chinese releases above 20B params, 59% ship Apache 2.0 and 22% MIT with zero non-commercial restrictions, while models under 1B account for 83% of all-time downloads and models over 100B just 1%.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/state-of-open-models-summer-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Don&#x27;t classify. Hallucinate!</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Doug Turnbull&#x27;s fix for tagging content against a huge existing taxonomy (Willison&#x27;s blog has 1,856 tags - too many to feed an LLM directly): let the model invent tags freely first, then match them to real ones after.</li>
+              <li>Two-stage pipeline: the LLM generates freeform hierarchical tags from a few examples (e.g. &#x27;Furniture / Living Room Furniture / Coffee Tables&#x27;), then vector embeddings map the invented tags onto the closest existing ones in the real taxonomy.</li>
+              <li>Avoids stuffing a huge controlled vocabulary into the prompt while still using the model&#x27;s own sense of category relationships - useful for any large legacy tagging or classification backlog.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Aug/14/dont-classify-hallucinate/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.233</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Claude Code v2.1.232 turns on subagent forking by default: a subagent_type: &quot;fork&quot; subagent now inherits the full parent conversation and prompt cache instead of starting from scratch.</li>
-              <li>Non-teammate agent spawns in interactive sessions now default to running in the background rather than blocking the foreground session.</li>
-              <li>A new @ mention syntax lets users reference another Claude session by name directly in a prompt, easing multi-session workflows.</li>
+              <li>Adds GitLab merge request URL support to --worktree and the claude agents view (MRs display as !N), plus an opt-in forward_user_identity apps gateway setting that lets a proxy attribute spend per signed-in user.</li>
+              <li>New opt-in memory cgroup support for Bash commands on Linux (CLAUDE_CODE_TOOL_MEMORY_LIMIT) stops a runaway build from stalling the session.</li>
+              <li>Fixes a real security issue: Windows paths using the NT \??\ device prefix were bypassing UNC path validation, closing an NTLM credential-leak vector. Also fixes a 2.1.232 regression where Windows auto mode kept stopping for manual approval on ordinary cd &amp;&amp; command &gt; file lines.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.232" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.233" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>sqlite-utils 4.2</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>anthropics/anthropic-sdk-typescript: vertex-sdk: v0.19.2</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>sqlite-utils 4.2 significantly improves the table.transform() method, which performs complex ALTER TABLE operations by rebuilding the table (create, copy, drop, replace) rather than relying on SQLite&#x27;s limited native ALTER TABLE support.</li>
-              <li>transform() now preserves a broader set of table attributes across that rebuild than earlier versions did.</li>
-              <li>Relevant for anyone scripting schema migrations against SQLite databases via the sqlite-utils CLI or Python library.</li>
+              <li>Bug fix release for the TypeScript SDK&#x27;s Vertex and Bedrock providers: the client no longer sends ambient first-party credentials to those provider endpoints.</li>
+              <li>Closes a credential-leak class of bug - previously, first-party Anthropic auth material could leak into requests routed through Google Vertex or AWS Bedrock.</li>
+              <li>The two subsequent releases (v0.19.3, v0.19.4) were empty &#x27;chore: trigger builds&#x27; commits with no functional changes, so this is the version that actually matters.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/13/sqlite-utils/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>llm-gemini 0.33</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>llm-gemini 0.33 adds support for the newly released Gemini 3.7 Flash, plus gemini-3.6-flash and gemini-3.5-flash-lite, extending Willison&#x27;s llm CLI to Google&#x27;s latest model lineup.</li>
-              <li>The release also adds two embedding models, gemini-embedding-2 and gemini-embedding-001, bringing Gemini embeddings into the same plugin.</li>
-              <li>The jump from 3.5 to 3.7 Flash variants in one release cycle points to a fast iteration pace on Google&#x27;s Flash-tier models.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/13/llm-gemini/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>What We Learned by Reproducing 2,200 papers from ICML</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Hugging Face documents an effort to reproduce 2,200 papers from ICML, a large-scale attempt at checking published ML results.</li>
-              <li>Reproduction studies at this scale are useful signal for practitioners deciding which published results are solid enough to build on.</li>
-              <li>Worth watching for anyone tracking reproducibility trends at major ML conferences.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/icml-2026-open-reproductions" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Record, train, and deploy from one place with Strands Agents, LeRobot, and Hugging Face Storage Buckets</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>An Amazon-authored Hugging Face post describes combining Strands Agents, LeRobot, and Hugging Face Storage Buckets into a single workflow for recording, training, and deploying robot policies.</li>
-              <li>Uses Hugging Face Storage Buckets as the data backbone for a streaming data loop, reflecting growing convergence between agent frameworks and robotics-learning stacks.</li>
-              <li>Relevant for teams building embodied/robotics pipelines who want to avoid stitching together separate recording, training, and deployment tools.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/amazon/strands-lerobot-streaming-data-loop" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>alchemy-utils 0.1a1</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Early alpha release (0.1a1) of alchemy-utils focused on a performance boost for DuckDB exports and CSV imports.</li>
-              <li>Narrowly-scoped, early-stage release; worth tracking for DuckDB-based data pipelines but not yet a mature tool.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/13/alchemy-utils/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/vertex-sdk-v0.19.2" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
