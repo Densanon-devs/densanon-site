@@ -739,6 +739,18 @@
     filter: drop-shadow(0 2px 4px rgba(0,0,0,.5)); transition: transform .1s; }
   #setBtn img { width: 100%; height: 100%; display: block; }
   #setBtn:active { transform: scale(.92); }
+  /* SUSPECT, on Mac only — read this before "fixing" the centring below.
+     This is the one INTERACTIVE element combining `position:fixed` + `left:50%` + `translateX(-50%)`
+     + the `zoom` it takes at >=820px. (#toast has the same four but carries no controls and is
+     pointer-events:none.) `zoom` is non-standard, and WebKit is known to resolve percentage offsets
+     and transforms in a different coordinate space from the one it paints in, so the card you SEE and
+     the box that receives the click can come apart — which matches a report of coach taps not
+     registering on macOS and needing several attempts.
+     UNCONFIRMED: there is no Mac on this box. And the obvious fix is WRONG — `left:0; right:0;
+     margin-inline:auto` was tried and MEASURED: correct at zoom 1.5, but at zoom 1.8 it put the card
+     414px off centre with its left edge off-screen at -41. What is here is pixel-centred at BOTH
+     breakpoints in Chromium, with elementFromPoint at the painted button landing on the button. Do
+     not change it without a Mac in front of you. */
   #coach { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 45;
     display: none; width: min(92%, 460px); padding: 15px 18px 13px; color: #e9e3d1;
     --bt: 14px; --cn: 30px; border: none; border-radius: 0;
@@ -2521,7 +2533,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.67';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.68';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -3875,15 +3887,23 @@ const NODE_INFO = {
   camp:     'A moment to breathe. Rest to heal your whole army and HQ back to full, or drill one soldier for a permanent boost — +HP and +ATK, or +HP and +DEF for a unit that can\'t fight. One or the other — take what the run needs.',
   cache:    'A supply cache — free, no fight. Grab one reward: a card for your deck or a stack of salvage. Pure upside.',
 };
-function showNodeInfo(kind){
-  const desc = NODE_INFO[kind]; if (!desc) return; Sfx.play('ui_tap');
+/** "What am I walking into" — icon, name, kicker, and what to expect.
+ *
+ *  Shared by the panel you get for a node you CANNOT reach and the confirm you get before marching
+ *  onto one you can, so the two descriptions cannot drift apart. A boss node names the act boss when
+ *  the run has revealed it; an event node stays deliberately vague, because not knowing is the node. */
+function nodeSummaryHTML(kind){
   const img = NODE_IMG.has(kind)
     ? `<img src="assets/nodes/${kind}.png" alt="" style="width:64px;height:64px;object-fit:contain;flex:0 0 auto;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))">`
     : `<span style="font-size:44px">${si(NODE_ICON[kind],48)||'◆'}</span>`;
-  $('#ovInspect').innerHTML = `<div class="choice">
-    <div style="display:flex;align-items:center;gap:14px">${img}
-      <div><b class="gold" style="font-size:18px">${NODE_NAME[kind]||kind}</b><div class="d">${NODE_KICK[kind]||''}</div></div></div>
-    <div class="d" style="margin-top:11px;line-height:1.55">${desc}</div></div>
+  const boss = (kind === 'boss' && typeof S !== 'undefined' && S && S.act_boss) ? S.act_boss.name : null;
+  return `<div style="display:flex;align-items:center;gap:14px;text-align:left">${img}
+      <div><b class="gold" style="font-size:18px">${NODE_NAME[kind]||kind}</b><div class="d">${boss || NODE_KICK[kind]||''}</div></div></div>
+    <div class="d" style="margin-top:11px;line-height:1.55;text-align:left">${NODE_INFO[kind]||''}</div>`;
+}
+function showNodeInfo(kind){
+  const desc = NODE_INFO[kind]; if (!desc) return; Sfx.play('ui_tap');
+  $('#ovInspect').innerHTML = `<div class="choice">${nodeSummaryHTML(kind)}</div>
     <div class="ovclose"><button class="ibtn" onclick="closeOv('ovInspect')" aria-label="Return"><img src="assets/ui/btn/return.png" alt="Return"></button></div>`;
   $('#ovInspect').classList.add('show');
 }
@@ -4129,7 +4149,7 @@ function renderMapGraph() {
     if (n.jump) cls+=' jump';                 // Field Compass parallel-path target
     let tap;
     if (n.kind === 'boss' && !n.avail) tap = `onclick="showActBoss()"`;   // preview the act boss before you can reach it
-    else if (n.avail) tap = n.jump ? `onclick="jumpTo('${n.id}')"` : `onclick="travelTo('${n.id}')"`;
+    else if (n.avail) tap = n.jump ? `onclick="jumpTo('${n.id}')"` : `onclick="confirmTravel('${n.id}')"`;
     else tap = `onclick="showNodeInfo('${n.kind}')"`;   // not your next move → explain what this node is + what to expect
     if (_nodeFilter) cls += (n.kind === _nodeFilter) ? ' match' : ' nomatch';   // legend spotlight
     const icon = (n.kind === 'boss' && S.act_boss) ? bossFace(S.act_boss.id, 74) : nodeIconHTML(n.kind);
@@ -4150,11 +4170,24 @@ window.addEventListener('resize', () => {
   }, 150);
 });
 
-async function travelTo(nid) { Sfx.play('ui_tap'); const r = await api('/api/travel', {node: nid});
+/** Tapping your next node used to march instantly. Which node you take is the only strategic choice
+ *  the map offers, it cannot be undone, and on a phone it is one mis-tap away — so say what it is and
+ *  ask. The summary is the same one the map already shows for nodes you cannot reach yet. */
+async function confirmTravel(nid) {
+  const n = (S && S.nodes || []).find(x => x.id === nid);
+  if (!n) return travelTo(nid);
+  Sfx.play('ui_tap');
+  if (!(await gameConfirm(nodeSummaryHTML(n.kind), 'March'))) return;
+  travelTo(nid, true);
+}
+async function travelTo(nid, confirmed) { if (!confirmed) Sfx.play('ui_tap');
+  const r = await api('/api/travel', {node: nid});
   if (r.ok !== false) Sfx.play('move_infantry', { gain: 1.3 });   // the column moves out
   render(r); }
 async function jumpTo(nid) {
-  if (!(await gameConfirm('Use a Field Compass charge to jump to this parallel path?', 'Jump'))) return;
+  const n = (S && S.nodes || []).find(x => x.id === nid);
+  const cost = '<div style="margin-bottom:10px"><b class="gold">Spend a Field Compass charge</b> to jump to this parallel path.</div>';
+  if (!(await gameConfirm(cost + (n ? nodeSummaryHTML(n.kind) : ''), 'Jump'))) return;
   Sfx.play('reveal');
   render(await api('/api/travel', {node: nid}));
 }
