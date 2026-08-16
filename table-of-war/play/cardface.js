@@ -72,24 +72,33 @@
       ctx.font = `${o.weight} ${f}px ${o.family}`;
       lines = _wrapText(ctx, text, bw);
       const lh = f*1.16, fits = lines.length*lh <= bh && lines.every(l => ctx.measureText(l).width <= bw);
-      if (fits || f < 5) break;
+      if (fits || f < 5 * S0 / 600) break;   // the floor scales too, or small faces stop shrinking early and overflow
       f *= 0.93;
     }
     const lh = f*1.16, cx = (x0+x1)/2;
     let ty = y0 + padY + (bh - lines.length*lh)/2 + f*0.80;
     ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.lineJoin = 'round';
     for (const ln of lines) {
-      if (o.stroke) { ctx.strokeStyle = o.stroke; ctx.lineWidth = Math.max(1.5, f*0.13); ctx.strokeText(ln, cx, ty); }
+      // An ABSOLUTE 1.5px floor made the outline ~2.3x too heavy relative to the glyph at S0=256,
+      // which reads as muddy, closed-counter text on every Collection tile and hand card.
+      if (o.stroke) { ctx.strokeStyle = o.stroke; ctx.lineWidth = Math.max(1.5 * S0 / 600, f*0.13); ctx.strokeText(ln, cx, ty); }
       ctx.fillStyle = o.color; ctx.fillText(ln, cx, ty); ty += lh;
     }
   }
-  // Composite the full card FACE (frame + metallic cost digits + name + description) to a
-  // data URL. `mime` defaults to PNG (runtime fallback); the generator passes 'image/webp'.
-  g.renderFace = function (c, mime, quality) {
-    const frame = g.frameFor(c), F = g.FRAMES[frame] || g.FRAMES.common, S0 = 600;
+  // Composite the full card FACE (frame + metallic cost digits + name + description) and return the
+  // CANVAS. Drawing costs about 1.5 ms; encoding that canvas to a data URL costs another 17 ms, and
+  // measured on the Collection screen the encode was 92% of the whole per-face bill. The generator
+  // genuinely needs bytes, so `renderFace` below still encodes — but the game does not: it hands the
+  // pixels to an <img> via a blob, where the encode happens off the main thread.
+  //
+  // `size` is the edge of the square canvas. Every measurement in here is a fraction of it, so the
+  // face composites identically at any size — which matters because a Collection tile is 104 px and
+  // decoding a 600 px image to paint it means 33x more pixels than reach the screen.
+  g.renderFaceCanvas = function (c, size) {
+    const frame = g.frameFor(c), F = g.FRAMES[frame] || g.FRAMES.common, S0 = Math.max(64, Math.round(size || 600));
     const cp = c.cp != null ? c.cp : c.cost;
     const cv = document.createElement('canvas'); cv.width = S0; cv.height = S0;
-    const ctx = cv.getContext('2d'); if (!ctx) return '';   // e.g. jsdom without canvas
+    const ctx = cv.getContext('2d'); if (!ctx) return null;   // e.g. jsdom without canvas
     // card art fills the window BEHIND the frame (the frame's window edges/vignette overlay it), cover-fit + clipped
     const aim = _artImg[c.artId || c.id]; const A = F.art;
     if (aim && aim.naturalWidth && A) {
@@ -97,7 +106,9 @@
       const sc = Math.max(aw/aim.naturalWidth, ah/aim.naturalHeight), dw = aim.naturalWidth*sc, dh = aim.naturalHeight*sc;
       const off = _artOffsets[c.artId || c.id] || {}, anchorX = off.x != null ? off.x : 0.5, anchorY = off.y != null ? off.y : 0.5;
       const zoom = off.scale != null ? off.scale : 0.90;    // global default: slight zoom-out with a thin letterbox
-      const px = off.px || 0, py = off.py || 0;             // fine pixel nudge (in the 600px face-canvas)
+      // The offsets file records this nudge in 600px-canvas pixels, so it has to be scaled with the
+      // canvas or a smaller face shifts its art further than the artist asked for.
+      const nudge = S0 / 600, px = (off.px || 0) * nudge, py = (off.py || 0) * nudge;
       const zdw = dw * zoom, zdh = dh * zoom;
       ctx.save(); ctx.beginPath(); ctx.rect(ax, ay, aw, ah); ctx.clip();
       if (zoom < 1) { ctx.fillStyle = '#0b0906'; ctx.fillRect(ax, ay, aw, ah); }   // dark letterbox behind a shrunk image
@@ -107,13 +118,22 @@
     if (!F.nocost) {
       const chars = String(cp).split('').filter(ch => /\d/.test(ch)).map(ch => _digitImg[ch]).filter(im => im && im.naturalWidth);
       const dh = S0 * (F.csize || 0.11), ws = chars.map(im => im.naturalWidth * dh / im.naturalHeight);
-      let totw = ws.reduce((a, b) => a + b, 0) + 2 * Math.max(0, chars.length - 1), px = F.cost[0]*S0 - totw/2; const cy = F.cost[1]*S0;
-      chars.forEach((im, i) => { ctx.drawImage(im, px, cy - dh/2, ws[i], dh); px += ws[i] + 2; });
+      const gap = 2 * S0 / 600;            // proportional, so a two-digit cost kerns the same at any size
+      let totw = ws.reduce((a, b) => a + b, 0) + gap * Math.max(0, chars.length - 1), px = F.cost[0]*S0 - totw/2; const cy = F.cost[1]*S0;
+      chars.forEach((im, i) => { ctx.drawImage(im, px, cy - dh/2, ws[i], dh); px += ws[i] + gap; });
     }
     const fam = '"Arial Narrow","Roboto Condensed",system-ui,sans-serif';
     const col = F.dark ? '#241d10' : '#f4eecf', str = F.dark ? null : '#000';
     _drawFit(ctx, c.name || '', F.name, S0, { padx:0.04, pady:0.08, start:0.80, weight:'700', family:fam, color:col, stroke:str });
     _drawFit(ctx, c.text || '', F.desc, S0, { padx:0.07, pady:0.11, start:0.36, weight:'600', family:fam, color:col, stroke:str });
-    return cv.toDataURL(mime || 'image/png', quality);
+    return cv;
+  };
+
+  // Encoded form, for the offline generator (which writes files) and for anything that still wants a
+  // string. `mime` defaults to PNG; the generator passes 'image/webp'. Returns '' where there is no
+  // canvas at all, which is what the jsdom tests see.
+  g.renderFace = function (c, mime, quality) {
+    const cv = g.renderFaceCanvas(c);
+    return cv ? cv.toDataURL(mime || 'image/png', quality) : '';
   };
 })(typeof window !== 'undefined' ? window : this);

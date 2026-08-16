@@ -919,13 +919,29 @@
   /* the centred card reads as "in focus" from its position alone (straight, on top) —
      the gold highlight is reserved for a card that's actually been selected (.sel). */
   /* floating edge buttons — End Turn (right) / Deck (left), sitting above the hand */
-  .edgebtn { position: absolute; z-index: 8; pointer-events: auto; display: inline-flex; flex-direction: column;
-    align-items: center; gap: 1px; line-height: 1; border-radius: 10px; padding: 9px 12px;
-    bottom: calc(var(--hand-h, 120px) + 8px); box-shadow: 0 3px 10px rgba(0,0,0,.6); }
-  .edgebtn span { font-size: 10px; opacity: .85; }
-  .edgebtn.deck { left: max(8px, env(safe-area-inset-left)); font-size: 17px; padding: 8px 11px; }
-  .edgebtn.end { right: max(8px, env(safe-area-inset-right)); font-weight: 700; font-size: 13px; }
-  #app.hand-peek .edgebtn { bottom: 50px; }   /* follow the hand down while targeting */
+  #app.hand-peek .edgecol { bottom: 50px; }   /* follow the hand down while targeting */
+  /* The two floating columns. Bottom-anchored and laid out top-down, so the first child sits highest:
+     End Turn keeps its corner and the pile buttons stack beneath it rather than displacing it. */
+  .edgecol { position: absolute; z-index: 8; pointer-events: auto; display: flex; flex-direction: column;
+    align-items: center; gap: 5px; bottom: calc(var(--hand-h, 120px) + 8px); }
+  .edgecol.left  { left:  max(8px, env(safe-area-inset-left)); }
+  .edgecol.right { right: max(8px, env(safe-area-inset-right)); }
+  /* The art IS the button here — no plate behind it, matching how these have always been drawn. */
+  .edgecol .ibtn { box-shadow: none; padding: 0; background: none; border: none; border-radius: 0; }
+  .edgecol .ibtn img { height: 50px; }
+  /* A pile chip reads as a COUNT first — that is the thing you glance at mid-turn — with the label
+     small above it. Deliberately quieter than End Turn: these are reference, not the action. */
+  /* The global `button` rule paints a border, a gradient AND an inset top highlight; that highlight is
+     the faint translucent edge these were showing. All three have to be cleared, not just the border. */
+  .pilebtn { display: flex; flex-direction: column; align-items: center; gap: 0; cursor: pointer;
+    padding: 3px 9px 4px; border: none; background: none; box-shadow: none; border-radius: 0;
+    color: #d8d2be; pointer-events: auto; font-family: var(--f-head);
+    text-shadow: 0 1px 3px #000, 0 0 6px rgba(0,0,0,.9); }
+  .pilebtn:hover, .pilebtn:focus-visible { color: #fff; outline: none; }
+  .pilebtn .pl { font-size: 8px; letter-spacing: .8px; opacity: .7; line-height: 1; }
+  .pilebtn .pn { font-size: 15px; font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .pilebtn.empty { opacity: .38; }
+  #exhaustBtn { display: none; }   /* appears only once something has actually been exhausted */
   /* selected-unit card — sits just above the Deck button, out of the board's way */
   #unitinfo { position: absolute; left: max(8px, env(safe-area-inset-left)); bottom: 100px; z-index: 9;
     width: min(224px, 56vw); pointer-events: auto; padding: 13px 24px; font-size: 11px; color: #e9e3d1;
@@ -992,7 +1008,6 @@
   .card.kept { box-shadow: inset 0 0 0 2px var(--gold), -4px 5px 12px rgba(0,0,0,.75); }
   .card .keepmark { color: var(--gold); }   /* ★ next to the name = kept for next turn */
   .card .badges { position:absolute; top:4px; right:5px; z-index:2; display:flex; flex-direction:column; gap:2px; align-items:flex-end; }
-  .card .disc { color:var(--gold); font:700 8px var(--f-head); background:rgba(0,0,0,.55); padding:0 3px; border-radius:3px; }
   .card .temp { color:#d7b0ee; font:700 8px var(--f-head); background:rgba(0,0,0,.55); padding:0 3px; border-radius:3px; }
   .card.sel { border-color:var(--gold); box-shadow:0 0 0 2px var(--gold) inset, 0 0 16px rgba(205,169,78,.55); }
   .card.unaff { filter:grayscale(.9) brightness(.48); }
@@ -1094,8 +1109,10 @@
     .card .cardnm { min-height: 22px; padding: 3px 5px 3px 28px; }
     #hand { padding: 8px 40px max(3px, env(safe-area-inset-bottom)); }
     #hud { padding: max(2px, env(safe-area-inset-top)) calc(44px + max(8px, env(safe-area-inset-right))) 2px max(8px, env(safe-area-inset-left)); }
-    /* landscape: tuck Deck / End Turn into the very bottom corners, clear of the board */
-    .edgebtn, #app.hand-peek .edgebtn { bottom: max(6px, env(safe-area-inset-bottom)); }
+    /* landscape: tuck the button columns into the very bottom corners, clear of the board. The hand
+       is a narrow centred fan here, so the corners are dead space — there is no reason to float the
+       columns above it and eat vertical room the board wants. */
+    .edgecol, #app.hand-peek .edgecol { bottom: max(6px, env(safe-area-inset-bottom)); }
     /* the edge buttons sit in the corners here (not across the bottom), so the aim prompt
        doesn't need the tall portrait lift — drop it to just above the lowered cards */
     #app.hand-peek #prompt { margin-bottom: 8px; }
@@ -1218,8 +1235,6 @@
   .seedfield input { position: absolute; top: 0; right: 5%; width: 41%; height: 100%; z-index: 2;
     background: none; border: none; outline: none; color: transparent; caret-color: #e9cf7a;
     text-align: center; font: 700 18px var(--f-num); }
-  .edgebtn.ibtn { box-shadow: none; padding: 0; background: none; border: none; border-radius: 0; }
-  .edgebtn.ibtn img { height: 50px; }
   /* DESKTOP BATTLE. These float above the hand on a phone, where the hand spans the width and the
      corners are not reachable anyway. On a desktop the hand is a narrow centred fan, so the corners
      are dead space — put them there, out of the board's way, and 50% larger to match the screen.
@@ -1227,10 +1242,10 @@
      being a narrow centred fan, which is a width property. A short laptop window is still a desktop.
      Verified the cards clear the buttons horizontally at 1920/1280/1024/900 wide. */
   @media (min-width: 820px) {
-    .edgebtn, #app.hand-peek .edgebtn { bottom: max(12px, env(safe-area-inset-bottom)); }
-    .edgebtn.deck { left: max(14px, env(safe-area-inset-left)); }
-    .edgebtn.end  { right: max(14px, env(safe-area-inset-right)); }
-    .edgebtn.ibtn img { height: 75px; }
+    .edgecol, #app.hand-peek .edgecol { bottom: max(12px, env(safe-area-inset-bottom)); }
+    .edgecol.left  { left:  max(14px, env(safe-area-inset-left)); }
+    .edgecol.right { right: max(14px, env(safe-area-inset-right)); }
+    .edgecol .ibtn img { height: 75px; }
     /* the selected-unit card stacks above the Deck button, so it has to clear the taller art */
     #unitinfo { bottom: 108px; }
   }
@@ -2423,7 +2438,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-a38rEhPD.js"></script>
+  <script type="module" crossorigin src="./assets/index-D4ka7g7G.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2456,8 +2471,18 @@
     <div id="hand"></div>
   </div>
   <!-- floating edge controls (no bottom bar — cards run to the screen edge) -->
-  <button id="deckBtn" class="edgebtn ibtn deck" onclick="showDeck()" aria-label="Deck"><img src="assets/ui/btn/deck.png" alt="Deck"></button>
-  <button id="end" class="edgebtn ibtn end" onclick="endTurn()" aria-label="End Turn"><img src="assets/ui/btn/end_turn.png" alt="End Turn"></button>
+  <!-- LEFT: the DRAW pile, in the corner the deck button used to hold. The whole-deck view is gone
+       from battle on purpose — draw, discard and exhaust between them say everything it did, in the
+       three groupings that actually matter mid-fight, and the corner stays clear of the board. -->
+  <div id="leftCol" class="edgecol left">
+    <button id="drawBtn" class="pilebtn" onclick="showPile('draw')" aria-label="Draw pile"><span class="pl">DRAW</span><span class="pn" id="drawN">0</span></button>
+  </div>
+  <!-- RIGHT: End Turn stays on top; discard under it, exhaust under that and only once it exists. -->
+  <div id="rightCol" class="edgecol right">
+    <button id="end" class="ibtn end" onclick="endTurn()" aria-label="End Turn"><img src="assets/ui/btn/end_turn.png" alt="End Turn"></button>
+    <button id="discardBtn" class="pilebtn" onclick="showPile('discard')" aria-label="Discard pile"><span class="pl">DISCARD</span><span class="pn" id="discardN">0</span></button>
+    <button id="exhaustBtn" class="pilebtn" onclick="showPile('exhaust')" aria-label="Exhausted cards"><span class="pl">EXHAUST</span><span class="pn" id="exhaustN">0</span></button>
+  </div>
   <div id="unitinfo"></div>   <!-- selected-unit card, above the Deck button -->
   <!-- attack arrows are NOT declared here any more: fxLayer() creates #fxlayer as a child of #board so
        the camera pans and zooms them with the grid. A second element with this id would shadow it. -->
@@ -2476,6 +2501,7 @@
 <div id="ovLegend" class="overlay" onclick="if(event.target.id==='ovLegend')this.classList.remove('show')"></div>
 <div id="ovUpgrade" class="overlay"></div>
 <div id="ovDeck" class="overlay" onclick="if(event.target.id==='ovDeck')this.classList.remove('show')"></div>
+<div id="ovPile" class="overlay" onclick="if(event.target.id==='ovPile')this.classList.remove('show')"></div>
 <div id="ovArmy" class="overlay" onclick="if(event.target.id==='ovArmy')this.classList.remove('show')"></div>
 <div id="ovPopup" class="overlay" onclick="if(event.target.id==='ovPopup')this.classList.remove('show')"></div>
 <div id="ovMedal" class="overlay"></div>
@@ -2495,7 +2521,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.62';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.67';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2526,6 +2552,66 @@ function updateEndBtn() {
   const b = document.getElementById('end'); if (!b) return;
   const ourTurn = !!(S && S.board && !S.result && !turnBusy);
   b.style.display = ourTurn ? '' : 'none';
+  updatePileBtns();
+}
+/** Keep the three pile chips honest between renders.
+ *
+ *  EXHAUST is hidden until something has actually been exhausted: it is a pile most runs never touch,
+ *  and a permanent 0 next to two live counters reads as a broken feature rather than an empty one.
+ *  Draw and discard stay visible at 0 — an empty draw pile is information (the discard is about to be
+ *  reshuffled), not an absence. */
+function updatePileBtns() {
+  const p = (S && S.piles) || null;
+  const inBattle = !!(S && S.board && !S.result);
+  const col = document.getElementById('rightCol');
+  for (const [kind, n] of [['draw', p ? p.draw : 0], ['discard', p ? p.discard : 0], ['exhaust', p ? p.exhaust : 0]]) {
+    const btn = document.getElementById(kind + 'Btn'), num = document.getElementById(kind + 'N');
+    if (!btn || !num) continue;
+    num.textContent = n;
+    btn.classList.toggle('empty', !n);
+    const show = inBattle && (kind !== 'exhaust' || n > 0);
+    // 'flex', not '': clearing the inline style falls back to the stylesheet, and #exhaustBtn is
+    // hidden there by default — so the empty string left it invisible while reporting itself shown.
+    btn.style.display = show ? 'flex' : 'none';
+    btn.setAttribute('aria-label', `${kind === 'draw' ? 'Draw pile' : kind === 'discard' ? 'Discard pile' : 'Exhausted cards'}: ${n} card${n === 1 ? '' : 's'}`);
+  }
+  if (col) col.style.display = inBattle ? '' : 'none';
+  const dBtn = document.getElementById('drawBtn');
+  if (dBtn) dBtn.style.display = inBattle ? 'flex' : 'none';
+  const lCol = document.getElementById('leftCol');
+  if (lCol) lCol.style.display = inBattle ? '' : 'none';
+}
+
+const _PILE_META = {
+  draw:    { title: 'Draw pile',      hdr: 'deck',
+             note: 'What is still to come, listed alphabetically — the order it arrives in stays hidden.' },
+  discard: { title: 'Discard pile',   hdr: 'deck',
+             note: 'In the order it went in. Reshuffled into the draw pile when that one runs out.' },
+  exhaust: { title: 'Exhausted',      hdr: 'deck',
+             note: 'In the order it went in. These are out of the battle — they do not come back this fight.' },
+};
+/** Open a pile. Contents are fetched on demand rather than shipped with every state payload. */
+async function showPile(kind) {
+  const meta = _PILE_META[kind]; if (!meta) return;
+  Sfx.play('ui_tap');
+  let d = null;
+  try { d = await api('/api/piles', {}); } catch (e) { d = null; }
+  const cards = (d && d.ok && d[kind]) ? d[kind] : [];
+  // Warm before laying out: these are the same faces the hand uses, so this is usually a cache hit,
+  // and where it is not the composite happens while the overlay is opening.
+  warmFaces(cards, { baseOnly: true, width: GRID_CARD_W });
+  cards.forEach(c => { if (!_catCards[c.id]) _catCards[c.id] = c; });
+  const body = cards.length
+    ? `<div class="collgrid">${cards.map(c => framedTile(c, `showCatCard('${c.id}')`, { count: c.n || 1, up: !!c.upgraded })).join('')}</div>`
+    : `<div class="d" style="padding:18px 0">nothing here yet</div>`;
+  const total = cards.reduce((a, c) => a + (c.n || 1), 0);
+  $('#ovPile').innerHTML = `<div class="oframe titled" style="max-width:640px">
+    <div class="ofbanner ofhdr"><img src="assets/ui/hdr/${meta.hdr}.png" alt="${meta.title}"></div>
+    ${ocapG(`${meta.title} — ${total} card${total === 1 ? '' : 's'}`)}
+    <p class="d" style="margin:2px 0 8px">${meta.note}</p>
+    ${body}
+    <div class="ovclose"><button class="ibtn" onclick="closeOv('ovPile')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div></div>`;
+  $('#ovPile').classList.add('show');
 }
 // Two independent layers, both in the ⓘ run-info panel and in Settings. They answer different questions
 // and players want them at different times: the RANGE is a map you read while planning a move, the
@@ -3683,6 +3769,9 @@ function render(state) {
   }
   if (!S.result) _resultCue = null;      // a cleared result re-arms the stinger for the next one
   const wasInBattle = _inBattlePrev;      // captured BEFORE the flag is updated, for the entry cue below
+  // Entering a battle is the other moment worth spending: the player is watching a transition, and the
+  // hand is about to be dealt. Warm the deck once on the way in rather than compositing during a turn.
+  if (mode === 'battle' && !_inBattlePrev) warmFaces([...(S.deck_detail || []), ...(S.hand || [])], { width: HAND_CARD_W });
   _inBattlePrev = (mode === 'battle');
   // leaving the picker → tear down the run-setup overlays so the map/battle isn't hidden behind them
   // (START RUN from the Deploy popup used to leave #ovDeploy open, covering the map).
@@ -4232,7 +4321,10 @@ function showNode() {
       }).join('');
   } else if (p.kind === 'shop') {
     const pr = p.prices, sal = p.salvage;
-    const buy = p.offer.length ? `<div class="nodecards">${p.offer.map(x=>`<div class="shopcard ${sal<x.cost?'poor':''}" onclick="peekShopBuy('${x.id}')"><img src="assets/cards/${x.id}.webp" alt="${x.name}">${priceTag(x.cost)}</div>`).join('')}</div>` : '<div class="d">sold out</div>';
+    // Shop thumbnails go through framedInner like every other card face — they used to load the baked
+    // webp directly, which is the one place deleting the bake would have left an empty box.
+    warmFaces(p.offer || [], { width: 120 });          // the shop renders its thumbnails at 120
+    const buy = p.offer.length ? `<div class="nodecards">${p.offer.map(x=>`<div class="shopcard fcbox ${sal<x.cost?'poor':''}" onclick="peekShopBuy('${x.id}')">${framedInner(x, 120)}${priceTag(x.cost)}</div>`).join('')}</div>` : '<div class="d">sold out</div>';
     const canUp = sal >= pr.upgrade && p.deck.some(c=>c.upgradeable);
     const canRm = sal >= pr.remove && p.deck.some(c=>c.removable);
     const dtotal = p.deck.reduce((a,c)=>a+c.n,0);
@@ -4269,49 +4361,191 @@ let _peekConfirmFn = null;
 // FRAMES, frameFor, faceKey, preloadFrameAssets and renderFace live in the shared
 // public/cardface.js (loaded before this script) so the app and the offline pre-bake
 // generator use identical layout + canvas drawing. Card faces are pre-baked to
-// assets/cards/<id>.webp; a missing/dynamic one falls back to renderFace on the fly.
-const CARD_ART_IDS = ['adrenaline','air_strike','ambush','barrage','battle_plan','berserker_rage','blitz','blitzkrieg','blood_frenzy','build_barracks','build_depot','build_power','build_repair','build_turret','bunker','conscript','conscription_order','deploy_artillery','deploy_outpost','deploy_heavy','deploy_rocket','deploy_sniper','deploy_squad','deploy_tank','dig_in','doppelganger','field_promotion','field_repair','focus_fire','frenzy','gangrene','gas_shell','human_wave','incendiary','ion_cannon','jammed_comms','last_charge','med_pack','no_retreat','overrun','overwhelming_charge','power_drain','press_gang','provoke','raise_banner','rally','recon','redeploy_orders','reinforce','sabotage','scout_ahead','scrounge','shell_shock','smoke_screen_curse','supply_drop','total_war','veteran_squad','war_cry','war_drums'];
+// Faces are composited by renderFace and cached here; nothing is loaded from assets/cards/ any more.
+// Every playable card id, so the face preloader and the offline cache cover the whole collection.
+// Regenerate rather than hand-edit: this list fell 56 short the moment the 0.0.63 set landed, and a
+// missing id costs nothing VISIBLE — faceMiss composites the face on canvas — so it goes unnoticed.
+const CARD_ART_IDS = ['sabotage','adrenaline','air_strike','all_in','ambush','assembly_protocol','barrage','battle_plan','berserker_rage','blitz','blitzkrieg','blood_frenzy','blueprint','build_barracks','build_depot','build_power','build_repair','build_turret','bunker','chain_of_command','closing_move','combined_fire','conscript','conscription_order','coordinated_assault','dead_drop','demolition_charge','deploy_artillery','deploy_heavy','deploy_outpost','deploy_rocket','deploy_sniper','deploy_squad','deploy_tank','dig_in','doppelganger','double_time','emergency_reserves','entrenching_tools','field_dispatch','field_execution','field_promotion','field_promotion_mass','field_repair','fire_discipline','focus_fire','forced_requisition','forward_observer','frenzy','gamblers_volley','gangrene','gas_shell','hold_the_line','human_wave','improvise','incendiary','ion_cannon','jammed_comms','last_charge','last_reserves','med_pack','momentum_shift','muster_roll','no_retreat','opening_move','overrun','overwhelming_charge','power_drain','press_gang','provoke','raise_banner','rally','recon','redeploy_orders','regroup','reinforce','requisition_form','runner','salvage_wreckage','sapped_foundations','scorched_earth','scout_ahead','scrounge','shell_shock','smoke_and_mirrors','smoke_screen_curse','spotters_call','standing_orders','supply_drop','suppressing_fire','total_war','veteran_squad','war_college','war_cry','war_drums'];
 window.onCardAssetsReady = () => { scheduleBake(); try { if (typeof renderHand === 'function') renderHand(); } catch (_) {} };
 preloadFrameAssets();
 if (typeof preloadArt === 'function') preloadArt(CARD_ART_IDS);   // for any on-the-fly renderFace fallback
 if (typeof setArtOffsets === 'function' && typeof fetch === 'function') fetch('assets/cardart/offsets.json').then(r => r.json()).then(setArtOffsets).catch(() => {});
 const _cardData = {}, _faceBakeCache = {}, _bakeQ = []; let _bakeScheduled = false;
-function _faceCid(c){ const up = c.upgraded ? '_up' : ''; if (c.id) return c.id + up; const k = faceKey(c); let h = 0; for (let i = 0; i < k.length; i++) h = (h*31 + k.charCodeAt(i)) | 0; return 'h' + (h >>> 0).toString(36) + up; }
+// Set once if this environment has no 2D context (jsdom). Everything face-related then becomes a
+// no-op instead of re-queueing work that can never complete.
+let _noCanvas = false;
+// Ids being drawn RIGHT NOW. toBlob is async (~31ms measured), and between the shift() below and
+// its callback the id lives in neither _bakeQ nor _faceBakeCache — so every render in that window
+// re-queued the same face, drew it twice, and left the first blob referenced by nothing.
+const _bakeInFlight = new Set();
+// The cost circle is composited from THIS card's cost, so a discounted copy is a genuinely different
+// face and needs its own cache slot — keyed by id alone it would reuse the full-price face and the
+// number in the circle would be wrong. Only discounted cards take the suffix, so the extra entries are
+// bounded by how many cards are cheap right now, not by the size of the collection.
+// What resolution a face actually needs, bucketed so the cache does not fragment. A Collection tile
+// is 104 CSS px and a hand card 120; compositing those at 600 and then decoding 600x600 to paint them
+// is 33x the pixels that reach the screen, and with 149 tiles at once that was the last hitch left on
+// the Collection — measured at ~110 ms, and it vanished entirely when the faces were taken away.
+// The inspect view (220 px) still gets the full 600, and there is only ever one of those on screen.
+const FACE_TIERS = [256, 384, 600];
+// The largest CSS `zoom` a card is ever painted under (#hand .handfan at >=1500px). Deliberately
+// the MAXIMUM rather than the current one: it is a cache key, and keying on a value that changes
+// with viewport width would strand every warmed entry the first time the window is resized.
+const UI_ZOOM = 2.1;
+function _faceSize(w){
+  const dpr = Math.min(3, (typeof window !== 'undefined' && window.devicePixelRatio) || 1);
+  // `zoom` is a real layout scale, and the two containers cards live in apply a big one: the hand fan
+  // is 1.7-2.1x and every overlay 1.22-1.65x. Only `w * dpr` used to reach here, so the inspect panel
+  // asked for 256 to paint a 363px box — the 1.15 headroom inverted into a 1.4x UPSCALE, and softness
+  // on the two screens built for close reading is new since the faces stopped shipping at 600.
+  const need = (w || 120) * dpr * UI_ZOOM * 1.15;
+  return FACE_TIERS.find(t => t >= need) || 600;
+}
+function _faceCid(c, w){
+  const up = c.upgraded ? '_up' : '';
+  const cp = c.cp != null ? c.cp : c.cost;
+  const s = _faceSize(w);
+  const tier = s === 600 ? '' : '~' + s;
+  if (c.id) return c.id + up + (c.disc ? '$' + cp : '') + tier;
+  const k = faceKey(c); let h = 0; for (let i = 0; i < k.length; i++) h = (h*31 + k.charCodeAt(i)) | 0;
+  return 'h' + (h >>> 0).toString(36) + up + tier;
+}
 function faceMiss(img){                                   // pre-baked webp missing/dynamic → composite on canvas
   img.onerror = null;
   const id = img.getAttribute('data-cid'), c = _cardData[id]; if (!c) return;
   if (_faceBakeCache[id]) { img.src = _faceBakeCache[id]; return; }
-  _bakeQ.push({ id, c, img }); scheduleBake();
+  const m = /~(\d+)$/.exec(id);                      // the tier is in the key; 600 carries no suffix
+  _bakeQ.push({ id, c, img, size: m ? Number(m[1]) : 600 }); scheduleBake();
 }
 function scheduleBake(){ if (_bakeScheduled || !window._fcReady) return; _bakeScheduled = true; (window.requestAnimationFrame || (fn => setTimeout(fn, 16)))(runBake); }
+/** Queue one face for compositing. De-duplicated: the same card can be on screen several times (hand,
+ *  deck view, reward pick) and the Collection re-renders on every filter change. */
+function queueFace(id, c, img, size){
+  if (_noCanvas) return;
+  if (_faceBakeCache[id]) { if (img) img.src = _faceBakeCache[id]; return; }
+  if (_bakeInFlight.has(id)) return;
+  if (!_bakeQ.some(q => q.id === id)) _bakeQ.push({ id, c, img: img || null, size: size || 600 });
+  scheduleBake();
+}
+/** Composite ahead of time, during a transition the player is already waiting through — battle start,
+ *  opening the deck view, menu idle. Nothing here binds to an element; it only fills the cache, so the
+ *  faces are instant when the screen that needs them finally renders. This is the whole reason dropping
+ *  the pre-bake is affordable: the work still happens, just never while someone is looking at it. */
+/** The upgraded FACE of a card: name + '+', the upgraded cost, the upgraded rules.
+ *
+ *  This must be the only place that view is built. `_faceCid` keys an upgraded face purely on
+ *  `<id>_up`, so a warmer that flipped only the `upgraded` flag — without the name, cost and text —
+ *  cached a picture of the BASE card under the upgraded key, and every real upgrade view then hit
+ *  that poisoned entry: the Forge reveal, the inspect panel's "view upgrade", and an upgraded card
+ *  sitting in your hand printing the pre-upgrade cost the engine will not charge. */
+function upgradedView(c){
+  return Object.assign({}, c, { upgraded: true,
+    name: /\+$/.test(c.name || '') ? c.name : (c.name || '') + '+',
+    cost: c.up_cost != null ? c.up_cost : c.cost,
+    text: c.up_text || c.text });
+}
+function warmFaces(cards, opts){
+  if (!Array.isArray(cards) || !window._fcReady) return 0;
+  const baseOnly = !!(opts && opts.baseOnly);
+  // Warm the SIZE the screen will ask for. Warming 600s for a grid that renders 256s fills the cache
+  // with entries nothing ever looks up, and then composites the real ones while the player watches.
+  const w = (opts && opts.width) || GRID_CARD_W;
+  const size = _faceSize(w);
+  let n = 0;
+  for (const c of cards) {
+    if (!c) continue;
+    if (baseOnly) {
+      const id = _faceCid(c, w);
+      if (_faceBakeCache[id]) continue;
+      _cardData[id] = c; queueFace(id, c, null, size); n++;
+      continue;
+    }
+    // Warm BOTH faces of anything not already upgraded. The upgraded view is speculative — the player
+    // may or may not take that upgrade — but it is the face that has to appear instantly when they do,
+    // and it composites from art already decoded for the base, so the marginal cost is the canvas draw.
+    for (const view of (c.id && !c.upgraded ? [c, upgradedView(c)] : [c])) {
+      const id = _faceCid(view, w);
+      if (_faceBakeCache[id]) continue;
+      _cardData[id] = view;
+      queueFace(id, view, null, size);
+      n++;
+    }
+  }
+  return n;
+}
+/** Point every on-screen copy of a card at its finished face. The element that queued the work may
+ *  never have existed (the Collection re-renders on each filter change) and the same card can be on
+ *  screen several times, so the binding is by data-cid rather than by the one <img> we were handed. */
+function bindFace(id, url, img){
+  if (img && img.isConnected && !img.getAttribute('src')) { img.src = url; return; }
+  if (typeof document === 'undefined') return;
+  try { for (const el of document.querySelectorAll('img.fc-face[data-cid="' + id.replace(/"/g, '\\"') + '"]')) if (!el.getAttribute('src')) el.src = url; }
+  catch (e) {}
+}
 function runBake(){
   _bakeScheduled = false;
   const now = () => (window.performance && performance.now) ? performance.now() : Date.now(); const t0 = now();
   while (_bakeQ.length) {
-    const { id, c, img } = _bakeQ.shift();
-    let url = _faceBakeCache[id]; if (!url) { url = renderFace(c); _faceBakeCache[id] = url; }
-    if (img && img.isConnected) img.src = url;
+    const { id, c, img, size } = _bakeQ.shift();
+    const url = _faceBakeCache[id];
+    if (url) { bindFace(id, url, img); if (now() - t0 > 8) break; continue; }
+    const cv = renderFaceCanvas(c, size);
+    // No 2D context at all (jsdom, and nothing else in practice). Latch it: without this the face is
+    // never cached, so every re-render re-queues every card and the rAF loop never gets to idle.
+    if (!cv) { _noCanvas = true; _bakeQ.length = 0; return; }
+    // The DRAW is what costs main-thread time, and it is ~1.5 ms. Turning the canvas into something
+    // an <img> can take used to be a synchronous toDataURL, which cost another ~17 ms per face and
+    // made this loop's 8 ms budget unmeetable — one card per frame, 3.4 s to fill the Collection.
+    // toBlob hands the encode to the browser, off this thread; the URL lands a moment later and
+    // bindFace finds every copy of the card by data-cid, including ones drawn since.
+    if (cv.toBlob) {
+      _bakeInFlight.add(id);
+      cv.toBlob((b) => {
+        _bakeInFlight.delete(id);
+        if (!b) return;
+        const u = URL.createObjectURL(b);
+        if (_faceBakeCache[id]) { URL.revokeObjectURL(u); bindFace(id, _faceBakeCache[id], img); return; }
+        _faceBakeCache[id] = u; bindFace(id, u, img);
+      }, 'image/webp', 0.92);
+    } else {                                              // ancient fallback: pay the encode inline
+      const u = cv.toDataURL('image/png');
+      _faceBakeCache[id] = u; bindFace(id, u, img);
+    }
     if (now() - t0 > 8) break;                            // ~8ms/frame budget → no jank
   }
   if (_bakeQ.length) scheduleBake();
 }
-// Card layers: art window (gradient + %-sized category glyph) behind, then the face image —
-// pre-baked assets/cards/<id>.webp (browser-managed, scales to any card count), falling back
-// to a runtime canvas bake (faceMiss) if that file isn't present.
+// Card layers: art window (gradient + %-sized category glyph) behind, then the face image, which is
+// composited on canvas from cardart + frame + digits and cached as a data URL.
 function framedInner(c, w){
   const frame = frameFor(c), F = FRAMES[frame] || FRAMES.common;
   const cat = CAT_COLOR[c.cat] || '#7a7458';
   const glyph = (CAT_GLYPH[c.cat] || '').replace('width="1em" height="1em"', 'width="100%" height="100%"');
   const pc = r => `left:${(r[0]*100).toFixed(2)}%;top:${(r[1]*100).toFixed(2)}%;width:${((r[2]-r[0])*100).toFixed(2)}%;height:${((r[3]-r[1])*100).toFixed(2)}%`;
-  const cid = _faceCid(c); _cardData[cid] = c;
-  const src = c.id ? `assets/cards/${cid}.webp` : 'assets/cards/__nobake__.webp';   // <id>[_up].webp; missing → canvas fallback via faceMiss
-  // No lazy-loading here, deliberately. It was tried and removed: the full collection is 93 faces and
-  // ~1.1s of image DECODE, and deferring them did cut that — but only by moving it onto the SCROLL,
-  // where cards popped in row by row while someone was looking at them. There is no network involved;
-  // these are local files inside the app. The cost is paid once, up front, by warmAssets() while the
-  // menu is idle, and every grid then renders from a warm cache and scrolls without a single pop.
+  const cid = _faceCid(c, w); _cardData[cid] = c;
+  // FACES ARE COMPOSITED, NOT SHIPPED. Every face used to exist twice on disk — a baked
+  // assets/cards/<id>.webp AND assets/cards/<id>_up.webp — while the parts needed to draw them
+  // (cardart + frames + digits) shipped alongside, because the canvas path was the fallback. That is
+  // 31.8 MB of pre-rendered pixels duplicating 16 MB of parts already in the bundle, and the _up half
+  // of it differed from its base only in three lines of text over identical art.
+  //
+  // So the bake is gone and the fallback is now the only path. The cost does not disappear — a canvas
+  // composite is MORE work per card than decoding one image — but it is paid on cards you actually
+  // look at, sliced across frames by runBake()'s 8ms budget, and warmed ahead of time by warmFaces()
+  // during transitions the player is already waiting through. Nothing composites while being watched.
+  const cached = _faceBakeCache[cid];
+  // Not cached yet: queue it now rather than relying on an <img> error. A src-less <img> never fires
+  // onerror, and pointing it at a file we know is missing would mean a 404 per uncached face — 150 of
+  // them the first time the Collection opens. runBake binds the finished data URL by data-cid, so it
+  // reaches every copy of the card on screen and does not care that the element did not exist yet.
+  if (!cached) queueFace(cid, c, null, _faceSize(w));
+  // The glyph stays, always. Dropping it for cached faces measured ZERO improvement (the Collection's
+  // remaining hitch is grid layout, not this) and it cost the only floor there is: a composite can
+  // succeed structurally and still draw nothing — preloadFrameAssets treats a 404 on a frame or digit
+  // PNG as "done" — and that empty canvas then caches, so `cached` is truthy and the tile renders as a
+  // bare gradient. No frame, no cost, no name. The glyph is what makes that failure legible.
   return `<div class="fc-art" style="${pc(F.art)};--cat:${cat}"><span class="fc-glyph">${glyph}</span></div>
-    <img class="fc-face" src="${src}" data-cid="${cid}" onerror="faceMiss(this)" alt="">`;
+    <img class="fc-face" decoding="async"${cached ? ` src="${cached}"` : ''} data-cid="${cid}" onerror="faceMiss(this)" alt="">`;
 }
 function frameCardHTML(c, w){
   w = w || 250;
@@ -4399,10 +4633,7 @@ function playForgeFx(cards){
     // Draw the actual UPGRADED card face, the same way the collection does — cardDetailHTML renders a
     // text panel (name, cost, keywords, targets), which is a description of the card rather than the
     // card. You just earned the upgrade; you should see the thing you earned.
-    const view = Object.assign({}, c, { upgraded: true,
-      name: /\+$/.test(c.name) ? c.name : c.name + '+',
-      cost: c.up_cost != null ? c.up_cost : c.cost,
-      text: c.up_text || c.text });
+    const view = upgradedView(c);
     // No ✦ UPGRADED ✦ bar: the card now shows its own upgraded name and text, so the badge was
     // labelling something the art already says.
     const up = c.up_desc?`<div class="d" style="margin-top:8px;color:#f0c94a;text-align:center"><b>⤴ ${c.up_desc}</b></div>`:'';
@@ -4463,9 +4694,10 @@ let _catUp = false;
 function showCatCard(id, up){
   const c = _catCards[id]; if (!c) return; if (up === undefined) _catUp = false; Sfx.play('ui_tap');
   const canUp = c.up_text || c.up_desc, showUp = _catUp && canUp;
-  // upgraded view uses the pre-baked <id>_up.webp (fast, no runtime canvas) via the upgraded flag
-  const view = showUp ? Object.assign({}, c, { upgraded: true, name: /\+$/.test(c.name) ? c.name : c.name + '+',
-    cost: c.up_cost != null ? c.up_cost : c.cost, text: c.up_text || c.text }) : c;
+  // The upgraded view composites like everything else — there is no pre-baked _up.webp any more. It is
+  // usually already cached: warmFaces warms both faces of every card in a run's deck at battle start
+  // and on deck-view open, so the flip is a cache hit rather than a draw.
+  const view = showUp ? upgradedView(c) : c;
   $('#ovInspect').innerHTML = oframe(`<div style="text-align:center;margin:4px 0 8px" class="${showUp?'upgwrap':''}">${frameCardHTML(view, 220)}</div>
     <div style="display:flex;gap:8px;justify-content:center;align-items:center">
       ${canUp ? ibtn('view_upgrade', "_catUp="+(!showUp)+";showCatCard('"+id+"',1)", {cls: showUp?'act':''}) : ''}
@@ -5582,8 +5814,10 @@ function drawIntents(list) {
 
 const NEED_LBL = {own_unit:'your unit', enemy:'an enemy', any_unit:'any unit', tile:'a tile'};
 function cardMarkup(c, extra) {
-  const badges = [c.disc ? `<span class="disc">★${c.cost === 0 ? 'FREE' : c.cost}</span>` : '',
-                  c.temp ? '<span class="temp">once</span>' : ''].filter(Boolean).join('');
+  // No cost tag. The circle is composited from the live price, so a badge saying FREE or CUT was a
+  // second copy of a number already on the card, shouting over it. `once` stays: one-shot is a rule
+  // about where the card GOES after you play it, which nothing else on the face says.
+  const badges = [c.temp ? '<span class="temp">once</span>' : ''].filter(Boolean).join('');
   const kept = retain.has(c.i);
   return `<div class="card framed fcbox ${sel===c.i?'sel':''} ${c.aff?'':'unaff'} ${c.curse?'curse':''} ${kept?'kept':''}"
       style="${extra||''}" data-i="${c.i}"
@@ -5757,7 +5991,7 @@ function showCardFull(i) {
   Sfx.play('ui_tap');
   const cat = CAT_COLOR[c.cat] || '#7a7458';
   const glyph = CAT_GLYPH[c.cat] || '◆';
-  const tags = [c.disc ? (c.cost === 0 ? '★ FREE this turn' : `★ costs ${c.cost} CP (discounted)`) : '', c.temp ? 'one-shot (exhausts after use)' : ''].filter(Boolean).join(' · ');
+  const tags = [c.temp ? 'one-shot (exhausts after use)' : ''].filter(Boolean).join(' · ');
   const playable = c.aff && !c.curse;
   const kept = retain.has(i);
   const o = $('#ovCardFull');
@@ -7915,9 +8149,17 @@ function deckCard(c){
 }
 function showDeck() {
   _dropCmd();
+  // Warm the whole deck — base AND upgraded — while the overlay is opening. By the time the grid is
+  // laid out the faces are already in the cache, so the open is the cost and the view is instant.
+  warmFaces(S.deck_detail || [], { width: GRID_CARD_W });
   const cards = (S.deck_detail || []).slice().sort((a,b)=>
     (RARITY_ORDER[a.rarity]-RARITY_ORDER[b.rarity]) || a.name.localeCompare(b.name));
-  cards.forEach(c => { _catCards[c.id] = { id:c.id, name:c.name, cat:c.cat, cost:c.cost, text:c.text, rarity:c.rarity, general:c.general, curse:c.curse }; });
+  // Keep the upgrade fields: _catCards is shared with the Collection and showCatCard reads
+  // `up_text`/`up_desc` to decide whether to offer "view upgrade" at all. Stripping them here
+  // silently removed that button from every card the run had upgraded.
+  cards.forEach(c => { _catCards[c.id] = { id:c.id, name:c.name, cat:c.cat, cost:c.cost, text:c.text,
+    rarity:c.rarity, general:c.general, curse:c.curse,
+    up_cost:c.up_cost, up_text:c.up_text, up_desc:c.up_desc }; });
   const total = cards.reduce((a,c)=>a+c.n,0);
   const grid = cards.length ? `<div class="collgrid">${cards.map(deckGridCard).join('')}</div>` : '<div class="d">empty</div>';
   const disc = (S.discard && S.discard.length)
@@ -8041,7 +8283,7 @@ function showLegend() {
 async function menu() {   // re-pick general / new run — clear any open overlays first
   _dropCmd();
   ['ovResult', 'ovDraft', 'ovUpgrade', 'ovInspect', 'ovDeck', 'ovPopup', 'ovMedal', 'ovMedals',
-   'ovHelp', 'ovSummary', 'ovCards', 'ovRoster', 'ovNode'].forEach(closeOv);
+   'ovHelp', 'ovSummary', 'ovCards', 'ovRoster', 'ovNode', 'ovPile'].forEach(closeOv);
   runCfg.general = null; runCfg.ascension = 0;   // don't leave a general pre-selected on the menu
   render(await api('/api/to_menu'));             // fresh picker state (Daily, Continue, generals) — never stale battle data
 }
@@ -8689,7 +8931,9 @@ const _warm = { started: false, done: 0, total: 0 };
 function warmAssets() {
   if (_warm.started) return; _warm.started = true;
   const urls = [];
-  for (const id of CARD_ART_IDS) { urls.push('assets/cards/' + id + '.webp'); urls.push('assets/cards/' + id + '_up.webp'); }
+  // The ART, not the faces. Faces are composited now, so what has to be warm is the source image each
+  // composite draws from — one file per card instead of two baked faces per card.
+  for (const id of CARD_ART_IDS) urls.push('assets/cardart/' + id + '.jpg');
   const manifest = (m, dir) => { try { for (const k in (m || {})) if (m[k]) urls.push(dir + m[k]); } catch (_) {} };
   manifest(typeof S !== 'undefined' && S && S.medal_art, 'assets/medals/');
   manifest(typeof S !== 'undefined' && S && S.boss_art, 'assets/bosses/');
@@ -8701,6 +8945,10 @@ function warmAssets() {
       const img = new Image();
       const fin = () => {
         inFlight--; _warm.done++;
+        // Everything dispatched AND nothing still in the air: the art is warm, so start on the faces.
+        // This has to happen here rather than in the pump — once the last URL is handed out the pump
+        // is never called again, so a completion check inside it can only ever miss.
+        if (i >= urls.length && !inFlight) { warmCatalogue(); return; }
         if (i >= urls.length) return;
         // hand the thread back the moment the browser wants it
         if (deadline && typeof deadline.timeRemaining === 'function' && deadline.timeRemaining() <= 0) idle(pump);
@@ -8712,6 +8960,28 @@ function warmAssets() {
     }
   };
   idle(pump);
+}
+
+/** Composite every card face in the game, on the menu, while nothing else is happening.
+ *
+ *  This is the other half of warming and it was missing: the art was decoded but no face was ever
+ *  drawn, so opening the Collection composited all 149 of them right then — the one moment the player
+ *  is watching. Doing it here moves that work into idle time on a screen with nothing to do, and the
+ *  Collection then opens against a full cache.
+ *
+ *  Base faces only. The upgraded view sits behind a button in the detail panel, and battle entry and
+ *  the deck view already warm both faces for the far smaller set of cards a run actually holds. */
+let _warmedCatalogue = false;
+async function warmCatalogue(){
+  if (_warmedCatalogue || !window._fcReady) return; _warmedCatalogue = true;
+  try {
+    const d = await api('/api/cards');
+    const all = [];
+    (d.generals || []).forEach(g => (g.cards || []).forEach(c => all.push(c)));
+    ['starter','common','uncommon','rare'].forEach(r => ((d.groups && d.groups[r]) || []).forEach(c => all.push(c)));
+    (d.curses || []).forEach(c => all.push(c));
+    warmFaces(all, { baseOnly: true });
+  } catch (e) { _warmedCatalogue = false; }   // menu may not be ready yet; a later call can retry
 }
 
 // ── frame-time meter ─────────────────────────────────────────────────────────────────────────────
