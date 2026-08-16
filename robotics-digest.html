@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 15, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 16, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 15, 2026</div>
+        <div class="digest-date-badge">August 16, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s industry stories share a theme of closing the gap between robot capability and real-world deployment: Treble Technologies argues robots need natural sound perception to earn trust the way vision and locomotion already have, Protolabs shows the manufacturing side is already compressed to under-24-hour CAD-to-part turnaround, and Neros Technologies closes a $250M Series C to get its defense drones into combat theaters by year&#x27;s end. On the tooling side, the ROS Discourse community is wrestling with fleet-scale friction, from AMR gridlock in narrow industrial corridors to Metriplane&#x27;s push toward regression-testing recorded robot failures. Meanwhile hobbyists keep advancing real fundamentals, with a peer-reviewed RL obstacle-avoidance toolkit hitting v1.4, a Rust behavior-tree library crossing 100,000 downloads, and a home-built robot chaining navigation, perception, and manipulation into one autonomous loop.</p>
+        <p class="digest-intro">Three items today, and two of them make the same unglamorous point from opposite ends of the industry: the model is rarely the bottleneck. A rehab robotics CEO argues outcomes come from pairing robotics with human-centered care, and a hard-nosed piece on predictive maintenance argues that rollout discipline and service workflow — not detection accuracy — decide whether a deployment actually reduces downtime.</p>
       </div>
     </section>
 
@@ -29,135 +29,42 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Why robots that can’t communicate naturally won’t be adopted</h3>
+              <h3>Predictive maintenance in the real world: Why service automation and rollout discipline matter more than models</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A system can correctly flag rising vibration or an unusual thermal signature and still deliver zero reduction in downtime — the alert only pays off if someone acts on it.</li>
+              <li>The gap is organizational: a human still has to judge whether the signal matters, schedule the work, and get a part and a technician to the machine before it fails.</li>
+              <li>The argument is that service automation — the workflow from alert to closed work order — is where the returns actually live, and it is the part most deployments underinvest in.</li>
+              <li>A useful corrective to model-first thinking: improving detection from good to excellent moves the needle far less than closing the loop between detection and repair.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/08/15/predictive-maintenance-in-the-real-world-why-service-automation-and-rollout-discipline-matter-more-than-models/104183/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>How robotics is revolutionizing stroke rehabilitation</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Gunnar Petur Hauksson, co-founder and COO of Reykjavik-based Treble Technologies, argues robots need robust natural-language and sound perception, not just vision and locomotion, to win real-world adoption.</li>
-              <li>Notes hearing accounts for roughly 15-20% of the brain&#x27;s sensory processing, yet dominant training simulators like NVIDIA Isaac Sim remain largely silent, visual-only environments.</li>
-              <li>Sound is governed by wave physics and is highly sensitive to geometry and materials, making physically accurate acoustic training data far harder to obtain and scale than visual data -- the gap Treble&#x27;s own simulation platform is built to close.</li>
+              <li>Bioxtreme CEO Eyal Samuel Shachar makes the case that robotics, AI and human-centered care are converging in rehab rather than competing.</li>
+              <li>Stroke rehabilitation is a natural fit for robotic assistance — it demands high-repetition, precisely-dosed movement over long courses of therapy, which is exactly what human therapists cannot scale.</li>
+              <li>The stated goal is augmenting clinicians and improving measured patient outcomes, not replacing the therapist in the loop.</li>
+              <li>Medical rehab remains one of the few robotics markets where per-unit economics work today, because the alternative is expensive skilled labor delivered one patient at a time.</li>
             </ul>
-            <a href="https://www.therobotreport.com/why-robots-that-cant-communicate-naturally-wont-be-adopted-says-treble/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/how-robotics-is-revolutionizing-stroke-rehabilitation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How Protolabs turns CAD files into parts in under 24 hours</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>10 Best AI Video Tools That Automate Your Creative Workflow in 2026</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Protolabs CTO and Chief AI Officer Marc Kermisch, who has 25+ years in digital transformation, describes compressing the CAD-to-physical-part pipeline to under 24 hours across CNC machining, injection molding, 3D printing, and sheet metal fabrication.</li>
-              <li>Automated quoting and AI-driven design-for-manufacturability checks catch issues before a part ever reaches the shop floor, rather than bouncing a design back after a failed production run.</li>
-              <li>Frames the strategy as folding software and cloud tooling directly into traditional manufacturing workflows so pricing and production quotes return automatically instead of through manual review.</li>
+              <li>The bottleneck in AI video has moved: generating a usable clip is solved, and the open question is whether a tool can carry a whole project through versioning and revision.</li>
+              <li>A brief, a product still or a script can now become motion in minutes without a crew, a desktop NLE suite, or a week of round-trips.</li>
+              <li>The evaluation criterion the piece lands on is workflow continuity rather than raw output quality — which tool survives the fifth revision, not which makes the prettiest first frame.</li>
+              <li>Read it as a market snapshot rather than a technical review; the useful signal is where the industry now thinks the friction sits.</li>
             </ul>
-            <a href="https://www.therobotreport.com/how-protolabs-turns-cad-files-into-parts-under-24-hours/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Neros Technologies raises $250M to deploy its defense drones by the end of 2026</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Series C raised $250 million at a $2.5 billion valuation, co-led by Sequoia Capital and the American Strategic Technology Fund.</li>
-              <li>Archer AI (an FPV strike drone with terminal guidance and GPS-denied position holding) and Bandit (a counter-drone interceptor for Class 2/3 threats like Shahed-style systems) are both slated for combat-theater deployment by end of 2026.</li>
-              <li>Neros already holds contracts with the US Army, Marine Corps, and all Special Operations Command components plus six allied nations, and is targeting 1 million drones per year by 2028.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/neros-technologies-raises-250m-to-deploy-its-defense-drones-by-the-end-of-2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Video Friday: Lift Happens</h3>
-              <span class="digest-source">IEEE Spectrum Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>DARPA&#x27;s Heavy Lift Challenge wrapped up, with the recap footage showing several attempts ending in crashes and battery fires alongside the working entries.</li>
-              <li>Monumental&#x27;s construction robots laid roughly 20,000 bricks building a semi-detached home, one of the more concrete hardware demos in the roundup.</li>
-              <li>Stanford&#x27;s Biomimetics and Dexterous Manipulation Lab and Honeybee Robotics are testing gecko-inspired adhesives in space conditions via a NASA-backed payload; separately, HKUST is developing drone delivery to moving vehicles and open windows.</li>
-            </ul>
-            <a href="https://spectrum.ieee.org/video-friday-darpa-heavy-lift-challenge" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ROS News for the week of August 10th, 2026</h3>
-              <span class="digest-source">ROS Discourse</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>ROSCon Global 2026 (Toronto, Sept 22-24) has just 10 days left of regular-price tickets; six regional ROSCons are also on the calendar through December, from Edinburgh and Singapore to Valencia, Bologna, Nivelles, and Istanbul.</li>
-              <li>New community tools this week: a Nav2 semantic-segmentation costmap layer, the Fingermod parametric 3D-printed gripper configurator, a browser-based Feetech servo test bench (NORI MotorLab), a launch-file linter (lint_launch), and rostree v1.0.0, a ROS 2 dependency-graph explorer.</li>
-              <li>Weekly Waffle PR-triage meetings continue drawing new contributors, with the next session set for August 20 at 16:30 UTC.</li>
-            </ul>
-            <a href="https://discourse.openrobotics.org/t/ros-news-for-the-week-of-august-10th-2026/57415" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Congestion-aware traffic planning for dense and narrow industrial environments</h3>
-              <span class="digest-source">ROS Discourse</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>An engineer evaluating Open-RMF for a semiconductor-fab-style facility reports AMRs converging on the same shortest-path route through narrow bidirectional corridors, causing repeated head-on conflicts and rising deadlock risk as fleet density grows.</li>
-              <li>Argues Open-RMF&#x27;s negotiation mechanism only engages after robots have already committed to colliding routes, so it can&#x27;t prevent congestion upfront -- proposes a route_cost function blending travel time, predicted lane occupancy, and route overlap.</li>
-              <li>Outlines a four-layer fix: schedule-aware route planning, bottleneck reservation/admission control for narrow corridors, localized (not fleet-wide) replanning, and negotiation only as a last resort.</li>
-            </ul>
-            <a href="https://discourse.openrobotics.org/t/congestion-aware-traffic-planning-for-dense-and-narrow-industrial-environments/57410" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Metriplane v0.3.0: turn recorded workcell incidents into repeatable regression tests</h3>
-              <span class="digest-source">ROS Discourse</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Open-source tool that replays recorded robot/manufacturing state into an inspectable incident report plus an automated regression test verifying a specific failure stays caught.</li>
-              <li>v0.3.0 adds a Source Adapter SDK with bounded reproducible paths for ManiSkill and robomimic recordings, plus a proof-of-concept ROS 2/MCAP and TF2 integration -- still synthetic, so the maintainer isn&#x27;t yet claiming general rosbag compatibility.</li>
-              <li>Now source-indexed for ROS 2 Jazzy via rosdistro and installable with pip install metriplane==0.3.0; the demo shows catching an AGV that misses a 60-second arrival deadline at an outfeed station by correlating PLC and ROS 2 data.</li>
-            </ul>
-            <a href="https://discourse.openrobotics.org/t/metriplane-v0-3-0-turn-recorded-workcell-incidents-into-repeatable-regression-tests/57409" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Bonsai just hit a 100,000 downloads on crates.io 🎉</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Bonsai, a Rust library for building deterministic AI behavior trees, crossed 100,000 downloads on crates.io a little over 4 years after starting as a side project.</li>
-              <li>The author&#x27;s demo shows it running in two very different contexts, including driving bot behavior in a Titanfall 2 gameplay clip -- the same behavior-tree engine spanning game AI and real robot control.</li>
-              <li>Deterministic behavior trees remain a popular complement to learned/RL policies for robotics logic that needs to stay predictable and debuggable.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vp0pml/bonsai_just_hit_a_100000_downloads_on_cratesio/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>I turned my master&#x27;s thesis on RL obstacle avoidance into an open-source manipulator toolkit — it&#x27;s peer-reviewed now and just hit v1.4</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Open-source manipulator toolkit grew out of a master&#x27;s thesis using reinforcement learning to keep robot arms clear of kinematic singularities while avoiding moving, not just static, obstacles.</li>
-              <li>The underlying research is now peer-reviewed and published, and the toolkit itself just reached v1.4.</li>
-              <li>Targets a real integration pain point the author says other practitioners hit too: combining collision and singularity avoidance when obstacles are dynamic rather than fixed.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vok5xe/i_turned_my_masters_thesis_on_rl_obstacle/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Built a small autonomous household robot that can complete tasks end to end</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Self-built XLeRobot (3D-printed parts, low-cost servos) now completes a full autonomous household task end to end: explore the room, localize a target object, approach it, and manipulate it with its arm.</li>
-              <li>Chains navigation, perception, and manipulation into a single closed loop rather than demoing each capability in isolation.</li>
-              <li>Built on the open-hardware XLeRobot platform, showing how accessible full-stack home-robot experimentation has become for hobbyists on a budget.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vp27ra/built_a_small_autonomous_household_robot_that_can/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/08/15/best-ai-video-workflow-tools-2026/104186/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

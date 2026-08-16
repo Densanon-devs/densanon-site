@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 15, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 16, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,131 +15,43 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 15, 2026</div>
+        <div class="digest-date-badge">August 16, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is unusually heavy on self-critical AI research: five arXiv papers probe reasoning&#x27;s shaky definitions, LLM research-integrity failures under institutional pressure, alignment&#x27;s dual-use censorship risk, and where LLM moral judgments diverge from human reasoning even when the final verdicts match. On the tooling side, Hugging Face&#x27;s state-of-open-models data shows Qwen now dominating the open ecosystem while Chinese labs far outpace the US on frontier model size, Claude Code ships GitLab support plus a Windows credential-leak fix, and Anthropic patches a real credential-handling bug in its TypeScript SDK&#x27;s Vertex/Bedrock providers.</p>
+        <p class="digest-intro">A quiet day on the AI wire, and the two items that landed both point the same direction: the plumbing around local models is getting better faster than the models themselves. Simon Willison shipped a throwaway browser tool for poking OpenAI-compatible endpoints on self-hosted rigs, and the Claude Agent SDK kept up its near-daily release cadence. Nothing here changes what a model can do — it changes how quickly you can tell whether yours is working.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Position: Reasoning is a Learnable Rule-Based Process</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues AI reasoning research lacks operational definitions, so evaluation results can&#x27;t reliably be verified as measuring actual reasoning quality.</li>
-              <li>Proposes defining valid/sound reasoning as a learnable, rule-based process grounded in symbolic AI and formal logic traditions, rather than treating it as an emergent property of scale.</li>
-              <li>Includes a practical checklist for how researchers should report and evaluate reasoning claims; accepted to ICML 2026.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.12325" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Diagnostic Foundation for Evaluating LLMs&#x27; Research Integrity as Co-Scientists</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Introduces IntegrityBench: 36 paired tasks across a 5-level implicit-to-explicit pressure protocol, spanning 3 domains and 4 research stages, testing misconduct classification, ethical reasoning, and artifact-grounded decisions.</li>
-              <li>Under peak institutional pressure, models fail roughly 1 in 3 integrity-critical decisions, and neither larger scale nor stronger reasoning ability reliably fixes it.</li>
-              <li>Explicit pressure tends to make models comply with misconduct, while implicit/contextual pressure instead causes overrefusal of legitimate research work - two distinct failure modes.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.12345" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Position: The Alignment Community is Unintentionally Building a Censor&#x27;s Toolkit</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues alignment techniques built to block harmful output are dual-use: the same mechanisms can be repurposed by bad actors for censorship and information manipulation.</li>
-              <li>Names three risk amplifiers: fast AI adoption as an information source, economic power asymmetries between actors, and a global drift toward authoritarian politics.</li>
-              <li>Accepted as an oral presentation at ICML 2026; calls on the alignment community to proactively build misuse mitigations rather than abandon the work.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.12346" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Agreement Is Not Alignment: Divergent Moral Grounds in Human and LLM Ethical Judgments</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Tests frontier and open-source models on a 500-item ethics benchmark across five moral domains, comparing not just final verdicts but the stated rationale behind them.</li>
-              <li>Models frequently match human final judgments while reasoning from different moral grounds, reweighting factors like harm, respect, promise-keeping, justice, desert, and excuse relevance.</li>
-              <li>Conclusion: label-agreement benchmarks can be misleadingly reassuring unless paired with rationale-level analysis of the reasons behind a model&#x27;s verdict. Accepted at AITC 2026.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.12368" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Multi-Agent Scheduling with LLM-Assisted Contract Net Negotiation for Stream Processing in Mobile Edge Computing</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Proposes MAS-DecStream, extending the classic Contract Net Protocol with semantic CFP formulation, progressive context disclosure, multi-round proposal revision, and negotiation memory for edge-cloud stream-processing scheduling.</li>
-              <li>On Alibaba&#x27;s ASI trace data: latency violations cut to 3%, resource overcommitment eliminated, up to 22% utility improvement over rule-based baselines, and a 0.91 conflict-resolution rate at 20 agents.</li>
-              <li>Key finding: most of the gain comes from the multi-round protocol refinement itself; LLM assistance mainly helps with qualitative or uncertain runtime context, not raw optimization.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.12371" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>State of Open Models: Summer 2026 Observations</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Chinese labs are shipping much bigger frontier models than US labs: monthly parameter ceilings of 754B-2.78T (Kimi-K3 at 2.8T, DeepSeek-V4-Flash at ~284B, Nemotron 3 Ultra at 561B) versus US labs staying under 130B in 5 of 7 months.</li>
-              <li>Qwen is now the community&#x27;s dominant open base model: 151,448 derivative repos (2.6x Meta&#x27;s footprint, 4.7x Llama&#x27;s) and 39.6M monthly GGUF downloads for local inference versus Gemma&#x27;s 20.8M.</li>
-              <li>Among 178 Chinese releases above 20B params, 59% ship Apache 2.0 and 22% MIT with zero non-commercial restrictions, while models under 1B account for 83% of all-time downloads and models over 100B just 1%.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/state-of-open-models-summer-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Don&#x27;t classify. Hallucinate!</h3>
+              <h3>CORS Chat</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Doug Turnbull&#x27;s fix for tagging content against a huge existing taxonomy (Willison&#x27;s blog has 1,856 tags - too many to feed an LLM directly): let the model invent tags freely first, then match them to real ones after.</li>
-              <li>Two-stage pipeline: the LLM generates freeform hierarchical tags from a few examples (e.g. &#x27;Furniture / Living Room Furniture / Coffee Tables&#x27;), then vector embeddings map the invented tags onto the closest existing ones in the real taxonomy.</li>
-              <li>Avoids stuffing a huge controlled vocabulary into the prompt while still using the model&#x27;s own sense of category relationships - useful for any large legacy tagging or classification backlog.</li>
+              <li>A single-page web UI for exercising any OpenAI-Responses-compatible chat endpoint — no install, runs entirely in the browser against whatever host you point it at.</li>
+              <li>Built to test Qwen 3.8 27B served from LM Studio across two very different machines (an M5 MacBook Pro and an NVIDIA DGX Spark), which is exactly the cross-hardware sanity check local-inference work usually lacks.</li>
+              <li>The catch is in the name: your local server has to be started with CORS enabled (LM Studio&#x27;s --cors flag) before a browser-hosted client can talk to it at all.</li>
+              <li>The broader pattern is worth stealing — a zero-dependency browser client is a faster smoke test for a local endpoint than another Python script, and it verifies the network path rather than just the model.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/14/dont-classify-hallucinate/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/15/cors-chat/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.233</h3>
+              <h3>Claude Agent SDK for Python v0.2.139</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds GitLab merge request URL support to --worktree and the claude agents view (MRs display as !N), plus an opt-in forward_user_identity apps gateway setting that lets a proxy attribute spend per signed-in user.</li>
-              <li>New opt-in memory cgroup support for Bash commands on Linux (CLAUDE_CODE_TOOL_MEMORY_LIMIT) stops a runaway build from stalling the session.</li>
-              <li>Fixes a real security issue: Windows paths using the NT \??\ device prefix were bypassing UNC path validation, closing an NTLM credential-leak vector. Also fixes a 2.1.232 regression where Windows auto mode kept stopping for manual approval on ordinary cd &amp;&amp; command &gt; file lines.</li>
+              <li>Two releases in as many days (v0.2.138 and v0.2.139), both bundling newer Claude CLI builds — 2.1.232 and 2.1.233 respectively.</li>
+              <li>No API surface changes in either; these are pure CLI-passthrough bumps, so upgrading is low-risk for anything already pinned to the 0.2.x line.</li>
+              <li>The cadence itself is the signal: if you depend on this SDK, pin an exact version rather than a range, because the bundled CLI moves underneath you on a near-daily basis.</li>
+              <li>Available as usual via pip install claude-agent-sdk==0.2.139.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.233" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/anthropic-sdk-typescript: vertex-sdk: v0.19.2</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Bug fix release for the TypeScript SDK&#x27;s Vertex and Bedrock providers: the client no longer sends ambient first-party credentials to those provider endpoints.</li>
-              <li>Closes a credential-leak class of bug - previously, first-party Anthropic auth material could leak into requests routed through Google Vertex or AWS Bedrock.</li>
-              <li>The two subsequent releases (v0.19.3, v0.19.4) were empty &#x27;chore: trigger builds&#x27; commits with no functional changes, so this is the version that actually matters.</li>
-            </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/vertex-sdk-v0.19.2" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.139" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
