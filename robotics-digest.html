@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 16, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 17, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,56 +15,139 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 16, 2026</div>
+        <div class="digest-date-badge">August 17, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Three items today, and two of them make the same unglamorous point from opposite ends of the industry: the model is rarely the bottleneck. A rehab robotics CEO argues outcomes come from pairing robotics with human-centered care, and a hard-nosed piece on predictive maintenance argues that rollout discipline and service workflow — not detection accuracy — decide whether a deployment actually reduces downtime.</p>
+        <p class="digest-intro">Robot learning research today clusters around making policies safer and more interpretable at runtime: hierarchical world models enforcing temporal-logic constraints on language-conditioned policies, and an ontology-grounded world model that can name the exact failed task predicate and route to a repair mechanism instead of just flagging a low quality score. On the applied side, EPFL researchers found fish-like robots swim more efficiently in bursts than continuously, and the ROS community shipped a real-time control-barrier-function safety filter alongside an AI agent for triaging rosbag and MCAP failure data.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Predictive maintenance in the real world: Why service automation and rollout discipline matter more than models</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Adjacency-Based Spectral Proxy Control of Mobile Communication Agents</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A system can correctly flag rising vibration or an unusual thermal signature and still deliver zero reduction in downtime — the alert only pays off if someone acts on it.</li>
-              <li>The gap is organizational: a human still has to judge whether the signal matters, schedule the work, and get a part and a technician to the machine before it fails.</li>
-              <li>The argument is that service automation — the workflow from alert to closed work order — is where the returns actually live, and it is the part most deployments underinvest in.</li>
-              <li>A useful corrective to model-first thinking: improving detection from good to excellent moves the needle far less than closing the loop between detection and repair.</li>
+              <li>Studies a heterogeneous mobile-agent network where controllable communication-relay robots must reposition online as uncontrolled task agents move, to maintain network connectivity.</li>
+              <li>Uses adjacency-based spectral proxy control (graph-spectral properties as a proxy objective) instead of optimizing throughput directly, since throughput-based objectives are hard to optimize online - relevant to any multi-robot relay or coverage problem.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/15/predictive-maintenance-in-the-real-world-why-service-automation-and-rollout-discipline-matter-more-than-models/104183/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.13616" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How robotics is revolutionizing stroke rehabilitation</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>hint$^2$: Hierarchical World Models for Inference-Time Temporal Logic Guidance</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Bioxtreme CEO Eyal Samuel Shachar makes the case that robotics, AI and human-centered care are converging in rehab rather than competing.</li>
-              <li>Stroke rehabilitation is a natural fit for robotic assistance — it demands high-repetition, precisely-dosed movement over long courses of therapy, which is exactly what human therapists cannot scale.</li>
-              <li>The stated goal is augmenting clinicians and improving measured patient outcomes, not replacing the therapist in the loop.</li>
-              <li>Medical rehab remains one of the few robotics markets where per-unit economics work today, because the alternative is expensive skilled labor delivered one patient at a time.</li>
+              <li>Targets a known weakness of language-conditioned robot policies: struggling with temporal structure and safety constraints in runtime instructions (e.g. do X before Y, never Z).</li>
+              <li>Uses hierarchical world models applied at inference time to steer policy execution toward temporal-logic-specified constraints without retraining the base policy.</li>
             </ul>
-            <a href="https://www.therobotreport.com/how-robotics-is-revolutionizing-stroke-rehabilitation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.13678" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>10 Best AI Video Tools That Automate Your Creative Workflow in 2026</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Graph-MambaNav: Spatial-Temporal Graph Mamba Leveraging Object-Relation Knowledge for Object-Goal Navigation</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The bottleneck in AI video has moved: generating a usable clip is solved, and the open question is whether a tool can carry a whole project through versioning and revision.</li>
-              <li>A brief, a product still or a script can now become motion in minutes without a crew, a desktop NLE suite, or a week of round-trips.</li>
-              <li>The evaluation criterion the piece lands on is workflow continuity rather than raw output quality — which tool survives the fifth revision, not which makes the prettiest first frame.</li>
-              <li>Read it as a market snapshot rather than a technical review; the useful signal is where the industry now thinks the friction sits.</li>
+              <li>Combines graph-based object-relation reasoning with a Mamba (state-space model) backbone for object-goal navigation in unseen environments, aiming to prioritize target-relevant objects better than prior graph methods that only handle target-awareness at the feature or output level.</li>
+              <li>Mamba backbones for navigation are a notable departure from transformer-based approaches, relevant to efficient long-horizon navigation policies.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/15/best-ai-video-workflow-tools-2026/104186/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.13723" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Knowledge-Data-Dual-Driven Reinforcement Learning for Autonomous Vehicle Control in Mixed Traffic</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Addresses a known weakness of physics-prior RL for autonomous vehicles in mixed traffic: physics priors fail to capture the latent interactive intentions of surrounding human-driven vehicles.</li>
+              <li>Proposes combining domain knowledge with data-driven learning to better model interactive, diverse traffic behavior instead of relying on physics priors alone.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.13878" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Ontology-Grounded World Models for Failure Diagnosis and Closed-Loop Repair in Physical AI Systems</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Extends an existing world-model failure-diagnosis system (EV-WM) by grounding failure scores in an explicit ontology, so the system can name the specific unmet task predicate, route to an available correction mechanism, and record a post-correction acceptance result.</li>
+              <li>A concrete architecture for closed-loop self-repair in physical AI systems, moving beyond black-box quality scores to explainable, actionable failure diagnosis.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.13901" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intermittent swimming promotes the energy efficiency of fish-like robot movements</h3>
+              <span class="digest-source">Robohub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>EPFL Biorobotics Laboratory research shows fish-like robots that swim intermittently (burst-and-glide) rather than continuously achieve better energy efficiency, mirroring a strategy nature already evolved.</li>
+              <li>Directly applicable to extending battery life and operating duration for underwater or fish-inspired robots by adopting biologically-inspired intermittent locomotion instead of constant-thrust swimming.</li>
+            </ul>
+            <a href="https://robohub.org/intermittent-swimming-promotes-the-energy-efficiency-of-fish-like-robot-movements/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Exstrike Real TIme Vision &amp; Safety infrastructure for Autonomous Systems &amp; Tactical Robotics</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A real-time safety-filter SDK using Control Barrier Functions plus computer vision, built as a drop-in layer to prevent physical crashes when autonomous robots, drones, or AI navigation models fail.</li>
+              <li>Targeted at robotics, drones, and tactical ground vehicles - a reusable safety-layer pattern (CBF + vision) worth evaluating for any autonomous navigation stack that currently lacks a hard safety filter.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/exstrike-real-time-vision-safety-infrastructure-for-autonomous-systems-tactical-robotics/57440" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Generate 1M strictly-optimal robot paths in ~7 s of compute — free API tier for simulation &amp; training datasets</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Offers ground-truth-optimal path generation (versus the roughly 5ms-per-path cost of A* on a 1M-cell map) via a free API tier, aimed at Gazebo warehouse-scene simulation, dataset generation, and benchmarking learned planners against exact BFS references.</li>
+              <li>Useful as an external ground-truth generator for evaluating any learned path-planning policy without building a custom optimal-solver pipeline.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/generate-1m-strictly-optimal-robot-paths-in-7-s-of-compute-free-api-tier-for-simulation-training-datasets/57439" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Roboto Agents: agentic triage, root cause analysis, and data curation for rosbags and MCAP</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>An AI agent that investigates robotics log data (rosbags/MCAP) to triage failures and find root causes, validated with several robotics teams after being previewed at ROSCon.</li>
+              <li>A concrete example of applying LLM agents to robotics-specific observability and debugging data, relevant to any team looking to automate failure analysis on fleet logs.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/roboto-agents-agentic-triage-root-cause-analysis-and-data-curation-for-rosbags-and-mcap/57438" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>LoRa / Sub-GHz Antenna Optimization: From Ceramic to FPC</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A detailed RF design writeup on optimizing a LoRa/GNSS antenna for a compact handheld navigation and communication terminal, walking through the tradeoffs of moving from a ceramic antenna to a flexible printed circuit (FPC) antenna.</li>
+              <li>Practical hardware-design reference for anyone building compact wireless-enabled robotics or field hardware where antenna performance is constrained by device size.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1vqm6wp/lora_subghz_antenna_optimization_from_ceramic_to/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

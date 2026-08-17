@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 16, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 17, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,43 +15,131 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 16, 2026</div>
+        <div class="digest-date-badge">August 17, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A quiet day on the AI wire, and the two items that landed both point the same direction: the plumbing around local models is getting better faster than the models themselves. Simon Willison shipped a throwaway browser tool for poking OpenAI-compatible endpoints on self-hosted rigs, and the Claude Agent SDK kept up its near-daily release cadence. Nothing here changes what a model can do — it changes how quickly you can tell whether yours is working.</p>
+        <p class="digest-intro">Today&#x27;s digest leans heavily into agent infrastructure and evaluation - governing what tool-using agents can actually do, judging their outputs without a ground-truth reward, and controlling the hidden token costs of retries and context retrieval. On the model side, Alibaba&#x27;s new Qwen 3.8 27B lands as a strong open-weight vision model with an overthinking habit, while several papers push on architectural efficiency, from self-explainable latent reasoning to blockwise attention alternatives for long context.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Inducing Reward-Free Judging Rubrics that Reduce Over-Crediting in Agent Evaluation</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Addresses a core weakness in LLM-as-judge agent evaluation: judges tend to over-credit agents when there is no ground-truth executable environment reward available.</li>
+              <li>Proposes inducing structured, reward-free rubrics to make automatic judging more calibrated and harder for agents to game.</li>
+              <li>Directly relevant to anyone building agent benchmarks or evals without access to a real execution environment for scoring.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.13564" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Modular Cognitive Architecture Emerges in Large Language Models</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Investigates whether LLMs spontaneously develop brain-like functional specialization - separate subsystems for language, formal reasoning, theory-of-mind, and physical-world reasoning - mirroring human cognitive modularity.</li>
+              <li>Suggests modular organization may be a general emergent property of large-scale learning rather than something unique to biological brains.</li>
+              <li>Relevant to interpretability and architecture-design work exploring whether models can be decomposed into interpretable functional modules.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.13567" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Agentao: A Governed Local-First Runtime for Tool-Using LLM Agents</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Targets a real production risk: as LLM agents invoke tools, modify local state, and use persistent memory, they become over-privileged execution systems with real security exposure.</li>
+              <li>Proposes a governed, local-first runtime architecture to constrain what agents can actually do, rather than relying on prompt-level guardrails alone.</li>
+              <li>Directly applicable to local-first agent stacks that run tool-calling agents against local filesystems and state and need policy enforcement below the LLM layer.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.13574" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Does a Language Server Save Tokens for Coding Agents? A Measurement Methodology and Preliminary Study</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Compares lexical retrieval (grep - universal and instant, but noisy, unable to tell a definition from a call from a comment) against semantic retrieval via the Language Server Protocol for coding agents.</li>
+              <li>Introduces a measurement methodology to quantify token and context savings from LSP-based semantic retrieval versus plain grep.</li>
+              <li>Directly relevant to coding-agent context-budget optimization, an active cost lever for any agentic coding tool.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.13568" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Think in Latent, Explain in Language: Self-Explainable Latent Reasoning</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tackles a known tradeoff in latent reasoning, which compresses chain-of-thought into embeddings for efficiency but makes the reasoning opaque and hard to audit.</li>
+              <li>Proposes a self-explainable approach that reasons in latent space for computational efficiency while still producing a natural-language explanation of that reasoning.</li>
+              <li>Relevant to efficient-inference research that wants the speed gains of latent reasoning without sacrificing auditability of the reasoning trace.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.13570" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Not All Tokens Are Equal: Inflation-Aware Routing for Agentic LLM Systems</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Identifies a hidden cost problem in agentic systems: retries after a failed first attempt consume extra tokens, so the effective per-workflow cost diverges from the advertised per-token price.</li>
+              <li>Proposes inflation-aware routing that accounts for this retry overhead when deciding which model or route to send a request to.</li>
+              <li>Useful for any multi-agent or retry-heavy pipeline trying to control real-world inference spend rather than just sticker-price token cost.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.13571" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>BCMT: Blockwise Causal Memory Transformer</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Addresses the quadratic attention cost of standard Transformers on long-range dependencies by introducing a blockwise causal memory mechanism.</li>
+              <li>Aims to preserve long-context modeling capability while cutting the computational cost that normally scales quadratically with sequence length.</li>
+              <li>Relevant to long-context and long-memory architecture work, including agent memory systems, looking for cheaper alternatives to dense self-attention.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.13578" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>CORS Chat</h3>
+              <h3>Markdown SVG upgrades</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A single-page web UI for exercising any OpenAI-Responses-compatible chat endpoint — no install, runs entirely in the browser against whatever host you point it at.</li>
-              <li>Built to test Qwen 3.8 27B served from LM Studio across two very different machines (an M5 MacBook Pro and an NVIDIA DGX Spark), which is exactly the cross-hardware sanity check local-inference work usually lacks.</li>
-              <li>The catch is in the name: your local server has to be started with CORS enabled (LM Studio&#x27;s --cors flag) before a browser-hosted client can talk to it at all.</li>
-              <li>The broader pattern is worth stealing — a zero-dependency browser client is a faster smoke test for a local endpoint than another Python script, and it verifies the network path rather than just the model.</li>
+              <li>Willison&#x27;s markdown-svg-renderer tool, started in May 2026, has gained enough features to become his go-to way of sharing Markdown transcripts that embed inline SVG output.</li>
+              <li>Useful for publishing LLM outputs that include generated SVG graphics, such as his running pelican-riding-a-bicycle benchmark, without losing the rendered image.</li>
+              <li>Signals a broader pattern of lightweight, personal tooling built specifically to document and share LLM benchmark and eval results.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/15/cors-chat/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/16/markdown-svg-upgrades/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Claude Agent SDK for Python v0.2.139</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>Qwen 3.8 27B is excellent, but it defaults to wildly overthinking things</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Two releases in as many days (v0.2.138 and v0.2.139), both bundling newer Claude CLI builds — 2.1.232 and 2.1.233 respectively.</li>
-              <li>No API surface changes in either; these are pure CLI-passthrough bumps, so upgrading is low-risk for anything already pinned to the 0.2.x line.</li>
-              <li>The cadence itself is the signal: if you depend on this SDK, pin an exact version rather than a range, because the bundled CLI moves underneath you on a near-daily basis.</li>
-              <li>Available as usual via pip install claude-agent-sdk==0.2.139.</li>
+              <li>Qwen 3.8 27B is Apache 2.0 licensed and vision-capable, positioned as a strong size class for running on a well-specced laptop, following the well-regarded Qwen 3.6 27B.</li>
+              <li>Willison&#x27;s main critique is that the model defaults to excessive, verbose overthinking on tasks that do not need it - an efficiency and UX tradeoff worth watching.</li>
+              <li>Relevant for teams evaluating mid-size open-weight models for local or on-device inference where reasoning-token cost matters.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.139" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/16/qwen-38-27b/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

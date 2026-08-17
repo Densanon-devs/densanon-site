@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - August 16, 2026 | Densanon</title>
+  <title>Computation Morning Digest - August 17, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 16, 2026</div>
+        <div class="digest-date-badge">August 17, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">The busiest wire today, and the theme is silicon strategy. Google is rumored to have pulled AMD in to design a TPU with on-package CPU cores aimed squarely at agentic and reinforcement-learning workloads — a structural bet that the next bottleneck is the control loop, not the matrix multiply. Intel says its new core lands on desktops before the data center. Underneath the headlines, the Linux graphics and storage stacks had a genuinely productive week: a 43% AVX-512 speedup for RAID parity, nineteen more RADV/ACO optimization patches, and Intel&#x27;s new shader compiler finally passing Vulkan conformance.</p>
+        <p class="digest-intro">GPU and memory pricing keeps climbing - Intel&#x27;s 32GB Arc Pro B70 workstation card is up 48% in a month, a Japanese repair shop is modding old RTX 2080 Tis to 22GB of VRAM for budget AI inference, and PC Partner expects the squeeze to continue through H2 2026. On the infrastructure side, Cherokee Nation banned hyperscale data centers on its lands while a new forecast pegs the AI data center optical interconnect market at $144 billion by 2030. Linux and inference tooling saw real movement too: KTransformers 0.7 widened AVX-512 support for EPYC inference servers, GIMP is finally retiring its 30-year-old XCF format, and Con Kolivas revived his alternative Linux scheduler work.</p>
       </div>
     </section>
 
@@ -29,151 +29,102 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Google reportedly taps AMD to design next-generation TPU — hybrid AI ASIC could integrate on-package CPU cores</h3>
+              <h3>Intel&#x27;s Arc Pro B70 workstation GPU is now up to 48% more expensive than it was just a month ago — 32GB Battlemage workstation card climbs toward $2,000</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The rumor is a TPU with general-purpose CPU cores on the same package, targeted specifically at agentic and reinforcement-learning workloads rather than pure training throughput.</li>
-              <li>That design choice is a statement about where the bottleneck went: RL and agent loops interleave short bursts of tensor math with branchy, serial control logic, and shipping that control flow to a host CPU across PCIe wastes most of the accelerator&#x27;s time.</li>
-              <li>Bringing AMD in as a design partner would also loosen Google&#x27;s dependence on Broadcom, which has co-designed prior TPU generations.</li>
-              <li>Treat it as an unconfirmed report — but the architectural direction matches what everyone building agent systems keeps running into.</li>
+              <li>Intel&#x27;s 32GB Battlemage-based Arc Pro B70 workstation GPU has climbed toward $2,000, up as much as 48% in just a month.</li>
+              <li>The card&#x27;s large 32GB memory pool is specifically valuable for local AI/LLM workloads, so this price run tracks the broader AI-driven VRAM demand spike.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/google-reportedly-taps-amd-to-design-next-generation-tpu-hybrid-ai-asic-could-integrate-on-package-cpu-cores-for-reinforcement-learning" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/gpus/intels-arc-pro-b70-workstation-gpu-is-now-up-to-48-percent-more-expensive-than-it-was-just-a-month-ago-32gb-battlemage-workstation-card-climbs-toward-usd2-000" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel says it will launch new core with Nova Lake on desktop first, not in data center</h3>
+              <h3>PC Partner warns of rising GPU prices and budget card shortages — analyst suggests makers are hiking prices beyond memory costs</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel VP Robert Hallock confirms the new core architecture debuts in consumer Nova Lake parts ahead of any Xeon deployment — an inversion of the usual data-center-first cadence.</li>
-              <li>Hallock&#x27;s framing is competitive: he wants enthusiasts to &#x27;do the math&#x27; against AMD&#x27;s desktop lineup, which reads as confidence in per-core numbers rather than platform breadth.</li>
-              <li>Desktop-first also means the new core gets validated against a far more chaotic software surface before server customers see it, which historically shakes out errata earlier.</li>
-              <li>For anyone building local-inference or compile-heavy workstations, this puts Intel&#x27;s newest core in reach a generation sooner than the server roadmap would suggest.</li>
+              <li>PC Partner expects graphics card prices to keep climbing through H2 2026 as memory costs rise and supply tightens, with entry-level boards hit hardest.</li>
+              <li>Analyst Jon Peddie frames the hikes as manufacturers using memory-cost inflation as cover to expand margins, not just passing through costs.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/intel-says-it-will-launch-new-core-with-nova-lake-on-desktop-first-not-in-data-center-vp-robert-hallock-hopes-enthusiasts-do-the-math-compared-to-amd" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/pc-partner-warns-of-rising-gpu-prices-and-budget-card-shortages-analyst-suggests-makers-are-hiking-prices-beyond-memory-costs" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AVX-512 xor_gen Continues To Look Exciting For Helping Linux RAID With Modern CPUs</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Google engineer Eric Biggers&#x27; AVX-512 rewrite of the kernel&#x27;s xor_gen() parity routine is now measuring up to a 43% improvement on a Ryzen 9 9950X (Zen 5), up from 41% in the June revision.</li>
-              <li>xor_gen() sits on the hot path for software RAID parity, so the win lands on every write to an md RAID 5/6 array rather than in a synthetic benchmark.</li>
-              <li>The patch series still has not been merged, so the gains are not in a shipping kernel yet — worth tracking if you run software RAID on a recent AMD or Intel part.</li>
-              <li>It is also a clean illustration of how much headroom remains in hand-vectorizing old kernel hot paths for modern ISA extensions.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/AVX-512-xor-gen-v4" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux 7.3 binfmt_misc To Allow BPF Programs To Dynamically Choose Execution Environments</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>binfmt_misc is the kernel facility that routes non-native binaries to an interpreter — Windows EXEs to Wine, JARs to the JVM, foreign-arch binaries to QEMU.</li>
-              <li>The Linux 7.3 merge window extends it so a BPF program can decide the handler dynamically, rather than relying on a static magic-number-to-interpreter table.</li>
-              <li>That makes routing decisions programmable: pick an interpreter based on runtime context, container, or binary contents instead of a fixed registration.</li>
-              <li>Most immediately useful for cross-architecture build and emulation setups, where the right handler often depends on more than the file header.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-binfmt-misc" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Marek Olšák&#x27;s 19 Latest Patches Further Optimizing RADV &amp; ACO</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Nineteen more optimization patches for RADV, the open-source Radeon Vulkan driver, and ACO, its shader compiler backend.</li>
-              <li>Olšák spent years at AMD on the Radeon Gallium3D driver before joining Valve&#x27;s Linux graphics team this year, and has since focused almost entirely on the Vulkan path.</li>
-              <li>This is incremental compiler and driver tuning rather than a feature drop — the kind of steady work that shows up as frame-time consistency on Linux and Steam Deck.</li>
-              <li>Valve continuing to fund this level of driver engineering remains the single biggest reason Linux gaming performance keeps closing on Windows.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/RADV-ACO-19-More-Patches-Valve" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Intel&#x27;s Jay Graphics Shader Compiler Now Passing Vulkan CTS With Xe2/Xe3 Hardware</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Jay, Intel&#x27;s new shader compiler, now passes the Vulkan Conformance Test Suite on Xe2 and Xe3 hardware — the milestone that separates a research branch from a credible driver path.</li>
-              <li>The effort is led by Alyssa Rosenzweig, who joined Intel last year after contracting for Valve and leading Mesa&#x27;s Apple Silicon graphics work for Asahi Linux.</li>
-              <li>Passing CTS does not mean it is faster than the incumbent backend yet, only that it is correct across the spec surface — performance work comes next.</li>
-              <li>Relevant to anyone running compute or graphics on recent Intel GPUs under Linux, where compiler quality has been the long-standing weak link.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Intel-Jay-Compiler-Xe2-Xe3-CTS" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>3D-printed sound-powered jet engines propel micro drones</h3>
+              <h3>Japanese repair shop sells GDDR6 VRAM upgrades for $25 per GB during memory crisis — RTX 2080 Ti modded to 22GB for just $282, double the VRAM creates a budget AI powerhouse</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Researchers built a 3D-printed acoustic resonator that produces thrust when driven at the right ultrasonic frequency — air is pushed out of the nozzle with no moving parts at all.</li>
-              <li>The resulting micro-fliers hover at an effective 12,000 RPM equivalent while being completely silent to human hearing, since the driving frequency sits above the audible band.</li>
-              <li>Thrust is still well below practical levels; this is a proof of concept that the mechanism works, not a flight-ready propulsion system.</li>
-              <li>The no-moving-parts angle is the durable part of the result — it removes bearings and rotor wear from the failure model entirely.</li>
+              <li>A repair shop is modding RTX 2080 Ti cards to 22GB of VRAM for about $282 total, turning older GPUs into budget AI-inference cards during the current memory price crunch.</li>
+              <li>A concrete data point on the going rate for aftermarket VRAM mods ($25/GB) as a stopgap against new-GPU price inflation for anyone running local LLMs on a budget.</li>
             </ul>
-            <a href="https://www.tomshardware.com/3d-printing/3d-printed-sound-powered-jet-engines-propel-micro-drones-fliers-are-completely-silent-researchers-use-ultrasonic-frequencies-to-drive-12-000-rpm-silent-hovering-fliers" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/gpus/japanese-repair-shop-sells-gddr6-vram-upgrades-for-usd25-per-gb-during-memory-crisis-rtx-2080-ti-modded-to-22gb-for-just-usd282-double-the-vram-creates-a-budget-ai-powerhouse" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Industry &amp; HPC</h2>
-        <div class="digest-grid">
-
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Ex-farm bureau chief invites AI data center developers to buy his land</h3>
+              <h3>Cherokee Nation bans hyperscale data centers on its lands, won&#x27;t support projects without consultation — energy and water consumption, air quality, noise, and cultural resource protection among concerns</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Blake Hurst, who ran Missouri&#x27;s largest farm lobby for a decade, is publicly offering his own farmland to the data center developers his neighbors just blocked.</li>
-              <li>His argument is that a blocked $6.3B project does not disappear — it relocates to whichever jurisdiction says yes, so the local opposition forfeits the tax base without preventing the build.</li>
-              <li>The context is a moratorium wave now spanning roughly 500 jurisdictions, against polling showing about 70% public opposition to nearby data center construction.</li>
-              <li>Siting, not silicon, is becoming the binding constraint on AI capacity buildout in the US — a political bottleneck rather than a technical one.</li>
+              <li>Cherokee Nation (475,000+ citizens) has banned hyperscale data center development on tribally owned and trust lands, citing energy/water consumption, air quality, noise, and cultural resource concerns.</li>
+              <li>Adds to a growing pattern of local and tribal governments pushing back on AI data center siting - a supply-side constraint on where hyperscale AI infrastructure can expand.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/data-centers/former-missouri-farm-bureau-president-offers-his-farm-for-a-data-center" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/data-centers/largest-tribe-in-the-us-bans-hyperscale-data-centers-on-its-lands" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Stopping a cyberattack while walking your dog — defensive AI security CEO on autonomous response</h3>
-              <span class="digest-source">The Register</span>
+              <h3>AI data center optical interconnect market to hit $144 billion by 2030, an over ten-fold increase from 2024 figures, according to new projections — silicon photonics expected to account for nearly two-thirds of revenue, driven by co-packaged optics</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Corma&#x27;s CEO pitches a consolidated defensive AI platform — &#x27;one ring to rule them all, for the defenders&#x27; — that can triage and respond without an analyst at a console.</li>
-              <li>The premise is that attacker tooling is now automated enough that human-speed response is structurally too slow, so defenders have to close the loop autonomously.</li>
-              <li>The unavoidable tension is blast radius: an autonomous responder that can isolate hosts or revoke credentials on its own judgment is also a very effective self-inflicted outage.</li>
-              <li>Vendor interview rather than independent evaluation — useful for the framing of the problem, not as evidence the product solves it.</li>
+              <li>A CIC forecast projects the data center optical interconnect market growing more than 10x, from $13.7 billion in 2024 to $144.4 billion by 2030.</li>
+              <li>Silicon photonics is expected to capture 63.7% of that revenue, driven by co-packaged optics - a concrete signal of where AI datacenter interconnect investment is heading.</li>
             </ul>
-            <a href="https://www.theregister.com/security/2026/08/16/stopping-a-cyberattack-while-walking-your-dog-defensive-ai-security-ceo-says-its-not-ruff-to-do/5288126" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/photonics/ai-data-center-optical-interconnect-market-to-hit-usd144-billion-by-2030-an-over-ten-fold-increase-from-2024-figures-according-to-new-projections-silicon-photonics-expected-to-account-for-nearly-two-thirds-of-revenue-driven-by-co-packaged-optics" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Peer-reviewed study of 443,000 Backblaze hard drives ranks HGST most reliable, Toshiba least</h3>
-              <span class="digest-source">Reddit r/hardware</span>
+              <h3>KTransformers 0.7 Expands AVX-512 Support To Benefit AMD EPYC Servers</h3>
+              <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An academic analysis of Backblaze&#x27;s public drive telemetry — 443,000 drives across 1.66 million drive-years — puts real statistical weight behind numbers usually read as blog-post trivia.</li>
-              <li>The headline finding: Seagate and Toshiba drives fail at roughly twice the rate of Western Digital and HGST units.</li>
-              <li>Peer review matters here because Backblaze&#x27;s own quarterly posts mix drive models, ages and duty cycles in ways that make naive rate comparisons misleading.</li>
-              <li>Caveat worth keeping: this is one operator&#x27;s environment and purchasing history, so it reflects how these drives behave in a specific high-density deployment rather than a universal ranking.</li>
+              <li>KTransformers, a heterogeneous LLM inference and fine-tuning optimization framework, shipped v0.7 with expanded AVX-512 support specifically targeting AMD EPYC servers.</li>
+              <li>Relevant to CPU-side inference optimization for anyone running large MoE-style models on EPYC hardware without a full GPU cluster.</li>
             </ul>
-            <a href="https://www.reddit.com/r/hardware/comments/1vpr7mc/peerreviewed_study_of_443000_backblaze_hard/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/KTransformers-0.7" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GIMP Making Progress On New Project File Format After Nearly 30 Years With XCF</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>GIMP is actively developing a replacement for its roughly 30-year-old XCF project file format as part of the GIMP 3.4 development track.</li>
+              <li>A long-overdue format modernization worth tracking for anyone building tooling that reads or writes GIMP project files.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/GIMP-New-File-Format-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Con Kolivas Revives &quot;-ck&quot; Patches &amp; MuQSS To Improve Linux Desktop Responsiveness</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Longtime out-of-tree Linux scheduler developer Con Kolivas is reviving his &quot;-ck&quot; patch set and MuQSS scheduler (successor to the Brain F*** Scheduler), aimed at desktop and mobile responsiveness.</li>
+              <li>A notable return of alternative CPU scheduler work outside the mainline Linux scheduler, relevant for anyone tuning desktop responsiveness under load.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Con-Kolivas-Linux-Patches-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.3 On PowerPC Now Supports In-Kernel Rust, Initial Power12 Enablement Begins</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Linux 7.3&#x27;s PowerPC pull request adds in-kernel Rust support for both PPC32BE and PPC64LE architectures.</li>
+              <li>Also begins initial enablement work for IBM&#x27;s upcoming Power12 architecture, an early signal of what&#x27;s coming in the next POWER hardware generation.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.3-PowerPC-Rust" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
