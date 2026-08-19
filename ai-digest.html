@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 17, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 19, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 17, 2026</div>
+        <div class="digest-date-badge">August 19, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest leans heavily into agent infrastructure and evaluation - governing what tool-using agents can actually do, judging their outputs without a ground-truth reward, and controlling the hidden token costs of retries and context retrieval. On the model side, Alibaba&#x27;s new Qwen 3.8 27B lands as a strong open-weight vision model with an overthinking habit, while several papers push on architectural efficiency, from self-explainable latent reasoning to blockwise attention alternatives for long context.</p>
+        <p class="digest-intro">Today&#x27;s digest centers on making agentic AI trustworthy and efficient: new research proposes runtime governance layers and DAG-structured agents to keep LLM agents reliable in high-stakes domains, while IBM&#x27;s ALTK-Evolve shows smarter memory dosing beats brute-force context stuffing. On the tools side, Mojo&#x27;s Apache-2.0 release and a 27B Qwen model matching trillion-parameter rivals underscore a push toward smaller, more open infrastructure. A sobering research thread rounds things out: paying extra for &#x27;high reasoning effort&#x27; bought no measurable accuracy gain, and institution-specific prompting exposed protected health information that de-identification gold standards missed entirely.</p>
       </div>
     </section>
 
@@ -29,87 +29,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Inducing Reward-Free Judging Rubrics that Reduce Over-Crediting in Agent Evaluation</h3>
+              <h3>Runtime Governance for Agentic AI: Action-Boundary Control with Trusted Provenance and Fail-Closed Execution</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Addresses a core weakness in LLM-as-judge agent evaluation: judges tend to over-credit agents when there is no ground-truth executable environment reward available.</li>
-              <li>Proposes inducing structured, reward-free rubrics to make automatic judging more calibrated and harder for agents to game.</li>
-              <li>Directly relevant to anyone building agent benchmarks or evals without access to a real execution environment for scoring.</li>
+              <li>Proposes &#x27;Aegis,&#x27; a runtime governance layer where the model only proposes actions and a separate trusted runtime decides whether to execute them - moving safety enforcement out of the prompt and into server-side policy evaluation with cryptographic provenance tracking, defaulting to rejection under uncertainty.</li>
+              <li>High-stakes actions route through a quorum-based &#x27;senate-style&#x27; authorization requiring multiple independent approvals rather than one model call being able to unilaterally act.</li>
+              <li>In sandbox tests across 6,300 rows, prompt-conditioning alone produced 79 risky outcomes while Aegis governance produced zero risky completions across 2,100 governed rows - though the authors caution this supports narrow sandbox-system claims, not general autonomous-agent safety.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.13564" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.16891" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Modular Cognitive Architecture Emerges in Large Language Models</h3>
+              <h3>GxP-Agent: Process-DAG Topology for Reliable Clinical Trial Programming with LLM Agents</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Investigates whether LLMs spontaneously develop brain-like functional specialization - separate subsystems for language, formal reasoning, theory-of-mind, and physical-world reasoning - mirroring human cognitive modularity.</li>
-              <li>Suggests modular organization may be a general emergent property of large-scale learning rather than something unique to biological brains.</li>
-              <li>Relevant to interpretability and architecture-design work exploring whether models can be decomposed into interpretable functional modules.</li>
+              <li>Across 11 single-shot attempts with five frontier models, none produced a valid subject-level clinical trial analysis dataset - plain LLM code generation fails catastrophically on this regulated task.</li>
+              <li>GxP-Agent instead encodes regulatory process knowledge as a directed acyclic graph, splitting dataset generation into 15 specialized nodes with validation gates and conditional retries; with Claude Sonnet 4.6 it hit 100% structural accuracy (49/49 variables) across three independent runs, versus 59.2% for a RAG baseline.</li>
+              <li>The DAG structure also lifted a weaker model (GPT-4.1) from 0% to 59.2% accuracy, and generalized to adverse-events data at 100% on the first attempt - evidence that encoding domain process as graph topology, not more LLM reasoning, is what fixes reliability.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.13567" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.16890" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Agentao: A Governed Local-First Runtime for Tool-Using LLM Agents</h3>
+              <h3>The Price of Thinking: Reasoning Effort as a Model-Specific API Contract</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets a real production risk: as LLM agents invoke tools, modify local state, and use persistent memory, they become over-privileged execution systems with real security exposure.</li>
-              <li>Proposes a governed, local-first runtime architecture to constrain what agents can actually do, rather than relying on prompt-level guardrails alone.</li>
-              <li>Directly applicable to local-first agent stacks that run tool-calling agents against local filesystems and state and need policy enforcement below the LLM layer.</li>
+              <li>In a preregistered test of 30 AIME 2026 problems (5 replications each) on Claude Sonnet 5, explicitly requesting high reasoning effort cost about $0.01 more per call than omitting the parameter, with no statistically significant accuracy gain.</li>
+              <li>Cost per correct answer was $0.08665 for explicit high-effort versus $0.07662 with the parameter omitted - the &#x27;thinking harder&#x27; setting bought no measurable benefit here, just a premium.</li>
+              <li>The authors note reasoning-effort semantics are documented inconsistently across providers (and even within a single provider), making it hard for API consumers to reason about what they&#x27;re actually paying for.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.13574" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.16956" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Does a Language Server Save Tokens for Coding Agents? A Measurement Methodology and Preliminary Study</h3>
+              <h3>Institution-Specific LLM Prompting Recovers PHI That De-identification Systems and Their Gold Standards Both Miss</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Compares lexical retrieval (grep - universal and instant, but noisy, unable to tell a definition from a call from a comment) against semantic retrieval via the Language Server Protocol for coding agents.</li>
-              <li>Introduces a measurement methodology to quantify token and context savings from LSP-based semantic retrieval versus plain grep.</li>
-              <li>Directly relevant to coding-agent context-budget optimization, an active cost lever for any agentic coding tool.</li>
+              <li>On 100 pediatric oncology notes with 5,322 labeled PHI spans, in-context-prompted LLMs beat a purpose-built de-identification system (Stanford TiDE): F1 0.918 vs 0.779.</li>
+              <li>Feeding the LLM institution-specific &#x27;missed category&#x27; examples (hospital abbreviations, building names, internal codes) recovered 79% of PHI that the original gold-standard annotations and standard systems had missed entirely.</li>
+              <li>The final calibrated prompt hit recall 0.981 (F1 0.907) and surfaced 414 candidate annotation gaps, 227 of which were confirmed as real previously-missed PHI - a reminder that de-identification benchmarks can undercount the problem they&#x27;re meant to measure.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.13568" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.17051" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Think in Latent, Explain in Language: Self-Explainable Latent Reasoning</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>The Problem Is the Problem: Towards Scalable Mathematical Discovery</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Tackles a known tradeoff in latent reasoning, which compresses chain-of-thought into embeddings for efficiency but makes the reasoning opaque and hard to audit.</li>
-              <li>Proposes a self-explainable approach that reasons in latent space for computational efficiency while still producing a natural-language explanation of that reasoning.</li>
-              <li>Relevant to efficient-inference research that wants the speed gains of latent reasoning without sacrificing auditability of the reasoning trace.</li>
+              <li>Argues the real bottleneck in AI-assisted math research isn&#x27;t model reasoning capability but the human effort spent selecting good problems upfront and reviewing AI-generated results afterward.</li>
+              <li>Proposes FAR (Find, Attempt, Recommend): instead of a human picking one problem, the human specifies a research direction and the system searches a literature corpus for candidate problems, cascading them through filters toward human review.</li>
+              <li>In testing, FAR searched 5,245 combinatorics papers, surfaced 6,453 candidate problems, and filtered down to just 77 for human attention - automating the triage stage that currently consumes scarce expert time.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.13570" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Not All Tokens Are Equal: Inflation-Aware Routing for Agentic LLM Systems</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Identifies a hidden cost problem in agentic systems: retries after a failed first attempt consume extra tokens, so the effective per-workflow cost diverges from the advertised per-token price.</li>
-              <li>Proposes inflation-aware routing that accounts for this retry overhead when deciding which model or route to send a request to.</li>
-              <li>Useful for any multi-agent or retry-heavy pipeline trying to control real-world inference spend rather than just sticker-price token cost.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.13571" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>BCMT: Blockwise Causal Memory Transformer</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Addresses the quadratic attention cost of standard Transformers on long-range dependencies by introducing a blockwise causal memory mechanism.</li>
-              <li>Aims to preserve long-context modeling capability while cutting the computational cost that normally scales quadratically with sequence length.</li>
-              <li>Relevant to long-context and long-memory architecture work, including agent memory systems, looking for cheaper alternatives to dense self-attention.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.13578" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.16977" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -119,27 +95,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Markdown SVG upgrades</h3>
+              <h3>Mojo🔥 is now open source</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Willison&#x27;s markdown-svg-renderer tool, started in May 2026, has gained enough features to become his go-to way of sharing Markdown transcripts that embed inline SVG output.</li>
-              <li>Useful for publishing LLM outputs that include generated SVG graphics, such as his running pelican-riding-a-bicycle benchmark, without losing the rendered image.</li>
-              <li>Signals a broader pattern of lightweight, personal tooling built specifically to document and share LLM benchmark and eval results.</li>
+              <li>Modular released Mojo 1.0&#x27;s compiler and toolchain under the Apache 2 license on August 18, 2026, following through on a promise made since May 2023.</li>
+              <li>Mojo started as a &#x27;Python superset&#x27; but evolved into its own language; the creators now say full Python compatibility isn&#x27;t the goal - the focus shifted to GPU programming performance.</li>
+              <li>AI-assisted coding tools already help migrate existing Python code to Mojo, easing the transition for developers.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/16/markdown-svg-upgrades/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/18/mojo-is-now-open-source/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Qwen 3.8 27B is excellent, but it defaults to wildly overthinking things</h3>
+              <h3>Qwen 3.8 27B scores 52 on the Artificial Analysis Intelligence Index</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Qwen 3.8 27B is Apache 2.0 licensed and vision-capable, positioned as a strong size class for running on a well-specced laptop, following the well-regarded Qwen 3.6 27B.</li>
-              <li>Willison&#x27;s main critique is that the model defaults to excessive, verbose overthinking on tasks that do not need it - an efficiency and UX tradeoff worth watching.</li>
-              <li>Relevant for teams evaluating mid-size open-weight models for local or on-device inference where reasoning-token cost matters.</li>
+              <li>Qwen 3.8 27B scored 52 on the Artificial Analysis Intelligence Index - identical to GPT-5.6 Luna (max) and just one point behind GLM-5.2 and DeepSeek V4 Pro (both max variants).</li>
+              <li>The comparison models are vastly larger: GLM-5.2 is 753B parameters and DeepSeek V4 Pro is 1.7T parameters, while Qwen matches their scores at 27B - roughly 1/28th to 1/63rd the size.</li>
+              <li>Simon Willison calls it &#x27;a truly astonishing&#x27; result for a model this small to be competitive with frontier-scale models on this benchmark.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/16/qwen-38-27b/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/17/qwen-38-27b-scores-52/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>How Much Memory Does Your Agent Actually Need?</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>IBM Research&#x27;s ALTK-Evolve self-distills behavioral guidelines from an agent&#x27;s own past trajectories and injects them at inference time with no weight updates - the method transferred across eight different models without human annotation.</li>
+              <li>How much memory helps depends on model strength: a 117B MoE model gained +16.1pp task completion from selective retrieval of high-confidence, task-specific guidelines, while a 671B MoE model gained +9.5pp from full guideline sets - bigger context isn&#x27;t always better.</li>
+              <li>Selective retrieval added only +5% token overhead versus +51-78% for dumping in comprehensive guideline sets, and gains were larger on stricter &#x27;all task variants must succeed&#x27; metrics - suggesting memory mainly prevents edge-case failures, not just raises average completion.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/ibm-research/altk-evolve-hmm" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Multi-Vector (Late Interaction) Embedding Models with Sentence Transformers</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Late-interaction models keep one vector per token instead of compressing a document into a single vector, then score with MaxSim: for each query token, take its highest similarity against any document token and sum those maxima - preserving detail single-vector embeddings average away.</li>
+              <li>The quality gain has a real storage cost: encoding 4,874 passages produced 608,414 token vectors needing 311.5 MB, versus 7.5 MB for a dense single-vector model on the same data (~40x more storage); token pooling can cut that roughly in half with minimal quality loss.</li>
+              <li>Sentence Transformers v6.0 ships a unified MultiVectorEncoder API that loads PyLate/ColBERT/ColPali checkpoints interchangeably for text, image, audio, and video retrieval via the same encode_query()/encode_document()/similarity() calls, and integrates with Qdrant/Weaviate.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/multi-vector-encoder" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.235</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Added an optional spellcheck setting that underlines misspelled words in the prompt input using locally installed aspell, hunspell, or ispell.</li>
+              <li>Fixed whole-prompt-cache invalidation that occurred when a language server disconnected/reconnected mid-session, plus improved memory/CPU usage for cloud sessions like /ultrareview and /autofix-pr.</li>
+              <li>Rolled in 20+ smaller fixes: nested markdown list alignment at depth 3+, permission dialog bugs, Vim mode cursor preservation, and VSCode tab focus jumping.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.235" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

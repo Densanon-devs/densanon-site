@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - August 17, 2026 | Densanon</title>
+  <title>Computation Morning Digest - August 19, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 17, 2026</div>
+        <div class="digest-date-badge">August 19, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">GPU and memory pricing keeps climbing - Intel&#x27;s 32GB Arc Pro B70 workstation card is up 48% in a month, a Japanese repair shop is modding old RTX 2080 Tis to 22GB of VRAM for budget AI inference, and PC Partner expects the squeeze to continue through H2 2026. On the infrastructure side, Cherokee Nation banned hyperscale data centers on its lands while a new forecast pegs the AI data center optical interconnect market at $144 billion by 2030. Linux and inference tooling saw real movement too: KTransformers 0.7 widened AVX-512 support for EPYC inference servers, GIMP is finally retiring its 30-year-old XCF format, and Con Kolivas revived his alternative Linux scheduler work.</p>
+        <p class="digest-intro">Today&#x27;s digest is dominated by the Linux 7.3 merge window and semiconductor supply-chain friction: AMD&#x27;s new low-power CPU core type and a major scheduler overhaul land in the kernel, while Ajinomoto&#x27;s cuts to ABF chip-packaging film for China underscore how fragile the materials side of the chip supply chain remains. On the industry side, Samsung&#x27;s fab buildout and Taiwan&#x27;s AI-boom cash dividend show how unevenly the AI hardware boom&#x27;s costs and rewards are landing, and Modular&#x27;s full open-sourcing of Mojo caps a strong day for systems software.</p>
       </div>
     </section>
 
@@ -29,102 +29,141 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel&#x27;s Arc Pro B70 workstation GPU is now up to 48% more expensive than it was just a month ago — 32GB Battlemage workstation card climbs toward $2,000</h3>
+              <h3>Ajinomoto reportedly cuts critical chip packaging film supply to China by 30% as domestic substitutes race to qualify — ABF restriction comes following Beijing&#x27;s rare earth export curbs</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel&#x27;s 32GB Battlemage-based Arc Pro B70 workstation GPU has climbed toward $2,000, up as much as 48% in just a month.</li>
-              <li>The card&#x27;s large 32GB memory pool is specifically valuable for local AI/LLM workloads, so this price run tracks the broader AI-driven VRAM demand spike.</li>
+              <li>Japanese chemical maker Ajinomoto is reportedly cutting supply of ABF (Ajinomoto Build-up Film), a critical chip-packaging insulation material, to mainland China by 30%.</li>
+              <li>The move follows Beijing&#x27;s rare-earth export curbs, pointing to a tit-for-tat materials squeeze running through the chip supply chain.</li>
+              <li>Chinese chipmakers are racing to qualify domestic ABF substitutes to cover the shortfall — a reminder of how concentrated the advanced-packaging materials supply chain still is.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/gpus/intels-arc-pro-b70-workstation-gpu-is-now-up-to-48-percent-more-expensive-than-it-was-just-a-month-ago-32gb-battlemage-workstation-card-climbs-toward-usd2-000" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/ajinomoto-reportedly-cuts-abf-chip-packaging-film-supply-to-china-by-30-percent" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>PC Partner warns of rising GPU prices and budget card shortages — analyst suggests makers are hiking prices beyond memory costs</h3>
+              <h3>MicroSD card torture test writes 133 petabytes of data across 351 cards over three years — cards tested to failure reveal SanDisk as the outlier with 6 failures of the 7 tested</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>PC Partner expects graphics card prices to keep climbing through H2 2026 as memory costs rise and supply tightens, with entry-level boards hit hardest.</li>
-              <li>Analyst Jon Peddie frames the hikes as manufacturers using memory-cost inflation as cover to expand margins, not just passing through costs.</li>
+              <li>Independent tester Matt Cole&#x27;s three-year microSD endurance database has now written 133 petabytes across 351 cards and 4.6 million write cycles.</li>
+              <li>SanDisk was the standout reliability outlier, failing 6 of the 7 units tested to destruction.</li>
+              <li>Cards are run to actual failure rather than stopped at rated endurance specs, producing real-world longevity data manufacturers don&#x27;t publish themselves.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/pc-partner-warns-of-rising-gpu-prices-and-budget-card-shortages-analyst-suggests-makers-are-hiking-prices-beyond-memory-costs" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/microsd-cards/microsd-card-testing-database-celebrates-third-anniversary-with-133-petabytes-of-data-written-across-4-6-million-cycles-hundreds-of-cards-tested-to-failure-reveal-sandisk-as-the-outlier-with-6-failures-of-the-7-tested" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Japanese repair shop sells GDDR6 VRAM upgrades for $25 per GB during memory crisis — RTX 2080 Ti modded to 22GB for just $282, double the VRAM creates a budget AI powerhouse</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A repair shop is modding RTX 2080 Ti cards to 22GB of VRAM for about $282 total, turning older GPUs into budget AI-inference cards during the current memory price crunch.</li>
-              <li>A concrete data point on the going rate for aftermarket VRAM mods ($25/GB) as a stopgap against new-GPU price inflation for anyone running local LLMs on a budget.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/gpus/japanese-repair-shop-sells-gddr6-vram-upgrades-for-usd25-per-gb-during-memory-crisis-rtx-2080-ti-modded-to-22gb-for-just-usd282-double-the-vram-creates-a-budget-ai-powerhouse" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Cherokee Nation bans hyperscale data centers on its lands, won&#x27;t support projects without consultation — energy and water consumption, air quality, noise, and cultural resource protection among concerns</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Cherokee Nation (475,000+ citizens) has banned hyperscale data center development on tribally owned and trust lands, citing energy/water consumption, air quality, noise, and cultural resource concerns.</li>
-              <li>Adds to a growing pattern of local and tribal governments pushing back on AI data center siting - a supply-side constraint on where hyperscale AI infrastructure can expand.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/data-centers/largest-tribe-in-the-us-bans-hyperscale-data-centers-on-its-lands" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AI data center optical interconnect market to hit $144 billion by 2030, an over ten-fold increase from 2024 figures, according to new projections — silicon photonics expected to account for nearly two-thirds of revenue, driven by co-packaged optics</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A CIC forecast projects the data center optical interconnect market growing more than 10x, from $13.7 billion in 2024 to $144.4 billion by 2030.</li>
-              <li>Silicon photonics is expected to capture 63.7% of that revenue, driven by co-packaged optics - a concrete signal of where AI datacenter interconnect investment is heading.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/photonics/ai-data-center-optical-interconnect-market-to-hit-usd144-billion-by-2030-an-over-ten-fold-increase-from-2024-figures-according-to-new-projections-silicon-photonics-expected-to-account-for-nearly-two-thirds-of-revenue-driven-by-co-packaged-optics" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>KTransformers 0.7 Expands AVX-512 Support To Benefit AMD EPYC Servers</h3>
+              <h3>Framework Laptop 12 Updated For Intel Wildcat Lake, Shipping Starts In October</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>KTransformers, a heterogeneous LLM inference and fine-tuning optimization framework, shipped v0.7 with expanded AVX-512 support specifically targeting AMD EPYC servers.</li>
-              <li>Relevant to CPU-side inference optimization for anyone running large MoE-style models on EPYC hardware without a full GPU cluster.</li>
+              <li>Framework is adding Intel Core Series 3 &quot;Wildcat Lake&quot; as a mainboard upgrade option for the Framework Laptop 12, which originally shipped with low-end 13th Gen &quot;Raptor Lake&quot; chips.</li>
+              <li>The upgraded 2-in-1 remains upgrade-friendly and Linux-compatible, consistent with Framework&#x27;s repairability focus.</li>
+              <li>Shipping for the Wildcat Lake option starts in October.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/KTransformers-0.7" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Framework-Laptop-12-WCL" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GIMP Making Progress On New Project File Format After Nearly 30 Years With XCF</h3>
+              <h3>New AMD Low-Power Core &amp; Unified Intel/AMD CPU Core Type Handling In Linux 7.3</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GIMP is actively developing a replacement for its roughly 30-year-old XCF project file format as part of the GIMP 3.4 development track.</li>
-              <li>A long-overdue format modernization worth tracking for anyone building tooling that reads or writes GIMP project files.</li>
+              <li>Linux 7.3 merges AMD&#x27;s new &quot;low power&quot; CPU core type, joining the existing &quot;performance&quot; and &quot;efficiency&quot; (Zen 4C/5C) core classes.</li>
+              <li>The low-power core designation is presumed to target upcoming Zen 6 client chips.</li>
+              <li>The same merge window unifies how the kernel reports CPU core types across both Intel and AMD hybrid processors, simplifying scheduler support for heterogeneous chip designs.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/GIMP-New-File-Format-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/x86-Core-Types-Linux-7.3" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Con Kolivas Revives &quot;-ck&quot; Patches &amp; MuQSS To Improve Linux Desktop Responsiveness</h3>
+              <h3>Linux 7.3 Scheduler Improvements: Help For Gaming, Hybrid CPUs, Lower Scheduler Latency</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Longtime out-of-tree Linux scheduler developer Con Kolivas is reviving his &quot;-ck&quot; patch set and MuQSS scheduler (successor to the Brain F*** Scheduler), aimed at desktop and mobile responsiveness.</li>
-              <li>A notable return of alternative CPU scheduler work outside the mainline Linux scheduler, relevant for anyone tuning desktop responsiveness under load.</li>
+              <li>Peter Zijlstra&#x27;s &quot;flatten the pick&quot; patch series overhauls cgroup scheduling — moving it to a single runqueue with new weight-distribution modes (&#x27;up&#x27;, &#x27;max&#x27;, &#x27;concur&#x27;, &#x27;tasks&#x27;) — and showed measurable gaming gains even on old Sandy Bridge + Radeon RX 580 hardware.</li>
+              <li>Vincent Guittot&#x27;s latency-reduction work targets short-slice task scheduling; cyclictest measurements showed &quot;very significant improvements&quot; in scheduler latency.</li>
+              <li>Cluster load-balancing for asymmetric-capacity (hybrid) CPUs is fixed, and NOHZ balancing now prioritizes fully idle cores — both aimed at heterogeneous Intel/AMD chip designs.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Con-Kolivas-Linux-Patches-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.3-Scheduler" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Modular&#x27;s Mojo Language Now Open-Source Following Qualcomm Acquisition</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Modular has open-sourced the entire Mojo language under Apache 2.0, having previously only open-sourced the standard library.</li>
+              <li>Mojo targets CPUs, GPUs, and AI accelerators from a single codebase, draws syntax ideas from Rust, and supports two-way interop with Python.</li>
+              <li>The release follows Qualcomm&#x27;s acquisition of Modular — notable given Qualcomm&#x27;s historically closed licensing reputation. Mojo runs on macOS and Linux today, with Windows support in development; founder Chris Lattner (LLVM, Swift) remains involved.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Modular-Mojo-Open-Source" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.3 On PowerPC Now Supports In-Kernel Rust, Initial Power12 Enablement Begins</h3>
+              <h3>PHP 7.4 To PHP 8.6 Benchmarks, PHP 8.6 JIT Performance</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Linux 7.3&#x27;s PowerPC pull request adds in-kernel Rust support for both PPC32BE and PPC64LE architectures.</li>
-              <li>Also begins initial enablement work for IBM&#x27;s upcoming Power12 architecture, an early signal of what&#x27;s coming in the next POWER hardware generation.</li>
+              <li>Fresh Phoronix benchmarks spanning PHP 7.4 through the current PHP 8.6 Git snapshot show performance climbing gradually across the PHP 8.x release series.</li>
+              <li>The current PHP 8.6 Git build is actually regressing slightly versus PHP 8.5 in some tests, ahead of the stable 8.6.0 release later in 2026.</li>
+              <li>Enabling the JIT gave only a slight boost in PHP 8.6 in these early benchmarks, not a dramatic leap.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-PowerPC-Rust" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/PHP-8.6-Early-Benchmarks" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Industry &amp; HPC</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Samsung&#x27;s fab roadmaps examined — Taylor, Pyeongtaek, and the yield woes behind a $16.5 billion Tesla deal</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Samsung&#x27;s foundry operations span four campuses across two countries: the Korean fabs at Pyeongtaek, Hwaseong, and Giheung, plus the newer Taylor, Texas site in the US.</li>
+              <li>The roadmap review ties Samsung&#x27;s ongoing fab yield struggles directly to its $16.5 billion foundry supply deal with Tesla.</li>
+              <li>Taylor represents Samsung&#x27;s push to diversify advanced-node manufacturing capacity outside Korea while yield issues persist.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/samsungs-fab-roadmap-examined" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AI server boom funds $314 universal cash payout in Taiwan — President Lai Ching-te says the payout ensures the country&#x27;s AI windfall &#x27;can be shared by all,&#x27; 11% GDP growth and $903B export surge finance $7.4B dividend</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Taiwan&#x27;s 2027 central government budget earmarks $7.4 billion for a universal cash dividend of roughly $314 per resident, funded by the AI server manufacturing boom.</li>
+              <li>The payout is backed by 11% GDP growth and a $903 billion export surge, driven largely by AI hardware demand moving through TSMC and its supply chain.</li>
+              <li>President Lai Ching-te frames the dividend as ensuring the AI windfall benefits the general public, not just chipmakers and investors.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/taiwan-to-pay-every-resident-314-from-its-ai-boom-windfall" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>COSMIC Epoch 1.6 Released With Per-App Volume Control, Remote Desktop Preparations</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>COSMIC Epoch 1.6 adds per-app volume and output controls for granular audio management, plus Wayland wl-dmabuf-v6 support and fullscreen presentation-feedback capture in the compositor.</li>
+              <li>The release lays groundwork for remote desktop support via the EI (emulated input) protocol, though full remote desktop functionality isn&#x27;t shipping yet.</li>
+              <li>Smaller updates include bordered split panes in COSMIC Terminal, JPEG-XL/AVIF support in COSMIC Greeter, and performance work in COSMIC Edit — all part of System76&#x27;s Rust-based desktop environment for Pop!_OS.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/COSMIC-Epoch-1.6" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

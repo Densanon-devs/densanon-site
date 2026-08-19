@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 17, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 19, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 17, 2026</div>
+        <div class="digest-date-badge">August 19, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Robot learning research today clusters around making policies safer and more interpretable at runtime: hierarchical world models enforcing temporal-logic constraints on language-conditioned policies, and an ontology-grounded world model that can name the exact failed task predicate and route to a repair mechanism instead of just flagging a low quality score. On the applied side, EPFL researchers found fish-like robots swim more efficiently in bursts than continuously, and the ROS community shipped a real-time control-barrier-function safety filter alongside an AI agent for triaging rosbag and MCAP failure data.</p>
+        <p class="digest-intro">A strong day for robot learning research: papers push VLM-as-policy-writer control, sim-to-real humanoid loco-manipulation, minimal-reward musculoskeletal RL, and automatic PDDL generation from a single demonstration. On the industry side, humanoids keep landing narrow, high-volume jobs (shipyard welding, Schaeffler factory work) while construction robotics and robot safety infrastructure pull in nine-figure capital, and a claw-footed drone shows field robotics can be genuinely elegant.</p>
       </div>
     </section>
 
@@ -29,125 +29,129 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Adjacency-Based Spectral Proxy Control of Mobile Communication Agents</h3>
+              <h3>VLCP: Vision Language Control Policy Closed-Loop Code Replanning for Robot Manipulation</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Studies a heterogeneous mobile-agent network where controllable communication-relay robots must reposition online as uncontrolled task agents move, to maintain network connectivity.</li>
-              <li>Uses adjacency-based spectral proxy control (graph-spectral properties as a proxy objective) instead of optimizing throughput directly, since throughput-based objectives are hard to optimize online - relevant to any multi-robot relay or coverage problem.</li>
+              <li>Keeps the vision-language model frozen and has it write a short Python control function directly, instead of fine-tuning it to emit an unfamiliar action representation -- no demonstrations, no fine-tuning.</li>
+              <li>Closed-loop replanning: every K steps the VLM re-observes multi-view RGB and proprioceptive state and rewrites the control function, catching failures before they compound.</li>
+              <li>Hits 35.1% pooled success across 57 MuJoCo/RoboVerse tasks vs. 3.5% for a single-query open-loop variant -- a 10x gap -- with a 27.3% within-episode recovery rate on failed grasps.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.13616" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.16978" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>hint$^2$: Hierarchical World Models for Inference-Time Temporal Logic Guidance</h3>
+              <h3>FetchMan: Learning Visual Humanoid Loco-Manipulation Policies from Simulated Experiences</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets a known weakness of language-conditioned robot policies: struggling with temporal structure and safety constraints in runtime instructions (e.g. do X before Y, never Z).</li>
-              <li>Uses hierarchical world models applied at inference time to steer policy execution toward temporal-logic-specified constraints without retraining the base policy.</li>
+              <li>Trains visual humanoid loco-manipulation policies entirely in simulation, across more than 150,000 simulated scenes, to sidestep costly real-world demonstration collection.</li>
+              <li>Combines behavioral cloning with Flow-GRPO reinforcement-learning refinement on sparse rewards to break through the performance ceiling that pure imitation learning hits.</li>
+              <li>Zero-shot transfer to a real Unitree G1 humanoid reaches 73.3% success on reach-and-pick across unseen scenes; the team also releases FetchMan-Bench as a new evaluation benchmark.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.13678" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.17027" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Graph-MambaNav: Spatial-Temporal Graph Mamba Leveraging Object-Relation Knowledge for Object-Goal Navigation</h3>
+              <h3>Lambda-Hold Control: Human-Like Movement Emerges from a Minimal Task Reward in Predictive Musculoskeletal Simulation</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Combines graph-based object-relation reasoning with a Mamba (state-space model) backbone for object-goal navigation in unseen environments, aiming to prioritize target-relevant objects better than prior graph methods that only handle target-awareness at the feature or output level.</li>
-              <li>Mamba backbones for navigation are a notable departure from transformer-based approaches, relevant to efficient long-horizon navigation policies.</li>
+              <li>Proposes a lambda-hold controller, inspired by the equilibrium-point hypothesis of human motor control, where the policy sets per-muscle equilibrium-length thresholds instead of directly commanding muscle excitations.</li>
+              <li>Sidesteps the massive overactuation/redundancy problem that normally makes RL exploration in musculoskeletal models intractable, while also cutting how often the policy needs to be queried.</li>
+              <li>Learns human-like sprinting from a minimal task reward in under an hour of training -- framed as a step toward a learnable model of the human motor controller.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.13723" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.17030" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Knowledge-Data-Dual-Driven Reinforcement Learning for Autonomous Vehicle Control in Mixed Traffic</h3>
+              <h3>PDDL-ART: Autonomous Symbolic Abstraction From Demonstration For Long-Horizon Robotic Manipulation Using Vision-Language Models</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Addresses a known weakness of physics-prior RL for autonomous vehicles in mixed traffic: physics priors fail to capture the latent interactive intentions of surrounding human-driven vehicles.</li>
-              <li>Proposes combining domain knowledge with data-driven learning to better model interactive, diverse traffic behavior instead of relying on physics priors alone.</li>
+              <li>Auto-generates task-specific PDDL domain/problem descriptions from a single expert demonstration plus a natural-language task description -- no domain templates, action signatures, or fine-tuning required.</li>
+              <li>Uses a multi-stage correction pipeline (syntactic, semantic, execution) and lets a VLM invoke geometric/temporal reasoning tools to evaluate relational predicates.</li>
+              <li>Achieves 93.3% success on long-horizon manipulation tasks (engine maintenance, household domains) vs. 78.3% for a baseline VLM-based planner.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.13878" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Ontology-Grounded World Models for Failure Diagnosis and Closed-Loop Repair in Physical AI Systems</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Extends an existing world-model failure-diagnosis system (EV-WM) by grounding failure scores in an explicit ontology, so the system can name the specific unmet task predicate, route to an available correction mechanism, and record a post-correction acceptance result.</li>
-              <li>A concrete architecture for closed-loop self-repair in physical AI systems, moving beyond black-box quality scores to explainable, actionable failure diagnosis.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.13901" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Intermittent swimming promotes the energy efficiency of fish-like robot movements</h3>
-              <span class="digest-source">Robohub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>EPFL Biorobotics Laboratory research shows fish-like robots that swim intermittently (burst-and-glide) rather than continuously achieve better energy efficiency, mirroring a strategy nature already evolved.</li>
-              <li>Directly applicable to extending battery life and operating duration for underwater or fish-inspired robots by adopting biologically-inspired intermittent locomotion instead of constant-thrust swimming.</li>
-            </ul>
-            <a href="https://robohub.org/intermittent-swimming-promotes-the-energy-efficiency-of-fish-like-robot-movements/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.17146" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
       <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Exstrike Real TIme Vision &amp; Safety infrastructure for Autonomous Systems &amp; Tactical Robotics</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>Drones With Claws Perch on Arctic Icebergs</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A real-time safety-filter SDK using Control Barrier Functions plus computer vision, built as a drop-in layer to prevent physical crashes when autonomous robots, drones, or AI navigation models fail.</li>
-              <li>Targeted at robotics, drones, and tactical ground vehicles - a reusable safety-layer pattern (CBF + vision) worth evaluating for any autonomous navigation stack that currently lacks a hard safety filter.</li>
+              <li>Universite de Sherbrooke researchers built the &#x27;Ice Dart,&#x27; a 2.65 kg drone with four X-shaped legs, friction shock absorbers, and retractable ice spines (two per foot) that deploy passively, like a cat&#x27;s claws.</li>
+              <li>Field-tested on Iceland&#x27;s Fjallsjokull glacier: 100% landing success on slopes up to 58 degrees, at landing speeds up to 3 m/s, in winds up to 30 km/h.</li>
+              <li>Lets researchers perch and monitor glaciers/icebergs for extended periods instead of relying on brief aerial flyover passes; published in IEEE Transactions on Field Robotics.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/exstrike-real-time-vision-safety-infrastructure-for-autonomous-systems-tactical-robotics/57440" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://spectrum.ieee.org/arctic-iceberg-drones" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Generate 1M strictly-optimal robot paths in ~7 s of compute — free API tier for simulation &amp; training datasets</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>Is Shipyard Welding the Right First Job for Humanoid Robots?</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Offers ground-truth-optimal path generation (versus the roughly 5ms-per-path cost of A* on a 1M-cell map) via a free API tier, aimed at Gazebo warehouse-scene simulation, dataset generation, and benchmarking learned planners against exact BFS references.</li>
-              <li>Useful as an external ground-truth generator for evaluating any learned path-planning policy without building a custom optimal-solver pipeline.</li>
+              <li>Persona AI is targeting linear welding in shipbuilding -- hundreds of kilometers of repetitive, millimeter-precision welds per ship -- as a narrow, high-volume beachhead with no direct humanoid competitors.</li>
+              <li>Partnered with HD Hyundai (world&#x27;s largest shipbuilder) and POSCO (3rd-largest steel producer) in South Korea, targeting customers who can support hundreds of robots per site.</li>
+              <li>Bipedal form factor is deliberate: shipyards span hundreds of meters with spars to step over, requiring ground-level, overhead, and porthole access; scaling will require tens of thousands of hours of expert demonstration data plus high-fidelity simulation.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/generate-1m-strictly-optimal-robot-paths-in-7-s-of-compute-free-api-tier-for-simulation-training-datasets/57439" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://spectrum.ieee.org/persona-ai-humanoid-robot-welding" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Roboto Agents: agentic triage, root cause analysis, and data curation for rosbags and MCAP</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>FORT Robotics to take safety stack public via SPAC merger</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An AI agent that investigates robotics log data (rosbags/MCAP) to triage failures and find root causes, validated with several robotics teams after being previewed at ROSCon.</li>
-              <li>A concrete example of applying LLM agents to robotics-specific observability and debugging data, relevant to any team looking to automate failure analysis on fleet logs.</li>
+              <li>Merging with Newbury Street II Acquisition Corp at a $556.6M combined valuation ($500M pre-money), netting roughly $182M cash to the balance sheet; expected to close Q4 2026 as FORT Robotics Holdings Inc. on Nasdaq.</li>
+              <li>Its &#x27;Trust Layer&#x27; safety platform (hardware/firmware + cloud telemetry/AI + APIs) is certified to Safety Integrity Level 3 under IEC 61508 and backed by 25 patents, letting multi-vendor robot fleets work safely alongside humans.</li>
+              <li>Already at scale: 600 customers and 19,500+ deployed units, with 2025 revenue up 62% year-over-year and 91% growth among accounts spending over $100K annually.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/roboto-agents-agentic-triage-root-cause-analysis-and-data-curation-for-rosbags-and-mcap/57438" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/fort-robotics-takes-safety-stack-public-via-spac-merger/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LoRa / Sub-GHz Antenna Optimization: From Ceramic to FPC</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>Gravis Robotics raises $200M for autonomous construction</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A detailed RF design writeup on optimizing a LoRa/GNSS antenna for a compact handheld navigation and communication terminal, walking through the tradeoffs of moving from a ceramic antenna to a flexible printed circuit (FPC) antenna.</li>
-              <li>Practical hardware-design reference for anyone building compact wireless-enabled robotics or field hardware where antenna performance is constrained by device size.</li>
+              <li>SoftBank led a $200M Series A -- described as the largest funding round in construction robotics history -- for Gravis&#x27;s &#x27;Gravis Rack,&#x27; a retrofit autonomy kit for excavators.</li>
+              <li>Compatible across nine major OEM brands (Caterpillar, Case, Develon, John Deere, JCB, Hitachi, Sumitomo, Yanmar, Volvo), combining simulated training with real-time sensing to handle unpredictable jobsite and subterranean forces.</li>
+              <li>Already operating on four continents, including a UK government-backed $8M CAM Pathfinder project, with claimed productivity gains up to 30% over peak manual operation.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vqm6wp/lora_subghz_antenna_optimization_from_ceramic_to/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/gravis-robotics-raises-200m-autonomous-construction/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>How Generalist uses human demonstration data for robot learning</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Builds on the Universal Manipulation Interface (UMI, from Toyota Research Institute, Columbia, and Stanford): humans operate puppet-like end effectors with GoPro cameras to generate demonstration data for robot foundation models.</li>
+              <li>Remarkably data-efficient -- a tape-dispenser task needed just 2 hours of human demo data plus 4 minutes of on-robot refinement to reach 10/10 consecutive successes.</li>
+              <li>Policies transfer across hardware (Universal Robots arms folding boxes, Flexiv arms repairing vacuums) and exhibit recovery behaviors, like handling dropped objects, that weren&#x27;t explicitly present in the training data.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/how-generalist-uses-human-demonstration-data-robot-learning/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Hexagon starts training AEON humanoid robots at Schaeffler factories</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Hexagon Robotics and Schaeffler opened a &#x27;Humanoid Gym&#x27; in Germany running a Train-Validate-Deploy pipeline, using imitation learning plus repeated execution on real manufacturing tasks pulled from Schaeffler&#x27;s factories.</li>
+              <li>Plan is to deploy at least 1,000 AEON humanoids across Schaeffler manufacturing workflows within six months of this training milestone.</li>
+              <li>Schaeffler sits on both sides of the deal -- training AEON as a customer while also supplying actuator technology to Hexagon as a component partner, building on their April 2026 partnership.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/08/19/hexagon-starts-training-aeon-humanoid-robots-at-schaeffler-factories/104280/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
