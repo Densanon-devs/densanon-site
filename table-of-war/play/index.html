@@ -45,6 +45,12 @@
   #fxlayer { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 7; overflow: visible; }
   /* Explosions. A sibling of #fxlayer rather than part of it, because that one is an SVG and these are
      sprite-sheet divs. Both sit inside #board, so they pan and zoom with the grid. */
+  .dbgslider { width: 100%; height: 22px; -webkit-appearance: none; appearance: none; background: none; cursor: pointer; }
+  .dbgslider::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: linear-gradient(#20242e, #2c313d); border: 1px solid #454b5a; }
+  .dbgslider::-moz-range-track { height: 6px; border-radius: 3px; background: #262b35; border: 1px solid #454b5a; }
+  .dbgslider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; margin-top: -6px;
+    border-radius: 50%; background: var(--gold, #d8b23a); border: 1px solid #1a1d24; box-shadow: 0 1px 3px rgba(0,0,0,.6); }
+  .dbgslider::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--gold, #d8b23a); border: 1px solid #1a1d24; }
   #boomlayer { position: absolute; left: 0; top: 0; right: 0; bottom: 0; pointer-events: none;
     z-index: 6; overflow: visible; }
   /* 12 frames laid out horizontally, walked by one steps() animation. Sized in CELLS so the burst
@@ -55,7 +61,7 @@
     margin-left: calc(var(--bf) * -0.5); margin-top: calc(var(--bf) * -0.5);
     background-image: url(assets/fx/explosion.png); background-repeat: no-repeat;
     background-size: calc(var(--bf) * 12) var(--bf); will-change: background-position;
-    animation: boomsheet 560ms steps(12) forwards; }
+    animation: boomsheet var(--boomdur, 1000ms) steps(12) forwards; }   /* ~83ms a frame at the default */
   /* PIXEL steps, not percentages, and the difference is the whole effect. A percentage
      background-position aligns that % of the IMAGE with the same % of the BOX, so on a 12-frame strip
      the frame edges land on multiples of 100/11 = 9.09% — while steps(12) from 0% to 100% lands on
@@ -2493,7 +2499,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-CQn78vPK.js"></script>
+  <script type="module" crossorigin src="./assets/index-D-ss5AjE.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2576,7 +2582,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.70';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.72';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -3652,6 +3658,20 @@ function showSettings() {
         : `<button class="setbtn dbg" disabled>★ Promote a unit — select one on the board first</button>`) : ''}
       ${(S && (S.mode === 'map' || S.board)) ? `<button class="setbtn dbg" onclick="closeOv('ovSettings');showRunForecast()">🗺 Run forecast — bosses, elites &amp; jump to any node ▸</button>` : ''}
       <button class="setbtn dbg" onclick="perfMeter();showSettings()">${_perfOn ? '◉' : '○'} Frame-time meter — what the display is actually managing</button>
+      <div style="margin-top:12px"><b style="color:#7fbfff">Animation tuner</b>
+        <div class="d" style="margin:2px 0 6px;line-height:1.5">Play a sprite effect on demand and dial its speed. The value is saved and takes effect immediately.</div>
+        ${Object.entries(FX_TUNE).map(([k, fx]) => `
+        <div style="margin-top:8px">
+          <div class="d" style="margin-bottom:4px">${fx.label} — <span id="fxMs_${k}" class="gold">${fx.get()}ms</span>
+            for ${fx.frames} frames <span style="opacity:.6">(default ${fx.def()})</span></div>
+          <input id="boomMsSlider" class="dbgslider" type="range" min="200" max="2400" step="50" value="${fx.get()}"
+                 oninput="FX_TUNE['${k}'].set(this.value)" aria-label="${fx.label} duration">
+          <div style="display:flex;gap:6px;margin-top:6px">
+            <button class="setbtn dbg" style="flex:1" onclick="FX_TUNE['${k}'].play()">▶ Preview</button>
+            <button class="setbtn dbg" style="flex:0 0 auto" onclick="FX_TUNE['${k}'].set(FX_TUNE['${k}'].def());showSettings()">Reset</button>
+          </div>
+        </div>`).join('')}
+      </div>
     </div>` : ''}
     </div>
     </div><div class="ovclose"><button class="ibtn" onclick="closeOv('ovSettings')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
@@ -6706,6 +6726,46 @@ function fxLayer() {
   svg.setAttribute('width', board.offsetWidth); svg.setAttribute('height', board.offsetHeight);
   return svg;
 }
+/** How long one burst takes, in ms. Persisted, and read by both the CSS and the replay's backstop so
+ *  the two can never disagree about how long an explosion lasts. */
+const BOOM_MS_DEFAULT = 1000;
+function boomMs() {
+  const v = Number(localStorage.getItem('dc_boom_ms'));
+  return Number.isFinite(v) && v >= 200 && v <= 3000 ? v : BOOM_MS_DEFAULT;
+}
+function setBoomMs(ms) {
+  const v = Math.max(200, Math.min(3000, Math.round(Number(ms) || BOOM_MS_DEFAULT)));
+  try { localStorage.setItem('dc_boom_ms', String(v)); } catch (e) {}
+  applyBoomMs();
+  const out = document.getElementById('fxMs_explosion');
+  if (out) out.textContent = v + 'ms';
+}
+function applyBoomMs() { document.documentElement.style.setProperty('--boomdur', boomMs() + 'ms'); }
+/** The animation tuner's registry.
+ *
+ *  One entry per sprite effect: where its duration lives, what it defaults to, and how to fire one on
+ *  the board. The explosion is the only member today; the point of the shape is that the next effect
+ *  is an entry here rather than another copy of a slider, a persisted setting, a preview button and a
+ *  backstop that has to agree with all three. */
+const FX_TUNE = {
+  explosion: {
+    label: 'Explosion smoke',
+    frames: 12,
+    get: boomMs, set: setBoomMs, def: () => BOOM_MS_DEFAULT,
+    play: () => boomPreview(),
+  },
+};
+/** Fire one off in the middle of the board so the slider can be judged without waiting for a shell. */
+function boomPreview() {
+  const cells = (S && S.board && S.board.cells) ? S.board.cells.filter(c => c.vis !== false) : [];
+  if (!cells.length) { toast('Open a battle to preview it on the board'); return; }
+  const mid = cells[Math.floor(cells.length / 2)];
+  const ring = [];
+  for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) ring.push([mid.x + dx, mid.y + dy]);
+  closeOv('ovSettings');
+  Sfx.play('explode_large');
+  playBooms(ring);
+}
 function boomLayer() {
   const board = $('#board'); if (!board) return null;
   let el = board.querySelector('#boomlayer');
@@ -6742,7 +6802,10 @@ function playBooms(tiles) {
     let done = false;
     const finish = () => { if (done) return; done = true; for (const d of live) d.remove(); res(); };
     live[0].addEventListener('animationend', finish, { once: true });
-    setTimeout(finish, 900);          // backstop: a dropped animationend must not stall the replay
+    // Backstop for a dropped animationend. It READS the live duration rather than hardcoding one: the
+    // debug slider can push the burst past any fixed timer, and a backstop that fires first would
+    // truncate every explosion while looking like the animation itself was broken.
+    setTimeout(finish, boomMs() + 400);
   });
 }
 function cellCenter(x, y) {
@@ -6811,11 +6874,15 @@ async function playBlast(ev) {
   }
   // a wide blast is a different event from a single shell landing
   Sfx.play((ev.tiles || []).length > 3 ? 'explode_large' : 'explode_small'); haptic(30);
-  // The burst plays on every caught tile SIMULTANEOUSLY, and the replay waits for it: the damage
-  // badges that follow are the consequence, so they should land after the shell does, not through it.
-  // A single-tile strike still detonates — `tiles` may only carry the impact square, or be empty.
-  const hit = (ev.tiles && ev.tiles.length) ? ev.tiles : (ev.center ? [ev.center] : []);
-  await playBooms(hit);
+  // The burst plays across the blast's whole FOOTPRINT simultaneously, and the replay waits for it:
+  // the damage badges that follow are the consequence, so they land after the shell does rather than
+  // through it. `area` is the ground the explosion covers; `tiles` is only the impact square plus
+  // whoever was caught, so using it meant shelling empty ground bloomed a single puff on the centre
+  // and nothing on the eight tiles that were just as much inside the blast.
+  const foot = (ev.area && ev.area.length) ? ev.area
+             : (ev.tiles && ev.tiles.length) ? ev.tiles
+             : (ev.center ? [ev.center] : []);
+  await playBooms(foot);
 }
 
 async function animateEvents(events, finalR) {
@@ -9316,7 +9383,7 @@ initWheelZoom();
 initDragPan();
 initZoomKeys();
 initHotkeys();
-window.__boot = () => { _applyOrient(); const p = refresh(); setTimeout(checkForUpdate, 2500); return p; };   // src/main.ts wires the local API, then calls this; returns the refresh promise so callers/tests can await first paint; update check runs once, non-blocking
+window.__boot = () => { _applyOrient(); applyBoomMs(); const p = refresh(); setTimeout(checkForUpdate, 2500); return p; };   // src/main.ts wires the local API, then calls this; returns the refresh promise so callers/tests can await first paint; update check runs once, non-blocking
 </script>
 </body>
 </html>
