@@ -43,6 +43,20 @@
      created. Pan or zoom during the ~500ms it is in flight and the board slid out from under it, so
      the arrow visibly detached from both pieces. Sits above #intentfx (z 6). */
   #fxlayer { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 7; overflow: visible; }
+  /* Explosions. A sibling of #fxlayer rather than part of it, because that one is an SVG and these are
+     sprite-sheet divs. Both sit inside #board, so they pan and zoom with the grid. */
+  #boomlayer { position: absolute; left: 0; top: 0; right: 0; bottom: 0; pointer-events: none;
+    z-index: 6; overflow: visible; }
+  /* 12 frames laid out horizontally, walked by one steps() animation. Sized in CELLS so the burst
+     stays the same size relative to the board at every zoom level, and drawn larger than its tile
+     because an explosion that stops exactly at the tile edge reads as a square. */
+  .boom { position: absolute; width: calc(var(--cell) * 1.9); height: calc(var(--cell) * 1.9);
+    margin-left: calc(var(--cell) * -0.95); margin-top: calc(var(--cell) * -0.95);
+    background-image: url(assets/fx/explosion.png); background-repeat: no-repeat;
+    background-size: 1200% 100%; will-change: background-position;
+    animation: boomsheet 560ms steps(12) forwards; }
+  @keyframes boomsheet { from { background-position-x: 0%; } to { background-position-x: 100%; } }
+  @media (prefers-reduced-motion: reduce) { .boom { animation-duration: 1ms; opacity: .5; } }
 
   /* HUD */
   /* the whole HUD is ONE horizontal bar (scrolls if it can't fit); medals live below it */
@@ -766,6 +780,20 @@
       url(assets/ui/frame5/r.png) 100% center/var(--bt) auto repeat-y,
       url(assets/ui/frame5/cs.png) center/150px 150px repeat; }
   #coach.show { display: block; }
+  /* Card inspect: the zoomed card flanked by step arrows. Chevrons are drawn rather than art, so they
+     inherit the "no plate, no border" treatment the other floating controls use. The row is wide enough
+     that the arrows sit OFF the card — tapping one must never be mistaken for tapping the card. */
+  .catrow { display: flex; align-items: center; justify-content: center; gap: 4px; }
+  .catnav { background: none; border: none; box-shadow: none; border-radius: 0; padding: 10px 6px;
+    cursor: pointer; flex: 0 0 auto; line-height: 0; -webkit-tap-highlight-color: transparent; }
+  .catnav.off { opacity: .18; cursor: default; }            /* at the end of the grid — visible, inert */
+  .catnav .chev { display: inline-block; width: 15px; height: 15px; border-top: 3px solid #d8d2be;
+    border-right: 3px solid #d8d2be; filter: drop-shadow(0 1px 2px rgba(0,0,0,.8)); }
+  .catnav .chev.l { transform: rotate(-135deg); }
+  .catnav .chev.r { transform: rotate(45deg); }
+  .catnav:not(.off):hover .chev, .catnav:not(.off):focus-visible .chev { border-color: var(--gold); }
+  #catcard { touch-action: pan-y; }                          /* let a vertical drag still scroll */
+
   #coach .ct { font-size: 13px; line-height: 1.5; color: #ede6cd; }
   #coach .ch { font: 700 12px var(--f-head); color: var(--gold); letter-spacing:.5px; text-transform:uppercase; margin-bottom:3px; }
   #coach .cbtn { text-align: center; margin-top: 11px; }
@@ -790,11 +818,17 @@
     background: linear-gradient(#241a17, #14100e); border: 2px solid var(--pc, #c0392b);
     border-radius: 11px; padding: 10px 14px; box-shadow: 0 8px 26px rgba(0,0,0,.7); }
   #bossSay.show { display: flex; animation: bosssayin .3s ease-out; }
-  #bossSay .bsFace { flex: 0 0 auto; width: 46px; height: 46px; border-radius: 9px;
+  /* The boss art is a full framed illustration, and at 46px it was reduced to an unreadable chip. It
+     is the one moment the enemy commander is on screen with something to say, so give it room. */
+  #bossSay .bsFace { flex: 0 0 auto; width: 88px; height: 88px; border-radius: 9px; overflow: hidden;
     background: radial-gradient(circle at 40% 35%, #3a2b28, #150f0d); border: 1px solid var(--pc, #c0392b);
-    display: flex; align-items: center; justify-content: center; font-size: 26px; }
-  #bossSay .bsName { font: 700 12px var(--f-head); letter-spacing: .6px; text-transform: uppercase; color: var(--pc, #d8695c); }
-  #bossSay .bsText { font-size: 14px; line-height: 1.4; color: #efe6d6; margin-top: 2px; font-style: italic; }
+    display: flex; align-items: center; justify-content: center; font-size: 44px; }
+  /* Fill the slot rather than letterbox inside it — these are portraits, and `cover` on a square crop
+     keeps the face while dropping the frame's dead margin. */
+  #bossSay .bsFace img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (max-width: 520px) { #bossSay .bsFace { width: 64px; height: 64px; font-size: 32px; } }
+  #bossSay .bsName { font: 700 13px var(--f-head); letter-spacing: .6px; text-transform: uppercase; color: var(--pc, #d8695c); }
+  #bossSay .bsText { font-size: 15px; line-height: 1.45; color: #efe6d6; margin-top: 3px; font-style: italic; }
   @keyframes bosssayin { from { opacity:0; transform: translate(-50%, -12px) scale(.96); } to { opacity:1; transform: translate(-50%,0) scale(1); } }
   /* achievement unlock — trophy + comical flavor line */
   #achPop { position: fixed; left: 50%; top: max(14px, env(safe-area-inset-top)); transform: translateX(-50%);
@@ -2450,7 +2484,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-D4ka7g7G.js"></script>
+  <script type="module" crossorigin src="./assets/index-CQn78vPK.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2533,7 +2567,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.68';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.69';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -4724,18 +4758,75 @@ function cardCell(c){                       // one card tile in the collection g
   return framedTile(c, `showCatCard('${c.id}')`, { dim: c.owned ? '' : 'seen' });
 }
 let _catUp = false;
+/** The ids on screen behind the inspect panel, in the order they are DISPLAYED.
+ *
+ *  Read out of the DOM rather than rebuilt from the data. The collection interleaves commander shelves,
+ *  rarity groups and curses, the deck view sorts differently again, and a pile another way — rebuilding
+ *  that order in a second place is how "next card" starts disagreeing with the grid you are looking at.
+ *  Locked tiles carry no onclick and so are skipped, which is right: you cannot inspect them either. */
+function _visibleCardOrder(){
+  for (const sel of ['#ovPile', '#ovDeck', '#ovCards']) {
+    const ov = document.querySelector(sel);
+    if (!ov || !ov.classList.contains('show')) continue;
+    // No '(' in the selector: jsdom's CSS engine silently matches nothing on an unescaped paren inside
+    // an attribute substring, which made this return an empty order and the arrows never appear.
+    const ids = [...ov.querySelectorAll('[onclick*="showCatCard"]')]
+      .map(el => ((el.getAttribute('onclick') || '').match(/showCatCard\('([^']+)'/) || [])[1])
+      .filter(Boolean);
+    if (ids.length) return ids;
+  }
+  return [];
+}
+let _catOrder = [], _catShown = null;
+/** Step to the neighbouring card in the grid. Clamped, not wrapped — running off the end of the
+ *  collection and landing back at the start reads as a glitch rather than a feature. */
+function catStep(d){
+  if (!_catOrder.length) return;
+  const i = _catOrder.indexOf(_catShown);
+  const j = i < 0 ? 0 : i + d;
+  if (j < 0 || j >= _catOrder.length) return;
+  _catUp = false;                       // the next card is its own card; do not carry an upgrade toggle
+  showCatCard(_catOrder[j]);
+}
+/** Swipe the zoomed card left/right. Threshold is generous and axis-locked: a vertical drag is a
+ *  scroll, and a trackpad or thumb never travels in a perfectly straight line. */
+function catSwipe(el){
+  let x0 = null, y0 = null;
+  el.addEventListener('pointerdown', e => { x0 = e.clientX; y0 = e.clientY; });
+  el.addEventListener('pointerup', e => {
+    if (x0 === null) return;
+    const dx = e.clientX - x0, dy = e.clientY - y0;
+    x0 = null;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) catStep(dx < 0 ? 1 : -1);
+  });
+  el.addEventListener('pointercancel', () => { x0 = null; });
+}
 function showCatCard(id, up){
   const c = _catCards[id]; if (!c) return; if (up === undefined) _catUp = false; Sfx.play('ui_tap');
+  if (up === undefined) { _catOrder = _visibleCardOrder(); }   // a fresh open re-reads the grid
+  _catShown = id;
+  const _i = _catOrder.indexOf(id);
+  const hasPrev = _i > 0, hasNext = _i >= 0 && _i < _catOrder.length - 1;
+  const arrow = (dir, on) => `<button class="catnav ${on ? '' : 'off'}" ${on ? `onclick="catStep(${dir})"` : 'disabled'}
+      aria-label="${dir < 0 ? 'Previous' : 'Next'} card"><span class="chev ${dir < 0 ? 'l' : 'r'}"></span></button>`;
   const canUp = c.up_text || c.up_desc, showUp = _catUp && canUp;
   // The upgraded view composites like everything else — there is no pre-baked _up.webp any more. It is
   // usually already cached: warmFaces warms both faces of every card in a run's deck at battle start
   // and on deck-view open, so the flip is a cache hit rather than a draw.
   const view = showUp ? upgradedView(c) : c;
-  $('#ovInspect').innerHTML = oframe(`<div style="text-align:center;margin:4px 0 8px" class="${showUp?'upgwrap':''}">${frameCardHTML(view, 220)}</div>
+  const counter = _catOrder.length > 1 && _i >= 0
+    ? `<div class="d" style="font-size:11px;margin-top:2px">${_i + 1} / ${_catOrder.length}</div>` : '';
+  $('#ovInspect').innerHTML = oframe(`<div class="catrow">
+      ${arrow(-1, hasPrev)}
+      <div id="catcard" style="text-align:center;margin:4px 0 8px" class="${showUp?'upgwrap':''}">${frameCardHTML(view, 220)}</div>
+      ${arrow(1, hasNext)}
+    </div>${counter}
     <div style="display:flex;gap:8px;justify-content:center;align-items:center">
       ${canUp ? ibtn('view_upgrade', "_catUp="+(!showUp)+";showCatCard('"+id+"',1)", {cls: showUp?'act':''}) : ''}
       ${ibtn('close', "closeOv('ovInspect')")}</div>`);
   $('#ovInspect').classList.add('show');
+  const card = document.getElementById('catcard');
+  if (card) catSwipe(card);
 }
 function cardHeader(label, col, own, total){
   return ocap(`<span style="font-size:15px">${steelText(label)}</span> <span style="font-size:13px">${steelText(own+'/'+total)}</span>`);
@@ -6606,6 +6697,45 @@ function fxLayer() {
   svg.setAttribute('width', board.offsetWidth); svg.setAttribute('height', board.offsetHeight);
   return svg;
 }
+function boomLayer() {
+  const board = $('#board'); if (!board) return null;
+  let el = board.querySelector('#boomlayer');
+  if (!el) { el = document.createElement('div'); el.id = 'boomlayer'; board.appendChild(el); }
+  return el;
+}
+/** Detonate on EVERY tile at once and resolve when the last frame has played.
+ *
+ *  All at once, not walked outward: a rocket's splash lands as one blast, and staggering the tiles
+ *  makes a 3x3 read as nine separate shells. Fog is respected per TILE — the event ships if ANY of it
+ *  is visible, so `ev.tiles` routinely contains ground the player cannot see, and lighting those up
+ *  would draw an explosion on a tile that is still covered by cloud. */
+function playBooms(tiles) {
+  const layer = boomLayer();
+  if (!layer || !tiles || !tiles.length) return Promise.resolve();
+  const seen = (t) => {
+    const c = S.board && S.board.cells.find(k => k.x === t[0] && k.y === t[1]);
+    return !!c && c.vis !== false;
+  };
+  const live = [];
+  for (const t of tiles) {
+    if (!seen(t)) continue;
+    const p = cellCenter(t[0], t[1]);
+    if (!p) continue;
+    const d = document.createElement('div');
+    d.className = 'boom';
+    d.style.left = p.x + 'px';
+    d.style.top = p.y + 'px';
+    layer.appendChild(d);
+    live.push(d);
+  }
+  if (!live.length) return Promise.resolve();
+  return new Promise(res => {
+    let done = false;
+    const finish = () => { if (done) return; done = true; for (const d of live) d.remove(); res(); };
+    live[0].addEventListener('animationend', finish, { once: true });
+    setTimeout(finish, 900);          // backstop: a dropped animationend must not stall the replay
+  });
+}
 function cellCenter(x, y) {
   const board = $('#board');
   const cell = board && board.querySelector(`.cell[data-x="${x}"][data-y="${y}"]`);
@@ -6672,6 +6802,11 @@ async function playBlast(ev) {
   }
   // a wide blast is a different event from a single shell landing
   Sfx.play((ev.tiles || []).length > 3 ? 'explode_large' : 'explode_small'); haptic(30);
+  // The burst plays on every caught tile SIMULTANEOUSLY, and the replay waits for it: the damage
+  // badges that follow are the consequence, so they should land after the shell does, not through it.
+  // A single-tile strike still detonates — `tiles` may only carry the impact square, or be empty.
+  const hit = (ev.tiles && ev.tiles.length) ? ev.tiles : (ev.center ? [ev.center] : []);
+  await playBooms(hit);
 }
 
 async function animateEvents(events, finalR) {
@@ -7020,7 +7155,7 @@ function showBossSay(ev) {
     const el = $('#bossSay');
     if (!el) { res(); return; }
     el.style.setProperty('--pc', ev.color || '#c0392b');
-    el.innerHTML = `<div class="bsFace" style="color:${ev.color||'#c0392b'}">${bossFace(ev.bid,48)||ev.face||''}</div>
+    el.innerHTML = `<div class="bsFace" style="color:${ev.color||'#c0392b'}">${bossFace(ev.bid,88)||ev.face||''}</div>
       <div class="bsBody"><div class="bsName">${ev.name || 'Enemy Commander'}</div><div class="bsText">“${ev.text || ''}”</div></div>`;
     el.classList.add('show');
     Sfx.play('alert'); haptic(35);
@@ -9074,6 +9209,14 @@ function initHotkeys() {
     // but only one of them was reachable from the keyboard, so a keyboard player could back out of a
     // card draft and could not accept one.
     const ov = _topOverlay();
+    // Left/Right step through the cards while a card is zoomed — the keyboard equivalent of the
+    // chevrons and the swipe. Scoped to the inspect panel so the arrow keys keep their board meaning
+    // everywhere else.
+    if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && ov && ov.id === 'ovInspect' && _catOrder.length > 1) {
+      e.preventDefault();
+      catStep(e.key === 'ArrowRight' ? 1 : -1);
+      return;
+    }
     if (e.key === 'Escape') {
       e.preventDefault();
       if (ov) { closeOv(ov.id); return; }
