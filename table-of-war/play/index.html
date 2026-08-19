@@ -50,12 +50,21 @@
   /* 12 frames laid out horizontally, walked by one steps() animation. Sized in CELLS so the burst
      stays the same size relative to the board at every zoom level, and drawn larger than its tile
      because an explosion that stops exactly at the tile edge reads as a square. */
-  .boom { position: absolute; width: calc(var(--cell) * 1.9); height: calc(var(--cell) * 1.9);
-    margin-left: calc(var(--cell) * -0.95); margin-top: calc(var(--cell) * -0.95);
+  .boom { --bf: calc(var(--cell) * 1.9);            /* one frame == the element's own edge */
+    position: absolute; width: var(--bf); height: var(--bf);
+    margin-left: calc(var(--bf) * -0.5); margin-top: calc(var(--bf) * -0.5);
     background-image: url(assets/fx/explosion.png); background-repeat: no-repeat;
-    background-size: 1200% 100%; will-change: background-position;
+    background-size: calc(var(--bf) * 12) var(--bf); will-change: background-position;
     animation: boomsheet 560ms steps(12) forwards; }
-  @keyframes boomsheet { from { background-position-x: 0%; } to { background-position-x: 100%; } }
+  /* PIXEL steps, not percentages, and the difference is the whole effect. A percentage
+     background-position aligns that % of the IMAGE with the same % of the BOX, so on a 12-frame strip
+     the frame edges land on multiples of 100/11 = 9.09% — while steps(12) from 0% to 100% lands on
+     multiples of 8.33%. Every step showed two half-frames and the burst slid sideways like a strip of
+     paper pulled past a slot. Stepping by the frame WIDTH puts each step exactly on a frame. */
+  @keyframes boomsheet {
+    from { background-position-x: 0px; }
+    to   { background-position-x: calc(var(--bf) * -12); }
+  }
   @media (prefers-reduced-motion: reduce) { .boom { animation-duration: 1ms; opacity: .5; } }
 
   /* HUD */
@@ -2567,7 +2576,7 @@
 
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.69';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.70';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
