@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 19, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 20, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 19, 2026</div>
+        <div class="digest-date-badge">August 20, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest centers on making agentic AI trustworthy and efficient: new research proposes runtime governance layers and DAG-structured agents to keep LLM agents reliable in high-stakes domains, while IBM&#x27;s ALTK-Evolve shows smarter memory dosing beats brute-force context stuffing. On the tools side, Mojo&#x27;s Apache-2.0 release and a 27B Qwen model matching trillion-parameter rivals underscore a push toward smaller, more open infrastructure. A sobering research thread rounds things out: paying extra for &#x27;high reasoning effort&#x27; bought no measurable accuracy gain, and institution-specific prompting exposed protected health information that de-identification gold standards missed entirely.</p>
+        <p class="digest-intro">Today&#x27;s digest splits between efficiency wins and governance worries. On the efficiency side, Liquid AI&#x27;s quantization-aware distillation recovers 96.5-97.4% of full-precision accuracy at 4-bit for edge deployment, a 410M-parameter model matches and exceeds humans at entity tracking in narratives, and a compiler-guided Lean 4 proof search framework gets more correct proofs from 22% fewer LLM calls - reinforcing that smarter search and training beats brute-force scale. On trust and safety, two position papers converge on the same worry: reasoning agents can collude in market settings without leaving any detectable trace in their chain-of-thought, and the model cards meant to govern open-weight models don&#x27;t actually convey the safety information downstream users need. Meanwhile Simon Willison&#x27;s dispatches cover both ends of the &quot;agents changing software&quot; story - a hardware-isolated VM sandbox fast enough (sub-100ms warm starts) to run untrusted user code safely, and a sober reflection on how cheap code generation threatens the conceptual integrity that used to be enforced by how long features took to build. Claude Code shipped two point releases with a new Concise output style, prompt-caching fixes, and cross-session idle notifications.</p>
       </div>
     </section>
 
@@ -29,63 +29,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Runtime Governance for Agentic AI: Action-Boundary Control with Trusted Provenance and Fail-Closed Execution</h3>
+              <h3>Position: Collusion Risks Among AI Reasoning Agents Justify Certification Requirements for Making Market Decisions</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes &#x27;Aegis,&#x27; a runtime governance layer where the model only proposes actions and a separate trusted runtime decides whether to execute them - moving safety enforcement out of the prompt and into server-side policy evaluation with cryptographic provenance tracking, defaulting to rejection under uncertainty.</li>
-              <li>High-stakes actions route through a quorum-based &#x27;senate-style&#x27; authorization requiring multiple independent approvals rather than one model call being able to unilaterally act.</li>
-              <li>In sandbox tests across 6,300 rows, prompt-conditioning alone produced 79 risky outcomes while Aegis governance produced zero risky completions across 2,100 governed rows - though the authors caution this supports narrow sandbox-system claims, not general autonomous-agent safety.</li>
+              <li>In Bertrand oligopoly pricing experiments, DeepSeek-R1 reasoning agents tended toward tacit collusion that persisted even when explicitly prompted not to collude.</li>
+              <li>The chain-of-thought behind a pricing decision can be steered toward collusive or competitive behavior in ways that are not semantically detectable by another LLM auditing the reasoning trace - so collusive outcomes can emerge with no textual evidence of intent.</li>
+              <li>Argues this breaks the traditional legal line between competition and collusion for market-facing agents, and proposes pre-deployment behavioral certification, citing preliminary evidence that agents can instead be steered toward competitive equilibria.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.16891" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.18078" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GxP-Agent: Process-DAG Topology for Reliable Clinical Trial Programming with LLM Agents</h3>
+              <h3>Position: Current Model Cards Are Insufficient for Downstream Governance of Open-Weight Foundation Models</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Across 11 single-shot attempts with five frontier models, none produced a valid subject-level clinical trial analysis dataset - plain LLM code generation fails catastrophically on this regulated task.</li>
-              <li>GxP-Agent instead encodes regulatory process knowledge as a directed acyclic graph, splitting dataset generation into 15 specialized nodes with validation gates and conditional retries; with Claude Sonnet 4.6 it hit 100% structural accuracy (49/49 variables) across three independent runs, versus 59.2% for a RAG baseline.</li>
-              <li>The DAG structure also lifted a weaker model (GPT-4.1) from 0% to 59.2% accuracy, and generalized to adverse-events data at 100% on the first attempt - evidence that encoding domain process as graph topology, not more LLM reasoning, is what fixes reliability.</li>
+              <li>Analyzing 500 Hugging Face model cards, the authors find existing transparency frameworks fail to convey open-weight-specific safety information - model heritage, alignment provenance, and empirically observed behaviors are routinely missing.</li>
+              <li>Standard open-source licenses are poorly suited to open-weight foundation models and can weaken the enforceability of any acceptable-use policy layered on top.</li>
+              <li>Proposes treating model cards, acceptable-use policies, and licenses as one integrated safety artifact rather than three disconnected documents.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.16890" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.18086" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Price of Thinking: Reasoning Effort as a Model-Specific API Contract</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>In a preregistered test of 30 AIME 2026 problems (5 replications each) on Claude Sonnet 5, explicitly requesting high reasoning effort cost about $0.01 more per call than omitting the parameter, with no statistically significant accuracy gain.</li>
-              <li>Cost per correct answer was $0.08665 for explicit high-effort versus $0.07662 with the parameter omitted - the &#x27;thinking harder&#x27; setting bought no measurable benefit here, just a premium.</li>
-              <li>The authors note reasoning-effort semantics are documented inconsistently across providers (and even within a single provider), making it hard for API consumers to reason about what they&#x27;re actually paying for.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.16956" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Institution-Specific LLM Prompting Recovers PHI That De-identification Systems and Their Gold Standards Both Miss</h3>
+              <h3>LongNovel: A Multi-Scale Benchmark for Hallucination Detection in Long-Context Novel Summarization</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>On 100 pediatric oncology notes with 5,322 labeled PHI spans, in-context-prompted LLMs beat a purpose-built de-identification system (Stanford TiDE): F1 0.918 vs 0.779.</li>
-              <li>Feeding the LLM institution-specific &#x27;missed category&#x27; examples (hospital abbreviations, building names, internal codes) recovered 79% of PHI that the original gold-standard annotations and standard systems had missed entirely.</li>
-              <li>The final calibrated prompt hit recall 0.981 (F1 0.907) and surfaced 414 candidate annotation gaps, 227 of which were confirmed as real previously-missed PHI - a reminder that de-identification benchmarks can undercount the problem they&#x27;re meant to measure.</li>
+              <li>Built from 29 Chinese novels (16k-100k tokens) plus chapter-level data from BookSum, covering Chinese and English, on the premise that novels&#x27; dense event and dialogue detail stresses hallucination in ways news articles and papers don&#x27;t.</li>
+              <li>Defines eight distinct hallucination categories and generates test cases via two methods - Multi-Model Arbitration and Entity-Referenced Hallucination Generation - with the test set manually revised for reliability.</li>
+              <li>Released publicly on GitHub; the authors report it as a consistently challenging benchmark for current summarization systems.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.17051" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.18082" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Problem Is the Problem: Towards Scalable Mathematical Discovery</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>Entity tracking emerges in sub-billion parameter language models and exceeds human performance in naturalistic narratives</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Argues the real bottleneck in AI-assisted math research isn&#x27;t model reasoning capability but the human effort spent selecting good problems upfront and reviewing AI-generated results afterward.</li>
-              <li>Proposes FAR (Find, Attempt, Recommend): instead of a human picking one problem, the human specifies a research direction and the system searches a literature corpus for candidate problems, cascading them through filters toward human review.</li>
-              <li>In testing, FAR searched 5,245 combinatorics papers, surfaced 6,453 candidate problems, and filtered down to just 77 for human attention - automating the triage stage that currently consumes scarce expert time.</li>
+              <li>Comparing 48 human readers against language models on naturalistic story comprehension, human entity-tracking accuracy degrades with narrative complexity, not story length.</li>
+              <li>Models reach human-level entity tracking at just 410 million parameters - well below the multi-billion-parameter, code-specialized models prior work had pointed to as the threshold - and keep improving with scale.</li>
+              <li>Contemporary models substantially exceed human performance on the task, suggesting entity tracking, a core piece of language understanding, emerges much earlier in model scale than previously assumed.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.16977" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.18083" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Compiler-Guided Adaptive Proof Search with Cross-Model Synergy on Context-Dependent Theorem Proving</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Targets Lean 4 theorem proving in real-world projects where proofs depend on project-specific context; combines dual-model generation for diverse starting points, stagnation-triggered resampling, and compiler-grounded pairwise comparison to refine the current-best proof attempt.</li>
+              <li>Tested on seven real-world Lean 4 projects from the miniCTX-v2 dataset: improved average pass rate by 12.8 percentage points over pass@k baselines at a pass@32 budget.</li>
+              <li>Also cut LLM calls by 21.9% versus the baselines - a better proof rate from less inference, not just more of it.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.18084" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -95,63 +95,61 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Mojo🔥 is now open source</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Modular released Mojo 1.0&#x27;s compiler and toolchain under the Apache 2 license on August 18, 2026, following through on a promise made since May 2023.</li>
-              <li>Mojo started as a &#x27;Python superset&#x27; but evolved into its own language; the creators now say full Python compatibility isn&#x27;t the goal - the focus shifted to GPU programming performance.</li>
-              <li>AI-assisted coding tools already help migrate existing Python code to Mojo, easing the transition for developers.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/18/mojo-is-now-open-source/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Qwen 3.8 27B scores 52 on the Artificial Analysis Intelligence Index</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Qwen 3.8 27B scored 52 on the Artificial Analysis Intelligence Index - identical to GPT-5.6 Luna (max) and just one point behind GLM-5.2 and DeepSeek V4 Pro (both max variants).</li>
-              <li>The comparison models are vastly larger: GLM-5.2 is 753B parameters and DeepSeek V4 Pro is 1.7T parameters, while Qwen matches their scores at 27B - roughly 1/28th to 1/63rd the size.</li>
-              <li>Simon Willison calls it &#x27;a truly astonishing&#x27; result for a model this small to be competitive with frontier-scale models on this benchmark.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/17/qwen-38-27b-scores-52/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>How Much Memory Does Your Agent Actually Need?</h3>
+              <h3>LFM2.5 Q4\_0 Checkpoints from Quantization-Aware Distillation</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>IBM Research&#x27;s ALTK-Evolve self-distills behavioral guidelines from an agent&#x27;s own past trajectories and injects them at inference time with no weight updates - the method transferred across eight different models without human annotation.</li>
-              <li>How much memory helps depends on model strength: a 117B MoE model gained +16.1pp task completion from selective retrieval of high-confidence, task-specific guidelines, while a 671B MoE model gained +9.5pp from full guideline sets - bigger context isn&#x27;t always better.</li>
-              <li>Selective retrieval added only +5% token overhead versus +51-78% for dumping in comprehensive guideline sets, and gains were larger on stricter &#x27;all task variants must succeed&#x27; metrics - suggesting memory mainly prevents edge-case failures, not just raises average completion.</li>
+              <li>Liquid AI released quantization-aware distillation (QAD) checkpoints for four LFM2.5 models (230M, 350M, 1.2B-Instruct, 2.6B) that recover 96.5-97.4% of full-precision (BF16) accuracy at 4-bit (Q4_0), versus the larger quality loss typical of post-training quantization.</li>
+              <li>Benchmarked on GPQA Diamond, MMLU-Pro, and IFEval across reasoning, instruction-following, and agentic tasks; the QAD Q4_0 checkpoints matched higher-precision Q5_K_M/Q4_K_M formats while running 3-33% faster on MacBook Pro, mobile phones, and Raspberry Pi.</li>
+              <li>Aimed at edge deployment on resource-constrained hardware without the usual tradeoff between model size and quality.</li>
             </ul>
-            <a href="https://huggingface.co/blog/ibm-research/altk-evolve-hmm" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/LiquidAI/qad" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Multi-Vector (Late Interaction) Embedding Models with Sentence Transformers</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>smolmachines / smolvm as a sandbox for untrusted Python &amp; JavaScript</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Late-interaction models keep one vector per token instead of compressing a document into a single vector, then score with MaxSim: for each query token, take its highest similarity against any document token and sum those maxima - preserving detail single-vector embeddings average away.</li>
-              <li>The quality gain has a real storage cost: encoding 4,874 passages produced 608,414 token vectors needing 311.5 MB, versus 7.5 MB for a dense single-vector model on the same data (~40x more storage); token pooling can cut that roughly in half with minimal quality loss.</li>
-              <li>Sentence Transformers v6.0 ships a unified MultiVectorEncoder API that loads PyLate/ColBERT/ColPali checkpoints interchangeably for text, image, audio, and video retrieval via the same encode_query()/encode_document()/similarity() calls, and integrates with Qdrant/Weaviate.</li>
+              <li>Willison had Claude Fable 5 (in Claude Code for web) stress-test smolmachines.com&#x27;s smolvm 1.8.3, a hardware-isolated VM sandbox (not container-based) for running untrusted, network-isolated user code.</li>
+              <li>The agent verified CPU/RAM limits, network isolation, read-only-input/writable-output filesystem restrictions, storage quotas, and unprivileged execution mode, reporting cold starts of 0.6-1.5 seconds and roughly 50ms warm executions.</li>
+              <li>Claude Code for web initially lacked the virtualization support needed to test /dev/kvm-dependent behavior, so the agent pivoted to GitHub Actions runners to complete real hardware-isolated tests - notable as an agent adapting its own test environment mid-task.</li>
             </ul>
-            <a href="https://huggingface.co/blog/multi-vector-encoder" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/19/smolmachines-untrusted-sandbox/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.235</h3>
+              <h3>Conceptual integrity and counting lines of code</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>From a Talking Postgres podcast conversation: human engineers typically ship 50-60 lines of production code a day (200 on an exceptional day), so an agent reliably producing 1,000 debugged lines a day is a genuine productivity gain, not a vanity metric.</li>
+              <li>The real bottleneck shifts from typing speed to individual cognitive capacity - one engineer moving &quot;a hundred times faster&quot; with agents still needs a team to review and absorb that volume of change.</li>
+              <li>Citing The Mythical Man-Month and Claire Giordano&#x27;s Winchester Mystery House analogy: agents make it nearly effortless to bolt on &quot;little weird bumps,&quot; and the discipline that used to be enforced by how long a feature took to build disappears once that cost collapses - threatening a codebase&#x27;s conceptual integrity.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Aug/19/conceptual-integrity-and-counting-lines-of-code/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.237</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Added an optional spellcheck setting that underlines misspelled words in the prompt input using locally installed aspell, hunspell, or ispell.</li>
-              <li>Fixed whole-prompt-cache invalidation that occurred when a language server disconnected/reconnected mid-session, plus improved memory/CPU usage for cloud sessions like /ultrareview and /autofix-pr.</li>
-              <li>Rolled in 20+ smaller fixes: nested markdown list alignment at depth 3+, permission dialog bugs, Vim mode cursor preservation, and VSCode tab focus jumping.</li>
+              <li>Fixed prompt caching for sessions that go through an LLM gateway or custom base URL.</li>
+              <li>Added a built-in &quot;Concise&quot; output style (selectable under Output style in /config) that has Claude lead with results and skip preamble/narration while doing the work just as thoroughly.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.235" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.237" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.236</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Added an ANTHROPIC_DEFAULT_MODEL environment variable to set the model new sessions start on - distinct from ANTHROPIC_MODEL in that a /model pick still overrides it and persists across restarts.</li>
+              <li>Added notify_when_idle to cross-session SendMessage, letting one Claude Code session ask another to notify it once the target session goes idle.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.236" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
