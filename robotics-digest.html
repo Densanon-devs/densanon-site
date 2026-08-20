@@ -17,7 +17,7 @@
       <div class="container">
         <div class="digest-date-badge">August 20, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Unitree&#x27;s Shanghai IPO dominates the industry conversation -- a 460% first-day pop and roughly $905M raised reframes the capital calculus for every humanoid maker watching from the sidelines, from UBTech&#x27;s shakier unit economics to Agility Robotics&#x27; pending SPAC, while a second Unitree machine quietly broke human jump and sprint records as a stress test. Research leans into control robustness and agentic problem-solving: GigaBrain-WBC-0.5 predicts terrain-interaction outcomes to keep humanoids upright under implausible commands, while a Claude Code agent beat 200 human demonstrations on the classic Push-T benchmark using 46% fewer steps and zero demo data. Delivery and logistics robotics keep compounding -- Serve Robotics&#x27; Grubhub rollout and Pudu&#x27;s 2,000 kg MP2000 forklift both point at unglamorous, high-volume niches scaling fast. And UC Berkeley&#x27;s sub-$5,000 open-source 3D-printed humanoid is a reminder that the capital-intensive side of the industry isn&#x27;t the only track moving.</p>
+        <p class="digest-intro">Research leans into agentic and world-model approaches to control: an LLM coding agent (Claude Code) solves the classic Push-T manipulation benchmark from scratch with zero demonstrations, a new Behavior World Model gives humanoids terrain-aware whole-body control with a 4x jump in success on uneven ground, and an autonomous-driving planner grounds LLM reasoning in simulator rollouts to cut collisions. On the industry side, Unitree&#x27;s blockbuster Shanghai IPO (a 460% first-day pop) reopened the debate over whether any humanoid maker has real commercial traction, while Serve Robotics keeps scaling profitably on Grubhub and DoorDash and Pudu shipped a new AI-native warehouse forklift. Community picks span the practical and the spectacular: an open-source, sub-$5,000 3D-printed humanoid you can build at home, China&#x27;s expanding state-funded robot-training-center network, and Unitree pushing a humanoid past human jump and sprint records as a hardware stress test.</p>
       </div>
     </section>
 
@@ -33,9 +33,9 @@
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Positions itself as the first Behavior World Model (BWM) for humanoid whole-body control: a causal Transformer jointly predicts the next action, next state, and a distribution over feasible behavioral commands instead of just reactively tracking motion.</li>
-              <li>An automated terrain-annotation pipeline extracts 3D contact geometry from motion data at scale, teaching the model how terrain reshapes what commands are actually achievable; at deployment it flags implausible commands and adjusts them to feasible &quot;best-effort&quot; behavior rather than failing outright.</li>
-              <li>Reports 81.3% success on terrain interaction (4.3x the strongest baseline), 83.1% success under implausible commands, and 99.3% fall recovery, with policy transfer demonstrated across different robot hardware.</li>
+              <li>Introduces the first Behavior World Model for humanoid whole-body control: a causal Transformer that jointly predicts its next action, next state, and a distribution over its next latent behavior command, so the network that acts also models how the environment shapes what it can do next.</li>
+              <li>An automatic terrain-annotation pipeline recovers full 3D contact geometry from retargeted motion data, letting the policy learn how contact with terrain and objects reshapes dynamics instead of training only on flat, empty scenes.</li>
+              <li>Beats three large-scale tracker baselines across all four test regimes: 81.3% success on terrain interaction (4.3x the strongest baseline), 83.1% under implausible commands, and 99.3% fall recovery (16.8x the strongest baseline); the Unitree G1 checkpoint transfers to a Maker L01 robot with simple fine-tuning.</li>
             </ul>
             <a href="https://arxiv.org/abs/2608.18234" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
@@ -45,9 +45,9 @@
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Instead of training a diffusion policy on human demonstrations, the authors pointed an LLM coding agent (Claude Code) at the classic Push-T benchmark and had it write and iteratively refine an algorithmic solution from scratch, with zero demonstration data.</li>
-              <li>The agent-written solution hit a 100% success rate using 46% fewer steps than the best diffusion policy trained on 200 human demonstrations.</li>
-              <li>The agent then extended the benchmark on its own initiative, generating a self-authored &quot;Push-A to Push-Z&quot; curriculum and new 3D simulation setups for Franka and UR5 arms with visual feedback.</li>
+              <li>Instead of training a visuomotor imitation-learning policy on human demonstrations, the researchers prompted an LLM coding agent -- Claude Code with Fable 5 -- to write an algorithmic solution to the iconic Push-T manipulation benchmark from scratch, with zero demonstration data.</li>
+              <li>The agent found a 2D gym simulation online and ran its own simulated experiments to learn push mechanics, iteratively optimizing until it hit a 100% success rate using 46% fewer steps than the best diffusion policy trained on 200 human demonstrations.</li>
+              <li>Extended itself from Push-T to a full self-generated Push-A through Push-Z curriculum, and generated 3D cross-embodiment simulation code with visual feedback for both Franka and UR5 robot arms.</li>
             </ul>
             <a href="https://arxiv.org/abs/2608.18227" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
@@ -57,9 +57,9 @@
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets a core failure mode of using LLMs for autonomous-driving trajectory planning: hallucinated reasoning and poor numerical precision when the model reasons in free text instead of grounded dynamics.</li>
-              <li>Combines an LLM-based Effect Evaluator (structured multi-dimensional action-effect estimation) with a simulation-based Effect Grounder, then distills both into an Effect-Aware Decision Maker that guides PPO policy learning.</li>
-              <li>Across four Highway-env scenarios, reports lower collision rate and displacement error alongside higher average reward versus baselines -- pairing LLM semantic reasoning with simulator-grounded precision.</li>
+              <li>Targets a known failure mode of LLM-based autonomous-driving planners -- hallucinated reasoning and poor grounding in environment dynamics -- with a three-module closed loop: an LLM-based Effect Evaluator, a simulation-based Effect Grounder, and a PPO-based Effect-Aware Decision Maker.</li>
+              <li>The Effect Grounder uses simulator rollouts to check that the LLM&#x27;s predicted action outcomes are actually dynamics-consistent before a distiller lets them shape the policy, rather than trusting the LLM&#x27;s reasoning directly.</li>
+              <li>Across four Highway-env scenarios, reports average reductions of 0.76, 0.86, and 2.00 in collision rate, average displacement error, and final displacement error respectively, plus a 1.44 average reward gain over baselines.</li>
             </ul>
             <a href="https://arxiv.org/abs/2608.18254" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
@@ -69,9 +69,9 @@
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Models wildfire response as a joint scheduling/routing problem where new &quot;jobs&quot; are triggered by the degradation of existing ones: each ignited area has a time-bound action window, and delay lets it grow, spread, and lose value.</li>
-              <li>Proposes two solution methods -- a mixed-integer program for value optimization and a hybrid dynamic-constraint-generation model built for scalability -- validated with computational experiments and case studies for a UAV firefighting fleet.</li>
-              <li>Published in the European Journal of Operational Research with publicly released code, aimed at time-critical wildfire suppression rather than generic drone routing.</li>
+              <li>Models a scheduling/routing problem where new &#x27;jobs&#x27; are triggered by the degradation of existing ones: each ignited area has an action window, and the longer it goes unaddressed the more it spreads and loses value -- turning &#x27;a stitch in time saves nine&#x27; into an optimization objective for a UAV firefighting fleet.</li>
+              <li>Formulates a mixed-integer program to maximize total value retention across wildfire-threatened areas, plus a hybrid dynamic-constraint-generation variant to keep the model scalable.</li>
+              <li>Validated with computational experiments and a case study; the team released the full codebase for reproducibility, with the work published in the European Journal of Operational Research.</li>
             </ul>
             <a href="https://arxiv.org/abs/2608.18140" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
@@ -87,9 +87,9 @@
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Unitree&#x27;s IPO on Shanghai&#x27;s STAR Market closed up 460% on day one, raising roughly 6.1 billion yuan (~$905M); the company swung from a $1.6M loss in 2023 to $14M profit in 2024 and $41M profit in 2025, on unit sales that grew from 5 humanoids in 2023 to 5,215 in 2025 (about 70% to universities/research, under 10% commercial).</li>
-              <li>Rival UBTech (Hong Kong-listed since 2023) sold 1,079 humanoids in 2025 but posted a roughly $104M loss, leaning on consumer products like lawn mowers and pool cleaners for revenue; Agility Robotics is separately pursuing a SPAC merger at a $2.5B pre-money valuation.</li>
-              <li>Lands as the FCC moved in July 2026 to restrict U.S. imports of certain foreign-made humanoids and quadrupeds, adding a regulatory wrinkle to how far Unitree&#x27;s momentum can travel.</li>
+              <li>Unitree debuted on Shanghai&#x27;s STAR Market, raising roughly $905M (6.1 billion yuan) and closing its first trading day up 460% -- billed as the first major legged-robotics IPO.</li>
+              <li>Growth looks steep on paper (5 humanoid units sold in 2023 to 5,215 in 2025), but rivals are skeptical of real commercial traction: Ghost Robotics&#x27; CEO put Unitree&#x27;s commercial-deployment share under 10%, and roughly 70% of units reportedly went to universities and research labs.</li>
+              <li>A recent FCC restriction on imports of certain foreign-made mobile robots (including humanoids and quadrupeds) threatens Unitree&#x27;s U.S. sales, even as rivals eye their own exits -- UBTech&#x27;s 2023 Hong Kong IPO lost $104M last year, and Agility Robotics is reportedly weighing a $2.5B SPAC merger.</li>
             </ul>
             <a href="https://www.therobotreport.com/what-does-unitree-robotics-ipo-mean-for-humanoid-industry/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
@@ -99,9 +99,9 @@
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Rollout covers 100+ Grubhub merchants in Chicago and nearly 200 in Los Angeles, adding to existing Grubhub markets in Alexandria, VA, alongside Serve&#x27;s separate DoorDash partnership in D.C. and San Jose.</li>
-              <li>Q2 2026 revenue hit $3.2M (up 9% quarter-over-quarter, 404% year-over-year), with recurring revenue now over half of total revenue and advertising nearly half of food-delivery revenue.</li>
-              <li>Also launched Beacon (a power-only, cellular-connected countertop pickup device), Miami microdepots for staging/charging/maintenance, and &quot;Characters&quot; -- conversational AI-branded delivery bots like the hamburger-themed &quot;Chomp.&quot;</li>
+              <li>Serve&#x27;s sidewalk delivery robots are going live on Grubhub (a Wonder subsidiary) across Chicago (100+ merchants), Los Angeles (nearly 200 merchants), and Alexandria, VA, adding to existing DoorDash-powered markets in San Jose and Washington, D.C.</li>
+              <li>Also rolling out supporting infrastructure: a Miami microdepot for robot staging/charging/maintenance, and &#x27;Beacon,&#x27; a power-only countertop device that alerts restaurant staff when a robot arrives.</li>
+              <li>Q2 2026 revenue hit $3.2M (up 404% year-over-year), with advertising -- including AI-powered robot &#x27;Characters&#x27; like hamburger-mascot &#x27;Chomp&#x27; -- now roughly half of food-delivery revenue; Uber exited its remaining stake in Serve over the same period.</li>
             </ul>
             <a href="https://www.therobotreport.com/serve-robotics-deploys-autonomous-delivery-robots-grubhub/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
@@ -111,23 +111,29 @@
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AI-native AMR forklift rated for 2,000 kg loads, using 3D lidar and depth cameras to validate pallet size/alignment in real time and adjust its approach path on the fly.</li>
-              <li>Pallet pickup cycles as fast as 20 seconds; supports three-runner pallets, perimeter-base pallets, and customized load carriers, and can still be driven as a standard manual-powered forklift when needed.</li>
-              <li>Extends Pudu&#x27;s T Series AMR lineup into heavy palletized transport for loading docks and line-side warehouse work; integrates with distributed fleet intelligence and keeps operating through network outages.</li>
+              <li>The AI-native MP2000 moves loads up to 2,000 kg with pallet pickup and fork-in cycles as fast as 20 seconds, using 3D lidar and depth cameras to locate pallets and correct its approach path in real time.</li>
+              <li>Handles three-runner and perimeter-base pallets plus customized non-standard load carriers, validating pallet dimensions on the fly to compensate for misalignment.</li>
+              <li>Coordinates with other Pudu AMRs via distributed fleet intelligence -- local decision-making plus fleet-level coordination that keeps working through network outages -- and includes manual operator override for use as a powered forklift.</li>
             </ul>
             <a href="https://www.therobotreport.com/pudu-robotics-launches-new-mp2000-autonomous-forklift/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>X Square Robot showcases full embodied AI portfolio at WRC 2026</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Open-source, Accessible, and Customizable 3D-printed Humanoid Robot</h3>
+              <span class="digest-source">Hacker News Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Demoed its WALL-B foundation model driving six-axis logistics arms and five-finger dexterous hands (grasping, turning, tool use) alongside household tasks like flower arranging and fan disassembly/reassembly.</li>
-              <li>Logistics demo processed 1,816 parcels in one hour at over 98% accuracy -- 45% above its own stated throughput target.</li>
-              <li>Its QUANXTA Zero data-collection platform claims 1,000 &quot;body-free&quot; samples plus 100 real-robot samples match the results of 1,000 real-robot samples, at 2.33x the efficiency of teleoperated collection, with multi-sensor sync within 1ms.</li>
+              <li>Berkeley Humanoid Lite is a fully open-source humanoid platform -- hardware design, embedded code, and training framework all public -- built from parts you 3D-print on a standard desktop printer, for under $5,000 total.</li>
+              <li>Uses modular cycloidal gearboxes specifically engineered to hold up in 3D-printed plastic, addressing the durability problem that normally rules out printed actuators.</li>
+              <li>Demonstrated bipedal walking, fine manipulation (marker writing, solving a Rubik&#x27;s cube), and zero-shot sim-to-hardware policy transfer via reinforcement learning; validated in an RSS 2025 publication with full code, docs, and Discord/WeChat community support.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/19/x-square-robot-showcases-full-embodied-ai-portfolio-at-wrc-2026/104194/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://lite.berkeley-humanoid.org/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -137,15 +143,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Open-source, Accessible, and Customizable 3D-printed Humanoid Robot</h3>
+              <h3>China&#x27;s humanoid robot boom is fueled by government-backed training centres</h3>
               <span class="digest-source">Hacker News Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>UC Berkeley&#x27;s &quot;Humanoid Lite&quot; costs under $5,000 in parts sourced from ordinary e-commerce sites and printed on standard desktop 3D printers, using cycloidal gearbox actuators to work around the durability limits of plastic parts.</li>
-              <li>Hardware design, embedded code, and the RL training/deployment framework are fully open-source, with zero-shot sim-to-real policy transfer already demonstrated on the physical robot.</li>
-              <li>The team introduces a &quot;performance factor per dollar&quot; benchmark and reports the platform holds its own against far pricier humanoids, while also handling fine motor tasks like solving a Rubik&#x27;s cube and writing.</li>
+              <li>Local governments across China have funded roughly 40 dedicated humanoid-robot training centers, where human workers demonstrate everyday tasks -- folding laundry, wiping surfaces -- that robots imitate to build up scarce real-world training data.</li>
+              <li>Shanghai&#x27;s Pudong district runs one of the flagship centers, already training over 100 robots with a stated plan to scale to 1,000 by 2027, as part of a broader national push to make humanoid robotics a strategic industry through 2030.</li>
+              <li>Highlights a structural China-vs-West gap: state-subsidized data-collection infrastructure at this scale is something few Western humanoid startups can match on their own budget.</li>
             </ul>
-            <a href="https://lite.berkeley-humanoid.org/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.ft.com/content/26735a23-315f-47ef-8cf2-6c6ea9713998" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
@@ -153,9 +159,9 @@
               <span class="digest-source">Hacker News Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A new Unitree humanoid (successor to April 2026&#x27;s H1) posted a 2-meter standing vertical jump and a 12.66 m/s top speed, landing steadily after the jump rather than just hitting a peak number momentarily.</li>
-              <li>Both figures top human records and build on the H1&#x27;s prior 10 m/s milestone, which had been closing in on Usain Bolt&#x27;s peak sprint speed.</li>
-              <li>Unitree says the robot was developed in just over three months and frames the runs as hardware/software stress tests -- balance control and stability limits -- rather than a finished product, with &quot;significant room for improvement&quot; still ahead.</li>
+              <li>Unitree&#x27;s newest humanoid (successor to the H1) posted a 2-meter standing vertical jump and a 12.66 m/s top sprint speed on legs just 0.85 meters long -- both said to exceed human athletic records, after roughly three months of development.</li>
+              <li>Framed by Chinese engineers as a hardware/software &#x27;stress test&#x27; -- pushing the robot past normal operating limits to find its coordination and control boundaries -- rather than a production feature.</li>
+              <li>Comes as Unitree ranks second globally in 2026 humanoid shipments (5,900 units) after roughly 18,000 units produced to date, part of a broader wave of Chinese firms racing to demonstrate superhuman physical performance.</li>
             </ul>
             <a href="https://www.globaltimes.cn/page/202608/1368390.shtml" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
