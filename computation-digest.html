@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - August 20, 2026 | Densanon</title>
+  <title>Computation Morning Digest - August 21, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 20, 2026</div>
+        <div class="digest-date-badge">August 21, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest is bookended by supply and legitimacy questions in hardware: Pine64 is freezing all Linux-capable device production through mid-2027 on a DRAM shortage, while Seasonic&#x27;s first 80 Plus Ruby-certified ATX PSU shows efficiency engineering pushing forward regardless. On the chip-industry side, SMIC&#x27;s record $3B quarter is a direct product of US export sanctions walling off Chinese AI compute demand into a captive domestic foundry market, and a Tom&#x27;s Hardware HPC deep-dive argues the TOP500-style supercomputer rankings race itself is losing meaning now that the largest clusters are privately held and skip the HPL benchmark entirely. The open-source stack keeps grinding forward in parallel — Btrfs picks up 3x-5x performance wins for the Linux 7.3 merge window, Mesa and X.Org Server both ship maturity releases (the latter its first major feature release in five years), and Go 1.27 finally closes the generic-methods gap. A community-reverse-engineered Linux driver for a $700 PreSonus audio interface rounds out the day as a reminder that vendor driver support is still often optional, not guaranteed.</p>
+        <p class="digest-intro">Today&#x27;s computation news is dominated by the tangled state of AI chips in China: Nvidia&#x27;s H200 finally clears case-by-case import licenses for ByteDance and Tencent even as domestic chips eat into its lead, Nvidia denies a report of China-specific Groq-based LPUs, and Supermicro fires employees over a $2.5 billion smuggling probe. On the hardware R&amp;D side, Micron pours $10 billion into a new Boise research hub for post-DRAM memory while LG Display unveils a lithography-based OLED deposition process, and enterprise SSD prices keep climbing as HDD supply stays sold out through 2027. Rounding out the day: Linux 7.3 picks up CXL Type-2 NIC support, Rust 1.98 ships fast-math floating point methods, and a Slovakian traffic-camera rollout turns up Russian backdoors.</p>
       </div>
     </section>
 
@@ -29,141 +29,123 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Seasonic unveils world&#x27;s first 80 Plus Ruby ATX power supply — Prime Enterprise RX-1600 delivers 1600W with up to 95.4% efficiency</h3>
+              <h3>H200 AI GPUs finally reach China under case-by-case import licenses, but it&#x27;s already too late for Nvidia - homemade chips corner the China market as country seeks semiconductor independence</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Seasonic&#x27;s Prime Enterprise RX-1600 is the first ATX-form-factor PSU to earn 80 Plus Ruby certification, the efficiency tier above Titanium.</li>
-              <li>The 1600W unit hits up to 95.4% efficiency across the 20-50% load range on standard 115V input.</li>
-              <li>It ships in a standard ATX form factor rather than a proprietary server chassis, so it can slot into existing high-end enthusiast or workstation builds.</li>
+              <li>China approved the first Nvidia H200 deliveries to ByteDance and Tencent under case-by-case import licenses.</li>
+              <li>Each company&#x27;s US-licensed allowance is understood to cap around 100,000 units, with most required to stay outside mainland China.</li>
+              <li>Domestic Chinese AI chips are already capturing market share, making the approval a lagging move as China pushes semiconductor self-sufficiency.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/power-supplies/seasonic-introduces-the-worlds-first-80-plus-ruby-certified-psu-using-a-standard-atx-form-factor" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/gpus/china-approves-first-nvidia-h200-deliveries-to-bytedance-and-tencent-under-case-by-case-import-licenses" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Pine64 halts all Linux hardware manufacturing through at least mid-2027 due to shortages — memory crunch forces open-source maker to freeze SBCs, tablets, and phones</h3>
+              <h3>Nvidia denies report it will ship Groq-based LPUs to China by year-end - says there is &#x27;no China-specific LPU product in our roadmap&#x27;</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Pine64 is pausing production of all Linux-capable hardware — SBCs, tablets, and phones — through at least mid-2027 due to a memory (DRAM) shortage.</li>
-              <li>Microcontroller-based products like the PineTime smartwatch, PineVoice smart speaker, and Pinecil soldering iron are unaffected since they don&#x27;t depend on the same memory supply.</li>
-              <li>The halt is a concrete example of the current memory crunch hitting small open-source hardware makers hardest, since they lack the volume purchasing leverage of larger OEMs.</li>
+              <li>Nvidia publicly denied a report from The Information claiming it would ship Groq-based LPUs tailored for China by the end of 2026.</li>
+              <li>The company states there is no China-specific LPU product currently on its roadmap.</li>
+              <li>The denial follows broader scrutiny of Nvidia&#x27;s China AI-chip strategy amid tightening US export controls.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/dram/pine64-halts-all-linux-device-production-until-at-least-mid-2027-as-memory-shortage-bites" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/nvidia-denies-report-it-will-ship-groq-based-lpus-to-china-by-year-end" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux Driver Posted For The PreSonus Quantum 2626: A ~$700 Thunderbolt Audio Interface</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>An open-source Linux driver for the roughly $700 PreSonus Quantum 2626 Thunderbolt 3 audio interface has been posted upstream.</li>
-              <li>PreSonus itself only maintains official Windows and macOS drivers; the Linux support was independently developed through reverse engineering.</li>
-              <li>Gives Linux audio-production users driver-level support for a professional interface with zero vendor involvement.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/PreSonus-Quantum-2626-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Btrfs Ready With More Performance Improvements For Linux 7.3: Some ~3x To ~5x Wins</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>David Sterba (SUSE) submitted the Btrfs pull request for the Linux 7.3 merge window, continuing a run of performance-focused updates to the filesystem.</li>
-              <li>The update lands further performance work on top of the IOmap-related improvements already going into EXT4 this same cycle.</li>
-              <li>Reported wins land in the roughly 3x to 5x range for some operations — a significant jump for a filesystem already the default on several major distros.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-Btrfs" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Go Language 1.27 Adds Generic Methods, Struct Improvement &amp; More SIMD</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Go 1.27 ships generic methods, closing a long-standing gap in the generics support Go introduced back in Go 1.18.</li>
-              <li>The release also adds struct improvements and expands SIMD support, continuing Go&#x27;s push into performance-sensitive numeric and vector code.</li>
-              <li>Released today by Google&#x27;s Go team as the newest stable version of the language.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Go-1.27" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Industry &amp; HPC</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>SMIC posts record $3B quarter and hikes wafer prices — US sanctions hand Chinese foundry a captive AI market</h3>
+              <h3>Supermicro fires several employees following investigation into $2.5 billion China AI chip smuggling - claims that senior management had no knowledge of illicit transactions</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>SMIC, China&#x27;s largest chip foundry, posted its first-ever $3 billion quarter, with revenue up 36.1% year-over-year and net profit nearly tripling to $479.2 million.</li>
-              <li>The foundry is raising wafer prices into what the report frames as a shortage rather than competing on price.</li>
-              <li>US export sanctions that wall off Chinese firms from foreign foundries are credited with handing SMIC a captive domestic AI-chip customer base with little alternative sourcing.</li>
+              <li>An independent investigation into $2.5 billion of alleged China AI chip smuggling cleared senior management and affirmed Supermicro&#x27;s financial statements were reliable.</li>
+              <li>Terminated employees span sales, technical support, and business development roles tied to the illicit transactions.</li>
+              <li>The case highlights enforcement risk around US export controls on restricted AI chips reaching China through intermediaries.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/smic-is-raising-wafer-prices-into-a-shortage-as-sanctions-wall-off-chinas-ai-demand" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/big-tech/supermicro-fires-several-employees-following-investigation-into-usd2-5-billion-china-ai-chip-smuggling-claims-that-senior-management-had-no-knowledge-of-illicit-transactions" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The supercomputer race no longer means what it used to, as rankings lose relevance in the AI era — as privately held compute clusters are built, running HPL becomes a distraction</h3>
+              <h3>Micron commits $10 billion to new US-based Research Labs - Boise hub to target post-DRAM and NAND technologies and packaging</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Tom&#x27;s Hardware interviewed HPC experts, including the deputy head of high-performance computing at GWDG, on the current state of the supercomputer rankings race.</li>
-              <li>The piece argues that public TOP500-style rankings are losing relevance as the largest compute clusters are now privately held by hyperscalers and AI labs that don&#x27;t run the HPL benchmark used to rank public systems.</li>
-              <li>Running HPL purely to chase a leaderboard spot is increasingly viewed as a distraction from a cluster&#x27;s actual AI workloads.</li>
+              <li>Micron is committing $10 billion to a new Research Labs hub in Boise, Idaho.</li>
+              <li>Focus areas are post-DRAM and post-NAND memory technologies plus advanced packaging.</li>
+              <li>The hub is structured as an open collaboration bringing in customers, partners, universities, startups, and government organizations to develop pre-competitive IP.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/supercomputers/the-supercomputer-race-no-longer-means-what-it-used-to-as-rankings-lose-relevance-in-the-ai-era-as-privately-held-compute-clusters-are-built-running-hpl-becomes-a-distraction" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>RPM 6.1 Released With Clang Build Fixes, New Release Model</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>RPM 6.1 is out as the newest feature release of the package manager used by Fedora, RHEL, openSUSE, and other distros.</li>
-              <li>The release includes Clang build fixes, addressing compilation issues for non-GCC toolchains.</li>
-              <li>RPM is also moving to a new release model going forward, changing how future feature releases will be cadenced.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/RPM-6.1-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/micron-commits-usd10-billion-to-new-us-based-research-labs-boise-hub-to-target-post-dram-and-nand-technologies-and-packaging" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Mesa 26.2.1 Released With Dozens Of Fixes</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>LG Display introduces new OLED deposition technique that uses lithography instead of metal masks - &quot;FLiPP&quot; photolithography delivers 1.6x brightness and 2.4x longer lifespan</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Mesa 26.2.1 is the first point release following the Mesa 26.2 feature branch, bundling a large round of bug fixes.</li>
-              <li>It&#x27;s aimed at users who deliberately wait for the first stabilization release before upgrading off Mesa 26.1.</li>
-              <li>Mesa is the open-source graphics driver stack underpinning most Linux GPU support, including Intel, AMD, and the open NVIDIA driver stack.</li>
+              <li>FLiPP replaces traditional metal-mask OLED deposition, which wastes material, is costly, and can sag under its own weight, with photolithography using photomasks and photoresist layers to define RGB subpixels.</li>
+              <li>The process delivers 1.6x brightness and 2.4x longer panel lifespan versus conventional metal-mask deposition.</li>
+              <li>It also opens the door to higher pixel density and lower manufacturing waste for future OLED panels.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Mesa-26.2.1-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/monitors/lg-display-introduces-new-oled-deposition-technique-that-uses-lithography-instead-of-metal-masks-flipp-photolithography-delivers-1-6x-brightness-and-2-4x-longer-lifespan" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>X.Org Server 26.1 RC1 Prepares For First Feature Release In Five Years</h3>
+              <h3>Enterprise SSDs cost 18.6 times more than HDDs as 30TB drives hit $22,600 - hard drive supply is sold out through 2027</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A 30TB TLC enterprise SSD now costs $22,600, making enterprise flash 18.6x more expensive per terabyte than HDDs.</li>
+              <li>That price is 6.5x higher than the roughly $3,460 the same drive class fetched a year earlier.</li>
+              <li>Hard drive supply is reportedly sold out through 2027, pushing buyers toward pricier flash despite the premium.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/ssds/enterprise-ssds-now-cost-18-times-more-than-hard-drives-per-terabyte" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Slovakia discovers Russian backdoors in 279 new traffic cameras - SMS-triggered shell access and passwordless live feeds found in EU-funded rollout</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>279 newly deployed traffic/speed cameras from an EU-funded modernization rollout were found to contain Russian-origin backdoors.</li>
+              <li>Vulnerabilities include SMS-triggered shell access and passwordless live video feeds.</li>
+              <li>Slovakia&#x27;s National Security Service deactivated the affected units after the discovery.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/cyber-security/slovakia-discovers-russian-backdoors-in-279-new-traffic-cameras-national-security-service-deactivates-offending-units" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intel Hyper Threading Performance On The Xeon 678X &quot;Granite Rapids-WS&quot;</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>X.Org Server 26.1 RC1 was tagged today alongside XWayland 26.1 RC1, moving the release toward completion.</li>
-              <li>This is set to be the first major X.Org Server feature release in five years, succeeding the long-lived xorg-server 21.1 series.</li>
-              <li>Notable given X11&#x27;s presumed decline relative to Wayland — the project is still shipping meaningful feature work despite the ecosystem-wide shift.</li>
+              <li>Phoronix benchmarked the Intel Xeon 678X &quot;Granite Rapids-WS&quot; workstation CPU: 48 cores / 96 threads with Hyper-Threading, 300W TDP, tested in an HP Z4 G6i workstation.</li>
+              <li>The review isolates the specific throughput delta Hyper-Threading provides on the Granite Rapids-WS microarchitecture.</li>
+              <li>Part of Phoronix&#x27;s ongoing Granite Rapids-WS workstation CPU benchmark coverage.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/X.Org-Server-26.1-RC1" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/review/intel-xeon-678x-ht" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.3 Ready With CXL Type-2 Driver Support For AMD Solarflare NICs</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Linux 7.3 lands the first in-tree CXL Type-2 accelerator driver, targeting new AMD Solarflare NIC hardware.</li>
+              <li>It builds on the basic CXL Type-2 core-subsystem support that landed in Linux 7.2.</li>
+              <li>Marks early kernel-level groundwork for CXL-attached accelerators and NICs with coherent memory access.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/AMD-Solarflare-NIC-CXL-Type-2" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Rust 1.98 Adds Algebraic Floating-Point Methods Akin To &quot;-ffast-math&quot;</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Rust 1.98 adds algebraic floating-point methods that behave like C/C++&#x27;s &quot;-ffast-math&quot;, trading strict IEEE 754 semantics for speed.</li>
+              <li>The methods are explicit and opt-in per-operation rather than a blanket compiler flag, keeping default float behavior safe elsewhere.</li>
+              <li>Aimed at numerical and HPC code paths where relaxed float semantics enable better vectorization and performance.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Rust-1.98-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

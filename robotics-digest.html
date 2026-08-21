@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 20, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 21, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 20, 2026</div>
+        <div class="digest-date-badge">August 21, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Research leans into agentic and world-model approaches to control: an LLM coding agent (Claude Code) solves the classic Push-T manipulation benchmark from scratch with zero demonstrations, a new Behavior World Model gives humanoids terrain-aware whole-body control with a 4x jump in success on uneven ground, and an autonomous-driving planner grounds LLM reasoning in simulator rollouts to cut collisions. On the industry side, Unitree&#x27;s blockbuster Shanghai IPO (a 460% first-day pop) reopened the debate over whether any humanoid maker has real commercial traction, while Serve Robotics keeps scaling profitably on Grubhub and DoorDash and Pudu shipped a new AI-native warehouse forklift. Community picks span the practical and the spectacular: an open-source, sub-$5,000 3D-printed humanoid you can build at home, China&#x27;s expanding state-funded robot-training-center network, and Unitree pushing a humanoid past human jump and sprint records as a hardware stress test.</p>
+        <p class="digest-intro">Today&#x27;s research slate leans heavily into the sim-to-real and human-in-the-loop problem: five new ArXiv papers cover LLM-guided robot programming, tactile teleoperation, learned reduced-dynamics simulators, sim-augmented policy evaluation, and sampling-based MPC for humanoids. On the industry side, Waymo detailed the custom 5nm compute stack behind its robotaxis, Amazon is scaling Prime Air drone delivery sixfold to nearly 500 cities, Agtonomy shipped autonomous multi-point turning for ag equipment, and BrainChip brought neuromorphic inference into IBM&#x27;s workload scheduler. Rounding it out, a community builder shared an early speech demo from a reflex-driven mechanical-skeleton robot.</p>
       </div>
     </section>
 
@@ -29,51 +29,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GigaBrain-WBC-0.5: A Behavior World Model for Robust Whole-Body Control with Environment Interaction</h3>
+              <h3>APPROVE: Visual End-User-in-the-Loop Robot Programming with LLMs</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Introduces the first Behavior World Model for humanoid whole-body control: a causal Transformer that jointly predicts its next action, next state, and a distribution over its next latent behavior command, so the network that acts also models how the environment shapes what it can do next.</li>
-              <li>An automatic terrain-annotation pipeline recovers full 3D contact geometry from retargeted motion data, letting the policy learn how contact with terrain and objects reshapes dynamics instead of training only on flat, empty scenes.</li>
-              <li>Beats three large-scale tracker baselines across all four test regimes: 81.3% success on terrain interaction (4.3x the strongest baseline), 83.1% under implausible commands, and 99.3% fall recovery (16.8x the strongest baseline); the Unitree G1 checkpoint transfers to a Maker L01 robot with simple fine-tuning.</li>
+              <li>Lets non-experts describe tasks in natural language; an LLM generates robot programs that are rendered as Blockly block-diagrams the user can confirm, edit, or reject before execution</li>
+              <li>Confirmed programs are saved into a reusable function library, incrementally building a trusted set of components instead of throwaway one-off generations</li>
+              <li>Accepted at CIRP ICME 2026, framed around trust and intent alignment for manufacturing-floor programming by non-programmers</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.18234" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.19281" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Revisiting the &quot;Push-T&quot; Robot Manipulation Task with Agentic Robotics</h3>
+              <h3>The Missing Touch: Spatially Distributed Tactile Feedback Brings Teleoperation Closer to Human Dexterity</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Instead of training a visuomotor imitation-learning policy on human demonstrations, the researchers prompted an LLM coding agent -- Claude Code with Fable 5 -- to write an algorithmic solution to the iconic Push-T manipulation benchmark from scratch, with zero demonstration data.</li>
-              <li>The agent found a 2D gym simulation online and ran its own simulated experiments to learn push mechanics, iteratively optimizing until it hit a 100% success rate using 46% fewer steps than the best diffusion policy trained on 200 human demonstrations.</li>
-              <li>Extended itself from Push-T to a full self-generated Push-A through Push-Z curriculum, and generated 3D cross-embodiment simulation code with visual feedback for both Franka and UR5 robot arms.</li>
+              <li>Testbed pairs a 2-DoF bilateral force-feedback telemanipulator with a 32-DoF tactile fingertip display to reproduce spatially distributed contact info from the remote gripper on the operator&#x27;s hand</li>
+              <li>Distributed tactile feedback cut deviation between teleoperated and natural human hand trajectories by 29-79% versus setups without it</li>
+              <li>Higher-resolution tactile feedback also compressed the state-space of teleop motions, a property the authors link to better demonstration data for training autonomous robot policies</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.18227" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.19372" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GAPL: Grounded Action-effect Policy Learning for LLM-Based Trajectory Planning</h3>
+              <h3>Learning the Right Abstraction: Neural Reduced Dynamics for Complex Robot Control</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets a known failure mode of LLM-based autonomous-driving planners -- hallucinated reasoning and poor grounding in environment dynamics -- with a three-module closed loop: an LLM-based Effect Evaluator, a simulation-based Effect Grounder, and a PPO-based Effect-Aware Decision Maker.</li>
-              <li>The Effect Grounder uses simulator rollouts to check that the LLM&#x27;s predicted action outcomes are actually dynamics-consistent before a distiller lets them shape the policy, rather than trusting the LLM&#x27;s reasoning directly.</li>
-              <li>Across four Highway-env scenarios, reports average reductions of 0.76, 0.86, and 2.00 in collision rate, average displacement error, and final displacement error respectively, plus a 1.44 average reward gain over baselines.</li>
+              <li>Neural Reduced Dynamics (NRD) trains policies inside a lightweight learned model rather than the full physics sim, then validates them back in the high-fidelity simulator, running roughly four orders of magnitude faster than the simulator it replaces</li>
+              <li>Tested on terrain-aware HMMWV trajectory tracking (rigid and deformable terrain) and a tracked-vehicle-plus-arm goal-reaching task</li>
+              <li>A single terrain-conditioned policy beat single-terrain specialists on all three terrains including zero-shot bumpy terrain; the vehicle hit 100/100 goals and the arm 97/100 with zero contact or joint-limit violations</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.18254" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.19375" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Scheduling and Routing with Degradation-Triggered Job Arrivals: An Application to Forest Firefighting with an Unmanned Aerial Vehicle Fleet</h3>
+              <h3>SCAPE: Scenario-Conditioned Simulation-Augmented Policy Evaluation</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Models a scheduling/routing problem where new &#x27;jobs&#x27; are triggered by the degradation of existing ones: each ignited area has an action window, and the longer it goes unaddressed the more it spreads and loses value -- turning &#x27;a stitch in time saves nine&#x27; into an optimization objective for a UAV firefighting fleet.</li>
-              <li>Formulates a mixed-integer program to maximize total value retention across wildfire-threatened areas, plus a hybrid dynamic-constraint-generation variant to keep the model scalable.</li>
-              <li>Validated with computational experiments and a case study; the team released the full codebase for reproducibility, with the work published in the European Journal of Operational Research.</li>
+              <li>Combines a small number of paired sim-and-real samples with large-scale simulation rollouts to predict scenario-conditioned real-world policy performance, correcting sim bias and calibrating uncertainty with conformal prediction</li>
+              <li>Cut scenario-level prediction error by 4.9-34.7% on autonomous-driving tasks and 14.5-27.7% on quadruped velocity tracking versus scene-conditioned-network and aggregate-statistics baselines</li>
+              <li>Validated with real deployment testing on a Unitree Go2 quadruped</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.18140" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.19425" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Hybrid Feedback Sampling for Sample-Efficient Model Predictive Control</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>FS-MPC realizes the optimal sampling proposal distribution via an optimized feedback policy, blending local and global search instead of relying on MPPI-style sampling alone</li>
+              <li>Targets high-dimensional, open-loop-unstable systems where standard sampling-based MPC needs prohibitively many rollouts to converge</li>
+              <li>Validated on contact-rich humanoid locomotion and dexterous manipulation, including real-world humanoid robot experiments</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.19443" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -83,57 +95,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>What does Unitree Robotics’ IPO mean for the humanoid industry?</h3>
+              <h3>Amazon plans to expand Prime Air to nearly 500 cities by the end of 2026</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Unitree debuted on Shanghai&#x27;s STAR Market, raising roughly $905M (6.1 billion yuan) and closing its first trading day up 460% -- billed as the first major legged-robotics IPO.</li>
-              <li>Growth looks steep on paper (5 humanoid units sold in 2023 to 5,215 in 2025), but rivals are skeptical of real commercial traction: Ghost Robotics&#x27; CEO put Unitree&#x27;s commercial-deployment share under 10%, and roughly 70% of units reportedly went to universities and research labs.</li>
-              <li>A recent FCC restriction on imports of certain foreign-made mobile robots (including humanoids and quadrupeds) threatens Unitree&#x27;s U.S. sales, even as rivals eye their own exits -- UBTech&#x27;s 2023 Hong Kong IPO lost $104M last year, and Agility Robotics is reportedly weighing a $2.5B SPAC merger.</li>
+              <li>Expanding from 7 states today to nearly 500 cities and towns by end of 2026, roughly a sixfold increase, with FAA Part 135 certification (the highest level of FAA oversight for commercial drone delivery)</li>
+              <li>Drones carry items up to 5 lb that fit in a large shoebox, delivering in as fast as 30 minutes (most around 60); over 60% of frequently-purchased Amazon products qualify</li>
+              <li>New US metros include Chicago, Syracuse, Cleveland, Atlanta, and Boise, plus Amazon&#x27;s first international site in Darlington, UK with a 7.5-mile service radius</li>
             </ul>
-            <a href="https://www.therobotreport.com/what-does-unitree-robotics-ipo-mean-for-humanoid-industry/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/amazon-plans-expand-prime-air-nearly-500-cities-by-end-2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Serve Robotics to deploy its autonomous delivery robots with Grubhub</h3>
+              <h3>Agtonomy releases new autonomous multi-point turning features</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Serve&#x27;s sidewalk delivery robots are going live on Grubhub (a Wonder subsidiary) across Chicago (100+ merchants), Los Angeles (nearly 200 merchants), and Alexandria, VA, adding to existing DoorDash-powered markets in San Jose and Washington, D.C.</li>
-              <li>Also rolling out supporting infrastructure: a Miami microdepot for robot staging/charging/maintenance, and &#x27;Beacon,&#x27; a power-only countertop device that alerts restaurant staff when a robot arrives.</li>
-              <li>Q2 2026 revenue hit $3.2M (up 404% year-over-year), with advertising -- including AI-powered robot &#x27;Characters&#x27; like hamburger-mascot &#x27;Chomp&#x27; -- now roughly half of food-delivery revenue; Uber exited its remaining stake in Serve over the same period.</li>
+              <li>Added autonomous multi-point turning to its retrofit autonomy kits for Kubota and Bobcat equipment, letting tractors execute complex reverse maneuvers in tight orchard and vineyard headlands without a driver</li>
+              <li>Platform now processes more than 2 terabytes of data per vehicle per hour across 500+ supported implements (sprayers, discs, precision toolbars)</li>
+              <li>Field validation: Okanagan Specialty Fruits uses the system for 100% of its crop data collection jobs, citing fuel efficiency and labor cost reductions</li>
             </ul>
-            <a href="https://www.therobotreport.com/serve-robotics-deploys-autonomous-delivery-robots-grubhub/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/agtonomy-releases-new-autonomous-multi-point-turning-features/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Pudu Robotics launches new MP2000 autonomous forklift</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>BrainChip launches Symphony Community Akida bundle for IBM&#x27;s workload management solution</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The AI-native MP2000 moves loads up to 2,000 kg with pallet pickup and fork-in cycles as fast as 20 seconds, using 3D lidar and depth cameras to locate pallets and correct its approach path in real time.</li>
-              <li>Handles three-runner and perimeter-base pallets plus customized non-standard load carriers, validating pallet dimensions on the fly to compensate for misalignment.</li>
-              <li>Coordinates with other Pudu AMRs via distributed fleet intelligence -- local decision-making plus fleet-level coordination that keeps working through network outages -- and includes manual operator override for use as a powered forklift.</li>
+              <li>The free, open-source Symphony Community Akida Bundle lets BrainChip&#x27;s Akida neuromorphic processors run as a scheduled accelerator inside IBM Spectrum Symphony Community Edition</li>
+              <li>IBM&#x27;s scheduler automatically routes each workload task to whichever processor (CPU, GPU, or Akida) runs it best, adding event-driven neuromorphic inference to existing heterogeneous compute clusters</li>
+              <li>Pitched for lower-latency, lower-power inference on smaller jobs than GPUs handle efficiently; Akida ships as a PCIe accelerator board</li>
             </ul>
-            <a href="https://www.therobotreport.com/pudu-robotics-launches-new-mp2000-autonomous-forklift/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/08/21/brainchip-launches-symphony-community-akida-bundle-for-ibms-workload-management-solution/104376/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
-        <div class="digest-grid">
-
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Open-source, Accessible, and Customizable 3D-printed Humanoid Robot</h3>
-              <span class="digest-source">Hacker News Robotics</span>
+              <h3>Waymo reveals Nvidia-powered compute system behind its robotaxis</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Berkeley Humanoid Lite is a fully open-source humanoid platform -- hardware design, embedded code, and training framework all public -- built from parts you 3D-print on a standard desktop printer, for under $5,000 total.</li>
-              <li>Uses modular cycloidal gearboxes specifically engineered to hold up in 3D-printed plastic, addressing the durability problem that normally rules out printed actuators.</li>
-              <li>Demonstrated bipedal walking, fine manipulation (marker writing, solving a Rubik&#x27;s cube), and zero-shot sim-to-hardware policy transfer via reinforcement learning; validated in an RSS 2025 publication with full code, docs, and Discord/WeChat community support.</li>
+              <li>Custom 5nm ASIC delivers over 1,000 TOPS of ML performance for real-time front-end processing of lidar, radar, and 13 high-resolution cameras, including temporal denoising for low-light perception, built on Nvidia accelerated computing plus silicon from AMD, Micron, Samsung, SanDisk, Socionext, and TSMC</li>
+              <li>Runs two independent processing &#x27;engines&#x27; for safety: if one faults, the other seamlessly takes over; hardware is ruggedized for vibration, shock, and temperature extremes and tied into the vehicle&#x27;s liquid cooling loop</li>
+              <li>Raw compute available to the Waymo Driver has scaled 20x over the past eight years, aimed at cutting pixels-to-actuation latency</li>
             </ul>
-            <a href="https://lite.berkeley-humanoid.org/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/08/21/waymo-reveals-nvidia-powered-compute-system-behind-its-robotaxis/104373/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -143,27 +149,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>China&#x27;s humanoid robot boom is fueled by government-backed training centres</h3>
-              <span class="digest-source">Hacker News Robotics</span>
+              <h3>Eloi learning to talk, mechanical skeleton demo from Animotion Robotics</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Local governments across China have funded roughly 40 dedicated humanoid-robot training centers, where human workers demonstrate everyday tasks -- folding laundry, wiping surfaces -- that robots imitate to build up scarce real-world training data.</li>
-              <li>Shanghai&#x27;s Pudong district runs one of the flagship centers, already training over 100 robots with a stated plan to scale to 1,000 by 2027, as part of a broader national push to make humanoid robotics a strategic industry through 2030.</li>
-              <li>Highlights a structural China-vs-West gap: state-subsidized data-collection infrastructure at this scale is something few Western humanoid startups can match on their own budget.</li>
+              <li>Animotion Robotics shared an early demo of its mechanical-skeleton robot Eloi attempting speech for the first time; voice, movement, and facial expressions are all still described as rough and in active development</li>
+              <li>The robot runs what the team calls a Neural Reflex Model (NRM), a reactive control layer meant to trigger responses to environmental stimuli rather than pure scripted animation</li>
+              <li>Posted as an early-stage, iterative build update rather than a finished product showcase</li>
             </ul>
-            <a href="https://www.ft.com/content/26735a23-315f-47ef-8cf2-6c6ea9713998" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Unitree&#x27;s humanoid robot jumps 2 meters, hits 12.66M/s to break human records</h3>
-              <span class="digest-source">Hacker News Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Unitree&#x27;s newest humanoid (successor to the H1) posted a 2-meter standing vertical jump and a 12.66 m/s top sprint speed on legs just 0.85 meters long -- both said to exceed human athletic records, after roughly three months of development.</li>
-              <li>Framed by Chinese engineers as a hardware/software &#x27;stress test&#x27; -- pushing the robot past normal operating limits to find its coordination and control boundaries -- rather than a production feature.</li>
-              <li>Comes as Unitree ranks second globally in 2026 humanoid shipments (5,900 units) after roughly 18,000 units produced to date, part of a broader wave of Chinese firms racing to demonstrate superhuman physical performance.</li>
-            </ul>
-            <a href="https://www.globaltimes.cn/page/202608/1368390.shtml" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1vubzrn/%C3%A9loi_learning_to_talk_mechanical_skeleton_demo/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
