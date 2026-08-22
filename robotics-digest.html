@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 21, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 22, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,131 +15,107 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 21, 2026</div>
+        <div class="digest-date-badge">August 22, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s research slate leans heavily into the sim-to-real and human-in-the-loop problem: five new ArXiv papers cover LLM-guided robot programming, tactile teleoperation, learned reduced-dynamics simulators, sim-augmented policy evaluation, and sampling-based MPC for humanoids. On the industry side, Waymo detailed the custom 5nm compute stack behind its robotaxis, Amazon is scaling Prime Air drone delivery sixfold to nearly 500 cities, Agtonomy shipped autonomous multi-point turning for ag equipment, and BrainChip brought neuromorphic inference into IBM&#x27;s workload scheduler. Rounding it out, a community builder shared an early speech demo from a reflex-driven mechanical-skeleton robot.</p>
+        <p class="digest-intro">Today&#x27;s robotics digest spans the humanoid supply chain, consumer robotics, and ROS 2 tooling. Schaeffler&#x27;s move into mass-produced strain-wave gearboxes and Sunseeker&#x27;s case for GPS/vision-guided lawn mowers both point to established manufacturers industrializing robot hardware beyond boutique production. Meanwhile the ROS community is actively rebuilding parts of the stack -- a Rust microkernel challenger, a new execution-authorization safety layer, and a sensor bridge that skips custom code -- while weekly package syncs show continued strong growth in the newest ROS 2 distro.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>APPROVE: Visual End-User-in-the-Loop Robot Programming with LLMs</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Lets non-experts describe tasks in natural language; an LLM generates robot programs that are rendered as Blockly block-diagrams the user can confirm, edit, or reject before execution</li>
-              <li>Confirmed programs are saved into a reusable function library, incrementally building a trusted set of components instead of throwaway one-off generations</li>
-              <li>Accepted at CIRP ICME 2026, framed around trust and intent alignment for manufacturing-floor programming by non-programmers</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.19281" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>The Missing Touch: Spatially Distributed Tactile Feedback Brings Teleoperation Closer to Human Dexterity</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Testbed pairs a 2-DoF bilateral force-feedback telemanipulator with a 32-DoF tactile fingertip display to reproduce spatially distributed contact info from the remote gripper on the operator&#x27;s hand</li>
-              <li>Distributed tactile feedback cut deviation between teleoperated and natural human hand trajectories by 29-79% versus setups without it</li>
-              <li>Higher-resolution tactile feedback also compressed the state-space of teleop motions, a property the authors link to better demonstration data for training autonomous robot policies</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.19372" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Learning the Right Abstraction: Neural Reduced Dynamics for Complex Robot Control</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Neural Reduced Dynamics (NRD) trains policies inside a lightweight learned model rather than the full physics sim, then validates them back in the high-fidelity simulator, running roughly four orders of magnitude faster than the simulator it replaces</li>
-              <li>Tested on terrain-aware HMMWV trajectory tracking (rigid and deformable terrain) and a tracked-vehicle-plus-arm goal-reaching task</li>
-              <li>A single terrain-conditioned policy beat single-terrain specialists on all three terrains including zero-shot bumpy terrain; the vehicle hit 100/100 goals and the arm 97/100 with zero contact or joint-limit violations</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.19375" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>SCAPE: Scenario-Conditioned Simulation-Augmented Policy Evaluation</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Combines a small number of paired sim-and-real samples with large-scale simulation rollouts to predict scenario-conditioned real-world policy performance, correcting sim bias and calibrating uncertainty with conformal prediction</li>
-              <li>Cut scenario-level prediction error by 4.9-34.7% on autonomous-driving tasks and 14.5-27.7% on quadruped velocity tracking versus scene-conditioned-network and aggregate-statistics baselines</li>
-              <li>Validated with real deployment testing on a Unitree Go2 quadruped</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.19425" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Hybrid Feedback Sampling for Sample-Efficient Model Predictive Control</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>FS-MPC realizes the optimal sampling proposal distribution via an optimized feedback policy, blending local and global search instead of relying on MPPI-style sampling alone</li>
-              <li>Targets high-dimensional, open-loop-unstable systems where standard sampling-based MPC needs prohibitively many rollouts to converge</li>
-              <li>Validated on contact-rich humanoid locomotion and dexterous manipulation, including real-world humanoid robot experiments</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.19443" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Amazon plans to expand Prime Air to nearly 500 cities by the end of 2026</h3>
+              <h3>The technology that could bring robot mowers to one in two American lawns</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Expanding from 7 states today to nearly 500 cities and towns by end of 2026, roughly a sixfold increase, with FAA Part 135 certification (the highest level of FAA oversight for commercial drone delivery)</li>
-              <li>Drones carry items up to 5 lb that fit in a large shoebox, delivering in as fast as 30 minutes (most around 60); over 60% of frequently-purchased Amazon products qualify</li>
-              <li>New US metros include Chicago, Syracuse, Cleveland, Atlanta, and Boise, plus Amazon&#x27;s first international site in Darlington, UK with a 7.5-mile service radius</li>
+              <li>Written by Sunseeker&#x27;s founder, the piece argues AI, satellite navigation (RTK/GPS), and machine vision are replacing boundary-wire setups, making robot mowers viable for roughly half of U.S. lawns.</li>
+              <li>Signals a shift in the sensor stack for outdoor consumer robots -- from wire-perimeter systems to GPS+camera navigation, mirroring the trajectory of autonomous vehicles and drones.</li>
+              <li>Read as a vendor growth thesis rather than neutral analysis, but still a useful leading indicator for where consumer robotics investment is heading.</li>
             </ul>
-            <a href="https://www.therobotreport.com/amazon-plans-expand-prime-air-nearly-500-cities-by-end-2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/technology-could-bring-robot-mowers-one-half-american-lawns/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Agtonomy releases new autonomous multi-point turning features</h3>
+              <h3>How software-defined manufacturing fits into real factory operations</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Added autonomous multi-point turning to its retrofit autonomy kits for Kubota and Bobcat equipment, letting tractors execute complex reverse maneuvers in tight orchard and vineyard headlands without a driver</li>
-              <li>Platform now processes more than 2 terabytes of data per vehicle per hour across 500+ supported implements (sprayers, discs, precision toolbars)</li>
-              <li>Field validation: Okanagan Specialty Fruits uses the system for 100% of its crop data collection jobs, citing fuel efficiency and labor cost reductions</li>
+              <li>Roby Lynn (R2 Labs) explains how software-defined manufacturing bridges PLCs, robots, and AI to unify factory systems that historically ran on incompatible vendor stacks.</li>
+              <li>Frames the change as factories decoupling automation logic from fixed hardware -- similar to how virtualization decoupled compute from physical servers.</li>
+              <li>Key point for integrators: the real bottleneck in factory robotics right now is fragmented systems integration, not raw robot capability.</li>
             </ul>
-            <a href="https://www.therobotreport.com/agtonomy-releases-new-autonomous-multi-point-turning-features/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/how-software-defined-manufacturing-fits-into-real-factory-operations/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>BrainChip launches Symphony Community Akida bundle for IBM&#x27;s workload management solution</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Schaeffler plans to mass produce gearboxes for humanoid robots in 2027</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The free, open-source Symphony Community Akida Bundle lets BrainChip&#x27;s Akida neuromorphic processors run as a scheduled accelerator inside IBM Spectrum Symphony Community Edition</li>
-              <li>IBM&#x27;s scheduler automatically routes each workload task to whichever processor (CPU, GPU, or Akida) runs it best, adding event-driven neuromorphic inference to existing heterogeneous compute clusters</li>
-              <li>Pitched for lower-latency, lower-power inference on smaller jobs than GPUs handle efficiently; Akida ships as a PCIe accelerator board</li>
+              <li>Schaeffler, a major automotive-parts supplier, is retooling to mass-produce strain-wave (harmonic) gearboxes for humanoid actuators using a new forming technology, targeting 2027 production.</li>
+              <li>Signals traditional auto-supply-chain manufacturers moving into humanoid component production -- a sign the actuator supply chain is industrializing beyond small-batch specialty makers.</li>
+              <li>Strain-wave gearboxes are currently a key cost/availability constraint on humanoid actuators; mass production at automotive scale could meaningfully lower humanoid unit costs.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/21/brainchip-launches-symphony-community-akida-bundle-for-ibms-workload-management-solution/104376/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/schaeffler-plans-to-mass-manufacture-gearboxes-for-humanoids-in-2027/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>New packages for Kilted Kaiju 2026-08-21</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>This week&#x27;s Kilted Kaiju distro sync added 39 new ROS packages and updated 451 existing ones, credited to 85 maintainers.</li>
+              <li>A concrete measure of ecosystem velocity: Kilted Kaiju, the newest ROS 2 distro, is seeing fast-growing package coverage.</li>
+              <li>Useful signal for teams choosing a target distro -- package growth here is outpacing what&#x27;s typical for older, more stable distros.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/new-packages-for-kilted-kaiju-2026-08-21/57593" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Waymo reveals Nvidia-powered compute system behind its robotaxis</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>ROS News for the Week of August 17th, 2026</h3>
+              <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Custom 5nm ASIC delivers over 1,000 TOPS of ML performance for real-time front-end processing of lidar, radar, and 13 high-resolution cameras, including temporal denoising for low-light perception, built on Nvidia accelerated computing plus silicon from AMD, Micron, Samsung, SanDisk, Socionext, and TSMC</li>
-              <li>Runs two independent processing &#x27;engines&#x27; for safety: if one faults, the other seamlessly takes over; hardware is ruggedized for vibration, shock, and temperature extremes and tied into the vehicle&#x27;s liquid cooling loop</li>
-              <li>Raw compute available to the Waymo Driver has scaled 20x over the past eight years, aimed at cutting pixels-to-actuation latency</li>
+              <li>Regular-price ROSCon Global tickets close Monday, August 24 -- the last chance before prices increase.</li>
+              <li>Registration details for after-parties, hackathons, tours, and receptions are coming the following week, underscoring ROSCon Global as the community&#x27;s major upcoming event.</li>
+              <li>A practical action item for anyone planning to attend ROSCon this cycle.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/08/21/waymo-reveals-nvidia-powered-compute-system-behind-its-robotaxis/104373/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/ros-news-for-the-week-of-august-17th-2026/57592" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Should robot software have execution authorization separate from deployment?</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Introduces RLSOK, an open-source layer that separates &#x27;software deployed&#x27; from &#x27;software still authorized to act,&#x27; so a revoked release can be blocked from causing physical action even while still installed and running.</li>
+              <li>Addresses a real safety gap: today&#x27;s typical deployment model conflates installing code with permission to execute it, meaning a recalled release can keep controlling hardware.</li>
+              <li>Part of a broader pattern this week (see Sonny and NXS) of the community bolting safety and architecture layers onto ROS 2 rather than waiting on core changes.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/should-robot-software-have-execution-authorization-separate-from-deployment/57585" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>NXS – ROS 2 topics for GMSL2/3 cameras and CAN-FD/serial sensors, no custom bridge</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>NXS sits between sensors (GMSL2/3 cameras, CAN-FD/serial) and host compute, exposing them directly as ROS 2 topics without writing custom bridge code.</li>
+              <li>Targets a specific integration pain point: getting sensor data back reliably when compute is mounted far from the sensor, while avoiding node timing/sync fights.</li>
+              <li>Cuts per-project integration overhead for robot builders who otherwise write bespoke bridge code for each sensor type.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/nxs-ros-2-topics-for-gmsl2-3-cameras-and-can-fd-serial-sensors-no-custom-bridge/57583" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -149,15 +125,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Eloi learning to talk, mechanical skeleton demo from Animotion Robotics</h3>
+              <h3>Sonny – an async rust microkernel replacing ROS 2</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Animotion Robotics shared an early demo of its mechanical-skeleton robot Eloi attempting speech for the first time; voice, movement, and facial expressions are all still described as rough and in active development</li>
-              <li>The robot runs what the team calls a Neural Reflex Model (NRM), a reactive control layer meant to trigger responses to environmental stimuli rather than pure scripted animation</li>
-              <li>Posted as an early-stage, iterative build update rather than a finished product showcase</li>
+              <li>A community member introduces Sonny, an async Rust-based microkernel pitched as a replacement for ROS 2&#x27;s middleware layer.</li>
+              <li>Reflects ongoing community frustration with ROS 2&#x27;s DDS-based transport (latency, complexity), driving from-scratch middleware alternatives.</li>
+              <li>One of several &#x27;post-ROS2&#x27; efforts surfacing this week alongside NXS and RLSOK -- a sign the ecosystem is actively experimenting around transport and safety concerns.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vubzrn/%C3%A9loi_learning_to_talk_mechanical_skeleton_demo/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1vuify7/sonny_an_async_rust_microkernel_replacing_ros_2/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>For engineers deploying ML models on edge devices/robots: what&#x27;s the part that sucks?</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A student researcher asks practitioners what&#x27;s hardest about taking an ML model from &#x27;works on my machine&#x27; to reliable production use on robots, cameras, and drones.</li>
+              <li>Surfaces a recurring theme distinct from model accuracy: the real pain is deployment and maintenance -- hardware quirks, drift, monitoring -- once a model leaves the training environment.</li>
+              <li>A useful bellwether of what practitioners actually struggle with day to day, versus what research papers optimize for.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1vuro24/for_engineers_deploying_ml_models_on_edge/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

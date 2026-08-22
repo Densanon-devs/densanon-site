@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 21, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 22, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,119 +15,108 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 21, 2026</div>
+        <div class="digest-date-badge">August 22, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s roundup spans efficiency and reliability: Liquid AI&#x27;s speculative-decoding checkpoints promise up to 3.2x faster inference, while a fresh Claude Code release patches a long-session memory leak and hardens Remote Control. On the research side, papers tackle per-head attention allocation, domain-specific named entity recognition that outperforms general LLMs, and a provocative multi-agent framework that treats hallucination as raw material for testable hypotheses rather than a bug to suppress. Also notable: evidence that ChatGPT Search has sharply increased its use of site-scoped queries, and a minimal Bun-native alternative to Puppeteer for browser automation.</p>
+        <p class="digest-intro">Anthropic pushed a cluster of releases across Claude Code, the TypeScript Agent SDK, and the GitHub Action, mostly threading a new 1.1x US-only-inference cost premium through cost reporting and adding backgrounded-task telemetry. Simon Willison&#x27;s roundup covers practical LLM-tooling fixes (a broken `llm` install, an updated OpenRouter plugin) alongside a provocative argument that coding agents have made native GUIs cheaper to build than TUIs. A Hugging Face research post adds a methodological warning: several leading ASR models appear to be gaming benchmark datasets rather than genuinely transcribing audio, complicating trust in leaderboard scores.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>A Virtual Member of a Community of Practice for the Society of Petroleum Engineers: From Prototype to Deployment</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>ATHENA, a RAG-based virtual assistant for petroleum engineers, was upgraded with multi-document retrieval, answer-validation checks, and targeted proactive knowledge dissemination.</li>
-              <li>In a study with 75 SPE members on well-planning tasks, the upgraded version markedly improved both productivity and performance equality versus prior state-of-the-art RAG baselines.</li>
-              <li>The system has moved past prototype status and is now live in the SPE Research Portal for the society&#x27;s membership, a rare documented prototype-to-production RAG deployment.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.19199" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Automatic bioinformatic software named entity recognition from literature</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>SNAIL is a hybrid NER system pairing lexical pattern-matching with a SciBERT-based semantic model that uses token-masking to sharpen entity-focused representations.</li>
-              <li>Its training corpus was built via citation-hinted extraction with LLM-assisted distillation rather than pure manual annotation.</li>
-              <li>On two benchmarks and real-world articles, SNAIL beat both the domain-specific bioNerDS2 baseline and general LLMs (ChatGPT, Gemini, Grok, Claude), then was used at scale to surface journal-level differences in bioinformatics tool usage.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.19201" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Asymmetric Attention Heads: Structured Head-Wise Context Allocation for Transformer Attention</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Proposes Asymmetric Attention Heads (AAH), which treats each attention head&#x27;s causal context window as an explicit, individually assignable parameter instead of giving every head the same full context span.</li>
-              <li>Heads are grouped by feature statistics into a hierarchy, each getting its own local window size, while staying drop-in compatible with standard multi-head attention interfaces.</li>
-              <li>On 4096-token sequences, several AAH variants beat full-attention baselines on validation loss; the authors also introduce an Attention Coverage Ratio (ACR) metric to diagnose how context windows get routed.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.19203" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Hallucination as a Feature, not a Defect: Evaluating a multi-agent architecture to transform speculative language-model outputs into testable scientific hypotheses</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Instead of suppressing hallucination, the system routes it through three agents: a high-entropy generator producing speculative ideas, a low-entropy semantic bottleneck that cuts noise/repetition, and a web-grounded evaluator that checks feasibility - an &quot;Epistemological Friction loop.&quot;</li>
-              <li>Results were mixed: plain direct prompting was weak, but the full multi-agent architecture showed no consistent edge over simpler self-reflection baselines across originality, feasibility, diversity, and grounding metrics.</li>
-              <li>The architecture&#x27;s value shows up mainly when hypotheses must satisfy hard physical, empirical, or institutional constraints, suggesting structured constraints (not raw hallucination) are what make speculation useful.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.19206" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Up to 3.2x Faster Inference with LFM2.5-DSpark</h3>
+              <h3>Measuring benchmark optimization in speech recognition</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Liquid AI released DSpark draft-model checkpoints for three LFM2.5 models (1.2B, 2.6B, 8B-A1B) that add a speculative decoding path without changing output quality.</li>
-              <li>The ~300M-parameter draft models combine a parallel backbone for multi-token candidates, a sequential head for token dependencies, and a confidence-scheduled verifier that prunes low-confidence guesses.</li>
-              <li>Measured speedups: up to 3.18x on H100 GPU and 2.87x on-device (M4 Max), with a 57% latency reduction for function-calling on the 2.6B model; the 8B MoE model only hit 1.21x on-device due to MoE constraints.</li>
+              <li>Top-performing ASR models were found to reproduce benchmark-specific reference transcripts even when the audio itself contradicts them, meaning leaderboard scores can overstate real-world accuracy.</li>
+              <li>Some models detect which dataset a sample came from and switch to that benchmark&#x27;s expected spelling/formatting conventions rather than transcribing what they actually hear.</li>
+              <li>Models with the lowest reported WER are the most likely to be reproducing dataset errors (e.g. in VoxPopuli); authors recommend held-out, out-of-distribution test audio to separate genuine gains from benchmark gaming.</li>
             </ul>
-            <a href="https://huggingface.co/blog/LiquidAI/lfm25-dspark" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/asr-benchmark-optimization" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ChatGPT search now uses the site:operator at scale</h3>
+              <h3>llm 0.32.1</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Data from Promptwatch shows ChatGPT Search&#x27;s use of the site: operator jumped from 0.3-0.5% of queries to 16-17% on August 8, right after a GPT-5.6 update billed as making answers &quot;more reliable with facts.&quot;</li>
-              <li>The shift signals OpenAI is leaning harder on domain-scoped retrieval rather than open web search, feeding the emerging GEO (Generative Engine Optimization) industry - SEO for chatbot answers.</li>
-              <li>A follow-up report found ChatGPT also appears to have reduced how often it cites Reddit as a source, a reminder that source-selection behavior can shift silently with model updates.</li>
+              <li>Fresh installs of the `llm` CLI broke because the OpenAI Python library dropped its dependency on httpx, which `llm` had been relying on transitively without declaring it directly.</li>
+              <li>This point release pins the `openai` package to the last compatible version to restore installs — a reminder that transitive dependencies are a real fragility point for CLI tools built on fast-moving SDKs.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/20/chatgpt-search-now-uses-the-siteoperator-at-scale/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/21/llm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A shot-scraper-style JSON API on Bun 1.4&#x27;s new Bun.WebView</h3>
+              <h3>llm-openrouter 0.7</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Bun 1.4 ships Bun.WebView, native browser automation (macOS WebKit or CDP-controlled Chromium) built into the Bun runtime itself, no Puppeteer/Playwright dependency required.</li>
-              <li>Simon Willison built a roughly 150-line, zero-dependency TypeScript service exposing /javascript, /screenshot, and /healthz endpoints, spinning up one browser tab per request for concurrency.</li>
-              <li>The prototype ran in a 192-256MB container against complex pages, suggesting Bun.WebView is a lightweight alternative for scraping/screenshot microservices.</li>
+              <li>Updated for compatibility with the new `llm` 0.32 plugin interface, and now surfaces reasoning traces for models accessed through OpenRouter.</li>
+              <li>Models routed through OpenRouter now use its implementation of the Responses API.</li>
+              <li>Adds three new server-side tools (including Shell and Web), expanding what OpenRouter-routed models can do without extra client-side plumbing.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/20/bun-webview-json-api/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/21/llm-openrouter/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.238</h3>
+              <h3>Stop Making TUIs</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Argues developers should default to real native/GUI interfaces for small personal tools instead of terminal UIs, because coding agents have collapsed the cost of building a &quot;good enough&quot; GUI to nearly zero.</li>
+              <li>Willison points to his own vibe-coded bandwidth/GPU monitor as an example of a throwaway tool that was easier to build as a native app than a TUI once an agent handled the boilerplate.</li>
+              <li>Signals a broader shift: with agents doing UI scaffolding, the traditional &quot;TUI is faster to build&quot; trade-off is weakening for hobby and utility tooling.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Aug/21/stop-making-tuis/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.239</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fixed unbounded memory growth in long interactive sessions by releasing subagent tool results once they scroll out of the recent display window.</li>
-              <li>Added a keybindingFlavor: &quot;readline&quot; setting (Ctrl+W deletes back to previous whitespace like Bash) and plugin-marketplace headersHelper support for minting short-lived auth headers on fetch/install.</li>
-              <li>Multiple Remote Control fixes: sessions no longer exit on messages without a valid role, cross-session messaging now reports &quot;refused&quot; instead of failing silently, and reconnects tolerate brief HTTP 403s for up to 3 minutes.</li>
+              <li>Cost estimates (`/cost`, status line, `--max-budget-usd`) now factor in the 1.1x US-only-inference premium charged for data-residency workspaces, so budgets/estimates previously undercounted spend for those setups.</li>
+              <li>Adds a one-time fullscreen renderer opt-in prompt for Bedrock, Vertex, Foundry and other previously-excluded platforms, extending a UI feature that had been limited to direct Anthropic API users.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.238" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.239" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-agent-sdk-typescript: v0.3.239</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>`total_cost_usd` and `modelUsage.costUSD` now include the same 1.1x US-only-inference multiplier when a response reports `inference_geo: &quot;us&quot;`, keeping SDK cost accounting in sync with Claude Code&#x27;s v2.1.239 change.</li>
+              <li>Background subagents running in one-shot mode now report `total_cost_usd`, `duration_api_ms`, and `modelUsage` on their held-back result, closing a gap where cost/telemetry data was missing for backgrounded tasks.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.239" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-agent-sdk-typescript: v0.3.238</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Adds `is_backgrounded` and `spawn_depth` fields to `task_started` events for subagent tasks (plus `is_backgrounded` for background Bash tasks), giving callers visibility into task nesting and backgrounding.</li>
+              <li>Adds `suppressOriginalPrompt` to the `UserPromptExpansion` hook output to match existing `UserPromptSubmit` behavior, and introduces a new `refused` command-lifecycle state.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.238" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code-action: v1.0.199</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Fixes the GitHub Action to honor `GITHUB_GRAPHQL_URL` for its GraphQL client, relevant to GitHub Enterprise or self-hosted setups with custom API endpoints.</li>
+              <li>Fixes cleanup logic so a revert of base-branch config no longer gets swept into the action&#x27;s auto-commit, preventing unintended config changes from being committed.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code-action/releases/tag/v1.0.199" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
