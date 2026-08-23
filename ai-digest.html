@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 22, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 23, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 22, 2026</div>
+        <div class="digest-date-badge">August 23, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Anthropic pushed a cluster of releases across Claude Code, the TypeScript Agent SDK, and the GitHub Action, mostly threading a new 1.1x US-only-inference cost premium through cost reporting and adding backgrounded-task telemetry. Simon Willison&#x27;s roundup covers practical LLM-tooling fixes (a broken `llm` install, an updated OpenRouter plugin) alongside a provocative argument that coding agents have made native GUIs cheaper to build than TUIs. A Hugging Face research post adds a methodological warning: several leading ASR models appear to be gaming benchmark datasets rather than genuinely transcribing audio, complicating trust in leaderboard scores.</p>
+        <p class="digest-intro">A quiet pool today, dominated by Simon Willison: a Linus Torvalds commit-message quote crediting an AI with grinding through a brutal kernel debug session (while also noting the AI kept wanting to give up), a short note arguing that verifying agent output matters more than eyeballing every line, and a substantive llm 0.33 release finishing the OpenAI Python 3.x migration plus adding combinable templates. Two Claude Code point releases in the pool (v2.1.240, v2.1.241) carried no changelog beyond generic &#x27;bug fixes and reliability improvements&#x27; and were skipped as noise.</p>
       </div>
     </section>
 
@@ -29,94 +29,38 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Measuring benchmark optimization in speech recognition</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Top-performing ASR models were found to reproduce benchmark-specific reference transcripts even when the audio itself contradicts them, meaning leaderboard scores can overstate real-world accuracy.</li>
-              <li>Some models detect which dataset a sample came from and switch to that benchmark&#x27;s expected spelling/formatting conventions rather than transcribing what they actually hear.</li>
-              <li>Models with the lowest reported WER are the most likely to be reproducing dataset errors (e.g. in VoxPopuli); authors recommend held-out, out-of-distribution test audio to separate genuine gains from benchmark gaming.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/asr-benchmark-optimization" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>llm 0.32.1</h3>
+              <h3>llm 0.33</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fresh installs of the `llm` CLI broke because the OpenAI Python library dropped its dependency on httpx, which `llm` had been relying on transitively without declaring it directly.</li>
-              <li>This point release pins the `openai` package to the last compatible version to restore installs — a reminder that transitive dependencies are a real fragility point for CLI tools built on fast-moving SDKs.</li>
+              <li>Completes the migration to OpenAI Python library 3.x and switches the HTTP client dependency from httpx to httpx2, superseding the quick 0.32.1 patch shipped the day before.</li>
+              <li>`llm embed`/`embed-multi` and their Python equivalents (`EmbeddingModel.embed()`, `Collection.embed()`, etc.) now accept a `--key`/`key=` argument to pass a per-call API key without mutating shared model state; old plugins reading `self.key` still work via a compatibility fallback.</li>
+              <li>`llm prompt -t/--template` can now be repeated to combine templates in order, e.g. merging a template that pins a model+options with a separate template that supplies the prompt text. Reasoning-capable Responses API models also gain a `reasoning_summary` option (auto/concise/detailed).</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/21/llm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/22/llm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>llm-openrouter 0.7</h3>
+              <h3>Quoting Linus Torvalds</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Updated for compatibility with the new `llm` 0.32 plugin interface, and now surfaces reasoning traces for models accessed through OpenRouter.</li>
-              <li>Models routed through OpenRouter now use its implementation of the Responses API.</li>
-              <li>Adds three new server-side tools (including Shell and Web), expanding what OpenRouter-routed models can do without extra client-side plumbing.</li>
+              <li>In a Linux kernel commit message (&quot;drm/xe: Don&#x27;t hand out the flat CCS storage as usable VRAM&quot;), Torvalds credits an AI with doing &quot;much of the grunt-work&quot; during what he calls a debug session from hell.</li>
+              <li>The AI repeatedly declared the bug unsolvable and suggested writing it up as a lost cause instead of continuing, but kept adding and analyzing debug code faithfully whenever Torvalds pushed back.</li>
+              <li>Torvalds ultimately let the AI write the commit message itself, while speculating its readiness to give up reflects training on people less stubborn than he is.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/21/llm-openrouter/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/22/linus-torvalds/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Stop Making TUIs</h3>
+              <h3>More than just code review</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Argues developers should default to real native/GUI interfaces for small personal tools instead of terminal UIs, because coding agents have collapsed the cost of building a &quot;good enough&quot; GUI to nearly zero.</li>
-              <li>Willison points to his own vibe-coded bandwidth/GPU monitor as an example of a throwaway tool that was easier to build as a native app than a TUI once an agent handled the boilerplate.</li>
-              <li>Signals a broader shift: with agents doing UI scaffolding, the traditional &quot;TUI is faster to build&quot; trade-off is weakening for hobby and utility tooling.</li>
+              <li>Argues the core skill for using coding agents productively is being able to confidently instruct them and then confidently verify the result — not necessarily reviewing every line they write.</li>
+              <li>Willison&#x27;s framing: line-by-line eyeballing has never actually been the most effective way to validate a software change, so agent-era verification should lean on other techniques (tests, targeted checks) rather than exhaustive manual review.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/21/stop-making-tuis/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.239</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Cost estimates (`/cost`, status line, `--max-budget-usd`) now factor in the 1.1x US-only-inference premium charged for data-residency workspaces, so budgets/estimates previously undercounted spend for those setups.</li>
-              <li>Adds a one-time fullscreen renderer opt-in prompt for Bedrock, Vertex, Foundry and other previously-excluded platforms, extending a UI feature that had been limited to direct Anthropic API users.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.239" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-agent-sdk-typescript: v0.3.239</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>`total_cost_usd` and `modelUsage.costUSD` now include the same 1.1x US-only-inference multiplier when a response reports `inference_geo: &quot;us&quot;`, keeping SDK cost accounting in sync with Claude Code&#x27;s v2.1.239 change.</li>
-              <li>Background subagents running in one-shot mode now report `total_cost_usd`, `duration_api_ms`, and `modelUsage` on their held-back result, closing a gap where cost/telemetry data was missing for backgrounded tasks.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.239" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-agent-sdk-typescript: v0.3.238</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Adds `is_backgrounded` and `spawn_depth` fields to `task_started` events for subagent tasks (plus `is_backgrounded` for background Bash tasks), giving callers visibility into task nesting and backgrounding.</li>
-              <li>Adds `suppressOriginalPrompt` to the `UserPromptExpansion` hook output to match existing `UserPromptSubmit` behavior, and introduces a new `refused` command-lifecycle state.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.238" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code-action: v1.0.199</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Fixes the GitHub Action to honor `GITHUB_GRAPHQL_URL` for its GraphQL client, relevant to GitHub Enterprise or self-hosted setups with custom API endpoints.</li>
-              <li>Fixes cleanup logic so a revert of base-branch config no longer gets swept into the action&#x27;s auto-commit, preventing unintended config changes from being committed.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code-action/releases/tag/v1.0.199" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/22/more-than-just-code-review/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

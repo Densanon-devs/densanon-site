@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - August 22, 2026 | Densanon</title>
+  <title>Computation Morning Digest - August 23, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 22, 2026</div>
+        <div class="digest-date-badge">August 23, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation news skews toward the Linux and open-source stack quietly catching up on multiple fronts at once: AMD&#x27;s RDNA 4m firmware landed ahead of launch, Mesa&#x27;s NVK driver picked up Vulkan Video, sched_ext&#x27;s sub-scheduler support went feature-complete, and OpenZFS shipped a fresh point release, alongside a still-unpatched NTFS3 root vulnerability worth knowing about. On the market side, surging memory costs are squeezing both desktop CPU shipments and console pricing, while one GPU owner&#x27;s five-year-old factory-plastic mystery is a good reminder to double-check thermal pad installs.</p>
+        <p class="digest-intro">Linux 7.3 dominates today&#x27;s kernel news: FAMFS/NVDIMM groundwork, new AES crypto library APIs from Google&#x27;s Eric Biggers, input-subsystem security fixes, continued HFS+ maintenance, eCryptfs hardening, and a changing of the guard on CIFS/SMB3 maintainership, plus a two-line GCC patch that nets a real 12% SPEC CPU win on Zen 5. Community-built systems are pushing their own boundaries too -- Redox OS claims a 2.6x throughput jump from an EEVDF scheduler swap, and ReactOS lands Job Objects support toward genuine Windows-app compatibility. On the industry side, documented threats against officials over AI data center buildouts have now pushed 500+ towns to restrict new construction.</p>
       </div>
     </section>
 
@@ -29,123 +29,135 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Desktop CPU shipments crater 20% amid high component costs, but AMD gains record share despite &#x27;ugly&#x27; desktop processor market — Intel floods laptop market with millions of CPUs, but AMD still sets all-time share records</h3>
+              <h3>GCC Patch Adjusting AMD Zen 5 Misprediction Cost Nets 12% Win In Benchmark</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>An AMD compiler engineer posted a two-line GCC patch adjusting the branch misprediction cost model used for Zen 4 and Zen 5.</li>
+              <li>The change yields a 12% improvement on one SPEC CPU benchmark for Zen 5 and 9% for Zen 4.</li>
+              <li>A rare case of a tiny compiler tuning tweak producing a double-digit, measured performance gain on current AMD silicon.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/AMD-Zen-5-Mispredict-Cost" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.3 Makes Preparations Toward Upstreaming FAMFS File-System</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>NVDIMM and direct access (DAX) patches merged for the Linux 7.3 cycle lay groundwork for Micron&#x27;s FAMFS file-system.</li>
+              <li>Most of this cycle&#x27;s DAX/NVDIMM activity is specifically preparation work ahead of FAMFS&#x27;s upcoming upstream submission.</li>
+              <li>FAMFS targets shared, byte-addressable persistent memory -- infrastructure aimed at disaggregated/CXL-style memory setups.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.3-Preps-Toward-FAMFS" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.3 Introduces New AES Encryption APIs - Will Open Up More Performance</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Google&#x27;s Eric Biggers landed new kernel library APIs covering most of the AES encryption modes used internally by Linux.</li>
+              <li>The refactor reduces code duplication across the crypto subsystem and opens the door to further performance optimizations going forward.</li>
+              <li>Groundwork rather than an immediate speed boost -- the payoff is in follow-on optimization work the new APIs now make possible.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.3-New-Crypto-AES-APIs" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.3 Input Subsystem Updates Merged With Security Fixes, Other Improvements</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A large batch of input subsystem updates landed for Linux 7.3, mixing routine driver improvements with bug and security fixes.</li>
+              <li>Some of the security fixes stem from a growing flow of AI/LLM-assisted vulnerability discoveries feeding into kernel bug reports.</li>
+              <li>Reflects how automated fuzzing/discovery tooling is starting to shape which corners of the kernel get patched each cycle.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.3-Input" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>eCryptfs Sees Fixes For Potential Malicious Intent, Some Dating Back To Its 2006 Debut</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The eCryptfs stacked cryptographic filesystem received a batch of fixes for handling of maliciously-crafted data.</li>
+              <li>Some of the underlying bugs trace back to eCryptfs&#x27;s original 2006 introduction into the kernel.</li>
+              <li>A reminder that older, lower-traffic filesystem drivers can carry latent security issues for well over a decade before review.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.3-eCryptfs" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Apple HFS / HFS+ File-System Support Continues Seeing Fixes With Linux 7.3</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Linux&#x27;s HFS/HFS+ filesystem code -- once slated for possible removal in early 2025 as an orphaned, decade-old maintenance burden -- keeps getting fixes in 7.3.</li>
+              <li>Volunteer developers stepped up to maintain the code, reversing what looked like an imminent deprecation.</li>
+              <li>Keeps Linux&#x27;s ability to read/write Apple&#x27;s legacy filesystem format alive for now.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Apple-HFS-Linux-7.3" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Industry &amp; HPC</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Officials nationwide face death threats and gunfire over AI data center projects — More than 500 towns restrict builds as councils shutter public comment</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Desktop CPU shipments fell about 20% amid high component costs, even as AMD grew its share to an all-time record.</li>
-              <li>Intel is prioritizing data-center and notebook output, flooding laptops with CPUs while ceding ground on desktop.</li>
-              <li>Signals a structural squeeze on DIY desktop building as component costs and supply prioritization shift volume elsewhere.</li>
+              <li>The Soufan Center&#x27;s July IntelBrief documents hundreds of posts containing threat language directed at officials over AI data center projects between July 2025 and July 2026, with volume surging starting in April.</li>
+              <li>More than 500 towns have now moved to restrict data center construction, with some councils shutting down public comment periods entirely.</li>
+              <li>Signals the AI infrastructure buildout has become a genuine local political flashpoint, not just a zoning or utility-rate dispute.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/desktop-cpu-shipments-crater-20-percent-amid-high-component-costs-but-amd-gains-record-share-despite-ugly-desktop-processor-market-intel-floods-laptop-market-with-millions-of-cpus-but-amd-still-sets-all-time-share-records" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/data-centers/death-threats-hit-data-center-opponents-as-towns-cancel-votes-and-close-public-comment" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Gamer uncovers factory plastic left on RTX 3070 VRM pads after five years, causing overheating — claims removal and repasting dropped GPU hotspot temperatures by 30°C</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A Gigabyte RTX 3070 owner found factory-installed protective plastic film still covering the VRM thermal pads after nearly five years of use.</li>
-              <li>Removing the film and repasting reportedly dropped GPU hotspot temperatures by about 30C and stopped random black-screen crashes.</li>
-              <li>A concrete diagnostic check worth trying on any card from this era showing unexplained thermal throttling.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/gpus/gigabyte-rtx-3070-owner-discovers-protective-film-on-vrm-thermal-pads-after-nearly-five-years-claims-removal-and-repasting-dropped-gpu-hotspot-temperatures-by-30-c" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Spending on physical games falls to lowest on record since 1995 — US console sales plunge 39% in July as memory costs push average price to $542</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>US console hardware unit sales dropped 39% year-over-year in July, among the weakest physical-hardware showings on record.</li>
-              <li>The average price paid for a new console rose 16% to $542, driven by rising memory costs rather than added features.</li>
-              <li>Another data point in the broader 2026 memory-price spike rippling from components into finished consumer hardware.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/video-games/console-gaming/us-console-sales-fall-39-percent-in-july-as-memory-costs-push-average-price-to-542" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Specially Crafted NTFS File-System Image Allows Root Access On Linux With NTFS3 Driver</h3>
+              <h3>Redox OS Switches To EEVDF-Based Scheduler For 2.6x Throughput</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A specially crafted NTFS filesystem image (e.g. on a USB drive) can be used to gain root access on Linux systems using the NTFS3 kernel driver.</li>
-              <li>The vulnerability has reportedly gone unpatched since it was disclosed earlier in the summer.</li>
-              <li>A live local-privilege-escalation risk for any Linux system that auto-mounts removable NTFS media.</li>
+              <li>The Rust-written, from-scratch Redox OS switched its process scheduler to an EEVDF-based design, the same family of algorithm Linux&#x27;s CFS replacement uses.</li>
+              <li>The project reports a 2.6x increase in throughput and a 782x improvement in scheduling fairness over the prior scheduler.</li>
+              <li>A concrete case of a community OS adopting modern scheduling theory to close the gap with mainstream kernels.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/NTFS3-Vulnerability-For-Root" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Redox-OS-Goes-EEVDF" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD RDNA 4m Firmware Published For Linux Ahead Of Launch</h3>
+              <h3>ReactOS Merges Support For Job Objects As Step To Running Modern Windows Apps</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMD published RDNA 4m firmware binaries to linux-firmware.git ahead of the hardware&#x27;s official launch.</li>
-              <li>The drop came alongside a separate, large UALink enablement patch set for the Linux kernel and AMDGPU driver.</li>
-              <li>Early firmware availability suggests open-source driver support should be closer to launch-ready than in past AMD GPU generations.</li>
+              <li>ReactOS merged initial support for Windows Job Objects, the Win32 mechanism for managing groups of processes as a unit.</li>
+              <li>Job Objects are used by many modern Windows applications and sandboxing/container-style tooling, making this a meaningful compatibility milestone.</li>
+              <li>Moves the open-source, Windows-compatible OS a step closer to running more contemporary Windows software unmodified.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-RDNA-4m-Firmware-Published" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/ReactOS-Job-Objects" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NVK Vulkan Video Merged For Mesa 26.3</h3>
+              <h3>Longtime Linux CIFS/SMB3 Maintainer Passes Away</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Mesa&#x27;s open-source NVK Vulkan driver for NVIDIA GPUs has merged Vulkan Video support ahead of the 26.3 release.</li>
-              <li>Enables hardware-accelerated video decode/encode through the open-source stack instead of NVIDIA&#x27;s proprietary driver.</li>
-              <li>Continues NVK&#x27;s rapid feature-parity march, narrowing the gap with NVIDIA&#x27;s closed Linux driver.</li>
+              <li>Steve French, the principal author and longtime maintainer of Linux&#x27;s CIFS/SMB3 filesystem code, has stepped down due to health reasons as of Linux 7.3.</li>
+              <li>French was also a Microsoft employee, notable given his role maintaining the kernel&#x27;s implementation of Microsoft&#x27;s own SMB3 protocol.</li>
+              <li>Marks a significant maintainership transition for a widely used piece of Linux&#x27;s network filesystem stack.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/NVK-Vulkan-Video-Mesa-26.3" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Sched_ext&#x27;s Sub-Scheduler Support Now &quot;Feature Complete&quot; With Linux 7.3</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Linux&#x27;s sched_ext framework, which lets custom CPU schedulers run as BPF programs, has reached &quot;feature complete&quot; for sub-scheduler support in Linux 7.3.</li>
-              <li>Sub-schedulers let different scheduling policies apply to different parts of the system simultaneously, such as per-cgroup.</li>
-              <li>Matures sched_ext from an experimental BPF-scheduler curiosity into a serious pluggable-scheduling platform.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-sched-ext" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Open-Source Etnaviv Driver Now Able To Run YOLOX</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The reverse-engineered, open-source Etnaviv driver for Vivante GPU/NPU IP can now run the YOLOX object-detection model.</li>
-              <li>Extends Etnaviv&#x27;s scope from graphics acceleration into practical NPU-based inference workloads.</li>
-              <li>A win for open-source support on embedded/SoC platforms with Vivante silicon that&#x27;s otherwise often locked to vendor blobs.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Etnaviv-YOLOX" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux 7.3 x86/mm Lands Patches To Greatly Improve Latency-Sensitive Workloads</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Linux 7.3&#x27;s x86/mm pull request reduces the time TLB-flushing code spends with interrupts disabled.</li>
-              <li>Directly benefits latency-sensitive workloads affected by interrupt-disabled windows during memory management.</li>
-              <li>Intel engineer Dave Hansen cautioned the fix &quot;isn&#x27;t free,&quot; implying a tradeoff worth watching for regressions.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-x86-mm-Latency" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>OpenZFS 2.4.4 Released With Linux 7.2 Support, Dozens Of Fixes</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>OpenZFS 2.4.4 shipped as the latest stable point release, adding support for Linux 7.2 alongside dozens of fixes.</li>
-              <li>Keeps ZFS current against a fast-moving Linux kernel release cadence for both Linux and FreeBSD users.</li>
-              <li>A routine but important maintenance release for anyone running ZFS-backed storage in production.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/OpenZFS-2.4.4-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/SMB3-CIFS-Maintainer-Change" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
