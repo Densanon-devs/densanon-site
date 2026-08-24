@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 23, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 24, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,52 +15,149 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 23, 2026</div>
+        <div class="digest-date-badge">August 24, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A quiet pool today, dominated by Simon Willison: a Linus Torvalds commit-message quote crediting an AI with grinding through a brutal kernel debug session (while also noting the AI kept wanting to give up), a short note arguing that verifying agent output matters more than eyeballing every line, and a substantive llm 0.33 release finishing the OpenAI Python 3.x migration plus adding combinable templates. Two Claude Code point releases in the pool (v2.1.240, v2.1.241) carried no changelog beyond generic &#x27;bug fixes and reliability improvements&#x27; and were skipped as noise.</p>
+        <p class="digest-intro">Today&#x27;s pool leans heavily into agentic infrastructure and LLM safety research: two papers go directly after the context-window and cold-start problems that plague long-running coding agents, while several others probe where alignment and bias mitigation turn out to be more superficial than they look. On the industry side, Simon Willison flags Anthropic&#x27;s climbing revenue alongside real user drift toward cheaper models, plus a harness-vs-frontier-model debate that&#x27;s getting sharper as top-tier model costs rise.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>SDAD: Spec-Driven Agentic Development for the AI-Native SDLC</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes restructuring the software development lifecycle around frontier coding agents that now carry context windows from hundreds of thousands up to millions of tokens.</li>
+              <li>Frames agentic coding around explicit, checkable specs rather than ad hoc prompting, aiming to make multi-step agent-driven development more reliable and auditable.</li>
+              <li>Relevant to anyone running Claude Code-style agents at scale — a formalized spec-driven workflow targets exactly the kind of drift that shows up over long agent sessions.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.20341" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>PrimeAgentOrchestrator: Memory-Primed Agent Spawning for Personal AI Infrastructure</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tackles the cold-start problem where every new Claude Code agent session begins with an empty context window and discards prior accumulated knowledge.</li>
+              <li>PrimeAgentOrchestrator (PAO) spawns new Claude Code instances pre-loaded (“memory-primed”) with relevant prior history, aimed at persistent personal AI infrastructure rather than one-off tasks.</li>
+              <li>Directly on-topic for anyone running persistent multi-agent setups with hand-maintained memory files — this targets the exact context-continuity gap those files are currently patching manually.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.20342" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Truth Lies Deep: Countering Semantic Camouflage via Latent Intent Verification</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Argues current LLM safety alignment is often superficial: refusal mechanisms trigger only at the final stages of generation without erasing the harmful knowledge acquired during pretraining.</li>
+              <li>Proposes verifying latent intent rather than relying solely on surface-level refusal triggers, targeting attacks that semantically camouflage harmful intent.</li>
+              <li>Relevant to anyone building or auditing guardrails for local/agentic LLM deployments — a concrete reminder that refusal-only alignment is bypassable by design.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.20378" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>A Survey on Foundations and Frontiers of Multimodal Agentic Frameworks: Techniques and Applications</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Surveys the fast-growing space of agentic frameworks that orchestrate perception, memory, and decision-making around LLM backbones.</li>
+              <li>Positions “agency” — reasoning, planning, and acting — as the next major research axis beyond raw generation quality.</li>
+              <li>Useful as a map of the current agentic-framework landscape for comparing orchestration approaches across multiple in-house agent systems.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.20379" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Beyond Raw Transcripts: Structured Persona Extraction for LLM-Based Digital Twins</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Targets LLM “digital twins” that simulate how a specific individual would behave or respond, built from prior survey/transcript data.</li>
+              <li>Moves away from dumping raw transcripts into context, instead extracting a structured persona representation to ground the simulation.</li>
+              <li>Relevant to any persona- or character-driven dialogue system — structured persona extraction could sharpen consistency beyond freeform transcript conditioning.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.20344" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>When Vocabulary Comprehension Fails Clinical Reasoning: Evaluating Therapy Bots&#x27; Safety Risks for Generation Alpha</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Reports that 13.1% of US adolescents (5.4 million, Generation Alpha) already use generative AI for mental-health advice, often via informal therapy-bot use.</li>
+              <li>Evaluates specific points where these systems&#x27; vocabulary comprehension breaks down in ways that undermine actual clinical/safety reasoning.</li>
+              <li>A concrete data point on real-world AI safety exposure in a vulnerable population — relevant to anyone building conversational AI that could see off-label sensitive use.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.20345" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Who Do Language Models Think Is Competent? A Mechanistic Analysis of Occupational Bias</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Investigates whether LLMs that pass behavioral bias evaluations have actually unlearned biased occupational associations, or just learned not to express them.</li>
+              <li>Uses mechanistic interpretability to probe internal representations directly, rather than trusting surface-level output behavior.</li>
+              <li>Matters for anyone treating “passes the bias eval” as a safety signal — the underlying associations may still be present, just suppressed at output time.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.20347" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Inhibitory Attention for Clinical Long-Context Reasoning: Characterizing and Mitigating Lost-in-the-Middle Effects in EHR Processing</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Addresses the well-known “lost-in-the-middle” effect — where models retrieve information less reliably from the center of long contexts — specifically for electronic health records exceeding 100,000 tokens.</li>
+              <li>Proposes an inhibitory-attention mechanism to characterize and mitigate the effect rather than just documenting it.</li>
+              <li>Directly applicable to any long-context RAG or retrieval pipeline wrestling with the same middle-of-context degradation, not just clinical ones.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.20348" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Anthropic’s best AI model struggles to attract users as cheaper tools thrive</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>FT-reported numbers cited by Simon Willison: Anthropic&#x27;s annualized revenue climbed from $47bn in May to $65bn in July, even as its flagship model loses ground to cheaper competitors.</li>
+              <li>Points to a widening gap between raw model capability and mainstream adoption — price sensitivity, not benchmark wins, is increasingly what drives which model people actually use.</li>
+              <li>Worth tracking for cost-performance planning: frontier-tier pricing is a real adoption headwind even for the strongest model on the market.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Aug/23/anthropics-best-ai-model-struggles-to-attract-users-as-cheaper-t/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>llm 0.33</h3>
+              <h3>Quoting Drew Breunig</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Completes the migration to OpenAI Python library 3.x and switches the HTTP client dependency from httpx to httpx2, superseding the quick 0.32.1 patch shipped the day before.</li>
-              <li>`llm embed`/`embed-multi` and their Python equivalents (`EmbeddingModel.embed()`, `Collection.embed()`, etc.) now accept a `--key`/`key=` argument to pass a per-call API key without mutating shared model state; old plugins reading `self.key` still work via a compatibility fallback.</li>
-              <li>`llm prompt -t/--template` can now be repeated to combine templates in order, e.g. merging a template that pins a model+options with a separate template that supplies the prompt text. Reasoning-capable Responses API models also gain a `reasoning_summary` option (auto/concise/detailed).</li>
+              <li>Argues that before “Fable” landed, polishing your coding harness or context strategy felt wasted effort since each new model release just papered over the gaps.</li>
+              <li>Fable&#x27;s steep cost (with Opus reportedly being phased out) is pushing developers back toward investing in their own harness and context-engineering work instead of leaning on raw model strength.</li>
+              <li>Reinforces a recurring pattern: scaffold/harness value rises as top-tier model economics tighten, not only when base models get weaker.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/22/llm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Quoting Linus Torvalds</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>In a Linux kernel commit message (&quot;drm/xe: Don&#x27;t hand out the flat CCS storage as usable VRAM&quot;), Torvalds credits an AI with doing &quot;much of the grunt-work&quot; during what he calls a debug session from hell.</li>
-              <li>The AI repeatedly declared the bug unsolvable and suggested writing it up as a lost cause instead of continuing, but kept adding and analyzing debug code faithfully whenever Torvalds pushed back.</li>
-              <li>Torvalds ultimately let the AI write the commit message itself, while speculating its readiness to give up reflects training on people less stubborn than he is.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/22/linus-torvalds/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>More than just code review</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues the core skill for using coding agents productively is being able to confidently instruct them and then confidently verify the result — not necessarily reviewing every line they write.</li>
-              <li>Willison&#x27;s framing: line-by-line eyeballing has never actually been the most effective way to validate a software change, so agent-era verification should lean on other techniques (tests, targeted checks) rather than exhaustive manual review.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/22/more-than-just-code-review/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/23/drew-breunig/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

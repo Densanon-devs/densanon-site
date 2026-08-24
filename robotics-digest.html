@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 23, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - August 24, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,41 +15,107 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 23, 2026</div>
+        <div class="digest-date-badge">August 24, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s pool splits between industrial economics and community builds. The Robot Report covers how digital twins let manufacturers pilot automation on-screen before committing capital, and what workforce structures actually scale physical AI deployments beyond throughput metrics. In Beijing, the WHRG 2026 humanoid games produced a real milestone -- two robots beat the human 100m world record in a preliminary heat, a huge jump from last year&#x27;s remote-controlled, 21-second field -- while on the maker side a slow-motion CNC pixel-art display and a redesigned 3D-printed robot lamp show two long-running hobby builds reaching polish.</p>
+        <p class="digest-intro">Today&#x27;s research pool leans hard into manipulation and policy learning -- endoscopic control, gripper/data-collection co-design, and temporal-logic-constrained VLA models all target the gap between plausible-looking policies and verifiably correct ones, alongside a fixed-wing UAV control paper and EPFL&#x27;s sound-powered microfliers. On the industry side, Neura&#x27;s acquisition of cleaning-robot maker Adlatus and an investor&#x27;s case against the do-everything humanoid thesis make an interesting pair to read together. Community picks skew practical: an open-source ROS2 bridge for LeRobot policies, a quadruped trained to imitate a dog from phone video alone, and an independently published physics-violation benchmark for evaluating robot world models.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>EndoLIFT: Language-Disambiguated Latent-Conditioned Rectified Flow for Bidirectional Endoscopic Control</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Targets bidirectional control of endoscopes -- advancing toward target anatomy and later withdrawing or retroflexing for inspection -- as a single controllable behavior rather than two separate motion modes.</li>
+              <li>Uses a language-disambiguated, latent-conditioned rectified-flow model to resolve which direction the instrument should move when an external cue requests an earlier-than-expected phase change.</li>
+              <li>A less-covered but high-stakes application of language-conditioned robot control: surgical/medical manipulation rather than tabletop pick-and-place.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.20478" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Koala Gripper: Co-designing Robotic Grippers and Data-Capture Devices for Scaling Dexterous Manipulation Learning</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Co-designs a handheld data-capture gripper alongside the robotic gripper it is meant to train, aimed at scaling manipulation-dataset collection.</li>
+              <li>Pushes back on the common practice of matching handheld data-capture devices to the morphology of an existing robot gripper, arguing that decoupling the two designs improves data quality.</li>
+              <li>Directly targets the imitation-learning data bottleneck behind large-scale dexterous manipulation policies.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.20546" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Logic-VLA: A Temporal Logic Conditioned Vision-Language-Action Model</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Addresses a real gap in vision-language-action (VLA) policies: natural-language instructions often under-specify safety-critical or spatiotemporal requirements on the resulting behavior.</li>
+              <li>Introduces Logic-VLA, which conditions the model on formal (temporal-logic) requirements instead of relying on natural-language instructions alone.</li>
+              <li>Aimed at making learned manipulation/navigation policies verifiably compliant with hard constraints, not just plausible-looking.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.20556" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Nonlinear Model Predictive Control for Trajectory Tracking of Differentially Flat Fixed-Wing Aerial Systems</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tackles trajectory tracking for fixed-wing UAVs, which are harder to plan and control than multirotors due to nonlinear dynamics, aerodynamic limits, and disturbance sensitivity.</li>
+              <li>Combines differential flatness -- a principled way to generate fast, dynamically feasible trajectories -- with nonlinear MPC for tracking.</li>
+              <li>Core locomotion/control research relevant to any fixed-wing drone platform operating outdoors under wind disturbance.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.20655" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>These tiny drones are powered by sound</h3>
+              <span class="digest-source">Robohub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>EPFL&#x27;s MICROBS Lab built microfliers that exploit Helmholtz resonance -- the same acoustic effect as blowing across a bottle neck -- to generate lift/thrust instead of conventional propellers or flapping wings.</li>
+              <li>A genuinely new actuation mechanism for insect-scale drones, an area where every gram of motor and battery weight is a hard constraint.</li>
+              <li>Real hardware research out of an academic robotics lab, not a vendor product announcement.</li>
+            </ul>
+            <a href="https://robohub.org/these-tiny-drones-are-powered-by-sound/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Use a digital twin to explore automation before committing capital</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Humanoid developer Neura acquires cleaning automation company Adlatus Robotics</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>RoboDK&#x27;s platform lets manufacturers simulate reachability, collision risk, and cycle times across 1,400+ robot models from 80 manufacturers before buying any hardware.</li>
-              <li>A CNC machine-tending example cited in the piece: simulation surfaced that chuck cycles and part-settling time created more idle time than expected, and caught a gripper/part-geometry mismatch that physical prototyping would have found later and more expensively.</li>
-              <li>RoboDK CEO Albert Nubiola frames it as reducing vendor lock-in and improving quoting accuracy during a period of tighter capital scrutiny -- explicitly not a replacement for a systems integrator.</li>
+              <li>Neura Mobile Robots is acquiring 100 percent of Adlatus Robotics, an established autonomous-cleaning-robot maker, folding cleaning into Neura&#x27;s broader physical-AI ecosystem.</li>
+              <li>Follows Neura&#x27;s recent addition of Bosch Rexroth&#x27;s Active Shuttle to its portfolio -- a pattern of buying working commercial platforms rather than building every vertical in-house.</li>
+              <li>Signals a humanoid-robotics company hedging toward proven, revenue-generating task-specific robots alongside its general-purpose humanoid bet.</li>
             </ul>
-            <a href="https://www.therobotreport.com/use-digital-twin-explore-automation-before-committing-capital/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/08/24/humanoid-developer-neura-acquires-cleaning-automation-company-adlatus-robotics/104422/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Robots don&#x27;t run themselves: The workforce powering physical AI</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Investor opinion: Why the future of consumer robotics looks more like beauty and the beast</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>HireArt co-founder/president Christopher Bower argues physical-AI deployments are shifting to hybrid staffing: roughly equal parts salaried core operators/technicians and a flexible layer of temp staff for pilots and site launches.</li>
-              <li>Recommends replacing throughput-only metrics with SOP adherence, documentation quality, escalation accuracy, safe behavior under uncertainty, and hardware uptime/integrity.</li>
-              <li>New role types named: robot operators, field technicians, teleoperators, QA validators, and data-capture specialists -- hybrid jobs mixing execution with documenting edge cases back to engineering.</li>
+              <li>Early-stage investor Amber Atherton (partner at Patron) argues against the single, do-everything home humanoid thesis that Silicon Valley has largely converged on.</li>
+              <li>Frames the more likely consumer-robotics path as a split between specialized, purpose-built robots rather than one general-purpose platform.</li>
+              <li>A useful counterpoint to read against the Neura/Adlatus item above -- itself a bet on stitching together specialized, task-specific robots.</li>
             </ul>
-            <a href="https://www.therobotreport.com/robots-dont-run-themselves-workforce-powering-physical-ai/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/08/24/investor-opinion-why-the-future-of-consumer-robotics-looks-more-like-beauty-and-the-beast/104415/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -59,14 +125,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Nvidia jetson debloating guide</h3>
+              <h3>Running Next-Generation LeRobot Policies using lerobot-robot-ros2-zenoh SDK</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A ROS Discourse poster asks whether a debloating guide exists for NVIDIA Jetson/JetPack, after finding JetPack ships with a large amount of software they consider unnecessary and no existing writeup on safely removing it.</li>
-              <li>The poster offers to document and publish their own cleanup procedure as a free blog post if there&#x27;s community interest -- as of this thread, no guide exists yet and no replies had landed.</li>
+              <li>Open-source lerobot-robot-ros2-zenoh SDK bridges Hugging Face&#x27;s LeRobot policy-learning ecosystem directly into ROS2 via Zenoh, so trained policies can run on real hardware -- demoed on the OMY manipulator.</li>
+              <li>Closes the practical integration gap between a policy trained in LeRobot and a policy actually running on a ROS2-controlled robot, which is what determines whether research policies leave the sim.</li>
+              <li>Latest entry (#13) in an ongoing hands-on series testing LeRobot models on real manipulators.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/nvidia-jetson-debloating-guide/57606" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/running-next-generation-lerobot-policies-using-lerobot-robot-ros2-zenoh-sdk/57625" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -76,49 +143,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Honor lightning vs tiangong in the 2026 humanoid robotics 100 meter dash</h3>
+              <h3>A Robot Dog Trained Entirely on Dog&#x27;s Video</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>In a WHRG 2026 preliminary heat in Beijing, Tiangong Ultra (Beijing Humanoid Robot Innovation Center) ran the 100m in 9.39s and Honor&#x27;s &#x27;Lightning&#x27; robot ran 9.47s -- both faster than Usain Bolt&#x27;s 9.58s human world record -- with Tiangong overtaking Lightning near the finish.</li>
-              <li>Unitree&#x27;s entry finished well back at 12.41s; both leading robots also collided with the padded safety barrier past the finish line.</li>
-              <li>Posters note last year&#x27;s inaugural WHRG field was still remote-controlled and the 100m winner needed 21.50s -- this year&#x27;s heat was run autonomously and cut that time by more than half.</li>
+              <li>Trains a Unitree GO2 quadruped to imitate a real dog&#x27;s gait using only monocular phone video as the reference motion -- no motion-capture rig involved.</li>
+              <li>Pipeline goes from video straight to an RL locomotion policy, trained and validated in both Isaac Sim and MuJoCo, with open-source code released alongside the writeup.</li>
+              <li>A concrete demonstration that video-based motion imitation, increasingly common in humanoid work, scales down to consumer quadruped hardware too.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vve7ju/honor_lightning_vs_tiangong_in_the_2026_humanoid/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1vwxjok/a_robot_dog_trained_entirely_on_dogs_video/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Humanoid robot races have begun at the WHRG 2026</h3>
+              <h3>We published our robotics sim verification benchmarks -- recall/precision 1.00 on injected physics violations, zero false flags, full artifacts</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The second World Humanoid Robot Games opened at Beijing&#x27;s National Speed Skating Oval and runs through August 26, drawing 2,056 robots from 666 teams across 16 countries and six continents -- more than double the 280 teams at last year&#x27;s inaugural event.</li>
-              <li>Track events were among the first competitions to kick off; this year&#x27;s 100m dash times mark a sharp jump over the inaugural games, where the winning time was 21.50 seconds.</li>
+              <li>Published an independent physics-violation checker for evaluating robot policies and world models, detecting teleport/hover/impulse/penetration artifacts -- the failure modes that make simulated demos look better than they are.</li>
+              <li>Reports recall 1.00 / precision 1.00 with zero false flags on injected violations, and released versioned artifacts instead of just another demo video.</li>
+              <li>Addresses a real credibility gap in world-model and policy evaluation, where sim results are easy to cherry-pick and hard to independently verify.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vvc28h/humanoid_robot_races_have_begun_at_the_whrg_2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>P.A.R. (Pixel Art Robot) — A Giant, Slow, Flip-Squisk Display, Flipped by a CNC</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>P.A.R. renders crowd-submitted pixel art on a 37x18 grid by using a CNC gantry with a color-sensing, servo-driven pusher toolhead to physically flip two-tone &#x27;squisk&#x27; tiles into place.</li>
-              <li>The builder reports nearly six months of work to reach this stage; a custom PCB is the one piece still outstanding, and anyone can submit art for free at the project&#x27;s own site (par.zimmzimm.com).</li>
-              <li>Full CAD files are released free and are 3D-printable, making the design replicable by other hobbyists.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vvyaxs/par_pixel_art_robot_a_giant_slow_flipsquisk/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>3-month update, in a little story about my 3D-printed robot lamp</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Three-month progress update on a DIY robot lamp: the builder replaced an exposed-hardware prototype enclosure with a fully 3D-printed housing, moving the build much closer to the original design intent.</li>
-              <li>Framed as an ongoing build-log series rather than a finished product, illustrating the enclosure-design phase that follows a working electronics prototype.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1vvci99/3month_update_in_a_little_story_about_my/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1vx18dm/we_published_our_robotics_sim_verification/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

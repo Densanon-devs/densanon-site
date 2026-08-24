@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - August 23, 2026 | Densanon</title>
+  <title>Computation Morning Digest - August 24, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 23, 2026</div>
+        <div class="digest-date-badge">August 24, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Linux 7.3 dominates today&#x27;s kernel news: FAMFS/NVDIMM groundwork, new AES crypto library APIs from Google&#x27;s Eric Biggers, input-subsystem security fixes, continued HFS+ maintenance, eCryptfs hardening, and a changing of the guard on CIFS/SMB3 maintainership, plus a two-line GCC patch that nets a real 12% SPEC CPU win on Zen 5. Community-built systems are pushing their own boundaries too -- Redox OS claims a 2.6x throughput jump from an EEVDF scheduler swap, and ReactOS lands Job Objects support toward genuine Windows-app compatibility. On the industry side, documented threats against officials over AI data center buildouts have now pushed 500+ towns to restrict new construction.</p>
+        <p class="digest-intro">Linux 7.3 continues taking shape with RISC-V extension support and a fix for firmware that could previously hang the whole system on a bad EFI call, while Intel&#x27;s new DRM Fabric proposal lands right on the heels of AMD&#x27;s UALink patches -- both vying to define how Linux handles multi-accelerator interconnects. Materials research delivered a silicon carbide transistor rated for 600C using standard fab processes, and researchers confirmed a submarine cable across the Drake Passage to Antarctica is technically buildable. Elsewhere: Nintendo wiped over 400 GitHub repos in a single DMCA sweep, AliExpress is accused of audio-based browser fingerprinting, and a new report says US datacenter water use has tripled in a decade.</p>
       </div>
     </section>
 
@@ -29,75 +29,94 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GCC Patch Adjusting AMD Zen 5 Misprediction Cost Nets 12% Win In Benchmark</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Kyoto University builds transistor that survives 600C temperatures, compatible with standard fabs — Standard ion implantation and bottom-gate design fix leakage and voltage drift</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An AMD compiler engineer posted a two-line GCC patch adjusting the branch misprediction cost model used for Zen 4 and Zen 5.</li>
-              <li>The change yields a 12% improvement on one SPEC CPU benchmark for Zen 5 and 9% for Zen 4.</li>
-              <li>A rare case of a tiny compiler tuning tweak producing a double-digit, measured performance gain on current AMD silicon.</li>
+              <li>Kyoto University demonstrated a silicon carbide (SiC) transistor that operates reliably at 600C (873K), built with standard ion implantation rather than an exotic process.</li>
+              <li>A bottom-gate design combined with standard ion implantation fixes the leakage current and voltage drift that normally plague SiC devices at extreme temperatures.</li>
+              <li>Compatibility with standard fabs means this could reach practical use in engines, deep drilling, or spacecraft electronics without a bespoke process line.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-Zen-5-Mispredict-Cost" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/kyoto-university-demonstrates-a-sic-transistor-that-runs-at-600c-using-standard-ion-implantation" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.3 Makes Preparations Toward Upstreaming FAMFS File-System</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Undersea cable to Antarctica through Drake Passage is viable, researchers find — 1,600km route to Chile could spell an end to research data leaving in &#x27;suitcases full of hard drives&#x27;</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NVDIMM and direct access (DAX) patches merged for the Linux 7.3 cycle lay groundwork for Micron&#x27;s FAMFS file-system.</li>
-              <li>Most of this cycle&#x27;s DAX/NVDIMM activity is specifically preparation work ahead of FAMFS&#x27;s upcoming upstream submission.</li>
-              <li>FAMFS targets shared, byte-addressable persistent memory -- infrastructure aimed at disaggregated/CXL-style memory setups.</li>
+              <li>Researchers found a 1,600km submarine cable route across the Drake Passage to Chile is technically buildable, giving Antarctic research stations a real path to network connectivity.</li>
+              <li>Today, Antarctic research data still leaves the continent physically, ferried out by ship and plane in suitcases full of hard drives -- a cable would replace that logistics chain with a direct link.</li>
+              <li>Given the Drake Passage&#x27;s seas and seafloor geology, the finding is notable mainly as a feasibility result, not a signal that a build is imminent.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-Preps-Toward-FAMFS" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/networking/researcgers-find-a-drake-passage-cable-to-antarctica-is-buildable" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.3 Introduces New AES Encryption APIs - Will Open Up More Performance</h3>
+              <h3>GNU Emacs 31.1 Released With Mouse Control Enabled By Default, Theme For New Users</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Google&#x27;s Eric Biggers landed new kernel library APIs covering most of the AES encryption modes used internally by Linux.</li>
-              <li>The refactor reduces code duplication across the crypto subsystem and opens the door to further performance optimizations going forward.</li>
-              <li>Groundwork rather than an immediate speed boost -- the payoff is in follow-on optimization work the new APIs now make possible.</li>
+              <li>GNU Emacs 31.1 ships as the next feature release, with mouse control enabled by default -- a notable default change for a famously keyboard-driven editor.</li>
+              <li>A new default theme aimed at first-time users is part of a broader push to soften Emacs&#x27; historically steep onboarding curve.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-New-Crypto-AES-APIs" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/GNU-Emacs-31.1-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.3 Input Subsystem Updates Merged With Security Fixes, Other Improvements</h3>
+              <h3>VKD3D 2.1 Released With New Features For Direct3D 12 In Upstream Wine</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A large batch of input subsystem updates landed for Linux 7.3, mixing routine driver improvements with bug and security fixes.</li>
-              <li>Some of the security fixes stem from a growing flow of AI/LLM-assisted vulnerability discoveries feeding into kernel bug reports.</li>
-              <li>Reflects how automated fuzzing/discovery tooling is starting to shape which corners of the kernel get patched each cycle.</li>
+              <li>VKD3D 2.1, maintained by CodeWeavers&#x27; Henri Verbeet, adds new features to the library that translates Direct3D 12 calls onto the Vulkan API for Wine.</li>
+              <li>It&#x27;s the engine behind Wine/Proton&#x27;s D3D12 gaming compatibility on Linux, so improvements here directly widen which modern Windows titles run correctly.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-Input" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/VKD3D-2.1-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>eCryptfs Sees Fixes For Potential Malicious Intent, Some Dating Back To Its 2006 Debut</h3>
+              <h3>Intel Engineers Propose DRM Fabric For Linux</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The eCryptfs stacked cryptographic filesystem received a batch of fixes for handling of maliciously-crafted data.</li>
-              <li>Some of the underlying bugs trace back to eCryptfs&#x27;s original 2006 introduction into the kernel.</li>
-              <li>A reminder that older, lower-traffic filesystem drivers can carry latent security issues for well over a decade before review.</li>
+              <li>Intel engineers proposed &#x27;DRM Fabric,&#x27; a new Linux kernel subsystem concept, landing just days after AMD posted its own UALink patch series.</li>
+              <li>The near-simultaneous proposals show both vendors racing to define how Linux abstracts multi-GPU/accelerator interconnects -- effectively a fight over the kernel-level standard for AI and HPC clusters.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-eCryptfs" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/DRM-Fabric-Proposal" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Apple HFS / HFS+ File-System Support Continues Seeing Fixes With Linux 7.3</h3>
+              <h3>Linux 7.3 Adds Support For Several Newer RISC-V Extensions</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Linux&#x27;s HFS/HFS+ filesystem code -- once slated for possible removal in early 2025 as an orphaned, decade-old maintenance burden -- keeps getting fixes in 7.3.</li>
-              <li>Volunteer developers stepped up to maintain the code, reversing what looked like an imminent deprecation.</li>
-              <li>Keeps Linux&#x27;s ability to read/write Apple&#x27;s legacy filesystem format alive for now.</li>
+              <li>Linux 7.3 adds discovery and enumeration support for several newer RISC-V ISA extensions.</li>
+              <li>Also included: improved control-flow-integrity Shadow Stack handling, CPU context-switch support for QoS tagging, and using UEFI runtime services for restart/power management -- steady, incremental RISC-V platform maturity.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Apple-HFS-Linux-7.3" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.3-RISC-V" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.3 Better Protects Against Buggy EFI Firmware Taking Down The Rest Of User-Space</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Linux 7.3&#x27;s EFI subsystem now enforces a timeout on EFI runtime service calls instead of letting a hang wait indefinitely.</li>
+              <li>Closes a real reliability hole: buggy vendor firmware could previously wedge the whole machine by hanging a single EFI call, taking the rest of user-space down with it.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.3-EFI" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Nintendo takes down over 400 GitHub repositories for Switch emulators in one go — Relentless DMCA strikes tied to piracy concerns over illegal cryptographic keys</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Nintendo filed DMCA takedowns against 7 master repositories and their forks, wiping 401 GitHub repos for Switch emulators in a single day.</li>
+              <li>Most targets were Yuzu forks such as Suyu; the strikes are tied to distribution of the cryptographic keys needed to decrypt Switch content, not just the emulator code itself.</li>
+              <li>Shows the legal pressure on emulation projects has shifted toward anything downstream of leaked keys, not only the original codebase.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/video-games/nintendo/nintendo-takes-down-over-400-github-repositories-for-switch-emulators-in-one-go-relentless-dmca-strikes-tied-to-piracy-concerns-over-illegal-cryptographic-keys" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -107,57 +126,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Officials nationwide face death threats and gunfire over AI data center projects — More than 500 towns restrict builds as councils shutter public comment</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>AliExpress accused of fingerprinting shoppers with silent audio trick that also muted a dev&#x27;s headphones</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Soufan Center&#x27;s July IntelBrief documents hundreds of posts containing threat language directed at officials over AI data center projects between July 2025 and July 2026, with volume surging starting in April.</li>
-              <li>More than 500 towns have now moved to restrict data center construction, with some councils shutting down public comment periods entirely.</li>
-              <li>Signals the AI infrastructure buildout has become a genuine local political flashpoint, not just a zoning or utility-rate dispute.</li>
+              <li>AliExpress is accused of playing an inaudible sawtooth-wave audio signal through the browser as a device fingerprinting technique -- one side effect was interfering with a developer&#x27;s Bluetooth headphones.</li>
+              <li>Firefox and Brave say their existing anti-fingerprinting protections already block this specific technique.</li>
+              <li>A case of audio fingerprinting with an unusually visible side effect (actual audio hardware glitches) instead of staying silently invisible.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/data-centers/death-threats-hit-data-center-opponents-as-towns-cancel-votes-and-close-public-comment" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Redox OS Switches To EEVDF-Based Scheduler For 2.6x Throughput</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The Rust-written, from-scratch Redox OS switched its process scheduler to an EEVDF-based design, the same family of algorithm Linux&#x27;s CFS replacement uses.</li>
-              <li>The project reports a 2.6x increase in throughput and a 782x improvement in scheduling fairness over the prior scheduler.</li>
-              <li>A concrete case of a community OS adopting modern scheduling theory to close the gap with mainstream kernels.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Redox-OS-Goes-EEVDF" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/security/2026/08/24/aliexpress-accused-of-fingerprinting-shoppers-with-silent-audio-trick-that-also-muted-a-devs-headphones/5291662" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ReactOS Merges Support For Job Objects As Step To Running Modern Windows Apps</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>US datacenters tripled their water footprint in 10 years</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ReactOS merged initial support for Windows Job Objects, the Win32 mechanism for managing groups of processes as a unit.</li>
-              <li>Job Objects are used by many modern Windows applications and sandboxing/container-style tooling, making this a meaningful compatibility milestone.</li>
-              <li>Moves the open-source, Windows-compatible OS a step closer to running more contemporary Windows software unmodified.</li>
+              <li>US datacenter water consumption roughly tripled over the past 10 years, according to the report.</li>
+              <li>Those figures predate the current AI buildout, meaning today&#x27;s actual number is likely higher still.</li>
+              <li>Reporting on water use is siloed across operators and utilities, making an accurate aggregate picture hard to get -- a data-quality problem layered on top of the resource problem.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/ReactOS-Job-Objects" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Longtime Linux CIFS/SMB3 Maintainer Passes Away</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Steve French, the principal author and longtime maintainer of Linux&#x27;s CIFS/SMB3 filesystem code, has stepped down due to health reasons as of Linux 7.3.</li>
-              <li>French was also a Microsoft employee, notable given his role maintaining the kernel&#x27;s implementation of Microsoft&#x27;s own SMB3 protocol.</li>
-              <li>Marks a significant maintainership transition for a widely used piece of Linux&#x27;s network filesystem stack.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/SMB3-CIFS-Maintainer-Change" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/on-prem/2026/08/24/us-datacenters-tripled-their-water-footprint-in-10-years/5291564" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
