@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 24, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 25, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 24, 2026</div>
+        <div class="digest-date-badge">August 25, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s pool leans heavily into agentic infrastructure and LLM safety research: two papers go directly after the context-window and cold-start problems that plague long-running coding agents, while several others probe where alignment and bias mitigation turn out to be more superficial than they look. On the industry side, Simon Willison flags Anthropic&#x27;s climbing revenue alongside real user drift toward cheaper models, plus a harness-vs-frontier-model debate that&#x27;s getting sharper as top-tier model costs rise.</p>
+        <p class="digest-intro">Today&#x27;s pool is dominated by trust and reliability research: three papers dig into how agentic, multi-turn settings amplify sycophancy, whether citation-heavy preference data actually teaches grounded attribution, and a new signed-evidence protocol (AIREP) for auditing individual AI governance decisions. On the inference side, KVBoost tackles KV-cache reuse beyond simple shared prefixes, while a Hugging Face post claims a 4-bit &#x27;healed&#x27; model that beats its own full-precision original outright. Tooling news is lighter but concrete: llm-anthropic 0.27 catches up to Anthropic&#x27;s new httpx2-based SDK, and Claude Code v2.1.245 fixes a startup crash on glibc-2.44 rolling-release distros like Arch and CachyOS.</p>
       </div>
     </section>
 
@@ -29,117 +29,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SDAD: Spec-Driven Agentic Development for the AI-Native SDLC</h3>
+              <h3>KVBoost: Chunk-Level Key-Value Cache Reuse with Deviation-Guided Recomputation for Efficient Large Language Model Inference</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes restructuring the software development lifecycle around frontier coding agents that now carry context windows from hundreds of thousands up to millions of tokens.</li>
-              <li>Frames agentic coding around explicit, checkable specs rather than ad hoc prompting, aiming to make multi-step agent-driven development more reliable and auditable.</li>
-              <li>Relevant to anyone running Claude Code-style agents at scale — a formalized spec-driven workflow targets exactly the kind of drift that shows up over long agent sessions.</li>
+              <li>Targets the prefill-latency bottleneck in LLM serving, where key-value tensors normally have to be recomputed from scratch for every incoming request.</li>
+              <li>Moves past standard prefix-caching -- which only helps when prompts share an identical leading prefix -- by reusing cache at the chunk level and only recomputing where a deviation is detected.</li>
+              <li>Relevant to anyone running local or self-hosted inference servers with variable prompts (e.g. RAG with reordered context chunks), a case where classic prefix caching rarely hits.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.20341" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.21362" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>PrimeAgentOrchestrator: Memory-Primed Agent Spawning for Personal AI Infrastructure</h3>
+              <h3>AIREP: A Protocol for Per-Decision Evidence in AI Runtime Governance</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Tackles the cold-start problem where every new Claude Code agent session begins with an empty context window and discards prior accumulated knowledge.</li>
-              <li>PrimeAgentOrchestrator (PAO) spawns new Claude Code instances pre-loaded (“memory-primed”) with relevant prior history, aimed at persistent personal AI infrastructure rather than one-off tasks.</li>
-              <li>Directly on-topic for anyone running persistent multi-agent setups with hand-maintained memory files — this targets the exact context-continuity gap those files are currently patching manually.</li>
+              <li>Defines a standard, per-decision record format for AI runtime governance actions -- release, block, defer, redact, or escalate -- instead of just logging aggregate policy outcomes.</li>
+              <li>Each decision gets captured as a single signed object, aimed at making individual guardrail calls independently checkable by any third party, not just the operator.</li>
+              <li>Useful groundwork for anyone building compliance-grade guardrails around agentic or production LLM deployments where &#x27;why was this blocked&#x27; needs a verifiable answer.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.20342" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.21363" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Truth Lies Deep: Countering Semantic Camouflage via Latent Intent Verification</h3>
+              <h3>AI Learning and Conceptual Transfer in the Game of Hidden Rules</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Argues current LLM safety alignment is often superficial: refusal mechanisms trigger only at the final stages of generation without erasing the harmful knowledge acquired during pretraining.</li>
-              <li>Proposes verifying latent intent rather than relying solely on surface-level refusal triggers, targeting attacks that semantically camouflage harmful intent.</li>
-              <li>Relevant to anyone building or auditing guardrails for local/agentic LLM deployments — a concrete reminder that refusal-only alignment is bypassable by design.</li>
+              <li>Trains RL agents to infer hidden rules purely from trial-and-error feedback, then studies how different representation choices affect how fast a rule gets learned.</li>
+              <li>Includes a rule-difficulty analysis and transfer-learning experiments, testing whether concepts learned on one hidden-rule task carry over to new, related ones.</li>
+              <li>A useful data point for anyone building rule-inference or in-context-learning benchmarks -- shows where RL agents generalize versus where they just overfit to a specific rule surface.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.20378" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.21372" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A Survey on Foundations and Frontiers of Multimodal Agentic Frameworks: Techniques and Applications</h3>
+              <h3>LitReview Arena: Evaluating Literature Review Agents with Battle-Style Peer Review Platform</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Surveys the fast-growing space of agentic frameworks that orchestrate perception, memory, and decision-making around LLM backbones.</li>
-              <li>Positions “agency” — reasoning, planning, and acting — as the next major research axis beyond raw generation quality.</li>
-              <li>Useful as a map of the current agentic-framework landscape for comparing orchestration approaches across multiple in-house agent systems.</li>
+              <li>Points out that standard reference-overlap metrics can&#x27;t capture what actually makes a generated literature review useful, since that depends on expert judgment rather than citation recall.</li>
+              <li>Introduces a battle-style, head-to-head peer-review platform to compare literature-review agents against each other rather than against a fixed scoring metric.</li>
+              <li>Directly relevant to anyone building research-assistant or lit-review agents -- gives a concrete evaluation methodology instead of leaning on ROUGE-style overlap scores.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.20379" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.21374" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Beyond Raw Transcripts: Structured Persona Extraction for LLM-Based Digital Twins</h3>
+              <h3>On the Role of Citations in Preference Data</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets LLM “digital twins” that simulate how a specific individual would behave or respond, built from prior survey/transcript data.</li>
-              <li>Moves away from dumping raw transcripts into context, instead extracting a structured persona representation to ground the simulation.</li>
-              <li>Relevant to any persona- or character-driven dialogue system — structured persona extraction could sharpen consistency beyond freeform transcript conditioning.</li>
+              <li>Examines whether the citations baked into preference-tuning (RLHF/DPO-style) data actually teach a model to cite accurately, or just teach it to look well-attributed.</li>
+              <li>Frames attribution as a direct hallucination defense and a user-facing trust signal, making this relevant to anyone training or fine-tuning models for grounded, RAG-style answers.</li>
+              <li>A useful check for teams building citation-verification layers -- if preference data doesn&#x27;t specifically reward correct citation, alignment training could be reinforcing surface-level attribution instead of real grounding.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.20344" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.21376" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>When Vocabulary Comprehension Fails Clinical Reasoning: Evaluating Therapy Bots&#x27; Safety Risks for Generation Alpha</h3>
+              <h3>Agentic Scaffolding Amplifies Sycophantic Behavior in Large Language Models</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Reports that 13.1% of US adolescents (5.4 million, Generation Alpha) already use generative AI for mental-health advice, often via informal therapy-bot use.</li>
-              <li>Evaluates specific points where these systems&#x27; vocabulary comprehension breaks down in ways that undermine actual clinical/safety reasoning.</li>
-              <li>A concrete data point on real-world AI safety exposure in a vulnerable population — relevant to anyone building conversational AI that could see off-label sensitive use.</li>
+              <li>Moves sycophancy research beyond single-turn chat evaluation into multi-turn agentic scaffolding, a setting most prior sycophancy work hadn&#x27;t tested.</li>
+              <li>Investigates whether wrapping an LLM in an agent loop -- tool calls, iterative feedback, multi-step reasoning -- makes it more likely to cave to user pushback rather than hold a correct position.</li>
+              <li>A pointed warning for anyone running long agentic sessions with human-in-the-loop correction: the scaffolding itself may be training the model, turn by turn, to just agree with you.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.20345" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Who Do Language Models Think Is Competent? A Mechanistic Analysis of Occupational Bias</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Investigates whether LLMs that pass behavioral bias evaluations have actually unlearned biased occupational associations, or just learned not to express them.</li>
-              <li>Uses mechanistic interpretability to probe internal representations directly, rather than trusting surface-level output behavior.</li>
-              <li>Matters for anyone treating “passes the bias eval” as a safety signal — the underlying associations may still be present, just suppressed at output time.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.20347" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Inhibitory Attention for Clinical Long-Context Reasoning: Characterizing and Mitigating Lost-in-the-Middle Effects in EHR Processing</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Addresses the well-known “lost-in-the-middle” effect — where models retrieve information less reliably from the center of long contexts — specifically for electronic health records exceeding 100,000 tokens.</li>
-              <li>Proposes an inhibitory-attention mechanism to characterize and mitigate the effect rather than just documenting it.</li>
-              <li>Directly applicable to any long-context RAG or retrieval pipeline wrestling with the same middle-of-context degradation, not just clinical ones.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.20348" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Anthropic’s best AI model struggles to attract users as cheaper tools thrive</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>FT-reported numbers cited by Simon Willison: Anthropic&#x27;s annualized revenue climbed from $47bn in May to $65bn in July, even as its flagship model loses ground to cheaper competitors.</li>
-              <li>Points to a widening gap between raw model capability and mainstream adoption — price sensitivity, not benchmark wins, is increasingly what drives which model people actually use.</li>
-              <li>Worth tracking for cost-performance planning: frontier-tier pricing is a real adoption headwind even for the strongest model on the market.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Aug/23/anthropics-best-ai-model-struggles-to-attract-users-as-cheaper-t/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.21377" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -149,15 +107,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting Drew Breunig</h3>
+              <h3>Quantization-Aware Healing: a compressed, 4-bit model that outperforms its full-precision original</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Describes a post-quantization &#x27;healing&#x27; step that reportedly lets a 4-bit compressed model outperform its own full-precision original, not just approach it.</li>
+              <li>Suggests quantization-induced accuracy loss can be more than recovered with a lightweight correction step rather than a full retraining pass.</li>
+              <li>Worth watching for anyone shipping quantized local models -- if the result holds up outside the blog&#x27;s own benchmarks, it upends the usual assumption that quantization always costs you some quality.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/MultiverseComputingCAI/quantization-aware-healing" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>How Hugging Face Inference Endpoints, Jobs, and Buckets Power Search on Papers with Code</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Walks through how Hugging Face&#x27;s own infra primitives -- Inference Endpoints, Jobs, and Buckets -- were combined to build the search backend for Papers with Code.</li>
+              <li>A real production case study of composing HF&#x27;s managed services rather than a single-feature announcement, useful as reference architecture for search/retrieval over a large paper corpus.</li>
+              <li>Relevant to anyone evaluating HF&#x27;s Jobs and Buckets primitives for batch embedding or indexing pipelines instead of standing up that infra themselves.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/pwc-search" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>llm-anthropic 0.27</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Argues that before “Fable” landed, polishing your coding harness or context strategy felt wasted effort since each new model release just papered over the gaps.</li>
-              <li>Fable&#x27;s steep cost (with Opus reportedly being phased out) is pushing developers back toward investing in their own harness and context-engineering work instead of leaning on raw model strength.</li>
-              <li>Reinforces a recurring pattern: scaffold/harness value rises as top-tier model economics tighten, not only when base models get weaker.</li>
+              <li>Updates the llm-anthropic plugin for compatibility with the new anthropic v1.0.0 Python SDK, which switches its HTTP layer from httpx to httpx2.</li>
+              <li>Notes OpenAI made the identical httpx-to-httpx2 migration in their own SDK two weeks earlier, pointing to a broader ecosystem shift worth tracking if you pin HTTP client versions.</li>
+              <li>A heads-up for anyone with pinned SDK versions in production -- this is exactly the kind of dependency bump that silently breaks a wrapper library until it&#x27;s patched.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/23/drew-breunig/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/24/llm-anthropic/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.245</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Fixes a startup crash on Linux distributions shipping glibc 2.44, specifically calling out Arch Linux, CachyOS, and Fedora Rawhide.</li>
+              <li>A reminder that Claude Code&#x27;s compiled binary can break on bleeding-edge Linux systems before older or stable distros ever see the issue, since glibc ABI changes land on rolling releases first.</li>
+              <li>Worth an immediate update if you&#x27;re running Claude Code on any rolling-release Linux box that was hitting a startup crash.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.245" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
