@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 25, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 27, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 25, 2026</div>
+        <div class="digest-date-badge">August 27, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s pool is dominated by trust and reliability research: three papers dig into how agentic, multi-turn settings amplify sycophancy, whether citation-heavy preference data actually teaches grounded attribution, and a new signed-evidence protocol (AIREP) for auditing individual AI governance decisions. On the inference side, KVBoost tackles KV-cache reuse beyond simple shared prefixes, while a Hugging Face post claims a 4-bit &#x27;healed&#x27; model that beats its own full-precision original outright. Tooling news is lighter but concrete: llm-anthropic 0.27 catches up to Anthropic&#x27;s new httpx2-based SDK, and Claude Code v2.1.245 fixes a startup crash on glibc-2.44 rolling-release distros like Arch and CachyOS.</p>
+        <p class="digest-intro">Today&#x27;s mix leans on rigor as much as releases: Qwen previewed its next architecture with a 125B-total/6B-active MoE model and IBM detailed Granite 4.2&#x27;s agentic RL training, while three benchmark papers (memory/RAG formatting, enterprise NL2SQL, dialectal bias) each show real gaps between headline benchmark numbers and how models actually behave under harder, real-world conditions. Claude Code also shipped two dense releases with a new feedback tool, an API cost-optimizer, and a fixed transcript memory leak.</p>
       </div>
     </section>
 
@@ -29,75 +29,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>KVBoost: Chunk-Level Key-Value Cache Reuse with Deviation-Guided Recomputation for Efficient Large Language Model Inference</h3>
+              <h3>RENDER: Controlling Reader-Facing Evidence in LLM Memory Evaluation</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets the prefill-latency bottleneck in LLM serving, where key-value tensors normally have to be recomputed from scratch for every incoming request.</li>
-              <li>Moves past standard prefix-caching -- which only helps when prompts share an identical leading prefix -- by reusing cache at the chunk level and only recomputing where a deviation is detected.</li>
-              <li>Relevant to anyone running local or self-hosted inference servers with variable prompts (e.g. RAG with reordered context chunks), a case where classic prefix caching rarely hits.</li>
+              <li>Introduces RENDER, a benchmark control that holds conversation content fixed while varying only the &#x27;reader-facing artifact&#x27; - ChatGPT-style memory entries, LangChain summaries, MemGPT-style typed records, or raw dialogue.</li>
+              <li>Presentation format alone produced 24.6-48.8 point accuracy swings across models, and structured packet formats beat raw dialogue by 42.4-72.6 points.</li>
+              <li>Some models that scored zero on formal ledger-style formats hit 45.4-53.4% accuracy on the same underlying facts shown as natural-language entries - meaning current memory/RAG leaderboards partly measure format sensitivity, not memory quality.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.21362" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.23568" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AIREP: A Protocol for Per-Decision Evidence in AI Runtime Governance</h3>
+              <h3>ESQ-Bench: A Multi-Tier Enterprise Oracle Benchmark for Evaluating NL2SQL Dialect Generalization and Silent Semantic Divergence</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Defines a standard, per-decision record format for AI runtime governance actions -- release, block, defer, redact, or escalate -- instead of just logging aggregate policy outcomes.</li>
-              <li>Each decision gets captured as a single signed object, aimed at making individual guardrail calls independently checkable by any third party, not just the operator.</li>
-              <li>Useful groundwork for anyone building compliance-grade guardrails around agentic or production LLM deployments where &#x27;why was this blocked&#x27; needs a verifiable answer.</li>
+              <li>Builds an Oracle-focused enterprise NL2SQL benchmark (6 populated schemas, 465 tables, 164,682 rows, 550 validated question-query pairs across 3 complexity tiers) to replace the simplified academic schemas of Spider/BIRD, where models already claim 89%+ accuracy.</li>
+              <li>Claude Sonnet 4.6 held up best across tiers (87.4% / 74.9% / 68.7% execution accuracy), beating GPT-4o&#x27;s schema-linked approach (79.8% / 60.3% / 57.2%); Llama 3.2 managed only 13.3% overall.</li>
+              <li>Flags &#x27;silent semantic divergence&#x27; - queries that execute and return a result but are semantically wrong - affecting 73-99% of nominally successful queries, which plain execution-accuracy scoring completely misses.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.21363" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.23569" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AI Learning and Conceptual Transfer in the Game of Hidden Rules</h3>
+              <h3>LLM Agents Perform Controlled Experiments Using Simulation Models</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Trains RL agents to infer hidden rules purely from trial-and-error feedback, then studies how different representation choices affect how fast a rule gets learned.</li>
-              <li>Includes a rule-difficulty analysis and transfer-learning experiments, testing whether concepts learned on one hidden-rule task carry over to new, related ones.</li>
-              <li>A useful data point for anyone building rule-inference or in-context-learning benchmarks -- shows where RL agents generalize versus where they just overfit to a specific rule surface.</li>
+              <li>Builds an agent framework where an LLM designs and runs controlled experiments against a high-fidelity pharmaceutical process simulation, rather than reasoning in text alone - it constructs tasks, executes comparative simulation runs, interprets outcomes, and issues evidence-based recommendations.</li>
+              <li>Tested in an actual industrial setting, the simulation-integrated approach beat language-only reasoning on output specificity, user-rated correctness, and helpfulness.</li>
+              <li>A concrete example of &#x27;reasoning through intervention&#x27; - agents that test hypotheses by manipulating a real system model instead of just pattern-matching plausible-sounding answers.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.21372" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.23622" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LitReview Arena: Evaluating Literature Review Agents with Battle-Style Peer Review Platform</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Points out that standard reference-overlap metrics can&#x27;t capture what actually makes a generated literature review useful, since that depends on expert judgment rather than citation recall.</li>
-              <li>Introduces a battle-style, head-to-head peer-review platform to compare literature-review agents against each other rather than against a fixed scoring metric.</li>
-              <li>Directly relevant to anyone building research-assistant or lit-review agents -- gives a concrete evaluation methodology instead of leaning on ROUGE-style overlap scores.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.21374" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>On the Role of Citations in Preference Data</h3>
+              <h3>Does Fine-Tuning Undo Activation Steering? Behavioural Recovery Without Weight-Edit Reversal</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Examines whether the citations baked into preference-tuning (RLHF/DPO-style) data actually teach a model to cite accurately, or just teach it to look well-attributed.</li>
-              <li>Frames attribution as a direct hallucination defense and a user-facing trust signal, making this relevant to anyone training or fine-tuning models for grounded, RAG-style answers.</li>
-              <li>A useful check for teams building citation-verification layers -- if preference data doesn&#x27;t specifically reward correct citation, alignment training could be reinforcing surface-level attribution instead of real grounding.</li>
+              <li>Tested whether baking activation-steering behavior changes directly into a model&#x27;s weights (a proposed pre-release alignment technique) survives later fine-tuning, across 5 instruction-tuned models from 3B-14B.</li>
+              <li>The steering edit proved mechanistically durable (mean vector recovery rho = 0.004; fine-tuning updates are nearly orthogonal to the steering direction) but functionally fragile - refusal-ablation steering lost 64% of its behavioral effect on average under standard SFT.</li>
+              <li>The weights themselves barely change, but the suppressed behavior comes back anyway through other pathways - so &#x27;align it into the weights before shipping&#x27; is not a safe fire-and-forget move once customers fine-tune on top.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.21376" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.24988" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Agentic Scaffolding Amplifies Sycophantic Behavior in Large Language Models</h3>
+              <h3>The Dialect Tax: Dialectal Biases Persist throughout the Language Modeling Pipeline</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Moves sycophancy research beyond single-turn chat evaluation into multi-turn agentic scaffolding, a setting most prior sycophancy work hadn&#x27;t tested.</li>
-              <li>Investigates whether wrapping an LLM in an agent loop -- tool calls, iterative feedback, multi-step reasoning -- makes it more likely to cave to user pushback rather than hold a correct position.</li>
-              <li>A pointed warning for anyone running long agentic sessions with human-in-the-loop correction: the scaffolding itself may be training the model, turn by turn, to just agree with you.</li>
+              <li>Traces dialectal performance gaps (non-Standard-American-English varieties) across every stage of the LM pipeline - tokenization, pretraining, post-training, and inference - using parallel corpora that are semantically equivalent across dialects.</li>
+              <li>Character-level tokenization does not close the gap, ruling out subword segmentation as the sole culprit; during training, dialect pairs induce more divergent gradient updates than pairs of unrelated Standard-American-English documents.</li>
+              <li>Reward models are inconsistent - sometimes favoring isolated dialectal tokens while penalizing the same dialect features in full context - showing the bias accumulates incrementally across the whole pipeline rather than from one fixable component.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.21377" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.24952" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -107,51 +95,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quantization-Aware Healing: a compressed, 4-bit model that outperforms its full-precision original</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Describes a post-quantization &#x27;healing&#x27; step that reportedly lets a 4-bit compressed model outperform its own full-precision original, not just approach it.</li>
-              <li>Suggests quantization-induced accuracy loss can be more than recovered with a lightweight correction step rather than a full retraining pass.</li>
-              <li>Worth watching for anyone shipping quantized local models -- if the result holds up outside the blog&#x27;s own benchmarks, it upends the usual assumption that quantization always costs you some quality.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/MultiverseComputingCAI/quantization-aware-healing" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>How Hugging Face Inference Endpoints, Jobs, and Buckets Power Search on Papers with Code</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Walks through how Hugging Face&#x27;s own infra primitives -- Inference Endpoints, Jobs, and Buckets -- were combined to build the search backend for Papers with Code.</li>
-              <li>A real production case study of composing HF&#x27;s managed services rather than a single-feature announcement, useful as reference architecture for search/retrieval over a large paper corpus.</li>
-              <li>Relevant to anyone evaluating HF&#x27;s Jobs and Buckets primitives for batch embedding or indexing pipelines instead of standing up that infra themselves.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/pwc-search" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>llm-anthropic 0.27</h3>
+              <h3>Qwen3.8-Flash-Next</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Updates the llm-anthropic plugin for compatibility with the new anthropic v1.0.0 Python SDK, which switches its HTTP layer from httpx to httpx2.</li>
-              <li>Notes OpenAI made the identical httpx-to-httpx2 migration in their own SDK two weeks earlier, pointing to a broader ecosystem shift worth tracking if you pin HTTP client versions.</li>
-              <li>A heads-up for anyone with pinned SDK versions in production -- this is exactly the kind of dependency bump that silently breaks a wrapper library until it&#x27;s patched.</li>
+              <li>New open-weights Qwen release: a multimodal MoE model with 125B total parameters but only 6B active at inference, described as an early preview of the architecture Qwen4 will use.</li>
+              <li>The 6B-active/125B-total split is the headline: full MoE capacity at small-model inference cost.</li>
+              <li>Quantized GGUF builds are already up on Hugging Face via Unsloth, ranging 72.5GB-78.9GB depending on quant level; Simon tested it on a DGX Spark.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/24/llm-anthropic/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/26/qwen38-flash-next/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.245</h3>
+              <h3>Granite 4.2 LLMs: How They&#x27;re Built</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>IBM shipped three dense decoder-only Granite 4.2 models (3B/8B/30B) using grouped-query attention (40 attention heads / 8 KV heads) and RoPE, pretrained on roughly 15 trillion tokens across a five-phase schedule that extends context to 512K tokens.</li>
+              <li>The 8B and 30B models add a multi-stage, multi-environment agentic RL pipeline - training in real sandboxed environments (SWE agent, terminal, web search) so the models practice tool use and code edits, not just SFT on static data.</li>
+              <li>Reported 30B benchmarks: 41.89% on SWE-Bench Multilingual, 89.17% on HMMT Feb25 math, and 81.38% on RULER 128K long-context.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/ibm-granite/granite-4-2" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Training and Finetuning Multi-Vector Embedding Models with Sentence Transformers</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Walks through training ColBERT-style multi-vector retrievers in Sentence Transformers v6.0 - one small vector per token instead of one vector per document, scored with the MaxSim operator.</li>
+              <li>Finetuning the &#x27;-unsupervised&#x27; checkpoint of lightonai/mLateOn on 1M MIRIAD medical Q&amp;A pairs adapted far better to the new domain than the fully-supervised sibling checkpoint (+0.0311 NDCG@10 vs. only +0.0042).</li>
+              <li>The finetuned model hit 0.9139 NDCG@10 on a 200K-passage medical retrieval benchmark, beating every zero-shot retriever tested including Qwen3-Embedding-4B (0.7817) and SPLADE-v3 (0.6853) - trained in 14.5 hours on a single RTX 3090.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/train-multi-vector-encoder" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.247</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fixes a startup crash on Linux distributions shipping glibc 2.44, specifically calling out Arch Linux, CachyOS, and Fedora Rawhide.</li>
-              <li>A reminder that Claude Code&#x27;s compiled binary can break on bleeding-edge Linux systems before older or stable distros ever see the issue, since glibc ABI changes land on rolling releases first.</li>
-              <li>Worth an immediate update if you&#x27;re running Claude Code on any rolling-release Linux box that was hitting a startup crash.</li>
+              <li>Ships a new SendFeedback tool: Claude can draft a feedback report when something goes wrong mid-session for you to review and send via /feedback.</li>
+              <li>Adds /claude-api cost-optimize, which profiles a project&#x27;s actual Claude API spend and walks through cost levers (caching, token hygiene, batching, effort, model choice) one measured change at a time.</li>
+              <li>Fixes sub-agents that used to die outright on a first-call model 404 - they now fall back through the session&#x27;s model chain, and the parent receives the real error type, status, and request id instead of a bare failure.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.245" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.247" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.246</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Adds an Auto mode tab to /permissions for viewing and editing the auto-mode classifier rules directly, plus a startup warning when a Bash allow rule has a wildcard before the subcommand (e.g. Bash(git * main)), since that pattern also matches inserted options.</li>
+              <li>Fixes a real memory leak: fullscreen/Ctrl+O transcript views no longer retain a full copy of transcript-wide tool lookups per rendered message row, so memory no longer grows unbounded with session length.</li>
+              <li>Fixes background sessions that failed to open after a 45-second timeout when the starting directory had been deleted, the machine had slept, or process startup was slow.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.246" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
