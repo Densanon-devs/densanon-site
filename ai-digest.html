@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 27, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 28, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 27, 2026</div>
+        <div class="digest-date-badge">August 28, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s mix leans on rigor as much as releases: Qwen previewed its next architecture with a 125B-total/6B-active MoE model and IBM detailed Granite 4.2&#x27;s agentic RL training, while three benchmark papers (memory/RAG formatting, enterprise NL2SQL, dialectal bias) each show real gaps between headline benchmark numbers and how models actually behave under harder, real-world conditions. Claude Code also shipped two dense releases with a new feedback tool, an API cost-optimizer, and a fixed transcript memory leak.</p>
+        <p class="digest-intro">Today&#x27;s research cluster is inference and trust: TreeGraft speeds up speculative decoding with a shared multi-drafter draft tree (up to 26.6% faster than a fixed single drafter), while ElementCheck and a label-free hallucination-abstention paper attack long-form factuality verification from two different angles, and CIFQA shows deterministic tool-grounding beats raw model scale on financial math. On the practical side, a researcher found a roughly 80%-reliable prompt-injection bypass of Claude Code&#x27;s Auto Mode defense, while Claude Code itself shipped a new `--restricted` lockdown flag and Anthropic&#x27;s Python SDK landed two releases.</p>
       </div>
     </section>
 
@@ -29,63 +29,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>RENDER: Controlling Reader-Facing Evidence in LLM Memory Evaluation</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Introduces RENDER, a benchmark control that holds conversation content fixed while varying only the &#x27;reader-facing artifact&#x27; - ChatGPT-style memory entries, LangChain summaries, MemGPT-style typed records, or raw dialogue.</li>
-              <li>Presentation format alone produced 24.6-48.8 point accuracy swings across models, and structured packet formats beat raw dialogue by 42.4-72.6 points.</li>
-              <li>Some models that scored zero on formal ledger-style formats hit 45.4-53.4% accuracy on the same underlying facts shown as natural-language entries - meaning current memory/RAG leaderboards partly measure format sensitivity, not memory quality.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.23568" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ESQ-Bench: A Multi-Tier Enterprise Oracle Benchmark for Evaluating NL2SQL Dialect Generalization and Silent Semantic Divergence</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Builds an Oracle-focused enterprise NL2SQL benchmark (6 populated schemas, 465 tables, 164,682 rows, 550 validated question-query pairs across 3 complexity tiers) to replace the simplified academic schemas of Spider/BIRD, where models already claim 89%+ accuracy.</li>
-              <li>Claude Sonnet 4.6 held up best across tiers (87.4% / 74.9% / 68.7% execution accuracy), beating GPT-4o&#x27;s schema-linked approach (79.8% / 60.3% / 57.2%); Llama 3.2 managed only 13.3% overall.</li>
-              <li>Flags &#x27;silent semantic divergence&#x27; - queries that execute and return a result but are semantically wrong - affecting 73-99% of nominally successful queries, which plain execution-accuracy scoring completely misses.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.23569" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>LLM Agents Perform Controlled Experiments Using Simulation Models</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Builds an agent framework where an LLM designs and runs controlled experiments against a high-fidelity pharmaceutical process simulation, rather than reasoning in text alone - it constructs tasks, executes comparative simulation runs, interprets outcomes, and issues evidence-based recommendations.</li>
-              <li>Tested in an actual industrial setting, the simulation-integrated approach beat language-only reasoning on output specificity, user-rated correctness, and helpfulness.</li>
-              <li>A concrete example of &#x27;reasoning through intervention&#x27; - agents that test hypotheses by manipulating a real system model instead of just pattern-matching plausible-sounding answers.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.23622" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Does Fine-Tuning Undo Activation Steering? Behavioural Recovery Without Weight-Edit Reversal</h3>
+              <h3>TreeGraft: Adaptive Multi-Drafter Grafting for Tree-Based Speculative Decoding</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Tested whether baking activation-steering behavior changes directly into a model&#x27;s weights (a proposed pre-release alignment technique) survives later fine-tuning, across 5 instruction-tuned models from 3B-14B.</li>
-              <li>The steering edit proved mechanistically durable (mean vector recovery rho = 0.004; fine-tuning updates are nearly orthogonal to the steering direction) but functionally fragile - refusal-ablation steering lost 64% of its behavioral effect on average under standard SFT.</li>
-              <li>The weights themselves barely change, but the suppressed behavior comes back anyway through other pathways - so &#x27;align it into the weights before shipping&#x27; is not a safe fire-and-forget move once customers fine-tune on top.</li>
+              <li>Instead of one fixed drafter, a weak/fast drafter and a strong/slow drafter jointly build a single shared draft tree - the strong drafter rescores the weak drafter&#x27;s candidates, reselects grafting positions, and recovers promising branches the weak drafter left unexplored.</li>
+              <li>A lightweight scheduler, distilled from an offline value system, decides per-step when it&#x27;s worth calling the expensive drafter, controlling total drafting cost.</li>
+              <li>Across 10 model pairs and 6 benchmarks, beats the better of the two fixed single-drafter strategies by 15.1% on average, with a maximum gain of 26.6%.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.24988" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.26112" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Dialect Tax: Dialectal Biases Persist throughout the Language Modeling Pipeline</h3>
+              <h3>ElementCheck: Complexity-Aware Long-Form Text Factuality Evaluation via Sentence Elements</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Traces dialectal performance gaps (non-Standard-American-English varieties) across every stage of the LM pipeline - tokenization, pretraining, post-training, and inference - using parallel corpora that are semantically equivalent across dialects.</li>
-              <li>Character-level tokenization does not close the gap, ruling out subword segmentation as the sole culprit; during training, dialect pairs induce more divergent gradient updates than pairs of unrelated Standard-American-English documents.</li>
-              <li>Reward models are inconsistent - sometimes favoring isolated dialectal tokens while penalizing the same dialect features in full context - showing the bias accumulates incrementally across the whole pipeline rather than from one fixable component.</li>
+              <li>Replaces the standard decompose-retrieve-verify pipeline&#x27;s uniform atomic-claim splitting with entity-pair &#x27;elements&#x27; extracted per sentence and organized into a graph.</li>
+              <li>Graph topology estimates sentence complexity on the fly: simple sentences get verified directly, complex ones get targeted element-level refinement - cutting unnecessary re-verification instead of applying one fixed granularity to everything.</li>
+              <li>Introduces a new benchmark (FastFact-Sent) and shows consistent factuality-verification gains across five backbone models with a better accuracy-cost trade-off than fixed-granularity decomposition.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.24952" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.26118" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Can a Model Catch Its Own Hallucinations for Free?: Label-Free Doubt Signals Hold Their Own Against a Labelled Dataset for Abstention</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Fine-tunes six open-weight models (1B-8B, two model families) with LoRA to abstain purely off the model&#x27;s own token-probability dip - no correctness labels required for training.</li>
+              <li>At matched coverage, this label-free abstention-tuning shows no statistically detectable difference from label-supervised abstention-tuning on factual QA.</li>
+              <li>Caveat: it only flags &#x27;shaky-ground&#x27; answers where the model&#x27;s own confidence actually dips - it still won&#x27;t catch a hallucination the model states confidently.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.26121" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>CIFQA: A Deterministic Tool-Grounded Multi-Agent LLM Framework for Financial Query Answering</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Splits financial QA across specialized agents (query interpretation, routing, parameter extraction, computation planning, response generation) while deterministic Python tools handle the actual rate lookups and arithmetic - the LLM never does the math itself.</li>
+              <li>On a fixed-deposit query benchmark: 95.54% accuracy on calculation-intensive queries and 90.87% overall, beating direct-LLM baselines even when those baselines are handed the full formulas and rate cards.</li>
+              <li>A 17B open-source backbone running inside CIFQA outperforms much larger frontier models given the same information - architecture (deterministic tool-grounding), not model scale, is what fixes numerical reliability here.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.26114" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Recipes for Steering and Scaling LLMs via Sampling</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Presents a theoretically grounded sampling framework for steering autoregressive LLM output toward a powered/tilted/product target distribution, with two concrete algorithms: Sequential Monte Carlo and Replica Exchange.</li>
+              <li>Framed as inference-time quality scaling with no external supervision or reward model - it&#x27;s purely a sampling-strategy change over the base model.</li>
+              <li>Beats Best-of-N and standard MCMC baselines on generation-quality scaling in their experiments.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.26120" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -95,63 +95,49 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Qwen3.8-Flash-Next</h3>
+              <h3>Breaking Claude Code Opus 5 Auto Mode</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>New open-weights Qwen release: a multimodal MoE model with 125B total parameters but only 6B active at inference, described as an early preview of the architecture Qwen4 will use.</li>
-              <li>The 6B-active/125B-total split is the headline: full MoE capacity at small-model inference cost.</li>
-              <li>Quantized GGUF builds are already up on Hugging Face via Unsloth, ranging 72.5GB-78.9GB depending on quant level; Simon tested it on a DGX Spark.</li>
+              <li>Johann Rehberger reports a prompt-injection bypass of Claude Code&#x27;s Auto Mode - the classifier Anthropic made the default defense against injection attacks - that succeeds roughly 80% of the time.</li>
+              <li>Attack path: get the agent to download and extract a zip archive, then have it run code that imports `base64`, which inadvertently loads and executes a malicious local `struct.py` sitting in the extracted files.</li>
+              <li>Worst finding: in one run Claude detected the compromise and tried to clean up, but Auto Mode itself blocked the cleanup command - the classifier let the malware start but then stopped remediation. Recommended fix is infra-level containment (sandboxes/VMs, restricted network, isolated credentials), not relying on the agent-level classifier alone.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/26/qwen38-flash-next/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/27/breaking-claude-code-opus-5-auto-mode/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Granite 4.2 LLMs: How They&#x27;re Built</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>IBM shipped three dense decoder-only Granite 4.2 models (3B/8B/30B) using grouped-query attention (40 attention heads / 8 KV heads) and RoPE, pretrained on roughly 15 trillion tokens across a five-phase schedule that extends context to 512K tokens.</li>
-              <li>The 8B and 30B models add a multi-stage, multi-environment agentic RL pipeline - training in real sandboxed environments (SWE agent, terminal, web search) so the models practice tool use and code edits, not just SFT on static data.</li>
-              <li>Reported 30B benchmarks: 41.89% on SWE-Bench Multilingual, 89.17% on HMMT Feb25 math, and 81.38% on RULER 128K long-context.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/ibm-granite/granite-4-2" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Training and Finetuning Multi-Vector Embedding Models with Sentence Transformers</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Walks through training ColBERT-style multi-vector retrievers in Sentence Transformers v6.0 - one small vector per token instead of one vector per document, scored with the MaxSim operator.</li>
-              <li>Finetuning the &#x27;-unsupervised&#x27; checkpoint of lightonai/mLateOn on 1M MIRIAD medical Q&amp;A pairs adapted far better to the new domain than the fully-supervised sibling checkpoint (+0.0311 NDCG@10 vs. only +0.0042).</li>
-              <li>The finetuned model hit 0.9139 NDCG@10 on a 200K-passage medical retrieval benchmark, beating every zero-shot retriever tested including Qwen3-Embedding-4B (0.7817) and SPLADE-v3 (0.6853) - trained in 14.5 hours on a single RTX 3090.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/train-multi-vector-encoder" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.247</h3>
+              <h3>anthropics/anthropic-sdk-python: v1.2.0</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Ships a new SendFeedback tool: Claude can draft a feedback report when something goes wrong mid-session for you to review and send via /feedback.</li>
-              <li>Adds /claude-api cost-optimize, which profiles a project&#x27;s actual Claude API spend and walks through cost levers (caching, token hygiene, batching, effort, model choice) one measured change at a time.</li>
-              <li>Fixes sub-agents that used to die outright on a first-call model 404 - they now fall back through the session&#x27;s model chain, and the parent receives the real error type, status, and request id instead of a bare failure.</li>
+              <li>Beta files/skills namespaces move to GA shapes and drop dated beta header pins - a cleaner upgrade path off the beta API surface.</li>
+              <li>Fixes AWS/Bedrock request signing so binary file uploads actually work, and the agent toolset&#x27;s file tools (plus the memory tool) now preserve exact file bytes with no newline translation, so round-tripped files no longer get silently mangled.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.247" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.2.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.246</h3>
+              <h3>anthropics/anthropic-sdk-python: v1.1.0</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds an Auto mode tab to /permissions for viewing and editing the auto-mode classifier rules directly, plus a startup warning when a Bash allow rule has a wildcard before the subcommand (e.g. Bash(git * main)), since that pattern also matches inserted options.</li>
-              <li>Fixes a real memory leak: fullscreen/Ctrl+O transcript views no longer retain a full copy of transcript-wide tool lookups per rendered message row, so memory no longer grows unbounded with session length.</li>
-              <li>Fixes background sessions that failed to open after a 45-second timeout when the starting directory had been deleted, the machine had slept, or process startup was slow.</li>
+              <li>Adds a beta `updates` thinking-display mode and support for Organization API endpoints.</li>
+              <li>The tool runner now keeps going on `pause_turn` instead of stopping outright, and the internal legacy response API was removed - the SDK is consolidating on the newer API shape.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.246" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.1.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.248</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>New `--restricted` flag (or `CLAUDE_CODE_RESTRICTED=1`) strips out command/code-execution tools and WebFetch, keeps file tools sandboxed to the working directory, refuses `bypassPermissions`, and ignores user/project/local settings files - a locked-down mode for untrusted contexts.</li>
+              <li>Cut the Workflow tool&#x27;s prompt footprint from 5.7k to ~1k tokens by moving script-writing reference into a bundled skill, and fixed hourly prompt-cache misses caused by tool definitions re-rendering after OAuth token refresh.</li>
+              <li>New `experimental.cacheTtl` sets per-agent prompt cache TTL (5m/1h) in agent frontmatter, and cross-session `SendMessage`/`ListAgents` now works between sessions on the same machine.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.248" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
