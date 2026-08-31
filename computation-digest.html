@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - August 28, 2026 | Densanon</title>
+  <title>Computation Morning Digest - August 31, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 28, 2026</div>
+        <div class="digest-date-badge">August 31, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s lead story is uncomfortably close to home for anyone running agentic coding tools: a developer watched Claude wipe a 700 GB home directory while testing a script meant to prevent exactly that, with a mid-session model downgrade to Opus 4.8 implicated in the failure. Elsewhere, the AI hardware buildout keeps grinding forward -- Intel says 14A defect density is falling faster than expected, SK hynix broke ground on its first US HBM plant, and Google is tightening Android memory budgets to make room for on-device AI. The Linux side delivers a dense batch of engineering news: Btrfs co-maintainer Chris Mason is departing Meta, AMD is finally defaulting to HDMI 2.1 FRL after years of HDMI Forum blocking, and Linux 7.3 picks up USB-C alt-mode cable checking plus more MGLRU memory tuning.</p>
+        <p class="digest-intro">Semiconductor supply-chain integrity took center stage today: Taiwanese prosecutors are probing PCB giant Unimicron over alleged China-origin relabeling, while China&#x27;s CXMT claims a first-to-market win on LPDDR6 mass production. AI infrastructure buildout keeps testing physical limits too, with SpaceX bringing turbine-blade manufacturing in-house to unblock data-center generator supply. On the systems side, Phoronix brings a dense batch of Linux 7.3 and graphics-driver news -- AMD Zen 6 kernel power tuning, a faster Mesa Vulkan sort for ray-tracing, Servo&#x27;s 10x text-rendering jump, and an early AMD ROCm port to FreeBSD.</p>
       </div>
     </section>
 
@@ -29,123 +29,111 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Claude nukes a developer&#x27;s 700 GB home directory while testing deletion safeguards; automatic model safety downgrade may have contributed to the screw-up — Anthropic safety harness downgraded model to Opus 4.8 before fatal variable collision</h3>
+              <h3>Key Nvidia and Intel supplier raided over alleged China origin fraud — Unimicron faces probe over PCB origin washing, risk of 40% U.S. tariff penalty</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A developer testing a script specifically meant to verify Claude would NOT delete files watched it wipe a 700 GB home directory instead.</li>
-              <li>Anthropic&#x27;s safety harness had auto-downgraded the session to Opus 4.8 mid-task; the weaker model appears to have mishandled a variable collision in the test script that triggered the deletion.</li>
-              <li>Real risk for anyone running agentic coding tools with filesystem access: model routing/downgrades can change behavior mid-session without the user noticing.</li>
+              <li>Taiwanese prosecutors are investigating Unimicron, one of the world&#x27;s largest PCB and chip-substrate makers and a supplier to Nvidia, Intel, Google, and Amazon.</li>
+              <li>Allegation: Unimicron shipped China-made PCBs back through Taiwan and relabeled them as Taiwanese-origin product (&#x27;origin washing&#x27;).</li>
+              <li>Exposure includes up to a 40% US tariff penalty if the origin-fraud claims hold, with knock-on supply-chain risk for its major chip customers.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/claude-nukes-a-developers-700-gb-home-directory-while-testing-a-script-to-ensure-it-wouldnt-do-so-automatic-model-downgrade-may-have-contributed-to-the-screw-up" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/big-tech/key-nvidia-and-intel-supplier-raided-over-alleged-china-origin-fraud-unimicron-faces-probe-over-pcb-origin-washing-risk-of-40-percent-u-s-tariff-penalty" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Google clamps down on Android app RAM usage amid AI memory crisis — developers have until February 2027 to adapt to new memory-optimizing rules</h3>
+              <h3>China&#x27;s CXMT beats Western chipmakers to announcement of LPDDR6 mass production — Xiaomi smartphones to debut industry&#x27;s first LPDDR6 chips</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Google is rolling out stricter Android memory-usage limits and new performance standards for apps.</li>
-              <li>Developers have until February 2027 to bring apps into compliance with the new memory-optimizing rules.</li>
-              <li>Framed as a response to an &#x27;AI memory crisis&#x27; — on-device AI features are eating into RAM budgets, forcing Google to police app memory footprints more aggressively.</li>
+              <li>CXMT (ChangXin Memory Technologies) claims to be first to mass-produce LPDDR6 mobile memory, ahead of Samsung, SK hynix, and Micron.</li>
+              <li>First LPDDR6 chips are slated to debut in Xiaomi smartphones rather than a flagship line from a Western vendor.</li>
+              <li>Signals China&#x27;s memory industry closing the announcement/process gap with Western DRAM makers on next-gen mobile memory.</li>
             </ul>
-            <a href="https://www.tomshardware.com/phones/android/google-clamps-down-on-android-app-ram-usage-amid-ai-memory-crisis-developers-have-until-february-2027-to-adapt-to-new-memory-optimizing-rules" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/dram/chinas-cxmt-beats-western-chipmakers-to-announcement-of-lpddr6-mass-production-xiaomi-smartphones-to-debut-industrys-first-lpddr6-chips" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel 14A defect density is dropping faster than the company expected — &#x27;we have not seen this performance since 22nm,&#x27; says CFO</h3>
+              <h3>SpaceX starts in-house turbine blade manufacturing to boost gas-powered generator output for Elon&#x27;s AI data centers — new manufacturing strategy cuts generator delays by 18 months</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel says 14A defect density is falling faster than expected, with the CFO stating &#x27;we have not seen this performance since 22nm.&#x27;</li>
-              <li>Internal teams are already developing 14A-based products ahead of external customer commitments.</li>
-              <li>External foundry clients are reportedly asking about available capacity — an early credibility signal for Intel Foundry after the rockier 18A/20A ramp.</li>
+              <li>SpaceX is bringing turbine blade and vane manufacturing in-house to speed up gas-powered generator production for Musk-affiliated AI data centers.</li>
+              <li>Turbine blades are normally one of the slowest parts to source externally, with lead times of 60-90 weeks.</li>
+              <li>The in-house approach is claimed to cut generator delays by roughly 18 months, addressing power as a bottleneck on AI data center buildout.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/intel-14a-defect-density-is-dropping-faster-than-the-company-expected-we-have-not-seen-this-performance-since-22nm-says-cfo" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/data-centers/spacex-starts-in-house-turbine-blade-manufacturing-to-boost-gas-powered-generator-output-for-elons-ai-data-centers-new-manufacturing-strategy-cuts-generator-delays-by-18-months" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SK hynix breaks ground on the first HBM plant in the US, bringing key AI component production to the States — says production starts in 2029</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>SK hynix broke ground on its first US-based HBM assembly plant, aimed at AI accelerator memory production.</li>
-              <li>Production is slated to start in 2029; DRAM wafers still originate in South Korea, with the US site handling assembly for domestic AI customers.</li>
-              <li>Part of a broader push to onshore AI-critical memory supply chains ahead of an expected demand surge.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/dram/sk-hynix-breaks-ground-on-the-first-hbm-plant-in-the-us-bringing-key-ai-component-production-to-the-states-says-production-starts-in-2029" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD Preparing To Enable HDMI 2.1 FRL Support By Default For Linux</h3>
+              <h3>New Linux Patches Tune AMD Ryzen Zen 6 To Optimize Performance &amp; Power Consumption</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMD is preparing to enable HDMI 2.1 Fixed Rate Link (FRL) support by default in the open-source AMDGPU Linux driver.</li>
-              <li>FRL patches were first posted back in May; for years open-source HDMI 2.1 support was blocked by HDMI Forum licensing restrictions, not a technical limitation.</li>
-              <li>Once default, Linux users get full HDMI 2.1 bandwidth without manual driver flags — relevant for 4K/120Hz+ and high-refresh displays on AMD GPUs.</li>
+              <li>A new kernel patch series posted to the Linux kernel mailing list adds Energy Performance Preference (EPP) tunings specific to upcoming AMD Ryzen Zen 6 client processors.</li>
+              <li>EPP tuning affects the performance/power tradeoff the kernel scheduler applies per-core, ahead of Zen 6&#x27;s public debut.</li>
+              <li>Confirms Zen 6 client silicon is far enough along that AMD is already landing platform-specific kernel optimizations pre-launch.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMDGPU-HDMI-2.1-FRL-Default" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/AMD-Zen-6-Client-EPP-Tunings" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Chris Mason Steps Down As Btrfs Co-Maintainer, Departing Meta</h3>
+              <h3>Linux 7.3-rc1 With AMD Zen 6 Additions, Better Btrfs Performance &amp; 2026 Steam Controller</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Longtime Linux kernel developer Chris Mason, Btrfs&#x27;s original author, is leaving Meta and stepping down as Btrfs co-maintainer.</li>
-              <li>Mason has been a fixture of Btrfs maintenance since creating the filesystem at Oracle in 2007.</li>
-              <li>No successor named in the coverage yet — a maintainer transition on a mainline copy-on-write filesystem is worth watching for anyone running Btrfs in production.</li>
+              <li>Linux 7.3-rc1 arrived after a two-week merge window, bundling AMD Zen 6 platform additions, Btrfs performance work, and support for the 2026 Steam Controller.</li>
+              <li>The kernel now enters its stabilization/rc phase ahead of the final 7.3 release.</li>
+              <li>Zen 6 platform support here lands the same day as the separate EPP power-tuning patches — AMD is pushing next-gen client enablement across multiple subsystems at once.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Chris-Mason-Leaving-Meta" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.3-rc1-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.3 Will Begin Checking USB-C Cables For Alt-Mode Support</h3>
+              <h3>A Faster Merge Sort For Mesa 26.3 Vulkan Drivers To Benefit Ray-Tracing</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Linux 7.3 merges USB subsystem changes that check USB-C cables for Alt-Mode support — closing a long-standing gap where the kernel couldn&#x27;t tell whether a plugged-in cable actually supported the mode being negotiated.</li>
-              <li>Also merged: a new low-latency USB4STREAM option for the USB4/Thunderbolt stack.</li>
-              <li>Practical effect: fewer silent failures from using a charge-only or low-spec USB-C cable for DisplayPort/Thunderbolt alt modes.</li>
+              <li>Valve&#x27;s Linux graphics team (Natalie Vock) landed a faster, more VRAM-efficient merge sort for Morton code keys in Mesa&#x27;s Vulkan drivers, targeting Mesa 26.3.</li>
+              <li>Morton code sort speed directly affects BVH (bounding volume hierarchy) construction time, a core ray-tracing bottleneck.</li>
+              <li>Expected to improve GPU parallelism during BVH builds, benefiting ray-traced workloads on Mesa-driven GPUs like RADV.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-USB" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Mesa-Vulkan-Faster-Sorting" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GPU Reset Recovery Merge Request For GNOME Mutter Submitted</h3>
+              <h3>Servo 0.5 Released: DuckDuckGo Properly Rendering, Up To 10x Faster Text Rendering</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A Google Summer of Code 2026 project adding GPU reset recovery to GNOME&#x27;s Mutter compositor has opened its merge request for code review.</li>
-              <li>Goal: let Mutter survive a GPU hang/reset without crashing the whole desktop session, similar in spirit to Windows&#x27; TDR mechanism.</li>
-              <li>GSoC wrapped with the feature largely working, though the writeup notes some outstanding work remains before merge.</li>
+              <li>Servo 0.5, the monthly release of the open-source Rust browser engine, ships with up to 10x faster text rendering.</li>
+              <li>DuckDuckGo now renders correctly, closing a compatibility gap for the engine.</li>
+              <li>Improvements target both the Servoshell reference browser and embedded-use cases building on Servo.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/GNOME-GPU-Reset-Recovery-PR" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Servo-0.5-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Sovereign Tech Agency Providing Massive Investment Into Flatpak</h3>
+              <h3>NVIDIA VA-API Driver 0.0.18 Ships More Fixes, Chrome/Chromium Decode On Direct Backend</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Germany&#x27;s Sovereign Tech Agency is investing more than half a million Euros into Flatpak over the next two years.</li>
-              <li>Funding targets app sandboxing improvements and other core Flatpak functionality.</li>
-              <li>Continues the agency&#x27;s pattern of funding critical open-source infrastructure that lacks a commercial backer.</li>
+              <li>NVIDIA&#x27;s open VA-API driver reaches 0.0.18 with more fixes and now supports Chrome/Chromium hardware video decode on the &#x27;Direct&#x27; backend.</li>
+              <li>Context: Firefox has begun supporting Vulkan Video decoding on Linux to complement its existing VA-API path, an area NVIDIA&#x27;s official driver stack has historically lagged.</li>
+              <li>Incremental progress toward NVIDIA Linux GPUs getting full hardware video decode parity in mainstream browsers.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Sovereign-Tech-Agency-Flatpak" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/NVIDIA-VA-API-Driver-0.0.18" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.3 MGLRU Change Helps Executable Code Stays In Memory, Improving Performance</h3>
+              <h3>The Challenges In Bringing AMD ROCm To FreeBSD</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Additional Multi-Gen LRU (MGLRU) memory-management patches landed for Linux 7.3, following last week&#x27;s main MM update batch.</li>
-              <li>The changes help keep executable code pages resident in memory longer under reclaim pressure, reducing re-fault/re-read overhead.</li>
-              <li>Part of the ongoing MGLRU tuning work that has been a recurring performance theme across recent kernel cycles.</li>
+              <li>A FreeBSD Foundation summer internship focused on porting AMD&#x27;s ROCm compute stack to FreeBSD, which currently has no ROCm support.</li>
+              <li>By the internship&#x27;s end, the FreeBSD ROCm port is nearly able to run a simple vector-addition workload — an early but real milestone, not yet production-capable.</li>
+              <li>Highlights how far behind FreeBSD is on GPU-compute stacks compared to Linux, where ROCm is mature; the work is expected to continue beyond the internship.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-MGLRU-Executable-Mem" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/AMD-ROCm-FreeBSD-Intern-Report" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

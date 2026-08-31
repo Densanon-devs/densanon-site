@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - August 28, 2026 | Densanon</title>
+  <title>AI Morning Digest - August 31, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 28, 2026</div>
+        <div class="digest-date-badge">August 31, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s research cluster is inference and trust: TreeGraft speeds up speculative decoding with a shared multi-drafter draft tree (up to 26.6% faster than a fixed single drafter), while ElementCheck and a label-free hallucination-abstention paper attack long-form factuality verification from two different angles, and CIFQA shows deterministic tool-grounding beats raw model scale on financial math. On the practical side, a researcher found a roughly 80%-reliable prompt-injection bypass of Claude Code&#x27;s Auto Mode defense, while Claude Code itself shipped a new `--restricted` lockdown flag and Anthropic&#x27;s Python SDK landed two releases.</p>
+        <p class="digest-intro">Today&#x27;s research cluster is about trustworthy measurement and efficient inference: a Rasch-theory audit of LLMs as judges, raters, and examinees and a six-model study of emotional sycophancy (endorsement scores jump from 18.6 to 31.5 under distress, in every model but Claude Opus) both show standard benchmarks hide real behavioral gaps, while an HNSW-based output-embedding index cuts small-model CPU decoding latency up to 82% and a fused LLM-plus-Bayesian-network approach beats either causal-discovery method alone. A 14B local model also compressed 41 years of Jeopardy! into a 67%-accurate, fully portable knowledge base - something IBM&#x27;s server-bound Watson never had. On the tools side: Tencent&#x27;s 770B-parameter Hy4 Preview lands, OpenAI&#x27;s two-headed &quot;ChatGPT Work&quot; gets untangled, coding agents are now fast enough to turn a rumored bug into a working exploit within minutes, and Claude Code v2.1.251 adds model-switch hooks while closing several permission-check race conditions.</p>
       </div>
     </section>
 
@@ -29,63 +29,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>TreeGraft: Adaptive Multi-Drafter Grafting for Tree-Based Speculative Decoding</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Instead of one fixed drafter, a weak/fast drafter and a strong/slow drafter jointly build a single shared draft tree - the strong drafter rescores the weak drafter&#x27;s candidates, reselects grafting positions, and recovers promising branches the weak drafter left unexplored.</li>
-              <li>A lightweight scheduler, distilled from an offline value system, decides per-step when it&#x27;s worth calling the expensive drafter, controlling total drafting cost.</li>
-              <li>Across 10 model pairs and 6 benchmarks, beats the better of the two fixed single-drafter strategies by 15.1% on average, with a maximum gain of 26.6%.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.26112" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ElementCheck: Complexity-Aware Long-Form Text Factuality Evaluation via Sentence Elements</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Replaces the standard decompose-retrieve-verify pipeline&#x27;s uniform atomic-claim splitting with entity-pair &#x27;elements&#x27; extracted per sentence and organized into a graph.</li>
-              <li>Graph topology estimates sentence complexity on the fly: simple sentences get verified directly, complex ones get targeted element-level refinement - cutting unnecessary re-verification instead of applying one fixed granularity to everything.</li>
-              <li>Introduces a new benchmark (FastFact-Sent) and shows consistent factuality-verification gains across five backbone models with a better accuracy-cost trade-off than fixed-granularity decomposition.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.26118" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Can a Model Catch Its Own Hallucinations for Free?: Label-Free Doubt Signals Hold Their Own Against a Labelled Dataset for Abstention</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Fine-tunes six open-weight models (1B-8B, two model families) with LoRA to abstain purely off the model&#x27;s own token-probability dip - no correctness labels required for training.</li>
-              <li>At matched coverage, this label-free abstention-tuning shows no statistically detectable difference from label-supervised abstention-tuning on factual QA.</li>
-              <li>Caveat: it only flags &#x27;shaky-ground&#x27; answers where the model&#x27;s own confidence actually dips - it still won&#x27;t catch a hallucination the model states confidently.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.26121" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>CIFQA: A Deterministic Tool-Grounded Multi-Agent LLM Framework for Financial Query Answering</h3>
+              <h3>Rating the Raters: Rasch Measurement Theory for LLM Evaluation</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Splits financial QA across specialized agents (query interpretation, routing, parameter extraction, computation planning, response generation) while deterministic Python tools handle the actual rate lookups and arithmetic - the LLM never does the math itself.</li>
-              <li>On a fixed-deposit query benchmark: 95.54% accuracy on calculation-intensive queries and 90.87% overall, beating direct-LLM baselines even when those baselines are handed the full formulas and rate cards.</li>
-              <li>A 17B open-source backbone running inside CIFQA outperforms much larger frontier models given the same information - architecture (deterministic tool-grounding), not model scale, is what fixes numerical reliability here.</li>
+              <li>Applies many-facet Rasch Measurement Theory to LLMs acting simultaneously as examinees, judges, and raters, decomposing ordinal ratings into separable facets on one common scale.</li>
+              <li>Case study fits Rasch models to annotations from nine LLMs (spanning families and capability levels) on the Measuring Hate Speech corpus.</li>
+              <li>Finds LLMs systematically diverge from human raters in severity calibration, item-level calibration, question-order robustness, and target-identity sensitivity - gaps standard benchmark scoring can&#x27;t see.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.26114" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.27463" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Recipes for Steering and Scaling LLMs via Sampling</h3>
+              <h3>The Effect of Emotional Context on Large Language Models&#x27; Endorsement of Premature Decisions: Comparing Emotional Vulnerability Across Six Commercial Models</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Presents a theoretically grounded sampling framework for steering autoregressive LLM output toward a powered/tilted/product target distribution, with two concrete algorithms: Sequential Monte Carlo and Replica Exchange.</li>
-              <li>Framed as inference-time quality scaling with no external supervision or reward model - it&#x27;s purely a sampling-strategy change over the base model.</li>
-              <li>Beats Best-of-N and standard MCMC baselines on generation-quality scaling in their experiments.</li>
+              <li>Tested six commercial models (OpenAI, Anthropic, Google) across three decision scenarios under neutral vs. emotionally distressed framing; endorsement scores rose from 18.6 to 31.5 - a 12.9-point jump (p&lt;.001, Cohen&#x27;s d=0.51).</li>
+              <li>Susceptibility tracked by individual model, not price tier: 5 of 6 models, including flagship GPT-5.5 and Gemini 3.1 Pro, showed significant emotional sycophancy; Claude Opus was the one model with no significant shift.</li>
+              <li>Validated with an independent non-Google judge model (rho=.89) and human coder rankings (rho=.70), isolating the emotional effect from conversation-length confounds.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.26120" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.27465" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Accelerating LLM Inference via Vector Index Based Output Embeddings</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Reformulates the output projection plus top-k token selection as approximate nearest-neighbor search: an HNSW-based vector index retrieves only high-scoring candidates instead of a dense matmul over the full vocabulary.</li>
+              <li>Retrieved logits get scattered into a sparse full-vocabulary tensor, so it drops into existing decoding pipelines unchanged.</li>
+              <li>On Gemma 3, Llama 3.2, and Qwen 3, batch-size-1 CPU decoding throughput improved up to 82% (Gemma 3 270M) with quality held on AlpacaEval - targeting the memory-bandwidth bottleneck large multilingual vocab heads create on compact models.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.27460" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>LLM-Augmented Causal Discovery: Probabilistic Fusion of Edge Existence and Orientation</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Fuses Bayesian network structure learning (FGES, Tabu, PC) with LLM causal knowledge (Gemini, Claude, GPT) via Probabilistic Dependency Graphs, where each edge carries a distribution over directed/undirected/absent states.</li>
+              <li>Simple 50/50 fusion improved F1 in 22 of 26 benchmark networks, a statistically significant mean gain of 0.056 (p&lt;0.001).</li>
+              <li>The two sources are complementary in opposite ways - BNSL gets 80% edge recall vs. LLMs&#x27; 60%, but LLMs hit 96% orientation accuracy vs. BNSL&#x27;s 77% - so fusion exploits each one&#x27;s strength.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.27472" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Time Capsule of Testable Human Knowledge: 41 Years of Jeopardy! in a Single Free Local Model</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tests Qwen2.5-14B (a 9GB 4-bit quantized model) against all 529,939 clues from 41 broadcast seasons (1984-2025) - the first evaluation against the complete open Jeopardy! dataset.</li>
+              <li>Scored 67.0% under a strict forced-response protocol (exact + fuzzy matching), topping 85% on factoid categories, in a model that runs locally rather than on Watson&#x27;s dedicated server rig.</li>
+              <li>On clues aired after the training cutoff, the local model still got 65% right (vs. Claude Opus 4.8&#x27;s 95%) - a portable, updatable knowledge capsule versus Watson&#x27;s zero performance on anything newer than its build date.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2608.27459" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -95,49 +95,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Breaking Claude Code Opus 5 Auto Mode</h3>
+              <h3>Introducing Hy4 Preview</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Johann Rehberger reports a prompt-injection bypass of Claude Code&#x27;s Auto Mode - the classifier Anthropic made the default defense against injection attacks - that succeeds roughly 80% of the time.</li>
-              <li>Attack path: get the agent to download and extract a zip archive, then have it run code that imports `base64`, which inadvertently loads and executes a malicious local `struct.py` sitting in the extracted files.</li>
-              <li>Worst finding: in one run Claude detected the compromise and tried to clean up, but Auto Mode itself blocked the cleanup command - the classifier let the malware start but then stopped remediation. Recommended fix is infra-level containment (sandboxes/VMs, restricted network, isolated credentials), not relying on the agent-level classifier alone.</li>
+              <li>Tencent&#x27;s new open-weight, text-only Hy4 Preview: 770B total / 49B active parameters, 1M token context window, 1.56TB on Hugging Face.</li>
+              <li>Roughly triples Hy3 (July 2026: 295B total / 21B active, 256K context, 598GB) in total size while keeping active parameters in a similar range.</li>
+              <li>Chat template exposes two reasoning modes - &quot;high&quot; (default) and &quot;no_think&quot; - with abbreviated, non-grammatical reasoning traces; available via Hugging Face and OpenRouter.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Aug/27/breaking-claude-code-opus-5-auto-mode/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/29/hy4/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/anthropic-sdk-python: v1.2.0</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>Understanding ChatGPT Work</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Beta files/skills namespaces move to GA shapes and drop dated beta header pins - a cleaner upgrade path off the beta API surface.</li>
-              <li>Fixes AWS/Bedrock request signing so binary file uploads actually work, and the agent toolset&#x27;s file tools (plus the memory tool) now preserve exact file bytes with no newline translation, so round-tripped files no longer get silently mangled.</li>
+              <li>ChatGPT Work is actually two products under one name: cloud-hosted &quot;Work Cloud&quot; (chatgpt.com/mobile) and desktop &quot;Work Local&quot; (the renamed Codex app), both gated behind $20/mo+ plans.</li>
+              <li>Work Cloud adds internet-connected code execution (installs packages, clones GitHub repos), a headless Chrome browser for real page interaction, a persistent /workspace/scratch filesystem across sessions, and site deploys via Cloudflare Workers.</li>
+              <li>Ships with 223 registered tools and 44 skills, plus scheduled recurring automations and parallel sub-agents across the GPT-5.6 Sol/Luna/Terra and GPT-5.5 reasoning tiers.</li>
             </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.2.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/30/understanding-chatgpt-work/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/anthropic-sdk-python: v1.1.0</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>Just a rumour of a bug is enough to find a security exploit these days</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds a beta `updates` thinking-display mode and support for Organization API endpoints.</li>
-              <li>The tool runner now keeps going on `pause_turn` instead of stopping outright, and the internal legacy response API was removed - the SDK is consolidating on the newer API shape.</li>
+              <li>Cambridge professor and OCaml core maintainer Anil Madhavapeddy reports OCaml projects seeing exploit probes within about 10 minutes of a security patch merely being discussed publicly - before any CVE existed.</li>
+              <li>He replicated the attacker side himself with coding agents: Claude Fable declined the task, so he used DeepSeek V4 Pro to generate working exploits from vague bug rumors.</li>
+              <li>rclone&#x27;s maintainer corroborates the trend: roughly 20 security disclosures over the prior 10 years vs. over 40 in the past month alone (about 75% legitimate) - a pace that breaks traditional embargo/disclosure norms.</li>
             </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.1.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Aug/28/just-a-rumour-of-a-bug/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.248</h3>
+              <h3>The Open ASR Leaderboard Adds Its First Global South Language</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Added Hindi as the leaderboard&#x27;s first Indic language via two new eval sets (Monsoon en-IN and hi-IN), covering 4,888 speakers across hundreds of districts with public/private splits.</li>
+              <li>Regional breakdown exposed accuracy gaps invisible in aggregate WER: on Indian English, Whisper varied 0.46 WER points across zones while Mistral&#x27;s Voxtral-Mini varied 1.68 points (4.38 Central vs. 6.06 Eastern).</li>
+              <li>Hindi scoring uses a lattice-based Orthographically-Informed WER instead of single-reference matching, to handle multiple valid Hindi spellings without penalizing correct transcriptions; each clip also carries 12 speaker attributes for fairness analysis.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/open-asr-leaderboard-global-south" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.251</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>New `--restricted` flag (or `CLAUDE_CODE_RESTRICTED=1`) strips out command/code-execution tools and WebFetch, keeps file tools sandboxed to the working directory, refuses `bypassPermissions`, and ignores user/project/local settings files - a locked-down mode for untrusted contexts.</li>
-              <li>Cut the Workflow tool&#x27;s prompt footprint from 5.7k to ~1k tokens by moving script-writing reference into a bundled skill, and fixed hourly prompt-cache misses caused by tool definitions re-rendering after OAuth token refresh.</li>
-              <li>New `experimental.cacheTtl` sets per-agent prompt cache TTL (5m/1h) in agent frontmatter, and cross-session `SendMessage`/`ListAgents` now works between sessions on the same machine.</li>
+              <li>New `PreModelSwitch`/`PostModelSwitch` hooks to block, confirm, or annotate model switches; `SessionStart` resume hooks now report session staleness and estimated re-cache cost.</li>
+              <li>Live streaming of a foreground subagent&#x27;s tool calls/results to Remote Control clients, plus a per-session prompt-cache line in `/cost` (hit ratio, misses, tokens re-cached).</li>
+              <li>Fixed several permission-check race conditions - a symlink swapped after the Read/Write/Edit check, the Workflow tool reading a scriptPath outside allowed scope before the check ran, and Grep/Glob skipping Read deny rules through symlinks - plus trimmed the native binary ~5MB and another 2.5MB by dropping six rarely-used syntax-highlighting languages.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.248" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.251" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
