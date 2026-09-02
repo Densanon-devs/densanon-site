@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - August 31, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - September 02, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">August 31, 2026</div>
+        <div class="digest-date-badge">September 02, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s robotics research cluster centers on vision-language-action models, with two new papers tackling VLA data efficiency and long-horizon planning, alongside a year-long field study on autonomous navigation in subarctic forests and a brain-imaging study on trust in expressive humanoid robots. On the industry side, Locus Robotics deepens its manipulation stack with a soft-picking acquisition, while The Robot Report examines the power-management and compute constraints shaping swarm robotics and embodied AI.</p>
+        <p class="digest-intro">Today&#x27;s robotics news centers on foundation models pushing past vision-language into new modalities, with Skild AI&#x27;s S1 model and a haptic-foundation-model research push both aiming to close the gap between simulation and real-world manipulation. Safety and security get real scrutiny too, from adversarial attacks on robot perception to VLA driving policies that fail on rare rule-governed maneuvers. Funding news (Reframe Systems&#x27; $40M raise for robotic microfactories) and two hands-on community builds round out the day.</p>
       </div>
     </section>
 
@@ -29,75 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>One year in a forest: Analyzing the challenges of autonomous navigation in subarctic environments</h3>
+              <h3>The Potential of Haptic Foundation Models</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Documents a full year of autonomous navigation testing in a subarctic forest, evaluating real-world reliability rather than lab conditions.</li>
-              <li>Identifies reliance on GNSS and cloud computing as a key vulnerability for autonomous systems operating in subarctic conditions.</li>
-              <li>Targets forestry, mining, and environmental monitoring as the primary application areas for subarctic robot deployment.</li>
+              <li>Identifies the lack of generalized touch sensing as the key bottleneck keeping foundation models from expanding into embodied AI, unlike language and vision.</li>
+              <li>Notes relevance beyond robots -- smartphones, wearables, and VR controllers all need better tactile foundation models.</li>
+              <li>Frames haptics as the next modality foundation-model research needs after vision-language.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.27628" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.28664" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Beyond Data Scaling: Representation-Centric Continued Pre-training for Vision-Language-Action Models</h3>
+              <h3>RedLight-VLA: Models for traffic-rule grounding and behavioral emphasis in driving policies</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Argues robot trajectory data can&#x27;t scale like web-scale image-text data because physical data collection is costly and sparse.</li>
-              <li>Proposes a representation-centric continued pre-training approach as an alternative to brute-force data scaling for generalist VLA models.</li>
-              <li>Targets the core bottleneck limiting generalist VLA models: embodied data collection cost, not model architecture.</li>
+              <li>Targets a specific failure mode: behavior-cloned VLA driving policies underperform on rare, rule-governed maneuvers like stopping at red lights.</li>
+              <li>Braking and launching examples contribute little to averaged trajectory loss, so the paper proposes explicit rule-grounding rather than relying on it alone.</li>
+              <li>Points to a broader theme -- safety-critical rare events need explicit rule supervision layered on top of imitation learning.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.27550" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.28656" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>PHR-VLA: Planning Horizon Reasoning for Vision-Language-Action Models</h3>
+              <h3>Cognitively-Grounded On-Device Runtime Learning for Ground Robots in Unknown Physical Environments</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Points out that most current VLA models condition action prediction only on the current observation, ignoring planning horizon.</li>
-              <li>Introduces planning horizon reasoning to give VLA models longer-term look-ahead for action prediction in manipulation tasks.</li>
-              <li>Targets general-purpose robotic manipulation, where language instructions and vision observations map directly to actions.</li>
+              <li>CogRun lets safety-critical ground robots learn at runtime entirely on edge-AI hardware, with no prior maps or perceptual knowledge.</li>
+              <li>Targets unknown physical environments -- the robot builds cognitive grounding on the fly instead of relying on pre-built world models.</li>
+              <li>On-device-only learning matters for deployments where cloud dependency or offline training isn&#x27;t acceptable.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2608.27609" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2608.28677" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Beyond Relative Geometry: Metric-Aware Geometry Perception for Robotics</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Identifies that existing 3D reconstruction methods for embodied AI only recover relative geometry at arbitrary scale, distorting predicted object dimensions.</li>
-              <li>Proposes metric-aware geometry perception so robots get accurate real-world scale, not just relative shape, for manipulation.</li>
-              <li>Targets spatial reasoning accuracy as a limiting factor for embodied models doing robotic manipulation.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.27497" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Remote Human and Robot Interaction for Greenhouse Gardening Using Virtual Reality</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Evaluates a VR teleoperation interface for remote leaf inspection and soil moisture assessment in a greenhouse.</li>
-              <li>Robotic platform pairs an unmanned ground vehicle with a robotic manipulator arm for the inspection tasks.</li>
-              <li>Tests whether VR-based remote interaction holds up for precision agriculture monitoring.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2608.27545" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>When expressive humanoid robots are awkward, people become wary – new brain study</h3>
+              <h3>Surviving the paper deluge: Notes from an ICRA panel on publishing, LLMs, and the future of peer review</h3>
               <span class="digest-source">Robohub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Brain-imaging study finds people become more suspicious of a humanoid robot after it makes errors, especially when the robot is more expressive.</li>
-              <li>Research team spans Drexel University, the US Air Force Academy, and George Mason University.</li>
-              <li>Suggests expressive humanoid design can backfire on trust once a robot&#x27;s performance is imperfect, a factor for HRI system designers.</li>
+              <li>ICRA panel tackled the explosion in robotics paper volume and the strain it puts on peer review capacity.</li>
+              <li>Discussion covered hard numbers on publication growth alongside the promises and risks of using LLMs in the review process itself.</li>
+              <li>Reflects a maturing-field problem: robotics research output is outpacing the community&#x27;s ability to vet it.</li>
             </ul>
-            <a href="https://robohub.org/when-expressive-humanoid-robots-are-awkward-people-become-wary-new-brain-study/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://robohub.org/surviving-the-paper-deluge-notes-from-an-icra-panel-on-publishing-llms-and-the-future-of-peer-review/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -107,39 +83,81 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How Locus is getting a grasp on one of robotics biggest challenges: manipulation</h3>
+              <h3>Skild AI unveils S1 flagship robot foundation model</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Locus Robotics acquired Nexera Robotics to add soft-picking manipulation technology to its warehouse robot lineup.</li>
-              <li>Soft picking targets grasping irregular or delicate items, a longstanding weak point for rigid-gripper warehouse robots.</li>
-              <li>Positions manipulation, not just mobile fulfillment, as Locus&#x27;s next competitive front.</li>
+              <li>S1 lets robots learn new tasks from watching a video demonstration rather than teleoperation or hand-scripted programming.</li>
+              <li>Positions Skild as a general-purpose, cross-embodiment foundation model play rather than a single-robot solution.</li>
+              <li>Signals foundation-model providers pushing beyond simple pick-and-place toward broader task generalization.</li>
             </ul>
-            <a href="https://www.therobotreport.com/locus-getting-grasp-one-robotics-biggest-challenges-manipulation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/skild-ai-unveils-s1-flagship-robot-foundation-model/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The differences between decentralized and centralized power in swarm robotics</h3>
+              <h3>The Missing Layer in Robot Safety Assurance</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Compares centralized vs. decentralized power management architectures for robotic swarms.</li>
-              <li>Argues a hybrid power-management approach could combine the reliability of centralized control with the resilience of decentralized systems.</li>
-              <li>Frames power management, not just coordination algorithms, as a core swarm-robotics design constraint.</li>
+              <li>Argues current robot safety assurance frameworks don&#x27;t account for adversarial attacks that alter perception, decision-making, or actuation.</li>
+              <li>Calls for security to be treated as a first-class layer of the safety case, not bolted on after functional safety sign-off.</li>
+              <li>Increasingly relevant as physical-AI and VLA models widen the attack surface beyond classic sensor-failure modes.</li>
             </ul>
-            <a href="https://www.therobotreport.com/differences-between-decentralized-centralized-power-swarm-robotics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/the-missing-layer-in-robot-safety-assurance/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The edge AI wall: Why embodied AI requires new mathematics</h3>
+              <h3>How better grippers can unlock physical AI</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Argues computational overload on edge hardware is a systemic &#x27;edge AI wall,&#x27; not a bug in any single motion planner.</li>
-              <li>Frames the constraint as limiting physical and embodied AI broadly, not just one robot platform or algorithm.</li>
-              <li>Calls for new mathematical approaches, not just faster chips, to get past the edge-compute ceiling.</li>
+              <li>Argues gripper hardware, not just foundation models, is the bottleneck for physical AI generalization in real-world manipulation.</li>
+              <li>Dexterity, tactile sensing, and adaptability at the end-effector level determine whether a policy trained in simulation transfers to messy real objects.</li>
+              <li>Frames a hardware catch-up problem now that VLA and foundation models are outpacing actuator and sensor capability.</li>
             </ul>
-            <a href="https://www.therobotreport.com/edge-ai-wall-why-embodied-ai-requires-new-mathematics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/how-better-grippers-can-unlock-physical-ai/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Reframe Systems raises $40M to scale its robotic microfactories for home building</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>$40M raise funds a network of automated microfactories located near the communities that need housing.</li>
+              <li>Targets the construction labor and cost bottleneck by localizing robotic manufacturing instead of shipping modules long distances.</li>
+              <li>Part of a broader wave of construction-robotics funding as home-building automation matures.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/reframe-systems-raises-40m-scale-robotic-microfactories-home-building/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>We&#x27;ve been building a soft adaptive robotic hand -- last week we finally put it on stage</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>SoftSync FlexHand V1 uses mechanical compliance -- not just software or sensor tuning -- to grasp differently shaped and sized objects without per-object retuning.</li>
+              <li>Demoed live at CCTV&#x27;s Youth Innovation+ under the HKSTP Incubation Programme, indicating a path toward commercialization.</li>
+              <li>An example of underactuated soft-robotics grasping as a cheaper alternative to fully actuated dexterous hands.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1w585gt/weve_been_building_a_soft_adaptive_robotic_hand/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Teaching a 7 axis arm to use a watercolor brush: what the first calibration run looked like</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Built on a secondhand UFactory xArm 7 with a 3D-printed compliant brush mount angled roughly 16 degrees off the paper.</li>
+              <li>Uses an overhead camera with ChArUco-board solving for precise paper and brush registration during calibration.</li>
+              <li>A hands-on example of fine-motor manipulation tuning -- paint loading, cleaning, stroke control -- outside typical industrial pick-and-place tasks.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1w4sfsx/teaching_a_7_axis_arm_to_use_a_watercolor_brush/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
