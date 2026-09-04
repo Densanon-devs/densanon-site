@@ -17,7 +17,7 @@
       <div class="container">
         <div class="digest-date-badge">September 04, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">A quiet day for computation news, but the one story that cleared the bar is a notable one: AMD&#x27;s new flagship AI workstation aimed squarely at local trillion-parameter inference, a data point worth tracking for anyone weighing local hardware against cloud inference.</p>
+        <p class="digest-intro">Nvidia&#x27;s $12.93B acquisition of Hugging Face is the day&#x27;s structural story — the model-distribution layer the entire open-weights ecosystem runs on now has an owner with hardware interests. Underneath it, a genuine memory crisis is reshaping hardware: discrete GPU shipments hit a four-year record even as DRAM prices climb, and AMD and Lenovo both answered with big-memory local-AI workstations. On the software side, Mesa, Vulkan and Fedora all landed groundwork changes, and LLVM opened the first serious open-source debate over whether AI agent-instruction files belong in a repository at all.</p>
       </div>
     </section>
 
@@ -29,15 +29,143 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
+              <h3>Discrete graphics card sales hit four-year record despite soaring memory prices</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Discrete GPU shipments reached 13.24 million units, a four-year high, growing both sequentially and year-over-year.</li>
+              <li>The growth happened despite a component shortage and rising prices — the market defied the broader PC slump rather than following it.</li>
+              <li>AMD gained discrete-GPU market share year-over-year, with notebook graphics carrying much of the volume.</li>
+              <li>The stated driver is a global memory crisis pushing component costs up, making this a supply-side story rather than a demand slump.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/gpus/discrete-graphics-card-sales-hit-four-year-record-despite-high-prices-shipments-reach-13-24-million-units-as-market-defies-pc-slump" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
               <h3>AMD unveils Threadripper Halo Station, an AI workstation packing 96 cores and dual liquid-cooled MI350P accelerators</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMD&#x27;s Threadripper Halo Station pairs a 96-core Zen 5 Threadripper CPU with dual liquid-cooled MI350P accelerators (the chassis supports up to four MI350P cards) and 2TB of DDR5 memory.</li>
-              <li>AMD is billing it as &#x27;the most powerful workstation in the world,&#x27; claiming it can run trillion-parameter models locally.</li>
-              <li>Worth watching as a benchmark for the ceiling of local/on-prem inference hardware relevant to any local-LLM cost/capability tradeoff discussion (vs. cloud API costs) across our local-AI projects.</li>
+              <li>A 96-core Zen 5 Threadripper paired with dual liquid-cooled MI350P accelerators, with support for up to four.</li>
+              <li>2TB of DDR5 system memory, aimed squarely at running very large models locally rather than in the cloud.</li>
+              <li>AMD claims the configuration can run trillion-parameter models and calls it &#x27;the most powerful workstation in the world.&#x27;</li>
+              <li>Signals a broader push to move frontier-scale inference onto local workstations instead of rented datacenter time.</li>
             </ul>
             <a href="https://www.tomshardware.com/pc-components/cpus/amd-unveils-threadripper-halo-station-an-ai-workstation-packing-96-cores-and-dual-liquid-cooled-mi350p-accelerators-the-most-powerful-workstation-in-the-world-can-run-trillion-parameter-models-says-amd" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Lenovo ThinkCentre X Ultra packs Gorgon Halo — AMD Ryzen AI Max+ Pro 495 shows up in mini workstation</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>First public sighting of AMD&#x27;s Gorgon Halo silicon, as the Ryzen AI Max+ Pro 495, ahead of IFA.</li>
+              <li>Up to 128GB of soldered LPDDR5x unified memory, of which the integrated Radeon 8065S can address up to 96GB as graphics memory.</li>
+              <li>NPU rated at 55 TOPS, with dual Thunderbolt 4 and 10GbE, in a mini-workstation chassis.</li>
+              <li>Ships November 2026 with an expected starting price around $3,699.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/laptops/lenovo-thinkcentre-x-ultra-packs-gorgon-halo-amd-ryzen-ai-max-pro-495-shows-up-in-mini-workstation" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Mesa 26.3 Preps For Intel Nova Lake P&#x27;s New 64-bit GPU Mode</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Intel&#x27;s graphics compiler code in Mesa 26.3 gained support for a new 64-bit shader addressing mode.</li>
+              <li>The change is groundwork for upcoming Nova Lake P graphics, described as a fundamental architectural shift.</li>
+              <li>Landing compiler support well ahead of shipping hardware is the usual pattern for Intel&#x27;s open-source graphics stack.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Intel-Nova-Lake-P-64-bit-Mode" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Vulkan 1.4.362 Released With New Extension Developed By Valve</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>VK_KHR_pipeline_library_group_handles allows querying group handles directly from ray-tracing pipeline libraries, aligning Vulkan with DXR Tier 1.1.</li>
+              <li>VK_VALVE_buffer_device_address_allocation_alignment lets applications request buffer-device-address alignment beyond baseline guarantees.</li>
+              <li>The Valve extension targets D3D12-on-Vulkan translation layers such as VKD3D-Proton, so it is Proton and Steam Deck plumbing.</li>
+              <li>Otherwise a routine spec update with a handful of bug fixes.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Vulkan-1.4.362" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Industry &amp; HPC</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Nvidia acquires Hugging Face for $12.93 billion</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Nvidia gains control of the dominant open-model distribution platform: 18M+ developers, 200k+ companies, 3M models and 500k datasets.</li>
+              <li>Jensen Huang states Hugging Face will keep its brand and stay open to competing models, frameworks, clouds, inference providers and compute platforms.</li>
+              <li>Nvidia says it will not force platform participants into its own hardware ecosystem — a public commitment rather than a disclosed contractual term.</li>
+              <li>The deal is announced rather than confirmed closed; no regulatory-approval or closing-date detail was given.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-acquires-hugging-face-for-usd12-93-billion-company-gains-control-of-major-ai-model-distribution-platform" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Chinese chipmaker CXMT allegedly used a written roadmap to steal Samsung DRAM tech</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A South Korean court found that a written &#x27;Project Hefei&#x27; roadmap sequenced the acquisition of Samsung&#x27;s 620-step DRAM Process Recipe Plan.</li>
+              <li>The plan allegedly ran from acquiring the recipe in 2016 through recruiting Samsung engineers to hitting 10,000 wafers per month by August 2018.</li>
+              <li>An ex-Samsung researcher who manually copied the recipe received a seven-year sentence; the wider case is ongoing.</li>
+              <li>CXMT&#x27;s global DRAM share went from roughly 4% to about 10% year-over-year, making it China&#x27;s most valuable chipmaker after a July 2026 IPO.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/pc-components/dram/chinas-cmxt-had-an-actual-roadmap-for-its-alleged-industrial-espionage-from-samsung-south-korean-court-says-project-hefei-was-responsible-for-cxmts-current-position-as-major-dram-maker" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Amazon Linux 2027 Now in Preview: Powered By Linux 7.1, x86-64-v3 &amp; Built With LTO</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Ships a Linux 7.1 kernel with GCC 16.1 and LLVM/Clang 22, drawing partly on Fedora 44/45.</li>
+              <li>Built with link-time optimization by default, tuned for AWS cloud workloads.</li>
+              <li>Requires an x86-64-v3 baseline (AVX and AVX2), excluding pre-Haswell and pre-Excavator CPUs.</li>
+              <li>Notably stops short of x86-64-v4 — AVX2, not AVX-512, is the chosen compatibility and performance tradeoff.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Amazon-Linux-2027-Preview" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>LLVM Developers Begin Debate Over AGENTS.md For Helping AI Agents</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>An RFC asks whether LLVM should host AGENTS.md and CLAUDE.md files in-tree to guide AI coding agents.</li>
+              <li>Aaron Ballman cited research that such context files do not generally improve task success rates while raising inference cost by roughly 20%.</li>
+              <li>A separate objection is reputational: a root-level agents file signals &#x27;AI contributions welcome&#x27; while the project is already fighting low-quality AI patches.</li>
+              <li>Others note mechanical rules already live in .clang-format and .clang-tidy; the thread currently leans toward rejection.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/LLVM-Debates-AGENTS-MD" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Fedora 47 Considering Use Of Thin LTO Compiler Optimizations</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A change proposal would move Fedora 47 from Fat LTO to Thin LTO for link-time optimization.</li>
+              <li>Thin LTO is more memory-efficient and builds faster, lowering the cost of enabling it broadly.</li>
+              <li>The goal is to let more packages adopt LTO where the memory cost previously ruled it out.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Fedora-47-Considers-Thin-LTO" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
