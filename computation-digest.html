@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - September 04, 2026 | Densanon</title>
+  <title>Computation Morning Digest - September 05, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 04, 2026</div>
+        <div class="digest-date-badge">September 05, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Nvidia&#x27;s $12.93B acquisition of Hugging Face is the day&#x27;s structural story — the model-distribution layer the entire open-weights ecosystem runs on now has an owner with hardware interests. Underneath it, a genuine memory crisis is reshaping hardware: discrete GPU shipments hit a four-year record even as DRAM prices climb, and AMD and Lenovo both answered with big-memory local-AI workstations. On the software side, Mesa, Vulkan and Fedora all landed groundwork changes, and LLVM opened the first serious open-source debate over whether AI agent-instruction files belong in a repository at all.</p>
+        <p class="digest-intro">Linux&#x27;s low-level graphics and compute stack got several groundwork drops today: Nouveau landed HDMI 2.1 bring-up fixes for NVIDIA Blackwell GPUs, AMD announced a dedicated team pushing Rust into GPU firmware and drivers (mirroring NVIDIA&#x27;s own Rust-based Nova kernel driver), and PoCL 7.2 earned official Khronos OpenCL 3.0 conformance on both RISC-V and x86_64 AVX-512 hardware. On the systems side, Amazon Linux 2027 previewed EPYC performance gains from default LTO builds and an x86-64-v3 baseline, while Apple Silicon Linux support inched forward with single-core boot patches for the A18 Pro in the new MacBook Neo. Underneath it all, Taiwan&#x27;s multi-year crackdown on illegally Chinese-owned chip businesses — 166 investigations and at least 36 convictions since 2020 — is a reminder that the semiconductor talent pipeline is still an active enforcement front, not just a trade-policy one.</p>
       </div>
     </section>
 
@@ -29,67 +29,42 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Discrete graphics card sales hit four-year record despite soaring memory prices</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Discrete GPU shipments reached 13.24 million units, a four-year high, growing both sequentially and year-over-year.</li>
-              <li>The growth happened despite a component shortage and rising prices — the market defied the broader PC slump rather than following it.</li>
-              <li>AMD gained discrete-GPU market share year-over-year, with notebook graphics carrying much of the volume.</li>
-              <li>The stated driver is a global memory crisis pushing component costs up, making this a supply-side story rather than a demand slump.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/gpus/discrete-graphics-card-sales-hit-four-year-record-despite-high-prices-shipments-reach-13-24-million-units-as-market-defies-pc-slump" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD unveils Threadripper Halo Station, an AI workstation packing 96 cores and dual liquid-cooled MI350P accelerators</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A 96-core Zen 5 Threadripper paired with dual liquid-cooled MI350P accelerators, with support for up to four.</li>
-              <li>2TB of DDR5 system memory, aimed squarely at running very large models locally rather than in the cloud.</li>
-              <li>AMD claims the configuration can run trillion-parameter models and calls it &#x27;the most powerful workstation in the world.&#x27;</li>
-              <li>Signals a broader push to move frontier-scale inference onto local workstations instead of rented datacenter time.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/amd-unveils-threadripper-halo-station-an-ai-workstation-packing-96-cores-and-dual-liquid-cooled-mi350p-accelerators-the-most-powerful-workstation-in-the-world-can-run-trillion-parameter-models-says-amd" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Lenovo ThinkCentre X Ultra packs Gorgon Halo — AMD Ryzen AI Max+ Pro 495 shows up in mini workstation</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>First public sighting of AMD&#x27;s Gorgon Halo silicon, as the Ryzen AI Max+ Pro 495, ahead of IFA.</li>
-              <li>Up to 128GB of soldered LPDDR5x unified memory, of which the integrated Radeon 8065S can address up to 96GB as graphics memory.</li>
-              <li>NPU rated at 55 TOPS, with dual Thunderbolt 4 and 10GbE, in a mini-workstation chassis.</li>
-              <li>Ships November 2026 with an expected starting price around $3,699.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/laptops/lenovo-thinkcentre-x-ultra-packs-gorgon-halo-amd-ryzen-ai-max-pro-495-shows-up-in-mini-workstation" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Mesa 26.3 Preps For Intel Nova Lake P&#x27;s New 64-bit GPU Mode</h3>
+              <h3>Nouveau Lands Display Fixes For NVIDIA Blackwell GPUs As It Works Toward HDMI 2.1</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel&#x27;s graphics compiler code in Mesa 26.3 gained support for a new 64-bit shader addressing mode.</li>
-              <li>The change is groundwork for upcoming Nova Lake P graphics, described as a fundamental architectural shift.</li>
-              <li>Landing compiler support well ahead of shipping hardware is the usual pattern for Intel&#x27;s open-source graphics stack.</li>
+              <li>Fixes merged ahead of Linux 7.3-rc2 address GPU System Processor (GSP) interaction bugs, HDMI vendor infoframe handling, and HDMI GCP AVMute register offsets on Blackwell (GB20x) GPUs.</li>
+              <li>Developer Mohamed Ahmed frames the work as part of ongoing HDMI 2.1 bring-up — fixing vblank interrupts and infoframe handling that FRL, DSC, and VRR support will depend on.</li>
+              <li>Some of the fixes address latent bugs that don&#x27;t affect current operation but are necessary prerequisites for the next stage of HDMI 2.1 work.</li>
+              <li>The same DRM fixes batch also touched AMDGPU and Intel display code, part of the routine pull ahead of the 7.3 kernel release.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Intel-Nova-Lake-P-64-bit-Mode" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Nouveau-Blackwell-Display-Fixes" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Vulkan 1.4.362 Released With New Extension Developed By Valve</h3>
+              <h3>Linux Patches Posted For Initial Enablement Of The Apple A18 Pro + MacBook Neo</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>VK_KHR_pipeline_library_group_handles allows querying group handles directly from ray-tracing pipeline libraries, aligning Vulkan with DXR Tier 1.1.</li>
-              <li>VK_VALVE_buffer_device_address_allocation_alignment lets applications request buffer-device-address alignment beyond baseline guarantees.</li>
-              <li>The Valve extension targets D3D12-on-Vulkan translation layers such as VKD3D-Proton, so it is Proton and Steam Deck plumbing.</li>
-              <li>Otherwise a routine spec update with a handful of bug fixes.</li>
+              <li>Developer Yureka Lilian posted initial device-tree patches enabling the A18 Pro SoC (t8140) — the same chip used in the iPhone 16 Pro — to boot on Linux.</li>
+              <li>The device tree is minimal: CPU cores, interrupt controller, watchdog, serial, and framebuffer only, with no GPU acceleration yet.</li>
+              <li>The SoC currently only boots on a single CPU core due to unresolved WFI/WFIT instruction-handling issues; multi-core support is still pending.</li>
+              <li>Full support also needs matching updates to the Asahi Linux project&#x27;s m1n1 bootloader, and the article estimates it will be months before the budget MacBook Neo runs well on Linux.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Vulkan-1.4.362" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Apple-A18-Pro-MacBook-Neo-Patch" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AMD Working To &quot;Push Rust Deep Into The GPU Stack&quot;</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>AMD Senior Fellow Harsh Meno says he&#x27;s building &quot;a small, elite team&quot; to push Rust into GPU firmware, drivers, shader compilers, and other layers of the stack.</li>
+              <li>An active AMD job listing targets &quot;performance-sensitive and high-trust parts of the GPU stack,&quot; covering compiler support, system interfaces, and production validation methods.</li>
+              <li>The move parallels NVIDIA&#x27;s own Rust push, including its Rust-based Nova Linux kernel driver — memory-safe GPU drivers are becoming a two-vendor trend, not a one-off experiment.</li>
+              <li>Nothing has shipped yet; this is a hiring and team-formation signal rather than a released driver or compiler.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/AMD-Rust-Deep-Into-GPU-Stack" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -99,42 +74,40 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Nvidia acquires Hugging Face for $12.93 billion</h3>
+              <h3>Taiwan Cracks Down On Tech Businesses With Illegal Chinese Ownership — 166 Investigations And At Least 36 Convictions Since 2020</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Nvidia gains control of the dominant open-model distribution platform: 18M+ developers, 200k+ companies, 3M models and 500k datasets.</li>
-              <li>Jensen Huang states Hugging Face will keep its brand and stay open to competing models, frameworks, clouds, inference providers and compute platforms.</li>
-              <li>Nvidia says it will not force platform participants into its own hardware ecosystem — a public commitment rather than a disclosed contractual term.</li>
-              <li>The deal is announced rather than confirmed closed; no regulatory-approval or closing-date detail was given.</li>
+              <li>Taiwanese investigators have opened 166 investigations and secured at least 36 convictions since 2020 against tech businesses operating with illegal Chinese ownership.</li>
+              <li>The alleged pattern is Chinese-backed operations hiring Taiwanese engineers for semiconductor R&amp;D work while evading the island&#x27;s foreign-investment restrictions.</li>
+              <li>The multi-year case count points to a sustained, structural enforcement effort rather than an isolated bust — relevant to anyone tracking where Taiwan&#x27;s chip-design talent and IP are legally allowed to flow.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-acquires-hugging-face-for-usd12-93-billion-company-gains-control-of-major-ai-model-distribution-platform" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/policy/taiwan-cracks-down-on-tech-businesses-with-illegal-chinese-ownership-166-investigations-and-at-least-36-convictions-since-2020" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Chinese chipmaker CXMT allegedly used a written roadmap to steal Samsung DRAM tech</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A South Korean court found that a written &#x27;Project Hefei&#x27; roadmap sequenced the acquisition of Samsung&#x27;s 620-step DRAM Process Recipe Plan.</li>
-              <li>The plan allegedly ran from acquiring the recipe in 2016 through recruiting Samsung engineers to hitting 10,000 wafers per month by August 2018.</li>
-              <li>An ex-Samsung researcher who manually copied the recipe received a seven-year sentence; the wider case is ongoing.</li>
-              <li>CXMT&#x27;s global DRAM share went from roughly 4% to about 10% year-over-year, making it China&#x27;s most valuable chipmaker after a July 2026 IPO.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/dram/chinas-cmxt-had-an-actual-roadmap-for-its-alleged-industrial-espionage-from-samsung-south-korean-court-says-project-hefei-was-responsible-for-cxmts-current-position-as-major-dram-maker" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Amazon Linux 2027 Now in Preview: Powered By Linux 7.1, x86-64-v3 &amp; Built With LTO</h3>
+              <h3>Amazon Linux 2027 Shows Off Nice Performance Gains On AMD EPYC In The AWS Cloud</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Ships a Linux 7.1 kernel with GCC 16.1 and LLVM/Clang 22, drawing partly on Fedora 44/45.</li>
-              <li>Built with link-time optimization by default, tuned for AWS cloud workloads.</li>
-              <li>Requires an x86-64-v3 baseline (AVX and AVX2), excluding pre-Haswell and pre-Excavator CPUs.</li>
-              <li>Notably stops short of x86-64-v4 — AVX2, not AVX-512, is the chosen compatibility and performance tradeoff.</li>
+              <li>AWS is previewing Amazon Linux 2027, the successor to Amazon Linux 2023, benchmarked running on AMD EPYC hardware in AWS&#x27;s own cloud.</li>
+              <li>Per the article, packages are now built with link-time optimization (LTO) by default and the distribution enforces an x86-64-v3 baseline (AVX/AVX2), among other under-the-hood changes.</li>
+              <li>Phoronix describes the combination as producing &quot;nice performance gains,&quot; though the exact magnitude wasn&#x27;t captured in the summary available for this digest — worth a follow-up read for anyone running EPYC fleets on Amazon Linux.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Amazon-Linux-2027-Preview" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/review/amazon-linux-2027-benchmarks" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>PoCL 7.2 Released With Official OpenCL 3.0 Conformance On RISC-V &amp; x86_64 CPUs</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>PoCL 7.2 earned official Khronos OpenCL 3.0 conformance on RISC-V (RV64GC and RVA22+RV1.0) and on x86_64 with AVX-512 code paths, tested on an AMD Ryzen 9 9900X (Zen 5).</li>
+              <li>The release adds support for LLVM 22 with CUDA and Level Zero device backends, and up to LLVM 23 for CPU-only targets.</li>
+              <li>Seven new OpenCL extensions land, including cl_khr_extended_bit_ops, cl_khr_device_uuid, and cl_khr_suggested_local_work_size.</li>
+              <li>As an MIT-licensed, LLVM-backed OpenCL implementation, PoCL&#x27;s conformance push matters to anyone needing a portable compute runtime across CPU and GPU targets without a vendor SDK.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/PoCL-7.2-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -144,28 +117,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LLVM Developers Begin Debate Over AGENTS.md For Helping AI Agents</h3>
+              <h3>KDE Plasma 6.8 Lands Windows-Like Auto-Scrolling, Lower vRAM Usage For Breeze Theme</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An RFC asks whether LLVM should host AGENTS.md and CLAUDE.md files in-tree to guide AI coding agents.</li>
-              <li>Aaron Ballman cited research that such context files do not generally improve task success rates while raising inference cost by roughly 20%.</li>
-              <li>A separate objection is reputational: a root-level agents file signals &#x27;AI contributions welcome&#x27; while the project is already fighting low-quality AI patches.</li>
-              <li>Others note mechanical rules already live in .clang-format and .clang-tidy; the thread currently leans toward rejection.</li>
+              <li>Plasma 6.8 ships October 14, 2026 — coinciding with KDE&#x27;s 30th anniversary — with a Windows-like auto-scroll mode: a single middle-click now toggles a persistent scroll mode instead of requiring the button to be held down.</li>
+              <li>The Breeze theme&#x27;s SVG assets were optimized to reduce vRAM usage, though no specific number was given.</li>
+              <li>Also landing: Wayland dwell-clicker accessibility support, a remote-desktop &quot;exclusive mode&quot; that locks the physical screen during a session, and higher-quality screen recording via Spectacle and KPipeWire.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/LLVM-Debates-AGENTS-MD" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/KDE-Plasma-6.8-Autoscroll" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Fedora 47 Considering Use Of Thin LTO Compiler Optimizations</h3>
+              <h3>Wine 11.17 Released With Initial Support For Display Mode Emulation</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A change proposal would move Fedora 47 from Fat LTO to Thin LTO for link-time optimization.</li>
-              <li>Thin LTO is more memory-efficient and builds faster, lowering the cost of enabling it broadly.</li>
-              <li>The goal is to let more packages adopt LTO where the memory cost previously ruled it out.</li>
+              <li>Wine 11.17 adds initial display-mode emulation led by Rémi Bernon: it renders OpenGL content at the game&#x27;s requested (emulated) resolution, then scales the output to fit the actual host window or display.</li>
+              <li>The release integrates VKD3D 2.1, updating the Direct3D 12-over-Vulkan translation layer.</li>
+              <li>44 documented bug fixes land in the same release, spanning both recent and legacy titles — routine bi-weekly cadence, but the display-mode work is new plumbing relevant to running older fixed-resolution software on a modern Linux desktop.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Fedora-47-Considers-Thin-LTO" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Wine-11.17-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>NetworkManager Works To Enforce AI Policy By Tricking AI Agents To Add A Canary</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>NetworkManager&#x27;s AI-authorship policy requires contributors to take full responsibility for, and be able to explain, 100% of submitted code.</li>
+              <li>To catch agents ignoring that policy, maintainer Josephine Pfeiffer seeded the project&#x27;s AGENTS.md/CLAUDE.md with an instruction telling AI agents to work the word &quot;biblioklept&quot; into any commit message, merge-request description, or review reply they generate.</li>
+              <li>Because that word has no reason to appear in networking code review, any submission containing it flags itself as AI-generated — turning the agent&#x27;s own instruction-following into the detection signal, a trick worth stealing for any team drafting its own AGENTS.md.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/NetworkManager-AI-Canary" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

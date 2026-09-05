@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - September 04, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - September 05, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,136 +15,74 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 04, 2026</div>
+        <div class="digest-date-badge">September 05, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Robotics research this cycle leans hard into trustworthy autonomy: certifiable pose registration, privacy-aware perception exports, and modality-robust VLA policies all target failure modes that only show up once robots leave the lab, while Koopman-based shape control and a GPU-accelerated world model push precise control into soft arms and spacecraft docking. NASA&#x27;s CADRE mission adds a hardware proof point, sending three Moon rovers that must coordinate themselves with no real-time human oversight. On the industry side, big capital moved: Nvidia&#x27;s planned Hugging Face acquisition, Medtronic&#x27;s $700M surgical robotics bet, and PlusAI&#x27;s SPAC all signal consolidation and cash flowing into physical AI and autonomy.</p>
+        <p class="digest-intro">Robot perception and last-mile delivery both saw real capital and contracts today: Lyte AI closed a $165M Series C on its multimodal sensing silicon at a $1.6B valuation, while Robot.com locked in a seven-year, 500-plus-robot Sodexo deployment with a stair-climbing, package-dropping quadruped already in the pipeline. Hardware security got explicit attention too, with Lattice Semiconductor pitching FPGAs as deterministic guardrails for physical AI systems. On the community and tooling side, ROS 2 keeps building toward ROSCon Global in Toronto with new bipedal and MicroPython client releases, while builders shipped an impressively instrumented open-source tendon-driven hand exoskeleton alongside a scratch-built SCARA home manipulator and an early AI-prompt-to-quadruped-motion pipeline.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Seeing Less Is Not Seeing Safely: Privacy Leakage from Task-Scoped Robot Perception Exports</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Introduces Task-Functional Perception Distillation (TFPD), a framework testing whether privacy-scrubbed robot perception exports (semantics, geometry, task targets) still leak private household information even when raw sensor data never leaves the device.</li>
-              <li>Tested on 120 AI2-THOR home scenes: three navigation exports had identical task success (100%) and near-identical path efficiency, yet privacy linkability ranged from 0.532 to 0.970 - same utility, wildly different leakage.</li>
-              <li>Swapping explicit target labels for coarse regions cut target-identification accuracy from near-perfect to 0.077 while task success stayed at 99.5%, showing utility and privacy can be decoupled.</li>
-              <li>Key finding: neither removing fields nor abstracting them harder produces a universal privacy ordering - protection has to be evaluated per task, not applied as a blanket rule.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.03055" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>GPU-Accelerated Astrodynamics World Models for Spacecraft Rendezvous and Proximity Operations</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Applies world models (jointly learned state-action dynamics plus observation models) to spacecraft rendezvous and docking for the first time, after success in robotics and gaming.</li>
-              <li>Built a JAX-based, GPU-parallelized ISS simulation environment plus a transformer (Out-of-this-World-Model) that fuses relative-position data and camera imagery and predicts future states via flow matching with uncertainty estimates.</li>
-              <li>Autonomous ISS docking success hit 53% versus 29% for reinforcement-learning baselines; on unseen docking ports it still reached 40% versus 17% for baselines, more than double.</li>
-              <li>Also hit 98% accuracy detecting unexpected objects during approach; both the simulator and model are being open-sourced.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.03067" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Sensing Which Modality Matters: Evidence-Gated Regularization for Robust VLA Policies</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Names modality entanglement - VLA policies trained on small, homogeneous demonstration sets learn spurious cross-sensor correlations instead of task-relevant signal, making them fragile when a sensor drops out or gets corrupted.</li>
-              <li>Proposes Evidence-Gated Regularization (EGR), a training-time objective with zero inference-time overhead that scores per-frame, per-sensor relevance to stay invariant to low-evidence sensors while remaining accurate off any single high-evidence sensor.</li>
-              <li>On real bi-manual robots under visual distraction, success jumped from 30% to 85% (+183%); single-sensor success across setups rose from 2.8% to 6.1% (+120%).</li>
-              <li>Validated across dual Kinova arms and a vision-plus-GelSight tactile single-arm setup, showing the fix generalizes across robot embodiments.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.03142" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Real-Time Shape Control of Multi-Segment Soft Robotic Arms Using Koopman Operators with Global and Local Observables</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues tip-only control is insufficient for soft arms in constrained spaces once segment-to-segment coupling and gravity sag matter - the whole-body shape needs to be controlled, not just the tip.</li>
-              <li>Introduces a Koopman-operator model-predictive-control framework combining global and local shape observables, scaling to simulated arms with up to 10 independently actuated segments.</li>
-              <li>Physical tests on 3- and 5-segment arms hit tip speeds up to 0.6 m/s, held tracking under payloads up to 400g, and recovered from 7N lateral disturbances without retraining.</li>
-              <li>Targets confined-space inspection tasks where a soft arm&#x27;s whole shape, not just its tip, has to thread through obstacles.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.03175" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Following a Unique Path: A Fast Certifier Applied to Outlier-Robust Pose Registration</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Tackles a bottleneck in certifiable SDP-based optimization: the standard solve-locally-then-certify pipeline fails when the relaxation is degenerate, forcing slow direct solvers as the only fallback.</li>
-              <li>Proposes the Central-Path Certifier (CP-Cert), which finds a nearby point on the SDP&#x27;s central path where a valid optimality certificate can be obtained cheaply, leaning on sparsity and parallelism instead of a full direct solve.</li>
-              <li>Delivers runtimes up to three orders of magnitude faster than state-of-the-art direct solvers on simulated pointcloud data-association and outlier-robust pose-estimation problems.</li>
-              <li>Extends successfully to real-world pose registration data, not just simulation.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.03222" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Exploring the Moon will require rovers that can think for themselves - an upcoming NASA mission will test whether they can</h3>
-              <span class="digest-source">Robohub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>NASA&#x27;s CADRE (Cooperative Autonomous Distributed Robotic Exploration) mission will send three small rovers to the Moon&#x27;s near side to explore a patch of ground as a self-organizing team, with no real-time human control.</li>
-              <li>The rovers must elect a leader, divide tasks, and replan as a group on the fly - for example if one runs low on charge - marking the first time NASA has operated multiple rovers beyond Earth as a single autonomous system.</li>
-              <li>Slated to land as part of the IM-3 mission for roughly two weeks of surface operations.</li>
-              <li>Serves as a direct testbed for the blackout-tolerant, independent multi-robot coordination future missions will need to search for water ice at the lunar South Pole.</li>
-            </ul>
-            <a href="https://robohub.org/exploring-the-moon-will-require-rovers-that-can-think-for-themselves-an-upcoming-nasa-mission-will-test-whether-they-can/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NVIDIA plans to acquire Hugging Face and keep AI development platform open</h3>
+              <h3>How FPGAs become the gatekeepers of physical AI security</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NVIDIA, already one of Hugging Face&#x27;s biggest model contributors, plans to acquire the platform and has committed to keeping it open.</li>
-              <li>Hugging Face recently surpassed 1 million hosted datasets, making it a core piece of the open AI model-distribution infrastructure that robotics and physical-AI teams rely on for pretrained models.</li>
-              <li>Signals Nvidia extending its reach beyond chips and software frameworks into owning distribution of the models themselves.</li>
+              <li>Lattice Semiconductor VP of security Eric Sivertson argues FPGAs can serve as deterministic security guardrails for robotic and physical-AI systems, sitting outside the main AI compute path to enforce policy even if the AI stack itself is compromised.</li>
+              <li>The discussion (Episode 260 of The Robot Report Podcast) frames FPGA-based gatekeeping as a hardware-level trust anchor, distinct from software-only security approaches common in current robotics stacks.</li>
+              <li>Sivertson brings 30-plus years in embedded-systems, wireless-connectivity, and reconfigurable-computing security, suggesting the FPGA-as-guardrail pattern is being ported from prior IoT/embedded security practice into humanoid and physical-AI hardware.</li>
             </ul>
-            <a href="https://www.therobotreport.com/nvidia-to-acquire-hugging-face-and-keep-ai-develpment-platform-open/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/how-fpgas-become-the-gatekeepers-of-physical-ai-security/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Medtronic invests $700M in surgical partner Cornerstone Robotics</h3>
+              <h3>Lyte raises $165M to help robots better sense their surroundings</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Medtronic is investing $700 million in surgical robotics partner Cornerstone Robotics to build out a multi-port surgical portfolio.</li>
-              <li>The buildout is anchored by Medtronic&#x27;s existing Hugo surgical system and expanded with Cornerstone&#x27;s Sentire platform.</li>
-              <li>Deepens Medtronic&#x27;s capital commitment to soft-tissue surgical robotics as it competes for share against Intuitive Surgical.</li>
+              <li>Lyte AI closed a $165M Series C at a $1.6B post-money valuation, led by Maverick Silicon with Fidelity, Atreides Management, Key1 Capital, and Ora Global participating, bringing total funding to $272M since its 2021 founding.</li>
+              <li>Its LyteVision platform fuses custom silicon, 4D coherent vision, high-resolution imaging, and inertial sensing on a single synchronized timeline — a sensor-fusion approach directly relevant to perception stacks for embodied agents.</li>
+              <li>LyteVision is already in production shipping to robotics customers in inspection, logistics, and manufacturing, and won CES 2026 &#x27;Best of Innovation in Robotics,&#x27; signaling real-world traction rather than a lab demo.</li>
+              <li>The new capital is earmarked for scaling silicon and platform production and expanding perception-AI deployments, indicating the custom-sensor-chip approach to robot perception is attracting serious institutional capital.</li>
             </ul>
-            <a href="https://www.therobotreport.com/medtronic-invests-700m-in-surgical-partner-cornerstone-robotics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/lyte-raises-165m-help-robots-better-sense-their-surroundings/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>PlusAI to take autonomous trucking public via a SPAC deal</h3>
+              <h3>Robot.com partners with Sodexo to roll out more sidewalk delivery robots</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>PlusAI is going public via a SPAC deal that values the autonomous-trucking company at roughly $800 million.</li>
-              <li>PlusAI&#x27;s self-driving trucking software is already generating revenue, putting it among the few autonomous-trucking plays reaching commercial deployment rather than pure pilots.</li>
+              <li>Robot.com and Sodexo signed a seven-year commercial agreement — Robot.com&#x27;s largest single enterprise deployment — extending a relationship that started in 2021 and expanding across Sodexo-run North American college campuses.</li>
+              <li>Robot.com&#x27;s current R-Kiwi sidewalk delivery fleet has topped 500 units and completed 2.4 million tasks across campuses and city sidewalks, giving the partnership a substantial operational base rather than a pilot program.</li>
+              <li>An upcoming R-Dog quadruped is planned to add package drop-off (versus R-Kiwi&#x27;s manual retrieval), stair navigation, and the ability to board autonomous vehicles — a meaningful capability jump for last-mile delivery robots.</li>
+              <li>Sodexo&#x27;s motivation is labor-driven (roughly 400,000 employees globally, 120,000 full-time in the U.S.), with campuses explicitly serving as the proving ground before Robot.com scales into industrial, humanoid, and urban-delivery use cases.</li>
             </ul>
-            <a href="https://www.therobotreport.com/plusai-takes-autonomous-trucking-public-via-spac-deal/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/robot-com-partners-sodexo-rolls-out-more-sidewalk-delivery-robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ROS News of the Week for August 31st, 2026</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>ROSCon Global 2026 lands in Toronto Sept 22-24 with after-hours mixers, a Waterloo robotics-ecosystem bus tour, and a post-conference hackathon, alongside regional ROSCons scheduled through December across the UK, Singapore, Spain, Italy, Belgium, and Turkey.</li>
+              <li>New open-source releases this week include Bimo, a bipedal-robotics kit with built-in sim-to-real transfer, and SnakeROS, a pure-Python ROS 2 client targeting MicroPython — both lowering the barrier for hobbyist bipeds and microcontroller-class ROS 2 nodes.</li>
+              <li>A new adaptive-clearance Nav2 controller balances obstacle clearance against narrow-passage traversal, and a draft REP 158 proposes OpenUSD conventions for simulation-asset interoperability across ROS 2 sim tools.</li>
+              <li>Google Summer of Code 2026 work landed on Gazebo core-reset QA (improving reinforcement-learning training-loop reliability) and Open-RMF&#x27;s Crossflow diagram editor UI/UX, and the Open Robotics Zulip community passed 1,000 active members.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/ros-news-of-the-week-for-august-31st-2026/57868" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -154,15 +92,64 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Hacking on NVIDIA AGX Thor + RealSense 3D stereo vision AI</h3>
+              <h3>A ROS 2 Universal Home Manipulator</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A hobbyist got a full perception pipeline, including the RealSense SDK, running entirely on GPU on an NVIDIA AGX Thor board.</li>
-              <li>Swapped out QWEN for BLIP-CUDA and is now generating live scene descriptions with depth at 75-100ms per inference, roughly 10-12 VLM scene inferences per second.</li>
-              <li>Source code was shared in the post&#x27;s comments - a real edge-AI robotics build rather than a marketing post.</li>
+              <li>The build targets a general-purpose home manipulator: a SCARA-configuration arm mounted on a Z-axis lift, riding a differential-drive base with pivoting rear suspension for uneven home floors.</li>
+              <li>The arm axes use two NEMA 23 stepper motors, while the Z-axis lift is driven by a repurposed hoverboard motor controlled through an ODrive Mini — a scavenged-hardware approach that keeps a home-scale manipulator&#x27;s parts cost low.</li>
+              <li>Framed explicitly as a ROS 2 project, it&#x27;s a concrete example of hobbyist-grade SCARA-plus-mobile-base manipulation built from commodity motor-control hardware rather than a purpose-built robot arm.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1w6lp6o/hacking_on_nvidia_agx_thor_realsense_3d_stereo/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1w7enkq/a_ros_2_universal_home_manipulator/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Built a tendon-driven hand exoskeleton and open sourced everything (TAKTO ONE)</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>TAKTO ONE is a tendon-driven hand exoskeleton built as a master&#x27;s thesis project, now fully open sourced at github.com/molanocortes/takto-one — a rare fully-open hardware-and-firmware release in the assistive/haptic-hand space.</li>
+              <li>It instruments twelve finger joints, each with its own magnetic encoder, and uses tendons to pull the fingers back, giving fine per-joint angle feedback rather than a single aggregate grip sensor.</li>
+              <li>Embedded EMG channels are logged on the same clock as the joint-angle data, enabling synchronized muscle-activation-to-motion datasets that are directly useful for training or validating EMG-to-intent control models.</li>
+              <li>The electronics run on a Teensy 4.1 microcontroller with eight Dynamixel-class actuators (per the post&#x27;s hardware list), keeping the control loop on accessible, well-documented hobbyist hardware.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1w748bc/built_a_tendondriven_hand_exoskeleton_and_open/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>NVIDIA Is Buying Hugging Face. One of Its Hottest Robots Runs on a Chinese Chip</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Hugging Face&#x27;s prior acquisition of Pollen Robotics is now shipping product: the $399 Microduck robot has reportedly passed 10,000 orders, a rare volume figure for a consumer-priced open robotics platform.</li>
+              <li>Microduck&#x27;s compute choice is notable specifically because it runs on Rockchip&#x27;s RK3566, not NVIDIA silicon — a reminder that NVIDIA&#x27;s edge-AI stack isn&#x27;t the default even inside NVIDIA-adjacent robotics ecosystems.</li>
+              <li>The post frames this against NVIDIA&#x27;s reported $12.9B bid to acquire Hugging Face itself; if the deal closes, NVIDIA would own an AI developer platform reported at 18M-plus developers while one of its most visible consumer robots runs on a competitor&#x27;s chip.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1w79oda/nvidia_is_buying_hugging_face_one_of_its_hottest/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Turning AI prompts into robot motion</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>RSim is a hobbyist-built, AI-powered kinematic robot development tool that turns AI-generated motion directly into joint-level trajectories, demonstrated here by generating a quadruped walking gait and visualizing the resulting joint movements in-tool.</li>
+              <li>The builder has begun sim2real testing, with the physical robot already able to receive the AI-generated motion — moving the project from pure simulation toward a working prompt-to-hardware pipeline.</li>
+              <li>It&#x27;s a concrete small-scale example of the AI-generates-kinematics pattern relevant to embodied-agent work: AI-driven motion specification feeding a real quadruped&#x27;s joints rather than hand-authored gait tables.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1w7gs94/turning_ai_prompts_into_robot_motion/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Update on my robotic lamp - now I can control it with hand gestures while soldering</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A community builder&#x27;s robotic lamp now responds to a wake gesture, then tracks the user&#x27;s hand to reposition the light beam — demonstrated live while soldering, a fine-motor task where hands-free light aiming matters.</li>
+              <li>The project also adds gesture-based brightness adjustment, moving the build from a fixed-position task light toward a small embodied assistant that reacts to user intent without touch input.</li>
+              <li>It&#x27;s framed as an incremental update to an ongoing project, indicating the gesture-recognition and hand-following pipeline is being iteratively refined toward everyday usefulness rather than shown as a one-off demo.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1w7d88a/update_on_my_robotic_lamp_now_i_can_control_it/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
