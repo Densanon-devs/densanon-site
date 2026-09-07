@@ -8,7 +8,7 @@
   <meta name="description" content="Command an army, not a hero. Table of War is a tactics roguelike deckbuilder: draw cards to reinforce a living, permadeath force and maneuver it across a fog-of-war grid. Coming soon — play the demo in your browser.">
   <meta property="og:title" content="Table of War — Command an army, not a hero">
   <meta property="og:description" content="A tactics roguelike deckbuilder. Two fronts, one war. Play the demo in your browser.">
-  <meta property="og:image" content="https://densanon.com/table-of-war/media/battle.png">
+  <meta property="og:image" content="https://densanon.com/table-of-war/media/capsule-header.png">
   <meta property="og:type" content="website">
   <link rel="stylesheet" href="css/style.css">
   <style>
@@ -34,10 +34,14 @@
     .wt-shot-main{ border:1px solid var(--color-border); border-radius:12px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,.5);
       background:var(--color-surface); }
     .wt-shot-main img{ display:block; width:100%; height:auto; }
-    .wt-shot-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px; }
+    .wt-shot-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:16px; }
+    .wt-key{ margin:0 0 18px; border:1px solid var(--color-border); border-radius:12px; overflow:hidden;
+             box-shadow:0 10px 40px rgba(0,0,0,.5); }
+    .wt-key img{ display:block; width:100%; height:auto; }
     .wt-shot-row figure{ margin:0; border:1px solid var(--color-border); border-radius:10px; overflow:hidden; background:var(--color-surface); }
     .wt-shot-row img{ display:block; width:100%; height:auto; }
     .wt-shot-row figcaption{ font-size:.82rem; color:var(--color-text-muted); padding:9px 12px; border-top:1px solid var(--color-border); }
+    @media (max-width:900px){ .wt-shot-row{ grid-template-columns:1fr 1fr; } }
     @media (max-width:640px){ .wt-shot-row{ grid-template-columns:1fr; } }
 
     .wt-section{ padding:56px 0; }
@@ -137,12 +141,16 @@
 
     <section class="wt-shots">
       <div class="container">
+        <figure class="wt-key">
+          <img src="table-of-war/media/capsule-main.png" alt="Table of War key art: a weathered commander over the front line.">
+        </figure>
         <figure class="wt-shot-main" style="margin:0">
           <img src="table-of-war/media/battle.png" alt="A Table of War tactical battle: units, terrain and fog of war on the grid, with a hand of cards below.">
         </figure>
         <div class="wt-shot-row">
           <figure><img src="table-of-war/media/menu.png" alt="Table of War command menu with three commanders."><figcaption>Pick your commander — each rewrites how you fight.</figcaption></figure>
           <figure><img src="table-of-war/media/map.png" alt="The branching expedition map of a Table of War run."><figcaption>Chart your path up the act. Your army is permadeath.</figcaption></figure>
+          <figure><img src="table-of-war/media/shop.png" alt="The outpost: buy cards and relics, repair the army, upgrade or thin the deck."><figcaption>Bank salvage, then spend it at the outpost.</figcaption></figure>
         </div>
       </div>
     </section>

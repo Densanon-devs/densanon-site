@@ -58,10 +58,56 @@
     if (typeof document !== 'undefined' && document.fonts && document.fonts.ready) document.fonts.ready.then(done, done); else done();
   };
 
+  // Chinese, Japanese and Thai put no spaces between words, so splitting on whitespace hands the
+  // wrapper ONE token the width of the whole rules text. It never fits, `_drawFit` shrinks and shrinks
+  // trying to make it fit on one line, and the card face ends up microscopic instead of wrapped. So
+  // the text is broken into pieces first: whitespace-delimited words for scripts that have them, and
+  // individual characters inside any run of CJK/Thai. `glue` is what rejoins a piece to the one before
+  // it — a space between Latin words, nothing between CJK characters — which keeps a mixed string
+  // like "Deploy 1 步槍兵" correct in both halves.
+  const _CJK = /[⺀-〾ぁ-㏿㐀-䶿一-鿿ꀀ-꓏가-힯豈-﫿︰-﹏＀-｠฀-๿]/;
+  // Never orphan closing punctuation onto the head of a line, and never strand an opening bracket at
+  // the tail of one. This is the minimum courtesy version of the CSS line-break rules.
+  const _NO_BREAK_BEFORE = '、。，．：；！？」』）】〉》”’ー々ー!?,.:;';
+  const _NO_BREAK_AFTER = '「『（【〈《“‘(';
+
+  // Break `text` into the smallest pieces a line may end after. `glue` is what rejoins a piece to the
+  // one before it: a space between whitespace-delimited words, nothing between characters inside a CJK
+  // run. A mixed string like "Deploy 1 步槍兵" therefore stays correct in both halves.
+  function _pieces(text) {
+    const out = [];
+    for (const word of String(text).split(/\s+/)) {
+      if (!word) continue;
+      const wordStart = out.length;
+      if (!_CJK.test(word)) { out.push({ s: word, glue: wordStart ? ' ' : '' }); continue; }
+      let buf = '';
+      const push = () => {
+        if (!buf) return;
+        out.push({ s: buf, glue: out.length === wordStart && wordStart ? ' ' : '' });
+        buf = '';
+      };
+      for (const ch of word) {
+        const prev = buf ? buf[buf.length - 1] : '';
+        const boundary = buf && (_CJK.test(ch) || _CJK.test(prev));
+        if (boundary && _NO_BREAK_BEFORE.indexOf(ch) < 0 && _NO_BREAK_AFTER.indexOf(prev) < 0) push();
+        buf += ch;
+      }
+      push();
+    }
+    return out;
+  }
+
   function _wrapText(ctx, text, maxw) {
-    const words = String(text).split(/\s+/), lines = []; let cur = '';
-    for (const w of words) { const t = cur ? cur + ' ' + w : w; if (ctx.measureText(t).width <= maxw || !cur) cur = t; else { lines.push(cur); cur = w; } }
-    if (cur) lines.push(cur); return lines;
+    const pieces = _pieces(text);
+    const lines = []; let cur = '';
+    for (const p of pieces) {
+      const glue = cur ? p.glue : '';
+      const cand = cur + glue + p.s;
+      if (ctx.measureText(cand).width <= maxw || !cur) cur = cand;
+      else { lines.push(cur); cur = p.s; }
+    }
+    if (cur) lines.push(cur);
+    return lines;
   }
   function _drawFit(ctx, text, region, S0, o) {
     if (!text) return;

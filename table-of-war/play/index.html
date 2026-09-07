@@ -158,7 +158,7 @@
   .objhold .objval { position: absolute; top: 50%; right: 9%; width: 36%; height: 44%; transform: translateY(-50%);
     display: flex; align-items: center; justify-content: center; pointer-events: none; }
   .objhold .objval .gtext { height: 100%; }
-  /* Engineer's Overcharge power — ornate plate; gauge value in gold glyphs, glows when ready */
+  /* Engineer's Surge power — ornate plate; gauge value in gold glyphs, glows when ready */
   .powplate { position: relative; display: inline-block; height: var(--pillh, 34px); flex: 0 0 auto; cursor: pointer; padding: 0;
     background: none; border: none; -webkit-tap-highlight-color: transparent;
     filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); transition: filter .15s, transform .1s;
@@ -1239,6 +1239,40 @@
     -webkit-tap-highlight-color: transparent; transition: filter .12s, transform .1s;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,.5)); }
   .pbtn img { width: 100%; height: auto; display: block; pointer-events: none; }
+  /* Label drawn ONTO a blank plate (see plateLabel()). Positioned as a % box over the plate, so it
+     tracks the art at any size. `.pfit` is the scalable child — the fitter shrinks THAT rather than
+     the box, so the box stays the region and the text stays centred inside it. */
+  /* The query container is the LABEL BOX, never the plate. A plate like .bpill or .objhold takes its
+     width from the <img> inside it, and `container-type` implies size containment — put it on one of
+     those and the browser stops measuring the image, collapsing the plate to nothing. .plbl is
+     absolutely positioned with an explicit % width and height, so containing it is free: its size
+     comes from the region, not from the word inside. That also lets the type scale off the box (cqh)
+     rather than off the plate, which is what "fill this well" actually means. */
+  /* Every plate that hosts a label layer needs a positioning context; .pbtn/.ibtn already had one,
+     these do not by default. */
+  .platebtn, .objhold, .powplate { position: relative; }
+  .plbl { position: absolute; display: flex; align-items: center; justify-content: center;
+    pointer-events: none; overflow: hidden; container-type: size; }
+  /* Glyph label: lines stacked, glyphs laid along each line. Every size is in cqh — a percentage of
+     this box's height — so the whole thing scales with the plate and never needs measuring. */
+  .plbl.gl { flex-direction: column; }
+  .plbl.gl .pline { display: flex; align-items: flex-start; justify-content: center; flex: 0 0 auto; }
+  .plbl.gl .pline img { display: block; height: auto; }
+  .plbl.gl .pline i { display: block; flex: 0 0 auto; }
+  .plbl .pfit { font-family: var(--f-loc, var(--f-head)); font-weight: 800; letter-spacing: .5px;
+    /* WRAPS. This is the path a word the atlas cannot draw falls onto, and `nowrap` meant such a
+       label ran straight out of its box and was clipped by the overflow above — visible as a plate
+       with half a word on it. Wrapping degrades; clipping just loses the text. */
+    text-transform: uppercase; white-space: normal; overflow-wrap: anywhere; text-align: center;
+    line-height: 1.05;
+    font-size: 62cqh; color: #f0e4be;
+    text-shadow: 0 1px 0 rgba(0,0,0,.75), 0 0 6px rgba(0,0,0,.45); }
+  /* The header plaques are engraved rather than stamped: warmer, tighter, no uppercasing (the art
+     sets them in mixed case and forcing caps would fight the plate). */
+  .ofhdr .plbl .pfit { text-transform: none; font-weight: 700; letter-spacing: .3px;
+    font-size: 56cqh; color: #e8cf92;
+    text-shadow: 0 1px 0 rgba(0,0,0,.8), 0 -1px 0 rgba(255,225,160,.18); }
+  .bpill .plbl .pfit { font-size: 58cqh; letter-spacing: .4px; }
   .pbtn.off { filter: grayscale(.62) brightness(.58); }                         /* inactive toggle option */
   .pbtn.act { filter: drop-shadow(0 0 7px rgba(232,198,90,.75)) brightness(1.04); }  /* active toggle option */
   /* :active handled by the unified hover block near button:hover */
@@ -1248,6 +1282,14 @@
   .gtext { display: inline-flex; align-items: center; gap: 1px; line-height: 1; color: #e9cf7a; }
   .gtext img { height: 1em; width: auto; display: block; }
   .gtext .gsp { width: .32em; }
+  /* The atlas is ASCII-only (a-z 0-9 + punctuation). Anything outside it — an accented Latin letter,
+     Cyrillic, CJK — has no image to draw, and the old code emitted an empty string, so a translated
+     general's name or a localized "RANDOM" silently rendered as NOTHING. This draws those characters
+     as real text instead, tuned to sit at the same weight and colour as the glyphs beside it. */
+  .gtext .gfb { font-family: var(--f-loc, var(--f-head)); font-size: .92em; font-weight: 700;
+    line-height: 1; color: #e9cf7a; text-shadow: 0 1px 0 rgba(0,0,0,.55); }
+  .mn .gfb { font-family: var(--f-loc, var(--f-num)); font-size: .86em; font-weight: 700;
+    line-height: 1; color: #dcd8cc; text-shadow: 0 1px 1px rgba(0,0,0,.5); }
   /* labeled plate button with a recessed plaque that shows a dynamic gold value on the right */
   .platebtn { position: relative; display: block; width: 100%; background: none; border: none; padding: 0;
     margin: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform .1s, filter .12s;
@@ -1849,6 +1891,7 @@
   .oframe.menu .seedfield { margin: 12px auto; }
   .oframe.menu .mzone-c .menugrid { margin-top: 12px; }
   .mtile .mt-s { display: none; }                                   /* portrait: wide labeled plate */
+  .mtile .mtl-s { display: none; }                                  /* ...and the square plate's label with it */
   .mtile .mt-w { display: block; width: 100%; height: auto; }
   
     /* Daily slot: art scales edge-to-edge (no oval mask), PLAY drops to the bottom of the box */
@@ -1972,6 +2015,11 @@
     :where(body.o-landscape) .oframe.menu .mtile .mt-w { display: none; }
   
     :where(body.o-landscape) .oframe.menu .mtile .mt-s { display: block; width: 100%; height: 100%; object-fit: contain; }
+  
+    /* The labels swap with their plates. Separate classes from mt-w/mt-s on purpose: those carry
+       width/height/object-fit meant for an <img>, which would flatten .plbl's own box. */
+    :where(body.o-landscape) .oframe.menu .mtile .mtl-w { display: none; }
+    :where(body.o-landscape) .oframe.menu .mtile .mtl-s { display: flex; }
   
     :where(body.o-landscape) .oframe.menu .resumewrap .pbtn.h,
     :where(body.o-landscape) .oframe.menu .resumewrap .pbtn.h img { width: 100%; height: 100%; max-width: none; margin: 0; }
@@ -2499,7 +2547,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-D-ss5AjE.js"></script>
+  <script type="module" crossorigin src="./assets/index-BVqUm75S.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2580,9 +2628,18 @@
 <div id="ovProfiles" class="overlay" onclick="if(event.target.id==='ovProfiles')this.classList.remove('show')"></div>
 <div id="toast"></div>
 
+<!-- i18n, BLOCKING and in this order. The inline script below builds ~17 top-level const tables
+     (COACH, NODE_INFO, TERRAIN_INFO, CLASS_INFO, HOTKEY_HELP, …) the moment it parses, so `t` has to
+     already be a function and the active locale has to already be chosen. A deferred or fetched
+     dictionary would leave those tables in English while the rest of the UI switched. i18n.locales.js
+     is generated (npm run i18n:gen) and is an empty no-op until a translated pack exists. -->
+<script src="./i18n.js"></script>
+<script src="./i18n.locales.js"></script>
+<script>I18n.init();</script>
+<script src="./plates.js"></script>          <!-- which UI plates have text-free art (npm run gen:plates) -->
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.72';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.73';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2644,11 +2701,11 @@ function updatePileBtns() {
 }
 
 const _PILE_META = {
-  draw:    { title: 'Draw pile',      hdr: 'deck',
+  draw:    { title: t('pile.draw.title', 'Draw pile'),      hdr: 'deck',
              note: 'What is still to come, listed alphabetically — the order it arrives in stays hidden.' },
-  discard: { title: 'Discard pile',   hdr: 'deck',
+  discard: { title: t('pile.discard.title', 'Discard pile'),   hdr: 'deck',
              note: 'In the order it went in. Reshuffled into the draw pile when that one runs out.' },
-  exhaust: { title: 'Exhausted',      hdr: 'deck',
+  exhaust: { title: t('pile.exhaust.title', 'Exhausted'),      hdr: 'deck',
              note: 'In the order it went in. These are out of the battle — they do not come back this fight.' },
 };
 /** Open a pile. Contents are fetched on demand rather than shipped with every state payload. */
@@ -2671,7 +2728,7 @@ async function showPile(kind) {
     ${ocapG(`${meta.title} — ${total} card${total === 1 ? '' : 's'}`)}
     <p class="d" style="margin:2px 0 8px">${meta.note}</p>
     ${body}
-    <div class="ovclose"><button class="ibtn" onclick="closeOv('ovPile')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div></div>`;
+    <div class="ovclose">${ibtn('close', "closeOv('ovPile')")}</div></div>`;
   $('#ovPile').classList.add('show');
 }
 // Two independent layers, both in the ⓘ run-info panel and in Settings. They answer different questions
@@ -3227,43 +3284,43 @@ function haptic(ms) { try { if (navigator.vibrate) navigator.vibrate(ms); } catc
 // one appears. A tip fired before its concept is on screen is just a wall of text; the same words
 // beside the thing they describe are a tutorial. Fires once ever, per concept, per device.
 const COACH = {
-  battle: {h:'How battles work', t:'Your units act on <b>Action Points</b> — tap a unit, then a highlighted tile to <b>move</b> or an enemy to <b>attack</b>, all free. Your <b>cards</b> (bottom) cost <b>Command Points</b> to reinforce and command your army. Tap around — everything on the field explains itself.'},
-  map:    {h:'The Expedition', t:'Pick your path up the act — <b>skirmishes</b>, <b>elites</b>, <b>caches</b>, <b>camps</b>, <b>outposts</b>, and the <b>boss</b> at the top. Your army is <b>permadeath</b>: units that fall are gone for the run. Bank <b>salvage</b> at outposts to buy, upgrade, and thin your deck.'},
-  power:  {h:'Command Power ready', t:'Your gauge is <b>full</b> — tap the glowing <b>Power</b> button to unleash your general\'s signature ability. It costs the whole gauge, so pick your moment.'},
+  battle: {h:t('coach.battle.h', 'How battles work'), t:t('coach.battle.t', 'Your units act on <b>Action Points</b> — tap a unit, then a highlighted tile to <b>move</b> or an enemy to <b>attack</b>, all free. Your <b>cards</b> (bottom) cost <b>Command Points</b> to reinforce and command your army. Tap around — everything on the field explains itself.')},
+  map:    {h:t('coach.map.h', 'The Expedition'), t:t('coach.map.t', 'Pick your path up the act — <b>skirmishes</b>, <b>elites</b>, <b>caches</b>, <b>camps</b>, <b>outposts</b>, and the <b>boss</b> at the top. Your army is <b>permadeath</b>: units that fall are gone for the run. Bank <b>salvage</b> at outposts to buy, upgrade, and thin your deck.')},
+  power:  {h:t('coach.power.h', 'Command Power ready'), t:t('coach.power.t', 'Your gauge is <b>full</b> — tap the glowing <b>Power</b> button to unleash your general\'s signature ability. It costs the whole gauge, so pick your moment.')},
   // Nomad only. Wrath fills on kills and Charge on Power Plants — both are stated on the thing that
   // fills them. Momentum is the one that is genuinely unguessable: it banks a COMPOUNDING amount, halves
   // if a single unit stands still, has no ceiling, and is a currency three of the Nomad's own cards
   // spend. All of that lived in a `title=` tooltip, which does not exist on a phone.
-  momentum:{h:'Momentum — keep the column rolling', t:'Momentum banks at the <b>end of your turn</b>, and what it banks is your <b>Drive</b> — the meter beside the gauge. Move <b>every</b> unit that can move and Drive climbs by one; leave one standing and it <b>halves</b>. The pips are the roll call: one per unit that still owes a move. Momentum has <b>no ceiling</b>, and spending it <b>subtracts</b> the price instead of emptying you — so a column that never stalls discharges again and again.'},
+  momentum:{h:t('coach.momentum.h', 'Momentum — keep the column rolling'), t:t('coach.momentum.t', 'Momentum banks at the <b>end of your turn</b>, and what it banks is your <b>Drive</b> — the meter beside the gauge. Move <b>every</b> unit that can move and Drive climbs by one; leave one standing and it <b>halves</b>. The pips are the roll call: one per unit that still owes a move. Momentum has <b>no ceiling</b>, and spending it <b>subtracts</b> the price instead of emptying you — so a column that never stalls discharges again and again.')},
   // mid: centred over a veil rather than pinned to the bottom edge, because the bottom edge is exactly
   // where the thing this tip is about — the hand, and the ★ on each card — is sitting.
-  retain: {h:'Keep a card', t:'At end of turn your hand is discarded — but tap the <b>★</b> on a card to <b>keep</b> it for next turn. Save a key card for the right moment.', mid:true},
+  retain: {h:t('coach.retain.h', 'Keep a card'), t:t('coach.retain.t', 'At end of turn your hand is discarded — but tap the <b>★</b> on a card to <b>keep</b> it for next turn. Save a key card for the right moment.'), mid:true},
 
   // ── first-action tips ──
-  unit:   {h:'Your unit is active', t:'The <b>highlighted tiles</b> are everywhere it can walk this turn, and any enemy it can hit is <b>ringed in red</b> with the damage it would take. Its card shows <b>ATK</b>, <b>DEF</b>, <b>range</b> and <b>sight</b> — range is how far it strikes, sight is how far it lifts the fog. Each move or attack spends one <b>Action Point</b>.'},
-  inspect:{h:'Unit details', t:'Tapping any unit opens its full card — <b>HP</b>, <b>attack</b>, <b>defense</b>, <b>range</b>, <b>sight</b>, its rank, and what it does. Do it to an <b>enemy</b> before you commit: reading its reach is how you work out whether stepping up gets you hit back.'},
-  terrain:{h:'The ground matters', t:'Tapping bare ground tells you what it is. <b>Cover</b> (forest, rubble) adds <b>defense</b> to whoever stands in it. <b>High ground</b> extends a marksman\'s reach and sees further. Rough ground <b>costs more movement</b> to cross. Fighting from the right tile is often worth more than one more soldier.'},
-  move:   {h:'Ground taken', t:'That cost one <b>Action Point</b> — most units have more than one, so check the unit card before you end your turn. You can only step <b>one tile into the fog</b> at a time: your army will not march blind into ground it has never seen.'},
-  attack: {h:'First blood', t:'Damage is <b>attack minus defense</b>, and defense includes whatever cover the target is standing in. Get a <b>second unit on the far side</b> of an enemy and you <b>flank</b> it for bonus damage. A <b>✕</b> on the damage badge means the blow kills.'},
-  card:   {h:'Playing a card', t:'Cards cost <b>Command Points</b> — the CP counter, top-left — and refresh every turn. A card needing a target will highlight what it can be played on; tap the card again to put it back. Cards you cannot afford are dimmed.'},
-  danger: {h:'Reading the danger', t:'Shaded tiles are where the enemy can <b>strike next turn</b>. The <b>deeper red</b> is worse: those are tiles they can <b>move onto and fire from</b> — the ground worth taking or blocking first. Ghosts show where each enemy is heading, with arrows to what it will hit. Both layers toggle in <b>Menu</b>.'},
-  endturn:{h:'That was the enemy turn', t:'You watch every enemy decision play out — tap to skip it. Your hand was discarded and you have drawn a fresh one, with your <b>Command Points</b> refilled. Unspent points do <b>not</b> carry over, so empty your Action Points before ending a turn, and <b>★</b> a card you want to keep.'},
+  unit:   {h:t('coach.unit.h', 'Your unit is active'), t:t('coach.unit.t', 'The <b>highlighted tiles</b> are everywhere it can walk this turn, and any enemy it can hit is <b>ringed in red</b> with the damage it would take. Its card shows <b>ATK</b>, <b>DEF</b>, <b>range</b> and <b>sight</b> — range is how far it strikes, sight is how far it lifts the fog. Each move or attack spends one <b>Action Point</b>.')},
+  inspect:{h:t('coach.inspect.h', 'Unit details'), t:t('coach.inspect.t', 'Tapping any unit opens its full card — <b>HP</b>, <b>attack</b>, <b>defense</b>, <b>range</b>, <b>sight</b>, its rank, and what it does. Do it to an <b>enemy</b> before you commit: reading its reach is how you work out whether stepping up gets you hit back.')},
+  terrain:{h:t('coach.terrain.h', 'The ground matters'), t:t('coach.terrain.t', 'Tapping bare ground tells you what it is. <b>Cover</b> (forest, rubble) adds <b>defense</b> to whoever stands in it. <b>High ground</b> extends a marksman\'s reach and sees further. Rough ground <b>costs more movement</b> to cross. Fighting from the right tile is often worth more than one more soldier.')},
+  move:   {h:t('coach.move.h', 'Ground taken'), t:t('coach.move.t', 'That cost one <b>Action Point</b> — most units have more than one, so check the unit card before you end your turn. You can only step <b>one tile into the fog</b> at a time: your army will not march blind into ground it has never seen.')},
+  attack: {h:t('coach.attack.h', 'First blood'), t:t('coach.attack.t', 'Damage is <b>attack minus defense</b>, and defense includes whatever cover the target is standing in. Get a <b>second unit on the far side</b> of an enemy and you <b>flank</b> it for bonus damage. A <b>✕</b> on the damage badge means the blow kills.')},
+  card:   {h:t('coach.card.h', 'Playing a card'), t:t('coach.card.t', 'Cards cost <b>Command Points</b> — the CP counter, top-left — and refresh every turn. A card needing a target will highlight what it can be played on; tap the card again to put it back. Cards you cannot afford are dimmed.')},
+  danger: {h:t('coach.danger.h', 'Reading the danger'), t:t('coach.danger.t', 'Shaded tiles are where the enemy can <b>strike next turn</b>. The <b>deeper red</b> is worse: those are tiles they can <b>move onto and fire from</b> — the ground worth taking or blocking first. Ghosts show where each enemy is heading, with arrows to what it will hit. Both layers toggle in <b>Menu</b>.')},
+  endturn:{h:t('coach.endturn.h', 'That was the enemy turn'), t:t('coach.endturn.t', 'You watch every enemy decision play out — tap to skip it. Your hand was discarded and you have drawn a fresh one, with your <b>Command Points</b> refilled. Unspent points do <b>not</b> carry over, so empty your Action Points before ending a turn, and <b>★</b> a card you want to keep.')},
 
   // Rules that bite in silence. Each of these was previously either buried in How to Play or nowhere at
   // all: the player just saw something happen and had no way to find out why.
-  zoc:    {h:'You are in contact', t:'Standing next to an enemy puts you in its <b>zone of control</b> — you can step in, but you cannot keep moving <b>past</b> it in the same move. That is why your range stops short here. To get behind a line you have to <b>kill something and walk through the hole</b>, or go the long way around.'},
-  aim:    {h:'This one lobs its shells', t:'Artillery and rockets do not lock on — they <b>aim a tile</b>. Use the <b>Aim / Move</b> switch on the unit card: in <b>Aim</b> every visible tile is a target, and the shell may <b>drift one tile</b> when it lands, so mind your own troops. Bring it to <b>rank 5</b> and it stops drifting entirely.'},
-  death:  {h:'That soldier is gone', t:'Your army is <b>permadeath</b> — a unit lost is lost for the <b>whole run</b>, with its rank and everything you drilled into it. Reinforcement cards field <b>fresh</b> recruits at rank 1. Pull wounded units out of reach and heal them at an <b>Outpost</b> or a <b>Camp</b>; a veteran is worth far more than the ground you would spend it on.'},
-  promote:{h:'Promoted', t:'Units earn <b>XP</b> for damage and kills, and rank up to <b>5</b> — each rank adds HP and attack, and some gain more. Ranks are <b>permanent for the run</b> and carry between battles, so the soldier you keep alive early becomes the one that wins the boss fight.'},
-  hazard: {h:'That ground is hostile', t:'Fire, gas and toxic sludge <b>hurt whatever stands in them</b>, yours or theirs. They spread and burn out over time. Check the ground before you move onto it — and remember it cuts both ways: <b>herding the enemy into it</b> is a perfectly good way to win a fight.'},
+  zoc:    {h:t('coach.zoc.h', 'You are in contact'), t:t('coach.zoc.t', 'Standing next to an enemy puts you in its <b>zone of control</b> — you can step in, but you cannot keep moving <b>past</b> it in the same move. That is why your range stops short here. To get behind a line you have to <b>kill something and walk through the hole</b>, or go the long way around.')},
+  aim:    {h:t('coach.aim.h', 'This one lobs its shells'), t:t('coach.aim.t', 'Artillery and rockets do not lock on — they <b>aim a tile</b>. Use the <b>Aim / Move</b> switch on the unit card: in <b>Aim</b> every visible tile is a target, and the shell may <b>drift one tile</b> when it lands, so mind your own troops. Bring it to <b>rank 5</b> and it stops drifting entirely.')},
+  death:  {h:t('coach.death.h', 'That soldier is gone'), t:t('coach.death.t', 'Your army is <b>permadeath</b> — a unit lost is lost for the <b>whole run</b>, with its rank and everything you drilled into it. Reinforcement cards field <b>fresh</b> recruits at rank 1. Pull wounded units out of reach and heal them at an <b>Outpost</b> or a <b>Camp</b>; a veteran is worth far more than the ground you would spend it on.')},
+  promote:{h:t('coach.promote.h', 'Promoted'), t:t('coach.promote.t', 'Units earn <b>XP</b> for damage and kills, and rank up to <b>5</b> — each rank adds HP and attack, and some gain more. Ranks are <b>permanent for the run</b> and carry between battles, so the soldier you keep alive early becomes the one that wins the boss fight.')},
+  hazard: {h:t('coach.hazard.h', 'That ground is hostile'), t:t('coach.hazard.t', 'Fire, gas and toxic sludge <b>hurt whatever stands in them</b>, yours or theirs. They spread and burn out over time. Check the ground before you move onto it — and remember it cuts both ways: <b>herding the enemy into it</b> is a perfectly good way to win a fight.')},
 
   // Map-screen stakes. Each of these screens already says what the buttons do; none of them said what
   // the CHOICE costs you, which is the part a new player gets wrong.
-  shop:   {h:'The Outpost', t:'The only place to spend <b>salvage</b>. Buy cards and relics, <b>repair</b> the army, and — the one most people miss — <b>thin your deck</b>. Removing a weak card is often worth more than adding a strong one, because a smaller deck draws its best cards more often.'},
-  camp:   {h:'Make camp', t:'<b>One or the other, not both.</b> <b>Rest</b> heals your whole army and HQ to full. <b>Drill</b> gives one soldier a permanent boost for the rest of the run. Rest when you are battered heading into a boss; drill when you are healthy and want a unit that carries you there.'},
-  reward: {h:'Choosing a card', t:'Take the card that fits the deck you are building — or take <b>none</b>. Every card you add <b>dilutes your draw</b>, so a deck of a few strong cards beats a pile of decent ones. Tap a card to read it in full before you commit.'},
-  relic:  {h:'Relics', t:'Relics are <b>permanent, run-long</b> effects — they never take up a card slot and never need playing. Most rewrite a rule quietly in your favour, so read them: two that combine can change how a whole run is played.'},
-  boss:   {h:'Act boss', t:'The boss holds the top of the act, hits far harder than anything you have met, and has a <b>signature mechanic</b> — read its briefing, it tells you what that is. Beating it clears the act, hands you a <b>relic</b>, and takes you up a tier where everything gets tougher.'},
+  shop:   {h:t('coach.shop.h', 'The Outpost'), t:t('coach.shop.t', 'The only place to spend <b>salvage</b>. Buy cards and relics, <b>repair</b> the army, and — the one most people miss — <b>thin your deck</b>. Removing a weak card is often worth more than adding a strong one, because a smaller deck draws its best cards more often.')},
+  camp:   {h:t('coach.camp.h', 'Make camp'), t:t('coach.camp.t', '<b>One or the other, not both.</b> <b>Rest</b> heals your whole army and HQ to full. <b>Drill</b> gives one soldier a permanent boost for the rest of the run. Rest when you are battered heading into a boss; drill when you are healthy and want a unit that carries you there.')},
+  reward: {h:t('coach.reward.h', 'Choosing a card'), t:t('coach.reward.t', 'Take the card that fits the deck you are building — or take <b>none</b>. Every card you add <b>dilutes your draw</b>, so a deck of a few strong cards beats a pile of decent ones. Tap a card to read it in full before you commit.')},
+  relic:  {h:t('coach.relic.h', 'Relics'), t:t('coach.relic.t', 'Relics are <b>permanent, run-long</b> effects — they never take up a card slot and never need playing. Most rewrite a rule quietly in your favour, so read them: two that combine can change how a whole run is played.')},
+  boss:   {h:t('coach.boss.h', 'Act boss'), t:t('coach.boss.t', 'The boss holds the top of the act, hits far harder than anything you have met, and has a <b>signature mechanic</b> — read its briefing, it tells you what that is. Beating it clears the act, hands you a <b>relic</b>, and takes you up a tier where everything gets tougher.')},
 };
 let _coachBusy = false;
 let _coachQueue = [];
@@ -3521,14 +3578,14 @@ function showSettings() {
   const markerGateOpen = MARKER_SETS.some(m => m.req && markerUnlocked(m.id));   // hide the picker until you've unlocked at least one
   const ns = pillNumStyle();
   const NS_DIR = { A:'glyph', B:'glyph', C:'glyph_bronze' };   // B renders the gold glyphs desaturated to steel
-  const nsBtn = (v) => `<button class="nspick ${v.toLowerCase()} ${ns===v?'on':''}" onclick="setPillNumStyle('${v}')" aria-label="Number style ${v}"><img class="nsbg" src="assets/ui/nsplaque.png" alt=""><span class="nsval"><span class="gtext">${['a','b','c'].map(c=>`<img src="assets/ui/${NS_DIR[v]}/${c}.png" alt="">`).join('')}</span></span><span class="nslbl">${v}</span></button>`;
+  const nsBtn = (v) => `<button class="nspick ${v.toLowerCase()} ${ns===v?'on':''}" onclick="setPillNumStyle('${v}')" aria-label="Number style ${v}"><img class="nsbg" src="assets/ui/nsplaque.png" alt=""><span class="nsval"><span class="gtext">${['a','b','c'].map(c=>`<img src="assets/ui/${NS_DIR[v]}/${NS_DIR[v]==='glyph'?'u_'+c:c}.png" alt="">`).join('')}</span></span><span class="nslbl">${v}</span></button>`;
   const curFog = fogSet();
   const fogBtn = (s) => { const on = fogUnlocked(s.id);
     return `<button class="fogpick ${curFog===s.id?'on':''} ${on?'':'flocked'}" ${on?`onclick="setFogSet('${s.id}')"`:'disabled'} aria-label="Fog ${on?s.label:'locked'}"><img src="assets/ui/fog${s.suf}/f0.jpg" alt=""><span>${on?s.label:si('lock',13)||'🔒'}</span></button>`; };
   const fogGateOpen = FOG_SETS.some(f => f.req && fogUnlocked(f.id));   // hide the picker until you've unlocked at least one
   const inRun = !!(S && (S.board || S.mode === 'map'));   // a run is live (mid-battle OR out on the map) → offer Retreat
   const o = $('#ovSettings');
-  o.innerHTML = `<div class="oframe titled"><div class="ofbanner ofhdr"><img src="assets/ui/hdr/settings.png" alt="Settings"></div>
+  o.innerHTML = `<div class="oframe titled">${ofBanner('settings')}
     <div style="text-align:center;margin:8px 0 6px">${ibtn('switch_campaign', "closeOv('ovSettings');showProfiles()")}</div>
     <div class="setcols">
     ${(_isTauri() || S.demo) ? '' : `<div class="choice">
@@ -3602,6 +3659,14 @@ function showSettings() {
       </div>
       ${dangerRows('showSettings()')}
     </div>` : ''}
+    ${I18n.list().length > 1 ? `<div class="choice">
+      <b>${t('settings.language', 'Language')}</b>
+      <div class="d" style="margin:2px 0 8px;line-height:1.5">${t('settings.language_help', 'Changing the language restarts the game. Nothing in your progress is touched.')}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        ${I18n.list().map(l => `<button class="setbtn ${I18n.locale===l.id?'dbg':''}" style="flex:1 1 auto"
+          onclick="setLanguage('${l.id}')">${I18n.locale===l.id?'◉':'○'} ${l.name}</button>`).join('')}
+      </div>
+    </div>` : ''}
     <div class="choice">
       <b>Graphics</b>
       <div class="d" style="margin:2px 0 8px;line-height:1.5">For a machine that is struggling — an old
@@ -3674,7 +3739,7 @@ function showSettings() {
       </div>
     </div>` : ''}
     </div>
-    </div><div class="ovclose"><button class="ibtn" onclick="closeOv('ovSettings')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+    </div><div class="ovclose">${ibtn('close', "closeOv('ovSettings')")}</div>`;
   o.classList.add('show');
   wireGauges();
 }
@@ -3702,8 +3767,8 @@ function confirmResetAll() {
     <h1 class="red">Erase everything?</h1>
     <p>This wipes <b>all</b> progress — achievements, ascensions, Merit, best score, unlocks, collection and run history — and ends any run in progress. It cannot be undone.</p>
     <div class="ibtnrow" style="margin-top:12px">
-      <button class="ibtn" onclick="closeOv('ovConfirm')" aria-label="Cancel"><img src="assets/ui/btn/cancel.png" alt="Cancel"></button>
-      <button class="ibtn" onclick="doResetAll()" aria-label="Confirm"><img src="assets/ui/btn/confirm.png" alt="Yes, erase all"></button>
+      ${ibtn('cancel', "closeOv('ovConfirm')")}
+      ${ibtn('confirm', "doResetAll()")}
     </div></div>`;
   o.classList.add('show');
 }
@@ -3939,16 +4004,16 @@ async function refreshDanger() {
 const NODE_ICON = {skirmish:'skirmish', elite:'elite', boss:'boss', event:'event', shop:'shop', camp:'camp', cache:'cache'};
 const NODE_IMG = new Set(['skirmish','elite','shop','event','camp','cache']);   // bronze diorama minis (assets/nodes/*.png); boss keeps its SVG
 function nodeIconHTML(kind){ return NODE_IMG.has(kind) ? `<img class="nodeimg" src="assets/nodes/${kind}.png" alt="">` : (si(NODE_ICON[kind], 30) || '•'); }
-const NODE_NAME = {skirmish:'Skirmish', elite:'Elite', boss:'Boss', event:'Event', shop:'Outpost', camp:'Camp', cache:'Cache'};
+const NODE_NAME = {skirmish:t('node.skirmish.name', 'Skirmish'), elite:t('node.elite.name', 'Elite'), boss:t('node.boss.name', 'Boss'), event:t('node.event.name', 'Event'), shop:t('node.shop.name', 'Outpost'), camp:t('node.camp.name', 'Camp'), cache:t('node.cache.name', 'Cache')};
 // tap any node that isn't your next move → a preview of what it is + what to expect (boss uses showActBoss)
-const NODE_KICK = {skirmish:'Battle', elite:'Elite battle', boss:'Act boss', event:'Wildcard · could be anything', shop:'Outpost · spend salvage', camp:'Respite', cache:'Supply cache'};
+const NODE_KICK = {skirmish:t('node.skirmish.kick', 'Battle'), elite:t('node.elite.kick', 'Elite battle'), boss:t('node.boss.kick', 'Act boss'), event:t('node.event.kick', 'Wildcard · could be anything'), shop:t('node.shop.kick', 'Outpost · spend salvage'), camp:t('node.camp.kick', 'Respite'), cache:t('node.cache.kick', 'Supply cache')};
 const NODE_INFO = {
-  skirmish: 'A standard clash. Take the field against an enemy force and wipe them out — or hold your objective — to push on. Clearing it pays out salvage plus a card to fold into your deck.',
-  elite:    'A hardened enemy with a nasty twist that hits well above a skirmish. Riskier, but it drops a relic and a pick of rarer cards. Come in with a plan and a full army.',
-  event:    'A wildcard — the ? hides its hand until you step in. Most often it\'s a decision: a situation with choices that can pay out a boon, a curse, or a relic. But it can just as easily spring an ambush battle, or turn out to be a cache, an outpost, or a camp. No way to know which until you commit (and ambushes get likelier at higher Ascension).',
-  shop:     'An Outpost: the only place to spend salvage. Buy cards and relics, repair your army (heal 35%), and upgrade or thin your deck. Bank enough salvage before you arrive.',
-  camp:     'A moment to breathe. Rest to heal your whole army and HQ back to full, or drill one soldier for a permanent boost — +HP and +ATK, or +HP and +DEF for a unit that can\'t fight. One or the other — take what the run needs.',
-  cache:    'A supply cache — free, no fight. Grab one reward: a card for your deck or a stack of salvage. Pure upside.',
+  skirmish: t('node.skirmish.info', 'A standard clash. Take the field against an enemy force and wipe them out — or hold your objective — to push on. Clearing it pays out salvage plus a card to fold into your deck.'),
+  elite:    t('node.elite.info', 'A hardened enemy with a nasty twist that hits well above a skirmish. Riskier, but it drops a relic and a pick of rarer cards. Come in with a plan and a full army.'),
+  event:    t('node.event.info', 'A wildcard — the ? hides its hand until you step in. Most often it\'s a decision: a situation with choices that can pay out a boon, a curse, or a relic. But it can just as easily spring an ambush battle, or turn out to be a cache, an outpost, or a camp. No way to know which until you commit (and ambushes get likelier at higher Ascension).'),
+  shop:     t('node.shop.info', 'An Outpost: the only place to spend salvage. Buy cards and relics, repair your army (heal 35%), and upgrade or thin your deck. Bank enough salvage before you arrive.'),
+  camp:     t('node.camp.info', 'A moment to breathe. Rest to heal your whole army and HQ back to full, or drill one soldier for a permanent boost — +HP and +ATK, or +HP and +DEF for a unit that can\'t fight. One or the other — take what the run needs.'),
+  cache:    t('node.cache.info', 'A supply cache — free, no fight. Grab one reward: a card for your deck or a stack of salvage. Pure upside.'),
 };
 /** "What am I walking into" — icon, name, kicker, and what to expect.
  *
@@ -3967,7 +4032,7 @@ function nodeSummaryHTML(kind){
 function showNodeInfo(kind){
   const desc = NODE_INFO[kind]; if (!desc) return; Sfx.play('ui_tap');
   $('#ovInspect').innerHTML = `<div class="choice">${nodeSummaryHTML(kind)}</div>
-    <div class="ovclose"><button class="ibtn" onclick="closeOv('ovInspect')" aria-label="Return"><img src="assets/ui/btn/return.png" alt="Return"></button></div>`;
+    <div class="ovclose">${ibtn('return', "closeOv('ovInspect')")}</div>`;
   $('#ovInspect').classList.add('show');
 }
 let _nodeFilter = null;   // legend spotlight: highlight matching nodes gold, grey the rest (one at a time)
@@ -4153,8 +4218,8 @@ function renderMapScreen() {
       ${S.demo ? '' : `<button class="ibtn sm" onclick="showMedals()" aria-label="Medals"><img src="assets/ui/btn/medals.png" alt="Medals"></button>`}
     </span>
     <span class="mapbtns mapbtns-r">
-      <button class="ibtn sm" onclick="showHelp()" aria-label="How to play"><img src="assets/ui/btn/how_to_play.png" alt="How to play"></button>
-      <button class="ibtn sm" onclick="menu()" aria-label="Menu"><img src="assets/ui/btn/menu.png" alt="Menu"></button>
+      ${ibtn('how_to_play', 'showHelp()', { cls: 'sm' })}
+      ${ibtn('menu', 'menu()', { cls: 'sm' })}
     </span>
   </div>`;
   renderMapGraph();
@@ -4175,7 +4240,7 @@ function showActBoss() {
       <div class="d" style="margin-top:10px;line-height:1.5">${b.telegraph}</div>
       ${b.perk_name ? `<div class="d" style="margin-top:8px;line-height:1.45"><b class="gold">${b.perk_name}</b> — ${b.perk_desc}</div>` : ''}
     </div></div>
-    <div class="ovclose"><button class="ibtn" onclick="closeOv('ovInspect')" aria-label="Return"><img src="assets/ui/btn/return.png" alt="Return"></button></div>`;
+    <div class="ovclose">${ibtn('return', "closeOv('ovInspect')")}</div>`;
   $('#ovInspect').classList.add('show');
 }
 function renderMapGraph() {
@@ -4272,12 +4337,332 @@ function gameConfirm(msg, okLabel) {
   });
 }
 
+// ── plates: art that wears its label, or art that is handed one ───────────────────────────────────
+// 104 UI files have their English painted into the metal — every button, every panel header, every
+// HUD stat plate. That is fine until a second language exists, at which point each one needs
+// re-rendering by an artist, per language, forever.
+//
+// The way out was already in the art set: `heal`, `seed`, `obj_hold` and the three `pow_*` plates
+// carry an icon and an EMPTY recessed well, and the game stamps a value into it at runtime. The same
+// trick works for the label. So a plate now resolves in two steps:
+//
+//   1. Is there a text-free variant in assets/ui/<kind>/blank/? (public/plates.js knows; it is
+//      generated by `npm run gen:plates`.) If yes, draw that and put the label over it.
+//   2. If not, draw the baked original and say nothing — the English is already in the pixels.
+//
+// So this is a migration, not a cutover. With no blank art present every plate behaves exactly as it
+// did; drop one blank in and that button alone starts speaking the player's language.
+//
+// PLATE_LABEL is the word each plate is currently WEARING. Transcribed from the art, so it is the
+// English a translator replaces and the alt text a screen reader reads — both of which the painted
+// version could never provide.
+const PLATE_LABEL = {
+  btn: {
+    achievements: t('plate.btn.achievements', 'Achievements'), achievements_sq: t('plate.btn.achievements', 'Achievements'),
+    army: t('plate.btn.army', 'Army'), brackets: t('plate.btn.brackets', 'Brackets'),
+    buy: t('plate.btn.buy', 'Buy'), cancel: t('plate.btn.cancel', 'Cancel'),
+    cards: t('plate.btn.cards', 'Cards'), cards_sq: t('plate.btn.cards', 'Cards'),
+    cell_glow: t('plate.btn.cell_glow', 'Glow'), chip_enemy: t('plate.btn.chip_enemy', 'Enemy'),
+    chip_you: t('plate.btn.chip_you', 'Mine'), chips: t('plate.btn.chips', 'Chips'),
+    close: t('plate.btn.close', 'Close'), confirm: t('plate.btn.confirm', 'Confirm'),
+    continue: t('plate.btn.continue', 'Continue'), danger: t('plate.btn.danger', 'Danger'),
+    deck: t('plate.btn.deck', 'Deck'), diamond: t('plate.btn.diamond', 'Diamond'),
+    dot: t('plate.btn.dot', 'Dot'), end_turn: t('plate.btn.end_turn', 'End Turn'),
+    frame_opt: t('plate.btn.frame_opt', 'Frame'), generals: t('plate.btn.generals', 'Generals'),
+    generals_sq: t('plate.btn.generals', 'Generals'), gold_ribbon: t('plate.btn.gold_ribbon', 'Ribbon'),
+    heal: t('plate.btn.heal', 'Heal'), history: t('plate.btn.history', 'History'),
+    history_sq: t('plate.btn.history', 'History'), how_to_play: t('plate.btn.how_to_play', 'How to Play'),
+    how_to_play_sq: t('plate.btn.how_to_play', 'How to Play'), info: t('plate.btn.info', 'Info'),
+    keep: t('plate.btn.keep', 'Keep'), kept: t('plate.btn.kept', 'Kept'),
+    key: t('plate.btn.key', 'Key'), landscape: t('plate.btn.landscape', 'Landscape'),
+    legend: t('plate.btn.legend', 'Legend'), medals: t('plate.btn.medals', 'Medals'),
+    medals_sq: t('plate.btn.medals', 'Medals'), menu: t('plate.btn.menu', 'Menu'),
+    more: t('plate.btn.more', 'More'), new_run: t('plate.btn.new_run', 'New Run'),
+    not_enough_cp: t('plate.btn.not_enough_cp', 'Not Enough CP'), obj_hold: t('plate.btn.obj_hold', 'Hold'),
+    play: t('plate.btn.play', 'Play'), portrait: t('plate.btn.portrait', 'Portrait'),
+    pow_break_camp: t('plate.btn.pow_break_camp', 'Break Camp'), pow_overcharge: t('plate.btn.pow_overcharge', 'Surge'),
+    pow_rally: t('plate.btn.pow_rally', 'Rally'), red_ring: t('plate.btn.red_ring', 'Red Ring'),
+    remove: t('plate.btn.remove', 'Remove'), replay_tutorial: t('plate.btn.replay_tutorial', 'Replay Tips'),
+    rest: t('plate.btn.rest', 'Rest'), resume: t('plate.btn.resume', 'Resume'),
+    retreat: t('plate.btn.retreat', 'Retreat'), return: t('plate.btn.return', 'Return'),
+    ring: t('plate.btn.ring', 'Ring'), seed: t('plate.btn.seed', 'Seed'),
+    settings: t('plate.btn.settings', 'Settings'), shop_remove: t('plate.btn.remove', 'Remove'),
+    shop_upgrade: t('plate.btn.upgrade', 'Upgrade'), skip: t('plate.btn.skip', 'Skip'),
+    start_run: t('plate.btn.start_run', 'Start Run'), switch_campaign: t('plate.btn.switch_campaign', 'Campaigns'),
+    troops_full: t('plate.btn.troops_full', 'Troops Full'), unplayable: t('plate.btn.unplayable', 'Unplayable'),
+    view_upgrade: t('plate.btn.upgrade', 'Upgrade'),
+  },
+  hdr: {
+    act1: t('plate.hdr.act1', 'Act 1'), act2: t('plate.hdr.act2', 'Act 2'),
+    act3: t('plate.hdr.act3', 'Act 3'), act4: t('plate.hdr.act4', 'Act 4'),
+    army: t('plate.hdr.army', 'Army'), battle_spoils: t('plate.hdr.battle_spoils', 'Battle Spoils'),
+    battle_won: t('plate.hdr.battle_won', 'Battle Won'), cache: t('plate.hdr.cache', 'Cache'),
+    camp: t('plate.hdr.camp', 'Camp'), campaigns: t('plate.hdr.campaigns', 'Campaigns'),
+    cards: t('plate.hdr.cards', 'Cards'), chips: t('plate.hdr.chips', 'Board Chips'),
+    deck: t('plate.hdr.deck', 'Deck'), defeat: t('plate.hdr.defeat', 'Defeat'),
+    event: t('plate.hdr.event', 'Event'), generals: t('plate.hdr.generals', 'Generals'),
+    history: t('plate.hdr.history', 'History'), how_to_play: t('plate.hdr.how_to_play', 'How to Play'),
+    key: t('plate.hdr.key', 'Key'), medal_earned: t('plate.hdr.medal_earned', 'Medal Earned'),
+    medals: t('plate.hdr.medals', 'Medals'), menu: t('plate.hdr.menu', 'Menu'),
+    mission_complete: t('plate.hdr.mission_complete', 'Mission Complete'), mission_failed: t('plate.hdr.mission_failed', 'Mission Failed'),
+    more: t('plate.hdr.more', 'More'), outpost: t('plate.hdr.outpost', 'Outpost'),
+    remove: t('plate.hdr.remove', 'Remove'), settings: t('plate.hdr.settings', 'Settings'),
+    shop: t('plate.hdr.shop', 'Shop'), tribe_salvage: t('plate.hdr.tribe_salvage', 'Tribe Salvage'),
+    upgrade: t('plate.hdr.upgrade', 'Upgrade'), workshop: t('plate.hdr.workshop', 'Workshop'),
+    // table_of_war is the GAME'S NAME. It is a brand, not a label — it stays as the artwork drew it
+    // in every language, and it deliberately has no key.
+  },
+  pill: {
+    bases: t('plate.pill.bases', 'Bases'), cp: t('plate.pill.cp', 'CP'),
+    hq: t('plate.pill.hq', 'HQ'), survive: t('plate.pill.survive', 'Survive'),
+    troops: t('plate.pill.troops', 'Troops'), waves: t('plate.pill.waves', 'Waves'),
+  },
+};
+
+// Where the label sits on the plate, as FRACTIONS of the plate box: [x0, y0, x1, y1]. Fractions, not
+// pixels, because these plates are drawn at whatever size their container gives them.
+//
+// Same idea as FRAMES in cardface.js and PLAQUE_REGIONS below. The families differ in shape:
+//   wide   icon medallion on the left, label fills the rest
+//   welled icon on the left, label in the middle, VALUE WELL on the right (heal/seed/obj_hold/pow_*)
+//   square the tile form (*_sq) — icon on top, label beneath it
+//   plain  no medallion, label spans the plate
+//   hdr    the central plaque, inside the star end-caps
+//   pill   icon, label, then the value well
+//
+// These are starting values judged off the art. Load the game with ?plateboxes=1 to draw them over
+// the plates and nudge them — the debug overlay exists precisely so this is a five-minute visual job
+// rather than arithmetic.
+const PLATE_REGION = {
+  wide:   [0.355, 0.205, 0.900, 0.800],
+  welled: [0.205, 0.300, 0.520, 0.700],
+  square: [0.130, 0.570, 0.880, 0.830],
+  plain:  [0.120, 0.300, 0.910, 0.700],
+  hdr:    [0.235, 0.205, 0.800, 0.635],
+  pill:   [0.265, 0.205, 0.585, 0.765],
+};
+// Plates whose right-hand third is a value well the game stamps a number into.
+const PLATE_WELLED = new Set(['heal', 'seed', 'obj_hold', 'pow_break_camp', 'pow_overcharge', 'pow_rally']);
+const PLATE_PLAIN = new Set(['switch_campaign']);
+// Per-plate escapes, keyed '<kind>:<name>'. EMPTY, and that is the point: every plate's region is
+// now COMPUTED by the tool that draws it, from the fill rect minus the medallion and the well, and
+// arrives in plates.js as PLATE_REGION_GEN. The eighteen entries that used to live here were measured
+// by eye against art that has since been replaced, so keeping them would have meant a stale hand
+// value silently beating a correct computed one.
+//
+// It stays as a table rather than being deleted because tools/plate-tuner.html still exports into it,
+// and a plate that needs nudging after the fact should have somewhere to be nudged. Anything put here
+// wins over the computed value on purpose.
+const PLATE_REGION_OVERRIDE = {};
+
+function plateRegion(kind, name) {
+  const key = kind + ':' + name;
+  const o = PLATE_REGION_OVERRIDE[key];
+  if (o) return o;
+  // Then the computed region, which covers every generated plate. The family defaults below are the
+  // floor for a plate whose art was never regenerated -- with plates.js missing entirely, the UI still
+  // lays out, just less precisely.
+  const g = window.PLATE_REGION_GEN && window.PLATE_REGION_GEN[key];
+  if (g) return g;
+  if (kind === 'hdr') return PLATE_REGION.hdr;
+  if (kind === 'pill') return PLATE_REGION.pill;
+  if (name.endsWith('_sq')) return PLATE_REGION.square;
+  if (PLATE_WELLED.has(name)) return PLATE_REGION.welled;
+  if (PLATE_PLAIN.has(name)) return PLATE_REGION.plain;
+  return PLATE_REGION.wide;
+}
+
+/** Does this plate have text-free art to draw a label onto? */
+function plateIsBlank(kind, name) {
+  const m = window.PLATE_BLANK;
+  return !!(m && m[kind] && m[kind].indexOf(name) >= 0 && PLATE_LABEL[kind] && PLATE_LABEL[kind][name]);
+}
+/** The plate's word, whether it is painted on or about to be drawn. Also the alt/aria text. */
+function plateText(kind, name) {
+  return (PLATE_LABEL[kind] && PLATE_LABEL[kind][name]) || '';
+}
+/** Image path: the blank variant when one exists, otherwise the baked original. */
+function plateSrc(kind, name) {
+  return `assets/ui/${kind}/${plateIsBlank(kind, name) ? 'blank/' : ''}${name}.png`;
+}
+// Type size per family, as a fraction of the label box's height. One line at this size is the target;
+// two lines are bound by the box instead, so a stacked label finds its own size.
+const PLATE_CAP = { btn: 0.62, hdr: 0.56, pill: 0.58 };
+const PLATE_LINE_H = 1.12;   // baseline to baseline, in cap heights
+const PLATE_GLYPH_GAP = 0.03;
+const PLATE_SPACE_W = 0.32;
+
+/** Atlas file for one character, or null if the atlas has no glyph for it. */
+function plateGlyph(ch) {
+  const f = glyphFile(ch);
+  return f && window.GLYPH_METRICS && window.GLYPH_METRICS[f] ? f : null;
+}
+
+/** Width of one line in CAP units. */
+function _plateLineW(files) {
+  if (!files.length) return 0;
+  const M = window.GLYPH_METRICS;
+  let w = 0;
+  for (const f of files) w += (f === ' ' ? PLATE_SPACE_W : M[f].w);
+  return w + PLATE_GLYPH_GAP * (files.length - 1);
+}
+
+/**
+ * Choose how to set `word` in a box of the given aspect, and how big.
+ *
+ * A long word on a squat plate has to shrink until it is unreadable, while the same word on two lines
+ * gets to be far taller — so every split is measured and the one whose CAP HEIGHT comes out largest
+ * wins. Short labels stay on one line because splitting them gains nothing, which is what makes this
+ * safe to apply to all 103 plates rather than a hand-picked list.
+ *
+ * Everything is a ratio, and the box's aspect is fixed (region fractions x plate aspect). So the
+ * answer is a constant per plate: it can be baked into the markup in units that scale, with no
+ * measuring the DOM and no reflow.
+ */
+function platePlan(word, aspect, capMax) {
+  const M = window.GLYPH_METRICS;
+  const enc = (str) => {
+    const out = [];
+    for (const ch of str) {
+      if (ch === ' ') { out.push(' '); continue; }
+      const f = plateGlyph(ch);
+      if (!f) return null;
+      out.push(f);
+    }
+    return out;
+  };
+  // Every split into 1, 2 or 3 lines. Two was enough for English; a translation that runs 35% longer
+  // on a label that was already two words needs the third, and without it the type shrinks instead.
+  const toks = word.split(' ');
+  const candidates = [[word]];
+  for (let i = 1; i < toks.length; i++) {
+    candidates.push([toks.slice(0, i).join(' '), toks.slice(i).join(' ')]);
+    for (let j = i + 1; j < toks.length; j++) {
+      candidates.push([toks.slice(0, i).join(' '), toks.slice(i, j).join(' '), toks.slice(j).join(' ')]);
+    }
+  }
+
+  let best = null;
+  for (const lines of candidates) {
+    const encoded = lines.map(enc);
+    if (encoded.some((e) => e === null)) return null;      // a character the atlas cannot draw
+    const widest = Math.max(...encoded.map(_plateLineW));
+    if (!widest) continue;
+    const n = encoded.length;
+    const ups = encoded.map((fs) => Math.max(...fs.filter((f) => f !== ' ').map((f) => M[f].up), 1));
+    const dns = encoded.map((fs) => Math.max(...fs.filter((f) => f !== ' ').map((f) => M[f].dn), 0));
+    const block = n === 1 ? ups[0] + dns[0] : PLATE_LINE_H * (n - 1) + ups[0] + dns[n - 1];
+    const cap = Math.min(capMax, aspect / widest, 1 / block);
+    if (!best || cap > best.cap) best = { cap, lines: encoded, ups, dns };
+  }
+  return best;
+}
+
+/**
+ * The label layer to sit over a blank plate — '' when the art already carries its own text, and a
+ * plain text span when the atlas cannot draw the word (a locale outside Latin-1, say).
+ */
+function plateLabel(kind, name, cls) {
+  if (!plateIsBlank(kind, name)) return '';
+  const r = plateRegion(kind, name);
+  const style = `left:${r[0] * 100}%;top:${r[1] * 100}%;width:${(r[2] - r[0]) * 100}%;height:${(r[3] - r[1]) * 100}%`;
+  let word = plateText(kind, name);
+  if (kind !== 'hdr') word = word.toUpperCase();   // the button and pill art is set in caps
+
+  const size = window.PLATE_SIZE && window.PLATE_SIZE[kind] && window.PLATE_SIZE[kind][name];
+  const plan = size ? platePlan(word, ((r[2] - r[0]) * size[0]) / ((r[3] - r[1]) * size[1]), PLATE_CAP[kind] || 0.6) : null;
+  if (!plan) {
+    // No metrics, or a character with no glyph: fall back to real text rather than to nothing.
+    return `<span class="plbl${cls ? ' ' + cls : ''}" style="${style}"><span class="pfit">${I18n.esc(word)}</span></span>`;
+  }
+
+  // Sizes in cqh — percentages of the label box's own height — so the whole label scales with the
+  // plate and needs no JavaScript after this point.
+  const M = window.GLYPH_METRICS;
+  const u = (v) => (v * plan.cap * 100).toFixed(2);
+  let html = '';
+  plan.lines.forEach((fs, i) => {
+    let line = '';
+    for (const f of fs) {
+      if (f === ' ') { line += `<i style="width:${u(PLATE_SPACE_W)}cqh"></i>`; continue; }
+      line += `<img src="assets/ui/glyph/${f}.png" alt="" style="width:${u(M[f].w)}cqh;height:${u(M[f].up + M[f].dn)}cqh;margin-top:${u(plan.ups[i] - M[f].up)}cqh">`;
+    }
+    html += `<span class="pline" style="height:${u(plan.ups[i] + plan.dns[i])}cqh;gap:${u(PLATE_GLYPH_GAP)}cqh">${line}</span>`;
+  });
+  return `<span class="plbl gl${cls ? ' ' + cls : ''}" style="${style}" aria-label="${I18n.esc(word)}">${html}</span>`;
+}
+
+// Only the TEXT fallback needs measuring now — a glyph label is laid out in units that scale, so it
+// fits by construction. This is what catches the fallback case: no metrics, or a locale whose script
+// the atlas has no glyphs for, where the label is real text and a long translation can still overrun.
+function fitPlateLabels(root) {
+  const els = (root || document).querySelectorAll('.plbl > .pfit:not([data-fit])');
+  for (const el of els) {
+    el.setAttribute('data-fit', '1');
+    const box = el.parentElement;
+    const bw = box.clientWidth, bh = box.clientHeight;
+    if (!bw || !bh) { el.removeAttribute('data-fit'); continue; }   // not laid out yet; catch it next pass
+    const w = el.scrollWidth, h = el.scrollHeight;
+    if (!w || !h) continue;
+    const k = Math.min(1, bw / w, bh / h);
+    if (k < 0.999) el.style.transform = `scale(${k.toFixed(3)})`;
+  }
+}
+
+// The UI paints by assigning innerHTML in a few dozen places, so rather than remember to call the
+// fitter at each one, watch for plates arriving and fit them in the next frame. Scoped to #app and
+// batched, and each label is fitted once — the board's per-cell churn carries no .plbl, so this costs
+// a subtree query on nodes that almost never contain one.
+function watchPlateLabels() {
+  // document.body, not #app. Plates are rendered outside #app in more than one place — the overlays
+  // sit beside it, and tools/ui-gallery.html builds a whole page of them — and a label the observer
+  // never sees is a label that never gets fitted, which reads as text spilling out of its plate.
+  const root = document.body;
+  if (!root || typeof MutationObserver !== 'function') return;
+  let queued = false;
+  const flush = () => { queued = false; fitPlateLabels(root); };
+  new MutationObserver((recs) => {
+    if (queued) return;
+    for (const r of recs) {
+      for (const n of r.addedNodes) {
+        if (n.nodeType === 1 && (n.classList?.contains('plbl') || n.querySelector?.('.plbl'))) {
+          queued = true;
+          (window.requestAnimationFrame || setTimeout)(flush, 0);
+          return;
+        }
+      }
+    }
+  }).observe(root, { childList: true, subtree: true });
+}
+
+// Debug: draw every label region over its plate, so the PLATE_REGION numbers can be nudged by eye.
+// #end and #maplegtoggle are written into the static markup, so they cannot call plateSrc the way
+// every generated button does — and they were left showing baked English while the buttons around
+// them switched. They are re-rendered once at boot. #setBtn is deliberately absent: its art is a gear
+// with no word in it, so there is nothing to translate.
+function _upgradeStaticPlates() {
+  for (const [id, name] of [['end', 'end_turn'], ['maplegtoggle', 'legend']]) {
+    const el = document.getElementById(id);
+    if (!el || !plateIsBlank('btn', name)) continue;
+    const lbl = plateText('btn', name);
+    el.innerHTML = `<img src="${plateSrc('btn', name)}" alt="${I18n.esc(lbl)}">${plateLabel('btn', name)}`;
+    el.setAttribute('aria-label', lbl);
+  }
+}
+
+function _plateBoxDebug() {
+  try { if (!/[?&]plateboxes=1/.test(location.search)) return; } catch (e) { return; }
+  const st = document.createElement('style');
+  st.textContent = '.plbl{outline:1px solid rgba(255,64,64,.9);background:rgba(255,64,64,.14)}';
+  document.head.appendChild(st);
+}
+
 // ornate container wrapper. `hdr` = a header-plaque key (assets/ui/hdr/<key>.png) OR plain text (fallback banner)
 const HDR_KEYS = new Set(['act1','act2','act3','act4','army','battle_spoils','battle_won','cache','camp','cards','chips','deck','defeat','event','generals','history','how_to_play','key','medal_earned','medals','menu','mission_complete','mission_failed','more','outpost','remove','settings','shop','tribe_salvage','upgrade','workshop']);
 function ofBanner(hdr) {
   if (!hdr) return '';
   return HDR_KEYS.has(hdr)
-    ? `<div class="ofbanner ofhdr"><img src="assets/ui/hdr/${hdr}.png" alt=""></div>`
+    ? `<div class="ofbanner ofhdr"><img src="${plateSrc('hdr', hdr)}" alt="${I18n.esc(plateText('hdr', hdr))}">${plateLabel('hdr', hdr)}</div>`
     : `<div class="ofbanner"><span>${hdr}</span></div>`;
 }
 function oframe(inner, hdr) {
@@ -4293,17 +4678,28 @@ function metnum(n) {
 // pre-made labeled image button (icon + text baked in). opts: {cls, dis, style}
 function ibtn(name, onclick, opts) {
   opts = opts || {};
-  return `<button class="ibtn ${opts.cls||''}" onclick="${onclick}"${opts.dis?' disabled':''}${opts.style?` style="${opts.style}"`:''} aria-label="${name}"><img src="assets/ui/btn/${name}.png" alt="${name}"></button>`;
+  // The plate's own word is the default, because it is what the button visibly SAYS — an aria-label
+  // that disagrees with the letters on the plate is worse than no aria-label. opts.label is for the
+  // handful of buttons whose art carries no word at all.
+  const lbl = opts.label || plateText('btn', name) || name;
+  return `<button class="ibtn ${opts.cls||''}" onclick="${onclick}"${opts.dis?' disabled':''}${opts.style?` style="${opts.style}"`:''} aria-label="${I18n.esc(lbl)}"><img src="${plateSrc('btn', name)}" alt="${I18n.esc(lbl)}">${plateLabel('btn', name)}</button>`;
 }
 // main-menu tile: wide labeled plate (portrait) + square tile (landscape); CSS picks by orientation.
+// A menu tile carries BOTH plates -- the wide one for portrait, the square one for landscape -- and
+// CSS shows whichever fits. Each plate's LABEL has to be tagged the same way and swapped with it:
+// without that both labels render at once, one of them over art that is not on screen. That was
+// invisible for as long as the two regions happened to sit in the same place; the moment the square
+// plates started putting their label in the bottom third where the art actually has room, the wide
+// plate's label appeared straight across the middle of the square one.
 function mtile(name, onclick, label) {
-  return `<button class="ibtn mtile" onclick="${onclick}" aria-label="${label}"><img class="mt-w" src="assets/ui/btn/${name}.png" alt="${label}"><img class="mt-s" src="assets/ui/btn/${name}_sq.png" alt=""></button>`;
+  return `<button class="ibtn mtile" onclick="${onclick}" aria-label="${I18n.esc(label)}"><img class="mt-w" src="${plateSrc('btn', name)}" alt="${I18n.esc(label)}">${plateLabel('btn', name, 'mtl-w')}<img class="mt-s" src="${plateSrc('btn', name + '_sq')}" alt="">${plateLabel('btn', name + '_sq', 'mtl-s')}</button>`;
 }
 // labeled plate button. opts.active: true=highlighted toggle, false=dimmed toggle, undefined=plain solo button.
 function pbtn(name, onclick, opts) {
   opts = opts || {};
   const state = opts.active === true ? 'act' : (opts.active === false ? 'off' : '');
-  return `<button class="pbtn ${state} ${opts.cls||''}" onclick="${onclick}"${opts.style?` style="${opts.style}"`:''} aria-label="${opts.label||name}"><img src="assets/ui/btn/${name}.png" alt="${opts.label||name}"></button>`;
+  const lbl = opts.label || plateText('btn', name) || name;
+  return `<button class="pbtn ${state} ${opts.cls||''}" onclick="${onclick}"${opts.style?` style="${opts.style}"`:''} aria-label="${I18n.esc(lbl)}"><img src="${plateSrc('btn', name)}" alt="${I18n.esc(lbl)}">${plateLabel('btn', name)}</button>`;
 }
 // vintage price tag — the salvage cost printed on the parchment tag
 function priceTag(cost) { return `<span class="pricetag"><img src="assets/ui/pricetag.png" alt=""><span class="ptval">${si('salvage',13)}${goldText(String(cost))}</span></span>`; }
@@ -4314,27 +4710,62 @@ function setPillNumStyle(v){ try { localStorage.setItem('dc_pillnum', v); } catc
 function pillVal(val) {
   const s = pillNumStyle();
   if (s === 'B')   // silver metal digits (assets/digits); slash borrowed from the gold glyph, desaturated to steel
+    // Non-digits used to ALL render as a slash image, which was true enough while every pill value was
+    // "3" or "3/5" and false the moment one carries a letter.
     return `<span class="mn">` + String(val).split('').map(d => /[0-9]/.test(d)
       ? `<img class="md" src="assets/digits/${d}.png" alt="${d}">`
-      : `<img class="msl" src="assets/ui/glyph/slash.png" alt="${d}">`).join('') + `</span>`;
+      : d === '/' ? `<img class="msl" src="assets/ui/glyph/slash.png" alt="/">`
+      : `<span class="gfb">${d === '<' ? '&lt;' : d === '>' ? '&gt;' : d === '&' ? '&amp;' : d}</span>`).join('') + `</span>`;
   const dir = s === 'C' ? 'glyph_bronze' : 'glyph';   // A + C both use the glyph atlas (C = bronze variant)
   return `<span class="gtext">` + String(val).split('').map(ch => {
-    const f = /[A-Za-z0-9]/.test(ch) ? ch.toLowerCase() : GLYPH_PUNCT[ch];
-    return f ? `<img src="assets/ui/${dir}/${f}.png" alt="${ch}">` : '';
+    // The bronze set is digits plus a/b/c only — it was never a full alphabet — so it keeps the flat
+    // lowercase naming and falls back to text for anything it does not have.
+    const f = dir === 'glyph' ? glyphFile(ch)
+      : (/^[0-9abc]$/.test(ch.toLowerCase()) ? ch.toLowerCase() : GLYPH_PUNCT[ch]);
+    return f ? `<img src="assets/ui/${dir}/${f}.png" alt="${ch}">`
+      : `<span class="gfb">${ch === '<' ? '&lt;' : ch === '>' ? '&gt;' : ch === '&' ? '&amp;' : ch}</span>`;
   }).join('') + `</span>`;
 }
 // landscape uses the wide labeled plate (pill/<name>.png); portrait swaps to the compact icon-only plate (pill/<name>_p.png) — CSS picks by orientation
-function bpill(name, val, cls, onclick) { return `<span class="bpill ${cls||''} num${pillNumStyle()}"${onclick?` onclick="${onclick}" style="cursor:pointer"`:''}><img class="pl-l" src="assets/ui/pill/${name}.png" alt=""><img class="pl-p" src="assets/ui/pill/${name}_p.png" alt=""><span class="bpv">${pillVal(val)}</span></span>`; }
+/**
+ * The value box, placed from the WELL the generator actually drew rather than from a CSS constant.
+ * `.bpv`'s right/width still apply when there is no computed well, so a plate whose art was never
+ * regenerated keeps its old placement instead of collapsing.
+ */
+function plateWellStyle(kind, name) {
+  const w = window.PLATE_WELL_GEN && window.PLATE_WELL_GEN[kind + ':' + name];
+  if (!w) return '';
+  return ` style="left:${(w[0] * 100).toFixed(2)}%;top:${(w[1] * 100).toFixed(2)}%;`
+    + `width:${((w[2] - w[0]) * 100).toFixed(2)}%;height:${((w[3] - w[1]) * 100).toFixed(2)}%;`
+    + 'right:auto;transform:none"';
+}
+function bpill(name, val, cls, onclick) { return `<span class="bpill ${cls||''} num${pillNumStyle()}"${onclick?` onclick="${onclick}" style="cursor:pointer"`:''}><img class="pl-l" src="${plateSrc('pill', name)}" alt="${I18n.esc(plateText('pill', name))}"><img class="pl-p" src="assets/ui/pill/${name}_p.png" alt="">${plateLabel('pill', name)}<span class="bpv"${plateWellStyle('pill', name)}>${pillVal(val)}</span></span>`; }
 // gold bitmap text composed from the character-sheet glyph atlas (assets/ui/glyph). Digits/% scale cleanly.
 const GLYPH_PUNCT = {'!':'excl','?':'ques','.':'dot',',':'comma',':':'colon',';':'semi',"'":'apos','"':'quot',
   '+':'plus','-':'minus','=':'eq','_':'under','/':'slash','\\':'bslash','|':'pipe','(':'lparen',')':'rparen',
   '[':'lbrack',']':'rbrack','{':'lbrace','}':'rbrace','<':'lt','>':'gt','*':'star','#':'hash','@':'at',
   '$':'dollar','%':'pct','&':'amp','^':'caret','~':'tilde'};
+// The atlas used to hold ONE case of A-Z: glyphText lowercased its input, so the plaques shouted
+// everything in caps, and anything outside a-z0-9 rendered as NOTHING — a translated general's name
+// would have come out blank. It now carries both cases and the Latin-1 accents.
+//
+// Files are ASCII and case-PREFIXED — u_a / l_a, u_eacute / l_eacute — because Windows filesystems
+// are case-insensitive, so A.png and a.png would be the same file.
+const GLYPH_ACCENT = {'ß':'szlig','à':'agrave','á':'aacute','â':'acirc','ã':'atilde','ä':'auml','æ':'aelig','ç':'ccedil','è':'egrave','é':'eacute','ê':'ecirc','ë':'euml','ì':'igrave','í':'iacute','î':'icirc','ï':'iuml','ñ':'ntilde','ò':'ograve','ó':'oacute','ô':'ocirc','õ':'otilde','ö':'ouml','ù':'ugrave','ú':'uacute','û':'ucirc','ü':'uuml','ÿ':'yuml','ĳ':'ijlig','œ':'oelig',};
+function glyphFile(ch) {
+  if (/[0-9]/.test(ch)) return ch;
+  const low = ch.toLowerCase();
+  const acc = GLYPH_ACCENT[low];
+  if (acc) return (ch === low ? 'l_' : 'u_') + acc;
+  if (/[a-z]/.test(low)) return (ch === low ? 'l_' : 'u_') + low;
+  return GLYPH_PUNCT[ch] || null;
+}
 function glyphText(str, cls) {
   return `<span class="gtext${cls ? ' ' + cls : ''}">` + String(str).split('').map(ch => {
     if (ch === ' ') return '<span class="gsp"></span>';
-    const f = /[A-Za-z0-9]/.test(ch) ? ch.toLowerCase() : GLYPH_PUNCT[ch];
-    return f ? `<img src="assets/ui/glyph/${f}.png" alt="${ch === '<' ? '&lt;' : ch === '>' ? '&gt;' : ch === '&' ? '&amp;' : ch}">` : '';
+    const f = glyphFile(ch);
+    const a = ch === '<' ? '&lt;' : ch === '>' ? '&gt;' : ch === '&' ? '&amp;' : ch;
+    return f ? `<img src="assets/ui/glyph/${f}.png" alt="${a}">` : `<span class="gfb">${a}</span>`;
   }).join('') + `</span>`;
 }
 function goldText(str) { return glyphText(str); }              // gold foil
@@ -4365,7 +4796,8 @@ function onSeedInput(el) {
 // a plate button whose recessed plaque shows a dynamic gold value (price). variant: 'heal'|'upg'|'rem'.
 function platebtn(name, variant, onclick, value, opts) {
   opts = opts || {};
-  return `<button class="platebtn pb-${variant} ${opts.cls||''}" onclick="${onclick}"${opts.dis?' disabled':''} aria-label="${opts.label||name}"><img src="assets/ui/btn/${name}.png" alt="${opts.label||name}"><span class="plaqueval">${value}</span></button>`;
+  const lbl = opts.label || plateText('btn', name) || name;
+  return `<button class="platebtn pb-${variant} ${opts.cls||''}" onclick="${onclick}"${opts.dis?' disabled':''} aria-label="${I18n.esc(lbl)}"><img src="${plateSrc('btn', name)}" alt="${I18n.esc(lbl)}">${plateLabel('btn', name)}<span class="plaqueval">${value}</span></button>`;
 }
 function showNode() {
   const p = S.pending, o = $('#ovNode');
@@ -4397,13 +4829,13 @@ function showNode() {
     const rsub = p.source ? p.source+' — ' : (p.boss?'Act boss cleared — ':'');
     o.innerHTML = `<p style="margin-top:12px">${rsub}tap a card to inspect, then take one for your deck</p>
       <div class="nodecards">${p.options.map((c,i)=>framedTile(c, `peekReward(${i})`)).join('')}</div>
-      <div style="text-align:center;margin-top:10px"><button class="ibtn" onclick="takeReward(-1)" aria-label="Skip"><img src="assets/ui/btn/skip.png" alt="Skip"></button></div>`;
+      <div style="text-align:center;margin-top:10px">${ibtn('skip', "takeReward(-1)")}</div>`;
   } else if (p.kind === 'medal') {
     ttl = 'medal_earned';
     o.innerHTML = `<p style="margin-top:2px">${p.boss?'Act boss':'Elite'} cleared — claim a relic</p>` +
       p.options.map(m=>`<div class="choice" onclick="takeMedalReward('${m.id}')" style="display:flex;align-items:center;gap:12px">
         ${medalIcon(m.id,50)}<div><b class="gold">${m.name}</b><div class="d">${m.desc}</div></div></div>`).join('') +
-      `<div style="text-align:center;margin-top:10px"><button class="ibtn" onclick="takeMedalReward('')" aria-label="Skip"><img src="assets/ui/btn/skip.png" alt="Skip"></button></div>`;
+      `<div style="text-align:center;margin-top:10px">${ibtn('skip', "takeMedalReward('')")}</div>`;
   } else if (p.kind === 'event') {
     ttl = 'event';
     o.innerHTML = `<h1 class="gold" style="margin:2px 0 0">${p.title}</h1><p style="margin-top:2px">${p.text}</p>` +
@@ -4438,7 +4870,7 @@ function showNode() {
           ${platebtn('shop_upgrade','upg',"shopDeckPick('upgrade')", siEm('salvage')+goldText(pr.upgrade), {dis:!canUp, cls:'flex1'})}
           ${platebtn('shop_remove','rem',"shopDeckPick('remove')", siEm('salvage')+goldText(pr.remove), {dis:!canRm, cls:'flex1'})}</div>
         ${p.deck.every(c=>!c.removable)?`<div class="d" style="margin-top:6px">can't thin below 5 cards</div>`:''}</div>
-      <div style="text-align:center;margin-top:8px"><button class="ibtn" onclick="shopLeave()" aria-label="Return"><img src="assets/ui/btn/return.png" alt="Leave"></button></div>`;
+      <div style="text-align:center;margin-top:8px">${ibtn('return', "shopLeave()")}</div>`;
   } else { closeOv('ovNode'); return; }
   o.innerHTML = oframe(o.innerHTML, ttl);   // ornate container + banner title around every node view
   o.classList.add('show');
@@ -4679,7 +5111,7 @@ function peekCard(c, label, onConfirm, disabled, opts){
     + (opts.noDetail ? '' : cardDetailHTML(c))   // the card face already shows name/cost/text — skip the repeat where asked
     + `<div class="ibtnrow" style="margin-top:10px">
          <button class="ibtn" ${disabled?'disabled':''} onclick="_peekConfirm()" aria-label="${label}"><img src="assets/ui/btn/confirm.png" alt="${label}"></button>
-         <button class="ibtn" onclick="closeOv('ovInspect')" aria-label="Back"><img src="assets/ui/btn/return.png" alt="Back"></button></div>`;
+         ${ibtn('return', "closeOv('ovInspect')")}</div>`;
   _peekConfirmFn = disabled ? null : onConfirm;
   o.classList.add('show');
 }
@@ -4877,7 +5309,7 @@ async function showCards(){
                       cs.filter(c=>c.owned).length, cs.length) + grid(cs);
   };
   const o = $('#ovCards');
-  o.innerHTML = `<div class="oframe titled" style="max-width:640px"><div class="ofbanner ofhdr"><img src="assets/ui/hdr/cards.png" alt="Cards"></div>
+  o.innerHTML = `<div class="oframe titled" style="max-width:640px">${ofBanner('cards')}
     ${ocapG(`${d.owned}/${d.total} cards discovered`)}
     ${ocapG(`<span style="font-size:17px">${steelText('General Cards')}</span>`)}
     ${(d.generals||[]).map(genGrp).join('')}
@@ -4885,7 +5317,7 @@ async function showCards(){
     ${['starter','common','uncommon','rare'].map(grp).join('')}
     ${(d.curses&&d.curses.length)?`${ocapG(`<span style="font-size:17px">${steelText('Curses')}</span>`)}
       ${cardHeader('curses','#8a3a3a',d.curses.filter(c=>c.owned).length,d.curses.length)+`<div class="collgrid">${d.curses.map(c=>cardCell(c)).join('')}</div>`}`:''}
-    </div><div class="ovclose"><button class="ibtn" onclick="closeOv('ovCards')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+    </div><div class="ovclose">${ibtn('close', "closeOv('ovCards')")}</div>`;
   o.classList.add('show');
 }
 async function eventChoice(i){ Sfx.play('ui_tap'); const r=await api('/api/event',{choice:i});
@@ -4921,7 +5353,7 @@ function shopDeckPick(mode){
   const hint = mode==='upgrade' ? `Tap a card to upgrade it — ${siEm('salvage')}${cost} each.` : `Tap a card to scrap it and thin your deck — ${siEm('salvage')}${cost}.`;
   $('#ovDeck').innerHTML = oframe(`<p style="margin-top:10px">${hint}${afford?'':' <span class="red">— not enough salvage</span>'}</p>
     <div class="collgrid">${grid||'<div class="d">no eligible cards</div>'}</div>`, mode==='upgrade'?'upgrade':'remove')
-    + `<div class="ovclose"><button class="ibtn" onclick="closeOv('ovDeck')" aria-label="Back"><img src="assets/ui/btn/return.png" alt="Back"></button></div>`;
+    + `<div class="ovclose">${ibtn('return', "closeOv('ovDeck')")}</div>`;
   openOv('ovDeck');
 }
 function shopPick(mode,id){
@@ -4961,8 +5393,8 @@ function showRoster() {
         <span class="d">${xp}</span>
       </div></div>`;
   }).join('');
-  o.innerHTML = `<div class="oframe titled"><div class="ofbanner ofhdr"><img src="assets/ui/hdr/army.png" alt="Army"></div>
-    <div class="rostergrid">${rows||'<div class="d">no units</div>'}</div></div><div class="ovclose"><button class="ibtn" onclick="closeOv('ovRoster')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+  o.innerHTML = `<div class="oframe titled">${ofBanner('army')}
+    <div class="rostergrid">${rows||'<div class="d">no units</div>'}</div></div><div class="ovclose">${ibtn('close', "closeOv('ovRoster')")}</div>`;
   o.classList.add('show');
 }
 
@@ -5089,7 +5521,7 @@ function showPowerInfo(){
   $('#ovInspect').innerHTML = `<div class="choice"><b class="gold">${si('cp',15)} ${p.name}</b>
     <div class="d" style="margin-top:6px">${p.desc}</div>
     <div class="d" style="margin-top:8px">${p.gname} gauge: ${amount} — ${how}</div>${drive}
-    </div><div class="ovclose"><button class="ibtn" onclick="$('#ovInspect').classList.remove('show')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+    </div><div class="ovclose">${ibtn('close', "$('#ovInspect').classList.remove('show')")}</div>`;
   $('#ovInspect').classList.add('show');
 }
 async function usePower() {
@@ -5304,13 +5736,14 @@ function renderHud() {
     : '';
   const objChip = !obj ? ''
     : obj.kind === 'hold'
-      ? `<span class="objhold" onclick="showObjInfo()"><img class="pl-l" src="assets/ui/btn/obj_hold.png" alt="Hold"><img class="pl-p" src="assets/ui/btn/obj_hold_p.png" alt="Hold"><span class="objval">${goldText(obj.progress+'/'+obj.turns)}</span></span>`
+      ? `<span class="objhold" onclick="showObjInfo()" aria-label="${I18n.esc(plateText('btn','obj_hold'))}"><img class="pl-l" src="${plateSrc('btn','obj_hold')}" alt=""><img class="pl-p" src="assets/ui/btn/obj_hold_p.png" alt="">${plateLabel('btn','obj_hold')}<span class="objval">${goldText(obj.progress+'/'+obj.turns)}</span></span>`
       : obj.kind === 'survive'
       ? bpill('survive', obj.progress+'/'+obj.turns, '', 'showObjInfo()')
       : obj.kind === 'bastion'
       ? bpill('waves', obj.progress+'/'+obj.turns, 'waves', 'showObjInfo()')
       : '';   // spire / escort / escape / hunt are single-objective battles — the intro text explains them, so no HUD chip
-  const POW_PLATE = { 'Overcharge': 'pow_overcharge', 'Rally the Horde': 'pow_rally', 'Break Camp': 'pow_break_camp' };
+  // Keyed by the power ID, never its display name: the name is localized, the art file is not.
+  const POW_PLATE = { overcharge: 'pow_overcharge', rally_horde: 'pow_rally', break_camp: 'pow_break_camp' };
   // Nomad only. The plate says how much Momentum is banked; this says how fast it is being built, and
   // what this turn is about to do to that rate. Pips are the roll call: one per unit that still owes a
   // move. Fill them all and the trajectory climbs by one; leave any unfilled and it halves.
@@ -5338,7 +5771,7 @@ function renderHud() {
       </span></span>`;
   })();
   const gauge = !p ? ''
-    : POW_PLATE[p.name]
+    : POW_PLATE[p.id]
       ? (() => {
           // An uncapped gauge (Momentum) must NOT print "x/12" — 12 is the price of the power, not a
           // ceiling, and the value routinely goes past it. Show the number, and let the bar carry the
@@ -5355,7 +5788,7 @@ function renderHud() {
             ? `${p.name} — ${p.gauge} ${p.gname}, needs ${cost}` : `${p.name} ${p.gauge}/${p.max}`;
           return `<button class="powplate ${p.ready?'ready':''}" onclick="usePower()"
            onpointerdown="powPressStart()" onpointerup="powPressEnd()" onpointerleave="powPressEnd()"
-           oncontextmenu="event.preventDefault();showPowerInfo();return false" title="${p.desc}" aria-label="${label}"><img class="pl-l" src="assets/ui/btn/${POW_PLATE[p.name]}.png" alt="${p.name}"><img class="pl-p" src="assets/ui/btn/${POW_PLATE[p.name]}_p.png" alt="${p.name}"><span class="powval">${goldText(shown)}</span><span class="plgauge ${over?'over':''}"><i style="width:${pct}%"></i></span></button>`;
+           oncontextmenu="event.preventDefault();showPowerInfo();return false" title="${p.desc}" aria-label="${label}"><img class="pl-l" src="${plateSrc('btn', POW_PLATE[p.id])}" alt="${I18n.esc(p.name)}"><img class="pl-p" src="assets/ui/btn/${POW_PLATE[p.id]}_p.png" alt="">${plateLabel('btn', POW_PLATE[p.id])}<span class="powval">${goldText(shown)}</span><span class="plgauge ${over?'over':''}"><i style="width:${pct}%"></i></span></button>`;
         })()
       : `<button class="powchip ${p.ready?'ready':''}" onclick="usePower()"
            onpointerdown="powPressStart()" onpointerup="powPressEnd()" onpointerleave="powPressEnd()"
@@ -5367,8 +5800,8 @@ function renderHud() {
       ${foe}
     </div>
     <div class="hudbtns">
-      <button class="ibtn" onclick="showLegend()" title="Legend" aria-label="Legend"><img src="assets/ui/btn/legend.png" alt="Legend"></button>
-      <button class="ibtn" onclick="menu()" title="Menu" aria-label="Menu"><img src="assets/ui/btn/menu.png" alt="Menu"></button>
+      ${ibtn('legend', 'showLegend()')}
+      ${ibtn('menu', 'menu()')}
     </div>`;
   const _mb = $('#medalbar');
   if (S.medals && S.medals.length) {
@@ -5396,10 +5829,10 @@ function markTurnSpent() {
 }
 // tapping a non-button HUD stat pill (CP / HQ / Bases / Troops) explains what it is
 const PILL_INFO = {
-  cp:     ['Command Points', `Spent to play cards. A little refills at the start of each of your turns — hold <b>nodes</b> and captured <b>outposts</b> to earn more.`],
-  hq:     ['HQ Integrity', `Your headquarters' health. If it's destroyed you lose the battle — the plate glows <b class="red">red</b> when it's critical.`],
-  bases:  ['Enemy Bases', `How many enemy <b>HQs</b> are still standing. Destroy every one to win the battle.`],
-  troops: ['Troops', `Units in the field vs your <b>supply cap</b>. At the cap you can't deploy more — raise it by building <b>Barracks</b> and capturing <b>Outposts</b>.`],
+  cp:     [t('pill.cp.title', 'Command Points'), t('pill.cp.body', `Spent to play cards. A little refills at the start of each of your turns — hold <b>nodes</b> and captured <b>outposts</b> to earn more.`)],
+  hq:     [t('pill.hq.title', 'HQ Integrity'), t('pill.hq.body', `Your headquarters' health. If it's destroyed you lose the battle — the plate glows <b class="red">red</b> when it's critical.`)],
+  bases:  [t('pill.bases.title', 'Enemy Bases'), t('pill.bases.body', `How many enemy <b>HQs</b> are still standing. Destroy every one to win the battle.`)],
+  troops: [t('pill.troops.title', 'Troops'), t('pill.troops.body', `Units in the field vs your <b>supply cap</b>. At the cap you can't deploy more — raise it by building <b>Barracks</b> and capturing <b>Outposts</b>.`)],
 };
 function showPillInfo(key) {
   const e = PILL_INFO[key]; if (!e) return;
@@ -5419,7 +5852,7 @@ const OBJ_INFO = {
   hunt:    o => `${o.text}. Track the roaming quarry across the map and bring it down.`,
   spire:   o => `Wear down the <b>Living Heart</b> until it falls — but only so much damage lands each turn, so it's a war of attrition. <b>${o.hp}/${o.max}</b> HP left.`,
 };
-const OBJ_TITLE = { survive:'Survive', hold:'Hold the Point', escort:'Escort', escape:'Escape', bastion:'Bastion', hunt:'The Hunt', spire:'The Living Heart' };
+const OBJ_TITLE = { survive:t('objective.survive.title', 'Survive'), hold:t('objective.hold.title', 'Hold the Point'), escort:t('objective.escort.title', 'Escort'), escape:t('objective.escape.title', 'Escape'), bastion:t('objective.bastion.title', 'Bastion'), hunt:t('objective.hunt.title', 'The Hunt'), spire:t('objective.spire.title', 'The Living Heart') };
 function showObjInfo() {
   const o = S.objective, f = o && OBJ_INFO[o.kind]; if (!f) return;
   _infoPopup(`${OBJ_TITLE[o.kind] || 'Objective'}`, f(o));
@@ -5443,7 +5876,7 @@ function _infoPopup(title, body) {
   $('#ovPopup').innerHTML =
     `<div class="choice"><b class="gold">${title}</b>
        <div class="d" style="margin-top:8px;line-height:1.6;font-size:12.5px">${body}</div></div>
-     <div class="ovclose"><button class="ibtn" onclick="closeOv('ovPopup')" aria-label="OK"><img src="assets/ui/btn/confirm.png" alt="OK"></button></div>`;
+     <div class="ovclose">${ibtn('confirm', "closeOv('ovPopup')")}</div>`;
   $('#ovPopup').classList.add('show');
 }
 // find a medal by id across every place it might live (active run, collection, pending)
@@ -5474,8 +5907,8 @@ function showBigMedal(id, allBtn) {
       ${m.lifetime ? `<div class="bmLife">${siEm('medal')} awarded ${m.lifetime}× all-time</div>` : ''}
     </div>
     <div style="display:flex;gap:12px;justify-content:center;align-items:center;margin-top:14px">
-      ${allBtn ? `<button class="ibtn" onclick="closeOv('ovInspect');showMedals()" aria-label="All medals"><img src="assets/ui/btn/medals.png" alt="Medals"></button>` : ''}
-      <button class="ibtn" onclick="closeOv('ovInspect')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+      ${allBtn ? `${ibtn('medals', "closeOv('ovInspect');showMedals()")}` : ''}
+      ${ibtn('close', "closeOv('ovInspect')")}</div>`;
   $('#ovInspect').classList.add('show');
 }
 function showMedalOne(id) { showBigMedal(id, true); }   // battle medal-bar tap → big view + "all medals"
@@ -5521,7 +5954,7 @@ function showRunInfo() {
     ${runRulesBlock()}
     ${inBattle ? dangerRows('showRunInfo()') : ''}
     <div style="text-align:center;margin-bottom:6px">${pbtn('deck',"closeOv('ovInspect');showDeck()",{cls:'h'})}</div>
-    <div class="ovclose"><button class="ibtn" onclick="closeOv('ovInspect')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+    <div class="ovclose">${ibtn('close', "closeOv('ovInspect')")}</div>`;
   $('#ovInspect').classList.add('show');
 }
 
@@ -5903,11 +6336,16 @@ function _reducedMotion() {
 // exists on a healthy machine. It is here for the one that is already struggling, where the cheapest
 // thing to give up is work repeated every frame.
 const GFX_LEVELS = ['full', 'balanced', 'perf'];
-const GFX_LABEL = { full: 'Full', balanced: 'Balanced', perf: 'Performance' };
+const GFX_LABEL = { full: t('settings.gfx.full', 'Full'), balanced: t('settings.gfx.balanced', 'Balanced'), perf: t('settings.gfx.perf', 'Performance') };
 function gfxLevel() {
   try { const v = localStorage.getItem('dc_gfx'); return GFX_LEVELS.indexOf(v) >= 0 ? v : 'full'; }
   catch (_) { return 'full'; }
 }
+// A language change RELOADS. The ~17 top-level const tables above bake their text the moment this
+// script parses, so a live swap would leave the coach tips, node names and unit descriptions in the
+// old language while everything rebuilt around them switched. Reload is honest and, on a local
+// bundle, instant. I18n.setLocale persists the choice before it reloads.
+function setLanguage(id) { try { Sfx.play('ui_tap'); } catch (e) {} I18n.setLocale(id); }
 function setGfxLevel(v) {
   if (GFX_LEVELS.indexOf(v) < 0) return;
   try { localStorage.setItem('dc_gfx', v); } catch (_) {}
@@ -5965,7 +6403,7 @@ function drawIntents(list) {
   svg.innerHTML = out.join('');
 }
 
-const NEED_LBL = {own_unit:'your unit', enemy:'an enemy', any_unit:'any unit', tile:'a tile'};
+const NEED_LBL = {own_unit:t('need.own_unit', 'your unit'), enemy:t('need.enemy', 'an enemy'), any_unit:t('need.any_unit', 'any unit'), tile:t('need.tile', 'a tile')};
 function cardMarkup(c, extra) {
   // No cost tag. The circle is composited from the live price, so a badge saying FREE or CUT was a
   // second copy of a number already on the card, shouting over it. `once` stays: one-shot is a rule
@@ -6332,7 +6770,7 @@ function _coachSoon(id) {
   }, 500);
 }
 // interactable tokens sit ON open ground — they are NOT a terrain type
-const ONGROUND = { crate:'a supply crate', workshop:'a workshop', node:'a command node', escape:'the exit' };
+const ONGROUND = { crate:t('terrain.crate.onground', 'a supply crate'), workshop:t('terrain.workshop.onground', 'a workshop'), node:t('terrain.node.onground', 'a command node'), escape:t('terrain.escape.onground', 'the exit') };
 // The ground a special tile is sitting on, and whoever is standing on it. Shared by every describer
 // below so the storm, its eye and the objective all report their tile the same way.
 function _underTile(c) {
@@ -7288,7 +7726,7 @@ function showPopup(text, title) {
   $('#ovPopup').innerHTML =
     `<div class="choice"><b class="gold">${title || 'Found something'}</b>
        <div style="margin-top:8px">${text}</div></div>
-     <div class="ovclose"><button class="ibtn" onclick="closeOv('ovPopup')" aria-label="OK"><img src="assets/ui/btn/confirm.png" alt="OK"></button></div>`;
+     <div class="ovclose">${ibtn('confirm', "closeOv('ovPopup')")}</div>`;
   $('#ovPopup').classList.add('show');
 }
 function cancelSel() { cancelSelState(); renderBoard(); renderHand(); renderPrompt(); }
@@ -7540,11 +7978,11 @@ function showProfiles(){
         ${p.id==='default'?'':ibtn('delete', `deleteProfileUI('${p.id}','${(p.name||'').replace(/['\\]/g,'')}')`, {cls:'sm'})}
       </div>
     </div>`).join('');
-  $('#ovProfiles').innerHTML = `<div class="oframe titled prof"><div class="ofbanner ofhdr"><img src="assets/ui/hdr/campaigns.png" alt="Campaigns"></div>
+  $('#ovProfiles').innerHTML = `<div class="oframe titled prof">${ofBanner('campaigns')}
       <div class="verline">Table of War · v${APP_VERSION}</div>
       <div class="proflist">${rows}</div>
       <div style="text-align:center;margin-top:12px">${ibtn('new_run', "createProfileUI()")}</div>
-    </div><div class="ovclose"><button class="ibtn" onclick="closeOv('ovProfiles')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+    </div><div class="ovclose">${ibtn('close', "closeOv('ovProfiles')")}</div>`;
   openOv('ovProfiles');
 }
 async function switchProfile(id){ closeOv('ovProfiles'); render(await api('/api/profile_switch',{id})); toast('Switched to '+_actProfName()); }
@@ -7660,8 +8098,8 @@ function showRuns() {
         <div class="d" style="margin-top:5px"><b class="gold">Deck (${deckN}):</b> ${deck}</div>
       </details></div>`;
   }).join('') || ocap('No runs yet — finish a run (win or lose) and it lands here.');
-  $('#ovRuns').innerHTML = `<div class="oframe titled"><div class="ofbanner ofhdr"><img src="assets/ui/hdr/history.png" alt="History"></div>${ocap(`Your last ${runs.length} run${runs.length===1?'':'s'} — wins and losses, with what you did`)}
-    ${rows}</div><div class="ovclose"><button class="ibtn" onclick="closeOv('ovRuns')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+  $('#ovRuns').innerHTML = `<div class="oframe titled">${ofBanner('history')}${ocap(`Your last ${runs.length} run${runs.length===1?'':'s'} — wins and losses, with what you did`)}
+    ${rows}</div><div class="ovclose">${ibtn('close', "closeOv('ovRuns')")}</div>`;
   openOv('ovRuns');
 }
 async function newDaily() {
@@ -7816,9 +8254,9 @@ function showProgression() {
       ${ocap(`highest ascension cleared: ${g.cleared_asc}<br>${meritLine}${progbar}`)}
       <div class="proggrid" style="margin-top:6px">${rows}</div></div>`;
   }).join('');
-  $('#ovProg').innerHTML = `<div class="oframe titled"><div class="ofbanner ofhdr"><img src="assets/ui/hdr/generals.png" alt="Generals"></div>${ocap("Merit is your lifetime score with a general — it never resets. Cross a threshold, or clear an Ascension, to permanently unlock that general's card or medal.")}
+  $('#ovProg').innerHTML = `<div class="oframe titled">${ofBanner('generals')}${ocap("Merit is your lifetime score with a general — it never resets. Cross a threshold, or clear an Ascension, to permanently unlock that general's card or medal.")}
     ${blocks || '<div class="d">no data</div>'}
-    </div><div class="ovclose"><button class="ibtn" onclick="closeOv('ovProg')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+    </div><div class="ovclose">${ibtn('close', "closeOv('ovProg')")}</div>`;
   openOv('ovProg');
 }
 function showAchievements() {
@@ -7871,7 +8309,7 @@ function showAchievements() {
         ${markerRows?`${divider('Battle markers','var(--gold)')}${markerRows}`:''}
       </div>
     </div>
-    </div><div class="ovclose"><button class="ibtn" onclick="closeOv('ovAch')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+    </div><div class="ovclose">${ibtn('close', "closeOv('ovAch')")}</div>`;
   openOv('ovAch');
 }
 async function newGame(id) {
@@ -7906,7 +8344,7 @@ function showDraft() {
       <b>${c.name}</b> <span class="d">CP${c.cost}</span><div class="d">${c.text}</div></div>`).join('') +
     `<div style="display:flex;gap:12px;margin-top:10px;justify-content:center;align-items:center">
        ${ibtn('deck', "showDeck()")}
-       <button class="ibtn" onclick="skipDraft()" aria-label="Skip"><img src="assets/ui/btn/skip.png" alt="Skip"></button></div>`;
+       ${ibtn('skip', "skipDraft()")}</div>`;
   o.classList.add('show');
 }
 async function takeDraft(id) { Sfx.play('card_draw'); $('#ovDraft').classList.remove('show');
@@ -7996,56 +8434,56 @@ function medalIcon(id, size) {
 }
 
 const CLASS_INFO = {
-  construction_yard:{n:"Construction Yard",r:"Your HQ. If it's destroyed you lose. Can't move or attack."},
-  command_vehicle:{n:"Command Vehicle",r:"Nomad's MOBILE HQ — March it like a unit. Lose it and you lose. Can't attack."},
-  power_plant:{n:"Power Plant",r:"Building: +1 Command Point every turn (must be next to HQ). Can't move/attack."},
-  supply_depot:{n:"Supply Depot",r:"Building: draw +1 card every turn (must be next to HQ)."},
-  barracks:{n:"Barracks",r:"Building: reinforcements can deploy next to it (forward base), and it raises your troop cap by 2."},
-  turret:{n:"Turret",r:"Auto-defense: you DON'T control it — it fires on its own at the nearest enemy within range 3 after the enemy advances each round. Watch for its hit + damage number in the replay. Can't move."},
-  repair_bay:{n:"Repair Bay",r:"Building: heals adjacent friendly units +5 HP at the start of each of your turns. Park wounded units next to it. Can't move or attack."},
-  tribe_camp:{n:"Tribe Camp",r:"Neutral. Raze it to salvage a permanent card into your deck. Guards defend it."},
-  outpost:{n:"Outpost",r:"A capturable base (Level 4). Stand one of your units next to it, uncontested, to capture it — grey = neutral, cyan = yours, red = enemy's. Holding it gives +1 CP, +1 Troops, and a forward deploy point. Both sides fight over these; more outposts = more capability."},
-  rifleman:{n:"Rifleman",r:"Cheap infantry, melee range 1."},
-  rocket_soldier:{n:"Rocket Soldier",r:"Ranged infantry (range 2), good vs armor."},
-  sniper:{n:"Sniper",r:"Slow (1 action/turn), single-target, high damage at long range with long sight. On a hill it sees and shoots one tile further. Upgrade: armor-piercing rounds."},
-  light_tank:{n:"Light Tank",r:"Fast armor with a strong melee punch."},
-  heavy_tank:{n:"Heavy Tank",r:"Slow, heavy armor — big hits, high defense."},
-  artillery:{n:"Artillery",r:"Siege (range 2-4). CAN'T hit adjacent enemies — keep it back."},
+  construction_yard:{n:t('unitclass.construction_yard.n', "Construction Yard"),r:"Your HQ. If it's destroyed you lose. Can't move or attack."},
+  command_vehicle:{n:t('unitclass.command_vehicle.n', "Command Vehicle"),r:"Nomad's MOBILE HQ — March it like a unit. Lose it and you lose. Can't attack."},
+  power_plant:{n:t('unitclass.power_plant.n', "Power Plant"),r:"Building: +1 Command Point every turn (must be next to HQ). Can't move/attack."},
+  supply_depot:{n:t('unitclass.supply_depot.n', "Supply Depot"),r:"Building: draw +1 card every turn (must be next to HQ)."},
+  barracks:{n:t('unitclass.barracks.n', "Barracks"),r:"Building: reinforcements can deploy next to it (forward base), and it raises your troop cap by 2."},
+  turret:{n:t('unitclass.turret.n', "Turret"),r:"Auto-defense: you DON'T control it — it fires on its own at the nearest enemy within range 3 after the enemy advances each round. Watch for its hit + damage number in the replay. Can't move."},
+  repair_bay:{n:t('unitclass.repair_bay.n', "Repair Bay"),r:"Building: heals adjacent friendly units +5 HP at the start of each of your turns. Park wounded units next to it. Can't move or attack."},
+  tribe_camp:{n:t('unitclass.tribe_camp.n', "Tribe Camp"),r:"Neutral. Raze it to salvage a permanent card into your deck. Guards defend it."},
+  outpost:{n:t('unitclass.outpost.n', "Outpost"),r:"A capturable base (Level 4). Stand one of your units next to it, uncontested, to capture it — grey = neutral, cyan = yours, red = enemy's. Holding it gives +1 CP, +1 Troops, and a forward deploy point. Both sides fight over these; more outposts = more capability."},
+  rifleman:{n:t('unitclass.rifleman.n', "Rifleman"),r:"Cheap infantry, melee range 1."},
+  rocket_soldier:{n:t('unitclass.rocket_soldier.n', "Rocket Soldier"),r:"Ranged infantry (range 2), good vs armor."},
+  sniper:{n:t('unitclass.sniper.n', "Sniper"),r:"Slow (1 action/turn), single-target, high damage at long range with long sight. On a hill it sees and shoots one tile further. Upgrade: armor-piercing rounds."},
+  light_tank:{n:t('unitclass.light_tank.n', "Light Tank"),r:"Fast armor with a strong melee punch."},
+  heavy_tank:{n:t('unitclass.heavy_tank.n', "Heavy Tank"),r:"Slow, heavy armor — big hits, high defense."},
+  artillery:{n:t('unitclass.artillery.n', "Artillery"),r:"Siege (range 2-4). CAN'T hit adjacent enemies — keep it back."},
   
   
   
-  attack_dog:{n:"Attack Dog",r:"Very fast scout with wide sight. Fragile — great for revealing fog."},
-  tribe_warrior:{n:"Tribe Warrior",r:"Neutral guard — attacks anyone who comes close (you and the enemy)."},
-  bannerman:{n:"Bannerman",r:"A standard-bearer that CANNOT attack, but projects a battle-standard AURA: friendly units within 2 tiles deal +2 damage and take −1. It ranks up as the units it steadies score kills and take hits — gaining HP only (no attack or speed), and at RANK 5 each boost grows by +1 (+3 damage / −2 taken). Fragile — its aura dies with it, so keep it screened. Comes from Raise the Banner, events, and crates."},
+  attack_dog:{n:t('unitclass.attack_dog.n', "Attack Dog"),r:"Very fast scout with wide sight. Fragile — great for revealing fog."},
+  tribe_warrior:{n:t('unitclass.tribe_warrior.n', "Tribe Warrior"),r:"Neutral guard — attacks anyone who comes close (you and the enemy)."},
+  bannerman:{n:t('unitclass.bannerman.n', "Bannerman"),r:"A standard-bearer that CANNOT attack, but projects a battle-standard AURA: friendly units within 2 tiles deal +2 damage and take −1. It ranks up as the units it steadies score kills and take hits — gaining HP only (no attack or speed), and at RANK 5 each boost grows by +1 (+3 damage / −2 taken). Fragile — its aura dies with it, so keep it screened. Comes from Raise the Banner, events, and crates."},
   
   
   
-  citizen:{n:"The Refugee",r:`A civilian who can't fight (0 attack, slow). Escort them one tile at a time to the marked safe house. If they die, the fight is lost.`},
-  bog_rat:{n:"Bog Rat",r:"A big, fast swamp rat — melee only, but quick and relentless, and it lunges at whoever is nearest. They keep boiling out of the maze edges, so don't linger: find the way out."},
-  gator:{n:"Gator",r:"A mire predator — neutral, but hostile to everyone. Tough and hard-biting, yet slow and territorial: it lurks in the sludge and ambushes whatever strays too close, then sinks back. Keep your units out of the mire, or put it down."},
+  citizen:{n:t('unitclass.citizen.n', "The Refugee"),r:`A civilian who can't fight (0 attack, slow). Escort them one tile at a time to the marked safe house. If they die, the fight is lost.`},
+  bog_rat:{n:t('unitclass.bog_rat.n', "Bog Rat"),r:"A big, fast swamp rat — melee only, but quick and relentless, and it lunges at whoever is nearest. They keep boiling out of the maze edges, so don't linger: find the way out."},
+  gator:{n:t('unitclass.gator.n', "Gator"),r:"A mire predator — neutral, but hostile to everyone. Tough and hard-biting, yet slow and territorial: it lurks in the sludge and ambushes whatever strays too close, then sinks back. Keep your units out of the mire, or put it down."},
   
   
   
 };
 const TERRAIN_INFO = {
-  plain:"Open ground.", forest:"Forest — cover: units here take −2 damage.",
-  hill:"Hill — cover: −1 damage, and lifts your sightline (units here see farther).",
-  water:"Water — impassable.", rock:"Rock — impassable.",
-  crate:"Supply crate — move a unit onto it for supplies / intel / medkit / salvage.",
-  inferno:"Inferno — INSTANT burn: any unit that steps onto it takes fire damage (pierces armor).",
-  toxic:"Toxic sludge — SLOW rot: a unit that starts its turn here loses HP; also slows movement.",
-  mire:"Mire — SLOWS movement to a crawl (costly to cross).",
-  emp:"EMP field — TRIGGERS on entry: a unit that steps in loses its remaining actions this turn.",
-  smoke:"Smoke screen — friendly cover: blocks line of sight and shields whoever hides in it (−2 damage).",
-  escape:"...this ground is oddly still. Quiet. Not like the rest of the swamp at all.",
-  node:"Command node — a control point. You hold it by having a unit on or beside it while the enemy has none: a CP node raises your maximum CP, a draw node your hand size. If both sides stand next to it, it is contested and NEITHER side holds it.",
-  workshop:"Workshop — move a unit onto it to upgrade a card, or remove one from your deck.",
-  void:"Off the battlefield. Impassable, and it blocks line of sight.",
+  plain:t('terrain.plain.info', "Open ground."), forest:t('terrain.forest.info', "Forest — cover: units here take −2 damage."),
+  hill:t('terrain.hill.info', "Hill — cover: −1 damage, and lifts your sightline (units here see farther)."),
+  water:t('terrain.water.info', "Water — impassable."), rock:t('terrain.rock.info', "Rock — impassable."),
+  crate:t('terrain.crate.info', "Supply crate — move a unit onto it for supplies / intel / medkit / salvage."),
+  inferno:t('terrain.inferno.info', "Inferno — INSTANT burn: any unit that steps onto it takes fire damage (pierces armor)."),
+  toxic:t('terrain.toxic.info', "Toxic sludge — SLOW rot: a unit that starts its turn here loses HP; also slows movement."),
+  mire:t('terrain.mire.info', "Mire — SLOWS movement to a crawl (costly to cross)."),
+  emp:t('terrain.emp.info', "EMP field — TRIGGERS on entry: a unit that steps in loses its remaining actions this turn."),
+  smoke:t('terrain.smoke.info', "Smoke screen — friendly cover: blocks line of sight and shields whoever hides in it (−2 damage)."),
+  escape:t('terrain.escape.info', "...this ground is oddly still. Quiet. Not like the rest of the swamp at all."),
+  node:t('terrain.node.info', "Command node — a control point. You hold it by having a unit on or beside it while the enemy has none: a CP node raises your maximum CP, a draw node your hand size. If both sides stand next to it, it is contested and NEITHER side holds it."),
+  workshop:t('terrain.workshop.info', "Workshop — move a unit onto it to upgrade a card, or remove one from your deck."),
+  void:t('terrain.void.info', "Off the battlefield. Impassable, and it blocks line of sight."),
 };
 // terrain display names + stat lines for the detail view (mirrors engine terrain defs)
-const TERR_NAME = { plain:'Open Ground', forest:'Forest', hill:'Hill', water:'Water', rock:'Rock',
-  void:'Off-field', crate:'Supply Crate', workshop:'Workshop', node:'Command Node',
-  inferno:'Inferno', toxic:'Toxic Sludge', mire:'Mire', emp:'EMP Field', smoke:'Smoke Screen', escape:'Still Ground' };
+const TERR_NAME = { plain:t('terrain.plain.name', 'Open Ground'), forest:t('terrain.forest.name', 'Forest'), hill:t('terrain.hill.name', 'Hill'), water:t('terrain.water.name', 'Water'), rock:t('terrain.rock.name', 'Rock'),
+  void:t('terrain.void.name', 'Off-field'), crate:t('terrain.crate.name', 'Supply Crate'), workshop:t('terrain.workshop.name', 'Workshop'), node:t('terrain.node.name', 'Command Node'),
+  inferno:t('terrain.inferno.name', 'Inferno'), toxic:t('terrain.toxic.name', 'Toxic Sludge'), mire:t('terrain.mire.name', 'Mire'), emp:t('terrain.emp.name', 'EMP Field'), smoke:t('terrain.smoke.name', 'Smoke Screen'), escape:t('terrain.escape.name', 'Still Ground') };
 const TERR_STATS = { plain:{mv:1}, forest:{mv:2,def:2}, hill:{mv:2,def:1,elev:1},
   water:{imp:1}, rock:{imp:1}, void:{imp:1,los:1}, crate:{mv:1}, workshop:{mv:1}, node:{mv:1},
   inferno:{mv:1,haz:1}, toxic:{mv:2,haz:1}, mire:{mv:2}, emp:{mv:1,haz:1}, smoke:{mv:1,def:2,los:1}, escape:{mv:1} };
@@ -8074,8 +8512,8 @@ function terrChips(kind) {
   if (s.haz)  c.push('<span class="bichip haz">&#9888; Hazard</span>');
   return `<div class="bistats">${c.join('')}</div>`;
 }
-const SIDE_LABEL = {you:"your unit", enemy:"enemy", tribe:"neutral tribe",
-  hq_you:"YOUR HQ", hq_enemy:"enemy HQ",  neutral:"neutral", gator:"GATOR (mire predator)"};
+const SIDE_LABEL = {you:t('side.you', "your unit"), enemy:t('side.enemy', "enemy"), tribe:t('side.tribe', "neutral tribe"),
+  hq_you:t('side.hq_you', "YOUR HQ"), hq_enemy:t('side.hq_enemy', "enemy HQ"), raider:t('side.raider', "RAIDER (salvage thief)"), neutral:t('side.neutral', "neutral"), gator:t('side.gator', "GATOR (mire predator)")};
 
 function showInspect(u) {
   Sfx.play('ui_tap');
@@ -8136,7 +8574,7 @@ function showInspect(u) {
        ${desc?`<div class="bidesc">${desc}</div>`:''}
        ${intent}${flank}${terrPanel}
      </div>
-     <div class="ovclose"><button class="ibtn" onclick="closeOv('ovInspect')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+     <div class="ovclose">${ibtn('close', "closeOv('ovInspect')")}</div>`;
   $('#ovInspect').classList.add('show');
 }
 // One place for a panel to open, so the cue does not have to be remembered at 29 call sites.
@@ -8207,7 +8645,7 @@ function showWorkshop() {
     <div style="display:flex;gap:8px;margin:6px 0 10px;justify-content:center">
       ${tab('upgrade','view_upgrade',canUp)} ${tab('remove','remove',canRm)}</div>
     ${body}
-    <div style="text-align:center;margin-top:10px"><button class="ibtn" onclick="wsSkip()" aria-label="Skip"><img src="assets/ui/btn/skip.png" alt="Skip"></button></div>`, 'workshop');
+    <div style="text-align:center;margin-top:10px">${ibtn('skip', "wsSkip()")}</div>`, 'workshop');
   openOv('ovUpgrade');
 }
 function showSummary() {
@@ -8234,7 +8672,7 @@ function showHelp() {
   const keys = `<div class="keytable">${HOTKEY_HELP
     .map(([k, what]) => `<div class="keyrow"><kbd>${k}</kbd><span>${what}</span></div>`).join('')}</div>
     <div class="d" style="margin-top:6px;opacity:.8">Right-drag the battlefield to pan it; the wheel zooms.</div>`;
-  $('#ovHelp').innerHTML = `<div class="oframe titled"><div class="ofbanner ofhdr"><img src="assets/ui/hdr/how_to_play.png" alt="How to play"></div>
+  $('#ovHelp').innerHTML = `<div class="oframe titled">${ofBanner('how_to_play')}
     <div class="helpcols">
     ${topic('<span class="cyan">Your goal</span>', `Destroy every enemy <b>HQ</b> to clear a battle.`)}
     ${topic('<span class="cyan">Units move for free</span>', `Tap one of your units, then tap a
@@ -8274,7 +8712,7 @@ function showHelp() {
     ${topic('<span class="cyan">Keyboard</span>', keys, 'keyblock')}
     <div class="helpfoot">${pbtn('replay_tutorial','resetTutorial()')}</div>
     </div>
-    <div class="ovclose"><button class="ibtn" onclick="closeOv('ovHelp')" aria-label="Back"><img src="assets/ui/btn/return.png" alt="Back"></button></div>`;
+    <div class="ovclose">${ibtn('return', "closeOv('ovHelp')")}</div>`;
   openOv('ovHelp');
 }
 
@@ -8283,7 +8721,7 @@ function showMedal() {
     S.pending_medal.map(m => `<div class="choice" onclick="takeMedal('${m.id}')" style="display:flex;align-items:center;gap:12px">
       ${medalIcon(m.id, 54)}
       <div><b class="gold">${m.name}</b><div class="d">${m.desc}</div></div></div>`).join('') +
-    `<div style="text-align:center;margin-top:10px"><button class="ibtn" onclick="skipMedal()" aria-label="Skip"><img src="assets/ui/btn/skip.png" alt="Skip"></button></div>`,
+    `<div style="text-align:center;margin-top:10px">${ibtn('skip', "skipMedal()")}</div>`,
     'medal_earned');
   openOv('ovMedal');
 }
@@ -8322,14 +8760,14 @@ function showMedals() {
     <div style="margin-top:14px"></div>${ocap('Collection')}
     ${coll.length ? grouped(coll, m => activeIds.has(m.id) ? 1 : .6)
       : '<div class="d" style="text-align:center;padding:8px 4px">empty</div>'}
-    `, 'medals') + `<div class="ovclose"><button class="ibtn" onclick="closeOv('ovMedals')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+    `, 'medals') + `<div class="ovclose">${ibtn('close', "closeOv('ovMedals')")}</div>`;
   openOv('ovMedals');
 }
 // ── board-chip collection + equip (Settings → Board Chips) ──────────
 let _chipSlot = 'you';   // which slot the picker is editing (your units / enemy units)
 function chipSlot(s) { _chipSlot = s; showChips(); }
 async function equipChip(side, id) { Sfx.play('ui_tap'); haptic(15); const r = await api('/api/equip_chip', { side, id }); render(r); showChips(); }
-const _CHIP_TN = { common: 'Common', uncommon: 'Uncommon', rare: 'Rare', epic: 'Epic', legendary: 'Legendary' };
+const _CHIP_TN = { common: t('chip.tier.common', 'Common'), uncommon: t('chip.tier.uncommon', 'Uncommon'), rare: t('chip.tier.rare', 'Rare'), epic: t('chip.tier.epic', 'Epic'), legendary: t('chip.tier.legendary', 'Legendary') };
 const _CHIP_TC = { common: '#b9b09a', uncommon: '#6fae63', rare: '#5a8fd0', epic: '#b06fd0', legendary: '#e0b23e' };
 function showChips() {
   _dropCmd();
@@ -8363,7 +8801,7 @@ function showChips() {
     </div>
     ${ocap(`<b>${nOwned}/${nTot}</b> chips collected — win more as run rewards. Tap an owned chip to equip it on <b style="color:${glow}">${foe ? 'enemy' : 'your'} units</b>.`)}
     ${gal}
-  `, 'chips') + `<div class="ovclose"><button class="ibtn" onclick="closeOv('ovChips')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+  `, 'chips') + `<div class="ovclose">${ibtn('close', "closeOv('ovChips')")}</div>`;
   openOv('ovChips');
 }
 async function wsUpgrade(id) { closeOv('ovUpgrade'); render(await api('/api/upgrade', {card_id:id})); }
@@ -8411,10 +8849,10 @@ function showDeck() {
         <b>Discard pile</b> <span class="d">(${S.discard.reduce((a,d)=>a+d.n,0)} — reshuffled when the draw pile empties)</span>
         <div style="margin-top:6px">${S.discard.map(d=>`<div style="display:flex;justify-content:space-between;padding:1px 0"><span>${d.name}</span><span class="d">×${d.n}</span></div>`).join('')}</div></div>`
     : '';
-  $('#ovDeck').innerHTML = `<div class="oframe titled" style="max-width:640px"><div class="ofbanner ofhdr"><img src="assets/ui/hdr/deck.png" alt="Deck"></div>
+  $('#ovDeck').innerHTML = `<div class="oframe titled" style="max-width:640px">${ofBanner('deck')}
     <p style="margin-top:2px">${total} cards · tap a card for details</p>
     ${grid}${disc}
-    </div><div class="ovclose"><button class="ibtn" onclick="closeOv('ovDeck')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+    </div><div class="ovclose">${ibtn('close', "closeOv('ovDeck')")}</div>`;
   openOv('ovDeck');
 }
 function deckGridCard(c){
@@ -8451,7 +8889,7 @@ function showTerrain(cellOrKind) {
        ${terrChips(kind)}
        <div class="bidesc">${TERRAIN_INFO[kind] || ''}</div>
      </div>
-     <div class="ovclose"><button class="ibtn" onclick="closeOv('ovInspect')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+     <div class="ovclose">${ibtn('close', "closeOv('ovInspect')")}</div>`;
   $('#ovInspect').classList.add('show');
 }
 function legendChip(cls, side) {
@@ -8521,7 +8959,7 @@ function showLegend() {
         it's about troops around the TARGET. Beware Barrage splash when you cluster.</div>
         <div class="d" style="margin-top:6px">Tip: tap any unit or tile on the board to inspect it.</div></div>
       </div>
-     `, 'key') + `<div class="ovclose"><button class="ibtn" onclick="$('#ovLegend').classList.remove('show')" aria-label="Close"><img src="assets/ui/btn/close.png" alt="Close"></button></div>`;
+     `, 'key') + `<div class="ovclose">${ibtn('close', "$('#ovLegend').classList.remove('show')")}</div>`;
   openOv('ovLegend');
 }
 async function menu() {   // re-pick general / new run — clear any open overlays first
@@ -8658,7 +9096,7 @@ function showArmy() {
     `<div class="choice"><b>Retain <span class="gold">${nRet}/${cap}</span></b>
        <div class="d" style="margin-top:3px;line-height:1.5">Flag who to keep when you win — retained units get first claim on your roster slots (max ${cap}). Tap a unit to center the camera on it.</div></div>
      <div class="armylist">${body}</div>`, 'army')
-    + `<div class="ovclose"><button class="ibtn" onclick="closeOv('ovArmy')" aria-label="Back"><img src="assets/ui/btn/return.png" alt="Back"></button></div>`;
+    + `<div class="ovclose">${ibtn('return', "closeOv('ovArmy')")}</div>`;
   openOv('ovArmy');
 }
 async function toggleRetain(id) {
@@ -9383,7 +9821,7 @@ initWheelZoom();
 initDragPan();
 initZoomKeys();
 initHotkeys();
-window.__boot = () => { _applyOrient(); applyBoomMs(); const p = refresh(); setTimeout(checkForUpdate, 2500); return p; };   // src/main.ts wires the local API, then calls this; returns the refresh promise so callers/tests can await first paint; update check runs once, non-blocking
+window.__boot = () => { _applyOrient(); applyBoomMs(); _plateBoxDebug(); _upgradeStaticPlates(); watchPlateLabels(); const p = refresh(); setTimeout(checkForUpdate, 2500); return p; };   // src/main.ts wires the local API, then calls this; returns the refresh promise so callers/tests can await first paint; update check runs once, non-blocking
 </script>
 </body>
 </html>
