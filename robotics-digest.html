@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - September 06, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - September 08, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 06, 2026</div>
+        <div class="digest-date-badge">September 08, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s robotics roundup spans the extremes of the field: AI reacting to fusion plasma instabilities faster than any human operator and cyborg cockroaches built for disaster rescue, alongside a wave of industry dealmaking in surgical robotics, tactile sensing, and defense manufacturing.</p>
+        <p class="digest-intro">Today&#x27;s robotics roundup pairs a reality check on humanoid economics with real autonomy wins elsewhere: Agility Robotics&#x27; SPAC filing shows just $1.8M in revenue against a $140M loss, while a Dutch phlebotomy robot cleared the FDA on the strength of a 94.5% first-attempt success rate. Academic researchers weigh in on where care robots actually help with loneliness (monitoring and prompting, not companionship), and the community side ranges from a solo-built ROS2 quadruped and a fresh ros2_utils_tool release to an unverified but fast-spreading Unitree world-model combat demo.</p>
       </div>
     </section>
 
@@ -29,15 +29,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AI can now control fusion plasma faster than humans can react</h3>
-              <span class="digest-source">ScienceDaily Robotics</span>
+              <h3>Could robots help tackle loneliness? BBC&#x27;s Ann Droid raises questions about the future of care</h3>
+              <span class="digest-source">Robohub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Princeton/PPPL&#x27;s &quot;PACMAN&quot; system combines reinforcement learning with predictive plasma-behavior models, running full control loops in about 20 milliseconds versus seconds for a human operator.</li>
-              <li>Tested on the DIII-D tokamak, it predicted a tearing-mode instability roughly 200ms before onset and adjusted plasma conditions to prevent it from forming at all, something conventional controllers can&#x27;t do.</li>
-              <li>The system coordinated all six of DIII-D&#x27;s gyrotrons simultaneously, optimizing heating power and mirror aim in real time; results published in Nuclear Fusion (2026).</li>
+              <li>Most real-world &#x27;care robots&#x27; today are AI avatars on a screen, robotic pets, or smart speakers rather than humanoid helpers like the show&#x27;s Linda; current humanoid robots run only 90 minutes to 5 hours per charge, ruling out round-the-clock companionship.</li>
+              <li>Cardiff University researchers distinguish loneliness (a subjective sense that one&#x27;s relationships are insufficient) from isolation (mere physical solitude), arguing a robot&#x27;s presence alone cannot fix the former.</li>
+              <li>The most mature deployments today are monitoring and prompting - fall detection plus alerts, or nudging users toward contact with real people; facial-emotion-recognition systems perform worst on older adults, misreading anger and neutral expressions most often.</li>
             </ul>
-            <a href="https://www.sciencedaily.com/releases/2026/09/260903064215.htm" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://robohub.org/could-robots-help-tackle-loneliness-bbcs-ann-droid-raises-questions-about-the-future-of-care/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -47,51 +47,95 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Cyborg Roaches Can Stab You With Needles</h3>
+              <h3>This Robot Will Draw Your Blood Now</h3>
               <span class="digest-source">IEEE Spectrum Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>&quot;Paraborg&quot; cockroaches steer via electrodes on their antennae/cerci controlled with a handheld game controller, and carry a spring-loaded injector that uses a CO2-generating chemical reaction to fire a drug-filled syringe into a target.</li>
-              <li>Swarm design splits duties between reconnaissance (camera-carrying roaches) and medical intervention (injector-carrying roaches), aimed at reaching disaster victims trapped in rubble that conventional robots or rescuers can&#x27;t access.</li>
-              <li>In proof-of-concept trials over a 2.5-meter obstacle course, the cyborgs completed all 25 attempts and hit their injection target with a 72% success rate.</li>
+              <li>Vitestro&#x27;s Aletta combines near-infrared vein-finding, an ultrasound probe to map vessel depth and direction, and Doppler imaging to confirm blood flow direction (ruling out arteries) before automated needle insertion.</li>
+              <li>In a Dutch trial of over 1,600 participants it hit a 94.5% first-attempt success rate, including hard cases like obesity and elderly patients; one phlebotomist can supervise up to 3 machines, with humans handling the roughly 5.5% of failures.</li>
+              <li>FDA-cleared for non-hospital US settings on August 19, 2026 (two years after EU approval); planned EU launch in 2027 then US rollout. Vitestro flags a known risk of reduced accuracy on darker skin tones from IR absorption, claiming ultrasound mitigates it.</li>
             </ul>
-            <a href="https://spectrum.ieee.org/cyborg-rescue-roach" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://spectrum.ieee.org/blood-draw-robot-vitestro-aletta" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Pressure sensors can help improve robotic gripping accuracy</h3>
+              <h3>Agility Robotics reports $1.8M revenue ahead of humanoid SPAC</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Distributed tactile sensors (piezoresistive films, capacitive layers, microfluidic pads) measure localized stress at the contact interface rather than one global force reading, capturing the full grasp sequence: contact, surface deformation, micro-slips, load redistribution, then stable hold or failure.</li>
-              <li>Sensors can flag slip within the first few milliseconds of contact via characteristic micro-variations in pressure distribution, letting a controller react before an object actually drops.</li>
-              <li>Rigid, soft, and fragile objects load the sensor array differently (concentrated vs. broadly distributed vs. asymmetric collapse); demonstrated in the field with XELA Robotics&#x27; uSkin fingertip sensors on a UMI gripper.</li>
+              <li>Agility&#x27;s S-4 filing shows just $1.8 million in 2025 revenue against a $140 million operating loss for its Digit humanoid business, disclosed ahead of a SPAC merger.</li>
+              <li>A hard data point on how far humanoid robotics remains from commercial scale even for one of the most-funded companies in the category.</li>
             </ul>
-            <a href="https://www.therobotreport.com/pressure-sensors-can-help-improve-robotic-gripping-accuracy/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/agility-robotics-reports-18m-revenue-ahead-of-humanoid-spac/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ARM Institute gets $90M for 10 projects to modernize military manufacturing</h3>
+              <h3>MassRobotics shares member survey results around FCC restrictions</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The $90M comes from the Office of the Undersecretary of War&#x27;s Manufacturing Technology Office via an Organic Industrial Base Modernization Challenge, spread across 15 ARM Institute member organizations.</li>
-              <li>The 10 funded projects fall into three buckets: AI for safety and quality in energetics manufacturing, drones to speed mission readiness, and robotics to clear manufacturing bottlenecks, targeting 12 military manufacturing sites nationwide.</li>
-              <li>Two-year delivery window, with each project required to include a workforce-upskilling component alongside the technology itself.</li>
+              <li>MassRobotics surveyed member companies on the FCC&#x27;s ban on new foreign-produced mobile robots and found the membership split rather than unanimously for or against.</li>
+              <li>Signals the ban is creating real compliance and sourcing uncertainty across the robotics supply chain, not just a policy talking point.</li>
             </ul>
-            <a href="https://www.therobotreport.com/arm-institute-gets-90m-for-10-projects-to-modernize-military-manufacturing/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/massrobotics-shares-member-survey-results-around-fcc-restrictions/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>The ros2_utils_tool finally hit version 1.0!</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>v1.0 adds a UI for recording/playing back ROS2 bag files with splitting-by-size and looping playback, plus one-click export of bag messages to YAML for analysis.</li>
+              <li>Adds compressed-image support in the conversion tools and the ability to broadcast both static and dynamic tf transforms.</li>
+              <li>Extends distro support to Kilted, Lyrical, and Rolling (Jazzy remains the minimum), consolidating several separate CLI utilities into one UI/CLI toolkit.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/the-ros2-utils-tool-finally-hit-version-1-0/57935" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Orion - ROS2 Quadruped Robotics Platform</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Solo 8-month build of a ROS2-based quadruped covering the full stack: mechanical design, embedded firmware, electronics, and ROS2 node software, done by one person rather than a team or a COTS kit.</li>
+              <li>A useful reference point for hobbyists on how far a from-scratch quadruped plus ROS2 integration can go outside a lab or company budget.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1wa9ir1/orion_ros2_quadruped_robotics_platform/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Enovis to acquire surgical tech provider eCential Robotics for $180M</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>I built a time-optimal Micromouse planner to beat shortest-path A*. The shortest path kept winning.</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Deal terms: €176M ($204.3M) at closing plus up to €35M ($40.6M) in milestone-based earnouts; eCential brings a 7-degree-of-freedom robotic arm and 50+ engineers built on 15+ years of computer-assisted surgery work.</li>
-              <li>Enovis plans to ship its first robotic system for knee surgery within two years, integrating eCential&#x27;s proprietary control software into its existing ASTRA platform, before following with a shoulder system where Enovis already holds market share.</li>
-              <li>Transaction expected to close by end of 2026.</li>
+              <li>Inspired by Red Comet&#x27;s 2017 Micromouse run, which deliberately chose a longer route to preserve speed - the classic Micromouse lesson that the fastest path beats the shortest one.</li>
+              <li>Built a time-optimal planner meant to beat plain shortest-path A* by accounting for turn and speed costs, but found shortest-path A* kept winning in practice - an instructive negative result about whether the real bottleneck is path search or motion-profile tuning.</li>
             </ul>
-            <a href="https://www.therobotreport.com/enovis-to-acquire-ecential-robotics-for-180m/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1wadkyo/i_built_a_timeoptimal_micromouse_planner_to_beat/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Unitree&#x27;s UnifoLM-X2-1.0 reads the opponent, predicts the next move and reacts instantly. For the first time a world model controls a fully autonomous humanoid fight in real time.</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Demo claims a world-model-driven control stack (UnifoLM-X2-1.0) lets a Unitree humanoid read an opponent&#x27;s motion, predict its next move, and react in real time during a fight rather than following teleoperation or a scripted routine.</li>
+              <li>Billed as the first fully autonomous humanoid combat demo driven by a real-time world model; the clip circulated on r/robotics via more than one post (including a Bilibili source), spreading fast despite no accompanying technical paper.</li>
+              <li>Worth tracking for independent corroboration or benchmarks, since the claims so far rest on a demo video rather than published results.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1waegfb/unitrees_unifolmx210_reads_the_opponent_predicts/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

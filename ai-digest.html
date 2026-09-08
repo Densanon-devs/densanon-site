@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - September 06, 2026 | Densanon</title>
+  <title>AI Morning Digest - September 08, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,52 +15,95 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 06, 2026</div>
+        <div class="digest-date-badge">September 08, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A quiet news day with one big model announcement and two practical workflow notes: OpenAI teases a 3D-savvy GPT-6 Astra for developers, Simon Willison shows how easy it now is to hand Blender to a coding agent, and Claude Code ships a routine maintenance release.</p>
+        <p class="digest-intro">OpenAI&#x27;s new GPT-6 Astra model is the throughline today: it lands as a fresh plugin in the llm CLI and powers two separate vibe-coded demos (a WASM video compressor and a D3 map-projection tool). On the industry side, OpenAI&#x27;s chief scientist makes a defense-first case for continuing to push capability, a companion piece traces how agentic coding tools reshaped OpenAI&#x27;s internal research spend this year, and a look at git.kernel.org shows the real infrastructure cost of AI-era scraper traffic.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Creepy crawlies</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Kernel.org maintainer Konstantin Ryabitsev reports git.kernel.org now burns more CPU cycles rendering commit pages for scrapers than it spends on all legitimate access combined, including actual git clones.</li>
+              <li>Across five geographically distributed servers, 14 CPU cores are dedicated just to generating HTML commit views for bots.</li>
+              <li>Willison flags the same exposure for Datasette-hosted sites - any platform serving lots of crawlable pages is vulnerable to this same &#x27;background radiation&#x27; of abusive automated traffic, much of it plausibly AI-training scrapers.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Sep/7/creepy-crawlies/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Quoting Jakub Pachocki</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>OpenAI chief scientist Jakub Pachocki argues the strongest case for continuing to train more capable models is defensive: powerful, aligned AI is needed to secure infrastructure and counter rogue agents in real time.</li>
+              <li>He frames it as a balance rather than a blank check for speed, explicitly warning that uncertainty about AI progress does not justify &#x27;racing forward at all costs.&#x27;</li>
+              <li>Signals that OpenAI&#x27;s stated deployment priority is shifting toward defensive and security applications of frontier models, not just raw capability gains.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Sep/7/jakub-pachocki/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Research acceleration: The view inside OpenAI</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The piece and a companion essay (&#x27;An Alien Mind&#x27; by Pachocki) both use &#x27;RSI&#x27; - Recursive Self-Improvement - as OpenAI&#x27;s internal framing for AGI progress, without ever spelling out the acronym in the main text.</li>
+              <li>Per-researcher spend on internal coding agents reportedly went from near-zero in February 2026 to about $600 per researcher by late August 2026.</li>
+              <li>The spending curve accelerates sharply in late July, which the author ties to internal researcher access to the model later released publicly as GPT-6 Astra - a concrete signal of how much a stronger model shifted internal agentic workflows.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Sep/6/research-acceleration-the-view-inside-openai/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Introducing GPT-6 Astra for developers</h3>
+              <h3>llm 0.35</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GPT-6 Astra shows noticeably sharper prompt comprehension and can produce more sophisticated, multi-step outputs than prior GPT versions.</li>
-              <li>Its standout strength is 3D generation: the demo has it building complex renders from text alone, including gardens, shipyards, cityscapes, and a Dyson sphere.</li>
-              <li>The announcement is video-only so far, with no published benchmarks, pricing, or API availability — treat capability claims as unverified until documentation lands.</li>
+              <li>The llm CLI tool added a plugin for OpenAI&#x27;s new gpt-6-astra model, so it&#x27;s callable from the command line alongside every other model llm already supports.</li>
+              <li>It&#x27;s a minimal release - no other functional changes are called out beyond the new model registration.</li>
+              <li>Keeps llm&#x27;s pattern of adding new provider models within days of release, so the CLI stays a viable single interface across GPT, Claude, Gemini, and local models.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/5/introducing-gpt-6-astra-for-developers/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Sep/7/llm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Using Blender with coding agents on macOS</h3>
+              <h3>Video compressor</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Setup is one step: install the full Blender desktop app from blender.org — no plugin or SDK needed for a coding agent to drive it.</li>
-              <li>Point an agent like ChatGPT Codex at the installed /Applications/Blender binary and prompt it directly (e.g. &#x27;render a scene of a pelican riding a bicycle&#x27;); the agent writes and runs Blender&#x27;s Python API itself.</li>
-              <li>The same workflow produces editable .blend files, rendered stills, or full animations by rendering frame sequences and stitching them with ffmpeg.</li>
+              <li>Willison had Claude Fable 5.1 (in Claude Code for web) build a browser-based video compressor using the WebAssembly build of FFMPEG - all encoding happens client-side, no backend at all.</li>
+              <li>The tool generates 5 preset versions (Largest to Smallest) in about 11.8 seconds, tuning resolution, CRF (22-28), audio bitrate, encoder speed, and H.264 profile per preset.</li>
+              <li>Output compression ratios ranged from 48% to 87% of original size, and the UI shows the exact ffmpeg command behind each version, so results are reproducible rather than a black box.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/5/blender-coding-agents-macos/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Sep/7/video-compressor/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.263</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>Mercator &lt;-&gt; Equal Earth</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Anthropic shipped Claude Code v2.1.263 on September 6, 2026, described only as &#x27;bug fixes and reliability improvements&#x27; with no itemized changelog.</li>
-              <li>No new features or breaking changes are called out, so it&#x27;s a safe pull on the auto-update channel but not one to expect new capabilities from.</li>
+              <li>Prompted by the UN&#x27;s recent vote on the Equal Earth map projection, Willison had GPT-6 Astra (medium) in ChatGPT Work build a D3 tool that animates the transition between Mercator and Equal Earth projections.</li>
+              <li>A slider and play button let users scrub or auto-play the morph between the two projections without hand-coding the projection math.</li>
+              <li>Another data point for GPT-6 Astra&#x27;s coding ability on a self-contained, math-heavy visualization task done end-to-end via vibe-coding.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.263" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Sep/7/equal-earth/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
