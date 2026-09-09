@@ -1,7 +1,7 @@
 {
-  "version": "0.0.107",
-  "versionCode": 107,
+  "version": "0.0.108",
+  "versionCode": 108,
   "releaseDate": "2026-09-08",
-  "downloadUrl": "https://github.com/Densanon-devs/densanon-site/releases/download/densassistant-mobile-v0.0.107/DensAssistant-0.0.107.apk",
-  "changelog": "Protects your recordings when re-syncing several meetings at once.\n\nYour desktop transcribes one meeting at a time. If you sent more than it could hold, the phone used to quietly send its own transcript instead - and then delete the recording, because the desktop reported the meeting done. You lost both the better transcript and the audio.\n\nNow it says the desktop is busy, asks you to try that one again in a minute, and keeps your recording.\n\nPair this with desktop 0.1.66, which fixes meetings longer than about two minutes failing to transcribe."
+  "downloadUrl": "https://github.com/Densanon-devs/densanon-site/releases/download/densassistant-mobile-v0.0.108/DensAssistant-0.0.108.apk",
+  "changelog": "Fixes long recordings failing to upload with \"Aborted\".\n\nUploads were capped at 60 seconds by a library default. An hour-long meeting is well over 100 MB and takes longer than that on normal WiFi, so the transfer was cut off partway - affecting only long recordings, which are exactly the ones worth recovering.\n\nThe cap is now 30 minutes. Your recording is never deleted until your desktop confirms a finished transcript, so nothing was lost - re-sync and it will go through."
 }
