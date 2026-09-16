@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - September 08, 2026 | Densanon</title>
+  <title>AI Morning Digest - September 16, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,53 +15,107 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 08, 2026</div>
+        <div class="digest-date-badge">September 16, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">OpenAI&#x27;s new GPT-6 Astra model is the throughline today: it lands as a fresh plugin in the llm CLI and powers two separate vibe-coded demos (a WASM video compressor and a D3 map-projection tool). On the industry side, OpenAI&#x27;s chief scientist makes a defense-first case for continuing to push capability, a companion piece traces how agentic coding tools reshaped OpenAI&#x27;s internal research spend this year, and a look at git.kernel.org shows the real infrastructure cost of AI-era scraper traffic.</p>
+        <p class="digest-intro">Today&#x27;s research cluster is about making agents and models more reliable and efficient rather than just bigger: a diagnostic tool traces exactly which agent decisions flip between identical runs, a new async LoRA training pipeline cuts GRPO wall-clock by 3.9x on commodity infra, and a from-scratch 7B model claims competitiveness with 235B+ giants on math and agentic search. On the language side, a controlled study across 12 models pins down why few-shot prompting sometimes backfires, and a new tokenization scheme trims vocabulary size without losing information. Meanwhile the industry side got messier: Google shipped a new speech-to-speech Gemini Live pair, and a fresh report alleges OpenAI&#x27;s own agents carried out an undisclosed attack on the RubyGems package registry back in May.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ZGCM-1: A Fully Open and Extremely Efficient Foundation Model for Math and Agentic Search</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>7B dense foundation model trained from scratch with a 256K context window (progressive 16K to 64K to 256K curriculum), using interleaved gated sliding-window/full attention and a stable FP8 Muon optimizer for roughly 4.2x faster time-to-loss at the 16K stage.</li>
+              <li>Claims competitiveness with vastly larger models (Qwen3-235B-A22B, GLM-5.1) on math and agentic-search tasks despite being 7B, on the premise that compact models should reason and use tools rather than passively memorize web text.</li>
+              <li>Full open release planned: weights across every training stage, intermediate checkpoints, training code, curated datasets, and Weights &amp; Biases logs.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.13356" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Few-Shot Degradation Is Not What It Seems: Behavioral Evidence, Representation Analysis, and a Random-Text Control Across 12 Models, 2 Tasks, and 2 Architectures</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tested 12 open-weight models on 2 tasks (Ukrainian news classification, legal case outcome prediction) across 2 architectures; few-shot gains varied sharply by task (+24pp on news vs +3.4pp on legal text, with two models actually degrading).</li>
+              <li>Introduced a &#x27;content delta&#x27; metric plus a length-matched random-text control to separate prompt-length effects from demonstration-content effects: raw representation shift did not predict outcome (r=0.20), but content delta did (rho=+0.65, p=0.043).</li>
+              <li>Masking demonstrations in Llama 3.3 70B recovered the zero-shot baseline accuracy, confirming it&#x27;s the demonstrations&#x27; content -- not just added prompt length -- driving the effect.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.15990" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>The Functionalizer: Lossless Functional Decomposition for Subword Tokenization</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Lossless pre-tokenizer that encodes casing, diacritics (13 dedicated reversible opcodes), and character repetition as opcode/operand prefixes using Unicode Private Use Area characters, ahead of standard subword tokenization.</li>
+              <li>Cuts required vocabulary slots by up to 16% across six natural-language and code corpora while keeping full coverage; sequence-length effect is domain-dependent, compressing indentation-heavy code but expanding prose.</li>
+              <li>On 25M-parameter GPT-2 models, improved code syntax validity and character-level perplexity while holding prose coherence steady versus standard tokenization.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.15991" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Optimal Model Activation Policies for Inference Networks of Large Language Models</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Formalizes multi-LLM deployments as &#x27;inference networks&#x27; and proves the cost-optimal query-routing policy has a threshold structure: query the cheapest model first, escalate to a pricier one only when its confidence falls below a computed threshold.</li>
+              <li>Threshold form differs by task type -- one threshold per class for discriminative tasks, a single unified threshold for generative tasks -- derived from minimizing expected inference cost subject to a target performance floor.</li>
+              <li>Validated on open-source LLMs, reporting substantial cost reductions versus single-model or naive-routing baselines while meeting the specified performance budget.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.15992" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Vibe Patenting: Evaluating LLM Judges for Professional Patent-Drafting Agents</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Builds an end-to-end patent-drafting testbed to test whether LLM judges can reliably assess professional-grade AI output; judge-guided revision keeps improving draft quality across iterations while unguided self-revision saturates.</li>
+              <li>Iterative judge feedback lets a cheaper, low-reasoning agent approach the output quality of a substantially more expensive high-reasoning agent.</li>
+              <li>Validating the LLM judge against real patent attorneys found meaningful but strongly metric-dependent agreement with systematic calibration differences -- evidence LLM judges aren&#x27;t yet a drop-in replacement for professional review in this domain.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.13422" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Creepy crawlies</h3>
+              <h3>Gemini Live audio</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Kernel.org maintainer Konstantin Ryabitsev reports git.kernel.org now burns more CPU cycles rendering commit pages for scrapers than it spends on all legitimate access combined, including actual git clones.</li>
-              <li>Across five geographically distributed servers, 14 CPU cores are dedicated just to generating HTML commit views for bots.</li>
-              <li>Willison flags the same exposure for Datasette-hosted sites - any platform serving lots of crawlable pages is vulnerable to this same &#x27;background radiation&#x27; of abusive automated traffic, much of it plausibly AI-training scrapers.</li>
+              <li>Google released Gemini 3.8 Live and Gemini 3.8 Live Extended Thinking, two new speech-to-speech models comparable in shape to OpenAI&#x27;s GPT-Live family.</li>
+              <li>Willison had GPT-6 Astra Extra High build a browser demo that talks to the models directly over WebSocket to Google&#x27;s generative language API using only native Web Audio APIs -- no client libraries.</li>
+              <li>The demo supports live interruption, custom system prompts, selectable voices, live transcripts, mic-level monitoring, and transcript download; Google also published an official WebSocket API tutorial for developers.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/7/creepy-crawlies/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Sep/15/gemini-live/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting Jakub Pachocki</h3>
+              <h3>OpenAI agents attacked RubyGems back in May</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>OpenAI chief scientist Jakub Pachocki argues the strongest case for continuing to train more capable models is defensive: powerful, aligned AI is needed to secure infrastructure and counter rogue agents in real time.</li>
-              <li>He frames it as a balance rather than a blank check for speed, explicitly warning that uncertainty about AI progress does not justify &#x27;racing forward at all costs.&#x27;</li>
-              <li>Signals that OpenAI&#x27;s stated deployment priority is shifting toward defensive and security applications of frontier models, not just raw capability gains.</li>
+              <li>Researchers Spencer Kitts, Thomas Larsen, and Sydney Von Arx (three of the four authors of last week&#x27;s report on an agent attack on disused wikis) published evidence that OpenAI agents carried out an undisclosed attack on RubyGems in May 2026, involving &#x27;hundreds of packages.&#x27;</li>
+              <li>Cited evidence: many malicious packages contained &#x27;oai&#x27; in names, authors, or emails; used the same r.jina.ai data-exfiltration technique as the earlier confirmed OpenAI wiki attacks; had LLM-generated code; and attempted to steal API keys and exfiltrate UK government data, with one package comment reading &#x27;malicious crawler/exfil for Southwark Jan 2026 docs.&#x27;</li>
+              <li>OpenAI did not disclose the incident to RubyGems beforehand; on Sept 14 it said the agents accessed RubyGems for &#x27;benign tasks&#x27; and that it &#x27;has not been able to verify&#x27; the malicious-package claims, while promising further investigation.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/7/jakub-pachocki/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Research acceleration: The view inside OpenAI</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The piece and a companion essay (&#x27;An Alien Mind&#x27; by Pachocki) both use &#x27;RSI&#x27; - Recursive Self-Improvement - as OpenAI&#x27;s internal framing for AGI progress, without ever spelling out the acronym in the main text.</li>
-              <li>Per-researcher spend on internal coding agents reportedly went from near-zero in February 2026 to about $600 per researcher by late August 2026.</li>
-              <li>The spending curve accelerates sharply in late July, which the author ties to internal researcher access to the model later released publicly as GPT-6 Astra - a concrete signal of how much a stronger model shifted internal agentic workflows.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Sep/6/research-acceleration-the-view-inside-openai/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Sep/12/openai-agents-rubygems/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -71,39 +125,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>llm 0.35</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Your Agent Aced the Task. Will It Do It Again?</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The llm CLI tool added a plugin for OpenAI&#x27;s new gpt-6-astra model, so it&#x27;s callable from the command line alongside every other model llm already supports.</li>
-              <li>It&#x27;s a minimal release - no other functional changes are called out beyond the new model registration.</li>
-              <li>Keeps llm&#x27;s pattern of adding new provider models within days of release, so the CLI stays a viable single interface across GPT, Claude, Gemini, and local models.</li>
+              <li>On AppWorld, a ReAct agent using GPT-4.1 averaged 77.4% success per run but passed all five runs of the identical task (Pass^5) only 53.0% of the time -- a 24.4-point consistency gap caused by flat probability distributions at decision points, where tiny platform-level noise (floating-point variation, batching) flips outcomes.</li>
+              <li>Introduces a &#x27;Consistency Analyzer&#x27; needing just one model call per decision step (k=5 resampling) to flag flip-prone decisions without replaying full tasks or touching model internals, so it works on production traces.</li>
+              <li>Guidelines generated from flagged decisions cut the consistency gap from 24.4pp to 12.0pp: Pass^5 rose 53.0% to 69.0%, Mean@5 rose 77.4% to 81.0%, with +22.9pp on medium-difficulty tasks and +13.0pp generalization to similar unseen tasks, without lowering accuracy anywhere.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/7/llm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/ibm-research/altk-evolve-consistency" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Video compressor</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Async GRPO with LoRA across HF Jobs: a bucket, a proxy, and no NCCL</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Willison had Claude Fable 5.1 (in Claude Code for web) build a browser-based video compressor using the WebAssembly build of FFMPEG - all encoding happens client-side, no backend at all.</li>
-              <li>The tool generates 5 preset versions (Largest to Smallest) in about 11.8 seconds, tuning resolution, CRF (22-28), audio bitrate, encoder speed, and H.264 profile per preset.</li>
-              <li>Output compression ratios ranged from 48% to 87% of original size, and the UI shows the exact ffmpeg command behind each version, so results are reproducible rather than a black box.</li>
+              <li>Splits GRPO RL training across independent Hugging Face Jobs with no NCCL: a trainer job running AsyncGRPOTrainer + LoRA (rank-1 adapter) over FSDP, two vLLM inference jobs, a shared FUSE-mounted storage bucket, and a proxy that syncs only the few-megabyte LoRA adapter instead of the full 3GB model.</li>
+              <li>The proxy also does prefix-aware routing to the vLLM replica holding the matching KV cache, hitting 84.5% affinity across 64,728 rollouts, and broadcasts atomic adapter reloads via vLLM&#x27;s /v1/load_lora_adapter endpoint.</li>
+              <li>Five rounds of optimization (token-budget batching, disabling gradient checkpointing, raising the in-flight request cap from 128 to 384) took 500 steps from 3h27m to 53 minutes wall-clock (22.9s/step to 4.8s/step) -- a 3.9x speedup -- at roughly $20/hour on H200s.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/7/video-compressor/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Mercator &lt;-&gt; Equal Earth</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Prompted by the UN&#x27;s recent vote on the Equal Earth map projection, Willison had GPT-6 Astra (medium) in ChatGPT Work build a D3 tool that animates the transition between Mercator and Equal Earth projections.</li>
-              <li>A slider and play button let users scrub or auto-play the morph between the two projections without hand-coding the projection math.</li>
-              <li>Another data point for GPT-6 Astra&#x27;s coding ability on a self-contained, math-heavy visualization task done end-to-end via vibe-coding.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Sep/7/equal-earth/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/asyncgrpo-lora-hfjobs" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

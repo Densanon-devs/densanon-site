@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - September 08, 2026 | Densanon</title>
+  <title>Computation Morning Digest - September 16, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 08, 2026</div>
+        <div class="digest-date-badge">September 16, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation news splits between the chip/security trenches and a couple of genuine curiosities. AMD&#x27;s Zen 6 and SEV-SNP work keeps pushing new instructions through LLVM and the Linux kernel ahead of silicon, Intel&#x27;s confidential-computing memory overhead fix nears mainline, and a mystery startup&#x27;s x86 chip is quietly out-tiling Intel&#x27;s own AMX. Add a $320 million crypto heist, Thailand hitting pause on data center buildouts, and a fruit fly connectome learning to play Doom, and it&#x27;s a reminder that hardware, security, and pure research keep bleeding into each other.</p>
+        <p class="digest-intro">Today&#x27;s computation news is dominated by ripple effects of the AI-driven memory shortage: Fairphone says memory now eats 60% of a device&#x27;s materials cost, forcing redesigns and counterfeit-chip testing, while SK hynix and Intel reportedly discuss US HBM manufacturing to add capacity. Geopolitics looms over silicon too, with Nvidia&#x27;s Jensen Huang giving China until 2030 to build independent advanced lithography tooling, and AWS still unable to restore Middle East data centers six months after drone strikes. On the open-source side, kernel and toolchain work keeps landing concrete performance wins - AVX-512-optimized xor_gen for Linux software RAID, OpenVDB&#x27;s new SIMD framework, AMD P-State tuning for Zen 6, and Ubuntu 26.10 completing its Rust coreutils migration - while Java 27 makes G1 garbage collection the default everywhere. And in one of the day&#x27;s more entertaining hardware-hacking feats, an enthusiast fully cracked the PlayStation 2&#x27;s 26-year-old MechaCon security chip via chemical decapping.</p>
       </div>
     </section>
 
@@ -29,123 +29,135 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NEC has quietly quit quantum computing hardware development, report claims - company says it will continue to evaluate practical applications and industrialization of quantum technologies</h3>
+              <h3>Ubuntu 26.10 Moves cp, mv &amp; rm Over To Rust Coreutils For 100% Transition</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Ubuntu 26.10 completes the Rust coreutils migration for cp, mv, and rm, the three utilities that Ubuntu 25.10 and 26.04 LTS had held back on GNU coreutils because of compatibility gaps in the upstream uutils project.</li>
+              <li>Those upstream blockers are now resolved, letting Ubuntu finish swapping these core file-management commands to the memory-safe Rust implementations alongside the utilities already migrated in prior releases.</li>
+              <li>Ubuntu 26.10 stable is targeted for October 15, 2026.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Ubuntu-Completes-Rust-Coreutils" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>OpenVDB Introduces SIMD Framework With Some 2~4x Performance Improvements</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>OpenVDB 13.1 adds a new SIMD framework built on Agner Fog&#x27;s VectorClass Library, with explicit x86 intrinsic support up to AVX-512, turned on via the `_USE_VCL=ON` build option.</li>
+              <li>The initial coverage targets point transfer algorithms and delivers 2x-4x performance improvements on modern AVX-512-capable x86_64 CPUs; future releases will extend SIMD coverage to more operations.</li>
+              <li>Ships alongside updates to NanoVDB&#x27;s CUDA resource management and the vdb_tool command-line utility in the same 13.1 release from the Academy Software Foundation.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/OpenVDB-SIMD--Framework" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Linux 7.4 Slated To Land The AVX-512 Optimized xor_gen For A Big Performance Win</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Google&#x27;s Eric Biggers submitted an AVX-512-optimized xor_gen() for the Linux kernel, the function Linux software RAID5/RAID6 uses to generate and validate parity blocks.</li>
+              <li>The optimization targets AMD Zen 4-and-newer and current Intel server CPUs with AVX-512, and showed strong gains in benchmarks run on an AMD Ryzen 9 9950X.</li>
+              <li>Patches are queued in the x86/fpu branch for the Linux 7.4 merge window, expected to open in mid-October 2026.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.4-Land-AVX-512-xor-gen" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AMD P-State Driver For Linux 7.4 Will Tune For Zen 6 Client CPUs</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Linux 7.4&#x27;s AMD P-State driver adds Zen 6 client CPU tuning, with separate Energy Performance Preference values for performance cores, dense/efficiency cores, and AMD&#x27;s new low-power core type.</li>
+              <li>Boost ratio calculation switches from an arbitrary performance scale to being derived directly from frequency values.</li>
+              <li>Lands in the same kernel cycle as AMDGPU&#x27;s default-on HDMI 2.1 (FreeSync/VRR/ALLM) support, ahead of AMD&#x27;s next-gen Ryzen client launches expected in early 2027.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.4-AMD-P-State-Zen-6" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AI-induced Memory shortage is changing how devices are built, Fairphone says memory now 60% of materials cost — smaller laptop and phone makers are redesigning products and have to test for fake chips</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NEC has reportedly ended its own quantum computing hardware development program rather than continuing to compete on qubit count.</li>
-              <li>The company says it will keep evaluating practical applications and industrialization of quantum technologies, pivoting from R&amp;D to deployment and consulting.</li>
-              <li>Adds to a pattern of second-tier players exiting the quantum hardware race as the capital needed to keep pace with IBM, Google, and IonQ keeps rising.</li>
+              <li>Fairphone says memory now accounts for 60% of a device&#x27;s materials cost, as AI-driven demand squeezes DRAM and NAND supply.</li>
+              <li>Smaller laptop and phone makers are redesigning motherboards and rethinking procurement strategies to cope with limited memory availability.</li>
+              <li>The shortage has also pushed manufacturers to start testing incoming memory chips for counterfeits.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/quantum-computing/nec-has-quietly-quit-quantum-computing-hardware-development-report-claims-company-says-it-will-continue-to-evaluate-practical-applications-and-industrialization-of-quantum-technologies" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/ram/ai-induced-memory-shortage-is-changing-how-devices-are-built-fairphone-says-memory-now-60-percent-of-materials-cost-smaller-laptop-and-phone-makers-are-redesigning-products-and-have-to-test-for-fake-chips" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Industry &amp; HPC</h2>
+        <div class="digest-grid">
+
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Hackers drain $320 million in Bitcoin from Liquid Network, emptying roughly 95% of federation wallet - attackers claim they&#x27;re the &#x27;good guys&#x27; and will return funds after the vulnerability is fixed</h3>
+              <h3>SK hynix reportedly discussing US memory chip manufacturing with Intel — options include leasing Ohio plant or forming joint venture with other AI hyperscalers</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Attackers drained about $320 million in Bitcoin from Liquid Network, emptying roughly 95% of the platform&#x27;s federation wallet in one exploit.</li>
-              <li>The attackers claim to be white hats and say they will return the funds once the underlying bug is patched, a familiar exploit-then-negotiate pattern in crypto heists.</li>
-              <li>Losing 95% of a federation wallet in one shot points to a systemic flaw in the multisig/federation trust model, not just a single leaked key.</li>
+              <li>SK hynix and Intel are reportedly in talks over US-based memory chip manufacturing, with options including SK hynix leasing an Intel plant in Ohio or forming a joint venture with other AI hyperscalers.</li>
+              <li>Both companies declined to confirm the talks; the report frames the sensitivity around SK hynix&#x27;s position as trade negotiations between Seoul and Washington continue.</li>
+              <li>The talks are aimed at adding US HBM production capacity as AI-driven memory demand strains existing supply.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/cryptocurrency/hackers-drain-usd320-million-in-bitcoin-from-liquid-network-emptying-roughly-95-percent-of-federation-wallet-attackers-claim-theyre-the-good-guys-and-will-return-funds-after-the-vulnerability-is-fixed" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/sk-hynix-reportedly-discussing-us-memory-chip-manufacturing-with-intel-options-include-leasing-ohio-plant-or-forming-joint-venture-with-other-ai-hyperscalers" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Google maps entire brain and central nervous system of adult male fruit fly, software engineers immediately make it run Doom - AI-powered 3D model of over 166,000 neurons can also play Super Mario 64</h3>
+              <h3>Jensen Huang thinks China will develop its own advanced lithography chipmaking tools by 2030 — Nvidia CEO says achievement of that capability &#x27;is just a matter of time&#x27;</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Researchers completed MaleCNS v1.0, the first full brain and central nervous system map of an adult male fruit fly, covering more than 166,000 neurons.</li>
-              <li>Within days, engineers wired the connectome up as a controller and got it playing Doom and Super Mario 64, treating the mapped circuitry as a functional control network rather than a static diagram.</li>
-              <li>Shows connectomics moving from pure neuroscience mapping into testable computational models that can actually be driven.</li>
+              <li>Nvidia CEO Jensen Huang said China will develop its own advanced lithography chipmaking tools by 2030, calling it &quot;just a matter of time.&quot;</li>
+              <li>Huang has previously put the timeline for China closing the gap in advanced semiconductor tooling at three to four years.</li>
+              <li>The comments feed into ongoing debate over how quickly China can reduce reliance on Western/ASML-class lithography equipment.</li>
             </ul>
-            <a href="https://www.tomshardware.com/software/programming/google-maps-entire-brain-and-central-nervous-system-of-adult-male-fruit-fly-software-engineers-immediately-make-it-run-doom-ai-powered-3d-model-of-over-166-000-neurons-can-also-play-super-mario-64" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/jensen-huang-thinks-china-will-develop-its-own-advanced-lithography-systems-by-2030-nvidia-ceo-says-achievement-of-that-capability-is-just-a-matter-of-time" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Thailand asks data center operators to suspend 49 buildouts until legal framework is complete - new legislation is supposed to create &#x27;airtight&#x27; requirements for large-scale data centers</h3>
+              <h3>AWS tells clients to abandon Middle East data centers six months after Iranian drone strikes — Amazon offers no recovery timeline as UAE mulls underground data centers</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Thailand has asked data center operators to pause roughly 49 planned buildouts until new regulatory legislation is finalized.</li>
-              <li>The pending framework is meant to set &#x27;airtight&#x27; requirements for large-scale data centers, likely covering power, water, and land-use limits.</li>
-              <li>Another data point in growing regulatory pushback on AI-driven data center expansion, following similar friction in Ireland, Singapore, and parts of the US.</li>
+              <li>AWS has told customers running data centers in Abu Dhabi and Bahrain to migrate to other regions, more than six months after Iranian drone strikes damaged the facilities.</li>
+              <li>Amazon has given no timeline for restoring the damaged Middle East data centers.</li>
+              <li>The UAE is reportedly considering underground data centers as a hardening measure in response to the strikes.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/data-centers/thailand-asks-datacenter-operators-to-suspend-buildouts-until-legal-framework-is-complete-new-legislation-is-supposed-to-create-airtight-requirements-for-large-scale-datacenters" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/data-centers/amazon-reportedly-tells-customers-in-abu-dhabi-and-bahrain-to-find-safer-harbors-for-their-data-aws-has-no-timeline-for-resuming-operations-six-months-after-drone-strikes-damaged-data-centers-in-the-region" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Original Sony PlayStation 2 security chip ‘broken wide open’ after 26 years — chemical decapping and four years of reverse engineering unlocks MechaCon secrets</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>An enthusiast fully reverse-engineered and dumped Sony&#x27;s PS2 &quot;MechaCon&quot; security chip (part CXP102064) after four years of effort, 26 years after the console&#x27;s release.</li>
+              <li>The work used chemical decapping to physically expose and read the silicon, defeating the chip&#x27;s anti-tamper protections.</li>
+              <li>MechaCon was the PS2&#x27;s core anti-piracy and access-control gatekeeper; its internal secrets are now documented and unlocked.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/video-games/playstation/26-year-old-sony-ps2-security-chip-broken-wide-open-after-four-years-of-effort-reverse-engineering-enthusiast-successfully-unlocks-cxp102064-mechacon-chip" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>DirectX Support Promoted To Official Target Within LLVM</h3>
+              <h3>Java 27 Reaches GA With The G1 Garbage Collector By Default Everywhere</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>After roughly four years of Microsoft-backed development, the DirectX backend has been promoted to an official target within the LLVM compiler stack.</li>
-              <li>The backend lowers LLVM IR directly into DirectX Intermediate Language (DXIL), the format consumed by Windows DirectX 12 graphics drivers.</li>
-              <li>Official target status means the backend now gets first-class upstream maintenance and testing instead of living as an out-of-tree experiment.</li>
+              <li>OpenJDK 27 reached general availability with G1 as the default garbage collector in every environment, not just server deployments (G1 has been the server default since JDK 9).</li>
+              <li>Oracle says G1 is now competitive with the Serial collector across all heap sizes on throughput, latency, memory use, and startup time, which is why it replaces Serial as the universal default.</li>
+              <li>The release also ships Compact Object Headers on by default (96 down to 64 bits, improving heap density), a post-quantum hybrid key exchange for TLS 1.3, plus continued previews of Structured Concurrency and the Vector API.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/LLVM-DirectX-Backend-Official" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>FEX 2609 Released With Speedier JIT Performance, JIT Disk Cache Option</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>FEX 2609 ships as the latest monthly release of the open-source x86_64-on-AArch64 emulator, adding a faster JIT and a new JIT disk cache option.</li>
-              <li>The disk cache avoids re-JITting the same translated code blocks across runs, which should cut cold-start latency for repeat launches.</li>
-              <li>FEX underpins running Steam and Proton-translated Windows games on ARM64 Linux, so JIT throughput gains translate directly into load times and frame rates.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/FEX-2609-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>LLVM Merges Support For AMD&#x27;s RMPCHKD, RMPREAD &amp; RMPOPT Instructions</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>LLVM/Clang has landed support for AMD&#x27;s RMPCHKD, RMPREAD, and RMPOPT instructions, targeting Zen 5 and newer processors.</li>
-              <li>RMPOPT specifically reduces overhead on the Reverse Map Table (RMP) that SEV-SNP uses for memory encryption and integrity checks on confidential VMs.</li>
-              <li>Compiler support is landing ahead of the corresponding Linux kernel support, which is still in progress, showing the usual toolchain-then-kernel rollout order for new confidential-computing instructions.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/LLVM-Zen5-Zen6-RMPOPT" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>FreeBSD 14.5 Released With Hardware Support Improvements, Many Bug &amp; Security Fixes</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>FreeBSD 14.5-RELEASE is out for teams still on the 14.x branch rather than having moved to FreeBSD 15.</li>
-              <li>The release is described as hardware support improvements plus a batch of bug and security fixes rather than new features.</li>
-              <li>Matters most for production FreeBSD 14.x fleets that need the security fixes without jumping a major version.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/FreeBSD-14.5-RELEASE" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Mysterious x86 CPU Already Has APX, x86S Where Intel Left Off For Legacy-Free x86</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>An unnamed x86 vendor outside AMD and Intel is shipping silicon with 16-tile and 32-tile AMX (matrix multiply) implementations that reportedly exceed Intel&#x27;s current Advanced Matrix Extensions tile counts.</li>
-              <li>The same chip is picking up APX (Advanced Performance Extensions) and x86S, the legacy-boot-mode-free x86 spec, suggesting a clean-slate design rather than a legacy-compatible part.</li>
-              <li>The vendor&#x27;s identity is still undisclosed, but the feature mix points to a startup targeting AI/matrix-heavy workloads rather than general-purpose legacy compatibility.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/x86-CPU-With-APX-x86S" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux Preps For New AMD Zen 6 BTB CTX Isolation Security Feature</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A newly posted Linux kernel patch reveals a security feature for upcoming AMD Zen 6 processors that isolates Branch Target Buffer (BTB) entries by execution context.</li>
-              <li>BTB context isolation is a mitigation aimed at branch-predictor side-channel attacks, the same family as Spectre-v2 and BHI, stopping one context from poisoning another&#x27;s branch predictions.</li>
-              <li>Landing kernel support ahead of hardware availability lets distros ship day-one protection when Zen 6 parts actually launch.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-Preps-AMD-BTB-CTX" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/OpenJDK-27-Java-27" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

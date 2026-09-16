@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - September 08, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - September 16, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 08, 2026</div>
+        <div class="digest-date-badge">September 16, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s robotics roundup pairs a reality check on humanoid economics with real autonomy wins elsewhere: Agility Robotics&#x27; SPAC filing shows just $1.8M in revenue against a $140M loss, while a Dutch phlebotomy robot cleared the FDA on the strength of a 94.5% first-attempt success rate. Academic researchers weigh in on where care robots actually help with loneliness (monitoring and prompting, not companionship), and the community side ranges from a solo-built ROS2 quadruped and a fresh ros2_utils_tool release to an unverified but fast-spreading Unitree world-model combat demo.</p>
+        <p class="digest-intro">Robotics infrastructure is maturing across the stack today: Agility&#x27;s Digit 5 trades its signature backward-bending legs for human-like joints and cuts its charge cycle to 9 minutes for 90 minutes of runtime, while Universal Robots refreshes its entire cobot line with three new heavy-payload arms and a controller packing 40% more compute in a smaller footprint. On the software side, InOrbit&#x27;s open-source OpenRobOps pitches itself as fleet management&#x27;s answer to ROS, built around the new ISO 21423 interoperability standard, and ASI&#x27;s autonomous tractors now run the largest fleet in American sugarcane-farming history across a 255,000-acre Florida operation. Research is pushing into harder coordination and sensing problems - a new benchmark shows decentralized multi-robot policies can learn effective production behavior from local observations alone, a modifier-conditioned decoding scheme lets operators dial in how firmly or quickly a learned task executes, and one paper even explores encoding robot kinematics in quantum circuits, though without any claimed speed advantage over classical methods.</p>
       </div>
     </section>
 
@@ -29,15 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Could robots help tackle loneliness? BBC&#x27;s Ann Droid raises questions about the future of care</h3>
-              <span class="digest-source">Robohub</span>
+              <h3>World-Action Models for Robot Learning and Control: A Survey</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Most real-world &#x27;care robots&#x27; today are AI avatars on a screen, robotic pets, or smart speakers rather than humanoid helpers like the show&#x27;s Linda; current humanoid robots run only 90 minutes to 5 hours per charge, ruling out round-the-clock companionship.</li>
-              <li>Cardiff University researchers distinguish loneliness (a subjective sense that one&#x27;s relationships are insufficient) from isolation (mere physical solitude), arguing a robot&#x27;s presence alone cannot fix the former.</li>
-              <li>The most mature deployments today are monitoring and prompting - fall detection plus alerts, or nudging users toward contact with real people; facial-emotion-recognition systems perform worst on older adults, misreading anger and neutral expressions most often.</li>
+              <li>Survey formalizes ‘World-Action Models’ (WAMs) - systems that predict how candidate actions will affect future states before acting - and distinguishes them from plain world models, model-based RL, action-conditioned video generation, and vision-language-action (VLA) policies.</li>
+              <li>Organizes the field along representations, transition modeling, action interfaces, architectures, training pipelines, and scaling strategies, covering manipulation, navigation, and autonomous driving as application domains.</li>
+              <li>Flags open problems as the field&#x27;s core unsolved challenges: action alignment, world-action factorization, spatial consistency across viewpoints, long-horizon memory, and efficient inference.</li>
             </ul>
-            <a href="https://robohub.org/could-robots-help-tackle-loneliness-bbcs-ann-droid-raises-questions-about-the-future-of-care/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.16074" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AssemblyGrid v1: A Benchmark for Multi-Robot Production with Temporary Coalitions, Local Information, and Geometric Constraints</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>New reproducible benchmark for multi-robot production under decentralized control, spanning three workload families (Flow, Coalition, Concurrency) that combine process progression, material routing, temporary robot coalitions, and geometric feasibility constraints.</li>
+              <li>Directly compares learning-based methods (IPPO, MAPPO, QMIX multi-agent RL) against non-learning approaches on identical tasks.</li>
+              <li>Key finding: decentralized policies trained only on local observations and actions can learn effective production behavior, validating the benchmark as a testbed for cooperative decision-making research.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.16075" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Bi-MoDe: Bilateral Control-based Imitation Learning via Modifier-Conditioned Decoding for Modulation of Execution Speed and Contact Intensity</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Bi-MoDe lets an operator tell a bilateral-control imitation-learning policy how to execute a task at inference time - slowly or quickly, gently or firmly - by injecting conditioning into every Transformer decoder layer via adaLN-Zero, instead of retraining a separate model per variant.</li>
+              <li>Validated on a real-world whiteboard-wiping task across multiple speed and force modifier combinations.</li>
+              <li>Ablations show decoder-level conditioning alone or latent-space composition alone each underperform - combining both is necessary for accurate adherence to physical directives like force intensity.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.16040" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Structure-Preserving Quantum Circuit Architectures for Robot Kinematics</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Proposes a quantum circuit encoding for rigid-body robot kinematics that factorizes each translation into a classical magnitude plus a signed direction on a single-qubit Bloch vector, kept compatible with standard Denavit-Hartenberg serial-manipulator conventions.</li>
+              <li>Demonstrated numerically negligible position/orientation reconstruction error under ideal simulation, with multiple circuit variants trading off qubit count, circuit depth, and measurement overhead, plus characterization of noise sensitivity and finite-shot effects.</li>
+              <li>Authors are explicit this is a representational feasibility study, not a speedup: no computational advantage over classical kinematics methods is claimed.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.16089" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -47,37 +83,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>This Robot Will Draw Your Blood Now</h3>
-              <span class="digest-source">IEEE Spectrum Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Vitestro&#x27;s Aletta combines near-infrared vein-finding, an ultrasound probe to map vessel depth and direction, and Doppler imaging to confirm blood flow direction (ruling out arteries) before automated needle insertion.</li>
-              <li>In a Dutch trial of over 1,600 participants it hit a 94.5% first-attempt success rate, including hard cases like obesity and elderly patients; one phlebotomist can supervise up to 3 machines, with humans handling the roughly 5.5% of failures.</li>
-              <li>FDA-cleared for non-hospital US settings on August 19, 2026 (two years after EU approval); planned EU launch in 2027 then US rollout. Vitestro flags a known risk of reduced accuracy on darker skin tones from IR absorption, claiming ultrasound mitigates it.</li>
-            </ul>
-            <a href="https://spectrum.ieee.org/blood-draw-robot-vitestro-aletta" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Agility Robotics reports $1.8M revenue ahead of humanoid SPAC</h3>
+              <h3>Agility’s Digit 5 humanoid has new legs, batteries, and safety upgrades</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Agility&#x27;s S-4 filing shows just $1.8 million in 2025 revenue against a $140 million operating loss for its Digit humanoid business, disclosed ahead of a SPAC merger.</li>
-              <li>A hard data point on how far humanoid robotics remains from commercial scale even for one of the most-funded companies in the category.</li>
+              <li>Digit 5 drops Agility&#x27;s signature backward-bending ‘bird legs’ for human-like joints with proprietary cycloidal actuators, enabling repeated 50-lb lifts, kneeling, and a stable seated position; reach grows to 7.2 ft (up from Digit 4&#x27;s 5.5 ft) at 284 lb total weight.</li>
+              <li>Battery swaps to a 90-minute runtime with a 9-minute full charge - a 10:1 run-to-charge ratio versus Digit 4&#x27;s 2:1 - enabling 20+ hours of daily operation; safety now relies on 360-degree person detection that triggers autonomous avoidance, deceleration, or a seated shutdown instead of physical barriers.</li>
+              <li>Announced September 15 alongside Agility&#x27;s planned SPAC merger (Churchill Capital Corp. XI) at a $2.5B valuation, with over $300M in multi-year orders already booked; general availability targeted for end of 2027, with EU/UK expansion (CE certification) to follow.</li>
             </ul>
-            <a href="https://www.therobotreport.com/agility-robotics-reports-18m-revenue-ahead-of-humanoid-spac/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/agilitys-digit-5-humanoid-has-new-legs-batteries-safety-upgrades/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>MassRobotics shares member survey results around FCC restrictions</h3>
+              <h3>Universal Robots launches its seventh generation robot platform at IMTS</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>MassRobotics surveyed member companies on the FCC&#x27;s ban on new foreign-produced mobile robots and found the membership split rather than unanimously for or against.</li>
-              <li>Signals the ban is creating real compliance and sourcing uncertainty across the robotics supply chain, not just a policy talking point.</li>
+              <li>Three new arms join the e-Series/UR lineup, named for payload (kg) and reach (mm): UR10g-1750 (10kg/1750mm), UR17g-1300 (17kg/1300mm), and UR18g-950 (18kg/950mm).</li>
+              <li>New CB7 controller delivers 40% more compute in a 30% smaller footprint, with multi-network connectivity to PLCs, HMIs, MES platforms, IPCs, and vision systems in both standalone and compact cabinet versions.</li>
+              <li>Redesigned g-Series tool flange bakes in force-torque sensing, impedance control, and RTDE without external camera/sensor cabling; runs PolyScope X (ISO 10218-1 safety compliance, open APIs, ROS 2) alongside a 20%-lighter TP7 teach pendant.</li>
             </ul>
-            <a href="https://www.therobotreport.com/massrobotics-shares-member-survey-results-around-fcc-restrictions/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/universal-robots-launches-its-seventh-generation-robot-platform-at-imts/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>How autonomous fleets are changing what’s possible in American agriculture</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>ASI&#x27;s Mobius platform runs the autonomous fleet by retrofitting existing John Deere tractors with drive-by-wire technology rather than requiring new hardware, making the platform manufacturer-agnostic.</li>
+              <li>Deployed across U.S. Sugar&#x27;s 255,000-acre operation spanning five Florida counties - described as the largest autonomous vehicle fleet in the history of American sugarcane farming, with plans to expand fleet-wide over the next decade.</li>
+              <li>Early results show higher land-preparation accuracy than human operators plus longer working hours; U.S. Sugar (3,000 local employees) is retraining tractor operators into supervisory roles rather than cutting jobs, against a backdrop of an estimated $3.1B in recent Florida freeze losses.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/how-autonomous-fleets-are-changing-whats-possible-american-agriculture/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Ultrasound offers a scalable path to tactile intelligence for physical AI</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>UltraSense&#x27;s subsurface ultrasound sensing reflects acoustic waves off internal material boundaries and infers contact from time-of-flight, reflection amplitude, attenuation, and impedance changes - keeping the sensing element away from the wear-prone outer contact surface, unlike capacitive or piezoresistive e-skin.</li>
+              <li>Reports 500-micrometer spatial resolution through elastomer layers, about 1.25 millinewton localized force precision, and a roughly 5 millinewton shear-sensing noise floor.</li>
+              <li>Already shipped 4 million+ units into automotive applications for manufacturing scale; next step is custom ASICs with edge processing for robotic-hand deployment.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/ultrasound-offers-scalable-path-tactile-intelligence-physical-ai/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -87,15 +137,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The ros2_utils_tool finally hit version 1.0!</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>InOrbit.AI releases OpenRobOps ISO 21423 reference implementation</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>v1.0 adds a UI for recording/playing back ROS2 bag files with splitting-by-size and looping playback, plus one-click export of bag messages to YAML for analysis.</li>
-              <li>Adds compressed-image support in the conversion tools and the ability to broadcast both static and dynamic tf transforms.</li>
-              <li>Extends distro support to Kilted, Lyrical, and Rolling (Jazzy remains the minimum), consolidating several separate CLI utilities into one UI/CLI toolkit.</li>
+              <li>InOrbit.AI released OpenRobOps (ORO), an Apache 2.0-licensed open-source robot fleet-management platform, pitched as a ROS-equivalent for fleet operations so developers stop rebuilding the same backend infrastructure.</li>
+              <li>Ships the industry&#x27;s first reference implementation of ISO 21423, the new communication/data-exchange standard for industrial mobile robots and fleet managers (InOrbit&#x27;s CEO sits on the ISO working group), plus native Open-RMF interoperability for heterogeneous, multi-vendor fleets.</li>
+              <li>Feature set includes high-throughput telemetry built for unreliable networks, real-time spatial tracking with live camera visualization, Git-based configuration-as-code, automated incident detection/remediation, and edge-to-cloud hybrid deployment.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/the-ros2-utils-tool-finally-hit-version-1-0/57935" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/inorbit-ai-releases-openrobops-iso-21423-reference-implementation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -105,37 +155,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Orion - ROS2 Quadruped Robotics Platform</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>Robots in society, business and culture: August 2026</h3>
+              <span class="digest-source">Robohub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Solo 8-month build of a ROS2-based quadruped covering the full stack: mechanical design, embedded firmware, electronics, and ROS2 node software, done by one person rather than a team or a COTS kit.</li>
-              <li>A useful reference point for hobbyists on how far a from-scratch quadruped plus ROS2 integration can go outside a lab or company budget.</li>
+              <li>North American robot orders hit 8,940 units worth $622M in Q2 2026 - up 4.3% in units and 21.3% in revenue year over year - with automotive&#x27;s share of orders declining as adoption diversifies into other sectors.</li>
+              <li>Supply-chain and security frictions are surfacing: The Information reported US robotics startups sourcing components from Shenzhen markets and hand-carrying robots through customs in suitcases, while a US Department of Energy lab is investigating whether Chinese-made LiDAR sensors pose a security risk in US vehicles.</li>
+              <li>Research highlights: Princeton engineers built a motorless, origami-inspired shape-shifting robot using magnetic control instead of motors, and a Drexel study of 50 men found expressive robots earned stronger initial trust but triggered an oxytocin spike (a stress-response marker) when the robots made mistakes.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wa9ir1/orion_ros2_quadruped_robotics_platform/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>I built a time-optimal Micromouse planner to beat shortest-path A*. The shortest path kept winning.</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Inspired by Red Comet&#x27;s 2017 Micromouse run, which deliberately chose a longer route to preserve speed - the classic Micromouse lesson that the fastest path beats the shortest one.</li>
-              <li>Built a time-optimal planner meant to beat plain shortest-path A* by accounting for turn and speed costs, but found shortest-path A* kept winning in practice - an instructive negative result about whether the real bottleneck is path search or motion-profile tuning.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wadkyo/i_built_a_timeoptimal_micromouse_planner_to_beat/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Unitree&#x27;s UnifoLM-X2-1.0 reads the opponent, predicts the next move and reacts instantly. For the first time a world model controls a fully autonomous humanoid fight in real time.</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Demo claims a world-model-driven control stack (UnifoLM-X2-1.0) lets a Unitree humanoid read an opponent&#x27;s motion, predict its next move, and react in real time during a fight rather than following teleoperation or a scripted routine.</li>
-              <li>Billed as the first fully autonomous humanoid combat demo driven by a real-time world model; the clip circulated on r/robotics via more than one post (including a Bilibili source), spreading fast despite no accompanying technical paper.</li>
-              <li>Worth tracking for independent corroboration or benchmarks, since the claims so far rest on a demo video rather than published results.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1waegfb/unitrees_unifolmx210_reads_the_opponent_predicts/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://robohub.org/robots-in-society-business-and-culture-august-2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
