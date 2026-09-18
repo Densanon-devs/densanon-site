@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - September 16, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - September 18, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 16, 2026</div>
+        <div class="digest-date-badge">September 18, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Robotics infrastructure is maturing across the stack today: Agility&#x27;s Digit 5 trades its signature backward-bending legs for human-like joints and cuts its charge cycle to 9 minutes for 90 minutes of runtime, while Universal Robots refreshes its entire cobot line with three new heavy-payload arms and a controller packing 40% more compute in a smaller footprint. On the software side, InOrbit&#x27;s open-source OpenRobOps pitches itself as fleet management&#x27;s answer to ROS, built around the new ISO 21423 interoperability standard, and ASI&#x27;s autonomous tractors now run the largest fleet in American sugarcane-farming history across a 255,000-acre Florida operation. Research is pushing into harder coordination and sensing problems - a new benchmark shows decentralized multi-robot policies can learn effective production behavior from local observations alone, a modifier-conditioned decoding scheme lets operators dial in how firmly or quickly a learned task executes, and one paper even explores encoding robot kinematics in quantum circuits, though without any claimed speed advantage over classical methods.</p>
+        <p class="digest-intro">Today&#x27;s robotics research leans hard into manipulation hardware and perception: two new bimanual/dexterous-hand platforms (AthenaZero, DITTO) and a fully spiking event-camera model (REACT) all target the low-latency, high-fidelity control gap in dynamic manipulation. On the industry side, Agility Robotics&#x27; five-generation Digit retrospective and a $4.9B August funding tally show humanoid and physical-AI hardware continuing to mature and attract capital, while Arm&#x27;s new Total Design program tries to standardize the compute stack underneath it. The ROS 2 community keeps pushing embedded and multi-robot tooling forward, from native DDS on microcontrollers to a new benchmark for decentralized multi-robot production.</p>
       </div>
     </section>
 
@@ -29,51 +29,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>World-Action Models for Robot Learning and Control: A Survey</h3>
+              <h3>AthenaZero: A low-inertia, bimanual robot for dynamic manipulation</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Survey formalizes ‘World-Action Models’ (WAMs) - systems that predict how candidate actions will affect future states before acting - and distinguishes them from plain world models, model-based RL, action-conditioned video generation, and vision-language-action (VLA) policies.</li>
-              <li>Organizes the field along representations, transition modeling, action interfaces, architectures, training pipelines, and scaling strategies, covering manipulation, navigation, and autonomous driving as application domains.</li>
-              <li>Flags open problems as the field&#x27;s core unsolved challenges: action alignment, world-action factorization, spatial consistency across viewpoints, long-horizon memory, and efficient inference.</li>
+              <li>AthenaZero is a bimanual manipulator built to minimize end-effector inertia without sacrificing control authority, using quasi-direct-drive actuation.</li>
+              <li>Transmission remotization moves actuator mass off the distal links, giving the endpoint an effective mass comparable to much lighter reference arms while preserving torque bandwidth.</li>
+              <li>Low endpoint inertia matters for dynamic manipulation tasks involving fast contact or impact, where high-inertia arms risk instability or damage on contact.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.16074" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.19194" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AssemblyGrid v1: A Benchmark for Multi-Robot Production with Temporary Coalitions, Local Information, and Geometric Constraints</h3>
+              <h3>DITTO: Dexterous Interface for Transparent TeleOperation</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>New reproducible benchmark for multi-robot production under decentralized control, spanning three workload families (Flow, Coalition, Concurrency) that combine process progression, material routing, temporary robot coalitions, and geometric feasibility constraints.</li>
-              <li>Directly compares learning-based methods (IPPO, MAPPO, QMIX multi-agent RL) against non-learning approaches on identical tasks.</li>
-              <li>Key finding: decentralized policies trained only on local observations and actions can learn effective production behavior, validating the benchmark as a testbed for cooperative decision-making research.</li>
+              <li>DITTO targets data collection for high-DOF dexterous-hand manipulation, an area where existing teleop interfaces trade motion-capture fidelity against rendering contact interactions.</li>
+              <li>It aims to capture rich hand motion while still conveying the contact forces needed for precise manipulation, a gap neither pure motion-capture nor haptic-only rigs close well.</li>
+              <li>Better teleop data-collection pipelines feed directly into imitation-learning datasets for dexterous hands, currently a bottleneck for robot learning.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.16075" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.19196" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Bi-MoDe: Bilateral Control-based Imitation Learning via Modifier-Conditioned Decoding for Modulation of Execution Speed and Contact Intensity</h3>
+              <h3>REACT: A Fully Spiking State-Space Model for Real-Time Event-Driven Temporal Perception</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Bi-MoDe lets an operator tell a bilateral-control imitation-learning policy how to execute a task at inference time - slowly or quickly, gently or firmly - by injecting conditioning into every Transformer decoder layer via adaLN-Zero, instead of retraining a separate model per variant.</li>
-              <li>Validated on a real-world whiteboard-wiping task across multiple speed and force modifier combinations.</li>
-              <li>Ablations show decoder-level conditioning alone or latent-space composition alone each underperform - combining both is necessary for accurate adherence to physical directives like force intensity.</li>
+              <li>REACT pairs spiking neural networks with a state-space model architecture to process event-camera data natively, instead of converting asynchronous events into fixed-rate frames first.</li>
+              <li>Event cameras deliver microsecond-resolution, asynchronous sensing, but most learning pipelines discard that advantage by accumulating events into frames before inference.</li>
+              <li>A fully spiking SSM keeps the perception pipeline continuous end-to-end, better exploiting event cameras&#x27; low latency and power draw for real-time robot perception.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.16040" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Structure-Preserving Quantum Circuit Architectures for Robot Kinematics</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Proposes a quantum circuit encoding for rigid-body robot kinematics that factorizes each translation into a classical magnitude plus a signed direction on a single-qubit Bloch vector, kept compatible with standard Denavit-Hartenberg serial-manipulator conventions.</li>
-              <li>Demonstrated numerically negligible position/orientation reconstruction error under ideal simulation, with multiple circuit variants trading off qubit count, circuit depth, and measurement overhead, plus characterization of noise sensitivity and finite-shot effects.</li>
-              <li>Authors are explicit this is a representational feasibility study, not a speedup: no computational advantage over classical kinematics methods is claimed.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.16089" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.19204" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -83,51 +71,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Agility’s Digit 5 humanoid has new legs, batteries, and safety upgrades</h3>
+              <h3>Designing long-travel axes: When rack and pinion outperforms ball screws and linear motors</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Digit 5 drops Agility&#x27;s signature backward-bending ‘bird legs’ for human-like joints with proprietary cycloidal actuators, enabling repeated 50-lb lifts, kneeling, and a stable seated position; reach grows to 7.2 ft (up from Digit 4&#x27;s 5.5 ft) at 284 lb total weight.</li>
-              <li>Battery swaps to a 90-minute runtime with a 9-minute full charge - a 10:1 run-to-charge ratio versus Digit 4&#x27;s 2:1 - enabling 20+ hours of daily operation; safety now relies on 360-degree person detection that triggers autonomous avoidance, deceleration, or a seated shutdown instead of physical barriers.</li>
-              <li>Announced September 15 alongside Agility&#x27;s planned SPAC merger (Churchill Capital Corp. XI) at a $2.5B valuation, with over $300M in multi-year orders already booked; general availability targeted for end of 2027, with EU/UK expansion (CE certification) to follow.</li>
+              <li>Past a certain travel length, rack-and-pinion drives can beat ball screws and linear motors on speed, precision, scalability, and cost.</li>
+              <li>Ball screws hit practical length limits from critical speed and screw whip; linear motors solve travel length but add cost and thermal/EMI tradeoffs.</li>
+              <li>Axis technology selection is framed as a system-level tradeoff engineers should re-evaluate per application rather than defaulting to one drive type.</li>
             </ul>
-            <a href="https://www.therobotreport.com/agilitys-digit-5-humanoid-has-new-legs-batteries-safety-upgrades/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/designing-long-travel-axes-when-rack-and-pinion-outperforms-ball-screws-and-linear-motors/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Universal Robots launches its seventh generation robot platform at IMTS</h3>
+              <h3>Robotics investments reach $4.9B in August 2026</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Three new arms join the e-Series/UR lineup, named for payload (kg) and reach (mm): UR10g-1750 (10kg/1750mm), UR17g-1300 (17kg/1300mm), and UR18g-950 (18kg/950mm).</li>
-              <li>New CB7 controller delivers 40% more compute in a 30% smaller footprint, with multi-network connectivity to PLCs, HMIs, MES platforms, IPCs, and vision systems in both standalone and compact cabinet versions.</li>
-              <li>Redesigned g-Series tool flange bakes in force-torque sensing, impedance control, and RTDE without external camera/sensor cabling; runs PolyScope X (ISO 10218-1 safety compliance, open APIs, ROS 2) alongside a 20%-lighter TP7 teach pendant.</li>
+              <li>August 2026 robotics funding totaled $4.9B across 162 rounds, tracked with breakdowns by technology, country, and funding stage.</li>
+              <li>162 rounds in a single month signals continued heavy capital inflow into robotics and physical AI despite broader tech-funding caution elsewhere.</li>
+              <li>Sector and geography breakdowns in the full report are useful for spotting where investor conviction is concentrating, e.g., humanoids versus industrial automation versus logistics.</li>
             </ul>
-            <a href="https://www.therobotreport.com/universal-robots-launches-its-seventh-generation-robot-platform-at-imts/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/robotics-investments-reach-4-9b-in-august-2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How autonomous fleets are changing what’s possible in American agriculture</h3>
+              <h3>The evolution of Digit: Agility Robotics&#x27; journey from Cassie to Digit 5</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ASI&#x27;s Mobius platform runs the autonomous fleet by retrofitting existing John Deere tractors with drive-by-wire technology rather than requiring new hardware, making the platform manufacturer-agnostic.</li>
-              <li>Deployed across U.S. Sugar&#x27;s 255,000-acre operation spanning five Florida counties - described as the largest autonomous vehicle fleet in the history of American sugarcane farming, with plans to expand fleet-wide over the next decade.</li>
-              <li>Early results show higher land-preparation accuracy than human operators plus longer working hours; U.S. Sugar (3,000 local employees) is retraining tractor operators into supervisory roles rather than cutting jobs, against a backdrop of an estimated $3.1B in recent Florida freeze losses.</li>
+              <li>Agility Robotics&#x27; humanoid lineage runs from the research biped Cassie through five iterations of Digit, each retargeted toward industrial warehouse tasks rather than pure locomotion research.</li>
+              <li>The piece documents concrete design changes made across generations to fit real deployment constraints like payload, reliability, and task fit, not just walking performance.</li>
+              <li>Digit is one of the few humanoid platforms with multiple fielded hardware generations, making its iteration history a useful case study in what breaks when a research biped becomes a commercial product.</li>
             </ul>
-            <a href="https://www.therobotreport.com/how-autonomous-fleets-are-changing-whats-possible-american-agriculture/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/the-evolution-of-digit-agility-robotics-journey-from-cassie-to-digit-5/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Ultrasound offers a scalable path to tactile intelligence for physical AI</h3>
+              <h3>Arm Total Design for Physical AI brings more than 80 developers together</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>UltraSense&#x27;s subsurface ultrasound sensing reflects acoustic waves off internal material boundaries and infers contact from time-of-flight, reflection amplitude, attenuation, and impedance changes - keeping the sensing element away from the wear-prone outer contact surface, unlike capacitive or piezoresistive e-skin.</li>
-              <li>Reports 500-micrometer spatial resolution through elastomer layers, about 1.25 millinewton localized force precision, and a roughly 5 millinewton shear-sensing noise floor.</li>
-              <li>Already shipped 4 million+ units into automotive applications for manufacturing scale; next step is custom ASICs with edge processing for robotic-hand deployment.</li>
+              <li>Arm launched a Total Design for Physical AI program plus a Robotics Capability Framework to standardize how robotics developers integrate with Arm silicon.</li>
+              <li>More than 80 developers and partners are already involved, extending Arm&#x27;s existing Total Design chip-ecosystem model into robotics specifically.</li>
+              <li>A shared capability framework could reduce fragmentation in robotics compute stacks, where every vendor currently defines its own integration path.</li>
             </ul>
-            <a href="https://www.therobotreport.com/ultrasound-offers-scalable-path-tactile-intelligence-physical-ai/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/arm-total-design-for-physical-ai-brings-more-than-80-developers-together/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -137,33 +125,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>InOrbit.AI releases OpenRobOps ISO 21423 reference implementation</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>AssemblyGrid v1: benchmarking multi-robot production, handoffs, coalitions, and concurrency</h3>
+              <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>InOrbit.AI released OpenRobOps (ORO), an Apache 2.0-licensed open-source robot fleet-management platform, pitched as a ROS-equivalent for fleet operations so developers stop rebuilding the same backend infrastructure.</li>
-              <li>Ships the industry&#x27;s first reference implementation of ISO 21423, the new communication/data-exchange standard for industrial mobile robots and fleet managers (InOrbit&#x27;s CEO sits on the ISO working group), plus native Open-RMF interoperability for heterogeneous, multi-vendor fleets.</li>
-              <li>Feature set includes high-throughput telemetry built for unreliable networks, real-time spatial tracking with live camera visualization, Git-based configuration-as-code, automated incident detection/remediation, and edge-to-cloud hybrid deployment.</li>
+              <li>AssemblyGrid v1 is a new open benchmark for decentralized multi-robot production that explicitly models handoffs, coalitions, and concurrency instead of abstracting them away.</li>
+              <li>The stated motivation is that existing multi-agent/multi-robot benchmarks skip interactions that matter in real production systems, so results don&#x27;t transfer well to factory-floor coordination.</li>
+              <li>A standardized benchmark lets researchers compare multi-robot scheduling and coordination algorithms on a common, more realistic task set.</li>
             </ul>
-            <a href="https://www.therobotreport.com/inorbit-ai-releases-openrobops-iso-21423-reference-implementation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/assemblygrid-v1-benchmarking-multi-robot-production-handoffs-coalitions-and-concurrency/58223" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Robots in society, business and culture: August 2026</h3>
-              <span class="digest-source">Robohub</span>
+              <h3>Native ROS 2 on Zephyr with Cyclone DDS</h3>
+              <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>North American robot orders hit 8,940 units worth $622M in Q2 2026 - up 4.3% in units and 21.3% in revenue year over year - with automotive&#x27;s share of orders declining as adoption diversifies into other sectors.</li>
-              <li>Supply-chain and security frictions are surfacing: The Information reported US robotics startups sourcing components from Shenzhen markets and hand-carrying robots through customs in suitcases, while a US Department of Energy lab is investigating whether Chinese-made LiDAR sensors pose a security risk in US vehicles.</li>
-              <li>Research highlights: Princeton engineers built a motorless, origami-inspired shape-shifting robot using magnetic control instead of motors, and a Drexel study of 50 men found expressive robots earned stronger initial trust but triggered an oxytocin spike (a stress-response marker) when the robots made mistakes.</li>
+              <li>A developer got the standard ROS 2 C client stack (rclc -&gt; rcl -&gt; rmw_cyclonedds_c -&gt; Cyclone DDS) running natively on Zephyr RTOS on an ESP32-S3 over Wi-Fi.</li>
+              <li>The board joins the DDS/RTPS network directly as a native ROS 2 node, skipping the Micro-XRCE-DDS bridge most embedded ROS 2 setups rely on.</li>
+              <li>Removing the bridge layer simplifies embedded robotics architectures and could lower latency and overhead for microcontroller nodes talking to full ROS 2 graphs.</li>
             </ul>
-            <a href="https://robohub.org/robots-in-society-business-and-culture-august-2026/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/native-ros-2-on-zephyr-with-cyclone-dds/58222" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Rosbag2 dynamic recorder (dynrec)</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>dynrec is a new tool that makes rosbag2 recording reconfigurable on the fly, for cases where the set of topics being debugged changes often across exercises or robots.</li>
+              <li>It grew out of a real teaching workflow, an undergraduate ROS 2 course, where reconfiguring static rosbag2 setups for each debugging session was tedious.</li>
+              <li>Dynamic topic selection for bag recording cuts the friction of ad hoc debugging across heterogeneous robot setups without restarting the recording pipeline.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/rosbag2-dynamic-recorder-dynrec/58192" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

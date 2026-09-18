@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - September 16, 2026 | Densanon</title>
+  <title>Computation Morning Digest - September 18, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 16, 2026</div>
+        <div class="digest-date-badge">September 18, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation news is dominated by ripple effects of the AI-driven memory shortage: Fairphone says memory now eats 60% of a device&#x27;s materials cost, forcing redesigns and counterfeit-chip testing, while SK hynix and Intel reportedly discuss US HBM manufacturing to add capacity. Geopolitics looms over silicon too, with Nvidia&#x27;s Jensen Huang giving China until 2030 to build independent advanced lithography tooling, and AWS still unable to restore Middle East data centers six months after drone strikes. On the open-source side, kernel and toolchain work keeps landing concrete performance wins - AVX-512-optimized xor_gen for Linux software RAID, OpenVDB&#x27;s new SIMD framework, AMD P-State tuning for Zen 6, and Ubuntu 26.10 completing its Rust coreutils migration - while Java 27 makes G1 garbage collection the default everywhere. And in one of the day&#x27;s more entertaining hardware-hacking feats, an enthusiast fully cracked the PlayStation 2&#x27;s 26-year-old MechaCon security chip via chemical decapping.</p>
+        <p class="digest-intro">Today&#x27;s computation digest tracks the widening AI hardware race - Huawei accelerating its Ascend NPU roadmap and US frontier labs sounding alarms over model-distillation attacks - alongside ASML&#x27;s bet on scaling laser-plasma EUV light sources over an experimental particle-accelerator alternative. On the software side, Linux kernel build times are getting an AI-assisted speedup, Mojo opens its compiler to outside contributors, and security teams are on alert after Intel quietly dropped its bug bounty program and Rust flagged a targeted attack on its maintainers.</p>
       </div>
     </section>
 
@@ -29,135 +29,123 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Ubuntu 26.10 Moves cp, mv &amp; rm Over To Rust Coreutils For 100% Transition</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Ubuntu 26.10 completes the Rust coreutils migration for cp, mv, and rm, the three utilities that Ubuntu 25.10 and 26.04 LTS had held back on GNU coreutils because of compatibility gaps in the upstream uutils project.</li>
-              <li>Those upstream blockers are now resolved, letting Ubuntu finish swapping these core file-management commands to the memory-safe Rust implementations alongside the utilities already migrated in prior releases.</li>
-              <li>Ubuntu 26.10 stable is targeted for October 15, 2026.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Ubuntu-Completes-Rust-Coreutils" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>OpenVDB Introduces SIMD Framework With Some 2~4x Performance Improvements</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>OpenVDB 13.1 adds a new SIMD framework built on Agner Fog&#x27;s VectorClass Library, with explicit x86 intrinsic support up to AVX-512, turned on via the `_USE_VCL=ON` build option.</li>
-              <li>The initial coverage targets point transfer algorithms and delivers 2x-4x performance improvements on modern AVX-512-capable x86_64 CPUs; future releases will extend SIMD coverage to more operations.</li>
-              <li>Ships alongside updates to NanoVDB&#x27;s CUDA resource management and the vdb_tool command-line utility in the same 13.1 release from the Academy Software Foundation.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/OpenVDB-SIMD--Framework" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux 7.4 Slated To Land The AVX-512 Optimized xor_gen For A Big Performance Win</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Google&#x27;s Eric Biggers submitted an AVX-512-optimized xor_gen() for the Linux kernel, the function Linux software RAID5/RAID6 uses to generate and validate parity blocks.</li>
-              <li>The optimization targets AMD Zen 4-and-newer and current Intel server CPUs with AVX-512, and showed strong gains in benchmarks run on an AMD Ryzen 9 9950X.</li>
-              <li>Patches are queued in the x86/fpu branch for the Linux 7.4 merge window, expected to open in mid-October 2026.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.4-Land-AVX-512-xor-gen" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD P-State Driver For Linux 7.4 Will Tune For Zen 6 Client CPUs</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Linux 7.4&#x27;s AMD P-State driver adds Zen 6 client CPU tuning, with separate Energy Performance Preference values for performance cores, dense/efficiency cores, and AMD&#x27;s new low-power core type.</li>
-              <li>Boost ratio calculation switches from an arbitrary performance scale to being derived directly from frequency values.</li>
-              <li>Lands in the same kernel cycle as AMDGPU&#x27;s default-on HDMI 2.1 (FreeSync/VRR/ALLM) support, ahead of AMD&#x27;s next-gen Ryzen client launches expected in early 2027.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.4-AMD-P-State-Zen-6" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AI-induced Memory shortage is changing how devices are built, Fairphone says memory now 60% of materials cost — smaller laptop and phone makers are redesigning products and have to test for fake chips</h3>
+              <h3>US frontier AI companies warn authorities over sophisticated distillation attacks — China warns of &#x27;countermeasures&#x27; if America tries to constrain domestic AI models</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fairphone says memory now accounts for 60% of a device&#x27;s materials cost, as AI-driven demand squeezes DRAM and NAND supply.</li>
-              <li>Smaller laptop and phone makers are redesigning motherboards and rethinking procurement strategies to cope with limited memory availability.</li>
-              <li>The shortage has also pushed manufacturers to start testing incoming memory chips for counterfeits.</li>
+              <li>US frontier AI labs are lobbying the government over &#x27;distillation attacks,&#x27; where overseas actors extract knowledge from proprietary frontier models to cheaply train competing ones.</li>
+              <li>The concern centers on rivals closing the capability gap through distillation without matching the compute investment behind the original models.</li>
+              <li>China has signaled it would respond with &#x27;countermeasures&#x27; if the US moves to legally restrict how its domestic models can be accessed or queried.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/ram/ai-induced-memory-shortage-is-changing-how-devices-are-built-fairphone-says-memory-now-60-percent-of-materials-cost-smaller-laptop-and-phone-makers-are-redesigning-products-and-have-to-test-for-fake-chips" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/us-frontier-ai-companies-warn-authorities-over-sophisticated-distillation-attacks-china-warns-of-countermeasures-if-america-tries-to-constrain-domestic-ai-models" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Industry &amp; HPC</h2>
-        <div class="digest-grid">
-
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SK hynix reportedly discussing US memory chip manufacturing with Intel — options include leasing Ohio plant or forming joint venture with other AI hyperscalers</h3>
+              <h3>Modder gets Nvidia&#x27;s DLSS 5 working in a web browser using WebGPU — 147MB browser port runs on non-Nvidia GPUs and macOS but takes two seconds per render</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>SK hynix and Intel are reportedly in talks over US-based memory chip manufacturing, with options including SK hynix leasing an Intel plant in Ohio or forming a joint venture with other AI hyperscalers.</li>
-              <li>Both companies declined to confirm the talks; the report frames the sensitivity around SK hynix&#x27;s position as trade negotiations between Seoul and Washington continue.</li>
-              <li>The talks are aimed at adding US HBM production capacity as AI-driven memory demand strains existing supply.</li>
+              <li>A developer ported Nvidia&#x27;s DLSS 5 neural upscaler to run entirely in-browser via WebGPU, sidestepping Nvidia&#x27;s usual driver and hardware lock-in.</li>
+              <li>The port weighs in at 147MB and runs on non-Nvidia GPUs and macOS, though each frame currently takes about two seconds to render, far from real-time.</li>
+              <li>It&#x27;s a proof-of-concept showing WebGPU compute shaders can host a proprietary neural rendering model outside its vendor&#x27;s native stack.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/sk-hynix-reportedly-discussing-us-memory-chip-manufacturing-with-intel-options-include-leasing-ohio-plant-or-forming-joint-venture-with-other-ai-hyperscalers" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/gpus/modder-gets-nvidias-dlss-5-working-in-a-web-browser-using-webgpu-147mb-browser-port-runs-on-non-nvidia-gpus-and-macos-but-takes-two-seconds-per-render" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Jensen Huang thinks China will develop its own advanced lithography chipmaking tools by 2030 — Nvidia CEO says achievement of that capability &#x27;is just a matter of time&#x27;</h3>
+              <h3>ASML snubs Elon Musk-backed particle accelerator chipmaking tech — firm doubles down on 1,000W laser-produced plasma systems for chipmaking tools</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Nvidia CEO Jensen Huang said China will develop its own advanced lithography chipmaking tools by 2030, calling it &quot;just a matter of time.&quot;</li>
-              <li>Huang has previously put the timeline for China closing the gap in advanced semiconductor tooling at three to four years.</li>
-              <li>The comments feed into ongoing debate over how quickly China can reduce reliance on Western/ASML-class lithography equipment.</li>
+              <li>ASML is passing on free-electron-laser particle-accelerator EUV light sources, an approach tied to an Elon Musk-backed venture, in favor of scaling its existing laser-produced plasma technology.</li>
+              <li>The company is pushing its LPP EUV sources toward 1,000W of output power to boost scanner throughput without adopting a fundamentally new light-source architecture.</li>
+              <li>The decision reinforces ASML&#x27;s incumbent approach to EUV lithography, betting on incremental LPP scaling over the alternative FEL path&#x27;s engineering risk.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/jensen-huang-thinks-china-will-develop-its-own-advanced-lithography-systems-by-2030-nvidia-ceo-says-achievement-of-that-capability-is-just-a-matter-of-time" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/asml-snubs-elon-musk-backed-particle-accelerator-chipmaking-tech-firm-doubles-down-on-1-000w-laser-produced-plasma-systems-for-chipmaking-tools" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AWS tells clients to abandon Middle East data centers six months after Iranian drone strikes — Amazon offers no recovery timeline as UAE mulls underground data centers</h3>
+              <h3>Huawei details AI accelerator roadmap, pulls in next-generation Ascend NPUs by several quarters — FP4 performance of the Ascend 960PR doubles expectations</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AWS has told customers running data centers in Abu Dhabi and Bahrain to migrate to other regions, more than six months after Iranian drone strikes damaged the facilities.</li>
-              <li>Amazon has given no timeline for restoring the damaged Middle East data centers.</li>
-              <li>The UAE is reportedly considering underground data centers as a hardening measure in response to the strikes.</li>
+              <li>Huawei moved up the release timeline for its next-generation Ascend NPUs by several quarters, accelerating its response to US export restrictions on Nvidia chips.</li>
+              <li>The upcoming Ascend 960PR reportedly delivers roughly double the previously expected FP4 compute performance.</li>
+              <li>Huawei is building the roadmap out alongside its own Kunpeng CPUs and scale-up/scale-out interconnects, mirroring Nvidia&#x27;s full-stack &#x27;AI factory&#x27; strategy.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/data-centers/amazon-reportedly-tells-customers-in-abu-dhabi-and-bahrain-to-find-safer-harbors-for-their-data-aws-has-no-timeline-for-resuming-operations-six-months-after-drone-strikes-damaged-data-centers-in-the-region" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Original Sony PlayStation 2 security chip ‘broken wide open’ after 26 years — chemical decapping and four years of reverse engineering unlocks MechaCon secrets</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>An enthusiast fully reverse-engineered and dumped Sony&#x27;s PS2 &quot;MechaCon&quot; security chip (part CXP102064) after four years of effort, 26 years after the console&#x27;s release.</li>
-              <li>The work used chemical decapping to physically expose and read the silicon, defeating the chip&#x27;s anti-tamper protections.</li>
-              <li>MechaCon was the PS2&#x27;s core anti-piracy and access-control gatekeeper; its internal secrets are now documented and unlocked.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/video-games/playstation/26-year-old-sony-ps2-security-chip-broken-wide-open-after-four-years-of-effort-reverse-engineering-enthusiast-successfully-unlocks-cxp102064-mechacon-chip" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/huawei-details-ai-accelerator-roadmap-pulls-in-next-generation-ascend-npus-by-quarters-fp4-performance-of-the-ascend-960pr-doubles-expectations" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Java 27 Reaches GA With The G1 Garbage Collector By Default Everywhere</h3>
+              <h3>Linux Kernel Build Times Ready To Be Significantly Reduced With Latest Patches</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>OpenJDK 27 reached general availability with G1 as the default garbage collector in every environment, not just server deployments (G1 has been the server default since JDK 9).</li>
-              <li>Oracle says G1 is now competitive with the Serial collector across all heap sizes on throughput, latency, memory use, and startup time, which is why it replaces Serial as the universal default.</li>
-              <li>The release also ships Compact Object Headers on by default (96 down to 64 bits, improving heap density), a post-quantum hybrid key exchange for TLS 1.3, plus continued previews of Structured Concurrency and the Vector API.</li>
+              <li>A patch series addressing major bottlenecks in the Linux kernel&#x27;s Kbuild system is nearing merge readiness and promises substantially faster kernel build times.</li>
+              <li>The bottlenecks were originally surfaced through AI-assisted analysis of the build code, a concrete case of AI tooling directly informing kernel-level performance work.</li>
+              <li>The optimizations are being tracked for an upcoming kernel release after several weeks of iteration, with the patch series now at v3.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/OpenJDK-27-Java-27" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-Kbuild-Faster-v3" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intel Appears To End Its Bug Bounty Program</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Intel appears to have quietly ended its paid bug bounty program even as AI/LLM-assisted vulnerability research drives a broader industry-wide surge in bug reports.</li>
+              <li>The company has relaunched a new vulnerability reporting channel, but researchers will no longer receive monetary bounties for valid findings.</li>
+              <li>Cutting bounties just as automated and AI-assisted fuzzing tools make flaws easier to find is likely to reduce researchers&#x27; incentive to disclose to Intel first.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Intel-Bug-Bounty-Program-Ends" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Jemalloc 5.4 Released With Portability Improvements, Code Cleanups</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Jemalloc 5.4 ships portability fixes and code cleanups, the latest release since Meta renewed its investment in the allocator earlier this year.</li>
+              <li>The allocator remains widely used in server and HPC workloads, and this release follows a period of relative stagnation before Meta&#x27;s renewed backing.</li>
+              <li>Continued active development lowers the risk that projects depending on jemalloc will need to fork it or migrate to an alternative allocator.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Jemalloc-5.4" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intel Granite Rapids WS vs. AMD Threadripper Zen 5 SMT Performance</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The review isolates the specific performance impact of Hyper-Threading/SMT by comparing Intel Xeon 6900-series (Granite Rapids) workstation chips against AMD Threadripper 9000 (Zen 5) at matched core counts and memory configuration.</li>
+              <li>It follows up on an earlier 400-plus-benchmark comparison between the two workstation platforms, this time isolating the SMT variable specifically.</li>
+              <li>Matching core count and memory configuration controls for the usual confounders, giving a cleaner read on how much SMT alone contributes on each architecture.</li>
+            </ul>
+            <a href="https://www.phoronix.com/review/amd-zen5-intel-gnr-ws-smt" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Rust Issues Warning Over Key Developers Being Targeted For Compromise</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The Rust security response working group and the crates.io team issued a joint warning that key Rust developers are being targeted in a coordinated compromise attempt.</li>
+              <li>The warning signals concern about supply-chain risk to the Rust toolchain or crates.io registry if a maintainer&#x27;s credentials or commit access were compromised.</li>
+              <li>It follows a pattern seen in other major open-source ecosystems, such as npm and PyPI, where attackers target maintainer accounts as a high-leverage supply-chain entry point.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Rust-Developers-Targeted" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Mojo 1.1 Released, Now Accepting Community Contributions To The Compiler</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Mojo 1.1 is out, and the compiler is now open to community contributions for the first time since Modular open-sourced the language last month.</li>
+              <li>The release follows Qualcomm&#x27;s acquisition of Modular, the AI-infrastructure startup founded by LLVM/Swift creator Chris Lattner.</li>
+              <li>Opening the compiler to outside contributors is a meaningful shift for a language that has so far been developed almost entirely in-house.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Mojo-1.1-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
