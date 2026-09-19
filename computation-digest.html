@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - September 18, 2026 | Densanon</title>
+  <title>Computation Morning Digest - September 19, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,137 +15,149 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 18, 2026</div>
+        <div class="digest-date-badge">September 19, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation digest tracks the widening AI hardware race - Huawei accelerating its Ascend NPU roadmap and US frontier labs sounding alarms over model-distillation attacks - alongside ASML&#x27;s bet on scaling laser-plasma EUV light sources over an experimental particle-accelerator alternative. On the software side, Linux kernel build times are getting an AI-assisted speedup, Mojo opens its compiler to outside contributors, and security teams are on alert after Intel quietly dropped its bug bounty program and Rust flagged a targeted attack on its maintainers.</p>
+        <p class="digest-intro">Today&#x27;s computation digest features a working DNA-based computer alongside AMD&#x27;s aggressive new server-CPU benchmarks aimed at Nvidia&#x27;s Vera. Linux kernel work continues modernizing core infrastructure: Android&#x27;s Binder driver moves fully to Rust, Apple Silicon video decode heads toward mainline, and Intel&#x27;s Xe driver gains vRAM health checks. On the industry side, China&#x27;s CXMT eyes NAND flash production, Intel quietly cuts its bug bounty rewards, and Elon Musk&#x27;s Terafab hits a trademark snag before shipping a single chip.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Researchers create DNA computer that performs 100-bit calculations without electricity</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Researchers at Maynooth University built a DNA-based computing system that performs arithmetic and 100-bit calculations using molecular reactions instead of electrical power.</li>
+              <li>The system relies on self-assembling DNA strands that encode and process information through complementary base-pairing reactions rather than transistor logic.</li>
+              <li>It demonstrates a working alternative computing substrate for electricity-free or biologically embedded computation, though it runs far slower than silicon.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/researchers-create-dna-computer-that-performs-100-bit-calculations-without-electricity-molecular-system-uses-self-assembling-strands-to-perform-computing" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Hardware &amp; Chips</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>US frontier AI companies warn authorities over sophisticated distillation attacks — China warns of &#x27;countermeasures&#x27; if America tries to constrain domestic AI models</h3>
+              <h3>AMD targets Nvidia with first official benchmarks for EPYC &#x27;Venice&#x27; CPUs</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>US frontier AI labs are lobbying the government over &#x27;distillation attacks,&#x27; where overseas actors extract knowledge from proprietary frontier models to cheaply train competing ones.</li>
-              <li>The concern centers on rivals closing the capability gap through distillation without matching the compute investment behind the original models.</li>
-              <li>China has signaled it would respond with &#x27;countermeasures&#x27; if the US moves to legally restrict how its domestic models can be accessed or queried.</li>
+              <li>AMD published first official benchmarks for its upcoming EPYC &#x27;Venice&#x27; server CPUs, claiming the 256-core flagship is more than twice as fast as Nvidia&#x27;s Vera CPU in aggregate throughput.</li>
+              <li>AMD also claims a 20% per-core performance advantage for a 96-core Venice configuration over Vera.</li>
+              <li>The benchmarks mark AMD directly targeting Nvidia&#x27;s entry into the CPU market as Nvidia builds out its own Arm-based Vera chip for AI server platforms.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/us-frontier-ai-companies-warn-authorities-over-sophisticated-distillation-attacks-china-warns-of-countermeasures-if-america-tries-to-constrain-domestic-ai-models" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/amd-shares-first-official-benchmarks-for-epyc-venice-cpus-targets-nvidia-company-claims-256-core-chip-is-more-than-twice-as-fast-as-nvidia-vera-96-core-model-20-percent-faster-per-core" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Modder gets Nvidia&#x27;s DLSS 5 working in a web browser using WebGPU — 147MB browser port runs on non-Nvidia GPUs and macOS but takes two seconds per render</h3>
+              <h3>AMD Strix Halo Enjoys Some Performance Gains On Ubuntu 26.10, Especially With amd64v3</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Testing shows AMD&#x27;s Strix Halo APU gaining measurable performance on pre-release Ubuntu 26.10 compared to Ubuntu 26.04 LTS.</li>
+              <li>The biggest gains come from switching to amd64v3-optimized snapshot/daily ISO builds, which target a newer x86-64 instruction baseline than the default Ubuntu image.</li>
+              <li>The results arrive ahead of Ubuntu 26.10&#x27;s beta release next week, giving an early read on real-world gains from the microarchitecture-level optimization.</li>
+            </ul>
+            <a href="https://www.phoronix.com/review/ubuntu-2610-strix-halo" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Apple Video Decode Driver Posted For Upstream Linux Kernel Review</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The Asahi Linux project submitted its AVD (Apple Video Decode) driver upstream for Linux kernel review, adding accelerated video decode support for Apple M1/M2/M3 SoCs.</li>
+              <li>The driver is the latest piece of reverse-engineered Apple Silicon hardware support moving from the Asahi out-of-tree project into the mainline kernel.</li>
+              <li>Landing upstream would give Linux-on-Apple-Silicon hardware-accelerated video playback without relying on out-of-tree patches.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Apple-Video-Decode-AVD-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Google&#x27;s &#x27;Painful To Maintain&#x27; Binder C Linux Driver Being Removed In Favor Of Rust</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Google is removing the C implementation of the Binder IPC driver from the mainline Linux kernel in favor of the Rust rewrite developed over the past few years.</li>
+              <li>Binder is the inter-process communication mechanism Android depends on, making this one of the first widely-used kernel drivers to fully transition to Rust.</li>
+              <li>Google cited the C driver&#x27;s maintenance burden as the reason for retiring it now that the Rust version is considered stable enough for production use.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Google-Binder-C-Goodbye" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Steam Frame Making Use Of Zink For OpenGL On Vulkan</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Valve&#x27;s Steam Frame VR headset, built on a Qualcomm Snapdragon 8 Gen 3 SoC, uses Mesa&#x27;s open-source Turnip Vulkan driver for its Adreno GPU.</li>
+              <li>For legacy OpenGL support, the headset runs Mesa&#x27;s Zink driver, which translates OpenGL calls to Vulkan rather than shipping a native OpenGL driver.</li>
+              <li>The choice confirms Valve is relying entirely on the open-source Mesa graphics stack, Turnip plus Zink, rather than Qualcomm&#x27;s proprietary drivers for the device.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Steam-Frame-Uses-Zink" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intel Xe Driver For Linux 7.4 Adds vRAM Health Check, Degraded Memory Handling</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Intel&#x27;s Xe Linux kernel graphics driver picked up new vRAM health-check support targeting the upcoming Linux 7.4 kernel.</li>
+              <li>The changes add handling for degraded video memory, letting the driver detect and manage GPU memory that has started failing rather than crashing outright.</li>
+              <li>This is part of an ongoing series of reliability-focused Xe driver updates rather than a feature or performance release.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Intel-Xe-vRAM-Health-Check" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Industry &amp; HPC</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>China&#x27;s premier memory maker CXMT eyes producing flash for SSDs, report claims</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A developer ported Nvidia&#x27;s DLSS 5 neural upscaler to run entirely in-browser via WebGPU, sidestepping Nvidia&#x27;s usual driver and hardware lock-in.</li>
-              <li>The port weighs in at 147MB and runs on non-Nvidia GPUs and macOS, though each frame currently takes about two seconds to render, far from real-time.</li>
-              <li>It&#x27;s a proof-of-concept showing WebGPU compute shaders can host a proprietary neural rendering model outside its vendor&#x27;s native stack.</li>
+              <li>CXMT, China&#x27;s leading DRAM manufacturer, is reportedly planning to add 3D NAND flash production alongside its existing DRAM business.</li>
+              <li>A 3D NAND research-and-development pilot line is rumored for CXMT&#x27;s second fab near Beijing.</li>
+              <li>The move would extend China&#x27;s domestic memory self-sufficiency push from DRAM into NAND flash for SSDs, a market currently dominated by Samsung, SK Hynix, Micron, and Kioxia.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/gpus/modder-gets-nvidias-dlss-5-working-in-a-web-browser-using-webgpu-147mb-browser-port-runs-on-non-nvidia-gpus-and-macos-but-takes-two-seconds-per-render" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/ssds/chinas-premiere-memory-maker-cxmt-eyes-producing-flash-for-ssds-report-claims-3d-nand-research-and-development-line-rumored-for-its-second-manufacturing-facility-near-beijing" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ASML snubs Elon Musk-backed particle accelerator chipmaking tech — firm doubles down on 1,000W laser-produced plasma systems for chipmaking tools</h3>
+              <h3>Intel suspends bug bounty program that paid up to $100,000 per flaw</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ASML is passing on free-electron-laser particle-accelerator EUV light sources, an approach tied to an Elon Musk-backed venture, in favor of scaling its existing laser-produced plasma technology.</li>
-              <li>The company is pushing its LPP EUV sources toward 1,000W of output power to boost scanner throughput without adopting a fundamentally new light-source architecture.</li>
-              <li>The decision reinforces ASML&#x27;s incumbent approach to EUV lithography, betting on incremental LPP scaling over the alternative FEL path&#x27;s engineering risk.</li>
+              <li>Intel&#x27;s bug bounty program on the Intigriti platform now shows as suspended, ending monetary rewards that previously paid up to $100,000 for critical flaws.</li>
+              <li>A new Intel vulnerability disclosure program has replaced it on Intigriti, but it offers no financial rewards for reported bugs.</li>
+              <li>The change removes a major financial incentive for independent researchers to report Intel vulnerabilities directly rather than selling them elsewhere.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/asml-snubs-elon-musk-backed-particle-accelerator-chipmaking-tech-firm-doubles-down-on-1-000w-laser-produced-plasma-systems-for-chipmaking-tools" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/cyber-security/intel-suspends-bug-bounty-program-that-paid-up-to-usd100-000-per-flaw-new-intigriti-disclosure-program-offers-no-rewards" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Huawei details AI accelerator roadmap, pulls in next-generation Ascend NPUs by several quarters — FP4 performance of the Ascend 960PR doubles expectations</h3>
+              <h3>Elon Musk&#x27;s Terafab hits a roadblock before making a single chip, receives cease-and-desist order</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Huawei moved up the release timeline for its next-generation Ascend NPUs by several quarters, accelerating its response to US export restrictions on Nvidia chips.</li>
-              <li>The upcoming Ascend 960PR reportedly delivers roughly double the previously expected FP4 compute performance.</li>
-              <li>Huawei is building the roadmap out alongside its own Kunpeng CPUs and scale-up/scale-out interconnects, mirroring Nvidia&#x27;s full-stack &#x27;AI factory&#x27; strategy.</li>
+              <li>Elon Musk&#x27;s Terafab semiconductor venture received a cease-and-desist and trademark lawsuit from Tera-print, a small US company that has sold Tera-Fab branded tabletop lithography tools for over a decade.</li>
+              <li>The dispute arrives before Terafab has produced a single chip, adding a legal obstacle on top of the technical challenge of standing up new chip manufacturing.</li>
+              <li>A trademark conflict with an established, much smaller supplier shows the friction new entrants face even when building genuinely new fab capacity.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/huawei-details-ai-accelerator-roadmap-pulls-in-next-generation-ascend-npus-by-quarters-fp4-performance-of-the-ascend-960pr-doubles-expectations" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux Kernel Build Times Ready To Be Significantly Reduced With Latest Patches</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A patch series addressing major bottlenecks in the Linux kernel&#x27;s Kbuild system is nearing merge readiness and promises substantially faster kernel build times.</li>
-              <li>The bottlenecks were originally surfaced through AI-assisted analysis of the build code, a concrete case of AI tooling directly informing kernel-level performance work.</li>
-              <li>The optimizations are being tracked for an upcoming kernel release after several weeks of iteration, with the patch series now at v3.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-Kbuild-Faster-v3" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Intel Appears To End Its Bug Bounty Program</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Intel appears to have quietly ended its paid bug bounty program even as AI/LLM-assisted vulnerability research drives a broader industry-wide surge in bug reports.</li>
-              <li>The company has relaunched a new vulnerability reporting channel, but researchers will no longer receive monetary bounties for valid findings.</li>
-              <li>Cutting bounties just as automated and AI-assisted fuzzing tools make flaws easier to find is likely to reduce researchers&#x27; incentive to disclose to Intel first.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Intel-Bug-Bounty-Program-Ends" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Jemalloc 5.4 Released With Portability Improvements, Code Cleanups</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Jemalloc 5.4 ships portability fixes and code cleanups, the latest release since Meta renewed its investment in the allocator earlier this year.</li>
-              <li>The allocator remains widely used in server and HPC workloads, and this release follows a period of relative stagnation before Meta&#x27;s renewed backing.</li>
-              <li>Continued active development lowers the risk that projects depending on jemalloc will need to fork it or migrate to an alternative allocator.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Jemalloc-5.4" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Intel Granite Rapids WS vs. AMD Threadripper Zen 5 SMT Performance</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The review isolates the specific performance impact of Hyper-Threading/SMT by comparing Intel Xeon 6900-series (Granite Rapids) workstation chips against AMD Threadripper 9000 (Zen 5) at matched core counts and memory configuration.</li>
-              <li>It follows up on an earlier 400-plus-benchmark comparison between the two workstation platforms, this time isolating the SMT variable specifically.</li>
-              <li>Matching core count and memory configuration controls for the usual confounders, giving a cleaner read on how much SMT alone contributes on each architecture.</li>
-            </ul>
-            <a href="https://www.phoronix.com/review/amd-zen5-intel-gnr-ws-smt" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Rust Issues Warning Over Key Developers Being Targeted For Compromise</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The Rust security response working group and the crates.io team issued a joint warning that key Rust developers are being targeted in a coordinated compromise attempt.</li>
-              <li>The warning signals concern about supply-chain risk to the Rust toolchain or crates.io registry if a maintainer&#x27;s credentials or commit access were compromised.</li>
-              <li>It follows a pattern seen in other major open-source ecosystems, such as npm and PyPI, where attackers target maintainer accounts as a high-leverage supply-chain entry point.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Rust-Developers-Targeted" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Mojo 1.1 Released, Now Accepting Community Contributions To The Compiler</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Mojo 1.1 is out, and the compiler is now open to community contributions for the first time since Modular open-sourced the language last month.</li>
-              <li>The release follows Qualcomm&#x27;s acquisition of Modular, the AI-infrastructure startup founded by LLVM/Swift creator Chris Lattner.</li>
-              <li>Opening the compiler to outside contributors is a meaningful shift for a language that has so far been developed almost entirely in-house.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Mojo-1.1-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/elon-musks-terafab-hits-a-roadblock-before-making-a-single-chip-receives-cease-and-desist-order-firm-files-trademark-lawsuit-has-sold-tera-fab-branded-lithography-tools-for-over-a-decade" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
