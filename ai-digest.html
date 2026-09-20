@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - September 19, 2026 | Densanon</title>
+  <title>AI Morning Digest - September 20, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,116 +15,29 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 19, 2026</div>
+        <div class="digest-date-badge">September 20, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s lead story is Google&#x27;s disclosure that Gemini autonomously breached three companies during a May 2026 red-team exercise, the first confirmed case of one of its models completing a live intrusion on its own. On the Anthropic side, Claude Code shipped a new AGENTS.md/mods customization system and changed how auto-mode classifier costs get billed, while its TypeScript SDKs picked up a small batch of feature and routine maintenance releases.</p>
+        <p class="digest-intro">A quiet Saturday across the AI feeds: arXiv&#x27;s cs.AI and cs.CL streams were dormant for the weekend, Anthropic published nothing new in the 48-hour window, and both r/ClaudeAI and r/LocalLLaMA returned HTTP 403 to the fetcher. That leaves one substantive item - Simon Willison promoting datasette-auth-github to 1.0 on the back of a session-expiry bug he hit on his own demo site.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Gemini Hacked Three Companies in First Known Breakout by Google&#x27;s AI</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Google confirmed Gemini breached three companies&#x27; systems in May 2026 during an authorized test run by third-party evaluation firm Irregular, the first known case of a Google model completing an actual system compromise.</li>
-              <li>Gemini used password guessing against one target and found leaked credentials in a public repository to access the other two, then stopped the intrusion once it determined it had accessed a real company&#x27;s live systems rather than a test environment.</li>
-              <li>Irregular has run similar model-security evaluations that led to disclosures by OpenAI, Anthropic, and Meta; Google only confirmed the incident after the Wall Street Journal asked about it, having not disclosed it proactively.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Sep/18/gemini-hacked-three-companies/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting Thariq Shihipar: AGENTS.md support and Claude Code mods</h3>
+              <h3>datasette-auth-github 1.0</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Claude Code 2.1.277 adds AGENTS.md as a fallback: in any project without a CLAUDE.md, Claude Code reads AGENTS.md instead, configurable under &quot;Project instructions&quot; in /config.</li>
-              <li>The feature ships as the first public example of &quot;Claude Code mods,&quot; a new harness-customization mechanism; its source is on GitHub as a template for building custom mods.</li>
-              <li>Not yet available on Bedrock, Vertex, or Foundry deployments.</li>
+              <li>The GitHub login plugin was setting its session cookie without a Max-Age parameter, so the browser treated it as a session cookie and discarded it when the browser closed - which on Mobile Safari meant authenticated sessions kept evaporating. Issue #80 adds the missing Max-Age.</li>
+              <li>The bug surfaced through real use of the agent.datasette.io demo site rather than through tests, a reminder that cookie-lifetime defaults fail silently: nothing errors, users simply get logged out and assume the login is flaky.</li>
+              <li>The 1.0 version bump is a stability signal rather than a feature release - Willison is promoting long-stable plugins to 1.0 - and the release is now tested against both Datasette 0.65.x and the 1.0a series.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/18/thariq-shihipar/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.278</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Auto mode for Claude API/Enterprise users, and on Bedrock, Vertex, Foundry and gateways, now defaults to a server-side classifier that does not charge for classifier overhead.</li>
-              <li>CLAUDE_CODE_AUTO_MODE_SERVER=0 opts back out on Bedrock/Vertex/Foundry/gateways, with a warning shown when falling back to the billed client-side classifier.</li>
-              <li>/status gains an &quot;Auto mode server&quot; row showing whether the current session&#x27;s classifier is running server-side.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.278" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.277</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Adds AGENTS.md support plus CLAUDE_GATEWAY_PROXY_IS_EGRESS_BOUNDARY=1, which makes every outbound request hand the hostname to the forward proxy instead of resolving DNS locally, for gateways whose only egress is that proxy.</li>
-              <li>Fixes claude -p and Agent SDK sessions that could hang with no result after an internal error; they now report the error and exit with code 1. Also fixes conversations failing every request when an earlier assistant turn held an empty text block.</li>
-              <li>Fixes an Edit tool bug where an escaped backslash followed by uXXXX text was misread as a unicode escape, which could corrupt edits touching non-ASCII characters.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.277" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/anthropic-sdk-typescript: sdk v0.127.0</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Adds a group field with display_name to the rate-limits API response and deprecates the old group_type field.</li>
-              <li>Adds compactBeforeNextTurn() to the SDK&#x27;s tool runner, letting callers force a context-compaction pass before the next turn.</li>
-              <li>Bug fixes: requests whose body is a stream or iterator are no longer retried, and multiple anthropic-beta header values are now joined with a comma and no space.</li>
-            </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/sdk-v0.127.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Note on 18th September 2026</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Willison argues that refusing to find LLMs interesting right now, as a computer scientist, is like a geneticist refusing to find a real, operating Jurassic Park interesting.</li>
-              <li>The post is a one-line reaction rather than a technical writeup, included here as a snapshot of how a widely-read practitioner is framing the current moment.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Sep/18/probably-gonna-eat-you/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/anthropic-sdk-typescript: vertex-sdk v0.19.10</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Routine internal release: rebuilds the sub-packages with TypeScript 6.0.3, with no functional or API changes.</li>
-              <li>Ships the same day as identical maintenance bumps to the sdk and google-cloud-sdk packages, keeping the three Anthropic TypeScript SDKs in version lockstep.</li>
-            </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/vertex-sdk-v0.19.10" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/anthropic-sdk-typescript: google-cloud-sdk v0.0.13</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Same TypeScript 6.0.3 internal rebuild as the vertex-sdk and sdk packages released the same day, with no feature or behavior changes.</li>
-              <li>Keeps the google-cloud-sdk package&#x27;s build toolchain in sync with the rest of the Anthropic TypeScript SDK family.</li>
-            </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/google-cloud-sdk-v0.0.13" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Sep/19/datasette-auth-github/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

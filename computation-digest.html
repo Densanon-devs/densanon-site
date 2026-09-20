@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - September 19, 2026 | Densanon</title>
+  <title>Computation Morning Digest - September 20, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,107 +15,53 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 19, 2026</div>
+        <div class="digest-date-badge">September 20, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation digest features a working DNA-based computer alongside AMD&#x27;s aggressive new server-CPU benchmarks aimed at Nvidia&#x27;s Vera. Linux kernel work continues modernizing core infrastructure: Android&#x27;s Binder driver moves fully to Rust, Apple Silicon video decode heads toward mainline, and Intel&#x27;s Xe driver gains vRAM health checks. On the industry side, China&#x27;s CXMT eyes NAND flash production, Intel quietly cuts its bug bounty rewards, and Elon Musk&#x27;s Terafab hits a trademark snag before shipping a single chip.</p>
+        <p class="digest-intro">Today&#x27;s computation digest leads with a North Korea-linked crew looting $10.7 million in crypto by hiding malware inside fake coding-test job interviews, and a report warning the AI buildout could leave an e-waste trail wrapping six times around Earth. Linux kernel work keeps grinding forward: Btrfs picks up a filesystem-ID regression fix ahead of 7.3, a two-year-old file-open optimization lands a 39 percent throughput gain for 7.4, and Vulkan 1.4.363 ships a new Intel device-info extension. Elsewhere, KDE lays out its roadmap through 2028, a Swift-built Linux desktop grows a walkable 3D city mode, and high-end CD player makers PS Audio and Naim halt production as optical drive supply collapses.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Researchers create DNA computer that performs 100-bit calculations without electricity</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Researchers at Maynooth University built a DNA-based computing system that performs arithmetic and 100-bit calculations using molecular reactions instead of electrical power.</li>
-              <li>The system relies on self-assembling DNA strands that encode and process information through complementary base-pairing reactions rather than transistor logic.</li>
-              <li>It demonstrates a working alternative computing substrate for electricity-free or biologically embedded computation, though it runs far slower than silicon.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/researchers-create-dna-computer-that-performs-100-bit-calculations-without-electricity-molecular-system-uses-self-assembling-strands-to-perform-computing" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Hardware &amp; Chips</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD targets Nvidia with first official benchmarks for EPYC &#x27;Venice&#x27; CPUs</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>AMD published first official benchmarks for its upcoming EPYC &#x27;Venice&#x27; server CPUs, claiming the 256-core flagship is more than twice as fast as Nvidia&#x27;s Vera CPU in aggregate throughput.</li>
-              <li>AMD also claims a 20% per-core performance advantage for a 96-core Venice configuration over Vera.</li>
-              <li>The benchmarks mark AMD directly targeting Nvidia&#x27;s entry into the CPU market as Nvidia builds out its own Arm-based Vera chip for AI server platforms.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/amd-shares-first-official-benchmarks-for-epyc-venice-cpus-targets-nvidia-company-claims-256-core-chip-is-more-than-twice-as-fast-as-nvidia-vera-96-core-model-20-percent-faster-per-core" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD Strix Halo Enjoys Some Performance Gains On Ubuntu 26.10, Especially With amd64v3</h3>
+              <h3>Vulkan 1.4.363 Released With New VK_INTEL_device_info Extension</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Testing shows AMD&#x27;s Strix Halo APU gaining measurable performance on pre-release Ubuntu 26.10 compared to Ubuntu 26.04 LTS.</li>
-              <li>The biggest gains come from switching to amd64v3-optimized snapshot/daily ISO builds, which target a newer x86-64 instruction baseline than the default Ubuntu image.</li>
-              <li>The results arrive ahead of Ubuntu 26.10&#x27;s beta release next week, giving an early read on real-world gains from the microarchitecture-level optimization.</li>
+              <li>Vulkan 1.4.363 ships routine spec clarifications, several fixes, and multi-instance validation rules for DMA-BUF external memory, alongside a new Intel vendor extension.</li>
+              <li>The new VK_INTEL_device_info extension lets applications directly query the graphics IP block version of an Intel GPU, including architecture generation, generation release, and hardware revision.</li>
+              <li>Previously, applications had to maintain manual lookup tables mapping PCI device IDs to specific GPU generations; the extension removes that workaround.</li>
             </ul>
-            <a href="https://www.phoronix.com/review/ubuntu-2610-strix-halo" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Vulkan-1.4.363" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Apple Video Decode Driver Posted For Upstream Linux Kernel Review</h3>
+              <h3>Linux 7.3-rc4 To Address Two Unfortunate Bugs With Btrfs</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Asahi Linux project submitted its AVD (Apple Video Decode) driver upstream for Linux kernel review, adding accelerated video decode support for Apple M1/M2/M3 SoCs.</li>
-              <li>The driver is the latest piece of reverse-engineered Apple Silicon hardware support moving from the Asahi out-of-tree project into the mainline kernel.</li>
-              <li>Landing upstream would give Linux-on-Apple-Silicon hardware-accelerated video playback without relying on out-of-tree patches.</li>
+              <li>Linux 7.3-rc4 merges a fix for a Btrfs regression introduced back in 7.2-rc1 that changed how the filesystem&#x27;s f_fsid was derived, causing it to shift across reboots and kernel updates.</li>
+              <li>The regression broke applications that depend on a stable filesystem ID, notably breaking NetworkManager&#x27;s OpenConnect VPN support for users who upgraded to Linux 7.2 on Btrfs; the fix restores FSID derivation from the filesystem UUID.</li>
+              <li>A second fix addresses GRUB2 failing to detect Btrfs root filesystems on initramfs-less systems during the Linux 7.3 development cycle.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Apple-Video-Decode-AVD-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Btrfs-Fixes-For-Linux-7.3-rc4" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Google&#x27;s &#x27;Painful To Maintain&#x27; Binder C Linux Driver Being Removed In Favor Of Rust</h3>
+              <h3>Simple Optimization For Linux 7.4 Can Open Files For Reading ~39% Faster</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Google is removing the C implementation of the Binder IPC driver from the mainline Linux kernel in favor of the Rust rewrite developed over the past few years.</li>
-              <li>Binder is the inter-process communication mechanism Android depends on, making this one of the first widely-used kernel drivers to fully transition to Rust.</li>
-              <li>Google cited the C driver&#x27;s maintenance burden as the reason for retiring it now that the Rust version is considered stable enough for production use.</li>
+              <li>Developer Mateusz Guzik wrote a patch removing redundant dentry reference-counting in the kernel&#x27;s file-open path, letting do_dentry_open() consume an already-held reference instead of separately re-acquiring and dropping one.</li>
+              <li>Testing on a 20-core virtual machine with the will-it-scale benchmark, repeatedly opening the same file read-only, measured a 39 percent increase in operations per second.</li>
+              <li>The roughly three-dozen-line patch took over two years and five revisions to land in the vfs-7.4.lookup branch, and is expected to reach the Linux 7.4 merge window and stable kernels before the end of 2026.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Google-Binder-C-Goodbye" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Steam Frame Making Use Of Zink For OpenGL On Vulkan</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Valve&#x27;s Steam Frame VR headset, built on a Qualcomm Snapdragon 8 Gen 3 SoC, uses Mesa&#x27;s open-source Turnip Vulkan driver for its Adreno GPU.</li>
-              <li>For legacy OpenGL support, the headset runs Mesa&#x27;s Zink driver, which translates OpenGL calls to Vulkan rather than shipping a native OpenGL driver.</li>
-              <li>The choice confirms Valve is relying entirely on the open-source Mesa graphics stack, Turnip plus Zink, rather than Qualcomm&#x27;s proprietary drivers for the device.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Steam-Frame-Uses-Zink" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Intel Xe Driver For Linux 7.4 Adds vRAM Health Check, Degraded Memory Handling</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Intel&#x27;s Xe Linux kernel graphics driver picked up new vRAM health-check support targeting the upcoming Linux 7.4 kernel.</li>
-              <li>The changes add handling for degraded video memory, letting the driver detect and manage GPU memory that has started failing rather than crashing outright.</li>
-              <li>This is part of an ongoing series of reliability-focused Xe driver updates rather than a feature or performance release.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Intel-Xe-vRAM-Health-Check" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.4-Faster-Do-Open" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -125,39 +71,91 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>China&#x27;s premier memory maker CXMT eyes producing flash for SSDs, report claims</h3>
+              <h3>North Korea used job interviews to deploy malware on 30,000 devices during coding tests — WaterPlum group loots $10.7 million in crypto and plants persistent RATs</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>CXMT, China&#x27;s leading DRAM manufacturer, is reportedly planning to add 3D NAND flash production alongside its existing DRAM business.</li>
-              <li>A 3D NAND research-and-development pilot line is rumored for CXMT&#x27;s second fab near Beijing.</li>
-              <li>The move would extend China&#x27;s domestic memory self-sufficiency push from DRAM into NAND flash for SSDs, a market currently dominated by Samsung, SK Hynix, Micron, and Kioxia.</li>
+              <li>Multiple government agencies issued a joint warning that a North Korea-linked group tracked as WaterPlum has been posting fake job listings that use coding tests during interviews to install malware on applicants&#x27; computers, compromising roughly 30,000 devices.</li>
+              <li>WaterPlum used the scheme to steal credentials and cryptocurrency from victims, netting an estimated $10.7 million in stolen crypto.</li>
+              <li>The group plants persistent remote access trojans (RATs) on infected machines, giving it ongoing access to victim systems well beyond the initial compromise.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/ssds/chinas-premiere-memory-maker-cxmt-eyes-producing-flash-for-ssds-report-claims-3d-nand-research-and-development-line-rumored-for-its-second-manufacturing-facility-near-beijing" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/cyber-security/north-korea-used-job-interviews-to-deploy-malware-on-30-000-devices-during-coding-tests-waterplum-group-loots-usd10-7-million-in-crypto-and-plants-persistent-rats" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel suspends bug bounty program that paid up to $100,000 per flaw</h3>
+              <h3>Collapse of mainstream optical drive supply kills high-end CD players — PS Audio and Naim halt production as component costs double</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel&#x27;s bug bounty program on the Intigriti platform now shows as suspended, ending monetary rewards that previously paid up to $100,000 for critical flaws.</li>
-              <li>A new Intel vulnerability disclosure program has replaced it on Intigriti, but it offers no financial rewards for reported bugs.</li>
-              <li>The change removes a major financial incentive for independent researchers to report Intel vulnerabilities directly rather than selling them elsewhere.</li>
+              <li>High-end audio makers PS Audio and Naim have halted production of CD player models, including PS Audio&#x27;s PMG Super Audio CD transport, after mainstream suppliers of optical disc drive mechanisms exited the market.</li>
+              <li>Component costs for the remaining optical drive supply have roughly doubled, and adapting parts sourced from other companies into existing player designs requires extensive rework.</li>
+              <li>The supply collapse hits just as CD and vinyl sales have hit record levels in recent months, squeezing high-end audio makers at the same time physical-media demand is rebounding.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/cyber-security/intel-suspends-bug-bounty-program-that-paid-up-to-usd100-000-per-flaw-new-intigriti-disclosure-program-offers-no-rewards" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/peripherals/audiophiles-in-trouble-as-manufacturers-cease-optical-drive-production-hi-fi-cd-players-require-extensive-rework-to-use-components-from-other-companies" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Elon Musk&#x27;s Terafab hits a roadblock before making a single chip, receives cease-and-desist order</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>KDE To Focus On Next-Gen Styling, Better Documentation &amp; KDE For Enterprise</h3>
+              <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Elon Musk&#x27;s Terafab semiconductor venture received a cease-and-desist and trademark lawsuit from Tera-print, a small US company that has sold Tera-Fab branded tabletop lithography tools for over a decade.</li>
-              <li>The dispute arrives before Terafab has produced a single chip, adding a legal obstacle on top of the technical challenge of standing up new chip manufacturing.</li>
-              <li>A trademark conflict with an established, much smaller supplier shows the friction new entrants face even when building genuinely new fab capacity.</li>
+              <li>At KDE Akademy 2026, the community announced three goals guiding development through 2028: next-generation styling, better documentation, and KDE for Enterprise.</li>
+              <li>The styling goal centers on the Ocean design-system project plus enhancements to the Union theming engine to give Plasma a more cohesive, uniform visual language.</li>
+              <li>The documentation goal focuses on eliminating outdated, misleading, and duplicative docs while adding a new contributor guide to ease onboarding for future developers.</li>
+              <li>The enterprise goal targets practical deployment features: improved LDAP integration, password-expiry handling, single sign-on, network printer configuration, and better headless/remote terminal support.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/elon-musks-terafab-hits-a-roadblock-before-making-a-single-chip-receives-cease-and-desist-order-firm-files-trademark-lawsuit-has-sold-tera-fab-branded-lithography-tools-for-over-a-decade" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/KDE-Goals-To-2028" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AI-Assisted Starling Desktop Introduces 3D View With &quot;Walkable 3D Waterfront City&quot;</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Starling is a Linux desktop environment built around its own Wayland compositor, written in the Swift programming language and developed largely with AI assistance via Claude Code.</li>
+              <li>Starling 0.5 adds an optional 3D desktop mode, toggled from the control panel, that renders a walkable 3D waterfront city complete with animated boats, traffic, clouds, a clock tower, and sunset lighting.</li>
+              <li>Application windows remain real, functional windows placed within the 3D scene, switchable via Alt+Tab or a live-preview selector, and each connected display can render its own independent camera view.</li>
+              <li>Starling 0.5 also adds Windows support by running through WSL2 with Ubuntu 26.04 using RDP display mode.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Starling-0.5-3D-Desktop" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>How Windows turned months of inactivity into a 7-hour update hostage situation</h3>
+              <span class="digest-source">The Register</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A Windows 11 laptop left unused for a few months took about 7 hours to fully update, requiring multiple firmware and driver updates plus repeated restarts on top of a backlog of Windows component patches.</li>
+              <li>The author reports Windows&#x27; update progress indicator was unreliable through the ordeal, sticking at 65 percent for roughly an hour before jumping to 98 percent in 30 seconds and then hanging.</li>
+              <li>The piece argues the marathon update reflects an industry habit of shipping fixes via continuous updates rather than ensuring quality before release, undercutting Microsoft&#x27;s recent claims about Windows 11 efficiency gains.</li>
+            </ul>
+            <a href="https://www.theregister.com/os-platforms/2026/09/20/how-windows-turned-months-of-inactivity-into-a-7-hour-update-hostage-situation/5297478" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Agentic security is the billion-dollar challenge for some clever startup to solve</h3>
+              <span class="digest-source">The Register</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Investors interviewed say organizations are deploying AI agents into production with access to critical data and applications but with little to no way to manage, secure, or even inventory those agents.</li>
+              <li>Merlin Group&#x27;s Matt Hartman frames the gap as a major investment opportunity, pointing to unmet needs around non-human identity management, access restriction, and audit trails for agent actions.</li>
+              <li>Microsoft M12&#x27;s Todd Graham compared it to the historical pattern of security lagging infrastructure, saying &quot;If laptops were default secure, we wouldn&#x27;t have CrowdStrike,&quot; and predicted agentic identity could produce a company valued like Okta.</li>
+              <li>The article cites incidents of agents hacking organizations, compromising employee accounts, and modifying themselves without human authorization, without naming specific dollar losses.</li>
+            </ul>
+            <a href="https://www.theregister.com/security/2026/09/19/agentic-security-is-the-billion-dollar-challenge-for-some-clever-startup-to-solve/5297546" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AI boom could leave an e-waste trail that wraps 6 times around Earth</h3>
+              <span class="digest-source">The Register</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A Basel Action Network report titled &quot;How Big Is the AI Waste Wave?&quot; projects 395 million to 617 million tonnes of AI-related electronic waste between 2025 and 2050.</li>
+              <li>That volume equals 15 to 23 million shipping containers, which lined end to end would stretch roughly 244,000 km, about six times Earth&#x27;s circumference.</li>
+              <li>The report finds servers and accelerators (GPUs) account for only 13 percent of datacenter equipment by weight, so counting networking, power distribution, backup power, and cooling gear pushes total e-waste 40 to 60 times higher than commonly cited academic projections.</li>
+              <li>A reference 100 MW AI facility generates about 7,000 metric tonnes of equipment, including roughly 2,700 tonnes of copper, and GPUs are replaced every 2-3 years versus 5-7 years for traditional servers.</li>
+            </ul>
+            <a href="https://www.theregister.com/off-prem/2026/09/19/ai-boom-could-leave-an-e-waste-trail-that-wraps-6-times-around-earth/5297451" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
