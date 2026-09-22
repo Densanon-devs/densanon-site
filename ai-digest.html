@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - September 20, 2026 | Densanon</title>
+  <title>AI Morning Digest - September 22, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,29 +15,145 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 20, 2026</div>
+        <div class="digest-date-badge">September 22, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A quiet Saturday across the AI feeds: arXiv&#x27;s cs.AI and cs.CL streams were dormant for the weekend, Anthropic published nothing new in the 48-hour window, and both r/ClaudeAI and r/LocalLLaMA returned HTTP 403 to the fetcher. That leaves one substantive item - Simon Willison promoting datasette-auth-github to 1.0 on the back of a session-expiry bug he hit on his own demo site.</p>
+        <p class="digest-intro">Today&#x27;s research skews heavily toward inference efficiency: papers attack sparse prefill attention, context-aware MoE routing, and Ising-inspired block pruning (with hard MMLU numbers behind it), alongside a hybrid causal/diffusion reasoning approach and a topology-based hallucination detector. On the tools side, Hugging Face shipped two concrete speed wins (GGUF support landing in Transformers, a 3-30x faster tokenizers v1), while TypeSafe AI&#x27;s Jev and Cloudflare&#x27;s Python Workers GA both push toward cheaper, more practical inference and deployment infrastructure.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>RBS-Attention: Radius-Bounded Sparse Prefill for Long-Context Large Language Models</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>RBS-Attention targets the prefill bottleneck in long-context LLM inference, where dense self-attention over the full prompt dominates cost before generation even starts.</li>
+              <li>It addresses a specific failure mode in existing sparse block-selection methods: scoring blocks by their centroid can hide a highly relevant token buried inside an otherwise low-scoring block.</li>
+              <li>The radius-bounded approach is designed to keep those relevant tokens that centroid-based block selection would otherwise discard, cutting prefill cost without the accuracy loss of coarser sparsification.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.20971" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Attention-Aware Routing: Coupling Routing and Attention in MoEs</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Standard Mixture-of-Experts routers select and weight experts per token using only that token&#x27;s hidden state, which the authors say discards useful contextual signal.</li>
+              <li>Attention-Aware Routing (AAR) augments the router with additional temporal and spatial context, coupling the routing decision more directly to the attention mechanism instead of treating it as a separate lookup.</li>
+              <li>The goal is to let expert selection account for surrounding tokens and structure rather than routing each token in isolation.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.20974" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>CaLR: Causal Latent Revision for Robust Diffusion Reasoning</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>CaLR targets a known tradeoff between the two dominant language model paradigms: autoregressive models reason step by step but get stuck in locally greedy choices, while diffusion language models refine the whole sequence in parallel but lack the strict causal structure reasoning chains need.</li>
+              <li>Causal Latent Revision brings causal structure into a diffusion model&#x27;s latent refinement process rather than picking one paradigm over the other.</li>
+              <li>It fits the broader trend of hybrid AR/diffusion architectures that try to keep diffusion&#x27;s parallel refinement while restoring AR-style causal reasoning.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.20981" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Detecting Hallucination in LLMs: Tracing the Topological Signatures of Impaired Context Sharing</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The paper treats hallucination detection as a graph-topology problem, examining the shape of information flow through a model&#x27;s attention graphs to separate hallucinated from non-hallucinated responses.</li>
+              <li>The core tool is Forman-Ricci curvature, a discrete geometry measure applied to the attention graph to identify structural patterns that indicate impaired context sharing between tokens.</li>
+              <li>The premise is that hallucinations leave a detectable topological signature in how information moves through attention, rather than only showing up in output-level inconsistency checks.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.21096" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Memory That Looks Forward: A Zero-Inference Prospective Term for Personal Memory Retrieval</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Personal-memory retrieval is normally purely retrospective: it surfaces stored content resembling the current query but has no notion of what the user already committed to doing.</li>
+              <li>The paper adds a prospective term to the retrieval score that accounts for those commitments, designed to add zero inference cost at query time.</li>
+              <li>Commitments the user has already made get folded directly into the retrieval score, so pending intentions can surface alongside similarity matches instead of being invisible to a purely backward-looking retriever.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.22091" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>datasette-auth-github 1.0</h3>
+              <h3>Transformers now runs llama.cpp quants</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Hugging Face&#x27;s Transformers library now loads GGUF quantized checkpoints directly through the standard from_pretrained() API instead of requiring llama.cpp itself.</li>
+              <li>On Apple Silicon, performance approaches llama.cpp, and models can be served through an OpenAI-compatible API via transformers serve, or fine-tuned directly from a GGUF checkpoint.</li>
+              <li>The initial release covers Qwen3.5 dense and MoE variants across quant levels from Q4_K_M (2.74 GB) up to BF16 (8.42 GB), using Unsloth&#x27;s Qwen3.5-4B-GGUF as the reference model, and requires PyTorch 2.12.1+ with the Transformers main branch.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/transformers-llama-cpp-quants" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Pruning LLMs Like a Physicist: Block Removal as an Ising Optimization Problem</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The post reframes transformer block pruning as a constrained binary optimization problem mapped onto an Ising model: each block is a binary keep/remove variable, and a Hessian computed once from calibration data captures both individual block importance and pairwise interactions between blocks.</li>
+              <li>That interaction term is the key departure from existing mean-field pruning methods, which score blocks independently and ignore that removing one block changes how much another block matters.</li>
+              <li>On Llama-3.3-70B-Instruct at 50% depth removal, their method scores 76.9 MMLU versus 54.0 for a competing block-influence baseline; tabu search and quantum-inspired solvers reach the same optimal configurations in seconds that brute-force GPU search took about 2 days to verify on smaller problems (roughly 29 billion configurations).</li>
+              <li>Tests also covered Qwen3-14B and NVIDIA-Nemotron-3-Nano-30B, a hybrid Mamba2/attention/MoE architecture.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/MultiverseComputingCAI/pruning-llms-like-a-physicist-block-removal-as-an" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>tokenizers v1: encode, decode and scaling, measured</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tokenizers v1 keeps the same output and API as v0.23 (same call, same ids) while rewriting the internals: the workspace is split into modular crates, regex-based splitting is replaced with SIMD bitstream operations, and the merge loop uses intrusive linked lists in preallocated buffers instead of repeated allocations.</li>
+              <li>It adds thread-local word caching to avoid reprocessing repeated pre-tokens, plus native parallelism with per-thread scratch buffers.</li>
+              <li>Measured on an Apple M4 Max, the release candidate encodes 3 to 30 times faster than v0.23 on a single thread, and scales to 76% of linear speedup across eight worker threads.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/tokenizers-v1" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Jev introduces a new shape of LLM - System One, aka Decision Models</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The GitHub login plugin was setting its session cookie without a Max-Age parameter, so the browser treated it as a session cookie and discarded it when the browser closed - which on Mobile Safari meant authenticated sessions kept evaporating. Issue #80 adds the missing Max-Age.</li>
-              <li>The bug surfaced through real use of the agent.datasette.io demo site rather than through tests, a reminder that cookie-lifetime defaults fail silently: nothing errors, users simply get logged out and assume the login is flaky.</li>
-              <li>The 1.0 version bump is a stability signal rather than a feature release - Willison is promoting long-stable plugins to 1.0 - and the release is now tested against both Datasette 0.65.x and the 1.0a series.</li>
+              <li>TypeSafe AI&#x27;s Jev is the first example of what it calls &#x27;System One models&#x27; (Simon Willison prefers &#x27;decision models&#x27;): instead of generating text, it takes unstructured input and returns typed, probabilistic decisions with confidence scores.</li>
+              <li>It handles three question types: yes/no (0-1 confidence), multiple choice (a probability distribution over options), and scored ratings across a numeric range; TypeSafe summarizes it as &#x27;unstructured state in, typed probabilistic decisions out.&#x27;</li>
+              <li>Pricing charges only for input tokens at $0.042 per million, undercutting GPT-5 Nano, with output free; questions process in parallel so many queries take about as long as one.</li>
+              <li>Early community use cited includes spam detection, label suggestion, prioritization, search reranking, and even game-playing and utility functions.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/19/datasette-auth-github/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Sep/21/jev/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Cloudflare Python Workers are now generally available</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>After a two-year preview, Cloudflare has made Python a fully supported, stable language on its Workers platform, crediting developers Gyeongjae Choi, Dominik Picheta, and Hood Chatham, the latter two being Pyodide core maintainers.</li>
+              <li>Python code compiles to WebAssembly via Pyodide and runs inside Cloudflare&#x27;s V8-based workerd runtime; both the multiprocessing and threading modules are non-functional in that WASM environment.</li>
+              <li>The local dev tool pywrangler, published on PyPI as workers-py, simulates the full production stack locally, including running Pyodide-in-WASM inside V8; the workerd binary itself is about 123MB.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Sep/21/cloudflare-python-worker/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - September 20, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - September 22, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,60 +15,117 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 20, 2026</div>
+        <div class="digest-date-badge">September 22, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s lead stories are on the industry side: SoftBank has agreed to acquire the Robotics and AI Institute, deepening its bet on humanoid and legged-robot research, while The Robot Report lays out what actually happens when a humanoid robot breaks down -- a hazardous teardown involving kilograms of rare-earth magnets and pressurized hydraulics -- and Hirebotics rolled out line-tracking and linear-rail upgrades that let its painting cobots follow moving conveyor parts and cover much larger workpieces. On the research side, NC State researchers detail how a single-celled organism contracts to a quarter of its length in under 5 milliseconds, a mechanism they hope could inform faster artificial muscles. Rounding things out is a strong crop of community builds and control-systems questions from r/robotics, from a KUKA-inspired 5-DOF arm to a PID line-follower fighting its own turn logic.</p>
+        <p class="digest-intro">Today&#x27;s robotics digest leans heavily on humanoid and quadruped manipulation research: CHOREO composes thousands of pretrained skills into long action sequences on a Unitree G1, DeViGrasp benchmarks grasping under degraded vision, and OJOx captures construction demonstrations tied to changing design specs. On the industry side, Alphabet&#x27;s Intrinsic open-sourced its manipulation platform under Apache 2.0, the Indy Autonomous Challenge logged its first road-course overtakes at Laguna Seca, and Boston Dynamics opened a dedicated Atlas training facility inside Hyundai&#x27;s Georgia Metaplant. Elsewhere, a ROS Discourse adversarial benchmark exposes gaps in a robot behavior-tree ethics guard, and hobbyists keep shipping bipeds, from a scrappy cheap-biped rebuild to a 56 cm walking duck.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>What do you do with a humanoid robot when it breaks down?</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Decommissioning a humanoid robot means safely handling roughly 10,000-15,000 individual components, including 20-40 precision-geared motors and 3.5-4 kg of rare-earth neodymium magnets per unit -- more than is used in an EV chassis.</li>
-              <li>Recycling firm Re-Teck specializes in extracting delicate parts, sterilizing onboard memory, and responsibly destroying or repurposing retired units.</li>
-              <li>Key hazards include a &#x27;kinetic data breach&#x27; risk from proprietary navigation maps and biometric logs stored on up to 80 memory chips, lithium-ion battery thermal runaway, and trapped pressure in hydraulic and pneumatic lines.</li>
-              <li>Bulk crushing cross-contaminates the rare-earth magnets with aluminum and titanium, so the article argues for &#x27;design for recycling&#x27; principles -- modular cartridges and standardized decoupling joints instead of permanent adhesives.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/what-do-you-do-with-a-humanoid-robot-when-it-breaks-down/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Hirebotics adds line tracking and linear rail capabilities to its cobots</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Hirebotics unveiled the upgrades at IMTS 2026 for cobots running its no-code Beacon platform, letting the Cobot Painter track parts moving on a conveyor while holding its programmed paint path via encoder and sensor feedback that compensates for changing line speed.</li>
-              <li>The new linear rail extension, sold in 5-foot increments or custom lengths, extends the cobot&#x27;s standard 68.9-inch reach so it can traverse much larger workpieces; manual rail positioning is available now, with automated positioning planned for end of 2026.</li>
-              <li>CEO Matthew Bush framed the additions as solving two constraints at once -- parts too big or awkward for a fixed work envelope, and parts that don&#x27;t hold still -- aimed at shipyards, marine fabrication, and heavy fabrication for trailers, truck bodies, and agricultural or construction equipment.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/hirebotics-adds-line-tracking-linear-rail-capabilities-cobots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>This tiny organism can shrink to one quarter its size in milliseconds</h3>
-              <span class="digest-source">ScienceDaily Robotics</span>
+              <h3>CHOREO: Every Humanoid Skill as a Trajectory</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NC State researchers studying the giant aquatic ciliate Spirostomum ambiguum found it contracts to one-quarter of its length in under 5 milliseconds -- roughly 100 body lengths per second, about 10 times faster than human muscle contraction.</li>
-              <li>The mechanism is a calcium-triggered protein &#x27;fishnet&#x27; built from centrin and Sfi1 proteins arranged as myonemes around the cell; when calcium arrives, the Sfi1 protein loses its stiffness and clumps up, pulling the fishnet tight.</li>
-              <li>Unlike human muscle, which runs on ATP, the contraction is powered directly by calcium ions -- researcher Mary Elting compared it to &#x27;gas versus electric power&#x27; -- and the team, publishing in PNAS, hopes the mechanism could inspire ATP-free artificial muscles fast enough for robotics.</li>
+              <li>CHOREO converts any learned humanoid skill, regardless of whether it came from reinforcement learning, motion imitation, or generative modeling, into a unified SkillMotion representation of motion states, contacts, semantics, and boundary conditions, then composes skills via direct continuation, cubic Hermite blending, or validated bridge motions without retraining any source model.</li>
+              <li>Tested on a Unitree G1 in MuJoCo, the framework organized 2,950 admitted SkillMotion assets pulled from heterogeneous sources and reached 95.4% sequence success across 130 multi-action tasks, including 93.8% success on eight-action sequences.</li>
             </ul>
-            <a href="https://www.sciencedaily.com/releases/2026/09/260918024812.htm" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.22274" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>D3DWA: Adaptive Weight and Prediction-Horizon for Dynamic Window Approach via Dueling Double Deep Q-Network</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>D3DWA uses a Dueling Double Deep Q-Network to jointly pick the Dynamic Window Approach&#x27;s evaluation weights and prediction horizon at every control step from the current navigation state, instead of relying on the fixed parameters standard DWA uses.</li>
+              <li>Across eight simulated environments, including layouts unseen during training, the adaptive policy reached every goal, and on a real robot it completed all three tested configurations, including a constrained case where a weights-only variant timed out.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.22276" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>DeViGrasp: Robust Visual Mobile Grasping for Quadruped Manipulators under Degraded Perception</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The paper introduces DeViGrasp-Bench, a benchmark that subjects quadruped-manipulator grasping to controlled visual degradations (occlusion, segmentation-mask dropout, depth noise, target-localization jitter) across seen and unseen objects and difficulty levels, since prior work assumed reliable perception.</li>
+              <li>Its companion model, DeViGrasp-Net, trains a deployable student policy from a privileged offline teacher; the student fuses dual-view segmented-depth observations with Target Hold Memory and Temporal Memory Attention, hitting 62.3% task success under degraded conditions, beating baseline VBC by 16.1 points and DQ-Net by 4.3 points, with the DQ-Net margin widening to 10.5 points on harder settings.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.22278" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>OJOx: Specification-Conditioned Demonstrations for Embodied AI in Construction</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>OJOx captures what the authors call specification-conditioned demonstrations for construction robotics: a headset overlays design geometry onto the physical workspace and records a demonstrator&#x27;s stereo passthrough view synchronized with whole-body and hand motion, so the data records not just what a worker did but the design spec that gave the action its purpose.</li>
+              <li>The authors report one fully instrumented session, a 33-component wall built against a specification that changes mid-task, verified against an independently registered external camera and successfully replayed onto a Unitree G1 in simulation.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.22289" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intrinsic open sources key parts of its platform for easier development</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Alphabet&#x27;s Intrinsic released Intrinsic Core, a ROS-compatible, Apache 2.0-licensed collection covering hardware-agnostic real-time control, 6-DoF pose estimation built on NVIDIA&#x27;s FoundationPose, motion and grasp planning, Gazebo-based simulation, camera calibration, and ROS drivers, announced at ROSCon Toronto on September 22.</li>
+              <li>Intrinsic also unveiled the Open Machine Tending Solution, a reference design for CNC machine tending that supports FANUC and Universal Robots hardware; current scope targets manipulation tasks for ROS-familiar developers and excludes mobile robots and humanoids.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/intrinsic-open-sources-key-parts-platform-easier-development/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>IAC completes autonomous racing event at Laguna Seca</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Unimore Racing, from the University of Modena and Reggio Emilia, beat Purdue AI Racing in the final heat of the Indy Autonomous Challenge at Laguna Seca, the first time IAC cars have overtaken each other on a road course rather than an oval.</li>
+              <li>Nine university teams ran identical Dallara-based AV-24s with Honda engines, Luminar sensors, and NVIDIA GPUs in one-on-one heats where the trailing car had two laps to pass; teams first had to qualify in a software-in-the-loop D-Space simulation before running on the physical track, a first for the series.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/iac-completes-autonomous-racing-event-at-laguna-seca/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Boston Dynamics opens Metaplant Application Center to train Atlas humanoids</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Boston Dynamics, now wholly owned by Hyundai Motor Group, opened the Robotics Metaplant Application Center inside Hyundai&#x27;s Metaplant America near Savannah, Georgia, to train Atlas humanoids on automotive parts logistics: sequencing components, handling delicate cosmetic surfaces, bimanual manipulation of awkward items, and extracting parts from shipping packaging.</li>
+              <li>The center uses teleoperation, simulated reinforcement learning, and Universal Manipulation Interface devices for data collection; Hyundai plans a roughly 10x-larger facility next year, assembly-task expansion by 2030, and manufacturing up to 30,000 robots annually by 2028 toward deploying 25,000 Atlas units across its global plants.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/boston-dynamics-opens-metaplant-application-center-train-atlas-humanoid-robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Stress-testing a moral execution guard beyond direct language (QERRA-v2 Classical)</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>QERRA-v2 Classical is a text-directive guard for robot behavior trees, tested in Webots on a PAL Robotics TIAGo, that screens prospective commands for disguised coercion before an action is committed; the author ran a 20-case adversarial benchmark using Cloaked Attack / Unmasked Baseline / Benign Twin triplets to isolate specific failure modes.</li>
+              <li>Results showed affectionate or polite phrasing reduced embedding similarity 13-16 percentage points, letting violations slip past the filter as safe, while conflict-related vocabulary sometimes triggered false-positive refusals during genuine accountability requests; the write-up attributes this to a ceiling on bi-encoder embeddings and includes reproducible benchmark logs.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/stress-testing-a-moral-execution-guard-beyond-direct-language-qerra-v2-classical/58314" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -78,87 +135,25 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SoftBank agrees to acquire Robotics and AI Institute</h3>
+              <h3>My second attempt to build cheap biped robot (CBR-II)</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>SoftBank has agreed to acquire the Robotics and AI Institute from Hyundai Motor Group; financial terms were not disclosed and the deal is under review by the Committee on Foreign Investment in the United States (CFIUS), so it is agreed rather than closed.</li>
-              <li>RAI was founded in 2022 by Marc Raibert, who also founded Boston Dynamics, when Hyundai spun the research institute out as part of its Boston Dynamics acquisition and seeded it with an initial investment of more than $400 million.</li>
-              <li>The deal reunites Raibert with SoftBank, which owned Boston Dynamics itself from 2017 to 2021 before selling a controlling stake to Hyundai - continuing a pattern of legged- and humanoid-robotics research changing hands between strategic owners rather than going public or standing alone.</li>
+              <li>A hobbyist&#x27;s second-generation low-cost bipedal robot, CBR-II, is walking, though the builder notes the control policy was trained for more powerful actuators than the build actually uses, which causes it to overshoot its steps.</li>
+              <li>The project remains a work in progress, with further actuator matching and tuning needed to bring the trained policy in line with the cheaper hardware.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wjyuw3/softbank_agrees_to_acquire_robotics_and_ai/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1wn83bm/my_second_attempt_to_build_cheap_biped_robot_cbrii/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I Built This KUKA-Inspired Robotic Arm!</h3>
+              <h3>We built a 56cm Microduck. It&#x27;s not so micro anymore.</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The poster designed and built a 5-DOF robotic arm from scratch, inspired by the KUKA KR 4 AGILUS industrial arm.</li>
-              <li>The build pipeline ran from mechanical design in Autodesk Fusion through 3D printing, electronics assembly, and programming.</li>
-              <li>Control runs on an ESP32-S3 microcontroller paired with a custom MATLAB GUI for real-time visualization and control of the arm.</li>
+              <li>The builders scaled up their Microduck bipedal platform into &quot;XDuck,&quot; a 56.8 cm tall, 10.352 kg walking robot that the poster compares in scale and look to Disney&#x27;s BDX droids.</li>
+              <li>The larger robot is walking, and the team is currently working on posture as the next step; the build is a direct scale-up of the original smaller Microduck platform.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wjqoy8/i_built_this_kukainspired_robotic_arm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>QTR-8RC line follower: PID works perfectly, but adding turning conditions breaks the line following</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The poster is building a line-following robot for a competition on an Arduino Nano with a QTR-8RC 8-channel reflectance sensor array, a TB6612FNG motor driver, and N20 motors.</li>
-              <li>The base PID line-following loop works correctly on its own, but layering explicit turning-condition logic on top of the working PID controller breaks the line-following behavior -- the core problem being debugged in the post.</li>
-              <li>The poster describes still learning the coding side and used AI assistance while developing the control code, a detail relevant to why the interaction between the PID loop and the added turn logic is hard to isolate.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wkphat/qtr8rc_line_follower_pid_works_perfectly_but/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>My first-ever Fusion 360 project is a pan-tilt camera</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The poster recently finished schooling in automation while working as a scaffolder, and used this project to teach himself CAD in Fusion 360.</li>
-              <li>The auto-tracking pan-tilt camera assembly is his first-ever Fusion 360 design.</li>
-              <li>It took six design revisions to reach the final version, with V1.6 printing out with what he described as an amazingly snug fit.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wlddf9/my_firstever_fusion_360_project_is_a_pantilt/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>My UM1-Evo biomechanical hand on the TV studio</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The creator presented the UM1-Evo biomechanical arm and hand on France 24&#x27;s Tech24 program.</li>
-              <li>The project is self-taught and represents five and a half years of independent R&amp;D work.</li>
-              <li>The segment aired in French, with subtitles available for other languages.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wkf4qs/my_um1evo_biomechanical_hand_on_the_tv_studio/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>What is the future of blackboxification in robotics research?</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The poster, a first-year PhD student working at the intersection of controls, ML, and robotics, raises concern about &#x27;blackboxification&#x27; -- papers that plug a large foundation model into a problem in place of classical controls or ML approaches.</li>
-              <li>He describes finding much of this literature mind-numbing compared to more interpretable, classical approaches.</li>
-              <li>The post opens a discussion on where robotics research is heading as foundation-model-based methods become more common in the field.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wkfcvi/what_is_the_future_of_blackboxification_in/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>What allows Robots to go super fast?</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The poster asks what allows robots like micromouse and line-tracer competition robots to reach such high speed with near-instant acceleration.</li>
-              <li>He notes he has no exact speed measurements, just an observed impression of very fast, near-instant acceleration from videos seen online.</li>
-              <li>The question opens discussion on what mechanical or control factors could produce that performance, though the crawled text cuts off before giving a specific answer.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wkk3bk/what_allows_robots_to_go_super_fast/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1wn7m45/we_built_a_56cm_microduck_its_not_so_micro_anymore/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

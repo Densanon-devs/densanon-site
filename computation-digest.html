@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - September 20, 2026 | Densanon</title>
+  <title>Computation Morning Digest - September 22, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 20, 2026</div>
+        <div class="digest-date-badge">September 22, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation digest leads with a North Korea-linked crew looting $10.7 million in crypto by hiding malware inside fake coding-test job interviews, and a report warning the AI buildout could leave an e-waste trail wrapping six times around Earth. Linux kernel work keeps grinding forward: Btrfs picks up a filesystem-ID regression fix ahead of 7.3, a two-year-old file-open optimization lands a 39 percent throughput gain for 7.4, and Vulkan 1.4.363 ships a new Intel device-info extension. Elsewhere, KDE lays out its roadmap through 2028, a Swift-built Linux desktop grows a walkable 3D city mode, and high-end CD player makers PS Audio and Naim halt production as optical drive supply collapses.</p>
+        <p class="digest-intro">Kernel and driver plumbing dominates today: Cache Aware Scheduling fixes, a new AMD SEV status interface, GDDR7 recognition ahead of RDNA5 silicon, and 28 patches pushing Apple Silicon Mac audio toward mainline Linux. ZLUDA&#x27;s cuFFT-to-hipFFT bridge and Valve&#x27;s bandwidth-hungry Pyrowave codec round out the software side. On the hardware and market side, China&#x27;s CXMT hit a 12nm-class DRAM milestone, memory die pricing reportedly crossed above leading-edge logic silicon, and Raspberry Pi firmware-locked boards to their factory RAM capacity -- while Alibaba put $3 million behind the Omarchy &#x27;agentic OS&#x27; project.</p>
       </div>
     </section>
 
@@ -29,133 +29,122 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Vulkan 1.4.363 Released With New VK_INTEL_device_info Extension</h3>
+              <h3>Alibaba Contributing $3M USD To Omarchy To Work On Making &quot;Ideal&quot; Agentic OS</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Vulkan 1.4.363 ships routine spec clarifications, several fixes, and multi-instance validation rules for DMA-BUF external memory, alongside a new Intel vendor extension.</li>
-              <li>The new VK_INTEL_device_info extension lets applications directly query the graphics IP block version of an Intel GPU, including architecture generation, generation release, and hardware revision.</li>
-              <li>Previously, applications had to maintain manual lookup tables mapping PCI device IDs to specific GPU generations; the extension removes that workaround.</li>
+              <li>Alibaba Cloud is contributing $3 million total to the Omacom Foundation for Omarchy, a Linux distribution positioned as a desktop OS built for people and AI agents to work together, matching DigitalOcean&#x27;s existing $1 million-per-year commitment over three years.</li>
+              <li>Alibaba will also stand up a separate &#x27;Omarchy China&#x27; effort for local CDN, hosting, and meetups, and plans to tune the OS specifically for its own Qwen models plus integration with Chinese cloud services.</li>
+              <li>The stated goal is that model, operating system, and services &#x27;work together from the moment you start the machine,&#x27; while the human owner stays in charge of any agent activity.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Vulkan-1.4.363" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Omarchy-Alibaba-3M" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.3-rc4 To Address Two Unfortunate Bugs With Btrfs</h3>
+              <h3>ZLUDA Now Implements Some NVIDIA cuFFT APIs With hipFFT</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Linux 7.3-rc4 merges a fix for a Btrfs regression introduced back in 7.2-rc1 that changed how the filesystem&#x27;s f_fsid was derived, causing it to shift across reboots and kernel updates.</li>
-              <li>The regression broke applications that depend on a stable filesystem ID, notably breaking NetworkManager&#x27;s OpenConnect VPN support for users who upgraded to Linux 7.2 on Btrfs; the fix restores FSID derivation from the filesystem UUID.</li>
-              <li>A second fix addresses GRUB2 failing to detect Btrfs root filesystems on initramfs-less systems during the Linux 7.3 development cycle.</li>
+              <li>ZLUDA, the open-source layer that runs CUDA software on non-NVIDIA GPUs, added support for a subset of NVIDIA&#x27;s cuFFT fast-Fourier-transform APIs in its 7-preview.11 release, contributed by developer AmosKito1.</li>
+              <li>The implementation only covers cuFFT calls that have a direct equivalent in AMD&#x27;s own hipFFT library (part of ROCm/HIP), so it is partial coverage rather than a full cuFFT reimplementation.</li>
+              <li>The translation layer was enough to get Folding@Home&#x27;s Core24 and Core27 CUDA compute cores running on AMD Radeon hardware, per Phoronix.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Btrfs-Fixes-For-Linux-7.3-rc4" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/ZLUDA-cuFFT-APIs-hipFFT" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Simple Optimization For Linux 7.4 Can Open Files For Reading ~39% Faster</h3>
+              <h3>Linux Adding New Interface For Reporting AMD SEV Status</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Developer Mateusz Guzik wrote a patch removing redundant dentry reference-counting in the kernel&#x27;s file-open path, letting do_dentry_open() consume an already-held reference instead of separately re-acquiring and dropping one.</li>
-              <li>Testing on a 20-core virtual machine with the will-it-scale benchmark, repeatedly opening the same file read-only, measured a 39 percent increase in operations per second.</li>
-              <li>The roughly three-dozen-line patch took over two years and five revisions to land in the vfs-7.4.lookup branch, and is expected to reach the Linux 7.4 merge window and stable kernels before the end of 2026.</li>
+              <li>A new sysfs file, /sys/devices/system/cpu/sev/sev_status, is being added to Linux to report whether AMD Secure Encrypted Virtualization is active on a guest VM, along with higher-level capability flags for SEV-ES and SEV-SNP.</li>
+              <li>The interface reads the SEV_MSR register directly, letting users check encryption status without external tools like sevctl or snpguest.</li>
+              <li>It is queued for Linux 7.4, whose merge window is expected to open around October 2026 -- notable mainly because the gap existed this long despite SEV shipping in hardware for years.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.4-Faster-Do-Open" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-sysfs-AMD-SEV-Status" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Industry &amp; HPC</h2>
-        <div class="digest-grid">
-
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>North Korea used job interviews to deploy malware on 30,000 devices during coding tests — WaterPlum group loots $10.7 million in crypto and plants persistent RATs</h3>
+              <h3>Cache Aware Scheduling Fixes Queued For Submission To Linux 7.3, Backporting To 7.2</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Intel engineer Tim Chen queued a batch of Cache Aware Scheduling (CAS) fixes in the sched/urgent branch of tip/tip.git, targeting Linux 7.3 this week with a backport planned for 7.2, where CAS first landed.</li>
+              <li>The fixes cover correctly maintaining nr_pref_llc_running per runnable domain, honoring migrate_llc_task semantics during active load balancing, refreshing last-level-cache capacity across CPU hotplug events, and excluding kernel threads from cache-aware placement.</li>
+              <li>CAS groups related tasks onto cores sharing the same last-level cache to cut cache-bouncing latency; these are correctness fixes for that existing mechanism, not a new feature.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Linux-7.3-CAS-Fixes-Coming" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Patches Posted For Enabling Apple Silicon Mac Speaker &amp; Headset Jack Support On Linux</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>James Calligeros posted 28 patches, roughly 3,000 lines, for mainline kernel review to bring speaker and headset-jack audio to Apple M1 and M2 Macs running Linux; M3 support is deferred because prerequisite hardware nodes are still missing upstream.</li>
+              <li>The functionality already exists downstream in the Asahi Linux kernel -- this submission is the effort to mainline it into vanilla Linux rather than keep it as a downstream patch set.</li>
+              <li>A new &#x27;macaudio&#x27; machine driver handles speaker protection through a userspace daemon, speakersafetyd, which reads voltage and current telemetry to keep the Macs&#x27; fragile speakers from being damaged.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Apple-Mac-Speaker-Headset-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AMD Begins Preparing Open-Source Linux Driver For Graphics Cards With GDDR7</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>AMD sent kernel patches adding GDDR7 as a recognized video-memory type in the AMDGPU driver, alongside new IP-block support for IH 8.0 (interrupt handler) and NBIF 7.10 (bus interface), pointing at upcoming RDNA5 hardware.</li>
+              <li>Current RDNA4 cards use GDDR6; the GDDR7 enablement follows recent DCN6 display-core and GFX 13.0.x patches and confirms RDNA5 will switch memory types, aligning with Nvidia&#x27;s RTX 50-series approach.</li>
+              <li>Industry rumors cited by Phoronix put limited RDNA5 SKUs at a 2027 launch with broader availability slipping to 2028 on supply constraints, so this driver work is well ahead of actual silicon.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/AMDGPU-Linux-Prep-GDDR7" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Valve Introduces Pyrowave Video Codec In Beta For Low Latency Streaming</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Valve engineer Hans-Kristian Arntzen&#x27;s Pyrowave, a new Vulkan-based video codec for Steam Remote Play, rolled out in experimental beta on September 21 across Windows, macOS, and Linux via the SteamRT3 Steam client beta.</li>
+              <li>It targets low-latency LAN streaming over Gigabit Ethernet and supports HDR and YUV 4:4:4 color, but Phoronix notes it uses 5 to 10x the bandwidth of existing streaming codecs to get there -- a deliberate responsiveness-over-efficiency trade.</li>
+              <li>It is opt-in via the Remote Play advanced client settings in the Steam beta, not enabled by default.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Valve-Steam-Beta-Pyrowave" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>China&#x27;s CXMT hits 12nm-class DRAM milestone</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Multiple government agencies issued a joint warning that a North Korea-linked group tracked as WaterPlum has been posting fake job listings that use coding tests during interviews to install malware on applicants&#x27; computers, compromising roughly 30,000 devices.</li>
-              <li>WaterPlum used the scheme to steal credentials and cryptocurrency from victims, netting an estimated $10.7 million in stolen crypto.</li>
-              <li>The group plants persistent remote access trojans (RATs) on infected machines, giving it ongoing access to victim systems well beyond the initial compromise.</li>
+              <li>China&#x27;s DRAM champion CXMT has begun mass production on a 5th-generation DRAM process it describes as 12nm-class, using quadruple-patterning lithography.</li>
+              <li>Tom&#x27;s Hardware reports the new process boosts die capacity by about 50 percent over the prior generation.</li>
+              <li>CXMT is China&#x27;s leading domestic DRAM producer, so the milestone marks continued progress in the country&#x27;s push toward memory self-sufficiency.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/cyber-security/north-korea-used-job-interviews-to-deploy-malware-on-30-000-devices-during-coding-tests-waterplum-group-loots-usd10-7-million-in-crypto-and-plants-persistent-rats" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/dram/chinas-cxmt-hits-12nm-class-dram-milestone-new-5th-gen-dram-tech-uses-quadruple-patterning-to-boost-die-capacity-by-50-percent" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Collapse of mainstream optical drive supply kills high-end CD players — PS Audio and Naim halt production as component costs double</h3>
+              <h3>Memory chips are now more expensive than compute chips on a per-area basis</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>High-end audio makers PS Audio and Naim have halted production of CD player models, including PS Audio&#x27;s PMG Super Audio CD transport, after mainstream suppliers of optical disc drive mechanisms exited the market.</li>
-              <li>Component costs for the remaining optical drive supply have roughly doubled, and adapting parts sourced from other companies into existing player designs requires extensive rework.</li>
-              <li>The supply collapse hits just as CD and vinyl sales have hit record levels in recent months, squeezing high-end audio makers at the same time physical-media demand is rebounding.</li>
+              <li>DRAM makers may now be earning more revenue per wafer area than TSMC earns on its leading-edge N3 logic process, according to Tom&#x27;s Hardware -- a reversal of the usual pricing hierarchy between memory and cutting-edge compute silicon.</li>
+              <li>The report attributes the shift to AI-driven demand pushing memory die value past leading-edge logic silicon on a per-area basis.</li>
             </ul>
-            <a href="https://www.tomshardware.com/peripherals/audiophiles-in-trouble-as-manufacturers-cease-optical-drive-production-hi-fi-cd-players-require-extensive-rework-to-use-components-from-other-companies" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/dram/dram-is-now-more-expensive-than-compute-chips-on-per-area-basis-ai-demand-drives-memory-die-value-past-leading-edge-silicon" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>KDE To Focus On Next-Gen Styling, Better Documentation &amp; KDE For Enterprise</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>Raspberry Pi locks boards to factory RAM capacities in firmware</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>At KDE Akademy 2026, the community announced three goals guiding development through 2028: next-generation styling, better documentation, and KDE for Enterprise.</li>
-              <li>The styling goal centers on the Ocean design-system project plus enhancements to the Union theming engine to give Plasma a more cohesive, uniform visual language.</li>
-              <li>The documentation goal focuses on eliminating outdated, misleading, and duplicative docs while adding a new contributor guide to ease onboarding for future developers.</li>
-              <li>The enterprise goal targets practical deployment features: improved LDAP integration, password-expiry handling, single sign-on, network printer configuration, and better headless/remote terminal support.</li>
+              <li>Raspberry Pi has locked its boards in firmware to their factory-configured RAM capacity, blocking DIY attempts to swap in higher-capacity memory chips for repairs or upgrades.</li>
+              <li>A Raspberry Pi engineer told modders not to bother trying, and the company cited &#x27;shady reseller scams&#x27; -- boards misrepresented as higher-capacity than they actually are -- as the reason for the lock.</li>
+              <li>The change closes off a repair and upgrade path hobbyists had previously relied on for single-board computers.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/KDE-Goals-To-2028" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AI-Assisted Starling Desktop Introduces 3D View With &quot;Walkable 3D Waterfront City&quot;</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Starling is a Linux desktop environment built around its own Wayland compositor, written in the Swift programming language and developed largely with AI assistance via Claude Code.</li>
-              <li>Starling 0.5 adds an optional 3D desktop mode, toggled from the control panel, that renders a walkable 3D waterfront city complete with animated boats, traffic, clouds, a clock tower, and sunset lighting.</li>
-              <li>Application windows remain real, functional windows placed within the 3D scene, switchable via Alt+Tab or a live-preview selector, and each connected display can render its own independent camera view.</li>
-              <li>Starling 0.5 also adds Windows support by running through WSL2 with Ubuntu 26.04 using RDP display mode.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Starling-0.5-3D-Desktop" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>How Windows turned months of inactivity into a 7-hour update hostage situation</h3>
-              <span class="digest-source">The Register</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A Windows 11 laptop left unused for a few months took about 7 hours to fully update, requiring multiple firmware and driver updates plus repeated restarts on top of a backlog of Windows component patches.</li>
-              <li>The author reports Windows&#x27; update progress indicator was unreliable through the ordeal, sticking at 65 percent for roughly an hour before jumping to 98 percent in 30 seconds and then hanging.</li>
-              <li>The piece argues the marathon update reflects an industry habit of shipping fixes via continuous updates rather than ensuring quality before release, undercutting Microsoft&#x27;s recent claims about Windows 11 efficiency gains.</li>
-            </ul>
-            <a href="https://www.theregister.com/os-platforms/2026/09/20/how-windows-turned-months-of-inactivity-into-a-7-hour-update-hostage-situation/5297478" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Agentic security is the billion-dollar challenge for some clever startup to solve</h3>
-              <span class="digest-source">The Register</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Investors interviewed say organizations are deploying AI agents into production with access to critical data and applications but with little to no way to manage, secure, or even inventory those agents.</li>
-              <li>Merlin Group&#x27;s Matt Hartman frames the gap as a major investment opportunity, pointing to unmet needs around non-human identity management, access restriction, and audit trails for agent actions.</li>
-              <li>Microsoft M12&#x27;s Todd Graham compared it to the historical pattern of security lagging infrastructure, saying &quot;If laptops were default secure, we wouldn&#x27;t have CrowdStrike,&quot; and predicted agentic identity could produce a company valued like Okta.</li>
-              <li>The article cites incidents of agents hacking organizations, compromising employee accounts, and modifying themselves without human authorization, without naming specific dollar losses.</li>
-            </ul>
-            <a href="https://www.theregister.com/security/2026/09/19/agentic-security-is-the-billion-dollar-challenge-for-some-clever-startup-to-solve/5297546" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AI boom could leave an e-waste trail that wraps 6 times around Earth</h3>
-              <span class="digest-source">The Register</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A Basel Action Network report titled &quot;How Big Is the AI Waste Wave?&quot; projects 395 million to 617 million tonnes of AI-related electronic waste between 2025 and 2050.</li>
-              <li>That volume equals 15 to 23 million shipping containers, which lined end to end would stretch roughly 244,000 km, about six times Earth&#x27;s circumference.</li>
-              <li>The report finds servers and accelerators (GPUs) account for only 13 percent of datacenter equipment by weight, so counting networking, power distribution, backup power, and cooling gear pushes total e-waste 40 to 60 times higher than commonly cited academic projections.</li>
-              <li>A reference 100 MW AI facility generates about 7,000 metric tonnes of equipment, including roughly 2,700 tonnes of copper, and GPUs are replaced every 2-3 years versus 5-7 years for traditional servers.</li>
-            </ul>
-            <a href="https://www.theregister.com/off-prem/2026/09/19/ai-boom-could-leave-an-e-waste-trail-that-wraps-6-times-around-earth/5297451" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/raspberry-pi/raspberry-pi-locks-boards-to-factory-ram-capacities-in-firmware-engineer-tells-diy-modders-dont-waste-your-time-trying-repairs-or-upgrades-company-cites-shady-reseller-scams" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
