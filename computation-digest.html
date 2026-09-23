@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - September 22, 2026 | Densanon</title>
+  <title>Computation Morning Digest - September 23, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 22, 2026</div>
+        <div class="digest-date-badge">September 23, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Kernel and driver plumbing dominates today: Cache Aware Scheduling fixes, a new AMD SEV status interface, GDDR7 recognition ahead of RDNA5 silicon, and 28 patches pushing Apple Silicon Mac audio toward mainline Linux. ZLUDA&#x27;s cuFFT-to-hipFFT bridge and Valve&#x27;s bandwidth-hungry Pyrowave codec round out the software side. On the hardware and market side, China&#x27;s CXMT hit a 12nm-class DRAM milestone, memory die pricing reportedly crossed above leading-edge logic silicon, and Raspberry Pi firmware-locked boards to their factory RAM capacity -- while Alibaba put $3 million behind the Omarchy &#x27;agentic OS&#x27; project.</p>
+        <p class="digest-intro">China&#x27;s AI hardware push headlines today: ByteDance quietly routed over 2,000 Nvidia B200 chips through a Norwegian neocloud, Alibaba unveiled its Zhenwu V900 accelerator aimed at a 10-trillion-parameter Qwen model, and a Chinese satellite put AI compute in orbit. On the open-source side, AMD&#x27;s GDDR7 Linux driver work hints at RDNA 5, Qualcomm shipped day-one Adreno 850 kernel patches, and AMD pushed AVX10_V2_AUX into Clang 24 ahead of its AI Compute Extensions. Meta&#x27;s new transatlantic subsea cable, Canonical&#x27;s $345M year, and a utility repurposing fiber to hunt water leaks round things out.</p>
       </div>
     </section>
 
@@ -29,122 +29,129 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Alibaba Contributing $3M USD To Omarchy To Work On Making &quot;Ideal&quot; Agentic OS</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Alibaba Cloud is contributing $3 million total to the Omacom Foundation for Omarchy, a Linux distribution positioned as a desktop OS built for people and AI agents to work together, matching DigitalOcean&#x27;s existing $1 million-per-year commitment over three years.</li>
-              <li>Alibaba will also stand up a separate &#x27;Omarchy China&#x27; effort for local CDN, hosting, and meetups, and plans to tune the OS specifically for its own Qwen models plus integration with Chinese cloud services.</li>
-              <li>The stated goal is that model, operating system, and services &#x27;work together from the moment you start the machine,&#x27; while the human owner stays in charge of any agent activity.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Omarchy-Alibaba-3M" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ZLUDA Now Implements Some NVIDIA cuFFT APIs With hipFFT</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>ZLUDA, the open-source layer that runs CUDA software on non-NVIDIA GPUs, added support for a subset of NVIDIA&#x27;s cuFFT fast-Fourier-transform APIs in its 7-preview.11 release, contributed by developer AmosKito1.</li>
-              <li>The implementation only covers cuFFT calls that have a direct equivalent in AMD&#x27;s own hipFFT library (part of ROCm/HIP), so it is partial coverage rather than a full cuFFT reimplementation.</li>
-              <li>The translation layer was enough to get Folding@Home&#x27;s Core24 and Core27 CUDA compute cores running on AMD Radeon hardware, per Phoronix.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/ZLUDA-cuFFT-APIs-hipFFT" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Linux Adding New Interface For Reporting AMD SEV Status</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A new sysfs file, /sys/devices/system/cpu/sev/sev_status, is being added to Linux to report whether AMD Secure Encrypted Virtualization is active on a guest VM, along with higher-level capability flags for SEV-ES and SEV-SNP.</li>
-              <li>The interface reads the SEV_MSR register directly, letting users check encryption status without external tools like sevctl or snpguest.</li>
-              <li>It is queued for Linux 7.4, whose merge window is expected to open around October 2026 -- notable mainly because the gap existed this long despite SEV shipping in hardware for years.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-sysfs-AMD-SEV-Status" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Cache Aware Scheduling Fixes Queued For Submission To Linux 7.3, Backporting To 7.2</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Intel engineer Tim Chen queued a batch of Cache Aware Scheduling (CAS) fixes in the sched/urgent branch of tip/tip.git, targeting Linux 7.3 this week with a backport planned for 7.2, where CAS first landed.</li>
-              <li>The fixes cover correctly maintaining nr_pref_llc_running per runnable domain, honoring migrate_llc_task semantics during active load balancing, refreshing last-level-cache capacity across CPU hotplug events, and excluding kernel threads from cache-aware placement.</li>
-              <li>CAS groups related tasks onto cores sharing the same last-level cache to cut cache-bouncing latency; these are correctness fixes for that existing mechanism, not a new feature.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.3-CAS-Fixes-Coming" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Patches Posted For Enabling Apple Silicon Mac Speaker &amp; Headset Jack Support On Linux</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>James Calligeros posted 28 patches, roughly 3,000 lines, for mainline kernel review to bring speaker and headset-jack audio to Apple M1 and M2 Macs running Linux; M3 support is deferred because prerequisite hardware nodes are still missing upstream.</li>
-              <li>The functionality already exists downstream in the Asahi Linux kernel -- this submission is the effort to mainline it into vanilla Linux rather than keep it as a downstream patch set.</li>
-              <li>A new &#x27;macaudio&#x27; machine driver handles speaker protection through a userspace daemon, speakersafetyd, which reads voltage and current telemetry to keep the Macs&#x27; fragile speakers from being damaged.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Apple-Mac-Speaker-Headset-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD Begins Preparing Open-Source Linux Driver For Graphics Cards With GDDR7</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>AMD sent kernel patches adding GDDR7 as a recognized video-memory type in the AMDGPU driver, alongside new IP-block support for IH 8.0 (interrupt handler) and NBIF 7.10 (bus interface), pointing at upcoming RDNA5 hardware.</li>
-              <li>Current RDNA4 cards use GDDR6; the GDDR7 enablement follows recent DCN6 display-core and GFX 13.0.x patches and confirms RDNA5 will switch memory types, aligning with Nvidia&#x27;s RTX 50-series approach.</li>
-              <li>Industry rumors cited by Phoronix put limited RDNA5 SKUs at a 2027 launch with broader availability slipping to 2028 on supply constraints, so this driver work is well ahead of actual silicon.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/AMDGPU-Linux-Prep-GDDR7" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Valve Introduces Pyrowave Video Codec In Beta For Low Latency Streaming</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Valve engineer Hans-Kristian Arntzen&#x27;s Pyrowave, a new Vulkan-based video codec for Steam Remote Play, rolled out in experimental beta on September 21 across Windows, macOS, and Linux via the SteamRT3 Steam client beta.</li>
-              <li>It targets low-latency LAN streaming over Gigabit Ethernet and supports HDR and YUV 4:4:4 color, but Phoronix notes it uses 5 to 10x the bandwidth of existing streaming codecs to get there -- a deliberate responsiveness-over-efficiency trade.</li>
-              <li>It is opt-in via the Remote Play advanced client settings in the Steam beta, not enabled by default.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Valve-Steam-Beta-Pyrowave" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>China&#x27;s CXMT hits 12nm-class DRAM milestone</h3>
+              <h3>China&#x27;s ByteDance gained access to over 2,000 Nvidia B200 chips through Norway data center</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>China&#x27;s DRAM champion CXMT has begun mass production on a 5th-generation DRAM process it describes as 12nm-class, using quadruple-patterning lithography.</li>
-              <li>Tom&#x27;s Hardware reports the new process boosts die capacity by about 50 percent over the prior generation.</li>
-              <li>CXMT is China&#x27;s leading domestic DRAM producer, so the milestone marks continued progress in the country&#x27;s push toward memory self-sufficiency.</li>
+              <li>UK neocloud Nscale sold GPU capacity to Spring (SG) Pte Ltd, a Singapore-based ByteDance subsidiary, giving the TikTok parent access to more than 2,000 Nvidia B200 chips.</li>
+              <li>Nscale&#x27;s U.S. IPO filings never named ByteDance directly, referring to Spring only as a &#x27;significant customer&#x27; -- even though Spring reportedly accounted for 73% of the UK neocloud&#x27;s 2025 revenue.</li>
+              <li>The arrangement shows how offshore data centers and layered subsidiary structures can move restricted Nvidia hardware to Chinese firms around export controls.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/dram/chinas-cxmt-hits-12nm-class-dram-milestone-new-5th-gen-dram-tech-uses-quadruple-patterning-to-boost-die-capacity-by-50-percent" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/data-centers/filing-reveals-how-bytedance-gained-access-to-over-2-000-nvidia-b200-chips-through-nscales-norway-data-center-singaporean-subsidiary-spring-contributed-73-percent-of-uk-neoclouds-2025-revenue" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Memory chips are now more expensive than compute chips on a per-area basis</h3>
+              <h3>Alibaba unveils Zhenwu V900 AI accelerator, claims it&#x27;s &#x27;the most powerful AI chip in China&#x27;</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>DRAM makers may now be earning more revenue per wafer area than TSMC earns on its leading-edge N3 logic process, according to Tom&#x27;s Hardware -- a reversal of the usual pricing hierarchy between memory and cutting-edge compute silicon.</li>
-              <li>The report attributes the shift to AI-driven demand pushing memory die value past leading-edge logic silicon on a per-area basis.</li>
+              <li>Alibaba&#x27;s chip division T-Head unveiled the Zhenwu V900, which it bills as China&#x27;s most powerful AI accelerator, with 216GB of memory.</li>
+              <li>Alibaba claims roughly triple the performance of its predecessor, the M890.</li>
+              <li>The chip is positioned to anchor a supercluster of up to 500,000 units, aimed at training a 10-trillion-parameter Qwen model.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/dram/dram-is-now-more-expensive-than-compute-chips-on-per-area-basis-ai-demand-drives-memory-die-value-past-leading-edge-silicon" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/alibaba-unveils-zhenwu-v900-ai-accelerator-claims-its-the-most-powerful-ai-chip-in-china-accelerator-supports-500-000-chip-supercluster-with-a-10t-parameter-qwen-model-on-the-roadmap" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Raspberry Pi locks boards to factory RAM capacities in firmware</h3>
+              <h3>AMD begins to add GDDR7 support to its Linux GPU drivers</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Raspberry Pi has locked its boards in firmware to their factory-configured RAM capacity, blocking DIY attempts to swap in higher-capacity memory chips for repairs or upgrades.</li>
-              <li>A Raspberry Pi engineer told modders not to bother trying, and the company cited &#x27;shady reseller scams&#x27; -- boards misrepresented as higher-capacity than they actually are -- as the reason for the lock.</li>
-              <li>The change closes off a repair and upgrade path hobbyists had previously relied on for single-board computers.</li>
+              <li>AMD has started landing GDDR7 memory support in its open-source Linux GPU drivers.</li>
+              <li>The changes also touch other graphics IP blocks, suggesting bring-up work for a next-generation architecture is underway.</li>
+              <li>Driver commits like these are often the earliest public signal of unannounced hardware, arriving well ahead of an official RDNA 5 reveal.</li>
             </ul>
-            <a href="https://www.tomshardware.com/raspberry-pi/raspberry-pi-locks-boards-to-factory-ram-capacities-in-firmware-engineer-tells-diy-modders-dont-waste-your-time-trying-repairs-or-upgrades-company-cites-shady-reseller-scams" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/gpus/amd-begins-to-add-gddr7-support-to-its-linux-gpu-drivers-changes-could-herald-use-of-advanced-memory-standard-with-next-gen-radeon-gpus" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Meta&#x27;s new transoceanic undersea cable boasts a whopping petabit of bandwidth</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Meta announced Petal, a new subsea cable connecting the USA and France across roughly 4,300 miles.</li>
+              <li>The link will carry about a petabit of raw bandwidth, which Meta says makes it twice as fast as its previous transatlantic cable.</li>
+              <li>It&#x27;s another sign hyperscalers are building their own undersea infrastructure to keep up with AI-driven data demand.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/networking/metas-new-transoceanic-undersea-cable-boasts-a-whopping-petabit-of-bandwidth-petal-link-between-us-and-france-will-be-twice-as-fast-as-the-last" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>China launches &#x27;Supercomputing-1&#x27; AI satellite as orbital data centers gather momentum</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>China launched &#x27;Supercomputing-1,&#x27; a satellite built to run AI compute in orbit.</li>
+              <li>The goal is onboard processing of Earth-observation data, cutting turnaround from hours to minutes instead of downlinking raw data for ground processing.</li>
+              <li>It&#x27;s an early step toward orbital data centers, though the report is careful to note it&#x27;s still far from an actual space-based data center.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/space/china-puts-ai-compute-into-orbit-with-supercomputing-1-satellite-onboard-processing-aims-to-cut-earth-observation-data-processing-from-hours-to-minutes" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Qualcomm Posts Open-Source GPU Driver Patches For Adreno 850 One Day After Announcement</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Qualcomm announced the Snapdragon 8 Elite Extreme Gen 6 with new Adreno 850 graphics.</li>
+              <li>Just one day later, Qualcomm engineers posted initial open-source Linux kernel patches bringing up the A850 under the MSM driver.</li>
+              <li>That turnaround marks a notable shift toward day-one open-source GPU driver support for Qualcomm&#x27;s flagship mobile silicon.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Qualcomm-Adreno-850-Open-Source" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AMD Upstreams AVX10_V2_AUX Support Into LLVM Clang 24</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>AMD upstreamed AVX10_V2_AUX support into LLVM/Clang 24, after earlier posting the same support for GCC this summer.</li>
+              <li>AVX10_V2_AUX is described as an important building block toward AMD&#x27;s upcoming &#x27;AI Compute Extensions&#x27; (ACE).</li>
+              <li>Landing compiler support ahead of hardware availability signals AMD is lining up its software stack early for future silicon.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/LLVM-Clang-AVX10_V2_AUX" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>NTFS-3G Update Brings Many Security Fixes</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>NTFS-3G 2026.9.18 shipped as the newest release of the FUSE-based open-source NTFS driver for Linux and macOS.</li>
+              <li>The update is centered on security fixes rather than new features.</li>
+              <li>It&#x27;s a relevant patch for anyone relying on the userspace driver to read or write NTFS volumes outside Windows.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/NTFS-3G-2026.9.18" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Ubuntu Linux Maker Canonical Achieved $345M USD In Revenue For 2025</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Canonical, the company behind Ubuntu Linux, reported $345M in revenue for 2025.</li>
+              <li>That&#x27;s up from nearly $300M in 2024, continuing steady year-over-year growth.</li>
+              <li>The numbers reflect Canonical&#x27;s broader push into enterprise services beyond the free Ubuntu desktop and server distro.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Ubuntu-Canonical-Did-345M-2025" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Industry &amp; HPC</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Southern Water taps fiber network to sniff out leaky pipes</h3>
+              <span class="digest-source">The Register</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>UK utility Southern Water is repurposing its existing fiber-optic network to help detect leaks in water pipes.</li>
+              <li>It joins a growing list of utilities putting telecom infrastructure they already own to work for non-telecom monitoring.</li>
+              <li>The approach lets utilities extract new operational value -- like leak detection -- from fiber assets without deploying dedicated new sensor networks.</li>
+            </ul>
+            <a href="https://www.theregister.com/networks/2026/09/23/southern-water-taps-fiber-network-to-sniff-out-leaky-pipes/5298527" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
