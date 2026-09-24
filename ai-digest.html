@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - September 23, 2026 | Densanon</title>
+  <title>AI Morning Digest - September 24, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 23, 2026</div>
+        <div class="digest-date-badge">September 24, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A big model-release day dominates today&#x27;s roundup — Claude Opus 5.5 lands as Claude Code&#x27;s new default the same hour OpenAI ships two competing GPT-6 models — alongside research on why LLM benchmark numbers deserve more scrutiny, a new omni-modal embedding model, and a solo engineer&#x27;s from-scratch Rust training run.</p>
+        <p class="digest-intro">A quieter news day headlined by Google&#x27;s new Gemini 3.8 TTS models and a big Claude Code stability release, plus NVIDIA&#x27;s guide to GPU-parallel robotics simulation. Five fresh arXiv papers round things out, probing when multi-LLM collaboration actually helps, where expert annotators should spend their time, why LLMs can recognize culturally specific vocabulary but not produce it, how well models classify legal reasoning, and whether learned context planning beats plain strong retrieval.</p>
       </div>
     </section>
 
@@ -29,51 +29,52 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Claude Opus 5.5, GPT-6 Sol, GPT-6 Luna, and a new price war</h3>
+              <h3>Gemini 3.8 TTS Playground</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Anthropic shipped Claude Opus 5.5 the same day OpenAI released two new models, GPT-6 Sol and GPT-6 Luna, within about an hour of each other.</li>
-              <li>Comes right after Grok 4.7 and MiMo v2.6 Flash/Pro landed the day before — a rapid-fire release cycle across labs putting pricing and capability pressure on each other.</li>
-              <li>Willison notes it will take time to get a solid read on relative quality across all the new releases, but pricing is already shifting as a result.</li>
+              <li>Google released two new TTS models, gemini-3.8-flash-tts and gemini-3.8-flash-lite-tts, with a library of over 2,000 voices plus custom voice cloning from a 30-second sample.</li>
+              <li>Willison built an interactive playground for scripting multi-speaker conversations with per-speaker voice and delivery-style instructions, saved to shareable URLs, with API keys kept in memory only.</li>
+              <li>A roughly 1:18 multi-speaker dialogue generated in about 20 seconds cost around 2.7 cents on the standard Flash tier.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/22/opus-and-sol-and-luna/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Sep/23/gemini-tts-playground/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.280</h3>
+              <h3>anthropics/claude-code: v2.1.281</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Claude Code now defaults to Claude Opus 5.5, which brings a 1M-token context window.</li>
-              <li>Pricing: $4/$20 per million input/output tokens, with cache reads discounted to $0.20/Mtok.</li>
-              <li>Also adds mouse support to more fullscreen lists — scroll-wheel on /skills and clickable state options in /plugin.</li>
+              <li>A 100+ item stability release: fixes crashes on API request retries, turns that ignored --max-turns, and resumed sessions re-sending or truncating earlier messages.</li>
+              <li>Notable safety fix: dangerous recursive rm commands were running unprompted in auto mode; the confirmation prompt now times out after 2 minutes in unattended sessions instead of defaulting to running.</li>
+              <li>Adds Claude apps gateway support for newer Desktop keys plus Bedrock IAM role assumption and guardrails on gateway upstreams.</li>
+              <li>Windows-specific fixes for Bash writes to $TMPDIR failing and a race condition deleting claude.exe backups.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.280" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.281" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How UK AISI and EvalEval Are Making Benchmark Results Reproducible</h3>
+              <h3>How to Use NVIDIA Warp and MjWarp to Accelerate Robotics Simulation and Learning Workflows</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The UK AI Security Institute (AISI) and the EvalEval initiative are collaborating on infrastructure to make AI benchmark results independently reproducible.</li>
-              <li>Targets a real credibility gap in AI research: benchmark scores that can’t be replicated undermine trust in reported model capabilities.</li>
-              <li>Signals growing institutional investment in evaluation rigor as a first-class concern, not an afterthought to model releases.</li>
+              <li>Warp is NVIDIA&#x27;s Python framework for authoring GPU kernels that compile to CUDA; MJWarp reimplements MuJoCo&#x27;s physics pipeline on top of it for batched simulation.</li>
+              <li>Solves a real RL bottleneck: classic MuJoCo is fast per-robot on CPU but doesn&#x27;t parallelize, while MJWarp runs thousands of independent environments at once on a GPU using the same MJCF robot models.</li>
+              <li>Walks through validating GPU/CPU parity, sizing contact and constraint buffers, and using CUDA graph capture, scaling an SO-101 arm task from one CPU world to 2,048 parallel GPU worlds.</li>
             </ul>
-            <a href="https://huggingface.co/blog/evaleval-aisi" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/nvidia/how-to-use-nvidia-warp-and-mjwarp" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>llm 0.36</h3>
+              <h3>Shadow roots, explained with live examples</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon Willison’s llm CLI adds support for the newly released GPT-6 Sol and GPT-6 Luna models out of the box.</li>
-              <li>New plugin capability: models can declare supports_conversation = False for models that only accept single-turn prompts.</li>
-              <li>The tool now raises a clear ConversationNotSupported error instead of silently mishandling history for those models.</li>
+              <li>An interactive artifact explaining Shadow DOM — style encapsulation, inheritance, slots, parts, and JS access — built from a single prompt to Fable 5.1 Medium.</li>
+              <li>Rather than just describing isolated DOM trees with private stylesheets, the demo lets readers manipulate live examples to see the encapsulation rules in action.</li>
+              <li>A small but concrete example of a coding model producing a complete self-contained teaching tool, not just a code snippet.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/22/llm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Sep/23/shadow-roots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -83,63 +84,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Do Synthetic Personas Predict Real Audience Response? A Sim-to-Real Study Where a No-Persona Baseline Beats Persona-Based Copy Simulation</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Marketers increasingly use LLMs as “synthetic personas” to predict how an audience will react to copy before it ships.</li>
-              <li>A sim-to-real comparison finds a no-persona baseline actually outperforms persona-conditioned copy simulation at predicting real audience response.</li>
-              <li>Challenges the assumption that profile-conditioned LLMs reliably mimic real human sample reactions — a caution for AI-driven market research.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.25010" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Ovis-Embedding: Pushing the Frontiers of Universal Omni-Modal Embeddings</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Ovis-Embedding is a new omni-modal embedding family covering text, image, video, and audio in a single model.</li>
-              <li>Uses a shared multimodal backbone instead of bolting together separate per-modality towers, aiming for more unified cross-modal representations.</li>
-              <li>Positioned as pushing the frontier of universal embeddings, relevant for retrieval and multimodal search systems.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.25165" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>What Does 99% Accuracy Measure? A Reproducible Audit of Shortcut Learning in a Widely Used Fake News Corpus</h3>
+              <h3>COMED: The Missing Middle Between Routing and Collaboration in Multi-LLM Inference</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Classifiers trained on the widely-used ISOT/Kaggle “Fake and Real News” dataset routinely score above 98% accuracy — suspiciously high given how hard veracity assessment actually is.</li>
-              <li>A transparent TF-IDF plus linear-classifier audit shows this performance is largely driven by shortcut learning on dataset artifacts, not genuine fake-news detection.</li>
-              <li>A cautionary case study for anyone citing high benchmark accuracy as evidence of real-world capability.</li>
+              <li>Routing picks one model and stops; dense multi-model collaboration consults peers on every query and can just as easily hurt a correct answer as save a wrong one.</li>
+              <li>COMED (Controlled Model Escalation for Multi-LLM Deliberation) escalates selectively instead, using self-consistency checks, routing-confidence margins, and lightweight peer assessment to decide when a second model is worth the cost.</li>
+              <li>Gains up to +10.7 points on MedQA and lifts GPT-4.5 on HLE from 23.1% to 28.1%, beating dense collaboration while using fewer model invocations and decoded tokens.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.25006" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.26913" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Training a Language Model End-to-End in Rust: An Experience Report</h3>
+              <h3>Experts Rise Where LLMs Disagree: Using Cross-Model Disagreement to Target Expert Effort in LLM Codebook Revision for Large-Scale Annotation</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A solo engineer pretrained a language model entirely in Rust — no PyTorch, no Python anywhere in the training path — for $164 in rented GPU time.</li>
-              <li>Framed explicitly as “an achievement, not a recommendation” — the real value is the measured account of what broke and what was hard along the way.</li>
-              <li>A useful data point for anyone evaluating non-Python ML training stacks.</li>
+              <li>Targets a real bottleneck: hand-building an annotation codebook for large-scale text labeling normally takes months of expert time.</li>
+              <li>Uses disagreement between multiple LLMs to flag exactly which cases need expert attention, then tests three ways experts can respond: revising LLM output, answering targeted questions, or labeling disputes with a rationale.</li>
+              <li>On tutoring-session annotation, rationale labeling reached 64.9% agreement with expert labels, the best of the three methods, while cutting codebook development from months to days.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.25008" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.26926" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Same Quantity, Different Answer: Numerical Representation Invariance in Language Models</h3>
+              <h3>Recognized but Not Produced: A Generation Benchmark for Culturally Specific Kinship Terms</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Tests whether LLMs give the same answer to numerically-equivalent word problems when the quantity is written differently (decimal, fraction, percent, number word, scientific notation).</li>
-              <li>Built a 3,600-problem exact-rational benchmark specifically to probe this representation invariance.</li>
-              <li>Findings bear directly on how much to trust LLM math/reasoning outputs when a number’s surface form changes but its underlying value doesn’t.</li>
+              <li>Tests five open-weight LLMs on generating, not just selecting, kinship terms in Hindi, Tamil, and Korean across two conversational scenarios.</li>
+              <li>Finds a large recognition-production gap: GPT-OSS 120B picks the correct term in multiple choice 90.7% of the time but produces an accepted term unprompted only 36% of the time; Llama 3.3 70B drops similarly, 77.9% to 24.2%.</li>
+              <li>Paternal-lineage terms are favored unevenly across languages; the authors argue generation benchmarks are needed alongside multiple-choice ones to actually measure cultural-vocabulary competence.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.25009" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.26942" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Classifying Interpretive Canons at the Sentence Level: A Benchmark from the German Federal Constitutional Court</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Builds a sentence-level benchmark applying Larenz&#x27;s legal-interpretation framework to real opinions from the German Federal Constitutional Court.</li>
+              <li>Evaluates four LLMs with both expert-written and genetically-optimized prompts; F1 lands between 70.4 and 79.2, with grammatical interpretation easiest to identify and systematic interpretation hardest.</li>
+              <li>Genetic prompt optimization didn&#x27;t reliably beat expert-crafted prompts, a data point against assuming automated prompt search always wins. Accepted at the ICML 2026 AI4Law workshop.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.26945" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>When Learned Context Planning Fails to Beat Strong Retrieval: A Controlled Study of Planning, Routing, and Reranking for Long-Context QA</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Tests whether training a model to pick relevant &quot;evidence atoms&quot; before answering beats well-tuned retrieval on long-context multiple-choice QA (LongBench-v2, Qwen2.5-7B-Instruct).</li>
+              <li>At an 18k-character budget, anchored hybrid retrieval (36.18%) and BM25 (35.98%) both beat the best learned planner (34.19%); the gap holds on a held-out 152-question split, 42.11% vs 36.84%.</li>
+              <li>Under tight token budgets the planner is a wash at best, ahead by 0.4 points at 6k and losing by 9k, leading the authors to call learned planning &quot;a weak relevance signal&quot; rather than a retrieval replacement.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.26976" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
