@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - September 24, 2026 | Densanon</title>
+  <title>AI Morning Digest - September 25, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 24, 2026</div>
+        <div class="digest-date-badge">September 25, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A quieter news day headlined by Google&#x27;s new Gemini 3.8 TTS models and a big Claude Code stability release, plus NVIDIA&#x27;s guide to GPU-parallel robotics simulation. Five fresh arXiv papers round things out, probing when multi-LLM collaboration actually helps, where expert annotators should spend their time, why LLMs can recognize culturally specific vocabulary but not produce it, how well models classify legal reasoning, and whether learned context planning beats plain strong retrieval.</p>
+        <p class="digest-intro">A quiet news day carried mostly by Anthropic&#x27;s own tooling: a Claude Code release adding prose-width controls and telemetry visibility, plus a C# SDK bump with day-one support for claude-opus-5-5. The research slate leans toward agent reliability and safety — reward hacking in autonomous research agents, when forecasting agents should actually reason, and a new policy-driven multi-agent simulation for finance — alongside a new 27B/9B multimodal model family and a benchmark of how LLMs hold up against character attacks in debate.</p>
       </div>
     </section>
 
@@ -29,52 +29,49 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Gemini 3.8 TTS Playground</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Google released two new TTS models, gemini-3.8-flash-tts and gemini-3.8-flash-lite-tts, with a library of over 2,000 voices plus custom voice cloning from a 30-second sample.</li>
-              <li>Willison built an interactive playground for scripting multi-speaker conversations with per-speaker voice and delivery-style instructions, saved to shareable URLs, with API keys kept in memory only.</li>
-              <li>A roughly 1:18 multi-speaker dialogue generated in about 20 seconds cost around 2.7 cents on the standard Flash tier.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Sep/23/gemini-tts-playground/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.281</h3>
+              <h3>anthropics/claude-code: v2.1.282</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A 100+ item stability release: fixes crashes on API request retries, turns that ignored --max-turns, and resumed sessions re-sending or truncating earlier messages.</li>
-              <li>Notable safety fix: dangerous recursive rm commands were running unprompted in auto mode; the confirmation prompt now times out after 2 minutes in unattended sessions instead of defaulting to running.</li>
-              <li>Adds Claude apps gateway support for newer Desktop keys plus Bedrock IAM role assumption and guardrails on gateway upstreams.</li>
-              <li>Windows-specific fixes for Bash writes to $TMPDIR failing and a race condition deleting claude.exe backups.</li>
+              <li>Adds a `maxProseWidth` setting that caps the width of Claude&#x27;s prose in wide terminals, while tables and code blocks still use the full terminal width.</li>
+              <li>Adds a startup notice plus new `/status` and `claude doctor` entries that list telemetry variables in a project&#x27;s settings files which were previously being silently ignored.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.281" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.282" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How to Use NVIDIA Warp and MjWarp to Accelerate Robotics Simulation and Learning Workflows</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>anthropics/anthropic-sdk-csharp: Anthropic: v12.50.0</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Warp is NVIDIA&#x27;s Python framework for authoring GPU kernels that compile to CUDA; MJWarp reimplements MuJoCo&#x27;s physics pipeline on top of it for batched simulation.</li>
-              <li>Solves a real RL bottleneck: classic MuJoCo is fast per-robot on CPU but doesn&#x27;t parallelize, while MJWarp runs thousands of independent environments at once on a GPU using the same MJCF robot models.</li>
-              <li>Walks through validating GPU/CPU parity, sizing contact and constraint buffers, and using CUDA graph capture, scaling an SO-101 arm task from one CPU world to 2,048 parallel GPU worlds.</li>
+              <li>Version 12.50.0 of the C# Anthropic SDK, released 2026-09-22.</li>
+              <li>Adds API support for the new claude-opus-5-5 model.</li>
+              <li>Adds inline tool definitions and MCP tool-list pinning (beta) as new SDK features.</li>
             </ul>
-            <a href="https://huggingface.co/blog/nvidia/how-to-use-nvidia-warp-and-mjwarp" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/anthropic-sdk-csharp/releases/tag/Anthropic-v12.50.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Shadow roots, explained with live examples</h3>
+              <h3>datasette 1.0a41</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An interactive artifact explaining Shadow DOM — style encapsulation, inheritance, slots, parts, and JS access — built from a single prompt to Fable 5.1 Medium.</li>
-              <li>Rather than just describing isolated DOM trees with private stylesheets, the demo lets readers manipulate live examples to see the encapsulation rules in action.</li>
-              <li>A small but concrete example of a coding model producing a complete self-contained teaching tool, not just a code snippet.</li>
+              <li>Alec Garcia added OpenTelemetry support to Datasette in the 1.0a41 release.</li>
+              <li>Willison refactored all of Datasette&#x27;s modal dialogs into a single Web Component.</li>
+              <li>The new Web Component is now documented so other Datasette plugins can reuse it.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/23/shadow-roots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Sep/24/datasette/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>commit-rewriter 0.2</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>commit-rewriter 0.2 adds support for running against branches other than the repo&#x27;s default branch.</li>
+              <li>New usage: `uvx commit-rewriter --branch other` targets a specific branch.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Sep/24/commit-rewriter/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -84,63 +81,72 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>COMED: The Missing Middle Between Routing and Collaboration in Multi-LLM Inference</h3>
+              <h3>Reward Hacking Challenges Oversight of Autonomous Research Agents</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Routing picks one model and stops; dense multi-model collaboration consults peers on every query and can just as easily hurt a correct answer as save a wrong one.</li>
-              <li>COMED (Controlled Model Escalation for Multi-LLM Deliberation) escalates selectively instead, using self-consistency checks, routing-confidence margins, and lightweight peer assessment to decide when a second model is worth the cost.</li>
-              <li>Gains up to +10.7 points on MedQA and lifts GPT-4.5 on HLE from 23.1% to 28.1%, beating dense collaboration while using fewer model invocations and decoded tokens.</li>
+              <li>Autonomous research agents that design experiments, evaluate results, and write their own reports end up controlling both the scientific outcome and the evidence used to support it.</li>
+              <li>That dual control creates a reward-hacking risk: agents can satisfy the reward criteria without actually achieving the intended research result.</li>
+              <li>The paper studies how this dynamic undermines effective oversight of autonomous research agents.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.26913" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.28614" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Experts Rise Where LLMs Disagree: Using Cross-Model Disagreement to Target Expert Effort in LLM Codebook Revision for Large-Scale Annotation</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>Pistis Technical Report</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets a real bottleneck: hand-building an annotation codebook for large-scale text labeling normally takes months of expert time.</li>
-              <li>Uses disagreement between multiple LLMs to flag exactly which cases need expert attention, then tests three ways experts can respond: revising LLM output, answering targeted questions, or labeling disputes with a rationale.</li>
-              <li>On tutoring-session annotation, rationale labeling reached 64.9% agreement with expert labels, the best of the three methods, while cutting codebook development from months to days.</li>
+              <li>Introduces the Pistis model family: 27B- and 9B-parameter multimodal LLMs built on Qwen3.6 and Qwen3.5 respectively.</li>
+              <li>Developed through a general, scalable post-training framework.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.26926" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.28554" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Recognized but Not Produced: A Generation Benchmark for Culturally Specific Kinship Terms</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>TW3Cast: A Frozen Router of Lightly Fine-Tuned Foundation Models for Time-Series Forecasting on GIFT-Eval, Selected Entirely on the Training Split</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Tests five open-weight LLMs on generating, not just selecting, kinship terms in Hindi, Tamil, and Korean across two conversational scenarios.</li>
-              <li>Finds a large recognition-production gap: GPT-OSS 120B picks the correct term in multiple choice 90.7% of the time but produces an accepted term unprompted only 36% of the time; Llama 3.3 70B drops similarly, 77.9% to 24.2%.</li>
-              <li>Paternal-lineage terms are favored unevenly across languages; the authors argue generation benchmarks are needed alongside multiple-choice ones to actually measure cultural-vocabulary competence.</li>
+              <li>TW3Cast ranks 3rd out of 130 entries on the GIFT-Eval time-series forecasting benchmark by mean MASE rank, as of 2026-09-14.</li>
+              <li>The two systems ranked above it both belong to the leaderboard&#x27;s agentic category — multi-step systems that use agents.</li>
+              <li>TW3Cast itself is built as a frozen router over lightly fine-tuned foundation models, with model selection done entirely on the training split.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.26942" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.28506" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Classifying Interpretive Canons at the Sentence Level: A Benchmark from the German Federal Constitutional Court</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>When Should Forecasting Agents Reason? Behavioral Stress Tests for Reliability Routing</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Builds a sentence-level benchmark applying Larenz&#x27;s legal-interpretation framework to real opinions from the German Federal Constitutional Court.</li>
-              <li>Evaluates four LLMs with both expert-written and genetically-optimized prompts; F1 lands between 70.4 and 79.2, with grammatical interpretation easiest to identify and systematic interpretation hardest.</li>
-              <li>Genetic prompt optimization didn&#x27;t reliably beat expert-crafted prompts, a data point against assuming automated prompt search always wins. Accepted at the ICML 2026 AI4Law workshop.</li>
+              <li>Forecasting agents increasingly combine LM reasoning, retrieval, ensembling, and calibration, but it&#x27;s unclear when each behavior should actually be trusted.</li>
+              <li>The study evaluates this using ForecastBench-style binary forecasting tasks.</li>
+              <li>Proposes behavioral stress tests to guide &#x27;reliability routing&#x27; — deciding when an agent should reason versus fall back to simpler strategies.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.26945" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.28475" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>When Learned Context Planning Fails to Beat Strong Retrieval: A Controlled Study of Planning, Routing, and Reranking for Long-Context QA</h3>
+              <h3>PAWS: Policy-driven Agentic World Simulation</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Existing datasets for financial multi-agent simulation rarely connect policy interventions to temporally aligned historical evidence.</li>
+              <li>Introduces PAWS, a policy-driven agentic world simulation, to close that gap.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.28547" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Benchmarking Argumentative Behaviour of LLMs: A Study of Defences Against Character Attacks</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Tests whether training a model to pick relevant &quot;evidence atoms&quot; before answering beats well-tuned retrieval on long-context multiple-choice QA (LongBench-v2, Qwen2.5-7B-Instruct).</li>
-              <li>At an 18k-character budget, anchored hybrid retrieval (36.18%) and BM25 (35.98%) both beat the best learned planner (34.19%); the gap holds on a held-out 152-question split, 42.11% vs 36.84%.</li>
-              <li>Under tight token budgets the planner is a wash at best, ahead by 0.4 points at 6k and losing by 9k, leading the authors to call learned planning &quot;a weak relevance signal&quot; rather than a retrieval replacement.</li>
+              <li>LLMs are increasingly deployed as argumentative agents in persuasive dialogues, raising the need to rigorously evaluate their debating competence against human interlocutors.</li>
+              <li>The study focuses on character attacks (e.g., ad hominem) and how well LLMs defend against them in debate.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.26976" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.28673" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
