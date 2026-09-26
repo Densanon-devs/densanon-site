@@ -17,6 +17,12 @@
   #ctrl, #mapctrl { padding-bottom: max(4px, env(safe-area-inset-bottom)); }
   #setBtn { top: max(6px, env(safe-area-inset-top)); right: max(6px, env(safe-area-inset-right)); }
   input, textarea { user-select: text; -webkit-user-select: text; }
+  /* Display face for HEADLINES ONLY — Stardos Stencil (SIL OFL 1.1, licence beside the file). Shipped
+     locally and unmodified (the app is offline in Tauri/Capacitor; subsetting would be a Modified
+     Version under the OFL's Reserved Font Name clause). Latin-only: any glyph it lacks falls through
+     to --f-head per character, and a locale that sets --f-loc overrides it outright. */
+  @font-face { font-family: "TOW Stencil"; src: url(assets/fonts/stardos-stencil/StardosStencil-Bold.ttf) format("truetype");
+    font-weight: 400 900; font-style: normal; font-display: swap; }
   :root {
     --cell: 22px;
     --felt: #23271b;          /* table surround (dark olive) */
@@ -32,6 +38,7 @@
     --f-ui: system-ui, "Segoe UI", Roboto, sans-serif;
     --f-head: "Arial Narrow", "Roboto Condensed", "Oswald Local", system-ui, sans-serif;
     --f-num: Georgia, "Times New Roman", serif;
+    --f-display: var(--f-loc, "TOW Stencil", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif);
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { margin: 0; height: 100%; background: var(--felt); color: var(--paper);
@@ -398,13 +405,13 @@
   .pbtn .mlock svg { height: 17px; width: auto; }
   /* first-time unlock modal */
   .oframe.ulk { max-width: 380px; text-align: center; }
-  .ulk .ulk-top { font: 900 28px var(--f-head); letter-spacing: 3px; color: var(--gold); text-shadow: 0 2px 5px rgba(0,0,0,.65); margin: 2px 0 3px; }
+  .ulk .ulk-top { font: 900 28px var(--f-display); letter-spacing: 3px; color: var(--gold); text-shadow: 0 2px 5px rgba(0,0,0,.65); margin: 2px 0 3px; }
   .ulk .ulk-top svg { height: 22px; width: auto; vertical-align: -3px; margin-right: 4px; }
   .ulk .ulk-kind { font: 700 12px var(--f-head); letter-spacing: 1.2px; text-transform: uppercase; color: #cabf9a; margin: 2px 0 10px; }
   .ulk .ulk-art { margin: 4px auto 12px; display: flex; justify-content: center; }
   .ulk .ulk-art img.ulk-swatch { width: 122px; height: 122px; object-fit: cover; border-radius: 12px;
     border: 2px solid rgba(216,178,58,.65); box-shadow: 0 0 20px rgba(216,178,58,.28); }
-  .ulk .ulk-name { font: 800 23px var(--f-head); color: #f2e6bd; letter-spacing: .5px; margin: 2px 0 8px; }
+  .ulk .ulk-name { font: 800 23px var(--f-display); color: #f2e6bd; letter-spacing: .5px; margin: 2px 0 8px; }
   .ulk .ulk-hint { font: 500 13px var(--f-ui); color: #cabf9a; line-height: 1.55; margin: 0 14px; }
   /* remembered tile — solid fog fill greyed at heavy alpha so the dimmed terrain shows through */
   .fog.veil { filter: grayscale(.92) brightness(.5); opacity: .62; }
@@ -498,6 +505,8 @@
   /* smoke = translucent concealment cloud over the ground */
   .t-smoke { background-image: linear-gradient(rgba(198,203,208,.5), rgba(176,182,192,.55)), url(assets/board/base.png); }
   .cell.storm { box-shadow: inset 0 0 9px 2px rgba(190,205,255,.55); }
+  /* fire front — this forest / gas tile catches from the fire beside it at the start of your next turn */
+  .cell.igniting { box-shadow: inset 0 0 10px 3px rgba(255,120,30,.75); }
   /* storm wall overlay — a translucent storm icon ON TOP of whatever's on the tile (terrain + unit).
      It BLINK-FLASHES like lightning; each wall cell is offset (negative delay) so the ring flickers. */
   /* THE STORM. Same principle as the pulsing glows, at fifty times the scale — this is the single most
@@ -695,7 +704,7 @@
     border: 1px solid var(--bc, #b5433a); border-radius: 6px; background: linear-gradient(90deg, color-mix(in srgb, var(--bc) 22%, #14160a), #14160a); }
   .bossreveal .bossface { font-size: 30px; line-height: 1; filter: drop-shadow(0 0 4px var(--bc)); }
   .bossreveal .bosslabel { display: flex; flex-direction: column; line-height: 1.25; }
-  .bossreveal .bosslabel b { color: color-mix(in srgb, var(--bc) 55%, #f2ecd6); font: 700 15px var(--f-head); letter-spacing: .3px; }
+  .bossreveal .bosslabel b { color: color-mix(in srgb, var(--bc) 55%, #f2ecd6); font: 700 15px var(--f-display); letter-spacing: .3px; }
   .foebanner { border-radius: 5px; padding: 3px 8px; margin-bottom: 4px; font-size: 12px; cursor: pointer;
     background: #241f14; border: 1px solid #6a5a34; }
   .foebanner.boss { background: #2a1614; border-color: #b5433a; }
@@ -853,7 +862,7 @@
   #achPop.show { display: flex; animation: achpopin .32s ease-out; }
   #achPop .apTrophy { flex: 0 0 auto; font-size: 30px; filter: drop-shadow(0 0 6px rgba(205,169,78,.7)); animation: achspin .6s ease-out; }
   #achPop .apLabel { font: 700 10px var(--f-head); letter-spacing: 1px; text-transform: uppercase; color: var(--gold); opacity: .85; }
-  #achPop .apName { font: 700 16px var(--f-head); color: #f4ecd2; margin: 1px 0; }
+  #achPop .apName { font: 700 16px var(--f-display); color: #f4ecd2; margin: 1px 0; }
   #achPop .apFlavor { font-size: 13px; line-height: 1.35; color: #e2d9bd; font-style: italic; }
   @keyframes achpopin { from { opacity:0; transform: translate(-50%, -14px) scale(.94); } to { opacity:1; transform: translate(-50%,0) scale(1); } }
   @keyframes achspin { from { transform: rotate(-25deg) scale(.4); } to { transform: rotate(0) scale(1); } }
@@ -1070,6 +1079,10 @@
   .card .keepmark { color: var(--gold); }   /* ★ next to the name = kept for next turn */
   .card .badges { position:absolute; top:4px; right:5px; z-index:2; display:flex; flex-direction:column; gap:2px; align-items:flex-end; }
   .card .temp { color:#d7b0ee; font:700 8px var(--f-head); background:rgba(0,0,0,.55); padding:0 3px; border-radius:3px; }
+  /* status keyword glossary — one line per keyword a card carries, under its text */
+  .kwgloss { margin-top:8px; font-size:12px; line-height:1.5; color:#b9b3a0; text-align:left; }
+  .kwgloss > div + div { margin-top:3px; }
+  .kwgloss .kwname { color:#f0c94a; }
   .card.sel { border-color:var(--gold); box-shadow:0 0 0 2px var(--gold) inset, 0 0 16px rgba(205,169,78,.55); }
   .card.unaff { filter:grayscale(.9) brightness(.48); }
   .card.curse { --cat:#8a3a3a; }
@@ -1273,6 +1286,18 @@
     font-size: 56cqh; color: #e8cf92;
     text-shadow: 0 1px 0 rgba(0,0,0,.8), 0 -1px 0 rgba(255,225,160,.18); }
   .bpill .plbl .pfit { font-size: 58cqh; letter-spacing: .4px; }
+  /* WebKit before 16 has no container queries, and every size above is in cqh — so on that engine all
+     of them are invalid declarations and are dropped. The Mac is where this is reachable: a Mac's
+     WKWebView is whatever WebKit the OS carries, it only learned cqh in Safari 16, and the bundle
+     promises macOS 11. Windows and Android ride evergreen Chromium and iOS is pinned to 18.
+     Without this, plateLabel()'s glyph <img>es fall back to their INTRINSIC size — 126px letters in a
+     ~42px box under overflow:hidden, i.e. a slice through the middle of two giant letters. plateLabel
+     routes to the text path instead when the units are missing (see PLATE_CQ), and the size below is
+     deliberately larger than any label box: fitPlateLabels() only ever shrinks, so starting over-large
+     lets the existing fitter find the right size with no second code path to keep in step. */
+  @supports not (height: 1cqh) {
+    .plbl .pfit { font-size: 26px; }
+  }
   .pbtn.off { filter: grayscale(.62) brightness(.58); }                         /* inactive toggle option */
   .pbtn.act { filter: drop-shadow(0 0 7px rgba(232,198,90,.75)) brightness(1.04); }  /* active toggle option */
   /* :active handled by the unified hover block near button:hover */
@@ -1445,6 +1470,9 @@
     box-shadow: 0 0 10px rgba(111,155,208,.5); animation: pulse 1.3s infinite; }
   .mnode.jump { border-color: var(--gold); border-style: dashed;
     box-shadow: 0 0 10px rgba(216,178,58,.55); }
+  /* the off-survey Rumour: greyed art and a dashed, faded frame — ground the map was never meant to show */
+  .mnode.rumour { border-style: dashed; border-color: #6d6a58; background: linear-gradient(#23251c, #17190f); }
+  .mnode.rumour .nodeimg { filter: grayscale(1) brightness(.8) drop-shadow(0 1px 2px rgba(0,0,0,.6)); opacity: .8; }
   .mnode.boss { width: 81px; height: 81px; border-color: #b5643f; font-size: 26px; cursor: pointer; }
   .medge { position: absolute; height: 2px; background: #4a4630; transform-origin: 0 50%;
     pointer-events: none; }
@@ -1493,7 +1521,7 @@
   /* event scrapped a card — the card face with a slammed-down red REMOVED stamp */
   .removedcard { position: relative; display: inline-block; filter: grayscale(.45) brightness(.7); }
   .removed-stamp { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(-16deg);
-    font: 900 30px var(--f-head); letter-spacing: 3px; color: #ff5a3b; border: 4px solid #ff5a3b; padding: 3px 16px;
+    font: 900 30px var(--f-display); letter-spacing: 3px; color: #ff5a3b; border: 4px solid #ff5a3b; padding: 3px 16px;
     border-radius: 6px; background: rgba(20,9,7,.4); text-shadow: 0 2px 6px rgba(0,0,0,.85);
     box-shadow: 0 0 20px rgba(255,90,55,.55), inset 0 0 10px rgba(255,90,55,.3); white-space: nowrap;
     animation: stampin .38s cubic-bezier(.2,1.5,.4,1) both; }
@@ -1543,7 +1571,7 @@
   .gtrow label { font: 700 11px var(--f-head); letter-spacing: .4px; text-transform: uppercase; color: #b7ad8b; }
   .gtrow input[type=range] { width: 100%; }
   .gtrow .gtv { font: 600 12px var(--f-head); color: var(--gold); text-align: right; font-variant-numeric: tabular-nums; }
-  .overlay h1 { color: #f2ead0; font: 700 21px var(--f-head); letter-spacing: .6px;
+  .overlay h1 { color: #f2ead0; font: 700 21px var(--f-display); letter-spacing: .6px;
     text-transform: uppercase; margin: 0 0 4px; }
   .overlay p { color: #f2ead0; margin: 4px 0 16px; text-align: center; font-size: 13px; }
   /* `margin: 7px auto`, not `7px 0`. `.oframe` is a column flexbox with `align-items: stretch`, and a
@@ -1569,6 +1597,12 @@
       url(assets/ui/frame5/cs.png) center/150px 150px repeat; }
   .choice b { color: #f2e6bd; font: 700 15px var(--f-head); letter-spacing: .3px; }
   .choice .d { color: #b0a988; font-size: 12px; }
+  /* camp training: the Drill + the soldier's branch perks, one button each under its row */
+  .perkopts { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+  .perkopt { display: flex; flex-direction: column; gap: 2px; text-align: left; padding: 8px 12px; cursor: pointer;
+    background: rgba(20,16,10,.55); border: 1px solid #6b5a33; border-radius: 4px; color: #e9e3d1; font: inherit; }
+  .perkopt:hover, .perkopt:focus-visible { border-color: var(--gold); background: rgba(60,46,20,.6); }
+  .perkopt b { font-size: 13px; } .perkopt span { color: #b0a988; font-size: 12px; line-height: 1.4; }
   /* bronze panel (frame4 riveted-plate set) — used for the prominent Daily / Continue actions + overlay captions */
   .choice.bronze { --bt: 16px; --cn: 42px;
     background:
@@ -1658,7 +1692,7 @@
   .ofbanner { position: absolute; left: 50%; top: -8px; transform: translateX(-50%) translateZ(0); z-index: 3;
     width: min(260px, 76%); height: 54px; display: flex; align-items: center; justify-content: center;
     background: url(assets/ui/ornate/p09.png) center/100% 100% no-repeat; }
-  .ofbanner span { font: 800 16px var(--f-head); letter-spacing: 1.8px; text-transform: uppercase;
+  .ofbanner span { font: 800 16px var(--f-display); letter-spacing: 1.8px; text-transform: uppercase;
     color: #f3e7bb; text-shadow: 0 1px 2px #000; }
   /* per-menu labeled header plaque (assets/ui/hdr/<key>.png) */
   .ofbanner.ofhdr { width: min(330px, 90%); height: auto; background: none; top: -22px;
@@ -2547,7 +2581,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-BVqUm75S.js"></script>
+  <script type="module" crossorigin src="./assets/index-K5RCjE-P.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2639,7 +2673,7 @@
 <script src="./plates.js"></script>          <!-- which UI plates have text-free art (npm run gen:plates) -->
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.73';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.74';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -3417,6 +3451,20 @@ function setOrient(mode) {
   Sfx.play('ui_tap'); showSettings();
 }
 function toggleSettings() { _dropCmd(); const o = $('#ovSettings'); if (o && o.classList.contains('show')) closeOv('ovSettings'); else showSettings(); }
+// WITHDRAW — leave a plain skirmish without losing the run. Ordering it changes nothing on the spot: the
+// battle ends at the end of the first round enough troops stand beside the HQ (the engine explains).
+async function confirmWithdraw() {
+  const w = S && S.withdraw; if (!w) return;
+  if (w.ordered) { render(await api('/api/withdraw', { on: false })); return; }
+  if (!(await gameConfirm(`Withdraw from this battle? Get <b>${w.need}</b> of your troops beside your HQ and keep them there through the enemy turn, and the battle ends. Anyone still out in the field is <b class="red">left behind</b>, and everyone who makes it home loses ${w.hp_pct}% of their max HP on the way (never below 1). It costs <b class="red">all ${w.cost} of your salvage</b>, pays no salvage and no card — but the run goes on.`, t('withdraw.confirm', 'Withdraw')))) return;
+  const r = await api('/api/withdraw', {});
+  if (!r.ok && r.msg) toast(r.msg);
+  render(r);
+}
+function showWithdrawInfo() {
+  const w = S && S.withdraw; if (!w) return;
+  _infoPopup(t('withdraw.title', 'Withdrawing'), `Troops beside your HQ: <b>${w.at_hq}/${w.need}</b>. At the end of the round, with ${w.need} there, the battle ends and anyone outside the ring is left behind. Leaving costs all ${w.cost} salvage and ${w.hp_pct}% max HP from each troop that gets home. Rescind it from the menu.`);
+}
 async function confirmRetreat() {
   if (!(await gameConfirm(`Retreat and end this run now? It's recorded as a <b class="red">defeat</b> — you keep all merit, stats and records, exactly like any other loss.`, 'Retreat'))) return;
   closeOv('ovSettings');
@@ -3658,6 +3706,10 @@ function showSettings() {
         ${S.ascension?`Ascension ${S.ascension}<br>`:''}${(S.mods&&S.mods.length)?`Modifiers: ${S.mods.join(', ')}<br>`:''}Seed ${S.seed}
       </div>
       ${dangerRows('showSettings()')}
+      ${S.withdraw ? `<div style="margin-top:10px;text-align:left">
+        <button class="setbtn" ${(S.withdraw.ordered || !S.withdraw.block) ? '' : 'disabled'} onclick="closeOv('ovSettings');confirmWithdraw()">${S.withdraw.ordered ? t('withdraw.cancel', 'Rescind the withdrawal') : `${t('withdraw.order', 'Withdraw from this battle')} (−${S.withdraw.cost} salvage)`}</button>
+        <div class="d" style="margin-top:4px;line-height:1.45">${S.withdraw.block && !S.withdraw.ordered ? S.withdraw.block.charAt(0).toUpperCase() + S.withdraw.block.slice(1) + '.' : `Costs <b>all ${S.withdraw.cost} salvage</b>, and ${S.withdraw.hp_pct}% max HP from each troop that gets home. No salvage or card for the battle, but the run goes on.`}</div>
+      </div>` : ''}
     </div>` : ''}
     ${I18n.list().length > 1 ? `<div class="choice">
       <b>${t('settings.language', 'Language')}</b>
@@ -4003,10 +4055,11 @@ async function refreshDanger() {
 // ── expedition map screen ──
 const NODE_ICON = {skirmish:'skirmish', elite:'elite', boss:'boss', event:'event', shop:'shop', camp:'camp', cache:'cache'};
 const NODE_IMG = new Set(['skirmish','elite','shop','event','camp','cache']);   // bronze diorama minis (assets/nodes/*.png); boss keeps its SVG
-function nodeIconHTML(kind){ return NODE_IMG.has(kind) ? `<img class="nodeimg" src="assets/nodes/${kind}.png" alt="">` : (si(NODE_ICON[kind], 30) || '•'); }
-const NODE_NAME = {skirmish:t('node.skirmish.name', 'Skirmish'), elite:t('node.elite.name', 'Elite'), boss:t('node.boss.name', 'Boss'), event:t('node.event.name', 'Event'), shop:t('node.shop.name', 'Outpost'), camp:t('node.camp.name', 'Camp'), cache:t('node.cache.name', 'Cache')};
+function nodeIconHTML(kind){ if (kind === 'rumour') kind = 'event';   // the Rumour borrows the event mini, greyed by .mnode.rumour
+  return NODE_IMG.has(kind) ? `<img class="nodeimg" src="assets/nodes/${kind}.png" alt="">` : (si(NODE_ICON[kind], 30) || '•'); }
+const NODE_NAME = {skirmish:t('node.skirmish.name', 'Skirmish'), elite:t('node.elite.name', 'Elite'), boss:t('node.boss.name', 'Boss'), event:t('node.event.name', 'Event'), shop:t('node.shop.name', 'Outpost'), camp:t('node.camp.name', 'Camp'), cache:t('node.cache.name', 'Cache'), rumour:t('node.rumour.name', 'Rumour')};
 // tap any node that isn't your next move → a preview of what it is + what to expect (boss uses showActBoss)
-const NODE_KICK = {skirmish:t('node.skirmish.kick', 'Battle'), elite:t('node.elite.kick', 'Elite battle'), boss:t('node.boss.kick', 'Act boss'), event:t('node.event.kick', 'Wildcard · could be anything'), shop:t('node.shop.kick', 'Outpost · spend salvage'), camp:t('node.camp.kick', 'Respite'), cache:t('node.cache.kick', 'Supply cache')};
+const NODE_KICK = {skirmish:t('node.skirmish.kick', 'Battle'), elite:t('node.elite.kick', 'Elite battle'), boss:t('node.boss.kick', 'Act boss'), event:t('node.event.kick', 'Wildcard · could be anything'), shop:t('node.shop.kick', 'Outpost · spend salvage'), camp:t('node.camp.kick', 'Respite'), cache:t('node.cache.kick', 'Supply cache'), rumour:t('node.rumour.kick', 'Off the survey')};
 const NODE_INFO = {
   skirmish: t('node.skirmish.info', 'A standard clash. Take the field against an enemy force and wipe them out — or hold your objective — to push on. Clearing it pays out salvage plus a card to fold into your deck.'),
   elite:    t('node.elite.info', 'A hardened enemy with a nasty twist that hits well above a skirmish. Riskier, but it drops a relic and a pick of rarer cards. Come in with a plan and a full army.'),
@@ -4014,24 +4067,45 @@ const NODE_INFO = {
   shop:     t('node.shop.info', 'An Outpost: the only place to spend salvage. Buy cards and relics, repair your army (heal 35%), and upgrade or thin your deck. Bank enough salvage before you arrive.'),
   camp:     t('node.camp.info', 'A moment to breathe. Rest to heal your whole army and HQ back to full, or drill one soldier for a permanent boost — +HP and +ATK, or +HP and +DEF for a unit that can\'t fight. One or the other — take what the run needs.'),
   cache:    t('node.cache.info', 'A supply cache — free, no fight. Grab one reward: a card for your deck or a stack of salvage. Pure upside.'),
+  rumour:   t('node.rumour.info', 'Ground the survey never charted. No road leads here: Forward Scouts will find one from the row below, or a Field Compass can jump you across. Whoever gets there picks an encounter a normal march only stumbles on, or sells the survey for a top-tier relic.'),
 };
 /** "What am I walking into" — icon, name, kicker, and what to expect.
  *
  *  Shared by the panel you get for a node you CANNOT reach and the confirm you get before marching
  *  onto one you can, so the two descriptions cannot drift apart. A boss node names the act boss when
  *  the run has revealed it; an event node stays deliberately vague, because not knowing is the node. */
-function nodeSummaryHTML(kind){
-  const img = NODE_IMG.has(kind)
-    ? `<img src="assets/nodes/${kind}.png" alt="" style="width:64px;height:64px;object-fit:contain;flex:0 0 auto;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))">`
+/** Scouting report for one map node (serialize_map → node.intel): a skirmish shows the shape its seed
+ *  has already fixed — objective, enemy archetype, raider — so you can route and prep around it. A ?
+ *  only carries intel when Forward Scouts has revealed it. Empty string when there is nothing to say. */
+function nodeIntelHTML(n){
+  const i = n && n.intel; if (!i) return '';
+  const rows = [];
+  if (i.scouted) rows.push(t('node.intel.scouted', 'Scouted: this ? is {what}.', { what: `<b class="gold">${i.kind === 'skirmish' || i.kind === 'elite' ? t('node.intel.ambush', '{kind} ambush', { kind: NODE_NAME[i.kind] }) : (NODE_NAME[i.kind] || i.kind)}</b>` }));
+  if (i.kind === 'skirmish') {
+    const obj = i.objective === 'hold' ? t('node.intel.obj.hold', 'Hold the point for {n} turns', { n: i.obj_turns })
+              : i.objective === 'survive' ? t('node.intel.obj.survive', 'Survive {n} turns', { n: i.obj_turns })
+              : i.node_hold ? t('node.intel.obj.eliminate_or_hold', 'Destroy the enemy HQ, or hold the command node uncontested for {n} rounds', { n: i.node_hold })
+              : t('node.intel.obj.eliminate', 'Destroy the enemy HQ');
+    rows.push(`<b class="cyan">${t('node.intel.objective', 'Objective')}</b> — ${obj}`);
+    rows.push(`<b class="cyan">${t('node.intel.enemy', 'Enemy')}</b> — ${i.archetype_name ? `<b>${i.archetype_name}</b>: ${i.archetype_desc}` : t('node.intel.enemy_standard', 'A standard force.')}`);
+    if (i.raider) rows.push(`<b class="red">${t('node.intel.raider', 'Raider')}</b> — ${t('node.intel.raider_desc', 'a salvage-thief rides with them. Kill it before it escapes with your salvage.')}`);
+  }
+  return `<div class="d" style="margin-top:10px;padding-top:8px;border-top:1px solid #3d3a29;line-height:1.55;text-align:left">${rows.join('<br>')}</div>`;
+}
+function nodeSummaryHTML(kind, n){
+  const art = kind === 'rumour' ? 'event' : kind;
+  const img = NODE_IMG.has(art)
+    ? `<img src="assets/nodes/${art}.png" alt="" style="width:64px;height:64px;object-fit:contain;flex:0 0 auto;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))">`
     : `<span style="font-size:44px">${si(NODE_ICON[kind],48)||'◆'}</span>`;
   const boss = (kind === 'boss' && typeof S !== 'undefined' && S && S.act_boss) ? S.act_boss.name : null;
   return `<div style="display:flex;align-items:center;gap:14px;text-align:left">${img}
       <div><b class="gold" style="font-size:18px">${NODE_NAME[kind]||kind}</b><div class="d">${boss || NODE_KICK[kind]||''}</div></div></div>
-    <div class="d" style="margin-top:11px;line-height:1.55;text-align:left">${NODE_INFO[kind]||''}</div>`;
+    <div class="d" style="margin-top:11px;line-height:1.55;text-align:left">${NODE_INFO[kind]||''}</div>${nodeIntelHTML(n)}`;
 }
-function showNodeInfo(kind){
+function showNodeInfo(kind, nid){
   const desc = NODE_INFO[kind]; if (!desc) return; Sfx.play('ui_tap');
-  $('#ovInspect').innerHTML = `<div class="choice">${nodeSummaryHTML(kind)}</div>
+  const n = nid ? (S && S.nodes || []).find(x => x.id === nid) : null;
+  $('#ovInspect').innerHTML = `<div class="choice">${nodeSummaryHTML(kind, n)}</div>
     <div class="ovclose">${ibtn('return', "closeOv('ovInspect')")}</div>`;
   $('#ovInspect').classList.add('show');
 }
@@ -4205,7 +4279,7 @@ function renderMapScreen() {
   // navigation as a second row of buttons along the bottom — two bars for one screen's worth of state.
   // Everything now lives on top, which also gives the map back the height the bottom bar was taking.
   $('#maphud').innerHTML = `<div class="maprow">
-    <span class="pill gold mapact"><span>ACT ${S.act+1}/${S.acts} <b>${S.act_title}</b></span>${
+    <span class="pill gold mapact"${S.enemy_command ? ` title="${I18n.esc(S.enemy_command.name + (S.act_brief ? ' — ' + S.act_brief : ''))}"` : ''}><span>ACT ${S.act+1}/${S.acts} <b>${S.act_title}</b></span>${
       S.ascension ? `<span class="mapact-x">ASC ${S.ascension}</span>` : ''}${
       S.track_jumps ? `<span class="mapact-x" title="Field Compass — jump to a parallel path">${si('compass',13)} ${S.track_jumps}</span>` : ''}</span>
     <span class="mapseed" title="Run seed"><img src="assets/ui/btn/seed.png" alt="Seed"><span class="mapseedval">${goldText(String(S.seed))}</span></span>
@@ -4234,11 +4308,13 @@ function showActBoss() {
   const b = S.act_boss; if (!b) return; Sfx.play('ui_tap');
   const port = bossPortrait(b.id, 300);
   $('#ovInspect').innerHTML = `<div class="choice bossview" style="--cat:${b.color}">
-    <div class="bv-art">${port || `<span style="font-size:56px;color:${b.color}">${bossFace(b.id,56)||b.face}</span>`}</div>
+    <div class="bv-art">${port || `<span style="font-size:56px;color:${b.color}">${bossFace(b.id, b.unknown ? 120 : 56)||b.face||''}</span>`}</div>
     <div class="bv-info">
-      <div><b class="gold" style="font-size:17px">${b.name}</b><div class="d">Act ${S.act+1} — waits for you at the top of the act</div></div>
+      <div><b class="gold" style="font-size:17px">${b.name}</b>${b.post ? `<div class="d" style="color:#b7a77a;letter-spacing:.04em">${b.post}</div>` : ''}<div class="d">Act ${S.act+1} — waits for you at the top of the act</div></div>
       <div class="d" style="margin-top:10px;line-height:1.5">${b.telegraph}</div>
       ${b.perk_name ? `<div class="d" style="margin-top:8px;line-height:1.45"><b class="gold">${b.perk_name}</b> — ${b.perk_desc}</div>` : ''}
+      ${S.enemy_command ? `<div class="d" style="margin-top:10px;padding-top:8px;border-top:1px solid #3d3a29;line-height:1.45"><b class="red">${S.enemy_command.name}</b> — ${(S.act === 0 || S.enemy_command.revealed) ? `${S.enemy_command.identity} ` : ''}${S.act_brief || ''}
+        <div style="margin-top:4px;font-style:italic;color:#9a9575">${S.enemy_command.insignia}</div></div>` : ''}
     </div></div>
     <div class="ovclose">${ibtn('return', "closeOv('ovInspect')")}</div>`;
   $('#ovInspect').classList.add('show');
@@ -4271,6 +4347,7 @@ function renderMapGraph() {
     const p = pos(n);
     let cls = 'mnode';
     if (n.kind==='boss') cls+=' boss';
+    if (n.kind==='rumour') cls+=' rumour';
     if (n.id===S.pos) cls+=' here';
     else if (n.done) cls+=' done';
     else if (n.avail) cls+=' avail';
@@ -4278,7 +4355,7 @@ function renderMapGraph() {
     let tap;
     if (n.kind === 'boss' && !n.avail) tap = `onclick="showActBoss()"`;   // preview the act boss before you can reach it
     else if (n.avail) tap = n.jump ? `onclick="jumpTo('${n.id}')"` : `onclick="confirmTravel('${n.id}')"`;
-    else tap = `onclick="showNodeInfo('${n.kind}')"`;   // not your next move → explain what this node is + what to expect
+    else tap = `onclick="showNodeInfo('${n.kind}','${n.id}')"`;   // not your next move → explain what this node is + what to expect
     if (_nodeFilter) cls += (n.kind === _nodeFilter) ? ' match' : ' nomatch';   // legend spotlight
     const icon = (n.kind === 'boss' && S.act_boss) ? bossFace(S.act_boss.id, 74) : nodeIconHTML(n.kind);
     html += `<div class="${cls}" data-kind="${n.kind}" style="left:${p.x}px;top:${p.y}px" ${tap}>${icon}</div>`;
@@ -4305,7 +4382,7 @@ async function confirmTravel(nid) {
   const n = (S && S.nodes || []).find(x => x.id === nid);
   if (!n) return travelTo(nid);
   Sfx.play('ui_tap');
-  if (!(await gameConfirm(nodeSummaryHTML(n.kind), 'March'))) return;
+  if (!(await gameConfirm(nodeSummaryHTML(n.kind, n), 'March'))) return;
   travelTo(nid, true);
 }
 async function travelTo(nid, confirmed) { if (!confirmed) Sfx.play('ui_tap');
@@ -4315,7 +4392,7 @@ async function travelTo(nid, confirmed) { if (!confirmed) Sfx.play('ui_tap');
 async function jumpTo(nid) {
   const n = (S && S.nodes || []).find(x => x.id === nid);
   const cost = '<div style="margin-bottom:10px"><b class="gold">Spend a Field Compass charge</b> to jump to this parallel path.</div>';
-  if (!(await gameConfirm(cost + (n ? nodeSummaryHTML(n.kind) : ''), 'Jump'))) return;
+  if (!(await gameConfirm(cost + (n ? nodeSummaryHTML(n.kind, n) : ''), 'Jump'))) return;
   Sfx.play('reveal');
   render(await api('/api/travel', {node: nid}));
 }
@@ -4488,6 +4565,17 @@ function plateSrc(kind, name) {
 // Type size per family, as a fraction of the label box's height. One line at this size is the target;
 // two lines are bound by the box instead, so a stacked label finds its own size.
 const PLATE_CAP = { btn: 0.62, hdr: 0.56, pill: 0.58 };
+// Does this engine have container query units? The glyph label is laid out ENTIRELY in cqh — widths,
+// heights and baseline offsets all come out of platePlan() as percentages of the label box's height —
+// so on an engine without them every one of those declarations is invalid and dropped, and each letter
+// falls back to the intrinsic size of its atlas PNG. Feature-detect rather than sniff the browser, and
+// fail to the text path, which needs no container at all. See the @supports block beside .pfit.
+// Only a POSITIVE answer of "unsupported" switches paths. An engine with no CSS.supports at all is
+// not a target — it would predate Safari 9 — but jsdom is exactly that shape, and defaulting it to the
+// fallback silently retired the glyph path in every test that renders a plate. Absence of the API
+// means "cannot tell", and cannot-tell must not change what ships.
+const PLATE_CQ = !(typeof CSS === 'object' && typeof CSS.supports === 'function')
+  || (CSS.supports('height', '1cqh') && CSS.supports('container-type', 'size'));
 const PLATE_LINE_H = 1.12;   // baseline to baseline, in cap heights
 const PLATE_GLYPH_GAP = 0.03;
 const PLATE_SPACE_W = 0.32;
@@ -4570,9 +4658,11 @@ function plateLabel(kind, name, cls) {
   if (kind !== 'hdr') word = word.toUpperCase();   // the button and pill art is set in caps
 
   const size = window.PLATE_SIZE && window.PLATE_SIZE[kind] && window.PLATE_SIZE[kind][name];
-  const plan = size ? platePlan(word, ((r[2] - r[0]) * size[0]) / ((r[3] - r[1]) * size[1]), PLATE_CAP[kind] || 0.6) : null;
+  const plan = PLATE_CQ && size
+    ? platePlan(word, ((r[2] - r[0]) * size[0]) / ((r[3] - r[1]) * size[1]), PLATE_CAP[kind] || 0.6) : null;
   if (!plan) {
-    // No metrics, or a character with no glyph: fall back to real text rather than to nothing.
+    // No metrics, a character with no glyph, or an engine without container query units: fall back to
+    // real text rather than to nothing.
     return `<span class="plbl${cls ? ' ' + cls : ''}" style="${style}"><span class="pfit">${I18n.esc(word)}</span></span>`;
   }
 
@@ -4816,26 +4906,37 @@ function showNode() {
     ttl = 'camp';
     o.innerHTML = `<p style="margin-top:2px">Rest the army, or drill a soldier</p>
       <div class="choice" onclick="campRest()"><b class="grn">Rest</b><div class="d">heal your whole army + HQ to full</div></div>
-      <div class="d" style="margin:10px 0 2px">Drill one soldier — a permanent boost:</div>
-      ${roster.map(u=>`<div class="choice" onclick="campTrain('${u.uid}')" style="display:flex;align-items:center;gap:10px">
+      <div class="d" style="margin:10px 0 2px">Train one soldier — pick what it learns, for the rest of the run:</div>
+      ${roster.map(u=>`<div class="choice">
+         <div style="display:flex;align-items:center;gap:10px">
          <span class="rtok">${counterHTML({cls:u.cls,side:'you',hp:u.hp,max:u.max,atk:0,lvl:u.lvl})}</span>
          <div style="flex:1"><b class="gold">${u.rank||''} ${u.name||(CLASS_INFO[u.cls]||{n:u.cls}).n}</b>
            <div class="d">${(CLASS_INFO[u.cls]||{n:u.cls}).n}${u.lvl>1?` · rank ${u.lvl}/5`:''}</div>
            <div class="d" style="font-family:var(--f-num)">HP ${u.hp}/${u.max} · ATK ${u.atk} · DEF ${u.def} · MV ${u.mv} · RNG ${u.rng}${u.xp!=null?` · ${u.xp} XP`:''}</div>
-           <div class="d gold">Drill: +${tb.hp} HP / +${tb.atk} ${u.atk===0?'DEF':'ATK'}</div></div></div>`).join('')
+           ${perkLine(u.perks)}</div></div>
+         <div class="perkopts">${(u.options||[{id:'drill',name:'Drill',desc:`+${tb.hp} HP / +${tb.atk} ${u.atk===0?'DEF':'ATK'}`}]).map(o=>
+           `<button class="perkopt" onclick="campTrain('${u.uid}','${o.id}')"><b>${o.name}</b><span>${o.desc}</span></button>`).join('')}</div></div>`).join('')
         || '<div class="d">no units to drill</div>'}`;
   } else if (p.kind === 'reward') {
-    ttl = p.rkind==='tribe' ? 'tribe_salvage' : 'battle_spoils';
+    ttl = p.rkind==='tribe' ? 'tribe_salvage' : p.rkind==='event' ? 'event' : 'battle_spoils';
     const rsub = p.source ? p.source+' — ' : (p.boss?'Act boss cleared — ':'');
     o.innerHTML = `<p style="margin-top:12px">${rsub}tap a card to inspect, then take one for your deck</p>
       <div class="nodecards">${p.options.map((c,i)=>framedTile(c, `peekReward(${i})`)).join('')}</div>
       <div style="text-align:center;margin-top:10px">${ibtn('skip', "takeReward(-1)")}</div>`;
   } else if (p.kind === 'medal') {
     ttl = 'medal_earned';
-    o.innerHTML = `<p style="margin-top:2px">${p.boss?'Act boss':'Elite'} cleared — claim a relic</p>` +
+    o.innerHTML = `<p style="margin-top:2px">${p.source ? p.source : (p.boss?'Act boss':'Elite')+' cleared'} — claim a relic</p>` +
       p.options.map(m=>`<div class="choice" onclick="takeMedalReward('${m.id}')" style="display:flex;align-items:center;gap:12px">
         ${medalIcon(m.id,50)}<div><b class="gold">${m.name}</b><div class="d">${m.desc}</div></div></div>`).join('') +
       `<div style="text-align:center;margin-top:10px">${ibtn('skip', "takeMedalReward('')")}</div>`;
+  } else if (p.kind === 'deck_pick') {
+    // an event's "upgrade a card" / "remove a card" — the same deck grid the outpost uses, minus the price
+    const up = p.mode === 'upgrade', ok = new Set(p.options || []);
+    ttl = up ? 'upgrade' : 'remove';
+    const cards = (p.deck||[]).slice().sort((a,b)=>(RARITY_ORDER[a.rarity]-RARITY_ORDER[b.rarity])||a.name.localeCompare(b.name));
+    const grid = cards.map(c => framedTile(c, ok.has(c.id) ? `deckPickPeek('${c.id}')` : '', { count: c.n, up: c.up, dim: ok.has(c.id) ? '' : 'disabled' })).join('');
+    o.innerHTML = `<p style="margin-top:10px">${p.source ? p.source+' — ' : ''}${up ? 'tap a card to upgrade it' : 'tap a card to scrap it from your deck'}</p>
+      <div class="collgrid">${grid}</div>`;
   } else if (p.kind === 'event') {
     ttl = 'event';
     o.innerHTML = `<h1 class="gold" style="margin:2px 0 0">${p.title}</h1><p style="margin-top:2px">${p.text}</p>` +
@@ -4843,7 +4944,7 @@ function showNode() {
         const locked = (opt.require && !opt.met) || opt.dead;
         return `<div class="choice" ${locked?'style="opacity:.45"':`onclick="eventChoice(${i})"`}>
           <b>${opt.label}</b>
-          ${opt.dead?`<div class="d" style="color:#d76b5d">${achIcon('lock',16)} you already hold that relic</div>`:''}
+          ${opt.dead?`<div class="d" style="color:#d76b5d">${achIcon('lock',16)} ${opt.spent?'already found this run':'you already hold that relic'}</div>`:''}
           ${opt.require?`<div class="d" style="color:${opt.met?'#96ba6c':'#d76b5d'}">${opt.met?'✓':achIcon('lock',16)} requires ${opt.req_name} medal</div>`:''}
           ${opt.cost?`<div class="d gold">costs ${siEm('salvage')}${opt.cost}</div>`:''}</div>`;
       }).join('');
@@ -5090,10 +5191,30 @@ function framedTile(c, onclick, opts){
   const up = opts.up ? `<span class="fc-up">+</span>` : '';
   return `<div class="gridcard fcbox ${opts.dim||''}"${onclick?` onclick="${onclick}"`:''}>${framedInner(c, GRID_CARD_W)}${badge}${up}</div>`;
 }
+// ── status keywords (Ready, Pierce, Marked, …) ──
+// The glossary and each card's keywords are static, so they are fetched ONCE (see _glossary_view)
+// instead of riding on every state payload. Until it lands the helpers simply return nothing, and the
+// card views fall back to what they showed before. There is no hover here on purpose: a title=
+// tooltip does not exist on a phone, so the definition is printed under the card wherever it is opened.
+let KW = null;
+function loadKeywords(){ if (!KW) api('/api/glossary').then(d => { if (d && d.defs) KW = d; }).catch(() => {}); }
+function kwIds(c){
+  if (!KW || !c || !c.id) return [];
+  const ids = (c.upgraded && KW.cards[c.id + '+']) || KW.cards[c.id] || [];
+  // a crate card is One-Shot on the instance, not the definition
+  return (c.temp && !ids.includes('one_shot')) ? [...ids, 'one_shot'] : ids;
+}
+function kwBlockHTML(c){
+  const ids = kwIds(c);
+  if (!ids.length) return '';
+  const byId = Object.fromEntries(KW.defs.map(d => [d.id, d]));
+  return `<div class="kwgloss">${ids.filter(id => byId[id])
+    .map(id => `<div><b class="kwname">${byId[id].name}</b> — ${byId[id].desc}</div>`).join('')}</div>`;
+}
 function cardDetailHTML(c){
   const cp = c.cp != null ? c.cp : c.cost;
   const need = (c.needs && c.needs.length) ? c.needs.map(n=>NEED_LBL[n]||n).join(' + ') : 'no target';
-  const kw = (c.keywords && c.keywords.length) ? `<div class="d" style="margin-top:6px">Keywords: <b style="color:#c9c3ad">${c.keywords.join(', ')}</b></div>` : '';
+  const kw = kwBlockHTML(c) || ((c.keywords && c.keywords.length) ? `<div class="d" style="margin-top:6px">Keywords: <b style="color:#c9c3ad">${c.keywords.join(', ')}</b></div>` : '');
   return `<div class="choice" style="text-align:left;--cat:${CAT_COLOR[c.cat]||'#7a7458'}">
       <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px">
         <b style="font-size:16px">${c.name}</b>
@@ -5204,7 +5325,9 @@ function peekReward(i){ peekCard(S.pending.options[i], 'Take this card ▸', ()=
 function peekShopBuy(id){ const o=(S.pending.offer||[]).find(x=>x.id===id); if(!o) return; const can=(S.pending.salvage||0)>=o.cost; peekCard(o, can?`Buy for ${o.cost} salvage`:`Need ${o.cost} salvage`, ()=>shopBuy(id), !can, {noDetail:true}); }
 async function takeCache(i){ closeOv('ovNode'); render(await api('/api/cache',{choice:i})); }
 async function campRest(){ closeOv('ovNode'); render(await api('/api/camp_rest',{})); }
-async function campTrain(uid){ closeOv('ovNode'); render(await api('/api/camp_train',{uid})); }
+async function campTrain(uid, perk){ closeOv('ovNode'); render(await api('/api/camp_train',{uid, perk})); }
+// A soldier's camp perks, as one line of gold names (the rule text rides in the tooltip).
+function perkLine(perks){ return (perks&&perks.length) ? `<div class="d gold">${perks.map(p=>`<span title="${p.desc}">&#9670; ${p.name}</span>`).join(' ')}</div>` : ''; }
 async function shopBuyMedal(id){ const r=await api('/api/shop_buy_medal',{medal_id:id}); if(!r.ok)toast(r.msg); render(r); }
 async function takeReward(i){ Sfx.play('acquire'); closeOv('ovNode'); render(await api('/api/reward',{choice:i})); }
 async function takeMedalReward(id){ Sfx.play('acquire'); haptic(50); closeOv('ovNode'); render(await api('/api/take_medal',{medal_id:id})); }
@@ -5328,6 +5451,9 @@ async function eventChoice(i){ Sfx.play('ui_tap'); const r=await api('/api/event
   // exactly one voice per outcome: the card-change cues come from render()'s _playCardFx, a popup
   // outcome is voiced by showPopup, and a mid-battle toast gets its own.
   if(r.msg && S.board) { if(!S.upgrade_fx && !S.removed_fx) Sfx.play('acquire'); toast(r.msg); }
+  // the outcome opened a choice (pick a card / medal / which card to upgrade or scrap) — a popup would
+  // sit on top of it, so the rest of the outcome is a toast
+  else if(S.pending && S.pending.kind !== 'event') { if(r.msg) toast(r.msg); }
   else if(r.msg && !S.removed_fx && !S.upgrade_fx) showPopup(r.msg.charAt(0).toUpperCase()+r.msg.slice(1)+'.', 'Outcome'); }
 // Every shop verb pays salvage, so they all start with coin; the verb itself lands after.
 async function shopBuy(id){ const r=await api('/api/shop_buy',{card_id:id});
@@ -5367,6 +5493,17 @@ function shopPick(mode,id){
   closeOv('ovDeck');
   shopUpgradeOrRemove(id);
 }
+function deckPickPeek(id){
+  const p = S.pending; if(!p||p.kind!=='deck_pick') return;
+  const c = (p.deck||[]).find(x=>x.id===id); if(!c) return;
+  if (p.mode === 'upgrade') {   // preview the card AS UPGRADED, like the outpost does
+    const view = Object.assign({}, c, { upgraded:true, name: /\+$/.test(c.name)?c.name:c.name+'+',
+      cost: c.up_cost!=null?c.up_cost:c.cost, text: c.up_text || c.text });
+    peekCard(view, 'Upgrade this card', ()=>deckPick(id), false, {noDetail:true});
+  } else peekCard(c, 'Remove this card', ()=>deckPick(id), false, {noDetail:true});
+}
+async function deckPick(id){ const r=await api('/api/deck_pick',{card_id:id});
+  if(!r.ok){toast(r.msg); Sfx.play('ui_error'); return;} closeOv('ovNode'); render(r); }
 async function shopUpgradeOrRemove(id){ const r=await api('/api/shop_remove',{card_id:id}); if(!r.ok)toast(r.msg); render(r); }
 
 function showRoster() {
@@ -5381,9 +5518,11 @@ function showRoster() {
         <div style="flex:1">
           <b class="gold">${u.rank||''} ${u.name||info.n}</b>
           <div class="d">${info.n}${u.lvl>1?` · <span class="gold">rank ${u.lvl}/5</span>`:''}</div>
+          ${perkLine(u.perks)}
         </div>
       </div>
       <div class="d" style="margin-top:6px;line-height:1.5">${info.r}</div>
+      ${(u.perks||[]).map(p=>`<div class="d" style="margin-top:4px"><b class="gold">${p.name}</b> — ${p.desc}</div>`).join('')}
       <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px 12px;font-family:var(--f-num);font-size:12px">
         <span class="${u.hp<u.max*0.35?'red':'grn'}">HP ${u.hp}/${u.max}</span>
         <span class="cyan">ATK ${u.atk}</span>
@@ -5408,7 +5547,8 @@ function showBattleResult() {
   const kind = S.battle_kind || 'battle';
   // result_note is the engine's own word on how it ended — e.g. you shelled your own headquarters
   const lost = S.result_note || 'Your HQ was destroyed. The expedition ends.';
-  o.innerHTML = oframe(`<p style="margin-top:12px">${win?`The ${kind} is yours — survivors carry forward.`:lost}</p>
+  const wonText = S.withdrew ? `You withdrew from the ${kind}. It cost all your salvage, and the troops you brought home are battered but carry forward. No spoils.` : `The ${kind} is yours — survivors carry forward.`;
+  o.innerHTML = oframe(`<p style="margin-top:12px">${win?wonText:lost}</p>
     <div style="text-align:center">${pbtn('continue','battleDone()',{cls:'h'})}</div>`, win?'battle_won':'defeat');
   o.classList.add('show');
 }
@@ -5564,7 +5704,8 @@ function maybeShowIntro() {                 // telegraph the enemy + objective o
   const obj = _introObj();
   const foe = S.boss || S.elite || (obj ? null : S.archetype);   // an objective level briefs the OBJECTIVE, not a generic enemy type
   if ((!foe && !obj) || S.turn !== 1) return;
-  if (!S.boss && !introEnabled()) return;   // toggle only gates elite/archetype/objective intros — bosses always telegraph
+  const heart = !!(S.objective && S.objective.kind === 'spire');   // the Living Heart's name lands HERE (the map plaque was veiled)
+  if (!S.boss && !heart && !introEnabled()) return;   // toggle only gates elite/archetype/objective intros — bosses (and the Heart) always telegraph
   const k = (S.boss ? 'b:' : S.elite ? 'e:' : foe ? 'a:' : 'o:') + (foe ? foe.name : '') + ':' + (obj ? obj.kind : '') + ':' + (S.board ? S.board.width : 0);
   if (_introKey === k) return;
   _introKey = k;
@@ -5577,7 +5718,7 @@ function showFoeInfo() {
   const foe = boss || elite || arch;
   if (!foe && !obj) return;
   const txt = boss ? boss.telegraph : (foe ? foe.desc : '');
-  const lbl = boss ? 'Act Boss' : elite ? 'Elite force' : foe ? 'Enemy force' : 'Mission';
+  const lbl = boss ? (boss.post || 'Act Boss') : elite ? 'Elite force' : foe ? 'Enemy force' : 'Mission';
   const title = foe ? foe.name : (obj ? (obj.text || 'Objective') : 'Mission');
   // large framed portrait for act bosses and the Spire elite (the vine-heart)
   const artId = boss ? boss.id : (elite && /spire/i.test(foe.name || '')) ? 'spire' : null;
@@ -5589,6 +5730,7 @@ function showFoeInfo() {
       <b class="${boss?'red':'gold'}" style="font-size:16px;display:block">${face}${title}</b>
       <div class="d" style="margin-top:2px">${lbl}</div>
       ${(boss && boss.intro) ? `<div class="d" style="margin-top:6px;font-style:italic;color:${boss.color||'#c0392b'}">“${boss.intro}”</div>` : ''}
+      ${(boss && boss.herald) ? `<div class="d" style="margin-top:8px;line-height:1.5;color:#b7a77a">${boss.herald}</div>` : ''}
       ${txt ? `<div class="d" style="margin-top:8px;line-height:1.5">${txt}</div>` : ''}
       ${(boss && boss.perk_name) ? `<div class="d" style="margin-top:8px;line-height:1.45"><b class="gold">${boss.perk_name}</b> — ${boss.perk_desc}</div>` : ''}
       ${obj ? `<div style="margin-top:10px;padding-top:8px;border-top:1px solid #3d3a29">
@@ -5797,6 +5939,8 @@ function renderHud() {
       <div class="pillbar">${bpill('cp', S.cp+'/'+S.cp_max, '', "showPillInfo('cp')")}${bpill('hq', S.hq_hp, hpFrac<34?'danger':'', "showPillInfo('hq')")}${_noBaseBattle() ? '' : bpill('bases', S.bases_left, '', "showPillInfo('bases')")}${bpill('troops', S.troops.n+'/'+S.troops.cap, S.troops.n>=S.troops.cap?'full':'', "showArmy()")}${objChip}</div>
       ${driveMeter}${gauge}
       ${S.ascension?`<span class="stat gold">A${S.ascension}</span>`:''}
+      ${(S.withdraw && S.withdraw.ordered)?`<span class="foechip obj" onclick="showWithdrawInfo()">${t('hud.withdrawing', 'Withdrawing')} ${S.withdraw.at_hq}/${S.withdraw.need}</span>`:''}
+      ${S.node_hold?`<span class="foechip obj" onclick="showNodeHoldInfo()" title="${I18n.esc(t('hud.node_hold.tip', 'Hold every command node uncontested to win'))}">${t('hud.node_hold', 'Nodes')} ${S.node_hold.progress}/${S.node_hold.turns}</span>`:''}
       ${foe}
     </div>
     <div class="hudbtns">
@@ -5856,6 +6000,12 @@ const OBJ_TITLE = { survive:t('objective.survive.title', 'Survive'), hold:t('obj
 function showObjInfo() {
   const o = S.objective, f = o && OBJ_INFO[o.kind]; if (!f) return;
   _infoPopup(`${OBJ_TITLE[o.kind] || 'Objective'}`, f(o));
+}
+// The other way to win a plain skirmish: keep every command node for N rounds running.
+function showNodeHoldInfo() {
+  const h = S.node_hold; if (!h) return;
+  _infoPopup(t('objective.nodes.title', 'Hold the Nodes'),
+    `Raze the enemy HQ — <b>or</b> hold <b>every</b> command node (${h.total}) uncontested for <b>${h.turns}</b> rounds running. A node is held when one of your units (not a structure) is beside it. If <b>any</b> enemy stands beside <b>any</b> node when you end your turn or when the round ends, or a node is left empty, the count <b class="red">resets to zero</b>. <b>${h.progress}/${h.turns}</b> rounds${h.held_now ? ' — you hold them all, uncontested, right now' : ''}.`);
 }
 // Every ascension rule in force at the selected tier. They are cumulative — A3 means A1 AND A2 AND A3 —
 // which is exactly why listing them inline swamped the deploy screen.
@@ -6211,6 +6361,7 @@ function renderBoard() {
     }
     let stormfx = '';
     if (c.st && c.vis) { cls += ' storm'; const sd = (((c.x * 7 + c.y * 13) % 15) / 10).toFixed(2); stormfx = `<div class="stormfx" style="--sd:-${sd}s"><img src="assets/terrain/storm.png" alt=""></div>`; }   // storm WALL cell (only while you can SEE it — a remembered-tile storm is stale, so hide it): flashing overlay ON TOP of terrain + unit; the eye is open
+    if (c.ign) cls += ' igniting';   // the fire spreads here next turn
     // Two tiers. `danger` = this tile can be hit. `dangerfire` = an enemy can STAND here and shoot from
     // it, which is the tile you can deny by getting there first — so it wins when a tile is both.
     if (dangerOn) {
@@ -6587,8 +6738,10 @@ function showCardFull(i) {
   const kept = retain.has(i);
   const o = $('#ovCardFull');
   const playImg = c.curse?'unplayable':c.capped?'troops_full':(c.aff?'play':'not_enough_cp');
+  const kwb = kwBlockHTML(c);
   o.innerHTML = oframe(`<div style="text-align:center">${frameCardHTML(c, 220)}</div>
-    ${tags?`<div class="ctarget" style="font-size:11px;padding:6px 12px 0;color:#b78fd0;text-align:center">${tags}</div>`:''}
+    ${kwb?`<div class="ctarget" style="padding:0 12px;max-width:300px;margin:0 auto">${kwb}</div>`
+      :tags?`<div class="ctarget" style="font-size:11px;padding:6px 12px 0;color:#b78fd0;text-align:center">${tags}</div>`:''}
     <div class="cardfullbtns">
       ${ibtn(kept?'kept':'keep','keepFromFull('+i+')',{cls:kept?'act':''})}
       ${ibtn(playImg, playable?`_fullPlay(${i})`:'', {dis:!playable})}
@@ -6660,17 +6813,22 @@ function renderPrompt() {
       <div class="uihd"><b class="cyan">${info.n}</b>
         ${ibtn('info', 'showInspect(unitById(cmd))', { cls: 'xs' })}</div>
       <div class="uist">${siEm('hp')}${u.hp}/${u.max} · ATK ${u.atk} · RNG ${rng} · MV ${u.mv} · DEF ${u.df}</div>
+      ${S.deploy ? `<div class="uihint">${t('deploy.unit_hint', 'Deploy — tap a starting tile to move or swap')}</div>` : ''}
       ${(cmdOpts.aim && cmdOpts.aim.size) ? `<div class="uihint">${isAiming() ? (cmdOpts.precise ? 'Precise — tap a tile for a dead-on hit' : 'Tap a tile to lob — the shell may drift a tile') : 'Move — tap a tile to reposition'}</div>` : ''}
       <div class="uiact"><span class="dim">Actions ${cmdOpts.ap}</span>
         ${(cmdOpts.aim && cmdOpts.aim.size) ? `<button class="uitoggle" onclick="toggleAim()">${isAiming() ? 'Move ▸' : 'Aim ▸'}</button>` : ''}</div>
       <div class="uift">
-        <span class="uift-l">${ibtn('rest', 'doRest()', { cls: 'xs' })}</span>
+        <span class="uift-l">${S.deploy ? '' : ibtn('rest', 'doRest()', { cls: 'xs' })}</span>
         <span class="uift-r">${ibtn('cancel', 'deselectCmd();renderBoard();renderPrompt()', { cls: 'xs' })}</span>
       </div>` : '';
     return;
   }
   if (sel === null) {
-    $('#prompt').innerHTML = '';   // no standing hint floating above the cards
+    // Pre-battle deployment: the one standing prompt, because it has a button — skipping it must be one tap.
+    $('#prompt').innerHTML = (S.deploy && !S.result)
+      ? `<span class="ptext">▶ <b class="gold">${t('deploy.title', 'Deployment')}</b>: ${t('deploy.hint', 'tap a unit, then a highlighted starting tile to move or swap it')}</span>`
+        + ibtn('confirm', 'deployDone()', { cls: 'xs', label: t('deploy.done', 'Deploy as shown') })
+      : '';   // no standing hint floating above the cards
     return;
   }
   const card = S.hand[sel];
@@ -6913,19 +7071,21 @@ function centerCell(x, y) {
 async function doMove(x, y) {
   disarmEnd();
   const id = cmd;
-  const r = await api('/api/command_move', {unit_id: id, tile:[x, y]});
+  const r = await api(S.deploy ? '/api/deploy_move' : '/api/command_move', {unit_id: id, tile:[x, y]});   // pre-battle deployment repositions for free
   if (!r.ok) { toast(r.msg); Sfx.play('ui_error'); return; }
   // no cue here: the move event in the replay plays one, chosen from the unit's silhouette. Playing
   // it in both places doubled every step.
   cmdOpts = {moves:new Set(), attacks:new Set(), ap:0};   // drop stale highlight
   await afterAction(r);
   await reselect(id);
-  coach('move');
+  if (!S.deploy) coach('move');   // a deployment swap isn't the move the tip explains
   // Nomad only — the server sends `drive` for the motion gauge and no other, so this is the exact
   // signal, not a general-id guess. Taught on the first move, while the roll-call pips are counting and
   // there is still a turn left to fill them; at end of turn the trajectory has already been decided.
   if (S.power && S.power.drive !== undefined && S.power.pace > 0) coach('momentum');
 }
+// "Deploy as shown" — close pre-battle deployment and keep the army where it stands.
+async function deployDone() { deselectCmd(); render(await api('/api/deploy_done', {})); }
 async function doAttack(tid) {
   disarmEnd();
   const id = cmd;
@@ -6981,6 +7141,7 @@ async function play() {
   // The state is captured first because cancelSelState() nulls both of these, and the API call still
   // needs them.
   cancelSelState();
+  if (S.deploy) S.deploy = null;   // playing a card ends pre-battle deployment (api.ts) — don't flash its banner back up
   renderBoard(); renderPrompt();
   const r = await api('/api/play', {hand_index: hi, targets: tgts});
   actionToast(r.msg);
@@ -8215,10 +8376,16 @@ function si(name, s, cls) { if (name === 'salvage') return `<img src="assets/ui/
 function siEm(name) { if (name === 'salvage') return `<img src="assets/ui/salvage.png" alt="salvage" style="height:1.1em;width:auto;vertical-align:-2px">`; const p = SI_PATHS[name]; if (!p) return ''; return `<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-2px">${p}</svg>`; }
 // boss face: painted portrait PNG if we have one, else the SVG face icon (also covers the faceless Spire)
 function bossFace(id, size) {
+  if (id === 'veiled') return bossVeil(size);
   const art = (typeof S !== 'undefined' && S && S.boss_art) ? S.boss_art[id] : null;
   return art
     ? `<img src="assets/bosses/${art}" alt="" style="width:${size}px;height:${size}px;object-fit:contain;vertical-align:-3px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))">`
     : si(id, size);
+}
+// The veiled plaque on a Living Heart run (serialize_map → act_boss.unknown): the boss mark as a black
+// silhouette with a question mark over it. Nothing to name, nothing to recognise — only that it is there.
+function bossVeil(size) {
+  return `<span class="bossveil" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:${size}px;height:${size}px;vertical-align:-3px;color:#0d0e0a;filter:drop-shadow(0 0 4px rgba(122,182,72,.35))">${si('boss', size)}<b style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 ${Math.round(size*.55)}px var(--f-head);color:#8c8770;text-shadow:0 1px 3px #000">?</b></span>`;
 }
 // large framed boss portrait for the reveal / preview (the new art is a full framed illustration —
 // show it big so the frame + detail read; the small chips keep using bossFace as an icon).
@@ -8466,13 +8633,13 @@ const CLASS_INFO = {
   
 };
 const TERRAIN_INFO = {
-  plain:t('terrain.plain.info', "Open ground."), forest:t('terrain.forest.info', "Forest — cover: units here take −2 damage."),
+  plain:t('terrain.plain.info', "Open ground."), forest:t('terrain.forest.info', "Forest — cover: units here take −2 damage, and −3 from shots fired from 2 or more tiles away. Burns if a fire reaches it, leaving bare ground."),
   hill:t('terrain.hill.info', "Hill — cover: −1 damage, and lifts your sightline (units here see farther)."),
   water:t('terrain.water.info', "Water — impassable."), rock:t('terrain.rock.info', "Rock — impassable."),
   crate:t('terrain.crate.info', "Supply crate — move a unit onto it for supplies / intel / medkit / salvage."),
-  inferno:t('terrain.inferno.info', "Inferno — INSTANT burn: any unit that steps onto it takes fire damage (pierces armor)."),
+  inferno:t('terrain.inferno.info', "Inferno — INSTANT burn: any unit that steps onto it takes fire damage (pierces armor). Each turn it spreads into neighbouring forest and ignites gas; mire and ground beside water won't catch. Hills survive it."),
   toxic:t('terrain.toxic.info', "Toxic sludge — SLOW rot: a unit that starts its turn here loses HP; also slows movement."),
-  mire:t('terrain.mire.info', "Mire — SLOWS movement to a crawl (costly to cross)."),
+  mire:t('terrain.mire.info', "Mire — SLOW poison: costs 2 move to enter and gives NO cover, and any unit that ENDS its turn in it takes poison damage (structures are spared). Gators lurk in big bogs. Gas and fire won't take on it."),
   emp:t('terrain.emp.info', "EMP field — TRIGGERS on entry: a unit that steps in loses its remaining actions this turn."),
   smoke:t('terrain.smoke.info', "Smoke screen — friendly cover: blocks line of sight and shields whoever hides in it (−2 damage)."),
   escape:t('terrain.escape.info', "...this ground is oddly still. Quiet. Not like the rest of the swamp at all."),
@@ -8484,9 +8651,9 @@ const TERRAIN_INFO = {
 const TERR_NAME = { plain:t('terrain.plain.name', 'Open Ground'), forest:t('terrain.forest.name', 'Forest'), hill:t('terrain.hill.name', 'Hill'), water:t('terrain.water.name', 'Water'), rock:t('terrain.rock.name', 'Rock'),
   void:t('terrain.void.name', 'Off-field'), crate:t('terrain.crate.name', 'Supply Crate'), workshop:t('terrain.workshop.name', 'Workshop'), node:t('terrain.node.name', 'Command Node'),
   inferno:t('terrain.inferno.name', 'Inferno'), toxic:t('terrain.toxic.name', 'Toxic Sludge'), mire:t('terrain.mire.name', 'Mire'), emp:t('terrain.emp.name', 'EMP Field'), smoke:t('terrain.smoke.name', 'Smoke Screen'), escape:t('terrain.escape.name', 'Still Ground') };
-const TERR_STATS = { plain:{mv:1}, forest:{mv:2,def:2}, hill:{mv:2,def:1,elev:1},
+const TERR_STATS = { plain:{mv:1}, forest:{mv:2,def:2,rc:1}, hill:{mv:2,def:1,elev:1},
   water:{imp:1}, rock:{imp:1}, void:{imp:1,los:1}, crate:{mv:1}, workshop:{mv:1}, node:{mv:1},
-  inferno:{mv:1,haz:1}, toxic:{mv:2,haz:1}, mire:{mv:2}, emp:{mv:1,haz:1}, smoke:{mv:1,def:2,los:1}, escape:{mv:1} };
+  inferno:{mv:1,haz:1}, toxic:{mv:2,haz:1}, mire:{mv:2,haz:1}, emp:{mv:1,haz:1}, smoke:{mv:1,def:2,los:1}, escape:{mv:1} };
 // the on-tile marker (terrain icon / interactable token / hazard glyph) for a big cell
 function tileInner(kind) {
   if (kind === 'crate')    return `<span class="token crate">${(S.inter&&S.inter.crate)?`<img src="assets/interactables/${S.inter.crate}">`:si('cache',40)}</span>`;
@@ -8506,7 +8673,7 @@ function terrChips(kind) {
   if (s.imp) c.push('<span class="bichip"><b>Impassable</b></span>');
   else c.push(`<span class="bichip">Move cost <b>${s.mv||1}</b></span>`);
   if (s.def)  c.push(`<span class="bichip">Cover <b>&minus;${s.def} dmg</b></span>`);
-  if (s.eva)  c.push(`<span class="bichip">Evasion <b>${s.eva}%</b></span>`);
+  if (s.rc)   c.push(`<span class="bichip">vs Ranged <b>&minus;${s.rc} more</b></span>`);
   if (s.elev) c.push(`<span class="bichip">Elevation <b>+${s.elev}</b></span>`);
   if (s.los)  c.push('<span class="bichip">Blocks sight</span>');
   if (s.haz)  c.push('<span class="bichip haz">&#9888; Hazard</span>');
@@ -8514,6 +8681,11 @@ function terrChips(kind) {
 }
 const SIDE_LABEL = {you:t('side.you', "your unit"), enemy:t('side.enemy', "enemy"), tribe:t('side.tribe', "neutral tribe"),
   hq_you:t('side.hq_you', "YOUR HQ"), hq_enemy:t('side.hq_enemy', "enemy HQ"), raider:t('side.raider', "RAIDER (salvage thief)"), neutral:t('side.neutral', "neutral"), gator:t('side.gator', "GATOR (mire predator)")};
+
+// Which enemy troops read the ground is fixed by unit type (content.TACTICIANS), so it is learnable —
+// the card says so on every one of them. The serializer flags them `tac`.
+const TAC_TRAIT = t('unit.trait.tactician', "<b>Tactician</b> — ends its moves in cover or on high ground, walks around fire, gas, EMP and bog, and a wounded gun falls back out of reach before it fires.");
+const TAC_SHORT = t('unit.trait.tactician_short', "Tactician — uses cover, avoids hazards, falls back when wounded");
 
 function showInspect(u) {
   Sfx.play('ui_tap');
@@ -8526,7 +8698,7 @@ function showInspect(u) {
   const cc = (S.board && S.board.cells) ? S.board.cells.find(c => c.u && c.u.id === u.id) : null;
   const terr = (cc && cc.t) ? cc.t : null;
   const name = u.boss ? u.boss : (u.name ? `${u.rank||''} ${u.name}`.trim() : info.n);
-  const sub = u.boss ? 'Act Boss' : (SIDE_LABEL[u.side] || u.side);
+  const sub = u.boss ? ((S.boss && S.boss.id === u.bid && S.boss.post) || 'Act Boss') : (SIDE_LABEL[u.side] || u.side);
   const subname = (u.name && !u.boss) ? `<div class="bisub" style="color:#9a9575;margin-top:2px">${info.n}</div>` : '';
   const chips = [
     `<span class="bichip">${siEm('hp')}<b>${u.hp}/${u.max}</b></span>`,
@@ -8572,6 +8744,8 @@ function showInspect(u) {
        <div class="bisub">${sub}</div>${subname}
        <div class="bistats">${chips.join('')}</div>
        ${desc?`<div class="bidesc">${desc}</div>`:''}
+       ${u.tac?`<div class="binote gold">${TAC_TRAIT}</div>`:''}
+       ${(u.perks||[]).map(p=>`<div class="binote gold">&#9670; <b>${p.name}</b> — ${p.desc}</div>`).join('')}
        ${intent}${flank}${terrPanel}
      </div>
      <div class="ovclose">${ibtn('close', "closeOv('ovInspect')")}</div>`;
@@ -8705,6 +8879,7 @@ function showHelp() {
       <b style="color:#e8c65a">Level 3 gold</b> — and <b>stack</b> if you grab duplicates. Tap any medal for a
       full-size view. <b style="color:#d76b5d">${siEm('elite')} Curses</b> are negative medals handed out by
       risky events — grouped on their own at the bottom of your collection.`)}
+    ${KW ? topic('<span class="gold">Keywords</span>', KW.defs.map(d => `<b>${d.name}</b> — ${d.desc}`).join('<br>')) : ''}
     ${topic('<span class="gold">Ascension</span>', `Clear a run with a general and you unlock its next <b>Ascension</b> tier — each level piles on a new
       handicap (tougher, deadlier, more numerous enemies). <b>Ascension 6+</b> also floods the map with
       <b>more elite battles</b> and cuts your <b>between-act healing in half</b>. Climb as high as you dare for a higher score.`)}
@@ -8937,14 +9112,14 @@ function showLegend() {
         ${row(legendChip('outpost','neutral'),'Outpost — capture (L4): +CP/+Troops/deploy')}
         ${row(legendChip('tribe_camp','tribe'),'Tribe Village — raze it for an Extra Card Draft')}</div>
       <div class="choice"><b class="grn">Terrain</b>
-        ${row(terrSwatch('t-forest'),'Forest — take −2 dmg')}
+        ${row(terrSwatch('t-forest'),'Forest — take −2 dmg (−3 vs ranged)')}
         ${row(terrSwatch('t-hill'),'Hill — take −1 dmg')}
-        ${row(terrSwatch('t-mire'),'Mire — slows movement to a crawl')}
         ${row(terrSwatch('t-water'),'Water (impassable)')}
         ${row(terrSwatch('t-rock'),'Rock (impassable)')}</div>
       <div class="choice"><b class="red">Hazards</b> <span class="d">(they hurt whoever steps in — including the enemy)</span>
-        ${row(terrSwatch('t-inferno'),'Inferno — instant burn on entry')}
+        ${row(terrSwatch('t-inferno'),'Inferno — instant burn on entry; spreads into forest and gas')}
         ${row(terrSwatch('t-toxic'),'Toxic — rots units each turn + slows')}
+        ${row(terrSwatch('t-mire'),'Mire — slows + poisons units that end their turn in it')}
         ${row(terrSwatch('t-emp'),'EMP — entering disables the unit')}
         ${row(`<img src="assets/terrain/storm.png" style="width:24px;height:24px" alt="">`,'Storm — a drifting cloud that batters units and moves each round')}</div>
       <div class="choice"><b class="gold">Interactables</b> <span class="d">(walk a unit onto them)</span>
@@ -9527,6 +9702,7 @@ function showHoverCard(x, y, cell) {
   if (u.flanked === true) notes.push('Flanked — attacks on it hit +2');
   if (u.disabled) notes.push('EMP — cannot act');
   if (u.stale) notes.push('Last known position — not currently in sight');
+  if (u.tac) notes.push(TAC_SHORT);
   const el = document.createElement('div');
   el.id = 'hovercard';
   el.innerHTML = `<b class="${mine ? 'cyan' : 'red'}">${name}</b>`
@@ -9821,7 +9997,7 @@ initWheelZoom();
 initDragPan();
 initZoomKeys();
 initHotkeys();
-window.__boot = () => { _applyOrient(); applyBoomMs(); _plateBoxDebug(); _upgradeStaticPlates(); watchPlateLabels(); const p = refresh(); setTimeout(checkForUpdate, 2500); return p; };   // src/main.ts wires the local API, then calls this; returns the refresh promise so callers/tests can await first paint; update check runs once, non-blocking
+window.__boot = () => { loadKeywords(); _applyOrient(); applyBoomMs(); _plateBoxDebug(); _upgradeStaticPlates(); watchPlateLabels(); const p = refresh(); setTimeout(checkForUpdate, 2500); return p; };   // src/main.ts wires the local API, then calls this; returns the refresh promise so callers/tests can await first paint; update check runs once, non-blocking
 </script>
 </body>
 </html>
