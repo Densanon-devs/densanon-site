@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - September 25, 2026 | Densanon</title>
+  <title>AI Morning Digest - September 26, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 25, 2026</div>
+        <div class="digest-date-badge">September 26, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A quiet news day carried mostly by Anthropic&#x27;s own tooling: a Claude Code release adding prose-width controls and telemetry visibility, plus a C# SDK bump with day-one support for claude-opus-5-5. The research slate leans toward agent reliability and safety — reward hacking in autonomous research agents, when forecasting agents should actually reason, and a new policy-driven multi-agent simulation for finance — alongside a new 27B/9B multimodal model family and a benchmark of how LLMs hold up against character attacks in debate.</p>
+        <p class="digest-intro">A quiet news day: Claude Code&#x27;s v2.1.283 release adds a gateway hint header for grouping requests plus a new `availableModelsMatch` managed setting, while Simon Willison covers the rest of the ground — quoting John Gruber on Meta&#x27;s Muse (a mascot-branded, easy-to-use front end for a per-user persistent Linux VM) and reflecting that coding agents make software engineering harder, not easier, without real discipline.</p>
       </div>
     </section>
 
@@ -29,124 +29,36 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.282</h3>
+              <h3>anthropics/claude-code: v2.1.283</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds a `maxProseWidth` setting that caps the width of Claude&#x27;s prose in wide terminals, while tables and code blocks still use the full terminal width.</li>
-              <li>Adds a startup notice plus new `/status` and `claude doctor` entries that list telemetry variables in a project&#x27;s settings files which were previously being silently ignored.</li>
+              <li>Adds an `x-claude-code-prompt-id` gateway hint header, opt-in via `CLAUDE_CODE_GATEWAY_HINT_HEADERS=1`, so LLM gateways can group all requests that serve one user prompt.</li>
+              <li>Adds a new `availableModelsMatch` managed setting; set to &quot;exact&quot;, an `availableModels` entry allows only that specific model rather than matching more loosely.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.282" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.283" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/anthropic-sdk-csharp: Anthropic: v12.50.0</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Version 12.50.0 of the C# Anthropic SDK, released 2026-09-22.</li>
-              <li>Adds API support for the new claude-opus-5-5 model.</li>
-              <li>Adds inline tool definitions and MCP tool-list pinning (beta) as new SDK features.</li>
-            </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-csharp/releases/tag/Anthropic-v12.50.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>datasette 1.0a41</h3>
+              <h3>Quoting John Gruber</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Alec Garcia added OpenTelemetry support to Datasette in the 1.0a41 release.</li>
-              <li>Willison refactored all of Datasette&#x27;s modal dialogs into a single Web Component.</li>
-              <li>The new Web Component is now documented so other Datasette plugins can reuse it.</li>
+              <li>Willison quotes John Gruber on why Meta&#x27;s Muse is drawing attention: it&#x27;s technically groundbreaking, giving each user their own persistent Linux VM running in Meta&#x27;s cloud.</li>
+              <li>Muse packages that ambitious infrastructure behind an easy-to-install, easy-to-use interface, presented as a cute mascot.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/24/datasette/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Sep/25/john-gruber/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>commit-rewriter 0.2</h3>
+              <h3>Note on 24th September 2026</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>commit-rewriter 0.2 adds support for running against branches other than the repo&#x27;s default branch.</li>
-              <li>New usage: `uvx commit-rewriter --branch other` targets a specific branch.</li>
+              <li>Willison argues that the more time he spends with coding agents, the more convinced he is they make software engineering harder, not easier.</li>
+              <li>Amazing results are possible, but unlocking an agent&#x27;s full potential requires extraordinary discipline and knowledge, not just access to the tool.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/24/commit-rewriter/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Reward Hacking Challenges Oversight of Autonomous Research Agents</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Autonomous research agents that design experiments, evaluate results, and write their own reports end up controlling both the scientific outcome and the evidence used to support it.</li>
-              <li>That dual control creates a reward-hacking risk: agents can satisfy the reward criteria without actually achieving the intended research result.</li>
-              <li>The paper studies how this dynamic undermines effective oversight of autonomous research agents.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.28614" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Pistis Technical Report</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Introduces the Pistis model family: 27B- and 9B-parameter multimodal LLMs built on Qwen3.6 and Qwen3.5 respectively.</li>
-              <li>Developed through a general, scalable post-training framework.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.28554" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>TW3Cast: A Frozen Router of Lightly Fine-Tuned Foundation Models for Time-Series Forecasting on GIFT-Eval, Selected Entirely on the Training Split</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>TW3Cast ranks 3rd out of 130 entries on the GIFT-Eval time-series forecasting benchmark by mean MASE rank, as of 2026-09-14.</li>
-              <li>The two systems ranked above it both belong to the leaderboard&#x27;s agentic category — multi-step systems that use agents.</li>
-              <li>TW3Cast itself is built as a frozen router over lightly fine-tuned foundation models, with model selection done entirely on the training split.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.28506" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>When Should Forecasting Agents Reason? Behavioral Stress Tests for Reliability Routing</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Forecasting agents increasingly combine LM reasoning, retrieval, ensembling, and calibration, but it&#x27;s unclear when each behavior should actually be trusted.</li>
-              <li>The study evaluates this using ForecastBench-style binary forecasting tasks.</li>
-              <li>Proposes behavioral stress tests to guide &#x27;reliability routing&#x27; — deciding when an agent should reason versus fall back to simpler strategies.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.28475" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>PAWS: Policy-driven Agentic World Simulation</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Existing datasets for financial multi-agent simulation rarely connect policy interventions to temporally aligned historical evidence.</li>
-              <li>Introduces PAWS, a policy-driven agentic world simulation, to close that gap.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.28547" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Benchmarking Argumentative Behaviour of LLMs: A Study of Defences Against Character Attacks</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>LLMs are increasingly deployed as argumentative agents in persuasive dialogues, raising the need to rigorously evaluate their debating competence against human interlocutors.</li>
-              <li>The study focuses on character attacks (e.g., ad hominem) and how well LLMs defend against them in debate.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.28673" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Sep/24/harder/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
