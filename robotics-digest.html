@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - September 26, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - September 27, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,65 +15,83 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 26, 2026</div>
+        <div class="digest-date-badge">September 27, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Industry coverage today leans into scaling questions: The Robot Report looks at what it takes to grow robotaxi fleets, Amazon&#x27;s $100M Indiana manufacturing investment for its robotics network, General Robotics&#x27; modular-intelligence bet over one big robot brain, and Agility Robotics exploring wheeled form factors beyond its Digit humanoid. On the community side, Menlo Research open-sourced Asimov 1&#x27;s humanoid locomotion policy, Texas Instruments&#x27; CTO weighs in on why robotics adoption needs many technologies to mature together, and hobbyists share a phone-controlled chess robot and a small home robot ecosystem.</p>
+        <p class="digest-intro">Today&#x27;s robotics feed skews DIY and open-source: a quadruped builder swaps in higher-torque servos, a hobbyist asks whether AI coding assistants can de-risk mechanical design before printing, and an open-source anti-drone tracking system ships its v2 release. On the tools and research side, ROS 2 gets an experimental shared-memory buffer backend for cutting data-copy overhead, and researchers debut a motor-free soft microgripper that can pick up living cells.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>From 14 cities to 15,000: What it will take to scale robotaxis?</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>This Tiny Robot Claw Grabs Living Cells (No Motor)</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Robotaxi operators have largely proven the driving/autonomy piece already works.</li>
-              <li>The bigger bottleneck to scaling is the unglamorous logistics of fast, local vehicle servicing, not the driving technology itself.</li>
-              <li>Going from roughly 14 cities to a target of 15,000 requires solving that operational infrastructure problem globally.</li>
+              <li>A soft microgripper claw can grab and hold living cells with no motor at all.</li>
+              <li>It folds closed when warmed and reopens as it cools, using temperature alone to actuate, and can be steered with an external magnet.</li>
+              <li>Researchers used it in a lab experiment to grip individual cells out of a cell clump.</li>
             </ul>
-            <a href="https://www.therobotreport.com/from-14-cities-to-15000-what-it-will-take-to-scale-robotaxis/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1wqwu1z/this_tiny_robot_claw_grabs_living_cells_no_motor/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Shared_buffer_backend: shared-memory rosidl::Buffer for ROS 2 processes</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>shared_buffer_backend is an experimental CPU shared-memory implementation of ROS 2&#x27;s rosidl::Buffer abstraction (introduced in the Lyrical release), letting processes share backing storage for payloads like images instead of copying data through the normal transport.</li>
+              <li>It targets cases where intra-process communication isn&#x27;t enough, such as Python-based downstream nodes or processes split apart for fault isolation, without the data-type and fixed-size-array limits of middleware-specific options like Fast DDS Data-sharing.</li>
+              <li>Python subscribers can read the shared buffer as a NumPy view with no extra payload copy; it builds on the author&#x27;s earlier CPU shared-memory backend work, previously called memfd.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/shared-buffer-backend-shared-memory-rosidl-buffer-for-ros-2-processes/58414" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Amazon to invest $100M in new Indiana manufacturing facility</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>I made a tool that generates robotics simulation environments from a text description. Looking for feedback.</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Amazon is investing $100 million in a new manufacturing facility in Indiana.</li>
-              <li>The facility will produce products that power Amazon&#x27;s fulfillment and robotics network.</li>
-              <li>The investment supports Amazon&#x27;s robotics operations across North America.</li>
+              <li>The author built a text-to-simulation pipeline that generates robotics simulation environments from a written description.</li>
+              <li>A demo video shows a Unitree Go2 walking through the generated environments, though the walking policy itself is an existing learned policy, not something the author trained.</li>
+              <li>Each generated environment comes with physics simulated and working joints for interactive elements such as doors.</li>
             </ul>
-            <a href="https://www.therobotreport.com/amazon-to-invest-100m-in-new-indiana-manufacturing-facility/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1wqw8ox/i_made_a_tool_that_generates_robotics_simulation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>General Robotics is betting on modular intelligence, not one robot brain</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>I built an open-source anti-drone turret system with YOLOv8 + Kalman Filter + ballistic solver</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>General Robotics is pursuing a modular-intelligence architecture instead of training one monolithic model to do everything.</li>
-              <li>The approach composes specialized capabilities rather than a single do-everything model.</li>
-              <li>The company argues modularity helps robots adapt across different tasks and form factors.</li>
+              <li>The author released v2 of an open-source counter-drone tracking system that detects, tracks, and computes real-time ballistic intercepts for maneuvering drones.</li>
+              <li>The stack combines YOLOv8 for detection, ByteTrack for multi-object tracking, a Kalman filter, and a ballistic solver.</li>
+              <li>It&#x27;s described as a full software-hardware pipeline rather than a software-only demo.</li>
             </ul>
-            <a href="https://www.therobotreport.com/general-robotics-is-betting-on-modular-intelligence-not-one-robot-brain/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1wqpzb2/i_built_an_opensource_antidrone_turret_system/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Agility Robotics, maker of Digit humanoid, exploring wheeled robots</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>XIAO-ESP32C3 joystick controlled robot tutorial english</h3>
+              <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Agility Robotics, best known for its bipedal Digit humanoid, is exploring wheeled robot designs as well.</li>
-              <li>The company is looking at a range of form factors to address different operating environments.</li>
-              <li>The exploration is driven by customer needs that vary across environments.</li>
+              <li>A hobbyist shared a joystick-controlled robot built around the Seeed XIAO-ESP32C3 microcontroller.</li>
+              <li>The build tutorial is written out in text rather than presented as a video.</li>
+              <li>The author describes it as a simple, beginner-level project.</li>
             </ul>
-            <a href="https://www.therobotreport.com/agility-robotics-maker-of-digit-humanoid-exploring-wheeled-robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1wrj7g1/xiaoesp32c3_joystick_controlled_robot_tutorial/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -83,63 +101,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Asimov 1&#x27;s locomotion policy + training code is now open-source</h3>
+              <h3>Cubic Doggo update: Wouf moves like a newborn lamb</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Menlo Research open-sourced the locomotion policy and training code for its Asimov 1 open-source humanoid robot.</li>
-              <li>The training pipeline is built on NVIDIA Isaac Lab using PPO reinforcement learning.</li>
-              <li>It uses an AMP-based configuration that relies on reference motion data to guide how the robot moves.</li>
+              <li>The Cubic Wouf quadruped update switches to Feetech ST-3215-C018 12V servos, said to deliver roughly 2x the torque (and 2x the current draw) of the DYNAMIXEL XL430-W250-T actuators used before.</li>
+              <li>The higher current draw was enough that the builder covered the test table with a fire blanket as a precaution.</li>
+              <li>Existing control code worked again once the new servos&#x27; firmware was updated; per the title, the resulting gait is still wobbly, like a newborn lamb.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wpoc6f/asimov_1s_locomotion_policy_training_code_is_now/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1wrha5i/cubic_doggo_update_wouf_moves_like_a_newborn_lamb/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Texas Instruments CTO on Why robotics progress depends on more than one breakthrough</h3>
+              <h3>Has anyone here been using Codex or Claude to design robotics hardware/mechanics?</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>TI CTO Ahmad Bahai argues robotics adoption is slower than expected because many technologies must mature together, not just one breakthrough.</li>
-              <li>Motor drives, sensing, compute, analytics, and reliability/repeatability all need to improve in parallel.</li>
-              <li>He compares the pattern to smartphones and autonomous driving, where component technologies advanced at different rates before the full system matured.</li>
+              <li>A hobbyist with a 3D printer is asking whether others have used AI coding assistants like Codex or Claude to help design robotics hardware and mechanics.</li>
+              <li>They want more confidence that a design will actually work before committing to prints, rather than printing what they call &quot;a mountain of useless plastic.&quot;</li>
+              <li>Their starting brief is an upper-torso robot; the post is a question to the community, not a finished build.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wpxl6g/texas_instruments_cto_on_why_robotics_progress/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1wrfpz8/has_anyone_here_been_using_codex_or_claude_to/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Chess robot that detects moves from a phone camera and drives a LEGO NXT over Bluetooth, no PC in the loop</h3>
+              <h3>Recycling parts from old toys?</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A hobbyist built a chess-playing robot controlled entirely by an Android phone, with no PC in the loop.</li>
-              <li>The phone&#x27;s camera detects moves by comparing board-state frames from before and after each turn.</li>
-              <li>It runs a custom minimax chess engine and drives a LEGO NXT robot over Bluetooth to make the physical move.</li>
+              <li>The poster describes affording parts as one of the biggest recurring struggles in their robotics projects.</li>
+              <li>While browsing old toys at a thrift store, they started wondering whether those toys&#x27; parts could be salvaged and reused in builds.</li>
+              <li>The post asks the community whether there&#x27;s a downside to this approach they might be missing.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wpy287/chess_robot_that_detects_moves_from_a_phone/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Meet Cypher, Droid, Little One, and Eva</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A hobbyist introduced four robots, Cypher, Droid, Little One, and Eva, built as a shared home robot ecosystem.</li>
-              <li>Cypher, Droid, and Eva all run the same underlying software, while Little One is an ESP32-based unit flashed with that same codebase.</li>
-              <li>The builder is expanding the ecosystem gradually, with one unit headed to a family member&#x27;s home.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wq9bfj/meet_cypher_droid_little_one_and_eva/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Is Multi-agent Path planning still relevant in robotics?</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A PhD researcher in Operations Research asks whether multi-agent path planning remains a relevant research focus in robotics.</li>
-              <li>Their day-to-day work involves maintaining and extending a path-planning research repo, including bug fixes and new functionality.</li>
-              <li>The post opens a community discussion on the field&#x27;s continued relevance.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wqmc3q/is_multiagent_path_planning_still_relevant_in/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1wr20c6/recycling_parts_from_old_toys/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
