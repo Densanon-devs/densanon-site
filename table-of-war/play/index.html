@@ -267,6 +267,15 @@
     :where(body.o-portrait) .bpill .pl-p { display: block; }
   
     :where(body.o-portrait) .bpill .bpv { top: 50%; right: 12%; width: 40%; height: 47%; }
+  /* Portrait shows the compact icon-only plate (.pl-p), so the drawn label and the landscape well do not
+     apply: the label (.plbl) was being laid over the icon and colliding with the value, and the value box
+     kept the landscape plate's computed well (an inline style from plateWellStyle), which beats the rule
+     above -- so the numbers sat in the wrong place at the wrong size. !important is what outranks the
+     inline style; the numbers here are the portrait rule's own. */
+    :where(body.o-portrait) :is(.bpill, .objhold, .powplate) .plbl { display: none; }
+    :where(body.o-portrait) :is(.bpill .bpv, .objhold .objval, .powplate .powval) {
+      left: auto !important; right: 12% !important; top: 50% !important; width: 40% !important; height: 47% !important;
+      transform: translateY(-50%) !important; }
   .pillbar { display: contents; }                          /* landscape: the 4 stat pills flow inline in the statline */
                            /* portrait: all 4 pills alone on one line, uniform 34px height (height-driven so differing aspects stay the same height) */
     :where(body.o-portrait) #hud .statline > .pillbar { display: flex; flex: 1 1 100%; flex-wrap: nowrap; gap: 4px; min-width: 0; justify-content: flex-start; align-items: center; }
@@ -401,7 +410,7 @@
   /* locked move/target marker button */
   .pbtn.flocked { position: relative; cursor: default; }
   .pbtn.flocked img { filter: grayscale(1) brightness(.34); }
-  .pbtn .mlock { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); opacity: .9; pointer-events: none; }
+  .pbtn .mlock { position: absolute; top: 50%; left: 18%;   /* over the medallion, so the style name beside it stays readable */ transform: translate(-50%,-50%); opacity: .9; pointer-events: none; }
   .pbtn .mlock svg { height: 17px; width: auto; }
   /* first-time unlock modal */
   .oframe.ulk { max-width: 380px; text-align: center; }
@@ -744,6 +753,9 @@
   /* z-index 6, not 3. The fog layer is 4 and the lifting-fog animation is 5, so a legal-move marker on a
      tile with fog spilling in from an unexplored neighbour was drawn UNDERNEATH that spill — exactly the
      tiles at the edge of your vision, which is where you most need to see how far you can go. */
+  /* a selected Bannerman's aura: warm gold wash over every tile it reaches */
+  #board .cell.aura::before { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background: rgba(255,214,90,.26); box-shadow: inset 0 0 0 2px rgba(255,214,90,.6); }
   #board[data-ts] .legal::after { content: ''; position: absolute; pointer-events: none; z-index: 6; animation: pulse 1s infinite; }
   #board[data-ts="A"] .legal::after { inset: 7%; border: 2.5px solid var(--ts); border-radius: 4px;
     box-shadow: 0 0 6px var(--ts), inset 0 0 6px var(--tsf); }
@@ -925,8 +937,10 @@
     animation: pulse 1.3s infinite; }
   /* the 3-second hover breakdown (see showHoverCard). Viewport-fixed on purpose: it is anchored to
      where the POINTER is, not to the board, and it is dismissed by any movement — so it has nothing to
-     drift away from. z-index clears the hand (400) and sits under the overlays (10+ … 39 lifted). */
-  #hovercard { position: fixed; z-index: 8; pointer-events: none; max-width: 260px;
+     drift away from. z-index clears the hand (400) and sits under the overlays (10+ … 39 lifted). It
+     ties the unit panel / Reserve panel (9) on purpose: it is appended to <body> when shown, so it comes
+     later in the DOM and wins the tie. At 8 the selected-unit panel drew over it. */
+  #hovercard { position: fixed; z-index: 9; pointer-events: none; max-width: 260px;
     padding: 9px 11px; border-radius: 6px; background: rgba(18,19,14,.97);
     border: 1px solid #5a5238; box-shadow: 0 6px 20px rgba(0,0,0,.75);
     color: #e9e3d1; font-size: 12px; line-height: 1.45;
@@ -1012,6 +1026,33 @@
   .pilebtn .pn { font-size: 15px; font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
   .pilebtn.empty { opacity: .38; }
   #exhaustBtn { display: none; }   /* appears only once something has actually been exhausted */
+  /* The two piles are CARDS, not words: the draw pile is one flat card back, the discard pile is the face
+     of the card on top of it, each with a count badge. Cards are dealt off the draw card (dealDraws).
+     One art path — assets/cards/back.png — feeds the pile and the deal. It is drawn on the SAME 600x600
+     canvas as the card frames, so every back is a square box scaled by its canvas (never stretched) —
+     exactly how a face is drawn — and a back and a face land in identical boxes. An empty pile keeps
+     its slot: a faint outline of a card, badged 0. */
+  .pilebtn.pilecard { position: relative; padding: 0; gap: 0; }
+  .pilebtn.pilecard.empty { opacity: 1; }
+  .pcard { position: relative; display: block; width: 54px; height: 54px; }
+  .pcard .pback { position: absolute; inset: 0; background: url(assets/cards/back.png) center/100% 100% no-repeat;
+    filter: drop-shadow(1px 2px 2px rgba(0,0,0,.7)); }
+  .pcard.fcbox { filter: drop-shadow(1px 2px 2px rgba(0,0,0,.7)); }
+  .pilebtn.empty .pcard > * { display: none; }
+  .pilebtn.empty .pcard::before { content: ''; position: absolute; left: 13%; top: 1.5%; width: 74%; height: 97%;
+    border: 1.5px dashed rgba(216,210,190,.3); border-radius: 4px; background: rgba(0,0,0,.18); }
+  /* the count: gold on dark, like the medal stack badge, sized to read on a phone */
+  .pbadge { position: absolute; right: -4px; bottom: -3px; z-index: 7; min-width: 20px; padding: 1px 5px;
+    font: 700 12px/1.2 var(--f-num); color: var(--gold); text-align: center; font-variant-numeric: tabular-nums;
+    background: rgba(12,10,6,.88); border: 1px solid rgba(201,162,74,.75); border-radius: 9px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.7); text-shadow: none; }
+  .pilebtn.empty .pbadge { color: #a39d88; border-color: rgba(163,157,136,.45); }
+  /* the card back laid over a card being dealt: the same square box as its face (.fc-face) */
+  .dealback { position: absolute; inset: 0; z-index: 6; pointer-events: none;
+    background: url(assets/cards/back.png) center/100% 100% no-repeat; }
+  #hand .card.dealing { opacity: 0; }
+  /* Deployment is a hard gate: nothing but deploying until the army is down (render() sets the class). */
+  #app.deploying #hand, #app.deploying #end, #app.deploying .powplate { visibility: hidden; pointer-events: none; }
   /* selected-unit card — sits just above the Deck button, out of the board's way */
   #unitinfo { position: absolute; left: max(8px, env(safe-area-inset-left)); bottom: 100px; z-index: 9;
     width: min(224px, 56vw); pointer-events: auto; padding: 13px 24px; font-size: 11px; color: #e9e3d1;
@@ -1051,6 +1092,65 @@
   #unitinfo.hasaim .uihint { white-space: normal; }
   #unitinfo .uibtn { padding: 2px 8px; font-size: 11px; border-radius: 5px; }
   #unitinfo .uibtn.done { background: linear-gradient(#3a5230, #2c3f24); border-color: #5f7a44; color: #dff0cd; font-weight: 700; }
+  /* ── pre-battle deployment: the RESERVE panel ──────────────────────────────────────────────────
+     The army waits here, off the board, until it is set down. Same riveted frame as the unit card.
+     Landscape: a column on the side of the table away from your HQ, between the top bar and that
+     side's pile/End Turn controls. Portrait: a strip under the top bar — the board sits mid-screen
+     there, so the band above it is empty table. top/bottom/side are set by placeRoster(). */
+  #rosterPanel { position: absolute; z-index: 9; display: none; flex-direction: column; gap: 5px;
+    left: max(8px, env(safe-area-inset-left)); width: 164px; padding: 12px 13px; color: #e9e3d1; font-size: 11px;
+    pointer-events: auto; --bt: 12px; --cn: 26px; filter: drop-shadow(0 3px 10px rgba(0,0,0,.6));
+    background:
+      url(assets/ui/frame5/tl.png) top left/var(--cn) var(--cn) no-repeat,
+      url(assets/ui/frame5/tr.png) top right/var(--cn) var(--cn) no-repeat,
+      url(assets/ui/frame5/bl.png) bottom left/var(--cn) var(--cn) no-repeat,
+      url(assets/ui/frame5/br.png) bottom right/var(--cn) var(--cn) no-repeat,
+      url(assets/ui/frame5/t.png) center 0/auto var(--bt) repeat-x,
+      url(assets/ui/frame5/b.png) center 100%/auto var(--bt) repeat-x,
+      url(assets/ui/frame5/l.png) 0 center/var(--bt) auto repeat-y,
+      url(assets/ui/frame5/r.png) 100% center/var(--bt) auto repeat-y,
+      url(assets/ui/frame5/cs.png) center/150px 150px repeat; }
+  #rosterPanel.show { display: flex; }
+  #rosterPanel.right { left: auto; right: max(8px, env(safe-area-inset-right)); }
+  #rosterPanel .rp-hd { display: flex; align-items: baseline; justify-content: space-between; gap: 6px;
+    font: 700 13px var(--f-head); letter-spacing: .4px; text-transform: uppercase; }
+  #rosterPanel .rp-n { font: 10px var(--f-num); color: #c3bda6; text-transform: none; letter-spacing: 0; }
+  #rosterPanel .rp-list { display: flex; flex-direction: column; gap: 3px; overflow-y: auto; min-height: 0; flex: 0 1 auto;
+    scrollbar-width: thin; }
+  #rosterPanel .rp-unit { display: flex; align-items: center; gap: 6px; width: 100%; padding: 2px 4px 2px 2px; margin: 0;
+    text-align: left; cursor: pointer; color: inherit; font: inherit; border-radius: 5px; flex: 0 0 auto;
+    border: 1px solid rgba(201,162,74,.28); background: rgba(12,10,6,.45); -webkit-tap-highlight-color: transparent; }
+  #rosterPanel .rp-unit:hover { border-color: rgba(240,201,63,.6); }
+  #rosterPanel .rp-unit:active { transform: scale(.97); }
+  #rosterPanel .rp-unit.sel { border-color: var(--gold); background: rgba(240,201,63,.16); box-shadow: 0 0 6px rgba(240,201,63,.45); }
+  #rosterPanel .rp-chip { position: relative; flex: 0 0 34px; width: 34px; height: 34px; }
+  #rosterPanel .rp-chip .counter { inset: 0; }
+  #rosterPanel .rp-txt { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+  /* A name is never cut off: fitRosterNames() shrinks it to its row (down to 8px), and only a name still
+     too long at that size wraps onto a second line. The ellipsis it replaced turned 'Boone Griffith' into
+     'BOONE GRI…'. */
+  #rosterPanel .rp-txt { flex: 1 1 auto; }
+  #rosterPanel .rp-txt b { font: 700 11px var(--f-head); color: var(--gold); white-space: nowrap; overflow: visible; }
+  #rosterPanel .rp-txt b.wrap { white-space: normal; line-height: 1.1; overflow-wrap: anywhere; }
+  #rosterPanel .rp-txt span { font: 9.5px var(--f-num); color: #c3bda6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #rosterPanel .rp-empty { color: #c3bda6; font: 10px/1.35 var(--f-head); padding: 2px 0; }
+  /* the buttons keep their plate's own proportions — a stretched button box would put the label (placed
+     in fractions of the box) off the art */
+  /* Auto Deploy and Deploy side by side, each half the panel; To Reserve (shown only with a placed
+     soldier selected) takes its own full-width row above them. */
+  #rosterPanel .rp-ft { display: flex; flex-flow: row wrap; justify-content: center; align-items: center; gap: 4px; flex: 0 0 auto; }
+  #rosterPanel .rp-ft .ibtn { flex: 1 1 0; min-width: 0; }
+  #rosterPanel .rp-ft .ibtn img { width: 100%; height: auto; }
+  #rosterPanel .rp-ft .ibtn.rp-solo { flex: 1 1 100%; max-width: 70%; }
+  /* portrait: a horizontal strip — soldiers scroll sideways, the two buttons stack at its end */
+  #rosterPanel.strip { flex-direction: row; align-items: stretch; width: auto; right: max(8px, env(safe-area-inset-right)); padding: 10px 12px; }
+  #rosterPanel.strip .rp-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1 1 auto; }
+  #rosterPanel.strip .rp-list { flex-direction: row; overflow-x: auto; overflow-y: hidden; }
+  #rosterPanel.strip .rp-unit { width: 118px; }
+  #rosterPanel.strip .rp-ft { flex-flow: column nowrap; justify-content: center; }   /* the strip ends in a column */
+  #rosterPanel.strip .rp-ft .ibtn { flex: 0 0 auto; max-width: none; }
+  #rosterPanel.strip .rp-ft .ibtn img { height: 28px; width: auto; }
+  #rosterPanel:not(.strip) .rp-body { display: contents; }
   /* a card looks like a real trading card */
   .card { position: relative; width: 116px; height: 164px; --cat: #7a7458;
     display:flex; flex-direction:column; overflow:hidden;
@@ -1599,10 +1699,14 @@
   .choice .d { color: #b0a988; font-size: 12px; }
   /* camp training: the Drill + the soldier's branch perks, one button each under its row */
   .perkopts { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
-  .perkopt { display: flex; flex-direction: column; gap: 2px; text-align: left; padding: 8px 12px; cursor: pointer;
-    background: rgba(20,16,10,.55); border: 1px solid #6b5a33; border-radius: 4px; color: #e9e3d1; font: inherit; }
-  .perkopt:hover, .perkopt:focus-visible { border-color: var(--gold); background: rgba(60,46,20,.6); }
-  .perkopt b { font-size: 13px; } .perkopt span { color: #b0a988; font-size: 12px; line-height: 1.4; }
+  /* Each option is a copper nameplate (ui/plaqueB.png, 9-sliced so its bolted ends hold their shape): a
+     name and a line of description do not fit a plate label, and a plain bordered box read as a web form. */
+  .perkopt { display: flex; flex-direction: column; gap: 2px; text-align: left; cursor: pointer; font: inherit;
+    background: none; color: #f3e6c4; border-style: solid; border-color: transparent; border-width: 12px 34px;
+    border-image: url(assets/ui/plaqueB.png) 26 90 fill / 12px 34px stretch; padding: 2px 0;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,.5)); text-shadow: 0 1px 2px rgba(0,0,0,.85); transition: filter .12s; }
+  .perkopt:hover, .perkopt:focus-visible { filter: drop-shadow(0 0 6px rgba(233,199,82,.7)) brightness(1.08); outline: none; }
+  .perkopt b { font-size: 13px; color: #ffe7a8; } .perkopt span { color: #efdcb4; font-size: 12px; line-height: 1.4; text-transform: none; letter-spacing: 0; }
   /* bronze panel (frame4 riveted-plate set) — used for the prominent Daily / Continue actions + overlay captions */
   .choice.bronze { --bt: 16px; --cn: 42px;
     background:
@@ -1713,6 +1817,27 @@
     }
   
     :where(body.o-portrait) .oframe.titled .ofbanner.ofhdr { width: min(500px, 100%); top: -16px; }
+  /* Landscape does the same on NARROW frames. The flanking corners and the header plaque are two
+     different kits, and on a narrow frame they touch -- corner, plaque, corner jammed into one strip --
+     so the plaque becomes the top edge instead, as in portrait. A frame wide enough to show the top bar
+     running between corner and plaque (the Deck) reads fine as it was and keeps its corners: fitFrameTops()
+     tags those .ofwide. The main menu keeps its corners too: its title plate was built for them. */
+    :where(body.o-landscape) .oframe.titled:not(.menu):not(.ofwide) {
+      background:
+        url(assets/ui/ornate/p07.png) bottom left/90px 101px no-repeat,
+        url(assets/ui/ornate/p08.png) bottom right/89px 101px no-repeat,
+        url(assets/ui/ornate/hbarA.png) 0 0/auto 35px repeat-x,
+        url(assets/ui/ornate/hbarB.png) 0 100%/auto 34px repeat-x,
+        url(assets/ui/ornate/vbar.png) 0 0/29px auto repeat-y,
+        url(assets/ui/ornate/vbarR.png) 100% 0/29px auto repeat-y,
+        url(assets/ui/ornate/p05_mirror.png) center/300px 290px repeat;
+    }
+    /* In the flow rather than absolute: header art runs 104-146px tall at this width, and an absolute
+       plaque over a fixed 84px padding covered the first row of content (the Deck's card titles). */
+    :where(body.o-landscape) .oframe.titled:not(.menu):not(.ofwide) { padding-top: 22px; }
+    :where(body.o-landscape) .oframe.titled:not(.menu):not(.ofwide) .ofbanner.ofhdr { position: relative; left: auto; top: auto;
+      transform: translateZ(0); width: min(560px, calc(100% + 70px)); align-self: center; flex: 0 0 auto; margin: -38px 0 10px; }
+    :where(body.o-landscape) .oframe.titled.prof:not(.menu) { padding-top: 22px; }
   /* "Continue run" main-menu CTA — the purpose-built RESUME plate button */
   .resumewrap { text-align: center; margin: 8px 0 2px; }
   .resumewrap .d { margin-top: 3px; }
@@ -1795,7 +1920,8 @@
     letter-spacing: .7px; text-align: center; text-shadow: 0 1px 3px #000; }
   /* ── Achievements v2 — ornate skull frame kit (assets/ui/achv): header + 9-slice frame + grenade corners ── */
   .achv { width: 100%; max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
-  .achv-hdr { width: min(100%, 500px); height: auto; display: block; position: relative; z-index: 3; margin-bottom: -22px;
+  /* z-index 4: the frame's corner pieces are z-index 3 and come later in the DOM, so at 3 they drew over the header's ends */
+  .achv-hdr { width: min(100%, 500px); height: auto; display: block; position: relative; z-index: 4; margin-bottom: -22px;
     filter: drop-shadow(0 4px 11px rgba(0,0,0,.6)); }
   .achv-frame { position: relative; width: 100%; box-sizing: border-box; padding: 40px 30px 34px; }
   .achv-frame::before { content: ''; position: absolute; inset: 0 12px; z-index: 0; border-radius: 10px;
@@ -2031,9 +2157,10 @@
   
     :where(body.o-landscape) .oframe.menu .dailyslot > *:nth-child(1) { left: 5.12%; top: 11.31%; width: 49.08%; }
         /* header */
-    :where(body.o-landscape) .oframe.menu .dailyslot > *:nth-child(2) { left: 54.34%; top: 13.8%; width: 21.28%; }
+    :where(body.o-landscape) .oframe.menu .dailyslot > *:nth-child(2) { left: 54.34%; top: 13.8%; width: auto; white-space: nowrap; }
         /* date */
-    :where(body.o-landscape) .oframe.menu .dailyslot > *:nth-child(3) { left: 4.99%; top: 27.68%; width: 46.08%; }
+    :where(body.o-landscape) .oframe.menu .dailyslot > *:nth-child(3) { left: 4.99%; top: 27.68%; width: 90%; white-space: nowrap;
+      overflow: hidden; }   /* one line: at 46% "Engineer · Quartermaster" wrapped into the twist line below it */
          /* general · mods */
     :where(body.o-landscape) .oframe.menu .dailyslot > *:nth-child(4) { left: 4.83%; top: 52.01%; width: 90.11%; }
          /* blurb */
@@ -2313,6 +2440,7 @@
        leaving Legend sitting on top of it. Measured broken bands were 900-1100 and 1500-1600 — each
        one just above a zoom step-up, which is the tell. */
     #unitinfo { zoom: 1.5; width: min(300px, 40vw); }
+    #rosterPanel { zoom: 1.5; }
     #unitinfo.hasaim { width: min(360px, 46vw); }
     /* toasts and coach marks were phone-sized and bottom-pinned */
     #toast { zoom: 1.6; bottom: 250px; }
@@ -2327,6 +2455,7 @@
     #hand .handfan { zoom: 2.1; }
     /* no #hud zoom here either — see the note at the 820px breakpoint */
     #unitinfo { zoom: 1.8; width: min(320px, 34vw); }
+    #rosterPanel { zoom: 1.8; }
     #unitinfo.hasaim { width: min(380px, 40vw); }
     #prompt { zoom: 1.7; }
     #toast { zoom: 1.9; bottom: 300px; }
@@ -2481,6 +2610,16 @@
   #maphud .mapseed .mapseedval { position: absolute; top: 50%; right: 6%; width: 42%; height: 42%;
     transform: translateY(-50%); display: flex; align-items: center; justify-content: center; }
   #maphud .mapseed .gtext { height: 100%; }
+  /* The HQ/Troops wells are 60% of the plate tall and the steel digits used to fill all of it, so they
+     pressed on the rims; at 72% they sit inside the recess like the seed's gold digits. fitGtext() then
+     narrows a wide value (6/8, 120) to the well's width. */
+  #maphud .bpill .bpv .mn { height: 72%; }
+  /* Same on the battle bar (CP, HQ, Troops, Waves): landscape, where the plates are the wide labeled art. */
+  :where(body.o-landscape) #hud .bpill .bpv .mn { height: 72%; }
+  :where(body.o-landscape) #hud .objval .gtext, :where(body.o-landscape) #hud .powval .gtext { height: 80%; }
+  /* Landscape phones: the bar ran to two rows at 34px and its plates read oversized against a 400-ish
+     px tall screen. */
+  @media (pointer: coarse) and (max-height: 520px) { #maphud { --pillh: 29px; } }
   #maphud .mapbtns { display: inline-flex; gap: 5px; align-items: center; flex: 0 1 auto; }
   /* How to Play and Menu sit at the far right — they leave the run state and so are not part of the
      run's own readout. The auto margin is safe HERE and only here: the bar measures 1292 of 1878, so
@@ -2509,16 +2648,31 @@
      symbol on a 66px bar. siEm() sizes at 1.1em instead, so the icon follows the pill's own type size.
      The min-width reserves room for the symbol plus four digits so the plate does not resize as salvage
      climbs into the thousands. */
-  #maphud .maprow > .pill.mapsalv { gap: 7px; justify-content: center; padding: 0 14px;
-    min-width: calc(var(--pillh, 34px) * 1.85); font-size: calc(var(--pillh, 34px) * 0.30); }
-  #maphud .maprow > .pill.mapsalv .mapsalvv { font-family: var(--f-num); font-variant-numeric: tabular-nums; }
+  /* Salvage sits in the same bronze WELL the value boxes use (ui/nsplaque.png), 9-sliced so its bevelled
+     corners keep their shape at any width, with the coins and gold glyph digits like the seed plate.
+     It was a flat CSS chip, the one piece of the bar not built from the game's own parts. */
+  #maphud .mapsalv { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    flex: 0 0 auto; box-sizing: border-box; height: var(--pillh, 34px); min-width: calc(var(--pillh, 34px) * 2.3);
+    padding: 0 calc(var(--pillh, 34px) * 0.34); border-style: solid; border-width: calc(var(--pillh, 34px) * 0.2);
+    border-image: url(assets/ui/nsplaque.png) 26 fill / calc(var(--pillh, 34px) * 0.2) stretch;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); cursor: default; }
+  #maphud .mapsalv .mapsalvi { height: 62%; width: auto; filter: drop-shadow(0 1px 1px rgba(0,0,0,.6)); }
+  #maphud .mapsalv .mapsalvv { display: inline-flex; align-items: center; height: 52%; }
+  #maphud .mapsalv .mapsalvv .gtext { height: 100%; filter: drop-shadow(0 1px 1px rgba(0,0,0,.55)); }
 
 
   /* Ascension and the Field Compass ride WITH the act rather than as their own plates. They are facts
      about this run, like the act is, and as separate pills they were the two items that pushed the bar
      onto a second row at high ascension. Folding them in buys back that width. */
   #maphud .maprow > .pill.mapact { min-width: calc(var(--pillh, 34px) * 2.8); gap: 0;
-    justify-content: center; }
+    justify-content: center;
+    /* The copper nameplate (ui/plaqueA.png), 9-sliced so its bolted ends keep their shape at any width.
+       It was the last flat CSS chip on the bar. */
+    background: none; border-radius: 0; border-style: solid; border-color: transparent;
+    border-width: calc(var(--pillh, 34px) * 0.18) calc(var(--pillh, 34px) * 0.62);
+    border-image: url(assets/ui/plaqueA.png) 30 110 fill / calc(var(--pillh, 34px) * 0.18) calc(var(--pillh, 34px) * 0.62) stretch;
+    padding: 0 4px; color: #f3e6c4; text-shadow: 0 1px 2px rgba(0,0,0,.85), 0 0 1px rgba(0,0,0,.9);
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
   /* The act label and its title are ONE flex item: whitespace between separate flex items is
      discarded, which ran them together as "ACT 1/4First Contact". */
   #maphud .mapact-x { margin-left: 10px; padding-left: 10px; border-left: 1px solid rgba(233,199,82,.35);
@@ -2581,7 +2735,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-K5RCjE-P.js"></script>
+  <script type="module" crossorigin src="./assets/index-DxQ9VYja.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2618,15 +2772,16 @@
        from battle on purpose — draw, discard and exhaust between them say everything it did, in the
        three groupings that actually matter mid-fight, and the corner stays clear of the board. -->
   <div id="leftCol" class="edgecol left">
-    <button id="drawBtn" class="pilebtn" onclick="showPile('draw')" aria-label="Draw pile"><span class="pl">DRAW</span><span class="pn" id="drawN">0</span></button>
+    <button id="drawBtn" class="pilebtn pilecard" onclick="showPile('draw')" aria-label="Draw pile"><span class="pcard"><i class="pback"></i></span><span class="pbadge" id="drawN">0</span></button>
   </div>
   <!-- RIGHT: End Turn stays on top; discard under it, exhaust under that and only once it exists. -->
   <div id="rightCol" class="edgecol right">
     <button id="end" class="ibtn end" onclick="endTurn()" aria-label="End Turn"><img src="assets/ui/btn/end_turn.png" alt="End Turn"></button>
-    <button id="discardBtn" class="pilebtn" onclick="showPile('discard')" aria-label="Discard pile"><span class="pl">DISCARD</span><span class="pn" id="discardN">0</span></button>
+    <button id="discardBtn" class="pilebtn pilecard" onclick="showPile('discard')" aria-label="Discard pile"><span class="pcard fcbox" id="discardTop"></span><span class="pbadge" id="discardN">0</span></button>
     <button id="exhaustBtn" class="pilebtn" onclick="showPile('exhaust')" aria-label="Exhausted cards"><span class="pl">EXHAUST</span><span class="pn" id="exhaustN">0</span></button>
   </div>
   <div id="unitinfo"></div>   <!-- selected-unit card, above the Deck button -->
+  <div id="rosterPanel"></div>   <!-- pre-battle deployment: the soldiers still waiting to be set down -->
   <!-- attack arrows are NOT declared here any more: fxLayer() creates #fxlayer as a child of #board so
        the camera pans and zooms them with the grid. A second element with this id would shadow it. -->
 </div>
@@ -2673,7 +2828,7 @@
 <script src="./plates.js"></script>          <!-- which UI plates have text-free art (npm run gen:plates) -->
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.74';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.90';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -2712,6 +2867,17 @@ function updateEndBtn() {
  *  and a permanent 0 next to two live counters reads as a broken feature rather than an empty one.
  *  Draw and discard stay visible at 0 — an empty draw pile is information (the discard is about to be
  *  reshuffled), not an absence. */
+// The discard pile shows the FACE of its top card: a second card back beside the draw pile would read as
+// two draw piles, and the face says at a glance what just went (a physical discard pile works the same
+// way). Re-rendered only when the top card changes; the face composites through the normal bake cache.
+const PILE_CARD_W = 54;
+function setDiscardTop(top) {
+  const el = document.getElementById('discardTop'); if (!el) return;
+  const key = top ? `${top.id}${top.upgraded ? '+' : ''}` : '';
+  if (el.dataset.top === key) return;
+  el.dataset.top = key;
+  el.innerHTML = top ? framedInner({ ...top, aff: true }, PILE_CARD_W) : '';
+}
 function updatePileBtns() {
   const p = (S && S.piles) || null;
   const inBattle = !!(S && S.board && !S.result);
@@ -2721,6 +2887,7 @@ function updatePileBtns() {
     if (!btn || !num) continue;
     num.textContent = n;
     btn.classList.toggle('empty', !n);
+    if (kind === 'discard') setDiscardTop(n ? S.discard_top : null);
     const show = inBattle && (kind !== 'exhaust' || n > 0);
     // 'flex', not '': clearing the inline style falls back to the stylesheet, and #exhaustBtn is
     // hidden there by default — so the empty string left it invisible while reporting itself shown.
@@ -2735,11 +2902,11 @@ function updatePileBtns() {
 }
 
 const _PILE_META = {
-  draw:    { title: t('pile.draw.title', 'Draw pile'),      hdr: 'deck',
+  draw:    { title: t('pile.draw.title', 'Draw pile'),      hdr: 'draw_pile',
              note: 'What is still to come, listed alphabetically — the order it arrives in stays hidden.' },
-  discard: { title: t('pile.discard.title', 'Discard pile'),   hdr: 'deck',
+  discard: { title: t('pile.discard.title', 'Discard pile'),   hdr: 'discard_pile',
              note: 'In the order it went in. Reshuffled into the draw pile when that one runs out.' },
-  exhaust: { title: t('pile.exhaust.title', 'Exhausted'),      hdr: 'deck',
+  exhaust: { title: t('pile.exhaust.title', 'Exhausted'),      hdr: 'exhausted',
              note: 'In the order it went in. These are out of the battle — they do not come back this fight.' },
 };
 /** Open a pile. Contents are fetched on demand rather than shipped with every state payload. */
@@ -2758,7 +2925,7 @@ async function showPile(kind) {
     : `<div class="d" style="padding:18px 0">nothing here yet</div>`;
   const total = cards.reduce((a, c) => a + (c.n || 1), 0);
   $('#ovPile').innerHTML = `<div class="oframe titled" style="max-width:640px">
-    <div class="ofbanner ofhdr"><img src="assets/ui/hdr/${meta.hdr}.png" alt="${meta.title}"></div>
+    ${ofBanner(meta.hdr)}
     ${ocapG(`${meta.title} — ${total} card${total === 1 ? '' : 's'}`)}
     <p class="d" style="margin:2px 0 8px">${meta.note}</p>
     ${body}
@@ -2881,8 +3048,8 @@ function showUpdateBanner(d) {
       <b>Update available — v${d.version}</b>
       ${d.changelog ? `<div class="ub-log">${d.changelog}</div>` : ''}
       <div class="ub-btns">
-        <button class="ub-dl" onclick="openExternal('${(d.downloadUrl||'').replace(/'/g,'')}')">Download ▸</button>
-        <button class="ub-x" onclick="document.getElementById('updateBanner').classList.remove('show')">Later</button>
+        ${ibtn('download', `openExternal('${(d.downloadUrl||'').replace(/'/g,'')}')`, { cls: 'sm' })}
+        ${ibtn('later', "document.getElementById('updateBanner').classList.remove('show')", { cls: 'sm' })}
       </div></div>`;
   el.classList.add('show');
 }
@@ -3335,7 +3502,7 @@ const COACH = {
   inspect:{h:t('coach.inspect.h', 'Unit details'), t:t('coach.inspect.t', 'Tapping any unit opens its full card — <b>HP</b>, <b>attack</b>, <b>defense</b>, <b>range</b>, <b>sight</b>, its rank, and what it does. Do it to an <b>enemy</b> before you commit: reading its reach is how you work out whether stepping up gets you hit back.')},
   terrain:{h:t('coach.terrain.h', 'The ground matters'), t:t('coach.terrain.t', 'Tapping bare ground tells you what it is. <b>Cover</b> (forest, rubble) adds <b>defense</b> to whoever stands in it. <b>High ground</b> extends a marksman\'s reach and sees further. Rough ground <b>costs more movement</b> to cross. Fighting from the right tile is often worth more than one more soldier.')},
   move:   {h:t('coach.move.h', 'Ground taken'), t:t('coach.move.t', 'That cost one <b>Action Point</b> — most units have more than one, so check the unit card before you end your turn. You can only step <b>one tile into the fog</b> at a time: your army will not march blind into ground it has never seen.')},
-  attack: {h:t('coach.attack.h', 'First blood'), t:t('coach.attack.t', 'Damage is <b>attack minus defense</b>, and defense includes whatever cover the target is standing in. Get a <b>second unit on the far side</b> of an enemy and you <b>flank</b> it for bonus damage. A <b>✕</b> on the damage badge means the blow kills.')},
+  attack: {h:t('coach.attack.h', 'First blood'), t:t('coach.attack.t', 'Damage is <b>attack minus defense</b>, and defense includes whatever cover the target is standing in. Every <b>other unit of yours beside</b> an enemy <b>flanks</b> it: +1 damage to each hit on it. A <b>✕</b> on the damage badge means the blow kills.')},
   card:   {h:t('coach.card.h', 'Playing a card'), t:t('coach.card.t', 'Cards cost <b>Command Points</b> — the CP counter, top-left — and refresh every turn. A card needing a target will highlight what it can be played on; tap the card again to put it back. Cards you cannot afford are dimmed.')},
   danger: {h:t('coach.danger.h', 'Reading the danger'), t:t('coach.danger.t', 'Shaded tiles are where the enemy can <b>strike next turn</b>. The <b>deeper red</b> is worse: those are tiles they can <b>move onto and fire from</b> — the ground worth taking or blocking first. Ghosts show where each enemy is heading, with arrows to what it will hit. Both layers toggle in <b>Menu</b>.')},
   endturn:{h:t('coach.endturn.h', 'That was the enemy turn'), t:t('coach.endturn.t', 'You watch every enemy decision play out — tap to skip it. Your hand was discarded and you have drawn a fresh one, with your <b>Command Points</b> refilled. Unspent points do <b>not</b> carry over, so empty your Action Points before ending a turn, and <b>★</b> a card you want to keep.')},
@@ -3622,7 +3789,7 @@ function showSettings() {
   const hBtn = (v) => pbtn(HL_IMG[v], `setLegHl('${v}')`, { active: hl===v });
   const ts = tileSel();
   const tsBtn = (m) => { const on = markerUnlocked(m.id);
-    return `<button class="pbtn ${ts===m.id?'act':''} ${on?'':'flocked'}" ${on?`onclick="setTileSel('${m.id}');showSettings()"`:'disabled'} aria-label="Marker ${on?m.label:'locked'}"><img src="assets/ui/btn/${m.img}.png" alt="">${on?'':`<span class="mlock">${si('lock',15)||'🔒'}</span>`}</button>`; };
+    return `<button class="pbtn ${ts===m.id?'act':''} ${on?'':'flocked'}" ${on?`onclick="setTileSel('${m.id}');showSettings()"`:'disabled'} aria-label="Marker ${on?m.label:'locked'}"><img src="${plateSrc('btn', m.img)}" alt="">${plateLabel('btn', m.img)}${on?'':`<span class="mlock">${si('lock',15)||'🔒'}</span>`}</button>`; };
   const markerGateOpen = MARKER_SETS.some(m => m.req && markerUnlocked(m.id));   // hide the picker until you've unlocked at least one
   const ns = pillNumStyle();
   const NS_DIR = { A:'glyph', B:'glyph', C:'glyph_bronze' };   // B renders the gold glyphs desaturated to steel
@@ -3635,17 +3802,13 @@ function showSettings() {
   const o = $('#ovSettings');
   o.innerHTML = `<div class="oframe titled">${ofBanner('settings')}
     <div style="text-align:center;margin:8px 0 6px">${ibtn('switch_campaign', "closeOv('ovSettings');showProfiles()")}</div>
+    ${runDetailsBlock()}
     <div class="setcols">
     ${(_isTauri() || S.demo) ? '' : `<div class="choice">
       <b>Screen orientation</b>
       <div class="d" style="margin:2px 0 6px">Phone only — locks how the game is held.</div>
       <div style="display:flex;gap:8px">${oBtn('landscape')}${oBtn('portrait')}</div>
     </div>`}
-    ${(S && (S.mode === 'map' || S.board)) ? `<div class="choice">
-      <b>This run</b>
-      <div class="d" style="margin:2px 0 8px;line-height:1.5">The rules in force — modifiers, ascension tiers and, in a Commission, the day's exceptions — with what each one actually does.</div>
-      <button class="setbtn" onclick="closeOv('ovSettings');showRunInfo()">Run details</button>
-    </div>` : ''}
     ${_isNativeApp() ? '' : `<div class="choice">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
         <div><b>Fullscreen</b><div class="d">Fill the whole display — no window chrome, no desktop behind it.</div></div>
@@ -3660,7 +3823,7 @@ function showSettings() {
     ${markerGateOpen ? `<div class="choice">
       <b>Move &amp; target marker</b>
       <div class="d" style="margin:2px 0 6px">How a move/target tile is highlighted on the board. Earn more styles through achievements — see the Achievements screen.</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">${MARKER_SETS.map(tsBtn).join('')}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 10px">${MARKER_SETS.map(tsBtn).join('')}</div>
     </div>` : ''}
     <div class="choice">
       <b>Battle number style</b>
@@ -3685,6 +3848,11 @@ function showSettings() {
       </div>
     </div>
     <div class="choice">
+      <b>${t('settings.deploy', 'Deployment')}</b>
+      <div class="d" style="margin:2px 0 8px;line-height:1.5">${t('settings.deploy_help', 'Auto sets your army down on its starting tiles as each battle opens. Manual holds it in reserve so you place every soldier yourself.')}</div>
+      <div style="display:flex;gap:8px">${['auto', 'manual'].map(m => pbtn('deploy_' + m, `setDeployMode('${m}')`, { active: deployMode() === m })).join('')}</div>
+    </div>
+    <div class="choice">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
         <b>Mute all sound</b>
         ${toggle(Sfx.muted, "Sfx.setMuted(!Sfx.muted);showSettings()")}
@@ -3696,21 +3864,6 @@ function showSettings() {
         ${volGauge('mus', pct(Sfx.musicVol), Sfx.muted)}
       </div>
     </div>
-    ${(S && S.board) ? `<div class="choice">
-      <b>This run</b>
-      <div class="d" style="margin:4px 0 8px;line-height:1.8">
-        ${S.general} · Act ${(S.exp?S.exp.act:0)+1} · ${NODE_NAME[S.battle_kind]||'Battle'}${S.node_num?' '+S.node_num:''} · Turn ${S.turn}<br>
-        Map ${S.map.w}×${S.map.h} · Era ${S.era}<br>
-        Hand ${S.hand_size}/${S.draw_target} · keep ${S.retain_cap}<br>
-        Deck: draw ${S.piles.draw} · discard ${S.piles.discard}${S.piles.exhaust?` · exhausted ${S.piles.exhaust}`:''}<br>
-        ${S.ascension?`Ascension ${S.ascension}<br>`:''}${(S.mods&&S.mods.length)?`Modifiers: ${S.mods.join(', ')}<br>`:''}Seed ${S.seed}
-      </div>
-      ${dangerRows('showSettings()')}
-      ${S.withdraw ? `<div style="margin-top:10px;text-align:left">
-        <button class="setbtn" ${(S.withdraw.ordered || !S.withdraw.block) ? '' : 'disabled'} onclick="closeOv('ovSettings');confirmWithdraw()">${S.withdraw.ordered ? t('withdraw.cancel', 'Rescind the withdrawal') : `${t('withdraw.order', 'Withdraw from this battle')} (−${S.withdraw.cost} salvage)`}</button>
-        <div class="d" style="margin-top:4px;line-height:1.45">${S.withdraw.block && !S.withdraw.ordered ? S.withdraw.block.charAt(0).toUpperCase() + S.withdraw.block.slice(1) + '.' : `Costs <b>all ${S.withdraw.cost} salvage</b>, and ${S.withdraw.hp_pct}% max HP from each troop that gets home. No salvage or card for the battle, but the run goes on.`}</div>
-      </div>` : ''}
-    </div>` : ''}
     ${I18n.list().length > 1 ? `<div class="choice">
       <b>${t('settings.language', 'Language')}</b>
       <div class="d" style="margin:2px 0 8px;line-height:1.5">${t('settings.language_help', 'Changing the language restarts the game. Nothing in your progress is touched.')}</div>
@@ -3725,10 +3878,7 @@ function showSettings() {
         laptop, or one driving a television. <b>Balanced</b> looks identical standing still; it only stops
         effects that redo GPU work every frame. <b>Performance</b> also stops things moving: the board
         steps instead of gliding. Every cue and every sound still happens.</div>
-      <div style="display:flex;gap:6px">
-        ${GFX_LEVELS.map(v => `<button class="setbtn ${gfxLevel()===v?'dbg':''}" style="flex:1"
-          onclick="setGfxLevel('${v}')">${gfxLevel()===v?'◉':'○'} ${GFX_LABEL[v]}</button>`).join('')}
-      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">${GFX_LEVELS.map((v, i) => pbtn('gfx_' + v, `setGfxLevel('${v}')`, { active: gfxLevel() === v, style: i === 2 ? 'grid-column:1 / span 2;justify-self:center;width:calc(50% - 4px)' : '' })).join('')}</div>
     </div>
     <div class="setact-row">
       ${inRun ? pbtn('retreat', "confirmRetreat()") : ''}
@@ -3737,7 +3887,7 @@ function showSettings() {
     </div>
     <div class="choice" style="margin-top:10px;text-align:center">
       <div class="d" style="margin:0 0 9px;line-height:1.5">The plaque your units stand on — ${S.demo ? 'the demo starts you with a couple from every tier; the full game wins the rest as run rewards' : 'win chips as run rewards, then equip one for your units and one for the enemy'}.</div>
-      <button class="chipsbtn" onclick="closeOv('ovSettings');showChips()" aria-label="Open chip collection"><img src="assets/ui/btn/chips.png" alt="Chips"></button>
+      <button class="chipsbtn" style="position:relative" onclick="closeOv('ovSettings');showChips()" aria-label="Open chip collection"><img src="${plateSrc('btn', 'chips')}" alt="">${plateLabel('btn', 'chips')}</button>
     </div>
     ${S.demo ? `<div class="choice" style="margin-top:10px">
       <b>Version</b> <span class="d" style="float:right;font-family:var(--f-num)">v${APP_VERSION}</span>
@@ -3759,7 +3909,7 @@ function showSettings() {
         <b>Auto-check for updates</b>
         ${toggle(!updateOptedOut(), "toggleUpdateCheck()")}
       </div>
-      <button class="setbtn" onclick="checkNow()">Check for updates now</button>
+      <div style="text-align:center">${pbtn('check_updates', 'checkNow()', { style: 'max-width:260px;margin:0 auto' })}</div>
     </div>`}
     ${_debugToolsAllowed() ? `<div class="choice" style="margin-top:10px">
       <b class="red">Danger zone</b>
@@ -3769,6 +3919,7 @@ function showSettings() {
     ${_debugToolsAllowed() ? `<div class="choice" style="margin-top:10px">
       <b style="color:#7fbfff">Debug tools</b>
       <div class="d" style="margin:2px 0 8px;line-height:1.5">Review every art surface: unlock all progression/collection, and instant-win battles to blitz through nodes, bosses and variants.</div>
+      ${window.__WT_WIKI__ ? `<button class="setbtn dbg" onclick="openExternal(window.__WT_WIKI__)">📖 Field manual (private wiki) ▸</button>` : ''}
       <button class="setbtn dbg" onclick="debugUnlockAll()">Unlock everything</button>
       ${(S && S.board) ? `<button class="setbtn dbg" onclick="debugWin()">Instant-win this battle ▸</button>` : ''}
       ${(S && S.board) ? ((_cmdTarget()) ? `<button class="setbtn dbg" onclick="debugPromote()">★ Promote ${_cmdLabel()} one rank ▸</button>`
@@ -4009,6 +4160,9 @@ function render(state) {
     }
     _prevCpHold = S.cp_hold;
   }
+  // Deployment is a hard gate (the engine refuses everything else): no hand, no End Turn, no power until
+  // the army is down. CSS hides them off this one class.
+  document.getElementById('app').classList.toggle('deploying', !!(S.deploy && !S.result));
   renderHud(); renderBoard(); renderHand(); renderPrompt();
   if (freshBattle) {
     // Re-fit BEFORE centring, on the next frame. The fitCell() above runs earlier in this function —
@@ -4282,20 +4436,21 @@ function renderMapScreen() {
     <span class="pill gold mapact"${S.enemy_command ? ` title="${I18n.esc(S.enemy_command.name + (S.act_brief ? ' — ' + S.act_brief : ''))}"` : ''}><span>ACT ${S.act+1}/${S.acts} <b>${S.act_title}</b></span>${
       S.ascension ? `<span class="mapact-x">ASC ${S.ascension}</span>` : ''}${
       S.track_jumps ? `<span class="mapact-x" title="Field Compass — jump to a parallel path">${si('compass',13)} ${S.track_jumps}</span>` : ''}</span>
-    <span class="mapseed" title="Run seed"><img src="assets/ui/btn/seed.png" alt="Seed"><span class="mapseedval">${goldText(String(S.seed))}</span></span>
+    <span class="mapseed" title="Run seed"><img src="${plateSrc('btn', 'seed')}" alt="">${plateLabel('btn', 'seed')}<span class="mapseedval"${plateWellStyle('btn', 'seed')}>${goldText(String(S.seed))}</span></span>
     ${bpill('hq', S.hq_hp, hqp<34?'danger':'', "showPillInfo('hq')")}
     ${bpill('troops', S.roster.length+'/'+S.roster_cap, S.roster.length>=S.roster_cap?'full':'', 'showRoster()')}
-    <span class="pill gold mapsalv" title="Salvage">${siEm('salvage')}<span class="mapsalvv">${S.salvage}</span></span>
+    <span class="mapsalv" title="Salvage"><img class="mapsalvi" src="assets/ui/salvage.png" alt="Salvage"><span class="mapsalvv">${goldText(String(S.salvage))}</span></span>
     <span class="mapbtns">
-      <button class="ibtn sm" onclick="showDeck()" aria-label="Deck"><img src="assets/ui/btn/deck.png" alt="Deck"></button>
-      <button class="ibtn sm" onclick="showCards()" aria-label="Cards"><img src="assets/ui/btn/cards.png" alt="Cards"></button>
-      ${S.demo ? '' : `<button class="ibtn sm" onclick="showMedals()" aria-label="Medals"><img src="assets/ui/btn/medals.png" alt="Medals"></button>`}
+      ${ibtn('deck', 'showDeck()', { cls: 'sm' })}
+      ${ibtn('cards', 'showCards()', { cls: 'sm' })}
+      ${S.demo ? '' : ibtn('medals', 'showMedals()', { cls: 'sm' })}
     </span>
     <span class="mapbtns mapbtns-r">
       ${ibtn('how_to_play', 'showHelp()', { cls: 'sm' })}
       ${ibtn('menu', 'menu()', { cls: 'sm' })}
     </span>
   </div>`;
+  requestAnimationFrame(() => fitGtext($('#maphud')));
   renderMapGraph();
   renderLegend();
   requestAnimationFrame(() => { fitMapBar(); fitLegend(); });   // measure once the bar and legend have laid out
@@ -4403,8 +4558,8 @@ function gameConfirm(msg, okLabel) {
     o.innerHTML = `<div class="choice" style="max-width:340px">
         <div style="font-size:14px;line-height:1.5;margin-bottom:12px">${msg}</div>
         <div style="display:flex;gap:12px;justify-content:center">
-          <button id="_cfok" class="ibtn" aria-label="${okLabel || 'Confirm'}"><img src="assets/ui/btn/confirm.png" alt="${okLabel || 'Confirm'}"></button>
-          <button id="_cfno" class="ibtn" aria-label="Cancel"><img src="assets/ui/btn/cancel.png" alt="Cancel"></button>
+          <button id="_cfok" class="ibtn" aria-label="${okLabel || 'Confirm'}"><img src="${plateSrc('btn', 'confirm')}" alt="">${plateLabel('btn', 'confirm', '', okLabel || '')}</button>
+          <button id="_cfno" class="ibtn" aria-label="Cancel"><img src="${plateSrc('btn', 'cancel')}" alt="">${plateLabel('btn', 'cancel')}</button>
         </div></div>`;
     o.classList.add('show');
     const done = v => { o.classList.remove('show'); res(v); };
@@ -4452,6 +4607,12 @@ const PLATE_LABEL = {
     how_to_play_sq: t('plate.btn.how_to_play', 'How to Play'), info: t('plate.btn.info', 'Info'),
     keep: t('plate.btn.keep', 'Keep'), kept: t('plate.btn.kept', 'Kept'),
     key: t('plate.btn.key', 'Key'), landscape: t('plate.btn.landscape', 'Landscape'),
+    deploy_auto: t('plate.btn.deploy_auto', 'Auto'), deploy_manual: t('plate.btn.deploy_manual', 'Manual'),
+    gfx_full: t('plate.btn.gfx_full', 'Full'), gfx_balanced: t('plate.btn.gfx_balanced', 'Balanced'),
+    gfx_perf: t('plate.btn.gfx_perf', 'Performance'), check_updates: t('plate.btn.check_updates', 'Check for Updates'),
+    withdraw: t('plate.btn.withdraw', 'Withdraw'),
+    aim: t('plate.btn.aim', 'Aim'), move: t('plate.btn.move', 'Move'),
+    download: t('plate.btn.download', 'Download'), later: t('plate.btn.later', 'Later'),
     legend: t('plate.btn.legend', 'Legend'), medals: t('plate.btn.medals', 'Medals'),
     medals_sq: t('plate.btn.medals', 'Medals'), menu: t('plate.btn.menu', 'Menu'),
     more: t('plate.btn.more', 'More'), new_run: t('plate.btn.new_run', 'New Run'),
@@ -4476,6 +4637,8 @@ const PLATE_LABEL = {
     battle_won: t('plate.hdr.battle_won', 'Battle Won'), cache: t('plate.hdr.cache', 'Cache'),
     camp: t('plate.hdr.camp', 'Camp'), campaigns: t('plate.hdr.campaigns', 'Campaigns'),
     cards: t('plate.hdr.cards', 'Cards'), chips: t('plate.hdr.chips', 'Board Chips'),
+    draw_pile: t('plate.hdr.draw_pile', 'Draw Pile'), discard_pile: t('plate.hdr.discard_pile', 'Discard Pile'),
+    exhausted: t('plate.hdr.exhausted', 'Exhausted'),
     deck: t('plate.hdr.deck', 'Deck'), defeat: t('plate.hdr.defeat', 'Defeat'),
     event: t('plate.hdr.event', 'Event'), generals: t('plate.hdr.generals', 'Generals'),
     history: t('plate.hdr.history', 'History'), how_to_play: t('plate.hdr.how_to_play', 'How to Play'),
@@ -4493,6 +4656,7 @@ const PLATE_LABEL = {
     bases: t('plate.pill.bases', 'Bases'), cp: t('plate.pill.cp', 'CP'),
     hq: t('plate.pill.hq', 'HQ'), survive: t('plate.pill.survive', 'Survive'),
     troops: t('plate.pill.troops', 'Troops'), waves: t('plate.pill.waves', 'Waves'),
+    nodes: t('plate.pill.nodes', 'Nodes'),
   },
 };
 
@@ -4650,11 +4814,13 @@ function platePlan(word, aspect, capMax) {
  * The label layer to sit over a blank plate — '' when the art already carries its own text, and a
  * plain text span when the atlas cannot draw the word (a locale outside Latin-1, say).
  */
-function plateLabel(kind, name, cls) {
+function plateLabel(kind, name, cls, wordOverride) {
   if (!plateIsBlank(kind, name)) return '';
   const r = plateRegion(kind, name);
   const style = `left:${r[0] * 100}%;top:${r[1] * 100}%;width:${(r[2] - r[0]) * 100}%;height:${(r[3] - r[1]) * 100}%`;
-  let word = plateText(kind, name);
+  // `wordOverride` lets a blank plate wear a word of its own (already through t()) — the plate is
+  // chosen for its icon and colour, the word for the job. Only meaningful on a blank plate.
+  let word = wordOverride || plateText(kind, name);
   if (kind !== 'hdr') word = word.toUpperCase();   // the button and pill art is set in caps
 
   const size = window.PLATE_SIZE && window.PLATE_SIZE[kind] && window.PLATE_SIZE[kind][name];
@@ -4748,7 +4914,7 @@ function _plateBoxDebug() {
 }
 
 // ornate container wrapper. `hdr` = a header-plaque key (assets/ui/hdr/<key>.png) OR plain text (fallback banner)
-const HDR_KEYS = new Set(['act1','act2','act3','act4','army','battle_spoils','battle_won','cache','camp','cards','chips','deck','defeat','event','generals','history','how_to_play','key','medal_earned','medals','menu','mission_complete','mission_failed','more','outpost','remove','settings','shop','tribe_salvage','upgrade','workshop']);
+const HDR_KEYS = new Set(['act1','act2','act3','act4','army','battle_spoils','battle_won','cache','camp','campaigns','cards','chips','deck','draw_pile','discard_pile','exhausted','defeat','event','generals','history','how_to_play','key','medal_earned','medals','menu','mission_complete','mission_failed','more','outpost','remove','settings','shop','tribe_salvage','upgrade','workshop']);
 function ofBanner(hdr) {
   if (!hdr) return '';
   return HDR_KEYS.has(hdr)
@@ -4765,14 +4931,16 @@ function ocapG(html) { return `<div class="choice ofcap">${html}</div>`; }
 function metnum(n) {
   return `<span class="metnum">${String(n).split('').map(d=>/[0-9]/.test(d)?`<img src="assets/digits/${d}.png" alt="${d}">`:`<span>${d}</span>`).join('')}</span>`;
 }
-// pre-made labeled image button (icon + text baked in). opts: {cls, dis, style}
+// pre-made labeled image button (icon + text baked in). opts: {cls, dis, style, word}
 function ibtn(name, onclick, opts) {
   opts = opts || {};
   // The plate's own word is the default, because it is what the button visibly SAYS — an aria-label
   // that disagrees with the letters on the plate is worse than no aria-label. opts.label is for the
-  // handful of buttons whose art carries no word at all.
-  const lbl = opts.label || plateText('btn', name) || name;
-  return `<button class="ibtn ${opts.cls||''}" onclick="${onclick}"${opts.dis?' disabled':''}${opts.style?` style="${opts.style}"`:''} aria-label="${I18n.esc(lbl)}"><img src="${plateSrc('btn', name)}" alt="${I18n.esc(lbl)}">${plateLabel('btn', name)}</button>`;
+  // handful of buttons whose art carries no word at all. opts.word puts a different word ON a blank
+  // plate (so it is also what the button says, and its label).
+  const word = (opts.word && plateIsBlank('btn', name)) ? opts.word : '';
+  const lbl = word || opts.label || plateText('btn', name) || name;
+  return `<button class="ibtn ${opts.cls||''}" onclick="${onclick}"${opts.dis?' disabled':''}${opts.style?` style="${opts.style}"`:''} aria-label="${I18n.esc(lbl)}"><img src="${plateSrc('btn', name)}" alt="${I18n.esc(lbl)}">${plateLabel('btn', name, '', word)}</button>`;
 }
 // main-menu tile: wide labeled plate (portrait) + square tile (landscape); CSS picks by orientation.
 // A menu tile carries BOTH plates -- the wide one for portrait, the square one for landscape -- and
@@ -4859,6 +5027,39 @@ function glyphText(str, cls) {
   }).join('') + `</span>`;
 }
 function goldText(str) { return glyphText(str); }              // gold foil
+// Glyph runs are sized by HEIGHT (1em per glyph), so a long word in a narrow slot runs off both ends —
+// a phone's commander cards clipped "Warlord" to "arlor", and the seed plaque's RANDOM overran its
+// recess. Shrink any run in these slots to the width it actually has. Re-run once the glyph images
+// land, since an unloaded <img> has no width to measure.
+// The map bar's steel pill digits (.mn) are sized by their box's HEIGHT instead of a font size, so they
+// shrink by height.
+const GTEXT_FIT = '.gc-desc .gtext, .seedfield .plaqueval .gtext, #maphud .mapseedval .gtext, #maphud .bpv .mn, #maphud .bpv .gtext, #hud .bpv .mn, #hud .bpv .gtext, #hud .objval .gtext, #hud .powval .gtext, .platebtn .plaqueval .gtext, #maphud .mapsalvv .gtext';
+function fitGtext(root) {
+  (root || document).querySelectorAll(GTEXT_FIT).forEach(el => {
+    const byH = el.classList.contains('mn');
+    if (byH) el.style.height = ''; else el.style.fontSize = '';
+    const box = el.parentElement, avail = box ? box.clientWidth * (box.closest('.seedfield') ? 0.8 : 0.92) : 0, w = el.scrollWidth;
+    if (avail > 0 && w > avail) {
+      if (byH) el.style.height = (el.getBoundingClientRect().height * avail / w) + 'px';
+      else el.style.fontSize = (parseFloat(getComputedStyle(el).fontSize) * avail / w) + 'px';
+    }
+    el.querySelectorAll('img').forEach(im => { if (!im.complete) im.addEventListener('load', () => fitGtextSoon(), { once: true }); });
+  });
+}
+// Tag titled frames wide enough to keep their top corners (see .ofwide in the CSS). Frames are built by a
+// dozen different show*() functions, so this watches the DOM for them rather than being called from each.
+const OF_WIDE_PX = 560;
+const _ofRO = (typeof ResizeObserver !== 'undefined')
+  ? new ResizeObserver(es => es.forEach(e => e.target.classList.toggle('ofwide', e.target.offsetWidth >= OF_WIDE_PX))) : null;
+if (_ofRO && typeof MutationObserver !== 'undefined') new MutationObserver(ms => {
+  for (const m of ms) for (const n of m.addedNodes) if (n.nodeType === 1) {
+    if (n.matches('.oframe.titled')) _ofRO.observe(n);
+    n.querySelectorAll('.oframe.titled').forEach(f => _ofRO.observe(f));
+    if (n.matches('.gtext, .mn') || n.querySelector('.gtext, .mn')) fitGtextSoon();
+  }
+}).observe(document.documentElement, { childList: true, subtree: true });
+function fitGtextSoon() { clearTimeout(window._gtFit); window._gtFit = setTimeout(() => fitGtext(), 60); }
+window.addEventListener('resize', fitGtextSoon);
 function steelText(str) { return glyphText(str, 'steel'); }    // desaturated steel
 // live seed field: keep the numeric value, mirror it into gold glyphs on the plaque (dim "RANDOM" when empty).
 // round push-button toggle (glowing = on, dim = off)
@@ -4878,10 +5079,10 @@ function dangerRows(back) {
 }
 function toggleReveal() { const on = localStorage.getItem('dc_reveal_enemy') !== '0'; localStorage.setItem('dc_reveal_enemy', on ? '0' : '1'); showSettings(); }
 function onSeedInput(el) {
-  el.value = el.value.replace(/[^0-9]/g, '');
+  el.value = el.value.replace(/[^0-9]/g, '').slice(0, 9);   // maxlength does not stop a paste on every WebView
   runCfg.seed = el.value;
   const g = document.getElementById('seedGold');
-  if (g) { g.className = 'plaqueval' + (el.value ? '' : ' seedempty'); g.innerHTML = goldText(el.value || 'RANDOM'); }
+  if (g) { g.className = 'plaqueval' + (el.value ? '' : ' seedempty'); g.innerHTML = goldText(el.value || 'RANDOM'); fitGtext(g.parentElement); }
 }
 // a plate button whose recessed plaque shows a dynamic gold value (price). variant: 'heal'|'upg'|'rem'.
 function platebtn(name, variant, onclick, value, opts) {
@@ -4900,12 +5101,12 @@ function showNode() {
       : `<div class="gridcard cache-pick cache-salv gunframe" data-ci="${i}" onclick="pickCache(${i})"><div class="csv">${siEm('salvage')}<b class="gold">+${opt.amount}</b><span class="d" style="color:#d8ceb4">Salvage</span></div></div>`;
     o.innerHTML = `<p style="margin-top:10px">Take one — tap to choose, then confirm</p>
       <div class="nodecards">${p.options.map(tile).join('')}</div>
-      <div style="text-align:center;margin-top:8px"><button id="cacheOk" class="ibtn" disabled onclick="confirmCache()" aria-label="Take"><img src="assets/ui/btn/confirm.png" alt="Take"></button></div>`;
+      <div style="text-align:center;margin-top:8px"><button id="cacheOk" class="ibtn" disabled onclick="confirmCache()" aria-label="Take"><img src="${plateSrc('btn', 'confirm')}" alt="">${plateLabel('btn', 'confirm', '', 'Take')}</button></div>`;
   } else if (p.kind === 'camp') {
     const roster = p.roster||[], tb = p.train||{hp:4,atk:1};
     ttl = 'camp';
     o.innerHTML = `<p style="margin-top:2px">Rest the army, or drill a soldier</p>
-      <div class="choice" onclick="campRest()"><b class="grn">Rest</b><div class="d">heal your whole army + HQ to full</div></div>
+      <div class="choice" style="text-align:center">${pbtn('rest', 'campRest()', { style: 'max-width:230px;margin:0 auto' })}<div class="d" style="margin-top:6px">Heal your whole army and HQ to full</div></div>
       <div class="d" style="margin:10px 0 2px">Train one soldier — pick what it learns, for the rest of the run:</div>
       ${roster.map(u=>`<div class="choice">
          <div style="display:flex;align-items:center;gap:10px">
@@ -5221,7 +5422,7 @@ function cardDetailHTML(c){
         <span style="flex:0 0 auto">${c.rarity?rarTag(c.rarity)+' ':''}<span class="cyan">CP ${cp}</span></span></div>
       <div class="d" style="margin-top:2px">${c.cat||''}</div>
       <div style="margin-top:9px;line-height:1.55">${c.text||''}</div>${kw}
-      <div class="d" style="margin-top:6px">▸ ${need}</div></div>`;
+      <div class="d" style="margin-top:6px">${si('chevron',11)} ${need}</div></div>`;
 }
 function peekCard(c, label, onConfirm, disabled, opts){
   if(!c) return;
@@ -5231,7 +5432,7 @@ function peekCard(c, label, onConfirm, disabled, opts){
   o.innerHTML = `<div style="text-align:center;margin-bottom:10px">${frameCardHTML(c)}</div>`
     + (opts.noDetail ? '' : cardDetailHTML(c))   // the card face already shows name/cost/text — skip the repeat where asked
     + `<div class="ibtnrow" style="margin-top:10px">
-         <button class="ibtn" ${disabled?'disabled':''} onclick="_peekConfirm()" aria-label="${label}"><img src="assets/ui/btn/confirm.png" alt="${label}"></button>
+         <button class="ibtn" ${disabled?'disabled':''} onclick="_peekConfirm()" aria-label="${label}"><img src="${plateSrc('btn', 'confirm')}" alt="">${plateLabel('btn', 'confirm', '', label)}</button>
          ${ibtn('return', "closeOv('ovInspect')")}</div>`;
   _peekConfirmFn = disabled ? null : onConfirm;
   o.classList.add('show');
@@ -5285,7 +5486,7 @@ function playForgeFx(cards){
     const view = upgradedView(c);
     // No ✦ UPGRADED ✦ bar: the card now shows its own upgraded name and text, so the badge was
     // labelling something the art already says.
-    const up = c.up_desc?`<div class="d" style="margin-top:8px;color:#f0c94a;text-align:center"><b>⤴ ${c.up_desc}</b></div>`:'';
+    const up = c.up_desc?`<div class="d" style="margin-top:8px;color:#f0c94a;text-align:center"><b>${si('jump',14)} ${c.up_desc}</b></div>`:'';
     return `<div class="forgecard">${frameCardHTML(view, 210)}${up}</div>`;
   };
   $('#ovForge').innerHTML = `<div class="forgewrap">
@@ -5320,7 +5521,7 @@ function pickCache(i){
   const ok = document.getElementById('cacheOk'); if (ok) ok.disabled = false;
 }
 function confirmCache(){ if (_cacheSel == null) return; takeCache(_cacheSel); }
-function peekReward(i){ peekCard(S.pending.options[i], 'Take this card ▸', ()=>takeReward(i), false, {noDetail:true}); }   // card face already shows name/cost/text — no repeat panel
+function peekReward(i){ peekCard(S.pending.options[i], 'Take this card', ()=>takeReward(i), false, {noDetail:true}); }   // card face already shows name/cost/text — no repeat panel
 // label goes into aria-label/alt ATTRIBUTES → plain text only (an icon's <svg width="22"> broke the button)
 function peekShopBuy(id){ const o=(S.pending.offer||[]).find(x=>x.id===id); if(!o) return; const can=(S.pending.salvage||0)>=o.cost; peekCard(o, can?`Buy for ${o.cost} salvage`:`Need ${o.cost} salvage`, ()=>shopBuy(id), !can, {noDetail:true}); }
 async function takeCache(i){ closeOv('ovNode'); render(await api('/api/cache',{choice:i})); }
@@ -5592,7 +5793,7 @@ function showRunResult() {
       <div class="d" style="margin-top:6px">seed ${S.seed}${(S.mods&&S.mods.length)?' · '+S.mods.join(', '):''}</div>
     </div>
     ${rs.chip_drop ? `<div class="choice" style="text-align:center;border-color:var(--gold)">
-      <div class="d" style="letter-spacing:.6px;color:${_CHIP_TC[rs.chip_drop.tier]||'#cda94e'}">◆ BOARD CHIP UNLOCKED</div>
+      <div class="d" style="letter-spacing:.6px;color:${_CHIP_TC[rs.chip_drop.tier]||'#cda94e'}">${si('diamond',11)} BOARD CHIP UNLOCKED</div>
       <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:6px">
         <div style="width:66px;height:66px;background:url(${(S.chips&&S.chips.reg[rs.chip_drop.id]&&S.chips.reg[rs.chip_drop.id].file)||'assets/board/unit.png'}) center/contain no-repeat;filter:drop-shadow(0 2px 3px rgba(0,0,0,.55))"></div>
         <div style="text-align:left"><b class="gold" style="font:700 16px var(--f-head)">${rs.chip_drop.name}</b><div class="d" style="text-transform:capitalize;color:${_CHIP_TC[rs.chip_drop.tier]||'#b9b09a'}">${rs.chip_drop.tier} chip</div></div>
@@ -5617,26 +5818,6 @@ function toggleIntent() {
   else { intentList = []; renderBoard(); }
 }
 
-function gaugeRow() {
-  const p = S.power;
-  if (!p) return '';
-  // Momentum is uncapped: the pips show progress toward the NEXT discharge, and anything banked past
-  // that shows as a "+N" carry. Everyone else's gauge stops at max, so this reads the same for them.
-  const carry = Math.max(0, p.gauge - p.max);
-  const shown = Math.min(p.gauge, p.max);
-  const pips = Array.from({length: p.max}, (_, i) =>
-    `<i class="gpip ${i < shown ? 'on' : ''}"></i>`).join('');
-  // Nomad only: the trajectory, and the ground you must match this turn to keep it climbing.
-  const drive = (p.drive === undefined) ? '' :
-    `<span class="gdrive ${p.moved >= p.pace && p.pace > 0 ? 'ok' : 'slow'}" title="Drive: Momentum banked per turn. Move EVERY unit to push it higher — stall even one and it halves.">▲${p.drive} · moved ${p.moved}/${p.pace}</span>`;
-  return `<div class="row gaugebar" style="margin-top:5px">
-     <span class="glabel">${p.gname||'Power'} <b>${p.uncapped ? p.gauge : shown+'/'+p.max}</b>${(!p.uncapped && carry) ? `<b class="gcarry">+${carry}</b>` : ''}${drive}</span>
-     <span class="gtrack">${pips}</span>
-     <button class="powbtn ${p.ready ? 'ready' : ''}" onclick="usePower()"
-       onpointerdown="powPressStart()" onpointerup="powPressEnd()" onpointerleave="powPressEnd()"
-       oncontextmenu="event.preventDefault();showPowerInfo();return false" title="${p.desc}">${si('cp',15)} ${p.name}${p.ready ? '' : ` (${p.cost})`}</button>
-   </div>`;
-}
 let _powTimer = null, _powLong = false;
 function powPressStart(){ _powLong=false; _powTimer=setTimeout(()=>{ _powLong=true; showPowerInfo(); }, 450); }
 function powPressEnd(){ if(_powTimer){ clearTimeout(_powTimer); _powTimer=null; } }
@@ -5779,7 +5960,10 @@ function setPillH() {
   if (!scalers.length) { el.style.removeProperty('--pillh'); return; }
   let aspSum = 0;
   for (const s of scalers) {
-    const img = s.querySelector('img.pl-l') || s.querySelector('img');
+    // The image actually SHOWN: portrait swaps to the compact .pl-p plate, and measuring the hidden wide
+    // .pl-l there pinned every portrait plate to the landscape proportions.
+    const imgs = [...s.querySelectorAll(':scope > img')];
+    const img = imgs.find(i => getComputedStyle(i).display !== 'none') || s.querySelector('img.pl-l') || s.querySelector('img');
     const asp = (img && img.naturalWidth > 0 && img.naturalHeight > 0) ? img.naturalWidth / img.naturalHeight : 0;
     aspSum += asp || 3.5;
     // Pin each plate's own aspect ratio so its WIDTH follows --pillh directly, instead of being
@@ -5842,7 +6026,7 @@ function setPillH() {
 // settles. Both bars go through one loop — each is a no-op when its screen is not up.
 let _barFitGen = 0;
 function refitBars() {
-  const fit = () => { setPillH(); if (typeof fitMapBar === 'function') fitMapBar(); };
+  const fit = () => { setPillH(); if (typeof fitMapBar === 'function') fitMapBar(); for (const id of ['hud', 'maphud']) { const r = document.getElementById(id); if (r) fitGtext(r); } };
   fit();
   if (!window.requestAnimationFrame || !window.performance) {
     if (typeof refitBoard === 'function') refitBoard();
@@ -5878,7 +6062,7 @@ function renderHud() {
     : '';
   const objChip = !obj ? ''
     : obj.kind === 'hold'
-      ? `<span class="objhold" onclick="showObjInfo()" aria-label="${I18n.esc(plateText('btn','obj_hold'))}"><img class="pl-l" src="${plateSrc('btn','obj_hold')}" alt=""><img class="pl-p" src="assets/ui/btn/obj_hold_p.png" alt="">${plateLabel('btn','obj_hold')}<span class="objval">${goldText(obj.progress+'/'+obj.turns)}</span></span>`
+      ? `<span class="objhold" onclick="showObjInfo()" aria-label="${I18n.esc(plateText('btn','obj_hold'))}"><img class="pl-l" src="${plateSrc('btn','obj_hold')}" alt=""><img class="pl-p" src="assets/ui/btn/obj_hold_p.png" alt="">${plateLabel('btn','obj_hold')}<span class="objval"${plateWellStyle('btn','obj_hold')}>${goldText(obj.progress+'/'+obj.turns)}</span></span>`
       : obj.kind === 'survive'
       ? bpill('survive', obj.progress+'/'+obj.turns, '', 'showObjInfo()')
       : obj.kind === 'bastion'
@@ -5930,17 +6114,17 @@ function renderHud() {
             ? `${p.name} — ${p.gauge} ${p.gname}, needs ${cost}` : `${p.name} ${p.gauge}/${p.max}`;
           return `<button class="powplate ${p.ready?'ready':''}" onclick="usePower()"
            onpointerdown="powPressStart()" onpointerup="powPressEnd()" onpointerleave="powPressEnd()"
-           oncontextmenu="event.preventDefault();showPowerInfo();return false" title="${p.desc}" aria-label="${label}"><img class="pl-l" src="${plateSrc('btn', POW_PLATE[p.id])}" alt="${I18n.esc(p.name)}"><img class="pl-p" src="assets/ui/btn/${POW_PLATE[p.id]}_p.png" alt="">${plateLabel('btn', POW_PLATE[p.id])}<span class="powval">${goldText(shown)}</span><span class="plgauge ${over?'over':''}"><i style="width:${pct}%"></i></span></button>`;
+           oncontextmenu="event.preventDefault();showPowerInfo();return false" title="${p.desc}" aria-label="${label}"><img class="pl-l" src="${plateSrc('btn', POW_PLATE[p.id])}" alt="${I18n.esc(p.name)}"><img class="pl-p" src="assets/ui/btn/${POW_PLATE[p.id]}_p.png" alt="">${plateLabel('btn', POW_PLATE[p.id])}<span class="powval"${plateWellStyle('btn', POW_PLATE[p.id])}>${goldText(shown)}</span><span class="plgauge ${over?'over':''}"><i style="width:${pct}%"></i></span></button>`;
         })()
       : `<button class="powchip ${p.ready?'ready':''}" onclick="usePower()"
            onpointerdown="powPressStart()" onpointerup="powPressEnd()" onpointerleave="powPressEnd()"
            oncontextmenu="event.preventDefault();showPowerInfo();return false" title="${p.desc}">${si('cp',15)} ${p.name} <b>${p.uncapped ? p.gauge : p.gauge+'/'+p.max}</b><span class="pgtrack"><i style="width:${Math.round(100*Math.min(p.gauge,(p.cost||p.max))/(p.cost||p.max))}%"></i></span>${p.ready?' ▸GO':''}</button>`;
   $('#hud').innerHTML = `<div class="statline">
-      <div class="pillbar">${bpill('cp', S.cp+'/'+S.cp_max, '', "showPillInfo('cp')")}${bpill('hq', S.hq_hp, hpFrac<34?'danger':'', "showPillInfo('hq')")}${_noBaseBattle() ? '' : bpill('bases', S.bases_left, '', "showPillInfo('bases')")}${bpill('troops', S.troops.n+'/'+S.troops.cap, S.troops.n>=S.troops.cap?'full':'', "showArmy()")}${objChip}</div>
+      <div class="pillbar">${bpill('cp', S.cp+'/'+S.cp_max, '', "showPillInfo('cp')")}${bpill('hq', S.hq_hp, hpFrac<34?'danger':'', "showPillInfo('hq')")}${_noBaseBattle() ? '' : bpill('bases', S.bases_left, '', "showPillInfo('bases')")}${bpill('troops', S.troops.n+'/'+S.troops.cap, S.troops.n>=S.troops.cap?'full':'', "showArmy()")}${S.node_hold ? bpill('nodes', S.node_hold.progress+'/'+S.node_hold.turns, S.node_hold.progress>0?'full':'', "showNodeHoldInfo()") : ''}${objChip}</div>
       ${driveMeter}${gauge}
       ${S.ascension?`<span class="stat gold">A${S.ascension}</span>`:''}
       ${(S.withdraw && S.withdraw.ordered)?`<span class="foechip obj" onclick="showWithdrawInfo()">${t('hud.withdrawing', 'Withdrawing')} ${S.withdraw.at_hq}/${S.withdraw.need}</span>`:''}
-      ${S.node_hold?`<span class="foechip obj" onclick="showNodeHoldInfo()" title="${I18n.esc(t('hud.node_hold.tip', 'Hold every command node uncontested to win'))}">${t('hud.node_hold', 'Nodes')} ${S.node_hold.progress}/${S.node_hold.turns}</span>`:''}
+
       ${foe}
     </div>
     <div class="hudbtns">
@@ -6054,7 +6238,7 @@ function showBigMedal(id, allBtn) {
       <div class="bmName">${m.name}${m.n > 1 ? ` <span style="color:var(--mc)">×${m.n}</span>` : ''}</div>
       <div class="bmTier">${t.label}${m.n > 1 ? ` · stacked ${m.n}×` : ''}</div>
       <div class="bmDesc">${m.desc}</div>
-      ${m.lifetime ? `<div class="bmLife">${siEm('medal')} awarded ${m.lifetime}× all-time</div>` : ''}
+      ${m.lifetime ? `<div class="bmLife">awarded ${m.lifetime}× all-time</div>` : ''}
     </div>
     <div style="display:flex;gap:12px;justify-content:center;align-items:center;margin-top:14px">
       ${allBtn ? `${ibtn('medals', "closeOv('ovInspect');showMedals()")}` : ''}
@@ -6085,27 +6269,35 @@ function runRulesBlock() {
       ${asc.map((d, i) => row('Ascension ' + (i + 1), d)).join('')}
     </div></div>`;
 }
-function showRunInfo() {
-  // Half of this only exists during a BATTLE. `level`, `map`, `turn`, `hand_size` and `piles` are all
-  // absent from the map payload, so reading S.level.index there threw — and because the button ran
-  // closeOv() first, the panel it was opening died silently and the whole thing read as "Settings just
-  // closes". This function had never been called by anything until it was given a button, so nothing
-  // had ever exercised it outside a battle.
-  const inBattle = !!(S && S.level && S.map && S.piles);
-  $('#ovInspect').innerHTML = `<div class="choice"><b class="gold">Run details</b>
-    <div class="d" style="margin-top:6px;line-height:1.8">
-      ${inBattle ? `<b>L${S.level.index}</b> — ${S.level.title}<br>
-      Map ${S.map.w}×${S.map.h} · Era ${S.era} · Turn ${S.turn}<br>
-      Hand ${S.hand_size}/${S.draw_target} · keep ${S.retain_cap}<br>
-      Deck: draw ${S.piles.draw} · discard ${S.piles.discard}${S.piles.exhaust?` · exhausted ${S.piles.exhaust}`:''}<br>` : ''}
-      ${S.ascension?`Ascension ${S.ascension}<br>`:''}
-      Seed ${S.seed}
-    </div></div>
+// The run, at the top of Settings: where you are, the rules in force (modifiers, ascension tiers, a
+// Commission's exceptions -- each with what it does), the battle overlays and, mid-battle, Withdraw.
+// It used to be two things: a stats box further down Settings AND a separate Run Details screen behind a
+// button, which repeated half of it. Half the fields only exist in a BATTLE (level/map/turn/hand/piles are
+// absent from the map payload), so each is guarded.
+function runDetailsBlock() {
+  if (!(S && (S.mode === 'map' || S.board))) return '';
+  const inBattle = !!(S.board && S.level && S.map && S.piles);
+  const stat = (k, v) => `<div class="d" style="opacity:.8">${k}</div><div>${v}</div>`;
+  const where = [S.general, S.exp ? `Act ${S.exp.act + 1}` : (S.act != null ? `Act ${S.act + 1}` : ''),
+    inBattle ? `${NODE_NAME[S.battle_kind] || 'Battle'}${S.node_num ? ' ' + S.node_num : ''}` : ''].filter(Boolean).join(' · ');
+  const stats = [
+    ...(where ? [stat('Run', where)] : []),
+    ...(inBattle ? [stat('Level', `<b>L${S.level.index}</b> — ${S.level.title}`), stat('Map', `${S.map.w}×${S.map.h} · Era ${S.era} · Turn ${S.turn}`),
+      stat('Hand', `${S.hand_size}/${S.draw_target} · keep ${S.retain_cap}`),
+      stat('Piles', `draw ${S.piles.draw} · discard ${S.piles.discard}${S.piles.exhaust ? ` · exhausted ${S.piles.exhaust}` : ''}`)] : []),
+    ...(S.ascension ? [stat('Ascension', S.ascension)] : []),
+    stat('Seed', `<b>${S.seed}</b>`),
+  ].join('');
+  const w = inBattle && S.withdraw;
+  return `<div class="choice"><b>This run</b>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:baseline;line-height:1.5;margin-top:6px">${stats}</div>
+    </div>
     ${runRulesBlock()}
-    ${inBattle ? dangerRows('showRunInfo()') : ''}
-    <div style="text-align:center;margin-bottom:6px">${pbtn('deck',"closeOv('ovInspect');showDeck()",{cls:'h'})}</div>
-    <div class="ovclose">${ibtn('close', "closeOv('ovInspect')")}</div>`;
-  $('#ovInspect').classList.add('show');
+    ${inBattle ? `<div class="choice" style="margin-top:8px">${dangerRows('showSettings()')}</div>` : ''}
+    ${w ? `<div class="choice" style="margin-top:8px;text-align:left">
+      <div style="text-align:center${(w.ordered || !w.block) ? '' : ';opacity:.45;pointer-events:none'}">${pbtn(w.ordered ? 'cancel' : 'withdraw', "closeOv('ovSettings');confirmWithdraw()", { style: 'max-width:240px;margin:0 auto', label: w.ordered ? t('withdraw.cancel', 'Rescind the withdrawal') : `${t('withdraw.order', 'Withdraw from this battle')} (−${w.cost} salvage)` })}</div>
+      <div class="d" style="margin-top:4px;line-height:1.45">${w.block && !w.ordered ? w.block.charAt(0).toUpperCase() + w.block.slice(1) + '.' : `Costs <b>all ${w.cost} salvage</b>, and ${w.hp_pct}% max HP from each troop that gets home. No salvage or card for the battle, but the run goes on.`}</div>
+    </div>` : ''}`;
 }
 
 // ── board + table layout (shared by renderBoard AND live pinch-zoom so the table always scales with
@@ -6322,6 +6514,8 @@ function renderBoard() {
   // curtain drops and your ground is revealed through the same animation any other reveal uses. The
   // fight starts by being uncovered rather than by simply being there.
   const cells = _openFog ? b.cells.map(c => ({ x: c.x, y: c.y, t: null, vis: false, u: null })) : b.cells;
+  const _selU = (cmd !== null) ? cells.find(cc => cc.u && cc.u.id === cmd) : null;
+  const auraCtr = (_selU && _selU.u.aura) ? [_selU.x, _selU.y, _selU.u.aura] : null;
   for (const c of cells) {
     const terr = c.t ? 't-' + c.t : 't-none';
     const dark = (c.t && c.t !== 'void' && !c.vis) ? ' dark' : '';   // only REMEMBERED terrain greys; never void/fog (else the darkened void outlines the map shape)
@@ -6380,6 +6574,8 @@ function renderBoard() {
     }
     // highlight: command mode (a unit selected) OR card targeting
     let hl = '';
+    // A selected Bannerman shows the ground its aura covers (allies standing there hit harder, take less).
+    if (auraCtr && c.t && c.t !== 'void' && Math.max(Math.abs(c.x - auraCtr[0]), Math.abs(c.y - auraCtr[1])) <= auraCtr[2]) cls += ' aura';
     if (cmd !== null) {
       const hasAim = cmdOpts.aim && cmdOpts.aim.size;
       if (hasAim && isAiming()) {
@@ -6470,10 +6666,15 @@ function fogLift(el, oldHTML, x, y) {
   const step = ((x * 7 + y * 13) % 4) * 55;
   if (step) fog.style.animationDelay = step + 'ms';
   el.appendChild(fog);
-  const gone = () => fog.remove();
+  let done;
+  if (_fogLifts) _fogLifts.push(new Promise(res => { done = res; }));   // the opening reveal is waiting on it
+  const gone = () => { fog.remove(); if (done) done(); };
   fog.addEventListener('animationend', gone, { once: true });
   setTimeout(gone, 1400 + step);   // backstop: animationend never fires if the tile is re-rendered
 }
+// Set only across the one renderBoard() that drops the battle-open curtain: each tile's lift adds the
+// promise of its own ending, so "the layout reveal has finished" is a real event, not a guessed delay.
+let _fogLifts = null;
 // Motion is off when the SYSTEM asks for it, or when the player has chosen the Performance preset.
 // Everything that animates checks this one place.
 function _reducedMotion() {
@@ -6582,7 +6783,172 @@ function renderHand() {
   handDrag = 0;
   const fan = cards.map(c => cardMarkup(c, '')).join('');
   $('#hand').innerHTML = n ? `<div class="handfan">${fan}</div>` : '<div class="dim" style="padding:8px">no cards in hand</div>';
+  // Cards still to be dealt (see afterAction) are the newest — the end of the hand — and wait unseen.
+  if (_dealPending) [...$('#hand').querySelectorAll('.card')].slice(-_dealPending).forEach(el => el.classList.add('dealing'));
   layoutHand();
+}
+// ── dealing ──────────────────────────────────────────────────────────────────────────────────────
+// Every draw — the opening hand, the turn-start refill, a card that draws — is dealt: a card back lifts
+// off the draw pile, flies to its slot in the fan, and flips to its face as it lands, one after another.
+// Transform and opacity only (WAAPI), so it costs the compositor, not layout. With motion off the cards
+// simply appear. A re-render mid-deal rebuilds the hand and the cards just stand in place — never lost.
+let _dealPending = 0;
+// Slow enough to follow on a phone: at 560/120 a five-card opening hand was over before it registered.
+const DEAL_MS = 820, DEAL_STAGGER = 240;
+function dealDraws() {
+  const n = _dealPending; _dealPending = 0;
+  const hand = $('#hand');
+  const els = hand ? [...hand.querySelectorAll('.card')] : [];
+  const targets = els.slice(Math.max(0, els.length - n));
+  targets.forEach(el => el.classList.remove('dealing'));
+  if (!targets.length || _reducedMotion() || typeof targets[0].animate !== 'function') return;
+  const pile = document.querySelector('#drawBtn .pcard') || document.getElementById('drawBtn');
+  const pr = pile && pile.getBoundingClientRect();
+  if (!pr || !pr.width) return;
+  const fan = hand.querySelector('.handfan');
+  const z = (fan && parseFloat(getComputedStyle(fan).zoom)) || 1;   // desktop zooms the fan; translate is in its units
+  const px = pr.left + pr.width / 2, py = pr.top + pr.height / 2;
+  const fr = fan.getBoundingClientRect();
+  targets.forEach((el, i) => {
+    // The start is written in the SAME functions layoutHand uses (translateX/translateY/rotate/scale), with
+    // the fan offsets zeroed — so every keyframe has one function list (each part interpolates on its
+    // own, no matrix blending) and the start is measured from the card's untransformed box: centred on
+    // the fan, 4px from its top, scaling about its top edge (transform-origin: top center).
+    const w = el.offsetWidth || 126, h = el.offsetHeight || 126;
+    const s0 = +(pr.width / (w * z)).toFixed(3);                     // the draw card's box over this card's
+    const dx = (px - (fr.left + fr.width / 2)) / z;
+    const dy = (py - fr.top) / z - 4 - s0 * h / 2;
+    // (the browser may read `calc(-50% + -88px)` back as `calc(-50% - 88px)`)
+    const m = /translateX\(calc\(-50% ([+-]) (-?[\d.]+)px\)\) translateY\((-?[\d.]+)px\) rotate\((-?[\d.]+)deg\) scale\(([\d.]+)\)/.exec(el.style.transform || '');
+    if (!m) return;                                                  // not laid out by layoutHand: just show it
+    const tx = (m[1] === '-' ? -1 : 1) * Number(m[2]), [ty, rot, sc] = m.slice(3).map(Number);
+    const T = (x, y, a, b, r, s, sx) => `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) translateX(calc(-50% + ${a}px)) translateY(${b}px) rotate(${r}deg) scale(${s}) scaleX(${sx})`;
+    const opts = { duration: DEAL_MS, delay: i * DEAL_STAGGER, easing: 'cubic-bezier(.25,.7,.35,1)' };
+    el.animate([
+      { transform: T(dx, dy, 0, 0, 0, s0, 1), offset: 0 },          // square on the draw card, its size, back up
+      { transform: T(0, 0, tx, ty, rot, sc, 1), offset: 0.62 },     // in its slot
+      { transform: T(0, 0, tx, ty, rot, sc, 0.02), offset: 0.81 },  // edge-on: the flip
+      { transform: T(0, 0, tx, ty, rot, sc, 1), offset: 1 },        // face up
+    ], { ...opts, fill: 'backwards' });
+    const back = document.createElement('div');
+    back.className = 'dealback';
+    el.appendChild(back);
+    const a = back.animate([{ opacity: 1 }, { opacity: 1, offset: 0.81 }, { opacity: 0, offset: 0.815 }, { opacity: 0 }], { ...opts, fill: 'both' });
+    // No timer backstop needed: if the hand is rebuilt mid-deal, the back goes with the card it sits in.
+    a.onfinish = () => back.remove();
+    setTimeout(() => Sfx.play('card_draw'), i * DEAL_STAGGER);
+  });
+}
+// ── the played card's exit ───────────────────────────────────────────────────────────────────────
+// A played card used to vanish from the fan the moment it was committed. Now a copy of it lifts out of
+// its slot, stays in view while the card resolves on the board, and then goes where the card went: into
+// the discard pile, or — a One-Shot — burns away. Transform/opacity only; skipped with motion off.
+// End of turn: every card you did not keep is swept off the hand into the discard pile, one after another,
+// BEFORE the enemy turn starts -- so the hand empties on screen instead of vanishing when the state comes
+// back. Each card leaves from where it sits in the fan (its tilt included) and lands square on the pile.
+async function sweepHand(keep) {
+  if (_reducedMotion()) return;
+  const pile = document.querySelector('#discardBtn .pcard') || document.getElementById('discardBtn');
+  const pr = pile && pile.getBoundingClientRect();
+  if (!pr || !pr.width) return;
+  const els = [...document.querySelectorAll('#hand .card[data-i]')].filter(el => !keep.has(+el.dataset.i));
+  if (!els.length || typeof els[0].animate !== 'function') return;
+  const top = document.getElementById('discardTop');
+  // Every card not kept goes to the discard -- One-Shots included: they are only exhausted when played
+  // (game.ts _retain_and_discard).
+  const card = el => (S.hand || []).find(c => c.i === +el.dataset.i) || null;
+  const toPile = els;
+  const flights = els.map((el, i) => {
+    const r = el.getBoundingClientRect(); if (!r.width) return null;
+    const fan = el.closest('.handfan');
+    const z = (fan && parseFloat(getComputedStyle(fan).zoom)) || 1;
+    const mm = /matrix\(([^)]+)\)/.exec(getComputedStyle(el).transform || '');
+    const [a, b] = mm ? mm[1].split(',').map(Number) : [1, 0];
+    const k0 = Math.hypot(a, b) * z, rot = Math.atan2(b, a) * 180 / Math.PI;
+    const w = el.offsetWidth, h = el.offsetHeight;
+    const g = el.cloneNode(true);
+    for (const at of ['onpointerdown', 'onpointermove', 'onpointerup', 'onpointercancel', 'style']) g.removeAttribute(at);
+    g.classList.remove('sel', 'lift', 'dealing');
+    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    Object.assign(g.style, { position: 'fixed', left: (cx - w / 2) + 'px', top: (cy - h / 2) + 'px', width: w + 'px', height: h + 'px',
+      margin: '0', zIndex: String(60 + i), pointerEvents: 'none', transformOrigin: '50% 50%', transform: `rotate(${rot}deg) scale(${k0})` });
+    document.body.appendChild(g);
+    el.style.visibility = 'hidden';
+    const dx = pr.left + pr.width / 2 - cx, dy = pr.top + pr.height / 2 - cy, k1 = pr.height / h;
+    const anim = g.animate([{ transform: `translate(0px, 0px) rotate(${rot}deg) scale(${k0})` },
+      { transform: `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px) rotate(0deg) scale(${k1.toFixed(3)})` }],
+      { duration: 420, delay: i * 90, easing: 'cubic-bezier(.45,.05,.4,1)', fill: 'forwards' });
+    return new Promise(res => { const done = () => { g.remove(); res(); }; anim.onfinish = done; anim.oncancel = done; setTimeout(done, 420 + i * 90 + 600); });
+  }).filter(Boolean);
+  if (top && toPile.length) top.style.opacity = '0';
+  await Promise.all(flights);
+  if (top) top.style.opacity = '';
+  // The pile shows what just landed on it: the count grows by the cards that went there and its face is
+  // the last of them, now rather than after the enemy turn. The next render reconciles from the server.
+  if (toPile.length && S.piles) {
+    S.piles = { ...S.piles, discard: (S.piles.discard || 0) + toPile.length };
+    S.discard_top = card(toPile[toPile.length - 1]) || S.discard_top;
+    updatePileBtns();
+    if (top && top.animate) top.animate([{ transform: 'scale(1.12)' }, { transform: 'scale(1)' }], { duration: 200 });
+  }
+}
+function liftPlayed(hi) {
+  if (_reducedMotion()) return null;
+  const el = document.querySelector(`#hand .card[data-i="${hi}"]`);
+  if (!el || typeof el.animate !== 'function') return null;
+  const r = el.getBoundingClientRect(); if (!r.width) return null;
+  const fan = el.closest('.handfan');
+  const z = (fan && parseFloat(getComputedStyle(fan).zoom)) || 1;
+  const mm = /matrix\(([^)]+)\)/.exec(getComputedStyle(el).transform || '');
+  const k0 = (mm ? Math.hypot(...mm[1].split(',').slice(0, 2).map(Number)) : 1) * z;   // on-screen scale of the card
+  const w = el.offsetWidth, h = el.offsetHeight;
+  const g = el.cloneNode(true);
+  for (const a of ['onpointerdown', 'onpointermove', 'onpointerup', 'onpointercancel', 'style']) g.removeAttribute(a);
+  g.classList.remove('sel', 'lift', 'dealing');
+  // An unscaled box centred where the card is, scaled about its centre: translate() then works in screen px.
+  Object.assign(g.style, { position: 'fixed', left: (r.left + r.width / 2 - w / 2) + 'px', top: (r.top + r.height / 2 - h / 2) + 'px',
+    width: w + 'px', height: h + 'px', margin: '0', zIndex: '60', pointerEvents: 'none', transformOrigin: '50% 50%',
+    transform: `scale(${k0})` });
+  document.body.appendChild(g);
+  // Staged just off the RIGHT end of the hand while it resolves: out of the fan (it has been committed)
+  // but still in view, and clear of the discard pile it is about to fly into.
+  const fr = (fan || el).getBoundingClientRect();
+  const k1 = k0 * 0.92, sw = w * k1, sh = h * k1;
+  const dp = document.getElementById('discardBtn'), dr = dp && dp.getBoundingClientRect();
+  let sx = fr.right + 14 + sw / 2;
+  const maxX = (dr && dr.width ? Math.min(dr.left, innerWidth) : innerWidth) - 10 - sw / 2;
+  sx = Math.max(fr.left + fr.width / 2, Math.min(sx, maxX));
+  const sy = Math.min(fr.top + fr.height / 2, innerHeight - sh / 2 - 6);
+  const cx0 = r.left + r.width / 2, cy0 = r.top + r.height / 2;
+  const held = `translate(${(sx - cx0).toFixed(1)}px, ${(sy - cy0).toFixed(1)}px) scale(${k1.toFixed(3)})`;
+  g.animate([{ transform: `translate(0px, 0px) scale(${k0})` }, { transform: `translate(${((sx - cx0) * 0.5).toFixed(1)}px, ${((sy - cy0) * 0.5 - 24).toFixed(1)}px) scale(${(k0 * 1.02).toFixed(3)})`, offset: 0.5 }, { transform: held }],
+    { duration: 300, easing: 'cubic-bezier(.3,.6,.35,1)', fill: 'forwards' });
+  return { g, held, k0: k1, temp: (S.hand || []).some(c => c.i === hi && c.temp) };
+}
+async function sendPlayed(lift, ok) {
+  if (!lift) return;
+  const { g, held, k0, temp } = lift;
+  const done = a => new Promise(res => { a.onfinish = res; a.oncancel = res; setTimeout(res, 1400); });
+  try {
+    if (!ok) { await done(g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 180, fill: 'forwards' })); return; }
+    if (temp) {   // One-Shot: it does not go to the discard — it burns off
+      await done(g.animate([{ opacity: 1, transform: held, filter: 'brightness(1)' },
+        { opacity: 0, transform: `${held} translateY(-30px) scale(.9)`, filter: 'brightness(2.2) sepia(1)' }],
+        { duration: 460, easing: 'ease-in', fill: 'forwards' }));
+      return;
+    }
+    const pile = document.querySelector('#discardBtn .pcard') || document.getElementById('discardBtn');
+    const pr = pile && pile.getBoundingClientRect();
+    if (!pr || !pr.width) return;
+    const top = document.getElementById('discardTop'); if (top) top.style.opacity = '0';   // it lands there
+    const gl = parseFloat(g.style.left) + g.offsetWidth / 2, gt = parseFloat(g.style.top) + g.offsetHeight / 2;
+    const dx = pr.left + pr.width / 2 - gl, dy = pr.top + pr.height / 2 - gt;
+    const k1 = pr.height / g.offsetHeight;
+    await done(g.animate([{ transform: held },
+      { transform: `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px) scale(${k1.toFixed(3)})` }],
+      { duration: 520, easing: 'cubic-bezier(.45,.05,.4,1)', fill: 'forwards' }));
+    if (top) { top.style.opacity = ''; if (top.animate) top.animate([{ transform: 'scale(1.12)' }, { transform: 'scale(1)' }], { duration: 200 }); }
+  } finally { g.remove(); }
 }
 // coalesce rapid pointermove layout calls into one per animation frame
 let _layoutRAF = 0;
@@ -6612,8 +6978,11 @@ function layoutHand() {
 // first curtain rather than stacking two timers that would fight over the flag.
 const OPEN_FOG_MS = 1000;
 function openFogCurtain() {
-  if (_reducedMotion()) { _openFog = false; return; }
   clearTimeout(_openFogT); clearInterval(_openFogWatch);
+  _revealDone = false;
+  const tok = ++_revealTok;
+  // No curtain without motion: the board is simply open, and the reveal is over as soon as this render is.
+  if (_reducedMotion()) { _openFog = false; Promise.resolve().then(() => _onRevealDone(tok)); return; }
   _openFog = true;
   // The mission briefing opens over the battle at the same moment. The hold used to run underneath it,
   // so by the time you had read the brief and closed it the board was already open and the reveal had
@@ -6626,7 +6995,11 @@ function openFogCurtain() {
       _openFog = false;
       // The cache still holds the all-fogged frame, so this render diffs against it and every tile you
       // can see lifts through the normal animation — no separate opening effect to keep in step with it.
+      _fogLifts = [];
       try { renderBoard(); } catch (e) { console.error('[fog] curtain', e); }
+      const lifts = _fogLifts; _fogLifts = null;
+      // Deployment waits for the last of that fog to clear: the ground is laid out first, THEN the army.
+      Promise.all(lifts).then(() => _onRevealDone(tok));
     }, OPEN_FOG_MS);
   }, 120);
 }
@@ -6777,7 +7150,7 @@ function showEnemyReveal(c) {
     const need = (c.needs && c.needs.length) ? c.needs.join(' + ') : 'no target';
     const o = $('#ovReveal');
     o.innerHTML = `<div style="text-align:center">
-      <div class="gold" style="font:700 13px var(--f-head);letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px">⚔ New enemy card</div>
+      <div class="gold" style="font:700 13px var(--f-head);letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px">${si('skirmish',14)} New enemy card</div>
       ${frameCardHTML(c, 220)}
       <div class="d" style="margin-top:10px">Added to your Collection · Tap to continue</div></div>`;
     o.classList.add('show');
@@ -6788,12 +7161,23 @@ function showEnemyReveal(c) {
 // which side of the board the selected-unit panel parks on — remembered across selections
 function _uiSide(){ try { return localStorage.getItem('dc_uiside') === 'right' ? 'right' : 'left'; } catch (e) { return 'left'; } }
 function setUISide(side){ try { localStorage.setItem('dc_uiside', side); } catch (e) {} const el = $('#unitinfo'); if (el) el.classList.toggle('right', side === 'right'); Sfx.play('ui_tap'); }
-function renderPrompt() {
+// The roster panel rides along with the prompt: every state change that can alter one alters the other.
+function renderPrompt() { _renderPrompt(); renderRoster(); }
+function _renderPrompt() {
   $('#unitinfo').innerHTML = '';   // side panel only shows while commanding a unit
   if (powerArm) {
     const p = S.power;
-    $('#prompt').innerHTML = `<span class="ptext">▶ <b class="gold">${si('cp',15)} ${p ? p.name : 'Power'}</b>: tap one of YOUR highlighted units</span>`
+    $('#prompt').innerHTML = `<span class="ptext">${si('play',11)} <b class="gold">${si('cp',15)} ${p ? p.name : 'Power'}</b>: tap one of YOUR highlighted units</span>`
       + ibtn('cancel', 'cancelSel()', { cls: 'xs' });
+    return;
+  }
+  // Deployment: the reserve panel is the unit card, so the prompt only says what the next tap does. Held
+  // back entirely until the opening reveal has played (deployOpen) — the ground first, then the army.
+  if (S.deploy && !S.result && sel === null) {   // a card being aimed keeps its own prompt (playing it ends deployment)
+    const hint = cmd === null ? `<b class="gold">${t('deploy.title', 'Deployment')}</b>: ${t('deploy.hint_reserve', 'pick a soldier, then a lit tile')}`
+      : cmdOpts.reserve ? t('deploy.place_hint', 'Tap a lit tile to place this soldier')
+      : t('deploy.move_hint', 'Tap a lit tile to move it · tap it again to return it');
+    $('#prompt').innerHTML = deployOpen() ? `<span class="ptext">${si('play',11)} ${hint}</span>` : '';
     return;
   }
   if (cmd !== null) {
@@ -6813,22 +7197,17 @@ function renderPrompt() {
       <div class="uihd"><b class="cyan">${info.n}</b>
         ${ibtn('info', 'showInspect(unitById(cmd))', { cls: 'xs' })}</div>
       <div class="uist">${siEm('hp')}${u.hp}/${u.max} · ATK ${u.atk} · RNG ${rng} · MV ${u.mv} · DEF ${u.df}</div>
-      ${S.deploy ? `<div class="uihint">${t('deploy.unit_hint', 'Deploy — tap a starting tile to move or swap')}</div>` : ''}
       ${(cmdOpts.aim && cmdOpts.aim.size) ? `<div class="uihint">${isAiming() ? (cmdOpts.precise ? 'Precise — tap a tile for a dead-on hit' : 'Tap a tile to lob — the shell may drift a tile') : 'Move — tap a tile to reposition'}</div>` : ''}
       <div class="uiact"><span class="dim">Actions ${cmdOpts.ap}</span>
-        ${(cmdOpts.aim && cmdOpts.aim.size) ? `<button class="uitoggle" onclick="toggleAim()">${isAiming() ? 'Move ▸' : 'Aim ▸'}</button>` : ''}</div>
+        ${(cmdOpts.aim && cmdOpts.aim.size) ? ibtn(isAiming() ? 'move' : 'aim', 'toggleAim()', { cls: 'xs' }) : ''}</div>
       <div class="uift">
-        <span class="uift-l">${S.deploy ? '' : ibtn('rest', 'doRest()', { cls: 'xs' })}</span>
+        <span class="uift-l">${ibtn('rest', 'doRest()', { cls: 'xs' })}</span>
         <span class="uift-r">${ibtn('cancel', 'deselectCmd();renderBoard();renderPrompt()', { cls: 'xs' })}</span>
       </div>` : '';
     return;
   }
   if (sel === null) {
-    // Pre-battle deployment: the one standing prompt, because it has a button — skipping it must be one tap.
-    $('#prompt').innerHTML = (S.deploy && !S.result)
-      ? `<span class="ptext">▶ <b class="gold">${t('deploy.title', 'Deployment')}</b>: ${t('deploy.hint', 'tap a unit, then a highlighted starting tile to move or swap it')}</span>`
-        + ibtn('confirm', 'deployDone()', { cls: 'xs', label: t('deploy.done', 'Deploy as shown') })
-      : '';   // no standing hint floating above the cards
+    $('#prompt').innerHTML = '';   // no standing hint floating above the cards
     return;
   }
   const card = S.hand[sel];
@@ -6839,7 +7218,7 @@ function renderPrompt() {
     : card.id === 'recon' ? 'tap unseen ground (2+ tiles past your sight) to scout it'
     : 'tap a destination';
   const label = {own_unit:'tap YOUR unit', enemy:'tap an ENEMY', any_unit:'tap ANY unit to copy', tile:tileLabel}[step] || '';
-  $('#prompt').innerHTML = `<span class="ptext">▶ ${card.name}: ${label}</span>`
+  $('#prompt').innerHTML = `<span class="ptext">${si('play',11)} ${card.name}: ${label}</span>`
     + ibtn('cancel', 'cancelSel()', { cls: 'xs' });
 }
 
@@ -6900,6 +7279,7 @@ async function tapCell(x, y) {
       deselectCmd(); renderBoard(); renderPrompt();
       return;
     }
+    if (S.deploy && cell.u && cell.u.id === cmd) { await deployRecall(cmd); return; }   // tap the chosen soldier again → back to the reserve
     if (cmdOpts.moves.has(x+','+y)) { await doMove(x, y); return; }
     if (cell.u && cmdOpts.attacks.has(cell.u.id)) { await doAttack(cell.u.id); return; }
     if (isMine(cell.u)) { await selectUnit(cell.u.id); return; }   // tap another own unit → switch
@@ -7070,22 +7450,137 @@ function centerCell(x, y) {
 
 async function doMove(x, y) {
   disarmEnd();
-  const id = cmd;
-  const r = await api(S.deploy ? '/api/deploy_move' : '/api/command_move', {unit_id: id, tile:[x, y]});   // pre-battle deployment repositions for free
+  const id = cmd, fromReserve = !!cmdOpts.reserve, deploying = !!S.deploy;
+  const r = await api(deploying ? '/api/deploy_move' : '/api/command_move', {unit_id: id, tile:[x, y]});   // pre-battle deployment places/repositions for free
   if (!r.ok) { toast(r.msg); Sfx.play('ui_error'); return; }
   // no cue here: the move event in the replay plays one, chosen from the unit's silhouette. Playing
   // it in both places doubled every step.
   cmdOpts = {moves:new Set(), attacks:new Set(), ap:0};   // drop stale highlight
   await afterAction(r);
+  if (deploying) { await _deployNext(fromReserve); return; }   // a deployment placement isn't the move the tip explains
   await reselect(id);
-  if (!S.deploy) coach('move');   // a deployment swap isn't the move the tip explains
+  coach('move');
   // Nomad only — the server sends `drive` for the motion gauge and no other, so this is the exact
   // signal, not a general-id guess. Taught on the first move, while the roll-call pips are counting and
   // there is still a turn left to fill them; at end of turn the trajectory has already been decided.
   if (S.power && S.power.drive !== undefined && S.power.pace > 0) coach('momentum');
 }
-// "Deploy as shown" — close pre-battle deployment and keep the army where it stands.
-async function deployDone() { deselectCmd(); render(await api('/api/deploy_done', {})); }
+// ── pre-battle deployment ─────────────────────────────────────────────────────────────────────────
+// The army starts OFF the board, in reserve (game.ts _open_deployment), and nothing about deployment
+// shows until the opening reveal has played out (_onRevealDone): the ground is laid out first, then the
+// pieces arrive. Two ways in, picked in Settings. AUTO (the default) sets the whole army down on its
+// muster tiles the moment the reveal ends — no step to click through. MANUAL opens the reserve panel.
+// The engine rule is the same either way; Auto is just "Deploy" pressed for you.
+let _revealDone = true, _revealTok = 0, _rosterSide = null;
+function deployMode() { try { return localStorage.getItem('dc_deploy') === 'manual' ? 'manual' : 'auto'; } catch (e) { return 'auto'; } }
+function setDeployMode(m) {
+  try { localStorage.setItem('dc_deploy', m === 'manual' ? 'manual' : 'auto'); } catch (e) {}
+  Sfx.play('ui_tap');
+  const finish = m !== 'manual' && deployOpenRaw();   // switched to Auto mid-deployment: set the rest down now
+  showSettings();
+  if (finish) deployDone();
+}
+function deployOpenRaw() { return !!(S && S.board && S.deploy && !S.result && _revealDone); }
+function deployOpen() { return deployOpenRaw() && deployMode() === 'manual'; }
+async function _onRevealDone(tok) {
+  if (tok !== _revealTok) return;   // a newer battle's curtain has taken over
+  _revealDone = true; _rosterSide = null;
+  if (!S || !S.board || !S.deploy || S.result) return;
+  if (deployMode() === 'auto') { await deployDone(); return; }
+  renderPrompt();
+}
+// "Deploy" — close deployment. Anyone still in reserve is set down on their muster tile (or the nearest
+// free starting tile), and arrives through the normal spawn animation.
+async function deployDone() { deselectCmd(); const r = await api('/api/deploy_done', {}); r.muster = true; await afterAction(r); }
+// "Auto-deploy" — set every soldier still waiting down the same way, but leave deployment open.
+async function deployAuto() {
+  deselectCmd();
+  const r = await api('/api/deploy_auto', {});
+  if (!r.ok) { toast(r.msg); Sfx.play('ui_error'); return; }
+  r.muster = true;
+  await afterAction(r);
+}
+// Pick a soldier out of the reserve: the starting tiles light up. Tapping the picked one again drops it.
+async function selectReserve(id) {
+  disarmEnd();
+  if (cmd === id) { deselectCmd(); renderBoard(); renderPrompt(); return; }
+  const o = await api('/api/unit_options', {unit_id: id});
+  if (!o || !o.deploy) return;
+  cmd = id; sel = null; legal = null;
+  cmdOpts = {moves:new Set(o.moves.map(t=>t[0]+','+t[1])), attacks:new Set(), aim:new Set(), ap:o.ap, preview:{}, reserve: !!o.reserve};
+  Sfx.play('ui_tap');
+  setHandPeek(true);
+  renderBoard(); renderHand(); renderPrompt();
+}
+// Send a placed soldier back to the reserve.
+async function deployRecall(id) {
+  id = id || cmd;
+  deselectCmd();
+  const r = await api('/api/deploy_recall', {unit_id: id});
+  if (!r.ok) { toast(r.msg); Sfx.play('ui_error'); return; }
+  Sfx.play('ui_tap');
+  render(r);
+}
+// After a placement: straight on to the next soldier still waiting, so setting out the army is one tap
+// per soldier. A reposition on the board just drops the selection.
+async function _deployNext(fromReserve) {
+  const next = fromReserve && S.deploy && (S.deploy.reserve || [])[0];
+  if (next) { await selectReserve(next.id); return; }
+  deselectCmd(); renderBoard(); renderPrompt();
+}
+function renderRoster() {
+  const el = $('#rosterPanel'); if (!el) return;
+  if (!deployOpen()) { if (el.className || el.innerHTML) { el.className = ''; el.innerHTML = ''; } return; }
+  const res = S.deploy.reserve || [];
+  const placedSel = cmd !== null && !res.some(u => u.id === cmd) ? unitById(cmd) : null;
+  const row = u => {
+    const cls = (CLASS_INFO[u.cls] || {n: u.cls}).n;
+    return `<button class="rp-unit${cmd === u.id ? ' sel' : ''}" onclick="selectReserve('${u.id}')" aria-pressed="${cmd === u.id}">
+      <span class="rp-chip">${counterHTML({cls: u.cls, side: 'you', hp: u.hp, max: u.max, lvl: u.lvl, atk: 0, ap: 1, apmax: 1})}</span>
+      <span class="rp-txt"><b>${I18n.esc(u.name || cls)}</b><span>${u.name ? cls : (u.rank || '')}</span><span>${t('deploy.lv', 'Lv')} ${u.lvl} · ${siEm('hp')}${u.hp}/${u.max}</span></span></button>`;
+  };
+  const strip = document.body.classList.contains('o-portrait');
+  el.className = 'show' + (strip ? ' strip' : '');
+  el.innerHTML = `<div class="rp-body">
+      <div class="rp-hd"><span class="gold">${t('deploy.reserve', 'Reserve')}</span><span class="rp-n">${res.length ? `${res.length} ${t('deploy.waiting', 'waiting')}` : t('deploy.all_placed', 'all placed')}</span></div>
+      <div class="rp-list">${res.length ? res.map(row).join('') : `<div class="rp-empty">${t('deploy.all_placed_hint', 'Everyone is on the field. Tap a soldier to move it, or Deploy to begin.')}</div>`}</div>
+    </div>
+    <div class="rp-ft">${placedSel ? ibtn('return', 'deployRecall()', {cls: 'xs rp-solo', word: t('deploy.to_reserve', 'To Reserve')}) : ''}${res.length ? ibtn('army', 'deployAuto()', {cls: 'xs', word: t('deploy.auto', 'Auto Deploy')}) : ''}${ibtn('confirm', 'deployDone()', {cls: 'xs', word: t('deploy.done', 'Deploy')})}</div>`;
+  placeRoster(el, strip);
+  fitRosterNames(el);
+}
+function fitRosterNames(el) {
+  el.querySelectorAll('.rp-txt b').forEach(b => {
+    b.classList.remove('wrap'); b.style.fontSize = '';
+    const avail = b.parentElement.clientWidth;
+    if (!avail || b.scrollWidth <= avail) return;
+    const px = parseFloat(getComputedStyle(b).fontSize) * avail / b.scrollWidth;
+    if (px >= 8) b.style.fontSize = px.toFixed(2) + 'px';
+    else { b.style.fontSize = '8px'; b.classList.add('wrap'); }
+  });
+}
+// Landscape: a column on the side of the table away from the HQ (decided once per battle, so panning
+// never makes it jump), from under the top bar down to that side's pile / End Turn controls.
+// Portrait: a strip under the top bar. Positions are in the panel's own (possibly zoomed) pixels.
+function placeRoster(el, strip) {
+  const z = parseFloat(getComputedStyle(el).zoom) || 1;
+  const hud = $('#hudwrap'), mb = $('#medalbar');
+  let top = hud ? hud.getBoundingClientRect().bottom : 0;
+  if (mb && mb.offsetHeight) top = Math.max(top, mb.getBoundingClientRect().bottom);
+  top += 6;
+  el.style.top = (top / z) + 'px';
+  if (strip) { el.style.maxHeight = ''; return; }
+  if (_rosterSide === null) {
+    const hq = document.querySelector('#board .counter.hq_you');
+    const r = hq && hq.getBoundingClientRect();
+    _rosterSide = (r && r.width && (r.left + r.right) / 2 < window.innerWidth / 2) ? 'right' : 'left';
+  }
+  el.classList.toggle('right', _rosterSide === 'right');
+  const col = $(_rosterSide === 'right' ? '#rightCol' : '#leftCol'), cr = col && col.getBoundingClientRect();
+  const floor = (cr && cr.height) ? cr.top : window.innerHeight;
+  el.style.maxHeight = (Math.max(120, floor - top - 8) / z) + 'px';
+}
+window.addEventListener('resize', () => { if (deployOpen()) renderRoster(); });
 async function doAttack(tid) {
   disarmEnd();
   const id = cmd;
@@ -7140,8 +7635,9 @@ async function play() {
   //
   // The state is captured first because cancelSelState() nulls both of these, and the API call still
   // needs them.
+  const lift = liftPlayed(hi);   // before anything re-renders the fan out from under it
   cancelSelState();
-  if (S.deploy) S.deploy = null;   // playing a card ends pre-battle deployment (api.ts) — don't flash its banner back up
+  if (S.deploy) S.deploy = null;   // playing a card ends pre-battle deployment (api.ts) — don't flash its panel back up
   renderBoard(); renderPrompt();
   const r = await api('/api/play', {hand_index: hi, targets: tgts});
   actionToast(r.msg);
@@ -7154,6 +7650,7 @@ async function play() {
     retain = new Set([...retain].filter(x => x !== hi).map(x => x > hi ? x - 1 : x));
   }
   await afterAction(r);   // renders, plays events, then any popup + win/defeat
+  await sendPlayed(lift, r.ok !== false);   // the card goes to the discard (or burns) once it has resolved
 }
 
 // Replay granular move/attack events on the board so you SEE what happened.
@@ -7215,6 +7712,11 @@ function adoptOffBoard(r) {
 }
 async function afterAction(r) {
   _deferResult = true;
+  // Cards drawn by this action are DEALT off the pile once the board has settled, not stepped through the
+  // replay (they have no tile). Until then renderHand keeps them out of sight (_dealPending), so the early
+  // adoptOffBoard() hand does not show them arriving with no motion.
+  const drawn = (r.events || []).reduce((a, e) => a + (e.t === 'draw' ? (e.n || 0) : 0), 0);
+  if (drawn) { r.events = r.events.filter(e => e.t !== 'draw'); _dealPending += drawn; }
   const enemyPlays = (r.events || []).some(e => e.side === 'enemy');   // only lock while the enemy actually acts
   if (enemyPlays) { turnBusy = true; disarmEnd(); updateEndBtn(); enemySkipOn(); }   // hide End Turn during enemy play
   // Only for YOUR actions. On the enemy phase the costs being settled are theirs, and pre-announcing
@@ -7231,12 +7733,14 @@ async function afterAction(r) {
     if (enemyPlays && !(r.state || r).result) Sfx.play('turn_player');
     try {
       render(r);                        // reconcile to the authoritative final state (re-shows End Turn)
+      if (_dealPending) dealDraws();
       _deferResult = false;
       if (r.popup) showPopup(r.popup);
       if (S.result) showBattleResult();
     } catch (e) {
       _deferResult = false;
       console.error('[replay] reconcile failed', e);
+      _dealPending = 0;                 // never leave dealt cards hidden behind a failed reconcile
       toast('display error — resyncing');
       refresh();
     }
@@ -7549,7 +8053,10 @@ async function animateEvents(events, finalR) {
   // turns "linger" in the first place. The average turn lands ~16% shorter than the flat pacing, but
   // that is the filler shrinking: a kill runs 824ms against 537ms before, while distant movement drops
   // from 496ms to 408ms.
-  const budget = Math.min(7500, 950 * Math.max(1, paced.length));
+  // An army mustering in (Deploy / Auto-deploy) is one act, not six: each arrival gets a brisk beat so the
+  // whole force lands in about a second and a half instead of one piece a second.
+  const perEvent = (finalR && finalR.muster) ? 260 : 950;
+  const budget = Math.min(7500, perEvent * Math.max(1, paced.length));
   const totalW = paced.reduce((a, e) => a + weightOf(e), 0) || 1;
   const timeFor = (ev) => Math.max(130, Math.min(1100, Math.round(budget * weightOf(ev) / totalW)));
   for (const ev of events) {
@@ -7577,7 +8084,7 @@ async function animateEvents(events, finalR) {
       if (ev.first && ev.card && localStorage.getItem('dc_reveal_enemy') !== '0') {
         await showEnemyReveal(ev.card);                             // first time seeing it → reveal, click to continue
       } else {
-        toast(`⚔ Enemy plays ${ev.name || 'a card'}`);
+        toast(ev.msg || `Enemy plays ${ev.name || 'a card'}`);   // toast is textContent, so no icon markup (msg: a skirmish call-in, not a card)
         await sleep(780);
       }
       continue;
@@ -7789,7 +8296,7 @@ function _checkMarkerUnlocks(newIds) {
   for (const m of MARKER_SETS) {
     if (!m.req || !newIds.includes(m.req)) continue;
     queueUnlock({ kindLabel: 'Battle Marker Style', name: m.label,
-      art: `<img src="assets/ui/btn/${m.img}.png" style="max-height:64px;width:auto" alt="">`,
+      art: `<span class="pbtn" style="display:inline-block;width:200px;pointer-events:none"><img src="${plateSrc('btn', m.img)}" alt="">${plateLabel('btn', m.img)}</span>`,
       seenKey: 'dc_ulk_marker_' + m.id,
       hint: "A new look for your move & target highlights. Switch it in Settings › Move & target marker — earn more via achievements." });
   }
@@ -7926,6 +8433,7 @@ function disarmEnd() {
 let _endBusy = false;
 async function endTurn() {
   if (turnBusy || _endBusy) return;         // enemy is still acting, or this end is already in flight
+  if (S && S.deploy && !S.result) return;   // deployment is a gate (the E key reaches here with the button hidden)
   _endBusy = true;
   try {
     _dropCmd();                               // clear any live unit selection
@@ -7945,6 +8453,7 @@ async function endTurn() {
     disarmEnd();
     cancelSelState();
     aimModes.clear();                         // next turn every gun opens in Move again
+    await sweepHand(retain);                  // the hand empties into the discard before the enemy moves
     toast('enemy moving… tap to skip');
     Sfx.play('turn_enemy');
     const r = await api('/api/end', {retain: [...retain]});
@@ -8079,7 +8588,7 @@ function showDeploy() {
   // runCfg without re-clamping it, so the selected value alone is not a safe upper bound.
   const ascCount = Math.min(runCfg.ascension, unlocked, (S.ascension_ladder || []).length);
   const ascRules = ascCount
-    ? `<button class="ascrules" onclick="showAscRules()">${si('info', 13) || ''} What A1–A${ascCount} change ▸</button>` : '';
+    ? `<button class="ascrules" onclick="showAscRules()">${si('info', 13)} What A1–A${ascCount} change ${si('chevron', 11)}</button>` : '';
   const ascRow = postView
     ? `<div style="margin:2px 0 6px">
         <div class="d" style="margin-bottom:5px">Ascension <span style="opacity:.72">· / ${Math.max(unlocked, 1)} unlocked · +${(15 * runCfg.ascension)}% score</span></div>
@@ -8174,7 +8683,7 @@ function showGenerals() {
   // whether to spend their one Steam attempt has to be able to see what they are walking into.
   const dtw = (S.daily && S.daily.twists) || [];
   const twistLine = dtw.length
-    ? `<div class="d dtwist" onclick="showDailyTwists()">${dtw.map(t => `<b class="gold">${t.name}</b>`).join(' <span style="opacity:.5">+</span> ')} <span style="opacity:.6">ⓘ</span></div>` : '';
+    ? `<div class="d dtwist" onclick="showDailyTwists()">${dtw.map(t => `<b class="gold">${t.name}</b>`).join(' <span style="opacity:.5">+</span> ')} <span style="opacity:.6">${si('info', 13)}</span></div>` : '';
   // Spent attempts only ever happen on Steam (new_daily refuses there); every other build keeps Play.
   const dailyBtn = (S.daily && S.daily.locked)
     ? `<div class="d" style="text-align:center;opacity:.75">Today's attempt is spent — <b class="gold">${S.daily.best}</b>.<br><span style="font-size:11px">One run per Commission. The next opens at midnight.</span></div>`
@@ -8192,9 +8701,9 @@ function showGenerals() {
          <img class="daily-art" src="assets/ui/daily/d${dailyArt}.jpg" alt="">
          <div class="dp-play" style="text-align:center;margin-top:8px">${dailyBtn}</div></div>`;
   const seedField = `<div class="seedfield">
-        <img src="assets/ui/btn/seed.png" alt="Seed">
-        <span class="plaqueval${runCfg.seed?'':' seedempty'}" id="seedGold">${goldText(runCfg.seed||'RANDOM')}</span>
-        <input id="seedIn" value="${runCfg.seed}" placeholder="" inputmode="numeric" oninput="onSeedInput(this)" aria-label="Seed">
+        <img src="${plateSrc('btn', 'seed')}" alt="">${plateLabel('btn', 'seed')}
+        <span class="plaqueval${runCfg.seed?'':' seedempty'}" id="seedGold"${plateWellStyle('btn', 'seed')}>${goldText(runCfg.seed||'RANDOM')}</span>
+        <input id="seedIn" value="${runCfg.seed}" placeholder="" inputmode="numeric" maxlength="9" oninput="onSeedInput(this)" aria-label="Seed">
       </div>`;
   o.innerHTML = `<div class="oframe titled menu${S.demo ? ' demo' : ''}"><div class="ofbanner ofhdr tableofwar"><img src="assets/ui/hdr/table_of_war.png" alt="Table of War"></div><h1>TABLE OF WAR</h1>${best ? '<p>Best score ' + best + '</p>' : ''}`
     + `<div class="menucols">`
@@ -8213,13 +8722,14 @@ function showGenerals() {
        </div></div>`
     + `</div></div>`;
   o.classList.add('show');
+  requestAnimationFrame(() => fitGtext(o));
   // First-ever visit: a brief welcome, then in-battle coach tips teach the rest
   // in context (no more up-front text wall). The ? button reopens the full guide.
   if (!localStorage.getItem('dc_seenHelp')) {
     localStorage.setItem('dc_seenHelp', '1');
     showPopup('Two fronts, one war: maneuver a live army across the grid <b>and</b> draw cards to reinforce it. '
       + 'Choose a general, deploy, and take the field — tips will guide you as you fight. '
-      + 'Tap <b>?</b> anytime for the full briefing.', '⚔ Welcome, Commander');
+      + 'Tap <b>?</b> anytime for the full briefing.', `${si('skirmish', 16)} Welcome, Commander`);
   }
 }
 
@@ -8249,7 +8759,7 @@ function showRuns() {
     const roster = (r.roster||[]).map(u => `${u.rank||''} ${u.name||''} — ${(CLASS_INFO[u.cls]||{n:u.cls}).n} · HP ${u.hp}/${u.max}${u.level>1?` · rank ${u.level}/5`:''}`).join('<br>') || 'none survived';
     return `<div class="choice" style="border-color:${win?'var(--gold)':'#8a3a2f'}">
       <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">
-        <b class="${win?'gold':'red'}">${win?'★ VICTORY':'✕ DEFEAT'} — ${r.general_name||r.general}${r.ascension?` · A${r.ascension}`:''}</b>
+        <b class="${win?'gold':'red'}">${win?`${si('star',13)} VICTORY`:`${si('cross',13)} DEFEAT`} — ${r.general_name||r.general}${r.ascension?` · A${r.ascension}`:''}</b>
         <span class="d" style="flex:0 0 auto">${fmtRunDate(r.ts)}</span></div>
       <div style="font-family:var(--f-num);font-size:12px;margin-top:3px">Score <b class="gold">${r.score}</b> · reached Act ${r.act} · ${r.turns} turns · ${r.kills} kills · ${r.losses} lost</div>
       <div class="d" style="margin-top:3px">${brk}${r.outposts?`  ${siEm('flag_hold')}${r.outposts}`:''}${r.trained?`  ${siEm('medal')}drill ${r.trained}`:''}${r.workshops?`  ${siEm('shop')}tune ${r.workshops}`:''}</div>
@@ -8323,6 +8833,17 @@ const ACH_SVG = {
 function achIcon(name, s) { return `<svg viewBox="0 0 24 24" width="${s}" height="${s}" style="vertical-align:-2px;flex:0 0 auto">${ACH_SVG[name]||''}</svg>`; }
 // ── master inline-SVG icon set (replaces emoji everywhere) — tints with currentColor ──
 const SI_PATHS = {
+  // UI markers — drawn here so they match the icon set instead of falling back to emoji (si('lock') used to
+  // return '' and every locked marker showed a platform 🔒).
+  lock:'<rect x="5" y="10.5" width="14" height="10" rx="1.6" fill="currentColor"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="15" r="1.4" fill="#0d0f08"/><path d="M12 15.5v2.4" stroke="#0d0f08" stroke-width="1.4"/>',
+  check:'<path d="M4.5 12.5l4.8 4.8L19.5 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>',
+  cross:'<path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>',
+  chevron:'<path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>',
+  play:'<path d="M7 4.5v15l12-7.5z" fill="currentColor"/>',
+  star:'<path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z" fill="currentColor"/>',
+  diamond:'<path d="M12 3l8 9-8 9-8-9z" fill="currentColor"/>',
+  info:'<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 10.5v6.5" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="7.4" r="1.3" fill="currentColor"/>',
+  jump:'<path d="M5 19c0-7 4-11 11-11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 4.5l4 3.5-4 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
   // map nodes
   skirmish:'<path d="M4 4l9 9M17 5l3-1-1 3-2 1M5 20l1-3 2-1M4 4l1 3 3 1" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M20 4l-9 9M6 20l-1-3M20 4l-3 1" stroke="currentColor" stroke-width="1.8" fill="none"/>',
   elite:'<path d="M12 2.5c-4.4 0-7 3-7 6.6 0 2.4 1.2 3.7 2.4 4.6.5.4.6.7.6 1.3V17h1.4l.4-1.6h1.6L13.2 17h1.4v-2c0-.6.1-.9.6-1.3 1.2-.9 2.4-2.2 2.4-4.6 0-3.6-2.6-6.6-7-6.6z" fill="currentColor"/><circle cx="9.2" cy="10" r="1.5" fill="#0d0f08"/><circle cx="14.8" cy="10" r="1.5" fill="#0d0f08"/><path d="M9 18h6v3H9z" fill="currentColor"/><path d="M11 18v3M13 18v3" stroke="#0d0f08" stroke-width="1"/>',
@@ -8501,19 +9022,6 @@ async function continueRun() {
   retain.clear(); cancelSelState(); lastBoardW = null; _lastBattleSig = null;   // refit + recentre the resumed level
   render(r);
 }
-function showDraft() {
-  const o = $('#ovDraft');
-  const src = S.draft_source || 'Salvage';
-  const more = S.draft_more || 0;
-  o.innerHTML = `<h1>Card Draft</h1>
-    <p><b class="gold">${src}</b> — pick one to add to your deck (kept for the run)${more?`<br><span class="d">${more} more draft${more>1?'s':''} after this</span>`:''}</p>` +
-    S.pending_draft.map(c => `<div class="choice" onclick="takeDraft('${c.id}')">
-      <b>${c.name}</b> <span class="d">CP${c.cost}</span><div class="d">${c.text}</div></div>`).join('') +
-    `<div style="display:flex;gap:12px;margin-top:10px;justify-content:center;align-items:center">
-       ${ibtn('deck', "showDeck()")}
-       ${ibtn('skip', "skipDraft()")}</div>`;
-  o.classList.add('show');
-}
 async function takeDraft(id) { Sfx.play('card_draw'); $('#ovDraft').classList.remove('show');
   const r = await api('/api/draft', {card_id:id}); Sfx.play('acquire'); render(r); }
 async function skipDraft() { Sfx.play('ui_back'); $('#ovDraft').classList.remove('show'); render(await api('/api/skip_draft', {})); }
@@ -8611,17 +9119,17 @@ const CLASS_INFO = {
   tribe_camp:{n:t('unitclass.tribe_camp.n', "Tribe Camp"),r:"Neutral. Raze it to salvage a permanent card into your deck. Guards defend it."},
   outpost:{n:t('unitclass.outpost.n', "Outpost"),r:"A capturable base (Level 4). Stand one of your units next to it, uncontested, to capture it — grey = neutral, cyan = yours, red = enemy's. Holding it gives +1 CP, +1 Troops, and a forward deploy point. Both sides fight over these; more outposts = more capability."},
   rifleman:{n:t('unitclass.rifleman.n', "Rifleman"),r:"Cheap infantry, melee range 1."},
-  rocket_soldier:{n:t('unitclass.rocket_soldier.n', "Rocket Soldier"),r:"Ranged infantry (range 2), good vs armor."},
+  rocket_soldier:{n:t('unitclass.rocket_soldier.n', "Rocket Soldier"),r:"Ranged infantry (range 2) with ARMOUR-PIERCING rockets — a direct hit ignores defense entirely, so it is the answer to tanks."},
   sniper:{n:t('unitclass.sniper.n', "Sniper"),r:"Slow (1 action/turn), single-target, high damage at long range with long sight. On a hill it sees and shoots one tile further. Upgrade: armor-piercing rounds."},
-  light_tank:{n:t('unitclass.light_tank.n', "Light Tank"),r:"Fast armor with a strong melee punch."},
-  heavy_tank:{n:t('unitclass.heavy_tank.n', "Heavy Tank"),r:"Slow, heavy armor — big hits, high defense."},
-  artillery:{n:t('unitclass.artillery.n', "Artillery"),r:"Siege (range 2-4). CAN'T hit adjacent enemies — keep it back."},
+  light_tank:{n:t('unitclass.light_tank.n', "Light Tank"),r:"Fast armor with a strong melee punch. Can't hit flying units (Drones)."},
+  heavy_tank:{n:t('unitclass.heavy_tank.n', "Heavy Tank"),r:"Slow, heavy armor — big hits, high defense. Can't hit flying units (Drones)."},
+  artillery:{n:t('unitclass.artillery.n', "Artillery"),r:"Siege (range 2-4). CAN'T hit adjacent enemies — keep it back. Can't hit flying units (Drones)."},
   
   
   
-  attack_dog:{n:t('unitclass.attack_dog.n', "Attack Dog"),r:"Very fast scout with wide sight. Fragile — great for revealing fog."},
+  attack_dog:{n:t('unitclass.attack_dog.n', "Attack Dog"),r:"Very fast scout with wide sight. Fragile — great for revealing fog. Can't hit flying units (Drones)."},
   tribe_warrior:{n:t('unitclass.tribe_warrior.n', "Tribe Warrior"),r:"Neutral guard — attacks anyone who comes close (you and the enemy)."},
-  bannerman:{n:t('unitclass.bannerman.n', "Bannerman"),r:"A standard-bearer that CANNOT attack, but projects a battle-standard AURA: friendly units within 2 tiles deal +2 damage and take −1. It ranks up as the units it steadies score kills and take hits — gaining HP only (no attack or speed), and at RANK 5 each boost grows by +1 (+3 damage / −2 taken). Fragile — its aura dies with it, so keep it screened. Comes from Raise the Banner, events, and crates."},
+  bannerman:{n:t('unitclass.bannerman.n', "Bannerman"),r:"A standard-bearer that CANNOT attack, but projects a battle-standard AURA: friendly units within 1 tile deal +2 damage and take −1. It ranks up as the units it steadies score kills and take hits — gaining HP (no attack), one extra tile of movement at RANK 3, and at RANK 5 each boost grows by +1 (+3 damage / −2 taken) and the aura reaches 2 tiles. Fragile — its aura dies with it, so keep it screened. Comes from Raise the Banner, events, and crates."},
   
   
   
@@ -8724,8 +9232,8 @@ function showInspect(u) {
     steal:'heading for your HQ to rob salvage', flee:'fleeing to the edge with your salvage'}[u.intent];
   const intent = u.intent ? `<div class="binote red">Intent: ${it}</div>` : '';
   const flank = (u.flanked === true)
-    ? (mine ? `<div class="binote red">Flanked — enemy attacks on it hit +2. Pull back or clear one.</div>`
-            : `<div class="binote grn">Flanked — your attacks on it hit +2 (you have it surrounded).</div>`)
+    ? (mine ? `<div class="binote red">Flanked — every enemy beside it adds +1 to each hit on it. Pull back or clear one.</div>`
+            : `<div class="binote grn">Flanked — every one of your units beside it adds +1 to each hit on it.</div>`)
     : '';
   const desc = u.boss ? 'A named enemy commander — raze it to win the act. It has a signature mechanic; tap the boss banner up top for its intel.' : info.r;
   // No tag list. These are the ENGINE's own tags — `structure`, `tribe_camp`, `hq` — printed verbatim,
@@ -8804,7 +9312,7 @@ function showWorkshop() {
   const canUp = w.upgrade.length, canRm = w.remove.length;
   if (wsMode === 'remove' && !canRm) wsMode = 'upgrade';
   if (wsMode === 'upgrade' && !canUp) wsMode = 'remove';
-  const tab = (m, img, on) => `<button class="pbtn h ${wsMode===m?'act':'off'}" onclick="wsMode='${m}';showWorkshop()" ${on?'':'disabled'} aria-label="${m}"><img src="assets/ui/btn/${img}.png" alt="${m}"></button>`;
+  const tab = (m, img, on) => `<button class="pbtn h ${wsMode===m?'act':'off'}" onclick="wsMode='${m}';showWorkshop()" ${on?'':'disabled'} aria-label="${m}"><img src="${plateSrc('btn', img)}" alt="${m}">${plateLabel('btn', img)}</button>`;
   let body;
   if (wsMode === 'upgrade') {
     body = canUp ? w.upgrade.map(c => `<div class="choice" onclick="wsUpgrade('${c.id}')">
@@ -8821,20 +9329,6 @@ function showWorkshop() {
     ${body}
     <div style="text-align:center;margin-top:10px">${ibtn('skip', "wsSkip()")}</div>`, 'workshop');
   openOv('ovUpgrade');
-}
-function showSummary() {
-  const s = S.pending_summary;
-  const stat = (v, label, cls) => `<div class="choice" style="text-align:center">
-    <b class="${cls}" style="font-size:22px">${v}</b><div class="d">${label}</div></div>`;
-  $('#ovSummary').innerHTML = `<h1 class="gold">Level ${s.level} Cleared</h1>
-    <p>${s.title} — secured in ${s.turns} turn${s.turns===1?'':'s'}</p>
-    <div style="display:flex;gap:8px;width:100%;max-width:420px">
-      ${stat(s.kills, 'enemies destroyed', 'grn')}
-      ${stat(s.losses, 'units lost', s.losses?'red':'grn')}
-      ${stat(s.turns, 'turns taken', 'cyan')}
-    </div>
-    <div style="text-align:center;margin-top:14px">${pbtn('continue','dismissSummary()',{cls:'h'})}</div>`;
-  openOv('ovSummary');
 }
 async function dismissSummary() { closeOv('ovSummary'); render(await api('/api/dismiss_summary', {})); }
 
@@ -8862,8 +9356,8 @@ function showHelp() {
       <b>outpost</b> to take it — each one you hold gives more CP / Troops.`)}
     ${topic('<span class="cyan">Command Power</span>', `Your general has a signature <b>${si('cp',13)} Power</b>
       that fills as you play. When the gauge is full, tap it to unleash — it costs the whole gauge.`)}
-    ${topic('<span class="cyan">Battle tips</span>', `Tap <b>${siEm('danger')} Danger</b> to see where enemies can hit you
-      next turn · pull spent units back · thin bad cards at a <b>${siEm('shop')} Workshop</b> ·
+    ${topic('<span class="cyan">Battle tips</span>', `Turn on <b>Threat range</b> (Settings › This run) to see where enemies can hit you
+      next turn · pull spent units back · thin bad cards at an <b>${siEm('shop')} Outpost</b> ·
       tap any unit or tile to inspect it.`)}
     ${topic('<span class="gold">The Expedition</span>', `You climb an <b>act map</b> of nodes to the boss at the top — four acts in all.
       Choose your path: <b>${si('skirmish',13)} skirmishes</b>, tougher <b>${si('elite',13)} elite</b> battles,
@@ -8871,7 +9365,11 @@ function showHelp() {
       <b>${si('cache',13)} caches</b>, then the <b>${si('boss',13)} boss</b>. Your army is
       <b>permadeath</b> — units that fall are gone for the whole run. Bank <b>${si('salvage',13)} salvage</b>
       at outposts to buy cards, upgrade them, repair, and thin your deck.`)}
-    ${topic('<span class="gold">Generals</span>', `Three commanders — <b>Warlord</b> (offense), <b>Engineer</b> (defense) and <b>Nomad</b> (mobility) —
+    ${topic('<span class="gold">Generals</span>', S.demo
+      ? `The demo puts you in command of the <b>Warlord</b> (offense), with his own Power, cards and medals.
+      The full game adds two more commanders, each playing a different war. Winning earns <b>Merit</b>
+      (lifetime score); enough Merit unlocks a general's exclusive cards and medals.`
+      : `Three commanders — <b>Warlord</b> (offense), <b>Engineer</b> (defense) and <b>Nomad</b> (mobility) —
       each with their own Power, cards and medals. Winning earns <b>Merit</b> (lifetime score); enough Merit
       unlocks that general's exclusive cards and medals.`)}
     ${topic(`<span class="gold">${si('medal',13)} Medals &amp; Curses</span>`, `Medals are run-long relics you earn for clearing battles. They come in three tiers —
@@ -8908,7 +9406,7 @@ function showMedals() {
   const coll = (S && S.collection) ? S.collection : [];
   const row = (m, op) => `<div class="choice" onclick="showBigMedal('${m.id}')" style="cursor:pointer;display:flex;align-items:center;gap:12px${op!=null?';opacity:'+op:''}">
     ${medalIcon(m.id, 46)}<div style="flex:1"><b class="gold">${m.name}</b>${m.n>1?` <span class="gold">×${m.n}</span>`:''}
-      <div class="d">${m.desc}</div>${m.lifetime?`<div class="d" style="margin-top:2px;color:#8c8770">${siEm('medal')} awarded ${m.lifetime}× all-time</div>`:''}</div><span class="d" style="align-self:center;color:#6f7159">▸</span></div>`;
+      <div class="d">${m.desc}</div>${m.lifetime?`<div class="d" style="margin-top:2px;color:#8c8770">awarded ${m.lifetime}× all-time</div>`:''}</div><span class="d" style="align-self:center;color:#6f7159">${si('chevron',12)}</span></div>`;
   // group a list of medals: tier pools 1-3, then Special, then Curses isolated at the bottom
   const grouped = (list, opFn) => {
     if (!list.length) return '';
@@ -8961,7 +9459,7 @@ function showChips() {
       ? `<div class="chipplaque" style="background:url(${fileOf(id)}) center/contain no-repeat"><img class="chipunit" src="assets/units/${sampleUnit}.png" alt=""></div>`
       : `<div class="chipplaque locked"><span class="chipq">?</span></div>`;
     return `<div class="chiptile${sel ? ' sel' : ''}" ${own ? `onclick="equipChip('${slot}','${id}')"` : ''}>`
-      + `${plaque}<div class="chipname">${own ? nm : 'Undiscovered'}</div>${sel ? '<div class="chipeq">✓ Equipped</div>' : ''}</div>`;
+      + `${plaque}<div class="chipname">${own ? nm : 'Undiscovered'}</div>${sel ? `<div class="chipeq">${si('check',11)} Equipped</div>` : ''}</div>`;
   };
   let gal = `<div class="chiptier" style="color:#c9c2aa">Base</div><div class="chiprow">${tile('default')}</div>`;
   for (const t of (C.tiers || [])) {
@@ -8971,8 +9469,8 @@ function showChips() {
   const nOwned = (C.owned || []).length, nTot = Object.keys(C.reg).length;
   $('#ovChips').innerHTML = oframe(`
     <div style="display:flex;gap:10px;margin-bottom:8px;align-items:center">
-      <button class="chiptab ${!foe ? 'on' : 'off'}" onclick="chipSlot('you')" aria-label="My units"><img src="assets/ui/btn/chip_you.png" alt="My units"></button>
-      <button class="chiptab ${foe ? 'on' : 'off'}" onclick="chipSlot('enemy')" aria-label="Enemy units"><img src="assets/ui/btn/chip_enemy.png" alt="Enemy units"></button>
+      <button class="chiptab ${!foe ? 'on' : 'off'}" style="position:relative" onclick="chipSlot('you')" aria-label="My units"><img src="${plateSrc('btn', 'chip_you')}" alt="">${plateLabel('btn', 'chip_you')}</button>
+      <button class="chiptab ${foe ? 'on' : 'off'}" style="position:relative" onclick="chipSlot('enemy')" aria-label="Enemy units"><img src="${plateSrc('btn', 'chip_enemy')}" alt="">${plateLabel('btn', 'chip_enemy')}</button>
     </div>
     ${ocap(`<b>${nOwned}/${nTot}</b> chips collected — win more as run rewards. Tap an owned chip to equip it on <b style="color:${glow}">${foe ? 'enemy' : 'your'} units</b>.`)}
     ${gal}
@@ -8992,7 +9490,7 @@ function deckCard(c){
   let body;
   if (up && c.up_desc){                       // upgraded: show the upgrade, hide original behind a toggle
     const tid = 'dko_'+c.id;
-    body = `<div class="d"><span class="gold">⤴ Upgraded — ${c.up_desc}</span>
+    body = `<div class="d"><span class="gold">${si('jump',14)} Upgraded — ${c.up_desc}</span>
         <span onclick="toggleOrig('${tid}')" style="color:#7fa9d6;cursor:pointer;margin-left:6px;white-space:nowrap">view original ▾</span>
         <div id="${tid}" style="display:none;margin-top:3px;opacity:.75">${c.text}</div></div>`;
   } else {
@@ -9103,7 +9601,7 @@ function showLegend() {
         ${row(legendChip('tribe_warrior','tribe'),'Tribe Warrior')}</div>
       <div class="choice"><b class="gold">Buildings</b>
         ${row(legendChip('construction_yard','hq_you'),'Construction Yard (HQ)')}
-        ${row(legendChip('command_vehicle','hq_you'),'Command Vehicle (mobile HQ)')}
+        ${S.demo ? '' : row(legendChip('command_vehicle','hq_you'),'Command Vehicle (mobile HQ)')}
         ${row(legendChip('power_plant','you'),'Power Plant — +CP')}
         ${row(legendChip('supply_depot','you'),'Supply Depot — +draw')}
         ${row(legendChip('barracks','you'),'Barracks — +Troops')}
@@ -9127,11 +9625,12 @@ function showLegend() {
         ${row(swatchWrap((S.art&&S.art.repair_bay)?`<img src="assets/units/${S.art.repair_bay}" style="max-width:82%;max-height:82%;object-fit:contain">`:si('shop',18)),'Workshop — upgrade OR remove a card')}
         ${row(swatchWrap((S.inter&&S.inter.node)?`<img src="assets/interactables/${S.inter.node}" style="max-width:82%;max-height:82%;object-fit:contain">`:'<span style="font-size:16px">◆</span>'),'Command node — hold it for +CP / +draw')}</div>
       <div class="choice"><b>Good to know</b>
-        <div class="d" style="margin-top:5px;line-height:1.6">Units act using Action Points (infantry 2, artillery 1,
-        scouts 3) — tap a unit to see its actions left. Diagonals count as 1 move.</div>
-        <div class="d" style="margin-top:6px;line-height:1.6"><b class="grn">Flanking:</b> an attack hits +2 when you have
-        a SECOND unit next to the enemy you're hitting (you surround it). Two units in a line get nothing —
-        it's about troops around the TARGET. Beware Barrage splash when you cluster.</div>
+        <div class="d" style="margin-top:5px;line-height:1.6">Units act using Action Points (most units 2; artillery
+        and snipers 1; every fighter gains one more at rank 5) — tap a unit to see its actions left. Diagonals count as 1 move.</div>
+        <div class="d" style="margin-top:6px;line-height:1.6"><b class="grn">Flanking:</b> an attack hits +1 for every OTHER
+        unit of yours standing next to the enemy you're hitting — surround it and every blow lands harder.
+        Two units in a line get nothing; it's about troops around the TARGET (buildings don't count).
+        Beware Barrage splash when you cluster.</div>
         <div class="d" style="margin-top:6px">Tip: tap any unit or tile on the board to inspect it.</div></div>
       </div>
      `, 'key') + `<div class="ovclose">${ibtn('close', "$('#ovLegend').classList.remove('show')")}</div>`;
@@ -9139,8 +9638,9 @@ function showLegend() {
 }
 async function menu() {   // re-pick general / new run — clear any open overlays first
   _dropCmd();
-  ['ovResult', 'ovDraft', 'ovUpgrade', 'ovInspect', 'ovDeck', 'ovPopup', 'ovMedal', 'ovMedals',
-   'ovHelp', 'ovSummary', 'ovCards', 'ovRoster', 'ovNode', 'ovPile'].forEach(closeOv);
+  // Every open overlay, not a hand-kept list: the list had drifted and left Army, Legend, Chips,
+  // Achievements, Settings, Profiles and more open over the menu.
+  document.querySelectorAll('.overlay.show').forEach(o => { if (o.id) closeOv(o.id); });
   runCfg.general = null; runCfg.ascension = 0;   // don't leave a general pre-selected on the menu
   render(await api('/api/to_menu'));             // fresh picker state (Daily, Continue, generals) — never stale battle data
 }
@@ -9699,7 +10199,7 @@ function showHoverCard(x, y, cell) {
   if ((u.lvl || 1) > 1) chips.push(`<span class="bichip gold">&#9733; Rank <b>${u.lvl}/5</b></span>`);
   // The two states that change what an attack is worth, and the one that means it cannot act at all.
   const notes = [];
-  if (u.flanked === true) notes.push('Flanked — attacks on it hit +2');
+  if (u.flanked === true) notes.push('Flanked — +1 to each hit on it per unit beside it');
   if (u.disabled) notes.push('EMP — cannot act');
   if (u.stale) notes.push('Last known position — not currently in sight');
   if (u.tac) notes.push(TAC_SHORT);
