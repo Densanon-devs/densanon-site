@@ -754,6 +754,11 @@
      tile with fog spilling in from an unexplored neighbour was drawn UNDERNEATH that spill — exactly the
      tiles at the edge of your vision, which is where you most need to see how far you can go. */
   /* a selected Bannerman's aura: warm gold wash over every tile it reaches */
+  /* a charging boss's marked lane: it charges down it on its next turn */
+  #board .cell.chargelane::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+    background: repeating-linear-gradient(45deg, rgba(200,40,30,.28) 0 6px, rgba(200,40,30,.12) 6px 12px); box-shadow: inset 0 0 0 1px rgba(230,60,40,.7); }
+  .counter.tormented { filter: grayscale(.6) brightness(.7) drop-shadow(0 0 4px rgba(150,60,200,.9)); }
+  .counter .poison { position: absolute; left: 2%; top: 2%; width: 26%; height: 26%; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #b6e36a, #4f7a1c); box-shadow: 0 0 0 1px rgba(0,0,0,.6); }
   #board .cell.aura::before { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
     background: rgba(255,214,90,.26); box-shadow: inset 0 0 0 2px rgba(255,214,90,.6); }
   #board[data-ts] .legal::after { content: ''; position: absolute; pointer-events: none; z-index: 6; animation: pulse 1s infinite; }
@@ -2735,7 +2740,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-DxQ9VYja.js"></script>
+  <script type="module" crossorigin src="./assets/index-DsZuNWfr.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2828,7 +2833,7 @@
 <script src="./plates.js"></script>          <!-- which UI plates have text-free art (npm run gen:plates) -->
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.90';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.92';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -6516,6 +6521,7 @@ function renderBoard() {
   const cells = _openFog ? b.cells.map(c => ({ x: c.x, y: c.y, t: null, vis: false, u: null })) : b.cells;
   const _selU = (cmd !== null) ? cells.find(cc => cc.u && cc.u.id === cmd) : null;
   const auraCtr = (_selU && _selU.u.aura) ? [_selU.x, _selU.y, _selU.u.aura] : null;
+  const chargeLane = new Set((b.charge_lane || []).map(p => p[0] + ',' + p[1]));   // a charging boss's marked lane
   for (const c of cells) {
     const terr = c.t ? 't-' + c.t : 't-none';
     const dark = (c.t && c.t !== 'void' && !c.vis) ? ' dark' : '';   // only REMEMBERED terrain greys; never void/fog (else the darkened void outlines the map shape)
@@ -6576,6 +6582,7 @@ function renderBoard() {
     let hl = '';
     // A selected Bannerman shows the ground its aura covers (allies standing there hit harder, take less).
     if (auraCtr && c.t && c.t !== 'void' && Math.max(Math.abs(c.x - auraCtr[0]), Math.abs(c.y - auraCtr[1])) <= auraCtr[2]) cls += ' aura';
+    if (chargeLane.has(c.x + ',' + c.y)) cls += ' chargelane';
     if (cmd !== null) {
       const hasAim = cmdOpts.aim && cmdOpts.aim.size;
       if (hasAim && isAiming()) {
@@ -8901,7 +8908,7 @@ function bossFace(id, size) {
   const art = (typeof S !== 'undefined' && S && S.boss_art) ? S.boss_art[id] : null;
   return art
     ? `<img src="assets/bosses/${art}" alt="" style="width:${size}px;height:${size}px;object-fit:contain;vertical-align:-3px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))">`
-    : si(id, size);
+    : (si(id, size) || si('boss', size));   // a boss with no portrait (yet) still gets the boss mark
 }
 // The veiled plaque on a Living Heart run (serialize_map → act_boss.unknown): the boss mark as a black
 // silhouette with a question mark over it. Nothing to name, nothing to recognise — only that it is there.
@@ -9097,7 +9104,8 @@ function counterHTML(u) {
   const bodyVar = (bsz > 1 && isCore) ? ` style="--bsz:${bsz}"` : '';
   const mine = u.side === 'you' || u.side === 'hq_you';
   const spent = (mine && (u.apmax || 0) > 0 && (u.ap || 0) <= 0 && !u.disabled) ? ' spent' : '';
-  return `<div class="counter ${u.side}${u.boss?' bossunit':''}${bsz > 1 ? '' : huge}${bodyCls}${spent}${u.disabled?' disabled':''}${u.dying?' dying':''}"${bodyVar}>${inner}${atk}${rank}${hp}${loot}</div>`;
+  const poison = u.poison ? '<span class="poison"></span>' : '';
+  return `<div class="counter ${u.side}${u.boss?' bossunit':''}${bsz > 1 ? '' : huge}${bodyCls}${spent}${u.disabled?' disabled':''}${u.tormented?' tormented':''}${u.dying?' dying':''}"${bodyVar}>${inner}${atk}${rank}${hp}${loot}${poison}</div>`;
 }
 
 function medalIcon(id, size) {
@@ -10201,6 +10209,9 @@ function showHoverCard(x, y, cell) {
   const notes = [];
   if (u.flanked === true) notes.push('Flanked — +1 to each hit on it per unit beside it');
   if (u.disabled) notes.push('EMP — cannot act');
+  if (u.tormented) notes.push('Tormented — cannot act; dies at the end of your turn unless healed');
+  if (u.poison) notes.push(`Poisoned — takes 2 at the end of your turn (${u.poison} turn${u.poison > 1 ? 's' : ''} left)`);
+  if (u.facing && (u.facing[0] || u.facing[1])) notes.push(`Iron breastplate: +6 DEF from the front (facing ${u.facing[0] > 0 ? 'east' : u.facing[0] < 0 ? 'west' : u.facing[1] > 0 ? 'south' : 'north'}) — hit it from the side or behind`);
   if (u.stale) notes.push('Last known position — not currently in sight');
   if (u.tac) notes.push(TAC_SHORT);
   const el = document.createElement('div');
