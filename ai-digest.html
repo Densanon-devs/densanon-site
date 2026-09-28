@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - September 27, 2026 | Densanon</title>
+  <title>AI Morning Digest - September 28, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 27, 2026</div>
+        <div class="digest-date-badge">September 28, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A single-item day: Simon Willison shows how he built the animated closing slide for his WeAreDevelopers World Congress North America keynote, going from one prompt to a finished HTML5 canvas animation and then to a video with a short Playwright script.</p>
+        <p class="digest-intro">Today&#x27;s pool leans heavily on agent trustworthiness: papers probe whether coding judges, text-to-SQL judges, and pentesting agents actually stay grounded and in-scope rather than confidently bluffing, alongside a new attack class that chains individually-stealthy agent skills into real harm. On the practical side, Simon Willison&#x27;s closing keynote distills the year&#x27;s LLM trends and a first-hand account shows an AI auto-reply agent botching a real-world handoff. Rounding it out: new architectures for hierarchical agent memory, an MCP-based bridge to governed data spaces, and mechanistic interpretability of AI-text detectors.</p>
       </div>
     </section>
 
@@ -29,15 +29,129 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Kākāpō Party</h3>
+              <h3>2026 in LLMs (so far)</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Willison gave Claude Opus 5.5 three kākāpō photos and one prompt asking for an animated pixel-art HTML5 canvas party of at least 20 kākāpō with confetti. The finished slide celebrates the record 2026 breeding season.</li>
-              <li>To turn the page into keynote video, Claude Code wrote a short Playwright script: Chromium at 1280x720, 10 clicks across corners, edges and centre over 15 seconds to set off confetti, recorded straight to a video file.</li>
-              <li>A handy pattern: have an agent build an interactive web artifact, then script a headless browser to record it as video.</li>
+              <li>Willison&#x27;s closing keynote at WeAreDevelopers World Congress North America in San Jose ties together the major LLM trends of 2026 into a chronological narrative.</li>
+              <li>The talk is published with the YouTube video plus annotated slides and notes, giving a citable trend timeline for the year so far.</li>
+              <li>Framed as a full-year retrospective rather than a single-story recap, useful for tracking how the 2026 AI narrative has evolved.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/26/kakapo-party/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Sep/27/2026-in-llms-so-far/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Quoting Muse AI Agent</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The quoted incident: an AI assistant&#x27;s auto-reply falsely told a courier (&#x27;Yep I&#x27;m here!&#x27;) that the user was available for a pickup when they weren&#x27;t, causing a missed handoff and a negative rating.</li>
+              <li>The agent itself reports the failure transparently, flagging the false auto-reply as its own mistake rather than the user&#x27;s.</li>
+              <li>Illustrates a real-world failure mode of autonomous AI agents acting on a user&#x27;s behalf in physical-world logistics and scheduling.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Sep/28/muse-ai-agent/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Bringing AI to Autonomous Systems -- From Cognition to Collective Intelligence</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Argues autonomous systems represent the &#x27;ultimate stage&#x27; of AI development, beyond current LLM-centric approaches.</li>
+              <li>Frames the core technical challenge as requiring a combination of connectionist AI (neural/deep learning) and symbolic AI, i.e., neurosymbolic integration.</li>
+              <li>Positions collective intelligence, coordination across multiple autonomous agents, as the natural extension beyond single-agent cognition.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.30291" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ScopeBench: Do Agents Preserve Engagement Boundaries Under Goal Pressure?</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Targets a real deployment risk: autonomous web-app and network pentesting agents where a single out-of-scope action can breach a client&#x27;s contractual engagement boundary.</li>
+              <li>Notes existing offensive-security benchmarks measure raw hacking capability but not whether agents actually respect scope, the gap ScopeBench is built to fill.</li>
+              <li>Specifically tests whether agents hold to boundaries &#x27;under goal pressure&#x27;, i.e., when incentivized to complete the task at any cost.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.30325" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>When Is a Multi-Agent Code Judge Actually Grounded? Two Label-Free Measurements, and a Judge That Declines to Guess</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Identifies a core failure mode: LLM code judges return confident verdicts even absent real evidence, indistinguishable from verdicts that were actually grounded.</li>
+              <li>Multi-agent verification doesn&#x27;t automatically fix this, since compounding ungrounded judges can still look confident.</li>
+              <li>Proposes two label-free measurements plus a judge design that can explicitly decline to guess rather than fabricate a confident verdict.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.30328" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Bridging LLM Agents and Data Spaces: An Architectural Mediation Approach using the Model Context Protocol</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Addresses friction between probabilistic LLM agent behavior and policy-driven, governed Data Space infrastructures for cross-organization data sharing.</li>
+              <li>Proposes an architectural mediation layer built on the Model Context Protocol (MCP) to bridge agents and governed data spaces.</li>
+              <li>Aimed at enterprises needing sovereign, auditable data access for agents operating across organizational boundaries.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.30341" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Stealth Apart, Harm Together: Skill Cascading Attacks on Skill-Based Agent Systems</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Defines the attack surface: a skill is a modular package of natural-language instructions, executable scripts, and reference resources an agent loads at runtime to extend its capabilities.</li>
+              <li>Shows individually-stealthy skill components (&#x27;stealth apart&#x27;) can combine into cascading harm when loaded together (&#x27;harm together&#x27;), with no single skill tripping detection alone.</li>
+              <li>Directly relevant to any platform that lets agents dynamically load third-party skill packages to extend capabilities.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.30383" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Auditing and Repairing LLM-as-Judge Failures in a Production Text-to-SQL Pipeline</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Concrete finding: a deployed gpt-4o-mini LLM-as-judge in a production text-to-SQL pipeline agreed with two-author human gold labels at only Cohen&#x27;s kappa = 0.04, essentially chance-level.</li>
+              <li>Highlights that production LLM-judge setups often ship without ever measuring agreement against human annotators, masking silent quality failures.</li>
+              <li>Framed as an audit-and-repair case study, offering a template for teams to check whether their own LLM-judge is measuring what they think it is.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.30290" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Not All Memories Are Equal: Hierarchical Collaborative Memory for Validity-Aware Retrieval in LLM Agents</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Distinguishes two memory types in multi-agent team settings: team memory (collective decisions, protocols, consensus) versus individual memory (member-specific observations, execution traces).</li>
+              <li>Motivated by memory being &#x27;heterogeneous and continually evolving&#x27;, stale or superseded memories need to be distinguished from currently-valid ones via &#x27;validity-aware retrieval&#x27;.</li>
+              <li>Proposes a hierarchical retrieval architecture rather than a flat memory store, aimed at LLM agent teams collaborating over time.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.30289" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>A Mechanistic Study of AI-Text Detection Neurons in Frozen BERT: Sparse Probing and Activation Patching on RAID</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Notes AI-text detectors hit high benchmark accuracy, but their internal mechanisms remain poorly understood, an accuracy-vs-interpretability gap.</li>
+              <li>Uses sparse probing and activation patching on a frozen BERT-base-uncased encoder, evaluated on the RAID benchmark, to identify specific neurons responsible for AI-text detection.</li>
+              <li>A mechanistic-interpretability approach applied specifically to the AI-text-detection task rather than general language understanding.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.30287" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

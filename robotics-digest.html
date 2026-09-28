@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - September 27, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - September 28, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 27, 2026</div>
+        <div class="digest-date-badge">September 28, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s robotics feed skews DIY and open-source: a quadruped builder swaps in higher-torque servos, a hobbyist asks whether AI coding assistants can de-risk mechanical design before printing, and an open-source anti-drone tracking system ships its v2 release. On the tools and research side, ROS 2 gets an experimental shared-memory buffer backend for cutting data-copy overhead, and researchers debut a motor-free soft microgripper that can pick up living cells.</p>
+        <p class="digest-intro">Research dominates today&#x27;s pool: five new arXiv papers push visual-inertial odometry, one-shot manipulation learning, language task disambiguation, and world-model-aligned driving policies, alongside EPFL&#x27;s scale-invariant robotic fish. The Robot Report questions whether Asimov&#x27;s fictional safety laws still hold up against real AI/robotics deployment, ROS Discourse highlights new tooling for chaining robot skills into full workflows, and the community section rounds things out with hands-on maker builds.</p>
       </div>
     </section>
 
@@ -29,15 +29,93 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>This Tiny Robot Claw Grabs Living Cells (No Motor)</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>TinyCVIO: A Constellation-Aided Visual-Inertial Odometry System for Nanodrones</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A soft microgripper claw can grab and hold living cells with no motor at all.</li>
-              <li>It folds closed when warmed and reopens as it cools, using temperature alone to actuate, and can be steered with an external magnet.</li>
-              <li>Researchers used it in a lab experiment to grip individual cells out of a cell clump.</li>
+              <li>Targets nanodrones, which need real-time state estimation despite severe sensing and compute constraints.</li>
+              <li>Co-designs miniature sensing, visual processing, and estimation together rather than treating them as separate stages.</li>
+              <li>Built on a commodity dual-sensor setup, aiming to make constellation-aided VIO practical at nanodrone scale.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wqwu1z/this_tiny_robot_claw_grabs_living_cells_no_motor/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.30358" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>POIL: Point-based One-Shot Imitation Learning with Stable Dynamical Systems</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Learns manipulation skills from a single demonstration instead of large demo datasets.</li>
+              <li>Combines a point-based representation with stable dynamical systems to keep learned trajectories well-behaved.</li>
+              <li>Argues successful one-shot manipulation needs more than copying a trajectory — the underlying dynamics must generalize too.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.30404" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Actively Resolving Contextual Uncertainty for Underspecified Tasks in Natural Language</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Challenges the common assumption that language-conditioned robot policies always receive fully-specified goals.</li>
+              <li>Foundation models let robots interpret language and reason about context, but underspecified instructions still leave gaps.</li>
+              <li>Proposes robots actively resolve missing task-relevant information rather than acting on ambiguous instructions as-is.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.30428" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>WALT: Learning World-Model-Aligned Latent Trajectories for Autonomous Driving</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Points out that accurate visual prediction from driving world models doesn&#x27;t automatically translate into good trajectory planning.</li>
+              <li>Learns latent trajectories aligned with the world model&#x27;s own predictive representations to close that gap.</li>
+              <li>Targets the bottleneck between rich environmental prediction and actual driving decisions.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.30436" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>VkVIO: Cross-platform GPU Acceleration for Visual-Inertial Odometry with Vulkan</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Uses the Vulkan API to GPU-accelerate visual-inertial odometry and VI-SLAM across platforms, for robotics and XR alike.</li>
+              <li>Aims at efficiency, since VIO/VI-SLAM is a proven but computationally demanding approach to state estimation.</li>
+              <li>A cross-platform GPU design could make real-time VIO more portable across different hardware.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.30459" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Small, medium or large, a robotic fish maintains its swimming ability</h3>
+              <span class="digest-source">Robohub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>EPFL CREATE Lab&#x27;s scalable robot ScaFi maintains swimming performance across small, medium, and large sizes.</li>
+              <li>Motivated by the limits of propeller-driven underwater vehicles: spinning blades snag on vegetation, stir up sediment, and startle wildlife.</li>
+              <li>Fish-like propulsion is being explored as a less invasive way to monitor aquatic environments at multiple robot scales.</li>
+            </ul>
+            <a href="https://robohub.org/small-medium-or-large-a-robotic-fish-maintains-its-swimming-ability/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Asimov&#x27;s laws are not enough to keep robotics and AI safe</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Revisits Asimov&#x27;s fictional Three Laws of Robotics as a reference point for today&#x27;s real-world AI/robotics safety debates.</li>
+              <li>Tech observers are raising safety concerns about AI that echo the same territory Asimov&#x27;s laws tried to cover decades ago.</li>
+              <li>Underscores that fictional safeguards don&#x27;t translate directly into engineering-grade safety guarantees for deployed systems.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/asimovs-laws-are-not-enough-keep-robotics-ai-safe/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -47,51 +125,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Shared_buffer_backend: shared-memory rosidl::Buffer for ROS 2 processes</h3>
+              <h3>Mission Canvas — Turn Robot Skills into Real-World Tasks</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>shared_buffer_backend is an experimental CPU shared-memory implementation of ROS 2&#x27;s rosidl::Buffer abstraction (introduced in the Lyrical release), letting processes share backing storage for payloads like images instead of copying data through the normal transport.</li>
-              <li>It targets cases where intra-process communication isn&#x27;t enough, such as Python-based downstream nodes or processes split apart for fault isolation, without the data-type and fixed-size-array limits of middleware-specific options like Fast DDS Data-sharing.</li>
-              <li>Python subscribers can read the shared buffer as a NumPy view with no extra payload copy; it builds on the author&#x27;s earlier CPU shared-memory backend work, previously called memfd.</li>
+              <li>Part of an &quot;AI Worker&quot; series (#21) addressing that an isolated robot skill is only part of a real deployment.</li>
+              <li>Focuses on chaining skills into full workflows: moving to the right location, executing the task, then continuing to the next work area.</li>
+              <li>Aimed at making robot capabilities repeatable across a complete real-world workflow, not just single isolated actions.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/shared-buffer-backend-shared-memory-rosidl-buffer-for-ros-2-processes/58414" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>I made a tool that generates robotics simulation environments from a text description. Looking for feedback.</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The author built a text-to-simulation pipeline that generates robotics simulation environments from a written description.</li>
-              <li>A demo video shows a Unitree Go2 walking through the generated environments, though the walking policy itself is an existing learned policy, not something the author trained.</li>
-              <li>Each generated environment comes with physics simulated and working joints for interactive elements such as doors.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wqw8ox/i_made_a_tool_that_generates_robotics_simulation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>I built an open-source anti-drone turret system with YOLOv8 + Kalman Filter + ballistic solver</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The author released v2 of an open-source counter-drone tracking system that detects, tracks, and computes real-time ballistic intercepts for maneuvering drones.</li>
-              <li>The stack combines YOLOv8 for detection, ByteTrack for multi-object tracking, a Kalman filter, and a ballistic solver.</li>
-              <li>It&#x27;s described as a full software-hardware pipeline rather than a software-only demo.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wqpzb2/i_built_an_opensource_antidrone_turret_system/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>XIAO-ESP32C3 joystick controlled robot tutorial english</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A hobbyist shared a joystick-controlled robot built around the Seeed XIAO-ESP32C3 microcontroller.</li>
-              <li>The build tutorial is written out in text rather than presented as a video.</li>
-              <li>The author describes it as a simple, beginner-level project.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wrj7g1/xiaoesp32c3_joystick_controlled_robot_tutorial/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/mission-canvas-turn-robot-skills-into-real-world-tasks/58453" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -101,39 +143,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Cubic Doggo update: Wouf moves like a newborn lamb</h3>
+              <h3>Built a fully functional 3D-printed robotic arm from scratch using Arduino and C++!</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Cubic Wouf quadruped update switches to Feetech ST-3215-C018 12V servos, said to deliver roughly 2x the torque (and 2x the current draw) of the DYNAMIXEL XL430-W250-T actuators used before.</li>
-              <li>The higher current draw was enough that the builder covered the test table with a fire blanket as a precaution.</li>
-              <li>Existing control code worked again once the new servos&#x27; firmware was updated; per the title, the resulting gait is still wobbly, like a newborn lamb.</li>
+              <li>A maker-built robotic arm combining 3D-printed hardware with Arduino and custom C++ motion control.</li>
+              <li>Uses a color sensor to detect objects and custom motion logic to drop them at target locations.</li>
+              <li>A hands-on example of the sensing-plus-actuation-plus-control pipeline now accessible to hobbyists.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wrha5i/cubic_doggo_update_wouf_moves_like_a_newborn_lamb/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1ws8fd1/built_a_fully_functional_3dprinted_robotic_arm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Has anyone here been using Codex or Claude to design robotics hardware/mechanics?</h3>
+              <h3>I built an airsoft turret with web-based remote control</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A hobbyist with a 3D printer is asking whether others have used AI coding assistants like Codex or Claude to help design robotics hardware and mechanics.</li>
-              <li>They want more confidence that a design will actually work before committing to prints, rather than printing what they call &quot;a mountain of useless plastic.&quot;</li>
-              <li>Their starting brief is an upper-torso robot; the post is a question to the community, not a finished build.</li>
+              <li>Built as part of a personal &quot;Alien Defense&quot; project: a remotely controlled airsoft turret.</li>
+              <li>Combines camera feedback with pan/tilt aiming and firing, operable from a separate room.</li>
+              <li>Demonstrates a full teleoperation stack — video feedback, networked control, and actuation — built from scratch.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wrfpz8/has_anyone_here_been_using_codex_or_claude_to/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Recycling parts from old toys?</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The poster describes affording parts as one of the biggest recurring struggles in their robotics projects.</li>
-              <li>While browsing old toys at a thrift store, they started wondering whether those toys&#x27; parts could be salvaged and reused in builds.</li>
-              <li>The post asks the community whether there&#x27;s a downside to this approach they might be missing.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1wr20c6/recycling_parts_from_old_toys/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1ws9ub1/i_built_an_airsoft_turret_with_webbased_remote/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
