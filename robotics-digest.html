@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - September 28, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - September 29, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 28, 2026</div>
+        <div class="digest-date-badge">September 29, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Research dominates today&#x27;s pool: five new arXiv papers push visual-inertial odometry, one-shot manipulation learning, language task disambiguation, and world-model-aligned driving policies, alongside EPFL&#x27;s scale-invariant robotic fish. The Robot Report questions whether Asimov&#x27;s fictional safety laws still hold up against real AI/robotics deployment, ROS Discourse highlights new tooling for chaining robot skills into full workflows, and the community section rounds things out with hands-on maker builds.</p>
+        <p class="digest-intro">Today&#x27;s robotics news leans on agentic AI: papers explore robots that discover and install their own skills, and industry stories cover AI agent safety and the economics of autonomous machines. Practical open-source tooling for ROS mobile robots and mobile-GPU perception rounds out the day.</p>
       </div>
     </section>
 
@@ -29,75 +29,49 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>TinyCVIO: A Constellation-Aided Visual-Inertial Odometry System for Nanodrones</h3>
+              <h3>What Stops Recursive Self-Improvement in Robotics? Lessons from 123 Rounds of Agentic Skill Discovery</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets nanodrones, which need real-time state estimation despite severe sensing and compute constraints.</li>
-              <li>Co-designs miniature sensing, visual processing, and estimation together rather than treating them as separate stages.</li>
-              <li>Built on a commodity dual-sensor setup, aiming to make constellation-aided VIO practical at nanodrone scale.</li>
+              <li>Asks whether a robot can improve itself the way coding agents improve software.</li>
+              <li>The agentic system watches a robot fail, identifies the missing capability, then writes new skills or finds and installs external models.</li>
+              <li>Every change is tested; the study reports lessons from 123 rounds of skill discovery.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.30358" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.31760" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>POIL: Point-based One-Shot Imitation Learning with Stable Dynamical Systems</h3>
+              <h3>Robot Manipulation with GPT-6-Astra: Body Knowledge, Experience Reuse, Emergent Skills, and Sim2Real Transfer</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Learns manipulation skills from a single demonstration instead of large demo datasets.</li>
-              <li>Combines a point-based representation with stable dynamical systems to keep learned trajectories well-behaved.</li>
-              <li>Argues successful one-shot manipulation needs more than copying a trajectory — the underlying dynamics must generalize too.</li>
+              <li>Notes that general-purpose multimodal agents can write robot-control programs, but repeated exploration and model-mediated action selection make execution slow.</li>
+              <li>Studies how external body knowledge, successful experience, and executable skills improve performance.</li>
+              <li>Covers experience reuse, emergent skills, and sim-to-real transfer.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.30404" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.31770" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Actively Resolving Contextual Uncertainty for Underspecified Tasks in Natural Language</h3>
+              <h3>Timed Rule-Based Supervision of an End-to-End Autonomous Parking Policy</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Challenges the common assumption that language-conditioned robot policies always receive fully-specified goals.</li>
-              <li>Foundation models let robots interpret language and reason about context, but underspecified instructions still leave gaps.</li>
-              <li>Proposes robots actively resolve missing task-relevant information rather than acting on ambiguous instructions as-is.</li>
+              <li>Tests whether a manually specified runtime supervisor can correct recurring failures of an existing end-to-end parking policy.</li>
+              <li>Evaluation is in a fixed CARLA parking lot, using a vision-based Transformer policy inherited from Yang et al.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.30428" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.31773" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>WALT: Learning World-Model-Aligned Latent Trajectories for Autonomous Driving</h3>
+              <h3>Path Planning with Motion Primitives in Dynamic Environments: SIPP on Lattices</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Points out that accurate visual prediction from driving world models doesn&#x27;t automatically translate into good trajectory planning.</li>
-              <li>Learns latent trajectories aligned with the world model&#x27;s own predictive representations to close that gap.</li>
-              <li>Targets the bottleneck between rich environmental prediction and actual driving decisions.</li>
+              <li>Targets autonomous navigation in shared spaces where other agents&#x27; future trajectories are known.</li>
+              <li>Applies safe-interval path planning (SIPP) on lattices with motion primitives, going beyond traditional grid-based planners.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.30436" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>VkVIO: Cross-platform GPU Acceleration for Visual-Inertial Odometry with Vulkan</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Uses the Vulkan API to GPU-accelerate visual-inertial odometry and VI-SLAM across platforms, for robotics and XR alike.</li>
-              <li>Aims at efficiency, since VIO/VI-SLAM is a proven but computationally demanding approach to state estimation.</li>
-              <li>A cross-platform GPU design could make real-time VIO more portable across different hardware.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.30459" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Small, medium or large, a robotic fish maintains its swimming ability</h3>
-              <span class="digest-source">Robohub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>EPFL CREATE Lab&#x27;s scalable robot ScaFi maintains swimming performance across small, medium, and large sizes.</li>
-              <li>Motivated by the limits of propeller-driven underwater vehicles: spinning blades snag on vegetation, stir up sediment, and startle wildlife.</li>
-              <li>Fish-like propulsion is being explored as a less invasive way to monitor aquatic environments at multiple robot scales.</li>
-            </ul>
-            <a href="https://robohub.org/small-medium-or-large-a-robotic-fish-maintains-its-swimming-ability/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.31803" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -107,15 +81,47 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Asimov&#x27;s laws are not enough to keep robotics and AI safe</h3>
+              <h3>Gecko Robotics works with NVIDIA to add AI agent security and control</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Revisits Asimov&#x27;s fictional Three Laws of Robotics as a reference point for today&#x27;s real-world AI/robotics safety debates.</li>
-              <li>Tech observers are raising safety concerns about AI that echo the same territory Asimov&#x27;s laws tried to cover decades ago.</li>
-              <li>Underscores that fictional safeguards don&#x27;t translate directly into engineering-grade safety guarantees for deployed systems.</li>
+              <li>Gecko Robotics is using the new NVIDIA Open Agent Safety Platform.</li>
+              <li>The goal is secure, autonomous control of systems.</li>
             </ul>
-            <a href="https://www.therobotreport.com/asimovs-laws-are-not-enough-keep-robotics-ai-safe/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/gecko-robotics-works-with-nvidia-adds-ai-agent-security-and-control/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Robonomics on the threshold: Economic autonomy, smart cities, and crypto wallets for humanoids</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Frames economics as both an impetus for and a constraint on robotics.</li>
+              <li>Considers systems making street deliveries or doing household chores, including crypto wallets for humanoids.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/robotics-threshold-economic-autonomy-crypto-wallets-humanoids/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Raise Robotics to discuss scaling field robots at RoboBusiness</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Raise Robotics will present at RoboBusiness on scaling field robots.</li>
+              <li>Attendees are promised a decision rule for allocating engineering capacity and a vocabulary for two hidden failure modes.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/raise-robotics-discuss-scaling-field-robots-robobusiness/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>A Day in the Life of a Roboticist: Charlie Kemp</h3>
+              <span class="digest-source">Robots Guide</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Kemp is cofounder and CTO of Hello Robot.</li>
+              <li>He develops assistive robots that help with everyday tasks and support greater independence.</li>
+            </ul>
+            <a href="https://robotsguide.com/learn/a-day-in-the-life-of-a-roboticist-charlie-kemp" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -125,45 +131,26 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Mission Canvas — Turn Robot Skills into Real-World Tasks</h3>
+              <h3>Linorobot2 Cockpit: In-Browser Web Supervisor, Turnkey micro-ROS &amp; 1-Click Nav2 Autonomy (Call for Testers)</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Part of an &quot;AI Worker&quot; series (#21) addressing that an isolated robot skill is only part of a real deployment.</li>
-              <li>Focuses on chaining skills into full workflows: moving to the right location, executing the task, then continuing to the next work area.</li>
-              <li>Aimed at making robot capabilities repeatable across a complete real-world workflow, not just single isolated actions.</li>
+              <li>Release v2026.09 offers 1-click mobile robot autonomy from browser to bare microcontroller.</li>
+              <li>Bundles unified micro-ROS firmware, realistic physics simulation, and a SLAM and Nav2 supervisor.</li>
+              <li>The author is calling for testers.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/mission-canvas-turn-robot-skills-into-real-world-tasks/58453" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Built a fully functional 3D-printed robotic arm from scratch using Arduino and C++!</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A maker-built robotic arm combining 3D-printed hardware with Arduino and custom C++ motion control.</li>
-              <li>Uses a color sensor to detect objects and custom motion logic to drop them at target locations.</li>
-              <li>A hands-on example of the sensing-plus-actuation-plus-control pipeline now accessible to hobbyists.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1ws8fd1/built_a_fully_functional_3dprinted_robotic_arm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/linorobot2-cockpit-in-browser-web-supervisor-turnkey-micro-ros-1-click-nav2-autonomy-call-for-testers/58474" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I built an airsoft turret with web-based remote control</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>A Vulkan based SLAM (in progress) system that runs on Android/Linux</h3>
+              <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Built as part of a personal &quot;Alien Defense&quot; project: a remotely controlled airsoft turret.</li>
-              <li>Combines camera feedback with pan/tilt aiming and firing, operable from a separate room.</li>
-              <li>Demonstrates a full teleoperation stack — video feedback, networked control, and actuation — built from scratch.</li>
+              <li>Currently a proof of concept that runs arbitrary compute shaders on a camera frame with zero copy.</li>
+              <li>Full SLAM/VIO is planned for the future.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1ws9ub1/i_built_an_airsoft_turret_with_webbased_remote/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/a-vulkan-based-slam-in-progress-system-that-runs-on-android-linux/58479" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
