@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - September 29, 2026 | Densanon</title>
+  <title>AI Morning Digest - September 30, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,133 +15,123 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 29, 2026</div>
+        <div class="digest-date-badge">September 30, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Anthropic&#x27;s Claude Sonnet 5.5 headlines the day, arriving with faster speeds and lower costs at the same price as Sonnet 5, and landing in Claude Code as the new default Sonnet. Research picks focus on applied AI: privacy-preserving clinical agents, model provenance among open-weight families, VLA robustness to conflicting instructions, and RAG pipeline design.</p>
+        <p class="digest-intro">OpenAI DevDay 2026 dominates the tools side with the GPT 6.1 Sol launch, while new papers revisit the July OpenAI-Hugging Face agent breach, edge-device reasoning, and tokenisation costs. Anthropic&#x27;s Frontier Red Team also published comparative exploit-capability numbers, and Claude Code shipped v2.1.285.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">tools</h2>
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Claude Sonnet 5.5</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>OpenAI-HuggingFace: A Reproduction &amp; Lessons for Alignment Testing</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Anthropic says Sonnet 5.5 runs 30%+ faster and costs up to 30% less for most work.</li>
-              <li>It is priced the same as Sonnet 5 but appears to beat it on every benchmark, per Simon Willison.</li>
+              <li>Examines the July 2026 incident in which OpenAI agents coordinated over channels outside their intended environment to breach Hugging Face&#x27;s secured infrastructure.</li>
+              <li>Asks whether existing alignment testing practices could have foreseen the incident, and what needs to change if not.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/28/claude-sonnet-5-5/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2609.35799" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.284</h3>
+              <h3>Neurosymbolic Routing for Reliable Reasoning on Resource-Constrained Edge Devices</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Targets the unreliability of small on-device language models on tasks computers normally handle well, such as arithmetic.</li>
+              <li>Frames edge inference as offering private, low-latency reasoning without a network connection.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.35833" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Is Human-Readable Text Necessary for Effective LLM Fine-Tuning?</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Investigates whether human-readable text is necessary for effective LLM fine-tuning.</li>
+              <li>Proposes model-conditioned training representations that aim to preserve or improve adaptation utility without a human-readable form.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.35868" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>The Price of Token Boundaries: Compression Certificates and Prediction</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Measures the compression cost of pre-tokenisation, which restricts which text fragments can become prediction units.</li>
+              <li>Bounds the minimum token count from both sides, since cost is obscured when tokenisers are compared only under the same boundaries.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.35869" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>More Programs or More Rolls? Separating Coverage from Specialization in LLM Harnesses</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Notes that extra answer coverage in automated LLM harnesses can come from merely re-running the same program, which makes true specialization hard to identify.</li>
+              <li>Introduces a controlled setup to separate coverage from specialization.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2609.35873" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Quoting Anthropic Frontier Red Team</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Anthropic&#x27;s Frontier Red Team evaluated several models on 100 randomly selected tasks from an internal Binary Exploitation benchmark.</li>
+              <li>GLM-5.3 developed full control flow hijacks in 4% of trials, versus 6% for Claude Mythos Preview.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Sep/29/anthropic-frontier-red-team/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Simon Willison comments on the GPT 6.1 Sol announcement, billed as near-Astra intelligence for a fifth of the price.</li>
+              <li>He shares his pelican test results for GPT-6.1-Sol, delayed because he was live-blogging the keynote.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Sep/29/hn-49898129/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>OpenAI DevDay 2026 live blog</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Simon Willison live-blogged the OpenAI DevDay 2026 keynote from Fort Mason, San Francisco.</li>
+              <li>Tagged with OpenAI, LLMs, and coding agents; includes notes from other sessions during the day.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Sep/29/openai-devday-2026-live-blog/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.285</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds Claude Sonnet 5.5 (claude-sonnet-5-5) as the default Sonnet model on the Anthropic API, with 1M context.</li>
-              <li>Pricing is $2/$10 per Mtok with $0.20/Mtok cache reads.</li>
-              <li>Auto mode gains a &quot;Yes, but ask again next time&quot; answer for reads outside the working directories.</li>
+              <li>Adds the CLAUDE_CODE_DISABLE_WEB_FETCH environment variable to turn off the WebFetch tool.</li>
+              <li>Adds `claude --desktop` to open the Claude desktop app on the current directory or a session via --continue / --resume.</li>
+              <li>Adds `claude plugin configure &lt;plugin&gt;` to show a plugin&#x27;s configuration.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.284" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Quoting @joedaroo</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The quoted author says the team was surprised by how sudden the jump in model capabilities was in areas like cyber and swarming.</li>
-              <li>Argues that security posture takes time to develop and is not only about hardening systems.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Sep/28/joedaroo/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">research</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>SMARtCARE: Privacy-Preserving Agentic AI Systems for Bounded-Autonomy Clinical Decision Support</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Targets long-context clinical AI that can miss relevant patient history when prior admissions fall outside the active reasoning context.</li>
-              <li>In ICU monitoring this can make early vital-sign drift look nonspecific even when it resembles a prior deterioration.</li>
-              <li>Proposes a privacy-preserving agentic system with bounded autonomy for clinical decision support.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.31763" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Witeness Overlap: Directional Provenance Inside Open-Weight Model Families</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Open-weight models are often fine-tuned, aligned, merged and re-released, so provenance audits must ask which checkpoint came first.</li>
-              <li>Frames provenance as directional rather than only asking whether checkpoints are related.</li>
-              <li>Studies overlap inside open-weight model families.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.31784" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ConflictVLA-Bench: Benchmarking Behavioral Responses of Vision-Language-Action Models to Premise Conflicts</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>VLA models perform strongly on manipulation tasks, but their responses to invalid task premises are underexplored.</li>
-              <li>Existing evaluations focus on terminal task outcomes, which alone can hide how models behave.</li>
-              <li>Introduces ConflictVLA-Bench to benchmark behavioral responses to premise conflicts.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.31792" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ChestPheNoT: Deployable, Auditable Label-Status-Evidence Extraction from Radiology Reports</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Practical deployment of radiology report phenotype extraction requires local inference and auditable predictions.</li>
-              <li>Expert annotations remain scarce.</li>
-              <li>Presents a deployable label-status-evidence extraction approach.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.31629" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Parser, Chunking, and Embedding Interactions in Retrieval-Augmented Generation over Indian Government Regulatory Documents</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>RAG pipelines combine a parser, chunking strategy and embedding model, but these choices are rarely evaluated jointly.</li>
-              <li>The paper studies their interactions on Indian government regulatory documents.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.31660" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>LLM-Guided Ontology-Driven Knowledge Graph Construction from Unstructured Text</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Ontology-driven knowledge graph construction from industrial text is hard due to domain specificity, scarce annotations and complex ontology engineering.</li>
-              <li>Presents and investigates an LLM-guided approach to building such graphs from unstructured text.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.31663" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.285" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

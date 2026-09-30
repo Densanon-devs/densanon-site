@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - September 29, 2026 | Densanon</title>
+  <title>Computation Morning Digest - September 30, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">September 29, 2026</div>
+        <div class="digest-date-badge">September 30, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation news centers on next-generation silicon: AMD has published full pricing for its Zen 6 EPYC 9006 &#x27;Venice&#x27; line, Intel&#x27;s Nova Lake platforms are clearing USB-IF and PCI-SIG compliance, and AI is increasingly being used to design the chips it runs on. On the open-source side, Mesa gets a new default Intel shader compiler and a Vulkan driver framework, while Linux 7.4 and SIMDjson 5.0 bring further performance work.</p>
+        <p class="digest-intro">Today&#x27;s computation news is dominated by AI in silicon: EDA vendors and OpenAI pitch AI-assisted chip design, AMD&#x27;s Linux 7.4 work lifts LLM speed on Radeon iGPUs, and a new Spectre-V2 variant targets JIT compilers.</p>
       </div>
     </section>
 
@@ -29,48 +29,110 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD drops an EPYC $15,000, 256-core beast</h3>
+              <h3>The state of agentic AI in chip design tools in 2026</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMD published the full SKU list for its 6th-generation EPYC 9006 &#x27;Venice&#x27; (Zen 6) series.</li>
-              <li>1Ku pricing runs from about $700 up to $14,904, with the top part reaching 256 cores.</li>
+              <li>Cadence, Synopsys, and Siemens all now offer agentic AI for chip design.</li>
+              <li>The offerings are largely built on Nvidia&#x27;s stack.</li>
+              <li>Claims of how autonomous the tools are vary between vendors.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/amd-drops-an-epyc-usd15-000-256-core-bomb-epyc-9006-zen-6-venice-cpus-get-full-spec-and-pricing-treatment-from-usd700-up-to-usd14-904" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/semiconductors/the-state-of-agentic-ai-in-chip-design-tools-in-2026-cadence-synopsys-and-siemens-all-pitch-autonomous-engineers" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel&#x27;s next-gen Nova Lake platforms pass compliance at USB and PCIe standards bodies as launch looms</h3>
+              <h3>‘This is how AI should be used’ — OpenAI head of hardware breaks down the AI-assisted design of its Jalapeño ASIC</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel&#x27;s Core Ultra 400-series &#x27;Nova Lake&#x27; CPUs and chipsets have passed interoperability and compliance testing with PCI-SIG and USB-IF.</li>
-              <li>The certifications suggest platform launches are approaching.</li>
+              <li>OpenAI says AI-assisted design of its Jalapeño ASIC &quot;established a new baseline&quot; for the industry.</li>
+              <li>Its head of hardware breaks down how the design was done.</li>
+              <li>Others are reportedly interested in learning how OpenAI pulled it off.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/cpus/intels-nova-lake-platforms-pass-compliance-at-pci-sig-usb-if-as-launch-looms" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/asics/this-is-how-ai-should-be-used-openai-head-of-hardware-breaks-down-the-ai-assisted-design-of-its-jalapeno-asic" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel patent embeds MicroLEDs in chip packaging, technology may enable embedded optical interconnects through TGVs</h3>
+              <h3>Nuvacore reveals unconventional Core First CPU IP design strategy</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The patent, filed in 2022, describes embedding MicroLEDs inside chip packaging.</li>
-              <li>Suggested uses include diagnostic testing and custom lighting on chip surfaces.</li>
-              <li>It could also offer an alternative integration path for co-packaged optics.</li>
+              <li>NuvaCore is developing its WarpCore CPU IP without first choosing an ISA.</li>
+              <li>The unusual strategy is meant to maximize technology and business flexibility.</li>
+              <li>The startup is led by Apple and Nuvia veterans.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/photonics/intel-patent-embeds-microleds-in-chip-packaging-technology-may-enable-embedded-optical-interconnects-through-tgvs" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/cpus/nuvacore-reveals-unconventional-core-first-cpu-ip-design-strategy-chip-startup-led-by-apple-and-nuvia-legends-plans-to-delay-isa-selection-for-as-long-as-possible" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD Ryzen Zen 6 CPU Power Values Being Further Tuned For Linux</h3>
+              <h3>Linux 7.4 To Support The NPU On AMD Ryzen AI Max 400 Series &quot;Gorgon Halo&quot;</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMD engineers continue preparing Linux support for upcoming Zen 6 Ryzen client processors.</li>
-              <li>The latest work further tunes CPU power values.</li>
+              <li>Linux 7.4 is set to support the NPU on AMD&#x27;s Ryzen AI Max 400 series &quot;Gorgon Halo&quot;.</li>
+              <li>NPU support was seemingly overlooked until now.</li>
+              <li>The enablement patch appears simple and targets the upcoming 7.4 kernel.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-Zen-6-More-Client-Tuning" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/AMD-Gorgon-Halo-NPU-LInux" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AMD Boosting AI/LLM Performance For Radeon iGPUs As Much As 18~23% With Linux 7.4</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>AMD&#x27;s new PerfOpt feature arrives in Linux 7.4 for Radeon integrated GPUs.</li>
+              <li>Benchmarks show AI/LLM performance gains of roughly 18-23%.</li>
+              <li>Lower-end hardware benefits the most.</li>
+            </ul>
+            <a href="https://www.phoronix.com/review/amd-perfopt" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Developer trains a small AI on a single RTX 3080 Ti gaming GPU to &#x27;play&#x27; Pokémon Red</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A developer trained a small JEPA world model on a single RTX 3080 Ti.</li>
+              <li>The model is based on LeWorldModel research co-authored by Yann LeCun.</li>
+              <li>It was trained to play Pokémon Red.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/developer-trains-a-small-ai-on-a-single-rtx-3080-ti-gaming-gpu-to-play-pokemon-red-model-discovered-what-each-button-does-by-predicting-what-happens-next" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Branch Target Reuse, BTR: New Spectre V2 Attack Targeting JIT Compilers</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Branch Target Reuse (BTR) is a newly disclosed Spectre-V2 attack.</li>
+              <li>It affects just-in-time (JIT) compilers.</li>
+              <li>The embargo lifted today, after a long gap since new Spectre vulnerabilities.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Branch-Target-Reuse-BTR" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Meta Releases OpenZL 0.3 With Decompression Speed 144% Faster Than Zstd</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Meta released OpenZL 0.3, a format-aware compression framework.</li>
+              <li>It advertises decompression speed 144% faster than Zstd.</li>
+              <li>OpenZL was first announced just under a year ago.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/OpenZL-0.3-Released" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Microsoft Announces General Availability Of WSLC: Linux Containers On Windows</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Microsoft announced general availability of WSLC, Linux containers on Windows.</li>
+              <li>It follows a public preview of Linux containers on WSL.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/Microsoft-WSLC-Linux-Containers" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -80,69 +142,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Silicon is starting to design silicon: how AI is being used in chipmaking, from EDA tools to OpenAI&#x27;s Jalapeno and beyond</h3>
+              <h3>The price of AI is crashing faster than the rate of Moore&#x27;s Law, report suggests</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The piece explores how close AI is to designing the same chips it runs on.</li>
-              <li>It surveys how AI is used in modern chip design today, from EDA tools to OpenAI&#x27;s Jalapeno.</li>
+              <li>A report suggests the price of AI &quot;intelligence&quot; has fallen faster than Moore&#x27;s Law.</li>
+              <li>The decline is described as faster than any other transformational technology, by some estimates.</li>
+              <li>That raises questions about the need to retain access to frontier capabilities when they appear elsewhere so quickly.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/semiconductors/silicon-is-starting-to-design-silicon-how-ai-is-being-used-in-chipmaking-from-eda-tools-to-openais-jalapeno-and-beyond" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Mesa 26.3 Enables Intel&#x27;s New Jay Shader Compiler By Default, Compile Times 55% Faster Or 66% Faster Than Windows</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Jay, a new open-source shader compiler for Intel GPUs led by Alyssa Rosenzweig, becomes the default for modern Intel graphics in Mesa 26.3.</li>
-              <li>Per the headline, compile times are 55% or 66% faster than on Windows.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Mesa-26.3-Intel-Jay-Compiler" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Large Folios Able To Deliver Big Performance Gains For FUSE With Linux 7.4</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Linux 7.4 is expected to enable the large folios feature for FUSE file-systems.</li>
-              <li>It follows FUSE improvements in Linux 7.3 and is reported to deliver big performance gains.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/FUSE-Large-Folios" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>&quot;Shiva&quot; Being Developed For Mesa Vulkan Drivers, Akin To Gallium3D</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Shiva is a new framework for Mesa Vulkan drivers, akin to Gallium3D for OpenGL.</li>
-              <li>It aims for more code sharing and a better driver development experience, though it will be some time before it matures.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Mesa-Shiva-For-Vulkan" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>NVIDIA Developing &quot;Display Config Server&quot; To Improve Linux/Wayland On Display Walls</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>NVIDIA is developing Display-Config-Server to improve Linux capabilities for complex display walls.</li>
-              <li>It is an initiative aimed at the Linux ecosystem outside of AI.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/NVIDIA-Display-Config-Server" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>SIMDjson 5.0 Released: Still Making JSON Parsing Even Faster</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>SIMDjson 5.0 is out, continuing to refine the high-performance open-source JSON parser.</li>
-              <li>The project began using AVX-512 years ago for big performance gains.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/SIMDjson-5.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/the-price-of-ai-is-crashing-faster-than-the-rate-of-moores-law-report-suggests-intelligence-costs-are-in-freefall-outpacing-comparative-technologies-like-compute-dna-sequencing-and-lithium-batteries" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
