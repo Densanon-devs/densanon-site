@@ -4193,8 +4193,13 @@ function render(state) {
   // fresh-battle signature (seed+level+dims) — more reliable than width alone (two same-width battles
   // in a row would otherwise skip the refit/recentre and inherit the previous battle's zoom + scroll)
   const _dims = S.board.orig ? S.board.orig.join('x') : (S.board.width + 'x' + S.board.height);   // as generated: the finale grows the board mid-fight
-  const bsig = S.seed + ':' + (S.level ? S.level.index : '?') + ':' + _dims;
-  const freshBattle = bsig !== _lastBattleSig;
+  const bsig = S.seed + ':' + (S.level ? S.level.index : '?') + ':' + (S.node_num || '') + ':' + _dims;
+  // ANY arrival from outside a battle is a new battle too. The signature alone was not enough: two
+  // fights in a row on the same-sized board could share it, so the second was taken for the first — no
+  // opening reveal, and Auto deploy (which fires when the reveal ends) never ran. The army sat in reserve
+  // with no panel to call it from, and only a trip to the menu and back (which clears the signature)
+  // brought it onto the board.
+  const freshBattle = bsig !== _lastBattleSig || !wasInBattle;
   if (freshBattle) {   // new battle: refit zoom, drop stale selection, recentre on your camp
     _lastBattleSig = bsig;
     lastBoardW = S.board.width;
