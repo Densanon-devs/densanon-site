@@ -393,10 +393,18 @@
   .fog { position: absolute; inset: 0; pointer-events: none; z-index: 4; }
   /* each fogged cell shows one of 4 seamless tiles (a-d), picked at random per cell */
   .fog.fill { background-position: center; background-size: cover; background-repeat: no-repeat; }
-  /* macro-texture windowing: 4×4 sheet, each cell a 1/4 window → continuous across neighbours */
-  .fog.fill.win { background-size: 400% 400%; }
+  /* macro-texture windowing: one sheet spread over 6×6 cells (FSPAN in renderBoard — keep the two in step), each cell a 1/6 window → continuous across neighbours */
+  /* Sized and positioned in CELL units, not percentages, so the window stays exact even on a cell that
+     is not exactly one track wide (see .cell.fogsolid below). */
+  .fog.fill.win { background-size: calc(var(--cell) * 6) calc(var(--cell) * 6); }
+  /* Every board cell is drawn 1px wider and taller than its grid track, so it covers the seam to its
+     right and below. At 125%/150% display scaling cell edges land on fractional device pixels, and two
+     anti-aliased edges meeting there let the wooden table show through as a hairline grid — most visibly
+     across the fog, one line every few cells. It cannot be done with an overhanging child:
+     `content-visibility` clips a cell's paint to its own box. */
+  #board > .cell { width: calc(var(--cell) + 1px); height: calc(var(--cell) + 1px); }
   /* runtime-baked feathered edge: the section's windowed texture masked through the feather shape */
-  .fpw { position: absolute; inset: 0; background-size: 400% 400%; background-repeat: no-repeat;
+  .fpw { position: absolute; inset: 0; background-size: calc(var(--cell) * 6) calc(var(--cell) * 6); background-repeat: no-repeat;
     -webkit-mask-size: 100% 100%; mask-size: 100% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; pointer-events: none; }
   .fog .fp { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
   /* fog-of-war style picker (Settings) — a swatch of each set's fill tile */
@@ -759,6 +767,9 @@
     background: repeating-linear-gradient(45deg, rgba(200,40,30,.28) 0 6px, rgba(200,40,30,.12) 6px 12px); box-shadow: inset 0 0 0 1px rgba(230,60,40,.7); }
   .counter.tormented { filter: grayscale(.6) brightness(.7) drop-shadow(0 0 4px rgba(150,60,200,.9)); }
   .counter .poison { position: absolute; left: 2%; top: 2%; width: 26%; height: 26%; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #b6e36a, #4f7a1c); box-shadow: 0 0 0 1px rgba(0,0,0,.6); }
+  /* a Doctrine in force: a gold seal at the front of the medal bar */
+  .medalpip.doctrinepip b { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%;
+    background: radial-gradient(circle at 35% 35%, #f3d77a, #9a6a1c); color:#2a1a05; font: 700 14px var(--f-head, serif); box-shadow: 0 0 0 1px rgba(0,0,0,.6), 0 1px 3px rgba(0,0,0,.5); }
   #board .cell.aura::before { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
     background: rgba(255,214,90,.26); box-shadow: inset 0 0 0 2px rgba(255,214,90,.6); }
   #board[data-ts] .legal::after { content: ''; position: absolute; pointer-events: none; z-index: 6; animation: pulse 1s infinite; }
@@ -793,6 +804,8 @@
     border: none; background: none; cursor: pointer; padding: 0; -webkit-tap-highlight-color: transparent;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,.5)); transition: transform .1s; }
   #setBtn img { width: 100%; height: 100%; display: block; }
+  /* main-menu Quit (desktop shells): the top-left mirror of the settings gear */
+  .menuquit { position: fixed; top: max(6px, env(safe-area-inset-top)); left: max(6px, env(safe-area-inset-left)); z-index: 40; }
   #setBtn:active { transform: scale(.92); }
   /* SUSPECT, on Mac only — read this before "fixing" the centring below.
      This is the one INTERACTIVE element combining `position:fixed` + `left:50%` + `translateX(-50%)`
@@ -1842,6 +1855,12 @@
     :where(body.o-landscape) .oframe.titled:not(.menu):not(.ofwide) { padding-top: 22px; }
     :where(body.o-landscape) .oframe.titled:not(.menu):not(.ofwide) .ofbanner.ofhdr { position: relative; left: auto; top: auto;
       transform: translateZ(0); width: min(560px, calc(100% + 70px)); align-self: center; flex: 0 0 auto; margin: -38px 0 10px; }
+    /* Desktop: a frame lands here when the window is small (How to Play is 520px wide in a 1280x950 window at
+       125% scaling), and the phone overhang above put the plate's end posts out past the frame's pillars
+       and its top above the frame. Sit it BETWEEN the pillars instead. Phones keep the overhang. */
+    @media (pointer: fine) and (min-width: 820px) {
+      :where(body.o-landscape) .oframe.titled:not(.menu):not(.ofwide) .ofbanner.ofhdr { width: min(560px, calc(100% + 8px)); margin: -20px -4px 10px; }
+    }
     :where(body.o-landscape) .oframe.titled.prof:not(.menu) { padding-top: 22px; }
   /* "Continue run" main-menu CTA — the purpose-built RESUME plate button */
   .resumewrap { text-align: center; margin: 8px 0 2px; }
@@ -2091,7 +2110,26 @@
       /* The panel is a FRACTION of the frame, so on a big screen it grows while fixed-px text inside it
          does not — a large plate with small print. Scale the type off the frame's own width variable so
          the two grow together. `--mw` is the aspect-locked frame width set just below. */
-      font-size: clamp(11px, calc(var(--mw, 940px) * 0.0125), 22px); }
+      font-size: clamp(11px, calc(var(--mw, 940px) * 0.0125), 22px);
+      /* Its own compositing layer, for the reason .ofbanner has one: rolling the pointer across the menu
+         tiles re-rasterized this panel with their shared parent, and on Windows it visibly brightened and
+         dimmed as you went. translateZ moves nothing. */
+      transform: translateZ(0); }
+    /* the demo's notice: keep its words off the riveted border (it ran into both edges in a small window) */
+    :where(body.o-landscape) .oframe.menu .menutop > .choice.demo-note { padding: 3% 9%; }
+    :where(body.o-landscape) .oframe.menu .menutop > .choice.demo-note b { font-size: 1.25em; }
+    :where(body.o-landscape) .oframe.menu .menutop > .choice.demo-note span { font-size: 1em; }
+    .demo-note .dn-short { display: none; }
+    /* A landscape PHONE shrinks the whole frame to the screen's height, so the notice is about 200x55px
+       while the type stops at its 11px floor — the long line overflowed the plate both ways, its DEMO
+       heading pushed up behind the title plate. Say less there, and in tighter type. */
+    @media (max-height: 560px) {
+      :where(body.o-landscape) .oframe.menu .menutop > .choice.demo-note { padding: 0 5%; gap: 1px; font-size: clamp(8.5px, calc(var(--mw, 460px) * 0.022), 10px); line-height: 1.25; }
+      :where(body.o-landscape) .oframe.menu .menutop > .choice.demo-note b { font-size: 1.15em; }
+      :where(body.o-landscape) .oframe.menu .menutop > .choice.demo-note span { line-height: 1.25; }
+      .demo-note .dn-long { display: none; }
+      .demo-note .dn-short { display: inline; }
+    }
     :where(body.o-landscape) .oframe.menu .menutop > .choice .d,
     :where(body.o-landscape) .oframe.menu .menutop > .choice b { font-size: 1em; }
     :where(body.o-landscape) .oframe.menu .menutop > .choice > div { line-height: 1.5; }
@@ -2114,20 +2152,21 @@
   
     :where(body.o-landscape) .oframe.menu .mtile { position: absolute; margin: 0; }
   
-    /* six menu buttons — uniform size, aligned columns (L 57.73% / R 73.74%) and rows */
-    :where(body.o-landscape) .oframe.menu .menugrid .mtile { width: 15.27%; height: 23.34%; }
-  
-    :where(body.o-landscape) .oframe.menu .menugrid .mtile:nth-of-type(1) { left: 57.73%; top: 13.88%; }
-  
-    :where(body.o-landscape) .oframe.menu .menugrid .mtile:nth-of-type(2) { left: 73.74%; top: 13.88%; }
-  
-    :where(body.o-landscape) .oframe.menu .menugrid .mtile:nth-of-type(3) { left: 58.22%; top: 38.2%; }
-  
-    :where(body.o-landscape) .oframe.menu .menugrid .mtile:nth-of-type(4) { left: 73.74%; top: 38.17%; }
-  
-    :where(body.o-landscape) .oframe.menu .menugrid .mtile:nth-of-type(5) { left: 57.73%; top: 62.46%; }
-  
-    :where(body.o-landscape) .oframe.menu .menugrid .mtile:nth-of-type(6) { left: 73.74%; top: 62.46%; }
+    /* six menu buttons — a true 3x2 grid. The art is square, so the boxes are too, with ONE gap on both
+       axes. Rows span the left column exactly (13.56% = the Daily panel's top, 85.8% = the commanders'
+       bottom); the pair of columns is centred in the space right of the Daily panel. In frame-width
+       units (the frame is locked to 1.694:1): tile 13.415, gap 1.2 -> 3 tiles + 2 gaps = 42.645 = 72.24%
+       of the height. The old boxes were hand-placed (57.73 vs 58.22) and 15.27 wide by 13.78 tall, so
+       the square art floated in them with a wide gutter across and a thin one down. */
+    :where(body.o-landscape) .oframe.menu .menugrid .mtile { width: 13.415%; height: 22.725%; }
+    :where(body.o-landscape) .oframe.menu .menugrid .mtile:nth-of-type(odd)  { left: 59.45%; }
+    :where(body.o-landscape) .oframe.menu .menugrid .mtile:nth-of-type(even) { left: 74.065%; }
+    :where(body.o-landscape) .oframe.menu .menugrid .mtile:nth-of-type(1),
+    :where(body.o-landscape) .oframe.menu .menugrid .mtile:nth-of-type(2) { top: 13.56%; }
+    :where(body.o-landscape) .oframe.menu .menugrid .mtile:nth-of-type(3),
+    :where(body.o-landscape) .oframe.menu .menugrid .mtile:nth-of-type(4) { top: 38.318%; }
+    :where(body.o-landscape) .oframe.menu .menugrid .mtile:nth-of-type(5),
+    :where(body.o-landscape) .oframe.menu .menugrid .mtile:nth-of-type(6) { top: 63.076%; }
   
     /* ── DEMO: three tiles and one commander, so the six-tile grid and three card slots leave holes.
        These regions are tuned for what the demo actually shows, so it reads as a composed screen
@@ -2444,12 +2483,14 @@
        floor and the row still overflowed into overflow:hidden, slicing "Rally the Horde" in half and
        leaving Legend sitting on top of it. Measured broken bands were 900-1100 and 1500-1600 — each
        one just above a zoom step-up, which is the tell. */
-    #unitinfo { zoom: 1.5; width: min(300px, 40vw); }
-    #rosterPanel { zoom: 1.5; }
+    /* --uiz scales with the window (_applyOrient): a fixed 1.5 made the unit panel half the screen on a
+       1000x760 window — what a 1280x950 Steam window is at 125% display scaling. */
+    #unitinfo { zoom: var(--uiz, 1.5); width: min(300px, 40vw); }
+    #rosterPanel { zoom: var(--uiz, 1.5); }
     #unitinfo.hasaim { width: min(360px, 46vw); }
     /* toasts and coach marks were phone-sized and bottom-pinned */
     #toast { zoom: 1.6; bottom: 250px; }
-    #coach { zoom: 1.5; width: min(80%, 460px); }
+    #coach { zoom: var(--uiz, 1.5); width: min(80%, 460px); }
     /* map view: bars, buttons and the legend all scale with the window */
     #maplegend { zoom: var(--legzoom, 1.35); }
     /* the deploy screen was hard-capped at 320px regardless of viewport */
@@ -2459,12 +2500,12 @@
     #app { --hand-h: 230px; }
     #hand .handfan { zoom: 2.1; }
     /* no #hud zoom here either — see the note at the 820px breakpoint */
-    #unitinfo { zoom: 1.8; width: min(320px, 34vw); }
-    #rosterPanel { zoom: 1.8; }
+    #unitinfo { zoom: var(--uiz, 1.8); width: min(320px, 34vw); }
+    #rosterPanel { zoom: var(--uiz, 1.8); }
     #unitinfo.hasaim { width: min(380px, 40vw); }
     #prompt { zoom: 1.7; }
     #toast { zoom: 1.9; bottom: 300px; }
-    #coach { zoom: 1.8; }
+    #coach { zoom: var(--uiz, 1.8); }
     #maplegend { zoom: var(--legzoom, 1.5); }
     #ovDeploy .deploy-plaque { max-width: 620px; }
   }
@@ -2740,7 +2781,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-DsZuNWfr.js"></script>
+  <script type="module" crossorigin src="./assets/index-Cq9II3t6.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2833,7 +2874,7 @@
 <script src="./plates.js"></script>          <!-- which UI plates have text-free art (npm run gen:plates) -->
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.92';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.99';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -3001,6 +3042,11 @@ function _applyOrient() {
   const port = _isPortrait();
   document.body.classList.toggle('o-portrait', port);
   document.body.classList.toggle('o-landscape', !port);
+  // Desktop panel scale (unit panel, roster, coach tips): 1.8 on a full 1080p screen, easing down to 1
+  // on a small window. Bounded by the SHORTER axis so a wide-but-short window does not blow them up.
+  // Only the desktop media queries read it; phones never do.
+  const uiz = Math.max(1, Math.min(1.8, innerWidth / 1067, innerHeight / 600));
+  document.documentElement.style.setProperty('--uiz', uiz.toFixed(3));
 }
 window.addEventListener('resize', _applyOrient);
 window.addEventListener('orientationchange', _applyOrient);
@@ -4146,7 +4192,8 @@ function render(state) {
   if (!S.board) return;
   // fresh-battle signature (seed+level+dims) — more reliable than width alone (two same-width battles
   // in a row would otherwise skip the refit/recentre and inherit the previous battle's zoom + scroll)
-  const bsig = S.seed + ':' + (S.level ? S.level.index : '?') + ':' + S.board.width + 'x' + S.board.height;
+  const _dims = S.board.orig ? S.board.orig.join('x') : (S.board.width + 'x' + S.board.height);   // as generated: the finale grows the board mid-fight
+  const bsig = S.seed + ':' + (S.level ? S.level.index : '?') + ':' + _dims;
   const freshBattle = bsig !== _lastBattleSig;
   if (freshBattle) {   // new battle: refit zoom, drop stale selection, recentre on your camp
     _lastBattleSig = bsig;
@@ -4281,8 +4328,15 @@ function fitLegend() {
   document.documentElement.style.setProperty('--legzoom', '1');
   const natural = leg.offsetHeight;                       // layout height at zoom 1
   if (!natural || !row.clientHeight) { document.documentElement.style.removeProperty('--legzoom'); return; }
-  const z = Math.max(1, Math.min(3.2, (row.clientHeight - 24) / natural));
+  // ...but never past a fifth of the window's width: on a short-wide window (1000x760 is a 1280x950 Steam
+  // window at 125% scaling) filling the height made it ~2.9x — 40% of the width, sitting over the map.
+  const byW = (innerWidth * 0.2) / (leg.offsetWidth || 142);
+  const z = Math.max(1, Math.min(3.2, (row.clientHeight - 24) / natural, byW));
   document.documentElement.style.setProperty('--legzoom', z.toFixed(3));
+  // The map spreads its columns over whatever width #mapscroll has, and it measured that BEFORE this
+  // ran — so the columns were laid out for the old legend and the right-hand ones ended up under it.
+  // Lay them out again now the legend has its real size.
+  if (S && S.nodes && document.getElementById('mapview')?.classList.contains('show')) renderMapGraph();
 }
 window.addEventListener('resize', () => { clearTimeout(window._legFit); window._legFit = setTimeout(fitLegend, 120); });
 
@@ -4393,7 +4447,7 @@ function markerUnlocked(id){ const m = MARKER_SETS.find(x => x.id === id); if (!
 function tileSel(){ try { const v = localStorage.getItem('dc_tile_sel'); return (v && markerUnlocked(v)) ? v : 'B'; } catch (e) { return 'B'; } }
 function setTileSel(v){ if (!markerUnlocked(v)) return; try { localStorage.setItem('dc_tile_sel', v); } catch (e) {} const b = document.getElementById('board'); if (b) b.dataset.ts = v; }
 // switchable fog-of-war art sets — Billows is the free default; the rest are UNLOCKED by achievements
-// (win:true → macro-texture windowing: one whole image per 4×4 section; feather edges masked at runtime).
+// (win:true → macro-texture windowing: one sheet windowed across the whole board; feather edges masked at runtime).
 const FOG_SETS = [
   { id:'billow',  label:'Billows', suf:'_billow',  n:4, win:true },                          // default, always available
   { id:'lava',    label:'Ember',   suf:'',         n:4, win:true, req:'warlord_win' },
@@ -6137,9 +6191,12 @@ function renderHud() {
       ${ibtn('menu', 'menu()')}
     </div>`;
   const _mb = $('#medalbar');
-  if (S.medals && S.medals.length) {
+  const _docs = S.doctrines || [];
+  if ((S.medals && S.medals.length) || _docs.length) {
     _mb.style.display = '';   // shown (flex, via the stylesheet)
-    _mb.innerHTML = S.medals.map(m => `<span class="medalpip" onclick="showMedalOne('${m.id}')" title="${m.name}${m.n>1?' ×'+m.n:''}">${medalIcon(m.id, 24)}${m.n>1?`<span class="medalx">×${m.n}</span>`:''}</span>`).join('');
+    // Doctrines in force sit at the front of the bar: a gold "D" seal each, tap for the card that set it.
+    _mb.innerHTML = _docs.map((d, i) => `<span class="medalpip doctrinepip" onclick="peekCard(S.doctrines[${i}], 'Doctrine in force', null, true)" title="${I18n.esc(d.name)}${d.n > 1 ? ' ×' + d.n : ''}"><b>D</b>${d.n > 1 ? `<span class="medalx">×${d.n}</span>` : ''}</span>`).join('')
+      + (S.medals || []).map(m => `<span class="medalpip" onclick="showMedalOne('${m.id}')" title="${m.name}${m.n>1?' ×'+m.n:''}">${medalIcon(m.id, 24)}${m.n>1?`<span class="medalx">×${m.n}</span>`:''}</span>`).join('');
   } else {
     _mb.innerHTML = '';
     _mb.style.display = 'none';   // no medals → collapse the bar entirely (no overlay over the board)
@@ -6422,15 +6479,23 @@ function renderBoard() {
   const FSUF = fogSuffix();
   const FWIN = fogWin();
   const fp = (name, deg) => `<img class="fp" src="assets/ui/fogedge${FSUF}/${name}.png"${deg ? ` style="transform:rotate(${deg}deg)"` : ''} alt="">`;
-  // macro-windowing: each 4×4 section picks one of the set's sheets; a cell shows its window into it.
-  const blkSheet = (x, y) => `assets/ui/fog${FSUF}/sheet${fogHash(Math.floor(x / 4), Math.floor(y / 4)) % FCNT}.jpg`;
-  const winPos = (x, y) => { const wx = ((x % 4) + 4) % 4, wy = ((y % 4) + 4) % 4; return (wx / 3 * 100).toFixed(2) + '% ' + (wy / 3 * 100).toFixed(2) + '%'; };
+  // macro-windowing: ONE sheet for the whole battle, spread over FSPAN×FSPAN cells, each cell showing its
+  // window into it. Every sheet tiles seamlessly with ITSELF, so the field is continuous in every
+  // direction. It used to pick a different sheet per 4×4 section, and two different sheets never meet
+  // cleanly — the board read as a grid of fog squares with hard lines between them. The sheet and its
+  // offset come from the battle, so each fight still gets its own cloud.
+  const FSPAN = 6;
+  const fseed = fogHash((Number(S.seed) || 0) & 0x7fffffff, (S.node_num || 0) * 31 + (S.level || 0));
+  const fsheet = `assets/ui/fog${FSUF}/sheet${fseed % FCNT}.jpg`, fox = (fseed >>> 8) % FSPAN, foy = (fseed >>> 16) % FSPAN;
+  const blkSheet = () => fsheet;
+  const winPos = (x, y) => { const m = (v) => ((v % FSPAN) + FSPAN) % FSPAN, wx = m(x + fox), wy = m(y + foy);
+    return `calc(var(--cell) * ${-wx}) calc(var(--cell) * ${-wy})`; };
   // feathered edge: for windowed sets it's RUNTIME-BAKED and CONTEXT-AWARE. The fog field is a pure
   // function of position — every fogged cell shows blkSheet(x,y) windowed at winPos(x,y) — so the ONE
   // correct texture for the feather on cell c is c's OWN would-be fog: blkSheet(c)@winPos(c). Pulling the
   // neighbour's sheet (src) instead shows a DIFFERENT part of the set whenever c and the neighbour fall in
-  // different 4×4 sections, breaking continuity; using c's own sheet makes the spill match the surrounding
-  // fog exactly (and the seam at a section boundary is the same seam the fog field already has there). The
+  // different sections, breaking continuity; using c's own window makes the spill match the surrounding
+  // fog exactly. (There is now one sheet per board, so there are no section seams left to match.) The
   // mask is PRE-ROTATED (deg) so only the feather shape turns; the texture stays world-aligned. src is now
   // vestigial for windowed sets (kept for the non-win PNG signature).
   const edge = (c, shape, deg, src) => {
@@ -6460,7 +6525,7 @@ function renderBoard() {
     // whole board fogged: every unrevealed play cell AND off-map void renders fog (hides the map shape)
     if (c.t == null || c.t === 'void') {
       const off = offSides(c);
-      // windowed: cell shows its window into its 4×4 section's sheet (continuous within the section).
+      // windowed: cell shows its window into the board's sheet (continuous everywhere).
       // (Every fog set is win:true; the non-win branch is a defensive fallback — f0 is the only fill tile kept.)
       const fill = FWIN
         ? `<div class="fog fill win" style="background-image:url(${blkSheet(c.x, c.y)});background-position:${winPos(c.x, c.y)}"></div>`
@@ -8086,6 +8151,7 @@ async function animateEvents(events, finalR) {
       await sleep(700);
       continue;
     }
+    if (ev.t === 'finale' && ev.at) { try { centerCell(ev.at[0], ev.at[1]); } catch (e) {} await sleep(900); continue; }   // the field grows: look where the king stands
     if (ev.t === 'enemy_card') {                                    // an enemy played a card
       Sfx.play('alert'); haptic(20);
       if (ev.first && ev.card && localStorage.getItem('dc_reveal_enemy') !== '0') {
@@ -8715,7 +8781,7 @@ function showGenerals() {
   o.innerHTML = `<div class="oframe titled menu${S.demo ? ' demo' : ''}"><div class="ofbanner ofhdr tableofwar"><img src="assets/ui/hdr/table_of_war.png" alt="Table of War"></div><h1>TABLE OF WAR</h1>${best ? '<p>Best score ' + best + '</p>' : ''}`
     + `<div class="menucols">`
     +   `<div class="mzone mzone-a">`
-    +     `<div class="menutop">${S.demo ? '<div class="choice demo-note"><b>DEMO</b><span>One commander, Act 1 only.<br>The full campaign, every commander, achievements and unlockables are coming to Steam.</span></div>' : dailyPanel}</div>`
+    +     `<div class="menutop">${S.demo ? '<div class="choice demo-note"><b>DEMO</b><span>One commander, Act 1 only.<br><span class="dn-long">The full campaign, every commander, achievements and unlockables are coming to Steam.</span><span class="dn-short">The full game is coming to Steam.</span></span></div>' : dailyPanel}</div>`
     +     `<div class="menumid">${resume}${seedField}</div>`
     +     genCards
     +   `</div>`
@@ -8727,7 +8793,10 @@ function showGenerals() {
          ${mtile('how_to_play',"showHelp()",'How to play')}
          ${S.demo ? '' : mtile('generals',"showProgression()",'Generals')}
        </div></div>`
-    + `</div></div>`;
+    + `</div></div>`
+    // Desktop only. A phone app is left with the OS's own gesture and a browser tab with its close box,
+    // but a fullscreen Steam window had no way out short of Alt+F4.
+    + (_isTauri() ? `<div class="menuquit">${ibtn('close', 'quitGame()', { cls: 'sm', word: t('menu.quit', 'Quit') })}</div>` : '');
   o.classList.add('show');
   requestAnimationFrame(() => fitGtext(o));
   // First-ever visit: a brief welcome, then in-battle coach tips teach the rest
@@ -9021,6 +9090,13 @@ async function newGame(id) {
   if (seed != null && r && r.seed != null && String(r.seed) !== String(seed))   // surface a seed mismatch instead of hiding it
     toast(`seed applied as ${r.seed}`);
   render(r);
+}
+// Leave the desktop app from the main menu. Progress is already in the store after every action; the
+// cloud write is flushed first because it is otherwise on a debounce, and the process is about to end.
+async function quitGame() {
+  if (!(await gameConfirm(t('menu.quit_q', 'Quit Table of War? Your progress is saved.'), t('menu.quit', 'Quit')))) return;
+  try { if (window.__quitApp) { await window.__quitApp(); return; } } catch (e) { /* fall through */ }
+  window.close();
 }
 async function continueRun() {
   const r = await api('/api/continue', {});
@@ -10209,7 +10285,7 @@ function showHoverCard(x, y, cell) {
   const notes = [];
   if (u.flanked === true) notes.push('Flanked — +1 to each hit on it per unit beside it');
   if (u.disabled) notes.push('EMP — cannot act');
-  if (u.tormented) notes.push('Tormented — cannot act; dies at the end of your turn unless healed');
+  if (u.tormented) notes.push('Tormented — cannot act; dies at the end of your next full turn unless healed above 1 HP');
   if (u.poison) notes.push(`Poisoned — takes 2 at the end of your turn (${u.poison} turn${u.poison > 1 ? 's' : ''} left)`);
   if (u.facing && (u.facing[0] || u.facing[1])) notes.push(`Iron breastplate: +6 DEF from the front (facing ${u.facing[0] > 0 ? 'east' : u.facing[0] < 0 ? 'west' : u.facing[1] > 0 ? 'south' : 'north'}) — hit it from the side or behind`);
   if (u.stale) notes.push('Last known position — not currently in sight');
