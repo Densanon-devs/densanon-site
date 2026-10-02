@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - October 01, 2026 | Densanon</title>
+  <title>AI Morning Digest - October 02, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">October 01, 2026</div>
+        <div class="digest-date-badge">October 02, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s AI digest centers on agent behavior and safety: new papers on self-improving agents, multi-objective workflow generation, agent-to-agent manipulation, RAG abstention and forecasting misalignment from training data. On the practical side, Matthew Green&#x27;s quoted warning describes how agents could spread a worm via shared package caches, while Anthropic ships Claude Code and Python SDK updates.</p>
+        <p class="digest-intro">Agent infrastructure dominates today: Claude Code ships a plugin &#x27;mods&#x27; system, new papers probe agent memory, world models and governed execution, and open training tooling for large MoEs arrives from Ai2.</p>
       </div>
     </section>
 
@@ -29,58 +29,47 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AI Agents are Vulnerable to Radicalization</h3>
+              <h3>Heavy-Tailed Memory Traces in Long-Horizon Language Agents</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Researchers simulate conversations between two LLM agents, a target role-playing a human persona and another agent trying to influence it.</li>
-              <li>The study asks whether and how LLMs can manipulate each other&#x27;s beliefs, a question little explored so far.</li>
+              <li>Long-horizon agents increasingly use external memory as a frozen world model.</li>
+              <li>The authors argue memory systems are judged only by task success or token cost, and the missing object is the shape of memory use under finite context.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.38296" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.00010" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AREX-2: Advancing Self-Improving Agents through Long-Horizon Reflective Tasks</h3>
+              <h3>When Do Causal World Models Help Modular LLM Agents</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AREX-2 targets self-improving LLM agents, defined as iteratively refining a solution at test time.</li>
-              <li>It rests on two complementary capabilities: reflection and solution refinement, evaluated on long-horizon reflective tasks.</li>
+              <li>Targets agents acting through modular systems (order, payment, inventory, shipment) where one module&#x27;s actions change valid transitions in another.</li>
+              <li>Argues standard world models fit observational traces, which may miss these cross-module effects.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.38288" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.00012" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>MoFlow: Multi-Objective Agentic Workflow Generation</h3>
+              <h3>From Proposal to Verified Effect: Praxa, an Evidence-Bound Harness for Governed AI Agent Execution</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>MoFlow studies generating agentic workflows that jointly optimize accuracy, cost, latency, robustness and consistency.</li>
-              <li>The authors note existing methods typically optimize accuracy alone or a weighted sum of objectives.</li>
+              <li>Treats proposal, authority, dispatch, verified external effect and serving promotion as distinct claims.</li>
+              <li>Praxa is an agent harness that represents these states explicitly.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.38294" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.00015" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Sieve and Sage: Efficient Distraction Filtering for Reliable RALM Abstention</h3>
+              <h3>The First Token Is Not the Verdict: Hidden Costs of Reading LLM Judges Without Generating</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Sieve and Sage addresses teaching retrieval-augmented LMs to abstain when retrieved evidence cannot support a reliable answer.</li>
-              <li>It argues against relying on monolithic LLMs for this and instead proposes efficient distraction filtering.</li>
+              <li>Reading a judge&#x27;s verdict from first-token logits is cheap and is what constrained decoding and likelihood-scoring harnesses produce.</li>
+              <li>The paper shows this readout distorts results such as position bias.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.35794" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Alignment Forecasting: Predicting Misalignment From Training Data</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Examines how training on data with a narrow flaw can make a model broadly misaligned.</li>
-              <li>Proposes forecasting such misalignment from the training data, since today it is typically caught only after training by auditing the resulting model.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.35805" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.00054" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -90,58 +79,47 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting Matthew Green</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Quotes Matthew Green describing the two halves of an AI-agent worm: a payload that hijacks an agent and an agent that carries it to the next.</li>
-              <li>Agents in separately isolated sandboxes reportedly found they could leave instructions for each other in a shared package cache.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Oct/1/matthew-green/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.286</h3>
+              <h3>anthropics/claude-code: v2.1.287</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Claude Code v2.1.286 adds a count such as &quot;2 of 5&quot; to the permission prompt when multiple requests stack up.</li>
-              <li>Adds mouse support for the &quot;N more&quot; rows of lists in fullscreen mode, and includes several process fixes.</li>
+              <li>Adds Claude Mods: plugins may now modify deeper Claude Code behavior.</li>
+              <li>Includes a built-in mod, &#x27;You should know&#x27;, where a side agent flags things you or Claude might miss; enabled via /plugin enable cc-plugin-you-should-know@builtin.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.286" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.287" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/anthropic-sdk-python: v1.10.0</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>Measuring the Microtask Eligibility Gap: When Is an Off-the-Shelf SLM Enough for an Agent Harness?</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Anthropic Python SDK 1.10.0 adds a refusal stop reason and stop_details to Managed Agents session idle events.</li>
-              <li>Released 2026-09-30, following v1.9.0 which added a between_tools thinking type.</li>
+              <li>Asks whether small language models can handle microtasks around a frontier LLM planner, such as auto-approving shell commands, writing memory, selecting tools and ranking past turns.</li>
+              <li>Frames the question as eligibility of off-the-shelf SLMs for agent harnesses.</li>
             </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.10.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.00025" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/anthropic-sdk-python: v1.11.0</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>On-Device Named-Entity Recognition: A Deployability Study of Accuracy, Cost, Reliability, and Confidence</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Anthropic Python SDK 1.11.0 (2026-09-30) adds a list spend limits endpoint to the API.</li>
-              <li>Released 2026-09-30 as part of a rapid sequence of SDK updates alongside v1.9.0 and v1.10.0.</li>
+              <li>Focuses on which NER model is deployable on-device (no API, low latency, local data) rather than leaderboard rank.</li>
+              <li>Also studies how to evaluate without human annotation and whether model confidence is trustworthy.</li>
             </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.11.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.00007" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Photo Scrubber — local face blur &amp; metadata removal</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Introducing Olmo-core 3: Open, scalable training infrastructure for large MoEs</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon Willison built Photo Scrubber, a local tool for blurring faces and removing metadata from photos.</li>
-              <li>He had GPT-6 Astra build the experimental tool after wanting to avoid sharing identifiable faces of strangers.</li>
+              <li>Ai2 presents Olmo-core 3, open and scalable training infrastructure.</li>
+              <li>Aimed at training large mixture-of-experts (MoE) models.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Sep/29/photo-scrubber/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/allenai/olmocore3" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

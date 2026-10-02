@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - October 01, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - October 02, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">October 01, 2026</div>
+        <div class="digest-date-badge">October 02, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Funding and deployment dominate today&#x27;s industry news, from Maven Robotics&#x27; $100 million raise and Inbolt and CloudNC rounds to Pony.ai&#x27;s driverless robotaxi trials in Zagreb. On the research side, new work targets soft-robot manipulation, a long-horizon humanoid benchmark, and learning from imperfect demonstrations.</p>
+        <p class="digest-intro">Humanoids dominate today&#x27;s digest: Boston Dynamics redesigns Atlas&#x27;s hand for mass production, IDC reports humanoid shipments up 432% in H1 2026 with Agibot leading, and IROS 2026 wraps up in Pittsburgh. Research items cover humanoid skill reuse and continuum-robot safety.</p>
       </div>
     </section>
 
@@ -29,47 +29,36 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Optimize, Learn, Refine: Whole-Body Grasping and Pick-and-Throw with a Spiral Soft Robot</h3>
+              <h3>HumanoidTTT: Test-Time Capability Reuse for Efficient Humanoid Control</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Addresses whole-body grasping and pick-and-throw with a spiral soft continuum robot, starting from an initially ungrasped state.</li>
-              <li>Soft continuum robots can exploit distributed compliance for whole-body manipulation, but synthesizing behavior through changing contacts remains difficult.</li>
+              <li>Targets the case where the same humanoid motion capability is requested repeatedly during continual deployment.</li>
+              <li>Builds on recent advances in motion generation and whole-body tracking; the paper&#x27;s focus is reliable, efficient reuse.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.38202" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.00198" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Fiatlux: A Long-Horizon Benchmark for Humanoid Ladder Climbing and Light-Bulb Replacement</h3>
+              <h3>Real-Time Whole-Body Safe Motion Generation for Multi-Segment Tendon-Driven Continuum Robots</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Introduces a benchmark for humanoid ladder climbing and light-bulb replacement in a single long-horizon episode.</li>
-              <li>Existing benchmarks treat tabletop manipulation, flat-floor household activity, and humanoid locomotion separately; none scores vertical mobility and dexterous work on a fragile payload together.</li>
+              <li>Notes that real-time motion generation for tendon-driven continuum robots needs accurate modeling of nonuniform bending and whole-body collision avoidance.</li>
+              <li>Presents a unified actuation-space framework for planar multi-segment tendon-driven continuum robots.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.38216" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.00220" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SynIL: Leveraging Synergy for Offline Imitation Learning from Imperfect Demonstration Datasets</h3>
+              <h3>Multi-Reference Path Tracking Control for an Agricultural Tractor with Nonlinear Model Predictive Control</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets offline imitation learning from demonstration datasets contaminated with suboptimal or noisy demonstrations.</li>
-              <li>Notes that performance degrades severely on such data, and proposes leveraging synergy rather than relying on prior quality-assessment metrics alone.</li>
+              <li>Path tracking along a predefined reference is a key component of precision agriculture.</li>
+              <li>Develops a Nonlinear MPC controller that incorporates multiple segments of a piecewise-linear reference path.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2609.38225" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>TALK-Dem: Benchmarking Embodied Task Planning under Dementia-Associated Communication Patterns</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Benchmarks LLM-driven embodied task planning under communication patterns associated with dementia.</li>
-              <li>Argues current planners assume an ideal user whose instructions are clear, complete, and task-focused, which fails for users with cognitive impairment.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2609.38371" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.00057" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -79,69 +68,99 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How Maven Robotics plans to automate industrial work, one task at a time</h3>
+              <h3>Atlas Robot&#x27;s New Hand May Outperform Humanlike Designs</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Boston Dynamics announced a redesigned hand for Atlas.</li>
+              <li>The previous three-finger generation did superhuman things but was never intended for mass production in the tens or hundreds of thousands.</li>
+              <li>The redesign shifts from research hardware to a scalable production design.</li>
+            </ul>
+            <a href="https://spectrum.ieee.org/robust-robot-hand" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Boston Dynamics drops pinkie on new humanoid hand</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Maven Robotics raised $100 million earlier this month.</li>
-              <li>The company is now looking toward mass producing its mobile manipulator robot, targeting industrial work one task at a time.</li>
+              <li>Engineers taped their pinkies and ring fingers together for a day to learn what they could not do without them.</li>
+              <li>That exercise informed the new hand&#x27;s design, which drops the pinkie.</li>
             </ul>
-            <a href="https://www.therobotreport.com/how-maven-robotics-plans-automate-industrial-work-one-task-at-a-time/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/boston-dynamics-drops-pinkie-on-new-humanoid-hand/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ANYbotics launches Shift to streamline robot fleet operations, scale inspections</h3>
+              <h3>IDC data shows Agibot led global humanoid robot shipments in H1 2026</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Global humanoid shipments approached 25,000 units in H1 2026, up 432.1 percent year on year, per IDC.</li>
+              <li>Agibot ranked first, shipping more than 8,600 humanoids.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/10/02/idc-data-shows-agibot-led-global-humanoid-robot-shipments-in-h1-2026/105463/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Agibot and Chimelong launch large-scale embodied AI theme park with more than 300 robots</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>First phase launched at Chimelong Spaceship Park with more than 300 robots.</li>
+              <li>Robots are integrated into entertainment, education, visitor services and hotel operations.</li>
+              <li>Goes beyond standalone demonstrations by embedding robots in daily operations.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/10/02/agibot-and-chimelong-launch-large-scale-embodied-ai-theme-park-with-more-than-300-robots/105428/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Astribot brings its T1 humanoid robot to North America</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Shenzhen-based Astribot showed the T1 humanoid in North America for the first time.</li>
+              <li>Shown at IROS 2026, held September 27 to October 1 in Pittsburgh.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/10/02/astribot-brings-its-t1-humanoid-robot-to-north-america/105448/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Neura Robotics brings physical AI to healthcare</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Neura is entering healthcare and life sciences with physical AI and cognitive robots.</li>
+              <li>Aimed at staff shortages and capacity limits that leave care teams short on time.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/10/02/neura-robotics-brings-physical-ai-to-healthcare/105460/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Flow Engineering raises $50 million Series B at $750 million valuation</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Agentic platform for hardware development raised a $50M Series B at a $750M valuation.</li>
+              <li>Co-led by Antonio Gracias (Valor Equity Partners) and Gavin Baker (Atreides Management).</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/10/02/flow-engineering-raises-50-million-series-b-at-750-million-valuation/105451/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Your Robot&#x27;s Safety Functions Already Work. What If the Input Lies?</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ANYbotics launched Shift, software for running robot fleet operations.</li>
-              <li>It helps maintenance teams run industrial inspections, detect failing equipment, and turn data into work orders.</li>
+              <li>A robot can follow its safety rules and still act on manipulated information.</li>
+              <li>Discusses how teams can strengthen testing and evidence for robot safety.</li>
             </ul>
-            <a href="https://www.therobotreport.com/anybotics-launches-shift-streamline-robot-fleet-operations-scale-autonomous-inspections/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Innodata opens motion-capture lab to help humanoids move more like people</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Innodata opened a motion-capture lab to help humanoids move more like people.</li>
-              <li>The lab uses Vicon cameras to measure movements with sub-millimeter accuracy and collect real-world training data for robots.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/innodata-opens-motion-capture-lab-help-humanoids-move-more-like-people/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Inbolt raises $12.5 million to bring sight and intelligence to industrial robots</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Inbolt raised $12.5 million for technology that lets industrial robots see, think, and adapt in real time.</li>
-              <li>The round was led by new investor Shift4Good, with participation from Bridges Climate Transition Partners.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/09/30/inbolt-raises-12-5-million-to-bring-sight-and-intelligence-to-industrial-robots/105360/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Pony.ai and Verne begin fully driverless robotaxi passenger trials in Zagreb</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Pony.ai and Verne began fully driverless robotaxi test rides with passengers on public roads in Zagreb.</li>
-              <li>The companies describe it as a European first.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/09/30/pony-ai-and-verne-begin-fully-driverless-robotaxi-passenger-trials-in-zagreb/105356/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Comau develops robotic order preparation system for Decathlon e-commerce operations</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Comau designed and validated a robotic order preparation solution tested within Decathlon&#x27;s e-commerce fulfillment operations.</li>
-              <li>It is part of MASTERLY, a European initiative to move from traditional mass production to highly flexible, customized manufacturing.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/09/30/comau-develops-robotic-order-preparation-system-for-decathlon-e-commerce-operations/105352/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/your-robots-safety-functions-already-work-what-if-the-input-lies/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
