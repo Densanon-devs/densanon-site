@@ -472,6 +472,10 @@
   .shopcard { position: relative; flex: 1 1 78px; max-width: 140px; cursor: pointer; aspect-ratio: 1/1;
     filter: drop-shadow(1px 2px 3px rgba(0,0,0,.5)); }
   .shopcard img { width: 100%; height: 100%; display: block; }
+  /* One size for every offer: a quarter of the row each, never growing. With flex-grow a lone card on the
+     second row stretched to the size cap while the three above it shared a row, so one offer looked
+     bigger — more important — than the rest. */
+  .nodecards .shopcard { flex: 0 1 calc((100% - 30px) / 4); }
   .shopcard.poor { filter: grayscale(.55) brightness(.55); }
   .shopcard .shopcost { position: absolute; top: 3px; right: 3px; z-index: 2; font: 700 11px var(--f-num); color: #f1ead2;
     background: rgba(0,0,0,.74); border: 1px solid rgba(216,178,58,.65); border-radius: 5px; padding: 0 5px;
@@ -804,6 +808,20 @@
     border: none; background: none; cursor: pointer; padding: 0; -webkit-tap-highlight-color: transparent;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,.5)); transition: transform .1s; }
   #setBtn img { width: 100%; height: 100%; display: block; }
+  /* the hand's full card view (long-press): a big card on the dark ground, notes beside it on a wide screen */
+  #ovCardFull { display: none; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
+  #ovCardFull.show { display: flex; }
+  .cfull { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .cfull.side { flex-direction: row; gap: 22px; }
+  .cfull-kw { max-width: 360px; font-size: 15px; line-height: 1.55; text-align: left; }
+  /* upgrade preview: the card now, an arrow, the card upgraded */
+  .uppair { display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .uppair .uparrow { font-size: 28px; color: #f0c94a; text-shadow: 0 2px 4px rgba(0,0,0,.7); }
+  .upchange { margin-top: 10px; font: 700 14px var(--f-ui); color: #8fe07a; text-shadow: 0 1px 2px rgba(0,0,0,.8); }
+  /* boss March confirm: portrait beside its description */
+  #ovConfirm .bossconf > div:first-child { display: flex; gap: 16px; align-items: center; text-align: left; }
+  #ovConfirm .bossconf .bc-art { flex: 0 0 auto; max-width: 42%; }
+  #ovConfirm .bossconf .bc-art img { width: 100% !important; height: auto; display: block; margin: 0 !important; border-radius: 6px; }
   /* main-menu Quit (desktop shells): the top-left mirror of the settings gear */
   .menuquit { position: fixed; top: max(6px, env(safe-area-inset-top)); left: max(6px, env(safe-area-inset-left)); z-index: 40; }
   #setBtn:active { transform: scale(.92); }
@@ -2781,7 +2799,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-Cq9II3t6.js"></script>
+  <script type="module" crossorigin src="./assets/index-CFfysjyg.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2874,7 +2892,7 @@
 <script src="./plates.js"></script>          <!-- which UI plates have text-free art (npm run gen:plates) -->
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.99';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.100';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -3899,11 +3917,6 @@ function showSettings() {
       </div>
     </div>
     <div class="choice">
-      <b>${t('settings.deploy', 'Deployment')}</b>
-      <div class="d" style="margin:2px 0 8px;line-height:1.5">${t('settings.deploy_help', 'Auto sets your army down on its starting tiles as each battle opens. Manual holds it in reserve so you place every soldier yourself.')}</div>
-      <div style="display:flex;gap:8px">${['auto', 'manual'].map(m => pbtn('deploy_' + m, `setDeployMode('${m}')`, { active: deployMode() === m })).join('')}</div>
-    </div>
-    <div class="choice">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
         <b>Mute all sound</b>
         ${toggle(Sfx.muted, "Sfx.setMuted(!Sfx.muted);showSettings()")}
@@ -4523,6 +4536,13 @@ function renderMapScreen() {
   else closeOv('ovNode');
 }
 
+function bossConfirmHTML(b) {
+  const port = bossPortrait(b.id, 200);
+  return `<div class="bc-art">${port || `<span style="font-size:56px;color:${b.color}">${bossFace(b.id, b.unknown ? 120 : 56) || b.face || ''}</span>`}</div>
+    <div class="bc-info"><b class="gold" style="font-size:17px">${b.name}</b>${b.post ? `<div class="d" style="color:#b7a77a;letter-spacing:.04em">${b.post}</div>` : ''}
+      <div class="d" style="margin-top:8px;line-height:1.5">${b.telegraph}</div>
+      ${b.perk_name ? `<div class="d" style="margin-top:8px;line-height:1.45"><b class="gold">${b.perk_name}</b> — ${b.perk_desc}</div>` : ''}</div>`;
+}
 function showActBoss() {
   const b = S.act_boss; if (!b) return; Sfx.play('ui_tap');
   const port = bossPortrait(b.id, 300);
@@ -4601,7 +4621,11 @@ async function confirmTravel(nid) {
   const n = (S && S.nodes || []).find(x => x.id === nid);
   if (!n) return travelTo(nid);
   Sfx.play('ui_tap');
-  if (!(await gameConfirm(nodeSummaryHTML(n.kind, n), 'March'))) return;
+  // The boss gets its own face: who it is and what it does, nothing else. The generic node summary drew a
+  // crown glyph and the word "Boss" over the one fight in the act you most need to read up on.
+  const boss = n.kind === 'boss' && S.act_boss;
+  if (!(await gameConfirm(boss ? bossConfirmHTML(S.act_boss) : nodeSummaryHTML(n.kind, n), 'March',
+                          boss ? { cls: 'bossconf', maxW: 460 } : null))) return;
   travelTo(nid, true);
 }
 async function travelTo(nid, confirmed) { if (!confirmed) Sfx.play('ui_tap');
@@ -4616,10 +4640,10 @@ async function jumpTo(nid) {
   render(await api('/api/travel', {node: nid}));
 }
 // in-DOM confirm — native confirm() is blocked/inconsistent across WKWebView (iOS) and Tauri (macOS)
-function gameConfirm(msg, okLabel) {
+function gameConfirm(msg, okLabel, opts) {
   return new Promise(res => {
     const o = $('#ovConfirm');
-    o.innerHTML = `<div class="choice" style="max-width:340px">
+    o.innerHTML = `<div class="choice${opts && opts.cls ? ' ' + opts.cls : ''}" style="max-width:${(opts && opts.maxW) || 340}px">
         <div style="font-size:14px;line-height:1.5;margin-bottom:12px">${msg}</div>
         <div style="display:flex;gap:12px;justify-content:center">
           <button id="_cfok" class="ibtn" aria-label="${okLabel || 'Confirm'}"><img src="${plateSrc('btn', 'confirm')}" alt="">${plateLabel('btn', 'confirm', '', okLabel || '')}</button>
@@ -5493,7 +5517,14 @@ function peekCard(c, label, onConfirm, disabled, opts){
   opts = opts || {};
   Sfx.play('ui_tap');
   const o = $('#ovInspect');
-  o.innerHTML = `<div style="text-align:center;margin-bottom:10px">${frameCardHTML(c)}</div>`
+  // opts.before: an upgrade preview. Show the card as it is NOW beside what it becomes, with the change
+  // spelled out, because an upgrade is a difference: shown alone, the upgraded card had to be compared
+  // with a version you were remembering, and a one-word change ("wider field") read as no change at all.
+  const face = opts.before
+    ? `<div class="uppair">${frameCardHTML(opts.before, 210)}<span class="uparrow">➜</span>${frameCardHTML(c, 210)}</div>
+       ${opts.change ? `<div class="upchange">Upgrade: ${opts.change}</div>` : ''}`
+    : frameCardHTML(c);
+  o.innerHTML = `<div style="text-align:center;margin-bottom:10px">${face}</div>`
     + (opts.noDetail ? '' : cardDetailHTML(c))   // the card face already shows name/cost/text — skip the repeat where asked
     + `<div class="ibtnrow" style="margin-top:10px">
          <button class="ibtn" ${disabled?'disabled':''} onclick="_peekConfirm()" aria-label="${label}"><img src="${plateSrc('btn', 'confirm')}" alt="">${plateLabel('btn', 'confirm', '', label)}</button>
@@ -5750,9 +5781,7 @@ function shopDeckPick(mode){
 function shopPick(mode,id){
   if (mode === 'upgrade') {   // preview the card AS UPGRADED; keep the deck list open UNDER the peek so Return goes back to it
     const c = (S.pending.deck||[]).find(x=>x.id===id); if(!c) return;
-    const view = Object.assign({}, c, { upgraded:true, name: /\+$/.test(c.name)?c.name:c.name+'+',
-      cost: c.up_cost!=null?c.up_cost:c.cost, text: c.up_text || c.text });
-    peekCard(view, 'Upgrade this card', ()=>{ closeOv('ovDeck'); shopUpgrade(id); }, false, {noDetail:true});   // Confirm closes the list + applies; Return just closes the peek → back to the list
+    peekCard(upgradedView(c), 'Upgrade this card', ()=>{ closeOv('ovDeck'); shopUpgrade(id); }, false, {noDetail:true, before:c, change:c.up_desc});   // Confirm closes the list + applies; Return just closes the peek → back to the list
     return;
   }
   closeOv('ovDeck');
@@ -5762,9 +5791,7 @@ function deckPickPeek(id){
   const p = S.pending; if(!p||p.kind!=='deck_pick') return;
   const c = (p.deck||[]).find(x=>x.id===id); if(!c) return;
   if (p.mode === 'upgrade') {   // preview the card AS UPGRADED, like the outpost does
-    const view = Object.assign({}, c, { upgraded:true, name: /\+$/.test(c.name)?c.name:c.name+'+',
-      cost: c.up_cost!=null?c.up_cost:c.cost, text: c.up_text || c.text });
-    peekCard(view, 'Upgrade this card', ()=>deckPick(id), false, {noDetail:true});
+    peekCard(upgradedView(c), 'Upgrade this card', ()=>deckPick(id), false, {noDetail:true, before:c, change:c.up_desc});
   } else peekCard(c, 'Remove this card', ()=>deckPick(id), false, {noDetail:true});
 }
 async function deckPick(id){ const r=await api('/api/deck_pick',{card_id:id});
@@ -7189,14 +7216,21 @@ function showCardFull(i) {
   const o = $('#ovCardFull');
   const playImg = c.curse?'unplayable':c.capped?'troops_full':(c.aff?'play':'not_enough_cp');
   const kwb = kwBlockHTML(c);
-  o.innerHTML = oframe(`<div style="text-align:center">${frameCardHTML(c, 220)}</div>
-    ${kwb?`<div class="ctarget" style="padding:0 12px;max-width:300px;margin:0 auto">${kwb}</div>`
-      :tags?`<div class="ctarget" style="font-size:11px;padding:6px 12px 0;color:#b78fd0;text-align:center">${tags}</div>`:''}
+  // Laid out like the reward view: the card as large as the screen allows on the plain dark ground, the
+  // buttons under it. It used to sit at 220px inside an ornate frame that was then zoomed down to fit,
+  // which on a phone left the card and its notes too small to read. The keyword notes go BESIDE the card
+  // when the screen is wider than tall, so they cost the card no height.
+  const note = kwb || (tags ? `<div style="color:#b78fd0">${tags}</div>` : '');
+  const F = FRAMES[frameFor(c)] || FRAMES.common, asp = F.aspect || 1;
+  const side = !!note && innerWidth > innerHeight;
+  const w = Math.round(Math.max(170, Math.min((innerHeight - 130) * asp, innerWidth * (side ? 0.46 : 0.86), 560)));
+  o.innerHTML = `<div class="cfull${side ? ' side' : ''}"><div class="cfull-card">${frameCardHTML(c, w)}</div>
+      ${note ? `<div class="cfull-kw ctarget">${note}</div>` : ''}</div>
     <div class="cardfullbtns">
       ${ibtn(kept?'kept':'keep','keepFromFull('+i+')',{cls:kept?'act':''})}
       ${ibtn(playImg, playable?`_fullPlay(${i})`:'', {dis:!playable})}
       ${ibtn('return', "closeOv('ovCardFull')")}
-    </div>`);
+    </div>`;
   _cardFullAt = Date.now();
   o.classList.add('show');
   fitCardFull();
@@ -7545,25 +7579,17 @@ async function doMove(x, y) {
 // ── pre-battle deployment ─────────────────────────────────────────────────────────────────────────
 // The army starts OFF the board, in reserve (game.ts _open_deployment), and nothing about deployment
 // shows until the opening reveal has played out (_onRevealDone): the ground is laid out first, then the
-// pieces arrive. Two ways in, picked in Settings. AUTO (the default) sets the whole army down on its
-// muster tiles the moment the reveal ends — no step to click through. MANUAL opens the reserve panel.
-// The engine rule is the same either way; Auto is just "Deploy" pressed for you.
+// pieces arrive. Deployment is always MANUAL: the reserve panel opens when the reveal ends, and its
+// Auto-deploy button sets everyone still waiting down on their muster tiles in one press. (There used to
+// be an Auto mode in Settings that pressed Deploy for you; it was removed so every fight opens on the
+// placement decision.)
 let _revealDone = true, _revealTok = 0, _rosterSide = null;
-function deployMode() { try { return localStorage.getItem('dc_deploy') === 'manual' ? 'manual' : 'auto'; } catch (e) { return 'auto'; } }
-function setDeployMode(m) {
-  try { localStorage.setItem('dc_deploy', m === 'manual' ? 'manual' : 'auto'); } catch (e) {}
-  Sfx.play('ui_tap');
-  const finish = m !== 'manual' && deployOpenRaw();   // switched to Auto mid-deployment: set the rest down now
-  showSettings();
-  if (finish) deployDone();
-}
 function deployOpenRaw() { return !!(S && S.board && S.deploy && !S.result && _revealDone); }
-function deployOpen() { return deployOpenRaw() && deployMode() === 'manual'; }
+function deployOpen() { return deployOpenRaw(); }
 async function _onRevealDone(tok) {
   if (tok !== _revealTok) return;   // a newer battle's curtain has taken over
   _revealDone = true; _rosterSide = null;
   if (!S || !S.board || !S.deploy || S.result) return;
-  if (deployMode() === 'auto') { await deployDone(); return; }
   renderPrompt();
 }
 // "Deploy" — close deployment. Anyone still in reserve is set down on their muster tile (or the nearest
