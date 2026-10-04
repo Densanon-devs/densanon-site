@@ -2799,7 +2799,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-CFfysjyg.js"></script>
+  <script type="module" crossorigin src="./assets/index-B614Y5ou.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2906,7 +2906,16 @@ let cmdOpts = {moves:new Set(), attacks:new Set(), aim:new Set(), ap:0};
 // Cleared at end of turn, so every turn starts everyone back in Move.
 let aimModes = new Map();
 const isAiming = (id = cmd) => id !== null && !!aimModes.get(id);
-let retain = new Set();       // hand indices marked to keep
+let retain = new Set();       // hand indices marked to keep — DERIVED from retainU on every hand render
+let retainU = new Set();      // the kept cards themselves (serialize's per-instance `u`). An index is only a
+                              // slot: when All In discards the hand and deals a new one, a kept index lands on
+                              // a different card, so the ★ follows the card, and a card that left the hand
+                              // takes its ★ with it.
+function _syncRetain() {
+  const hand = (typeof S !== 'undefined' && S && S.hand) || [];
+  retainU = new Set(hand.filter(c => retainU.has(c.u)).map(c => c.u));
+  retain = new Set(hand.filter(c => retainU.has(c.u)).map(c => c.i));
+}
 let animGen = 0;              // bumped on every render — cancels stale replays
 let lastBoardW = null;        // detect a new level to refit zoom + clear selection
 let _lastBattleSig = null;    // per-battle identity (seed:level:dims) → refit zoom + recentre camera on entry
@@ -6879,6 +6888,7 @@ const HAND_CARD_W = 120;              // display width of a framed hand card (fo
 let handFocus = 0, handDrag = 0, _handSig = '';
 let _cardFullAt = 0;   // guard: ignore the ghost-click that follows the tap which opened the full-card view
 function renderHand() {
+  _syncRetain();   // the ★ follows the card, not the slot
   const cards = S.hand || [];
   const n = cards.length;
   const sig = cards.map(c => c.i).join(',');
@@ -7286,7 +7296,8 @@ function _renderPrompt() {
   // back entirely until the opening reveal has played (deployOpen) — the ground first, then the army.
   if (S.deploy && !S.result && sel === null) {   // a card being aimed keeps its own prompt (playing it ends deployment)
     const hint = cmd === null ? `<b class="gold">${t('deploy.title', 'Deployment')}</b>: ${t('deploy.hint_reserve', 'pick a soldier, then a lit tile')}`
-      : cmdOpts.reserve ? t('deploy.place_hint', 'Tap a lit tile to place this soldier')
+      : cmdOpts.reserve ? ((S.deploy && (S.deploy.reserve || []).some(r => r.id === cmd && r.cls === 'power_plant'))
+          ? t('deploy.place_hint_building', 'Tap a lit tile beside your HQ to place this building') : t('deploy.place_hint', 'Tap a lit tile to place this soldier'))
       : t('deploy.move_hint', 'Tap a lit tile to move it · tap it again to return it');
     $('#prompt').innerHTML = deployOpen() ? `<span class="ptext">${si('play',11)} ${hint}</span>` : '';
     return;
@@ -7749,8 +7760,6 @@ async function play() {
     Sfx.play('card_play');
     // an order that lands on one of YOUR units reads as a buff settling on it
     if ((r.events || []).some(e => e.t === 'buff' || e.t === 'heal')) Sfx.play('buff_apply', { gain: 0.8 });
-    // the played card left the hand → shift the kept-★ indices so the star stays on the same card
-    retain = new Set([...retain].filter(x => x !== hi).map(x => x > hi ? x - 1 : x));
   }
   await afterAction(r);   // renders, plays events, then any popup + win/defeat
   await sendPlayed(lift, r.ok !== false);   // the card goes to the discard (or burns) once it has resolved
@@ -8517,10 +8526,11 @@ document.addEventListener('contextmenu', e => {
 });
 
 function toggleKeep(i) {
-  if (retain.has(i)) retain.delete(i);
+  const c = (S.hand || []).find(x => x.i === i); if (!c) return;
+  if (retainU.has(c.u)) retainU.delete(c.u);
   else {
-    if (retain.size >= (S.retain_cap || 1)) retain.delete(retain.values().next().value);
-    retain.add(i);
+    if (retainU.size >= (S.retain_cap || 1)) retainU.delete(retainU.values().next().value);
+    retainU.add(c.u);
   }
   renderHand();
 }
@@ -8561,7 +8571,7 @@ async function endTurn() {
     toast('enemy moving… tap to skip');
     Sfx.play('turn_enemy');
     const r = await api('/api/end', {retain: [...retain]});
-    retain.clear();
+    retain.clear(); retainU.clear();
     // no end-of-turn recap card — you watch the enemy act live, and the win/defeat
     // overlay is held until those blows finish.
     await afterAction(r);
@@ -8883,7 +8893,7 @@ function showRuns() {
 async function newDaily() {
   Sfx.play('card_play');
   $('#ovGeneral').classList.remove('show'); $('#ovResult').classList.remove('show');
-  retain.clear(); cancelSelState();
+  retain.clear(); retainU.clear(); cancelSelState();
   const r = await api('/api/daily', {});
   // Only Steam can refuse — one attempt per Commission there, freely replayable everywhere else.
   if (r.daily_locked) { Sfx.play('ui_error'); toast("Today's Commission is already spent — the next opens at midnight."); render(r); return; }
@@ -9115,7 +9125,7 @@ async function newGame(id) {
   const seed = runCfg.seed !== '' ? runCfg.seed : null;
   $('#ovGeneral').classList.remove('show'); $('#ovResult').classList.remove('show');
   closeOv('ovDeploy'); _plaquePrev = null; _deployAscView = 'auto';   // START leaves Deploy → don't leave it open over the map
-  retain.clear(); cancelSelState();
+  retain.clear(); retainU.clear(); cancelSelState();
   const r = await api('/api/new', {general: id, seed,
                                 ascension: runCfg.ascension, modifiers: [...runCfg.mods]});
   if (seed != null && r && r.seed != null && String(r.seed) !== String(seed))   // surface a seed mismatch instead of hiding it
@@ -9133,7 +9143,7 @@ async function continueRun() {
   const r = await api('/api/continue', {});
   if (!r.started) { toast("couldn't load the saved run"); return; }
   $('#ovGeneral').classList.remove('show');
-  retain.clear(); cancelSelState(); lastBoardW = null; _lastBattleSig = null;   // refit + recentre the resumed level
+  retain.clear(); retainU.clear(); cancelSelState(); lastBoardW = null; _lastBattleSig = null;   // refit + recentre the resumed level
   render(r);
 }
 async function takeDraft(id) { Sfx.play('card_draw'); $('#ovDraft').classList.remove('show');
