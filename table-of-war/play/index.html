@@ -814,6 +814,37 @@
   .cfull { display: flex; flex-direction: column; align-items: center; gap: 12px; }
   .cfull.side { flex-direction: row; gap: 22px; }
   .cfull-kw { max-width: 360px; font-size: 15px; line-height: 1.55; text-align: left; }
+  /* after-battle report */
+  .br-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px; margin: 8px 0 10px; }
+  .br-stat { display: flex; flex-direction: column; align-items: center; min-width: 60px; }
+  .br-stat b { font: 700 22px var(--f-num); color: #f2e6bd; }
+  .br-stat span { font: 600 10px var(--f-ui); letter-spacing: .06em; text-transform: uppercase; color: #b0a988; }
+  .br-list { display: flex; flex-direction: column; gap: 4px; max-height: 42vh; overflow-y: auto; }
+  .br-row { display: grid; grid-template-columns: 34px 1fr 48px 48px 74px; align-items: center; gap: 8px; padding: 4px 8px;
+    background: rgba(0,0,0,.28); border-radius: 6px; }
+  .br-row.br-lost { opacity: .7; } .br-row.br-other { background: rgba(0,0,0,.16); }
+  .br-face { width: 32px; height: 32px; object-fit: contain; display: flex; align-items: center; justify-content: center; }
+  .br-who { display: flex; flex-direction: column; min-width: 0; } .br-who b { color: #f2e6bd; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .br-num { display: flex; flex-direction: column; align-items: flex-end; font-variant-numeric: tabular-nums; } .br-num b { font: 700 15px var(--f-num); color: #f2e6bd; }
+  .br-num span { font-size: 10px; } .br-fate { font: 700 11px var(--f-ui); text-transform: uppercase; letter-spacing: .05em; text-align: right; }
+  .br-spoils { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; padding-top: 8px; border-top: 1px solid #3d3a29; }
+  .br-spoil { display: flex; align-items: center; gap: 8px; font: 600 15px var(--f-ui); color: #e9e3d1; }
+  .br-spoil.br-next { opacity: .8; font-size: 13px; }
+  .br-foot { display: flex; flex-direction: column; } .br-go { text-align: center; margin-top: 10px; }
+  /* a landscape phone: one stats row, one line per soldier, so the spoils and Draft stay on screen */
+  @media (max-height: 560px) {
+    .br-stats { flex-wrap: nowrap; gap: 4px 12px; margin: 2px 0 6px; }
+    .br-stat { min-width: 0; } .br-stat b { font-size: 16px; } .br-stat span { font-size: 8px; white-space: nowrap; }
+    .br-list { max-height: 34vh; gap: 2px; }
+    .br-row { grid-template-columns: 22px 1fr 36px 36px 58px; padding: 2px 6px; gap: 6px; }
+    .br-face { width: 22px; height: 22px; }
+    .br-who { flex-direction: row; align-items: baseline; gap: 6px; font-size: 12px; } .br-who .d { font-size: 10px; white-space: nowrap; }
+    .br-num { flex-direction: row; align-items: baseline; gap: 2px; } .br-num b { font-size: 12px; } .br-num span { font-size: 8px; }
+    .br-fate { font-size: 9px; }
+    .br-spoils { margin-top: 6px; padding-top: 5px; gap: 2px; } .br-spoil { font-size: 12px; }
+    .br-foot { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid #3d3a29; margin-top: 6px; }
+    .br-foot .br-spoils { border-top: none; margin-top: 4px; } .br-go { margin-top: 4px; }
+  }
   /* upgrade preview: the card now, an arrow, the card upgraded */
   .uppair { display: flex; align-items: center; justify-content: center; gap: 10px; }
   .uppair .uparrow { font-size: 28px; color: #f0c94a; text-shadow: 0 2px 4px rgba(0,0,0,.7); }
@@ -2799,7 +2830,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-B614Y5ou.js"></script>
+  <script type="module" crossorigin src="./assets/index-BrW5lGJA.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -4541,6 +4572,7 @@ function renderMapScreen() {
   renderLegend();
   requestAnimationFrame(() => { fitMapBar(); fitLegend(); });   // measure once the bar and legend have laid out
   if (S.result) showRunResult();
+  else if (_reportDue && S.battle_report) showBattleReport();   // how the fight went, before its spoils
   else if (S.pending) showNode();
   else closeOv('ovNode');
 }
@@ -5849,11 +5881,55 @@ function showBattleResult() {
   // result_note is the engine's own word on how it ended — e.g. you shelled your own headquarters
   const lost = S.result_note || 'Your HQ was destroyed. The expedition ends.';
   const wonText = S.withdrew ? `You withdrew from the ${kind}. It cost all your salvage, and the troops you brought home are battered but carry forward. No spoils.` : `The ${kind} is yours — survivors carry forward.`;
+  // A win goes straight to the battle report, which is built once the spoils are settled (it needs the
+  // salvage and the drafts). This panel stays for a defeat, where there is nothing to report but the end.
+  if (win) { if (!_battleDoneSent) { _battleDoneSent = true; setTimeout(() => { _battleDoneSent = false; battleDone(); }, 900); } return; }
   o.innerHTML = oframe(`<p style="margin-top:12px">${win?wonText:lost}</p>
     <div style="text-align:center">${pbtn('continue','battleDone()',{cls:'h'})}</div>`, win?'battle_won':'defeat');
   o.classList.add('show');
 }
-async function battleDone(){ closeOv('ovResult'); render(await api('/api/battle_done',{})); }
+let _reportDue = false, _battleDoneSent = false;
+async function battleDone(){ closeOv('ovResult'); const r = await api('/api/battle_done',{}); _reportDue = true; render(r); }
+
+// ── after-battle report ──
+// How the fight went and what it paid, on one screen: the turns it took, enemies defeated, each of your
+// soldiers (rank before → after, damage dealt, kills, kept or lost), then the spoils — the salvage and a
+// Draft for each card pick waiting (the battle's own, then a Village draft for every village razed).
+// Pressing Draft takes the salvage and opens the first pick; the rest follow in order, as they always have.
+const DRAFT_NAME = { skirmish: 'Skirmish draft', elite: 'Elite draft', boss: 'Boss draft', village: 'Village draft', tribe: 'Village draft' };
+function showBattleReport() {
+  const R = S.battle_report; if (!R) return;
+  const o = $('#ovResult');
+  const art = (S.art || {});
+  const face = cls => cls && art[cls] ? `<img class="br-face" src="assets/units/${art[cls]}" alt="">` : `<span class="br-face br-noface">${si('skirmish', 18)}</span>`;
+  const rank = u => u.to > u.from ? `R${u.from} <span class="gold">➜ R${u.to}</span>` : `R${u.to}`;
+  const FATE = { kept: ['grn', 'Kept'], joined: ['cyan', 'Joined'], lost: ['red', 'Lost'], left: ['d', 'Left behind'] };
+  const nm = u => u.name || (CLASS_INFO[u.cls] || { n: (u.cls || '').replace(/_/g, ' ') }).n;
+  const rows = (R.units || []).slice().sort((a, b) => b.dmg - a.dmg).map(u => `<div class="br-row${u.fate === 'lost' ? ' br-lost' : ''}">
+      ${face(u.cls)}<div class="br-who"><b>${nm(u)}</b><span class="d">${(CLASS_INFO[u.cls] || { n: u.cls }).n} · ${rank(u)}</span></div>
+      <div class="br-num"><b>${u.dmg}</b><span class="d">dmg</span></div><div class="br-num"><b>${u.kills}</b><span class="d">kills</span></div>
+      <div class="br-fate ${FATE[u.fate][0]}">${FATE[u.fate][1]}</div></div>`).join('');
+  const others = (R.other || []).map(u => `<div class="br-row br-other">${face(u.cls)}<div class="br-who"><b>${u.name}</b></div>
+      <div class="br-num"><b>${u.dmg}</b><span class="d">dmg</span></div><div class="br-num"><b>${u.kills}</b><span class="d">kills</span></div><div class="br-fate"></div></div>`).join('');
+  const stat = (v, l, c) => `<div class="br-stat"><b class="${c || ''}">${v}</b><span>${l}</span></div>`;
+  const drafts = R.drafts || [];
+  const spoils = R.withdrew
+    ? `<div class="br-spoil"><span class="red">Withdrew — all salvage spent, no spoils</span></div>`
+    : `<div class="br-spoil">${si('salvage', 22)} <b class="gold">+${Math.max(0, R.salvage)}</b> salvage</div>`
+      + drafts.map((d, i) => `<div class="br-spoil${i ? ' br-next' : ''}">${si(d === 'village' ? 'camp' : 'scroll', 18)} ${DRAFT_NAME[d] || 'Card draft'}${i ? ' <span class="d">— follows</span>' : ''}</div>`).join('');
+  const go = drafts.length && !R.withdrew ? ibtn('confirm', 'takeReport()', { word: t('report.draft', 'Draft') }) : pbtn('continue', 'takeReport()', { cls: 'h' });
+  o.innerHTML = oframe(`<div class="br-stats">${stat(R.turns, 'turns')}${stat(R.defeated, 'enemies defeated', 'gold')}${stat(R.kept, 'kept', 'grn')}${stat(R.lost, 'lost', R.lost ? 'red' : '')}${R.hq_lost ? stat('−' + R.hq_lost, 'HQ', 'red') : ''}</div>
+    <div class="br-list">${rows}${others}</div>
+    <div class="br-foot"><div class="br-spoils">${spoils}</div><div class="br-go">${go}</div></div>`, 'battle_won');
+  o.classList.add('show');
+}
+function takeReport() {
+  _reportDue = false;
+  closeOv('ovResult');
+  const R = S.battle_report;
+  if (R && R.salvage > 0) Sfx.play('ui_coin');
+  if (S.pending) showNode(); else renderMapScreen();
+}
 
 const _CHIP_TIERS = ['common', 'uncommon', 'rare', 'epic', 'legendary'];
 function showRunResult() {
