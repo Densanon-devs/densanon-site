@@ -2830,7 +2830,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-BrW5lGJA.js"></script>
+  <script type="module" crossorigin src="./assets/index-BuEPgPb0.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -7372,7 +7372,7 @@ function _renderPrompt() {
   // back entirely until the opening reveal has played (deployOpen) — the ground first, then the army.
   if (S.deploy && !S.result && sel === null) {   // a card being aimed keeps its own prompt (playing it ends deployment)
     const hint = cmd === null ? `<b class="gold">${t('deploy.title', 'Deployment')}</b>: ${t('deploy.hint_reserve', 'pick a soldier, then a lit tile')}`
-      : cmdOpts.reserve ? ((S.deploy && (S.deploy.reserve || []).some(r => r.id === cmd && r.cls === 'power_plant'))
+      : cmdOpts.reserve ? ((S.deploy && (S.deploy.reserve || []).some(r => r.id === cmd && r.struct))
           ? t('deploy.place_hint_building', 'Tap a lit tile beside your HQ to place this building') : t('deploy.place_hint', 'Tap a lit tile to place this soldier'))
       : t('deploy.move_hint', 'Tap a lit tile to move it · tap it again to return it');
     $('#prompt').innerHTML = deployOpen() ? `<span class="ptext">${si('play',11)} ${hint}</span>` : '';
@@ -9260,7 +9260,7 @@ const CLASS_SYM = {
   command_vehicle:'hq', construction_yard:'base', power_plant:'power',
   supply_depot:'supply', barracks:'barracks', repair_bay:'repair',
   outpost:'flag', turret:'turret', tribe_camp:'camp', bannerman:'flag',
-     citizen:'civ', bog_rat:'bog_rat',
+      citizen:'civ', bog_rat:'bog_rat',
      gator:'bog_rat',
 };
 const CAT_COLOR = {
@@ -9331,6 +9331,7 @@ const CLASS_INFO = {
   attack_dog:{n:t('unitclass.attack_dog.n', "Attack Dog"),r:"Very fast scout with wide sight. Fragile — great for revealing fog. Can't hit flying units (Drones)."},
   tribe_warrior:{n:t('unitclass.tribe_warrior.n', "Tribe Warrior"),r:"Neutral guard — attacks anyone who comes close (you and the enemy)."},
   bannerman:{n:t('unitclass.bannerman.n', "Bannerman"),r:"A standard-bearer that CANNOT attack, but projects a battle-standard AURA: friendly units within 1 tile deal +2 damage and take −1. It ranks up as the units it steadies score kills and take hits — gaining HP (no attack), one extra tile of movement at RANK 3, and at RANK 5 each boost grows by +1 (+3 damage / −2 taken) and the aura reaches 2 tiles. Fragile — its aura dies with it, so keep it screened. Comes from Raise the Banner, events, and crates."},
+  
   
   
   
