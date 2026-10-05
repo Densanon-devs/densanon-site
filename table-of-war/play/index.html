@@ -2830,7 +2830,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-D_65p9jy.js"></script>
+  <script type="module" crossorigin src="./assets/index-CXM7tZZE.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -5445,10 +5445,14 @@ function runBake(){
   _bakeScheduled = false;
   const now = () => (window.performance && performance.now) ? performance.now() : Date.now(); const t0 = now();
   while (_bakeQ.length) {
-    const { id, c, img, size } = _bakeQ.shift();
+    const job = _bakeQ.shift(), { id, c, img, size } = job;
     const url = _faceBakeCache[id];
     if (url) { bindFace(id, url, img); if (now() - t0 > 8) break; continue; }
-    const cv = renderFaceCanvas(c, size);
+    // One face that throws must not stall every face queued behind it (an exception here used to end
+    // runBake without rescheduling). It goes to the back of the queue for up to two more tries.
+    let cv;
+    try { cv = renderFaceCanvas(c, size); }
+    catch (e) { if ((job.tries = (job.tries || 0) + 1) <= 2) _bakeQ.push(job); else console.warn('[face] could not draw', id, e); continue; }
     // No 2D context at all (jsdom, and nothing else in practice). Latch it: without this the face is
     // never cached, so every re-render re-queues every card and the rAF loop never gets to idle.
     if (!cv) { _noCanvas = true; _bakeQ.length = 0; return; }
@@ -5461,8 +5465,14 @@ function runBake(){
       _bakeInFlight.add(id);
       cv.toBlob((b) => {
         _bakeInFlight.delete(id);
-        if (!b) return;
-        const u = URL.createObjectURL(b);
+        // A null blob is the browser's encoder giving up — a phone under memory pressure does it, and
+        // in bursts. It used to return here with nothing cached and nothing re-queued, so that card's
+        // tile stayed blank for the session: a run of holes in the Collection. Pay the synchronous
+        // encode instead; slower, but it does not give up.
+        let u = null;
+        if (b) u = URL.createObjectURL(b);
+        else { try { u = cv.toDataURL('image/png'); } catch (e) { u = null; } }
+        if (!u) { console.warn('[face] could not encode', id); return; }
         if (_faceBakeCache[id]) { URL.revokeObjectURL(u); bindFace(id, _faceBakeCache[id], img); return; }
         _faceBakeCache[id] = u; bindFace(id, u, img);
       }, 'image/webp', 0.92);
