@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - October 04, 2026 | Densanon</title>
+  <title>AI Morning Digest - October 05, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,50 +15,105 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">October 04, 2026</div>
+        <div class="digest-date-badge">October 05, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A light day: Simon Willison argues for default hard budget caps on usage-billed AI services, Claude Code ships v2.1.289 with permission and terminal fixes, and Hugging Face features a Microsoft post on agents that claim completion while the database disagrees.</p>
+        <p class="digest-intro">Today&#x27;s AI digest is all research: new benchmarks for LLM agents (XiangqiBench, HakemBench, CUE user simulators), work on tool-use credit assignment and fast decision models for agent harnesses, and analyses of safety and falsification gaps in generative models.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>We&#x27;re going to need default hard budget caps on pretty much everything</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>MintFlow: Minimal Trajectory Intervention for Constrained Flow Matching</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Argues pay-by-usage services and APIs need a built-in feature that cuts service off and returns errors after a set monthly spend.</li>
-              <li>Frames this as a product feature the world will need much more of in the coming months and years.</li>
+              <li>Targets flow matching models whose samples must satisfy constraints such as observed measurements or physical laws.</li>
+              <li>Frames existing constrained samplers as facing a trade-off, and proposes minimal trajectory intervention.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Oct/3/default-hard-budget-caps/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.02260" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.289</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>Fast Models, Slow Evidence: A Paired and Self-Audited Evaluation of System-1 Decision Models for LLM Agent Harnesses</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fixes a deny or ask rule on a nested part of a compound shell command not holding over a user-installed mod&#x27;s approval on managed machines.</li>
-              <li>Fixes the terminal freezing on short code blocks with many unclosed script tags or deeply nested substitutions.</li>
+              <li>Evaluates System-1 decision models, which answer per-step agent questions (model choice, tool choice, relevance, injection checks) in a single forward pass.</li>
+              <li>Uses a paired, self-audited evaluation design for agent harnesses.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.289" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.02267" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Agent Said It Was Done. The Database Disagreed.</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>Choosing Before Acting: Comparative Value Estimation for Long-Horizon Tool-Use Agents</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Hugging Face Blog post from Microsoft on the gap between an agent reporting a task complete and the actual database state.</li>
-              <li>No summary was provided in the feed; see the post for details.</li>
+              <li>Addresses long-horizon tool use, where each invocation can change task state and shape later decisions.</li>
+              <li>Notes final-outcome rewards give weak credit assignment, motivating comparative value estimation.</li>
             </ul>
-            <a href="https://huggingface.co/blog/microsoft/thinkingbox" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.02330" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>HakemBench: A Turkish Benchmark of Typed Decisions</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Turkish benchmark of typed decisions: the model reads a text, a question and fixed options, and returns a probability for every option.</li>
+              <li>Version 1.0 is fully open under CC BY 4.0 with 2,346 items.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.02293" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Finding the Move Is Not Winning the Game: XiangqiBench for Closed-Loop Evaluation of LLM Agents</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Argues static evaluations credit naming the right move but not carrying a plan to a verified outcome against a responding opponent.</li>
+              <li>Introduces XiangqiBench, an executable closed-loop benchmark in Chinese chess for LLM agents.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.02425" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Counterexample Generation via Per-Theorem Symbolic Verifiers: When Imitation Hurts and Reinforcement Repairs</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Finds LLMs often solve a theorem forward yet fail to disprove a closely related false one, a falsification gap.</li>
+              <li>Reports supervised fine-tuning does not close the gap and can worsen it; the title points to reinforcement learning as the repair.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.02444" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>CUEing User Simulators: Calibrated User Embeddings for Multi-Turn Benchmarking</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Notes recent agent benchmarks rely on user simulators for multi-turn evaluation.</li>
+              <li>Argues ecologically valid benchmarking needs more than surface fidelity to human style, proposing calibrated user embeddings.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.02460" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Keep It CALM: Analyzing the Limits of Global Unsafety in Text-to-Image Generation</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Provides a controlled geometric analysis of training-free safeguards for text-to-image generation.</li>
+              <li>Examines the assumption that a reusable global unsafe direction or toxic subspace works across all prompts.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.02300" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
