@@ -4681,6 +4681,7 @@ async function confirmTravel(nid) {
   const boss = n.kind === 'boss' && S.act_boss;
   if (!(await gameConfirm(boss ? bossConfirmHTML(S.act_boss) : nodeSummaryHTML(n.kind, n), 'March',
                           boss ? { cls: 'bossconf', maxW: 460 } : null))) return;
+  _bossBriefed = boss && S.act_boss ? { id: S.act_boss.id, tele: S.act_boss.telegraph } : null;
   travelTo(nid, true);
 }
 async function travelTo(nid, confirmed) { if (!confirmed) Sfx.play('ui_tap');
@@ -6097,8 +6098,14 @@ function maybeShowIntro() {                 // telegraph the enemy + objective o
   const k = (S.boss ? 'b:' : S.elite ? 'e:' : foe ? 'a:' : 'o:') + (foe ? foe.name : '') + ':' + (obj ? obj.kind : '') + ':' + (S.board ? S.board.width : 0);
   if (_introKey === k) return;
   _introKey = k;
+  // You just read this boss on the march confirm. Opening the battle on the same panel again was the
+  // "same text twice". It still opens when the fight says something the confirm did not: a veiled boss's
+  // real name, Ascension's extra mechanics, the finale's herald. The boss pill reopens it any time.
+  const briefed = _bossBriefed; _bossBriefed = null;
+  if (S.boss && briefed && briefed.id === S.boss.id && briefed.tele === S.boss.telegraph && !S.boss.herald) return;
   showFoeInfo();
 }
+let _bossBriefed = null;   // {id, telegraph} of the boss the march confirm just showed
 function showFoeInfo() {
   const boss = S.boss, elite = S.elite;
   const obj = _introObj();
