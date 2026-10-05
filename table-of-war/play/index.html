@@ -838,7 +838,8 @@
     .br-list { max-height: 34vh; gap: 2px; }
     .br-row { grid-template-columns: 22px 1fr 36px 36px 58px; padding: 2px 6px; gap: 6px; }
     .br-face { width: 22px; height: 22px; }
-    .br-who { flex-direction: row; align-items: baseline; gap: 6px; font-size: 12px; } .br-who .d { font-size: 10px; white-space: nowrap; }
+    .br-who { flex-direction: row; align-items: baseline; gap: 6px; font-size: 12px; } .br-who .d { font-size: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+    .br-who b { flex: 0 0 auto; }   /* the soldier's name stays whole; the class line gives way */
     .br-num { flex-direction: row; align-items: baseline; gap: 2px; } .br-num b { font-size: 12px; } .br-num span { font-size: 8px; }
     .br-fate { font-size: 9px; }
     .br-spoils { margin-top: 6px; padding-top: 5px; gap: 2px; } .br-spoil { font-size: 12px; }
@@ -1671,8 +1672,13 @@
      so you can leave from anywhere without scrolling all the way down */
   .overlay > button:last-child { position: sticky; bottom: 10px; z-index: 6; flex: 0 0 auto;
     box-shadow: 0 5px 16px rgba(0,0,0,.7); }
-  .overlay > .ovclose { position: sticky; bottom: 10px; z-index: 6; flex: 0 0 auto; text-align: center;
-    margin-top: 12px; filter: drop-shadow(0 5px 14px rgba(0,0,0,.7)); }
+  /* A solid bar, full width, flush to the bottom edge — not a button floating over the content. Floating,
+     it sat on top of whatever scrolled beneath it: the New Run button on Campaigns, a card in the
+     Collection, so a tap meant for those closed the panel. Content now scrolls UNDER the bar, and at the
+     end of the scroll everything sits above it. */
+  .overlay > .ovclose { position: sticky; bottom: -20px; z-index: 6; flex: 0 0 auto; text-align: center;
+    align-self: stretch; margin: 12px -20px -20px; padding: 8px 0 max(10px, env(safe-area-inset-bottom));
+    background: rgb(15,15,13); box-shadow: 0 -8px 14px rgba(15,15,13,.9); }
   /* card-grid overlays fill the screen width and scroll from the top (cutoff at the bottom edge, not floating centered) */
   #ovCards, #ovDeck { justify-content: flex-start; }
   .choice.gridsheet { max-width: min(1100px, 96vw); background: transparent; border: none; }
@@ -2830,7 +2836,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-CXM7tZZE.js"></script>
+  <script type="module" crossorigin src="./assets/index-DWsNc1cV.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -4571,10 +4577,15 @@ function renderMapScreen() {
   renderMapGraph();
   renderLegend();
   requestAnimationFrame(() => { fitMapBar(); fitLegend(); });   // measure once the bar and legend have laid out
+  if (!reopenPending()) closeOv('ovNode');
+}
+/** Show whatever the run is waiting on at this node; false when it waits on nothing. */
+function reopenPending() {
   if (S.result) showRunResult();
   else if (_reportDue && S.battle_report) showBattleReport();   // how the fight went, before its spoils
   else if (S.pending) showNode();
-  else closeOv('ovNode');
+  else return false;
+  return true;
 }
 
 function bossConfirmHTML(b) {
@@ -4633,7 +4644,10 @@ function renderMapGraph() {
     else if (n.avail) cls+=' avail';
     if (n.jump) cls+=' jump';                 // Field Compass parallel-path target
     let tap;
-    if (n.kind === 'boss' && !n.avail) tap = `onclick="showActBoss()"`;   // preview the act boss before you can reach it
+    // Your own node, while the run waits on a choice here: reopen it. A panel closed some other way used
+    // to leave a map with nothing tappable at all.
+    if (n.id === S.pos && (S.pending || S.result || (_reportDue && S.battle_report))) tap = `onclick="reopenPending()"`;
+    else if (n.kind === 'boss' && !n.avail) tap = `onclick="showActBoss()"`;   // preview the act boss before you can reach it
     else if (n.avail) tap = n.jump ? `onclick="jumpTo('${n.id}')"` : `onclick="confirmTravel('${n.id}')"`;
     else tap = `onclick="showNodeInfo('${n.kind}','${n.id}')"`;   // not your next move → explain what this node is + what to expect
     if (_nodeFilter) cls += (n.kind === _nodeFilter) ? ' match' : ' nomatch';   // legend spotlight
@@ -4681,7 +4695,9 @@ async function jumpTo(nid) {
   render(await api('/api/travel', {node: nid}));
 }
 // in-DOM confirm — native confirm() is blocked/inconsistent across WKWebView (iOS) and Tauri (macOS)
+let _confirmDone = null;   // the open confirm's resolver: Esc / Back / closeOv answer it "no" instead of orphaning it
 function gameConfirm(msg, okLabel, opts) {
+  if (_confirmDone) _confirmDone(false);   // a confirm replaced by another answers no, never hangs
   return new Promise(res => {
     const o = $('#ovConfirm');
     o.innerHTML = `<div class="choice${opts && opts.cls ? ' ' + opts.cls : ''}" style="max-width:${(opts && opts.maxW) || 340}px">
@@ -4691,7 +4707,10 @@ function gameConfirm(msg, okLabel, opts) {
           <button id="_cfno" class="ibtn" aria-label="Cancel"><img src="${plateSrc('btn', 'cancel')}" alt="">${plateLabel('btn', 'cancel')}</button>
         </div></div>`;
     o.classList.add('show');
-    const done = v => { o.classList.remove('show'); res(v); };
+    // An unanswered confirm used to leave its caller awaiting forever: Esc on End Turn's "units can still
+    // act" left _endBusy set, and End Turn never worked again that battle.
+    const done = v => { if (_confirmDone !== done) return; _confirmDone = null; o.classList.remove('show'); res(v); };
+    _confirmDone = done;
     o.querySelector('#_cfok').onclick = () => done(true);
     o.querySelector('#_cfno').onclick = () => done(false);
     o.onclick = e => { if (e.target.id === 'ovConfirm') done(false); };
@@ -5274,7 +5293,7 @@ function showNode() {
         const locked = (opt.require && !opt.met) || opt.dead;
         return `<div class="choice" ${locked?'style="opacity:.45"':`onclick="eventChoice(${i})"`}>
           <b>${opt.label}</b>
-          ${opt.dead?`<div class="d" style="color:#d76b5d">${achIcon('lock',16)} ${opt.spent?'already found this run':'you already hold that relic'}</div>`:''}
+          ${opt.dead?`<div class="d" style="color:#d76b5d">${achIcon('lock',16)} ${opt.dead_why||(opt.spent?'already found this run':'you already hold that relic')}</div>`:''}
           ${opt.require?`<div class="d" style="color:${opt.met?'#96ba6c':'#d76b5d'}">${opt.met?'✓':achIcon('lock',16)} requires ${opt.req_name} medal</div>`:''}
           ${opt.cost?`<div class="d gold">costs ${siEm('salvage')}${opt.cost}</div>`:''}</div>`;
       }).join('');
@@ -5670,14 +5689,16 @@ function confirmCache(){ if (_cacheSel == null) return; takeCache(_cacheSel); }
 function peekReward(i){ peekCard(S.pending.options[i], 'Take this card', ()=>takeReward(i), false, {noDetail:true}); }   // card face already shows name/cost/text — no repeat panel
 // label goes into aria-label/alt ATTRIBUTES → plain text only (an icon's <svg width="22"> broke the button)
 function peekShopBuy(id){ const o=(S.pending.offer||[]).find(x=>x.id===id); if(!o) return; const can=(S.pending.salvage||0)>=o.cost; peekCard(o, can?`Buy for ${o.cost} salvage`:`Need ${o.cost} salvage`, ()=>shopBuy(id), !can, {noDetail:true}); }
-async function takeCache(i){ closeOv('ovNode'); render(await api('/api/cache',{choice:i})); }
-async function campRest(){ closeOv('ovNode'); render(await api('/api/camp_rest',{})); }
-async function campTrain(uid, perk){ closeOv('ovNode'); render(await api('/api/camp_train',{uid, perk})); }
+/** Render, and say why when the server refused — a silent refusal just bounced the panel back. */
+function renderOrSay(r){ if (r && r.ok === false && r.msg) { toast(r.msg); Sfx.play('ui_error'); } render(r); }
+async function takeCache(i){ closeOv('ovNode'); renderOrSay(await api('/api/cache',{choice:i})); }
+async function campRest(){ closeOv('ovNode'); renderOrSay(await api('/api/camp_rest',{})); }
+async function campTrain(uid, perk){ closeOv('ovNode'); renderOrSay(await api('/api/camp_train',{uid, perk})); }
 // A soldier's camp perks, as one line of gold names (the rule text rides in the tooltip).
 function perkLine(perks){ return (perks&&perks.length) ? `<div class="d gold">${perks.map(p=>`<span title="${p.desc}">&#9670; ${p.name}</span>`).join(' ')}</div>` : ''; }
 async function shopBuyMedal(id){ const r=await api('/api/shop_buy_medal',{medal_id:id}); if(!r.ok)toast(r.msg); render(r); }
-async function takeReward(i){ Sfx.play('acquire'); closeOv('ovNode'); render(await api('/api/reward',{choice:i})); }
-async function takeMedalReward(id){ Sfx.play('acquire'); haptic(50); closeOv('ovNode'); render(await api('/api/take_medal',{medal_id:id})); }
+async function takeReward(i){ Sfx.play('acquire'); closeOv('ovNode'); renderOrSay(await api('/api/reward',{choice:i})); }
+async function takeMedalReward(id){ Sfx.play('acquire'); haptic(50); closeOv('ovNode'); renderOrSay(await api('/api/take_medal',{medal_id:id})); }
 const RAR_COLOR = {starter:'#9a957e', common:'#c9c3ad', uncommon:'#5a9bd0', rare:'#c98adf'};
 const RARITY_ORDER = {starter:0, common:1, uncommon:2, rare:3};
 function rarTag(r){ return r?`<span style="color:${RAR_COLOR[r]||'#999'};font:700 9px var(--f-head);text-transform:uppercase;letter-spacing:.6px">${r}</span>`:''; }
@@ -5811,7 +5832,7 @@ async function shopUpgrade(id){ const r=await api('/api/shop_upgrade',{card_id:i
   if(!r.ok){toast(r.msg); Sfx.play('ui_error');} else Sfx.play('ui_coin'); render(r); }
 async function shopRepair(){ const r=await api('/api/shop_repair',{});
   if(!r.ok){toast(r.msg); Sfx.play('ui_error');} else { Sfx.play('ui_coin'); Sfx.play('heal_repair'); } render(r); }
-async function shopLeave(){ Sfx.play('ui_back'); closeOv('ovNode'); render(await api('/api/shop_leave',{})); }
+async function shopLeave(){ Sfx.play('ui_back'); closeOv('ovNode'); renderOrSay(await api('/api/shop_leave',{})); }
 // Tune-your-deck opens a full card grid (no more squished list); tap a card to act on it.
 function shopDeckPick(mode){
   const p = S.pending; if(!p||p.kind!=='shop') return;
@@ -7336,7 +7357,7 @@ function showCardFull(i) {
 // zoom the whole panel down to fit (layout-affecting, Chromium — same trick as fitDeploy).
 function fitCardFull() {
   const o = $('#ovCardFull'); if (!o || !o.classList.contains('show')) return;
-  const box = o.querySelector('.oframe'); if (!box) return;
+  const box = o.querySelector('.cfull') || o.querySelector('.oframe'); if (!box) return;   // the large view is .cfull now
   // Compose with the stylesheet zoom, do not replace it. This used to set zoom:1 inline before
   // measuring and then write back a bare shrink factor — an inline value beats the stylesheet, so the
   // desktop overlay zoom was wiped out and the hand's card view rendered at roughly two thirds the size
@@ -9325,7 +9346,7 @@ const CLASS_INFO = {
   power_plant:{n:t('unitclass.power_plant.n', "Power Plant"),r:"Building: +1 Command Point every turn (must be next to HQ). Can't move/attack."},
   supply_depot:{n:t('unitclass.supply_depot.n', "Supply Depot"),r:"Building: draw +1 card every turn (must be next to HQ)."},
   barracks:{n:t('unitclass.barracks.n', "Barracks"),r:"Building: reinforcements can deploy next to it (forward base), and it raises your troop cap by 2."},
-  turret:{n:t('unitclass.turret.n', "Turret"),r:"Auto-defense: you DON'T control it — it fires on its own at the nearest enemy within range 3 after the enemy advances each round. Watch for its hit + damage number in the replay. Can't move."},
+  turret:{n:t('unitclass.turret.n', "Turret"),r:"Auto-defense: you DON'T control it — it fires on its own at the nearest enemy within range 2 after the enemy advances each round. Watch for its hit + damage number in the replay. Can't move."},
   repair_bay:{n:t('unitclass.repair_bay.n', "Repair Bay"),r:"Building: heals adjacent friendly units +5 HP at the start of each of your turns. Park wounded units next to it. Can't move or attack."},
   tribe_camp:{n:t('unitclass.tribe_camp.n', "Tribe Camp"),r:"Neutral. Raze it to salvage a permanent card into your deck. Guards defend it."},
   outpost:{n:t('unitclass.outpost.n', "Outpost"),r:"A capturable base (Level 4). Stand one of your units next to it, uncontested, to capture it — grey = neutral, cyan = yours, red = enemy's. Holding it gives +1 CP, +1 Troops, and a forward deploy point. Both sides fight over these; more outposts = more capability."},
@@ -9473,7 +9494,30 @@ function showInspect(u) {
 }
 // One place for a panel to open, so the cue does not have to be remembered at 29 call sites.
 function openOv(id) { const e = $('#' + id); if (e && !e.classList.contains('show')) Sfx.play('ui_open'); if (e) { e.classList.add('show'); _liftOv(e); } }
-function closeOv(id) { const e = $('#' + id); if (e && e.classList.contains('show')) Sfx.play('ui_close'); if (e) e.classList.remove('show'); }
+function closeOv(id) { if (id === 'ovConfirm' && _confirmDone) { _confirmDone(false); return; } const e = $('#' + id); if (e && e.classList.contains('show')) Sfx.play('ui_close'); if (e) e.classList.remove('show'); }
+/** Panels Esc / Android Back must not dismiss: every panel holding a choice the run is waiting on. Hiding
+ *  one left a map with nothing tappable (a shop, a camp, the after-battle report) until Menu → Continue.
+ *  Each has its own Skip / Return / Continue. */
+function _undismissable(ov) {
+  if (!ov) return false;
+  if (['ovResult', 'ovUpgrade', 'ovSummary', 'ovMedal', 'ovReveal'].includes(ov.id)) return true;
+  return ov.id === 'ovNode' && typeof S !== 'undefined' && S && !!S.pending;
+}
+/** Esc and the Android Back button: the one way "back" works. Returns false when there is nothing to back
+ *  out of — on the menu itself, or the bare board — and the caller opens Settings or minimises the app. */
+function backPress() {
+  const ov = _topOverlay();
+  if (ov) {
+    if (ov.id === 'ovGeneral') return false;             // the menu: hiding it left a blank battle shell
+    if (_undismissable(ov)) return true;                 // stay put; the panel offers its own way on
+    if (ov.id === 'ovDeploy') { closeDeploy(); return true; }
+    if (ov.id === 'ovUnlock') { closeUnlock(); return true; }
+    closeOv(ov.id); return true;
+  }
+  if (typeof sel !== 'undefined' && (sel !== null || cmd !== null || powerArm)) { cancelSel(); return true; }
+  return false;
+}
+window.__backPressed = backPress;
 // Overlay stacking. Every .overlay shares `z-index: 10`, so which one wins was decided purely by
 // DOCUMENT ORDER — and #ovSettings is declared before #ovProg. Opening Settings from the Generals
 // page therefore drew it BEHIND Generals, which reads as the button doing nothing. The one opened
@@ -10624,8 +10668,7 @@ function initHotkeys() {
     }
     if (e.key === 'Escape') {
       e.preventDefault();
-      if (ov) { closeOv(ov.id); return; }
-      if (sel !== null || cmd !== null || powerArm) { cancelSel(); return; }
+      if (backPress()) return;
       toggleSettings();
       return;
     }
