@@ -1685,6 +1685,12 @@
   /* detail popups sit ABOVE list overlays (e.g. a card detail over the deck grid) */
   #ovInspect, #ovConfirm, #ovCardFull { z-index: 13; }
   #ovForge { z-index: 14; }
+  /* the finale: the fallen boss's power, streaming to the one who rises */
+  .finmote { position: fixed; width: 10px; height: 10px; border-radius: 50%; pointer-events: none; z-index: 40;
+    background: radial-gradient(circle, #fff3d0 0, #ff6a2a 45%, rgba(170,20,10,0) 72%); box-shadow: 0 0 12px 4px rgba(255,80,30,.55); }
+  .cell.fx-finale { animation: finaleFlare 1.1s ease-out; }
+  @keyframes finaleFlare { 0% { filter: brightness(2.6) saturate(1.6); box-shadow: 0 0 40px 18px rgba(255,90,30,.8); }
+                           100% { filter: none; box-shadow: none; } }
   /* the name-entry / small input popup is a focused modal — it must sit ABOVE any overlay it
      opens over (e.g. the campaign manager #ovProfiles, which is later in the DOM), or it renders
      behind it and can't be seen or tapped (the "rename is broken" bug). */
@@ -2836,7 +2842,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-DfBCSvWO.js"></script>
+  <script type="module" crossorigin src="./assets/index-BxwJrzTF.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -6093,6 +6099,7 @@ function maybeShowIntro() {                 // telegraph the enemy + objective o
   const obj = _introObj();
   const foe = S.boss || S.elite || (obj ? null : S.archetype);   // an objective level briefs the OBJECTIVE, not a generic enemy type
   if ((!foe && !obj) || S.turn !== 1) return;
+  if (S.boss && S.boss.risen) return;   // the finale boss has his own entrance (finaleFx); no second briefing
   const heart = !!(S.objective && S.objective.kind === 'spire');   // the Living Heart's name lands HERE (the map plaque was veiled)
   if (!S.boss && !heart && !introEnabled()) return;   // toggle only gates elite/archetype/objective intros — bosses (and the Heart) always telegraph
   const k = (S.boss ? 'b:' : S.elite ? 'e:' : foe ? 'a:' : 'o:') + (foe ? foe.name : '') + ':' + (obj ? obj.kind : '') + ':' + (S.board ? S.board.width : 0);
@@ -7669,6 +7676,48 @@ function toggleAim() { if (cmd === null) return; aimModes.set(cmd, !isAiming());
 // drop a live unit selection when navigating away (menu / end turn / opening an overlay)
 function _dropCmd() { if (cmd !== null) { deselectCmd(); renderBoard(); renderPrompt(); } }
 // scroll a board cell up into the clear area if it's hidden under the bottom UI band
+/** The fallen Act IV boss's power streams across the field into the risen finale boss: a burst where it
+ *  died, the camera carried to him, then the motes fly in and he flares. Screen-space particles, so it
+ *  is the same at any zoom; every step tolerates a missing cell (fog, a resize) and simply moves on. */
+async function finaleFx(ev) {
+  const cellAt = p => p && document.querySelector(`#board .cell[data-x="${p[0]}"][data-y="${p[1]}"]`);
+  const mid = el => { const b = el.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2]; };
+  try {
+    Sfx.play('power_charge'); haptic([40, 60, 40]);
+    const from0 = cellAt(ev.from);
+    if (from0) { try { camCenterOnCell(ev.from[0], ev.from[1], true); } catch (e) {} await sleep(450); }
+    const src = cellAt(ev.from) ? mid(cellAt(ev.from)) : [innerWidth / 2, innerHeight / 2];
+    const N = 28, motes = [];
+    for (let i = 0; i < N; i++) {
+      const m = document.createElement('div'); m.className = 'finmote';
+      m.style.left = src[0] + 'px'; m.style.top = src[1] + 'px';
+      document.body.appendChild(m); motes.push(m);
+      const a = Math.random() * 6.283, d = 18 + Math.random() * 46;
+      m.animate([{ transform: 'translate(-50%,-50%) scale(.4)', opacity: 0 },
+                 { transform: `translate(calc(-50% + ${Math.cos(a) * d}px), calc(-50% + ${Math.sin(a) * d}px)) scale(1)`, opacity: 1 }],
+                { duration: 420, easing: 'ease-out', fill: 'forwards', delay: i * 8 });
+    }
+    await sleep(520);
+    try { camCenterOnCell(ev.at[0], ev.at[1], true); } catch (e) {}   // both axes: the field grew sideways or down
+    await sleep(380);
+    const dst = cellAt(ev.at) ? mid(cellAt(ev.at)) : [innerWidth / 2, innerHeight / 3];
+    Sfx.play('power_charge', { rate: 1.25 });
+    await Promise.all(motes.map((m, i) => {
+      const b = m.getBoundingClientRect(), x0 = b.left + b.width / 2, y0 = b.top + b.height / 2;
+      const bend = (Math.random() - .5) * 160;
+      return m.animate([
+        { left: x0 + 'px', top: y0 + 'px', transform: 'translate(-50%,-50%) scale(1)', opacity: 1 },
+        { left: ((x0 + dst[0]) / 2 + bend) + 'px', top: ((y0 + dst[1]) / 2 - 60) + 'px', transform: 'translate(-50%,-50%) scale(1.15)', opacity: 1, offset: .5 },
+        { left: dst[0] + 'px', top: dst[1] + 'px', transform: 'translate(-50%,-50%) scale(.3)', opacity: .2 }],
+        { duration: 700 + Math.random() * 300, easing: 'cubic-bezier(.5,0,.6,1)', delay: i * 14, fill: 'forwards' }).finished.catch(() => {});
+    }));
+    motes.forEach(m => m.remove());
+    const king = cellAt(ev.at);
+    if (king) { king.classList.add('fx-finale'); setTimeout(() => king.classList.remove('fx-finale'), 1100); }
+    screenShake(); haptic(80);
+    await sleep(500);
+  } catch (e) { console.warn('[finale fx]', e); document.querySelectorAll('.finmote').forEach(m => m.remove()); }
+}
 function centerCell(x, y) {
   const wrap = $('#boardwrap');
   const cell = wrap && wrap.querySelector(`.cell[data-x="${x}"][data-y="${y}"]`);
@@ -7943,6 +7992,12 @@ async function afterAction(r) {
   // adoptOffBoard() hand does not show them arriving with no motion.
   const drawn = (r.events || []).reduce((a, e) => a + (e.t === 'draw' ? (e.n || 0) : 0), 0);
   if (drawn) { r.events = r.events.filter(e => e.t !== 'draw'); _dealPending += drawn; }
+  // THE FINALE: the field grows when he rises, and the new ground only exists once the final state is
+  // drawn — during the replay there is nothing to point the camera at. So his entrance plays AFTER the
+  // reconcile: the fallen boss's power streams to him, THEN he speaks, THEN the RISES banner.
+  const fin = (r.events || []).find(e => e.t === 'finale') || null;
+  let finSay = [];
+  if (fin) { const i = r.events.indexOf(fin); finSay = r.events.slice(i + 1).filter(e => e.t === 'say'); r.events = r.events.filter(e => !finSay.includes(e)); }
   const enemyPlays = (r.events || []).some(e => e.side === 'enemy');   // only lock while the enemy actually acts
   if (enemyPlays) { turnBusy = true; disarmEnd(); updateEndBtn(); enemySkipOn(); }   // hide End Turn during enemy play
   // Only for YOUR actions. On the enemy phase the costs being settled are theirs, and pre-announcing
@@ -7961,6 +8016,7 @@ async function afterAction(r) {
       render(r);                        // reconcile to the authoritative final state (re-shows End Turn)
       if (_dealPending) dealDraws();
       _deferResult = false;
+      if (fin) { await finaleFx(fin); for (const sv of finSay) await showBossSay(sv); }
       if (r.popup) showPopup(r.popup);
       if (S.result) showBattleResult();
     } catch (e) {
@@ -8305,7 +8361,7 @@ async function animateEvents(events, finalR) {
       await sleep(700);
       continue;
     }
-    if (ev.t === 'finale' && ev.at) { try { centerCell(ev.at[0], ev.at[1]); } catch (e) {} await sleep(900); continue; }   // the field grows: look where the king stands
+    if (ev.t === 'finale') { await sleep(250); continue; }   // his entrance plays after the reconcile (afterAction → finaleFx)
     if (ev.t === 'enemy_card') {                                    // an enemy played a card
       Sfx.play('alert'); haptic(20);
       if (ev.first && ev.card && localStorage.getItem('dc_reveal_enemy') !== '0') {
