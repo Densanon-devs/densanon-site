@@ -848,8 +848,11 @@
   }
   /* upgrade preview: the card now, an arrow, the card upgraded */
   .uppair { display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .uptoggle { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 6px auto 4px; color: #e0c068;
+    font: 600 13px var(--f-head); letter-spacing: .4px; cursor: pointer; user-select: none; width: max-content; }
+  .uptoggle input { width: 18px; height: 18px; accent-color: #c9a227; cursor: pointer; }
   .uppair .uparrow { font-size: 28px; color: #f0c94a; text-shadow: 0 2px 4px rgba(0,0,0,.7); }
-  .upchange { margin-top: 10px; font: 700 14px var(--f-ui); color: #8fe07a; text-shadow: 0 1px 2px rgba(0,0,0,.8); }
+  .upchange { margin-top: 10px; text-align: center; font: 700 14px var(--f-ui); color: #8fe07a; text-shadow: 0 1px 2px rgba(0,0,0,.8); }
   /* boss March confirm: portrait beside its description */
   #ovConfirm .bossconf > div:first-child { display: flex; gap: 16px; align-items: center; text-align: left; }
   #ovConfirm .bossconf .bc-art { flex: 0 0 auto; max-width: 42%; }
@@ -2847,7 +2850,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-yg1-5oSi.js"></script>
+  <script type="module" crossorigin src="./assets/index-DvM2rd3O.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -5435,6 +5438,23 @@ function upgradedView(c){
     cost: c.up_cost != null ? c.up_cost : c.cost,
     text: c.up_text || c.text });
 }
+// ── "Show upgrade": every large card view (draft, reward, shop, deck, Collection, the battle card) can
+// show the card beside what it becomes. One remembered choice for all of them, so a player who reads
+// upgrades while drafting does not have to re-tick the box on every card.
+let _upPair = (() => { try { return localStorage.getItem('dc_uppair') === '1'; } catch (e) { return false; } })();
+function _setUpPair(v) { _upPair = !!v; try { localStorage.setItem('dc_uppair', _upPair ? '1' : '0'); } catch (e) {} }
+function _canUp(c) { return !!c && !c.upgraded && !c.curse && !!(c.up_text || c.up_desc); }
+/** The checkbox. `redo` is the JS that re-renders the view it sits in. Empty for a card with no upgrade. */
+function upToggleHTML(c, redo) {
+  if (!_canUp(c)) return '';
+  return `<label class="uptoggle"><input type="checkbox" ${_upPair ? 'checked' : ''} onchange="_setUpPair(this.checked);${redo}"> ${t('card.show_upgrade', 'Show upgrade')}</label>`;
+}
+/** The card alone, or — with Show upgrade ticked — the card ➜ its upgrade, side by side. */
+function cardOrPairHTML(c, w) {
+  if (!(_upPair && _canUp(c))) return frameCardHTML(c, w);
+  return `<div class="uppair">${frameCardHTML(c, w)}<span class="uparrow">➜</span>${frameCardHTML(upgradedView(c), w)}</div>`
+    + (c.up_desc ? `<div class="upchange">${t('card.upgrade_label', 'Upgrade')}: ${c.up_desc}</div>` : '');
+}
 function warmFaces(cards, opts){
   if (!Array.isArray(cards) || !window._fcReady) return 0;
   const baseOnly = !!(opts && opts.baseOnly);
@@ -5606,8 +5626,10 @@ function peekCard(c, label, onConfirm, disabled, opts){
   const face = opts.before
     ? `<div class="uppair">${frameCardHTML(opts.before, 210)}<span class="uparrow">➜</span>${frameCardHTML(c, 210)}</div>
        ${opts.change ? `<div class="upchange">Upgrade: ${opts.change}</div>` : ''}`
-    : frameCardHTML(c);
+    : cardOrPairHTML(c, _upPair && _canUp(c) ? 200 : undefined);
+  _peekLast = [c, label, onConfirm, disabled, opts];
   o.innerHTML = `<div style="text-align:center;margin-bottom:10px">${face}</div>`
+    + (opts.before ? '' : upToggleHTML(c, 'peekCard(..._peekLast)'))
     + (opts.noDetail ? '' : cardDetailHTML(c))   // the card face already shows name/cost/text — skip the repeat where asked
     + `<div class="ibtnrow" style="margin-top:10px">
          <button class="ibtn" ${disabled?'disabled':''} onclick="_peekConfirm()" aria-label="${label}"><img src="${plateSrc('btn', 'confirm')}" alt="">${plateLabel('btn', 'confirm', '', label)}</button>
@@ -5615,6 +5637,7 @@ function peekCard(c, label, onConfirm, disabled, opts){
   _peekConfirmFn = disabled ? null : onConfirm;
   o.classList.add('show');
 }
+let _peekLast = null;
 function _peekConfirm(){ closeOv('ovInspect'); const f=_peekConfirmFn; _peekConfirmFn=null; if(f)f(); }
 // Forge animation — an event upgraded a card: show it full-size, hammer it with sparks.
 let _forgeT = null;
@@ -5774,19 +5797,19 @@ function showCatCard(id, up){
   const hasPrev = _i > 0, hasNext = _i >= 0 && _i < _catOrder.length - 1;
   const arrow = (dir, on) => `<button class="catnav ${on ? '' : 'off'}" ${on ? `onclick="catStep(${dir})"` : 'disabled'}
       aria-label="${dir < 0 ? 'Previous' : 'Next'} card"><span class="chev ${dir < 0 ? 'l' : 'r'}"></span></button>`;
-  const canUp = c.up_text || c.up_desc, showUp = _catUp && canUp;
+  const pair = _upPair && _canUp(c);
   // The upgraded view composites like everything else — there is no pre-baked _up.webp any more. It is
   // usually already cached: warmFaces warms both faces of every card in a run's deck at battle start
   // and on deck-view open, so the flip is a cache hit rather than a draw.
-  const view = showUp ? upgradedView(c) : c;
+
   const counter = _catOrder.length > 1 && _i >= 0
     ? `<div class="d" style="font-size:11px;margin-top:2px">${_i + 1} / ${_catOrder.length}</div>` : '';
   $('#ovInspect').innerHTML = oframe(`<div class="catrow">
       ${arrow(-1, hasPrev)}
-      <div id="catcard" style="text-align:center;margin:4px 0 8px" class="${showUp?'upgwrap':''}">${frameCardHTML(view, 220)}</div>
+      <div id="catcard" style="text-align:center;margin:4px 0 8px">${cardOrPairHTML(c, pair ? 180 : 220)}</div>
       ${arrow(1, hasNext)}
     </div>${counter}
-    ${canUp ? `<div style="display:flex;justify-content:center">${ibtn('view_upgrade', "_catUp="+(!showUp)+";showCatCard('"+id+"',1)", {cls: showUp?'act':''})}</div>` : ''}`)
+    ${upToggleHTML(c, "showCatCard('" + id + "',1)")}`)
     + `<div class="ovclose">${ibtn('close', "closeOv('ovInspect')")}</div>`;   // the same bottom Close every menu has
   $('#ovInspect').classList.add('show');
   const card = document.getElementById('catcard');
@@ -7364,10 +7387,13 @@ function showCardFull(i) {
   // when the screen is wider than tall, so they cost the card no height.
   const note = kwb || (tags ? `<div style="color:#b78fd0">${tags}</div>` : '');
   const F = FRAMES[frameFor(c)] || FRAMES.common, asp = F.aspect || 1;
-  const side = !!note && innerWidth > innerHeight;
-  const w = Math.round(Math.max(170, Math.min((innerHeight - 130) * asp, innerWidth * (side ? 0.46 : 0.86), 560)));
-  o.innerHTML = `<div class="cfull${side ? ' side' : ''}"><div class="cfull-card">${frameCardHTML(c, w)}</div>
+  const pair = _upPair && _canUp(c);
+  const side = !!note && innerWidth > innerHeight && !pair;   // side by side with its upgrade, the notes go below
+  const w0 = Math.round(Math.max(170, Math.min((innerHeight - 150) * asp, innerWidth * (side ? 0.46 : 0.86), 560)));
+  const w = pair ? Math.round(Math.max(140, Math.min(w0, (innerWidth - 90) / 2))) : w0;
+  o.innerHTML = `<div class="cfull${side ? ' side' : ''}"><div class="cfull-card">${cardOrPairHTML(c, w)}</div>
       ${note ? `<div class="cfull-kw ctarget">${note}</div>` : ''}</div>
+    ${upToggleHTML(c, 'showCardFull(' + i + ')')}
     <div class="cardfullbtns">
       ${ibtn(kept?'kept':'keep','keepFromFull('+i+')',{cls:kept?'act':''})}
       ${ibtn(playImg, playable?`_fullPlay(${i})`:'', {dis:!playable})}
