@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - October 05, 2026 | Densanon</title>
+  <title>AI Morning Digest - October 06, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">October 05, 2026</div>
+        <div class="digest-date-badge">October 06, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s AI digest is all research: new benchmarks for LLM agents (XiangqiBench, HakemBench, CUE user simulators), work on tool-use credit assignment and fast decision models for agent harnesses, and analyses of safety and falsification gaps in generative models.</p>
+        <p class="digest-intro">Today&#x27;s picks focus on agent reliability and safety: new research on auditing black-box LLM agents and on multimodal agents that fail to refuse, plus Anthropic&#x27;s Cowork architecture note and fresh Claude Code releases.</p>
       </div>
     </section>
 
@@ -29,91 +29,122 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>MintFlow: Minimal Trajectory Intervention for Constrained Flow Matching</h3>
+              <h3>Proxy Confidence: Auditing Black-Box LLM Agents with a Surrogate&#x27;s Log-Probabilities</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets flow matching models whose samples must satisfy constraints such as observed measurements or physical laws.</li>
-              <li>Frames existing constrained samplers as facing a trade-off, and proposes minimal trajectory intervention.</li>
+              <li>Deployed LLM agents can emit tool calls, queries, and code that are silently wrong before the error surfaces.</li>
+              <li>Frontier chat APIs hide token probabilities, and an agent&#x27;s stated confidence barely beats chance.</li>
+              <li>The paper proposes auditing such agents using a surrogate model&#x27;s log-probabilities.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.02260" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.03894" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Fast Models, Slow Evidence: A Paired and Self-Audited Evaluation of System-1 Decision Models for LLM Agent Harnesses</h3>
+              <h3>MLLMs Fail to Refuse when Using Tools Agentically</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Evaluates System-1 decision models, which answer per-step agent questions (model choice, tool choice, relevance, injection checks) in a single forward pass.</li>
-              <li>Uses a paired, self-audited evaluation design for agent harnesses.</li>
+              <li>Agentic multimodal LLMs call tools such as zooming and tagging to push visual reasoning forward.</li>
+              <li>The work uncovers a critical safety failure: these models fail to refuse when using tools agentically.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.02267" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.03938" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Choosing Before Acting: Comparative Value Estimation for Long-Horizon Tool-Use Agents</h3>
+              <h3>Training Numerical Intelligence via Auto-Diagnosis and Skill Discovery</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Addresses long-horizon tool use, where each invocation can change task state and shape later decisions.</li>
-              <li>Notes final-outcome rewards give weak credit assignment, motivating comparative value estimation.</li>
+              <li>Generating scientific code is not the same as improving the algorithms behind it.</li>
+              <li>For numerical solvers, execution feedback exposes poor performance but rarely reveals its underlying cause.</li>
+              <li>The paper targets training numerical intelligence through auto-diagnosis and skill discovery.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.02330" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.03872" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>HakemBench: A Turkish Benchmark of Typed Decisions</h3>
+              <h3>SYNLAT: Syntax-Aligned Text-Latent Compression for Chain-of-Thought Reasoning</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Turkish benchmark of typed decisions: the model reads a text, a question and fixed options, and returns a probability for every option.</li>
-              <li>Version 1.0 is fully open under CC BY 4.0 with 2,346 items.</li>
+              <li>Long chain-of-thought traces impose substantial output-token costs.</li>
+              <li>Under constrained budgets, compression must preserve answer-critical information, making boundary placement central.</li>
+              <li>Token-level and fixed-length boundaries can fragment coherent content; SYNLAT uses syntax-aligned compression.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.02293" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.03839" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Finding the Move Is Not Winning the Game: XiangqiBench for Closed-Loop Evaluation of LLM Agents</h3>
+              <h3>Same Output, Different Gold: Measuring How Reference Choice Moves a Multilingual Benchmark Score</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Argues static evaluations credit naming the right move but not carrying a plan to a verified outcome against a responding opponent.</li>
-              <li>Introduces XiangqiBench, an executable closed-loop benchmark in Chinese chess for LLM agents.</li>
+              <li>Benchmark methodology focuses on the system output, while the reference side gets little attention.</li>
+              <li>The study measures how reference choice moves a score, using the annotation record of a six-language PII benchmark.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.02425" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.03825" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Quoting Felix Rieseberg</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The &quot;old&quot; version of Cowork runs model inference in the cloud and executes tool calls in an Anthropic-provided VM shipped to the user&#x27;s computer.</li>
+              <li>The VM was added for capability, safety, and security reasons, mapping in only the data explicitly added to a session.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Oct/5/felix-rieseberg/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Counterexample Generation via Per-Theorem Symbolic Verifiers: When Imitation Hurts and Reinforcement Repairs</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>Qwen3.8 27B addition in words</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Finds LLMs often solve a theorem forward yet fail to disprove a closely related false one, a falsification gap.</li>
-              <li>Reports supervised fine-tuning does not close the gap and can worsen it; the title points to reinforcement learning as the repair.</li>
+              <li>Simon Willison revisits an experiment where a model computes a sum and returns the answer in words across increasingly large numbers.</li>
+              <li>The original experiment was run over two years ago with GPT-4o and shared by Colin Frasier on Bluesky; this post tests Qwen3.8 27B.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.02444" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Oct/4/qwen38-addition-in-words/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>CUEing User Simulators: Calibrated User Embeddings for Multi-Turn Benchmarking</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>anthropics/claude-code: v2.1.291</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Notes recent agent benchmarks rely on user simulators for multi-turn evaluation.</li>
-              <li>Argues ecologically valid benchmarking needs more than surface fidelity to human style, proposing calibrated user embeddings.</li>
+              <li>Fixed a regression in 2.1.290 where cloud sessions could drop answers to permission prompts.</li>
+              <li>Fixed a regression in 2.1.288 where the last messages of a session could be lost when quitting.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.02460" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.291" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Keep It CALM: Analyzing the Limits of Global Unsafety in Text-to-Image Generation</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>anthropics/claude-code: v2.1.290</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Provides a controlled geometric analysis of training-free safeguards for text-to-image generation.</li>
-              <li>Examines the assumption that a reusable global unsafe direction or toxic subspace works across all prompts.</li>
+              <li>Added serverToolUses to the result of a mod&#x27;s turn.step hook, covering tool calls the API ran itself (the advisor).</li>
+              <li>Added agentId to the tool.check event of plugin hooks, so a hook can tell a subagent&#x27;s permission check apart.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.02300" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.290" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Welcome RL Environments to the hub</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Hugging Face announces RL environments coming to the hub.</li>
+              <li>The post introduces environments for reinforcement learning on the platform.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/rl-environments" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
