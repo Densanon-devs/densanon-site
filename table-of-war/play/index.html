@@ -1676,9 +1676,14 @@
      it sat on top of whatever scrolled beneath it: the New Run button on Campaigns, a card in the
      Collection, so a tap meant for those closed the panel. Content now scrolls UNDER the bar, and at the
      end of the scroll everything sits above it. */
+  /* Full width and flush to the bottom edge, but SEE-THROUGH: the menu runs to the bottom of the screen
+     behind it (a solid bar cut every menu off in a hard edge above the button). Only the button takes
+     taps — the bar around it passes them through to whatever is underneath — and the bar's own height
+     is the space the content ends on, so at the end of the scroll nothing sits under the button. */
   .overlay > .ovclose { position: sticky; bottom: -20px; z-index: 6; flex: 0 0 auto; text-align: center;
     align-self: stretch; margin: 12px -20px -20px; padding: 8px 0 max(10px, env(safe-area-inset-bottom));
-    background: rgb(15,15,13); box-shadow: 0 -8px 14px rgba(15,15,13,.9); }
+    pointer-events: none; filter: drop-shadow(0 5px 14px rgba(0,0,0,.7)); }
+  .overlay > .ovclose > * { pointer-events: auto; }
   /* card-grid overlays fill the screen width and scroll from the top (cutoff at the bottom edge, not floating centered) */
   #ovCards, #ovDeck { justify-content: flex-start; }
   .choice.gridsheet { max-width: min(1100px, 96vw); background: transparent; border: none; }
@@ -2842,7 +2847,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-BxwJrzTF.js"></script>
+  <script type="module" crossorigin src="./assets/index-yg1-5oSi.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -4160,7 +4165,8 @@ async function showRunForecast() {
       <button class="setbtn dbg" style="margin-top:6px" onclick="debugCompleteAct()">Complete Act ${a.act + 1} ▸</button>
     </div>`;
   }).join('');
-  $('#ovInspect').innerHTML = oframe(`<div class="d" style="margin-bottom:6px">Seed <b>${f.seed}</b> — elite variants on branches you haven't taken are a forecast: a different route can spend a once-per-run variant elsewhere.</div>${acts}`, 'settings');
+  $('#ovInspect').innerHTML = `<div class="ovclose">${ibtn('close', "closeOv('ovInspect')")}</div>`;
+  $('#ovInspect').insertAdjacentHTML('afterbegin', oframe(`<div class="d" style="margin-bottom:6px">Seed <b>${f.seed}</b> — elite variants on branches you haven't taken are a forecast: a different route can spend a once-per-run variant elsewhere.</div>${acts}`, 'settings'));
   $('#ovInspect').classList.add('show');
 }
 async function debugGoto(act, node) {
@@ -5780,9 +5786,8 @@ function showCatCard(id, up){
       <div id="catcard" style="text-align:center;margin:4px 0 8px" class="${showUp?'upgwrap':''}">${frameCardHTML(view, 220)}</div>
       ${arrow(1, hasNext)}
     </div>${counter}
-    <div style="display:flex;gap:8px;justify-content:center;align-items:center">
-      ${canUp ? ibtn('view_upgrade', "_catUp="+(!showUp)+";showCatCard('"+id+"',1)", {cls: showUp?'act':''}) : ''}
-      ${ibtn('close', "closeOv('ovInspect')")}</div>`);
+    ${canUp ? `<div style="display:flex;justify-content:center">${ibtn('view_upgrade', "_catUp="+(!showUp)+";showCatCard('"+id+"',1)", {cls: showUp?'act':''})}</div>` : ''}`)
+    + `<div class="ovclose">${ibtn('close', "closeOv('ovInspect')")}</div>`;   // the same bottom Close every menu has
   $('#ovInspect').classList.add('show');
   const card = document.getElementById('catcard');
   if (card) catSwipe(card);
@@ -6014,8 +6019,15 @@ function showRunResult() {
       </div>
       <div class="d" style="margin-top:5px">Equip it in Settings → Board Chips</div>
     </div>` : ''}
+    ${rs.asc_unlocked ? `<div class="choice" style="text-align:center;border-color:var(--gold)">
+      <div class="d" style="letter-spacing:.6px;color:#e0c068">${si('jump',11)} NEW DIFFICULTY UNLOCKED</div>
+      <b class="gold" style="font:700 18px var(--f-head);display:block;margin-top:4px">Ascension ${rs.asc_unlocked}${rs.general_name ? ` — ${rs.general_name}` : ''}</b>
+      <div class="d" style="margin-top:5px;line-height:1.45">${rs.asc_unlocked === 1
+        ? 'Tougher enemies, richer rewards, more Merit. Raise the Ascension dial on the Deploy screen before your next run with this commander — each win opens the next tier, all the way to Ascension 12.'
+        : 'Raise the Ascension dial on the Deploy screen to take it on.'}</div>
+    </div>` : ''}
     ${(S.daily && S.daily.date) ? `<div class="choice dboard" id="dboard"><div class="d" style="text-align:center">Daily Commission — ${S.daily.date}</div></div>` : ''}
-    <div style="text-align:center">${pbtn('continue','menu()',{cls:'h'})}</div>`, win?'mission_complete':'mission_failed');
+    `, win?'mission_complete':'mission_failed') + `<div class="ovclose">${ibtn('continue','menu()')}</div>`;   // the same bottom bar every menu has
   o.classList.add('show');
   if (S.daily && S.daily.date) renderDailyBoard(S.daily.date);
 }
@@ -6464,9 +6476,8 @@ function showBigMedal(id, allBtn) {
       <div class="bmDesc">${m.desc}</div>
       ${m.lifetime ? `<div class="bmLife">awarded ${m.lifetime}× all-time</div>` : ''}
     </div>
-    <div style="display:flex;gap:12px;justify-content:center;align-items:center;margin-top:14px">
-      ${allBtn ? `${ibtn('medals', "closeOv('ovInspect');showMedals()")}` : ''}
-      ${ibtn('close', "closeOv('ovInspect')")}</div>`;
+    ${allBtn ? `<div style="display:flex;justify-content:center;margin-top:14px">${ibtn('medals', "closeOv('ovInspect');showMedals()")}</div>` : ''}
+    <div class="ovclose">${ibtn('close', "closeOv('ovInspect')")}</div>`;   // the same bottom Close every menu has
   $('#ovInspect').classList.add('show');
 }
 function showMedalOne(id) { showBigMedal(id, true); }   // battle medal-bar tap → big view + "all medals"
