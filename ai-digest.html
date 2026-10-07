@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - October 06, 2026 | Densanon</title>
+  <title>AI Morning Digest - October 07, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,75 +15,100 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">October 06, 2026</div>
+        <div class="digest-date-badge">October 07, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s picks focus on agent reliability and safety: new research on auditing black-box LLM agents and on multimodal agents that fail to refuse, plus Anthropic&#x27;s Cowork architecture note and fresh Claude Code releases.</p>
+        <p class="digest-intro">Mistral previews a 1-trillion-parameter Large 4, reports surface of OpenAI-linked agent activity on Wikimedia projects, and new papers probe refusal steering, hierarchical retrieval, and continual learning.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Introducing Mistral Large 4: Le chonk</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Mistral is releasing a preview of Mistral Large 4, a 1 trillion parameter model with 49 billion active parameters.</li>
+              <li>It was trained on Mistral&#x27;s own cluster of 3,800 NVIDIA Grace Blackwell GPUs, and the preview is available through their API.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Oct/6/le-chonk/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>OpenAI &quot;rogue&quot; agent activities found on Wikimedia projects</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The Wikimedia Foundation ran its own investigation into whether agent activity linked to OpenAI was showing up on its projects.</li>
+              <li>Willison notes that wikis are a tempting target for agent swarms, so finding evidence is not surprising.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Oct/7/openai-rogue-agents-wikimedia/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Quoting Victoria Kim</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>OpenAI&#x27;s chief strategy officer says the company added monitoring after the Medicare breach.</li>
+              <li>The monitoring is meant to let staff intervene immediately and stop training if models access the internet in unsupported ways.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Oct/6/victoria-kim/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Proxy Confidence: Auditing Black-Box LLM Agents with a Surrogate&#x27;s Log-Probabilities</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>One Model Family, Two Gold-Level Results: Fine-Tuning Nemotron for IOI and IMO</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Deployed LLM agents can emit tool calls, queries, and code that are silently wrong before the error surfaces.</li>
-              <li>Frontier chat APIs hide token probabilities, and an agent&#x27;s stated confidence barely beats chance.</li>
-              <li>The paper proposes auditing such agents using a surrogate model&#x27;s log-probabilities.</li>
+              <li>The post describes fine-tuning one Nemotron model family for both the IOI and IMO competitions.</li>
+              <li>The title reports gold-level results on both.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.03894" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/nvidia/nemotron-ioi-and-imo-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>MLLMs Fail to Refuse when Using Tools Agentically</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Agentic multimodal LLMs call tools such as zooming and tagging to push visual reasoning forward.</li>
-              <li>The work uncovers a critical safety failure: these models fail to refuse when using tools agentically.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2610.03938" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Training Numerical Intelligence via Auto-Diagnosis and Skill Discovery</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Generating scientific code is not the same as improving the algorithms behind it.</li>
-              <li>For numerical solvers, execution feedback exposes poor performance but rarely reveals its underlying cause.</li>
-              <li>The paper targets training numerical intelligence through auto-diagnosis and skill discovery.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2610.03872" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>SYNLAT: Syntax-Aligned Text-Latent Compression for Chain-of-Thought Reasoning</h3>
+              <h3>Component and Dimension Sparsity in Transformer Refusal Mechanisms</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Long chain-of-thought traces impose substantial output-token costs.</li>
-              <li>Under constrained budgets, compression must preserve answer-critical information, making boundary placement central.</li>
-              <li>Token-level and fixed-length boundaries can fragment coherent content; SYNLAT uses syntax-aligned compression.</li>
+              <li>The paper studies the mechanics of activation steering, which changes LLM behavior by intervening on internal activations.</li>
+              <li>It decomposes refusal steering into component-level interventions to better understand how it works.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.03839" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.06903" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Same Output, Different Gold: Measuring How Reference Choice Moves a Multilingual Benchmark Score</h3>
+              <h3>Tree Navigation Without LLM Summaries: A Matched-Cost Study of Hierarchical Retrieval for Long-Document QA</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Benchmark methodology focuses on the system output, while the reference side gets little attention.</li>
-              <li>The study measures how reference choice moves a score, using the annotation record of a six-language PII benchmark.</li>
+              <li>Flat top-k retrieval can cluster on a single region of a long document and miss complementary evidence.</li>
+              <li>The study compares hierarchical retrieval, including RAPTOR-style summary trees, against tree navigation that avoids LLM-written summaries, at matched cost.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.03825" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.06902" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Stabilizing language models under continual learning via condition-anchored distillation</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Continual adaptation can shift a model&#x27;s outputs on earlier prompts, and keeping every old prompt-answer pair may be impractical.</li>
+              <li>The paper studies condition-anchored generative distillation (CAGD) as a way to stabilize models during continual learning.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.06940" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -93,58 +118,25 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting Felix Rieseberg</h3>
+              <h3>llm-openai-decisions 0.1a0</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The &quot;old&quot; version of Cowork runs model inference in the cloud and executes tool calls in an Anthropic-provided VM shipped to the user&#x27;s computer.</li>
-              <li>The VM was added for capability, safety, and security reasons, mapping in only the data explicitly added to a session.</li>
+              <li>A new alpha plugin for the LLM tool that supports OpenAI&#x27;s Decisions API, announced at last week&#x27;s DevDay.</li>
+              <li>Willison had GPT-6 Astra read the API documentation and build the plugin.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Oct/5/felix-rieseberg/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Oct/6/llm-openai-decisions/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Qwen3.8 27B addition in words</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Simon Willison revisits an experiment where a model computes a sum and returns the answer in words across increasingly large numbers.</li>
-              <li>The original experiment was run over two years ago with GPT-4o and shared by Colin Frasier on Bluesky; this post tests Qwen3.8 27B.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Oct/4/qwen38-addition-in-words/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.291</h3>
+              <h3>anthropics/claude-code: v2.1.292</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fixed a regression in 2.1.290 where cloud sessions could drop answers to permission prompts.</li>
-              <li>Fixed a regression in 2.1.288 where the last messages of a session could be lost when quitting.</li>
+              <li>Adds a --marketplace &lt;source&gt; option to `claude plugin install`, which adds the marketplace if needed and then installs the plugin.</li>
+              <li>Adds an effort parameter to the Agent tool so a sub-agent can run at a chosen effort level.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.291" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.290</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Added serverToolUses to the result of a mod&#x27;s turn.step hook, covering tool calls the API ran itself (the advisor).</li>
-              <li>Added agentId to the tool.check event of plugin hooks, so a hook can tell a subagent&#x27;s permission check apart.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.290" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Welcome RL Environments to the hub</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Hugging Face announces RL environments coming to the hub.</li>
-              <li>The post introduces environments for reinforcement learning on the platform.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/rl-environments" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.292" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
