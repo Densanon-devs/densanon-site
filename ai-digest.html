@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - October 11, 2026 | Densanon</title>
+  <title>AI Morning Digest - October 12, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,39 +15,130 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">October 11, 2026</div>
+        <div class="digest-date-badge">October 12, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A quiet day: Python 3.15.0 lands in GitHub Actions&#x27; python-versions repo, and Simon Willison notes that Dwarf Fortress now uses version control.</p>
+        <p class="digest-intro">A research-heavy day: new work on self-improving agents and agent data synthesis, fresh benchmarks that test long-horizon play and coding agents, and ideas for faster, more flexible LLM inference.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Know What You Don&#x27;t Know: Agentic Data Synthesis by Evolving Generation Space for Closed-Loop Learning</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Argues that LLM improvement increasingly depends on synthetic experience for interactive agents.</li>
+              <li>Good synthetic data needs trajectories that are executable and verifiable, and that also give real learning value.</li>
+              <li>Proposes evolving the generation space in a closed loop so synthesis targets what the model does not yet know.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.12593" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>SpireBench: Evaluating Long-Horizon Strategic Play of Agentic Models with Slay the Spire</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Notes that most agentic benchmarks are short and episodic, leaving long-horizon strategic reasoning under-studied.</li>
+              <li>Uses Slay the Spire as the testbed for long-horizon play.</li>
+              <li>Aims to separate stored knowledge, reasoning and long-horizon planning in agent performance.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.12596" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>EliteTable: Self-Improving Program Search for Executable Control Policies</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>An LLM-guided program-search algorithm that keeps a fixed-capacity table of high-scoring solutions.</li>
+              <li>The table guides new proposals, edits of existing solutions, and remixes of several solutions.</li>
+              <li>Targets executable control policies.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.12536" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>One Model to Loop Them All: Elastic Latent Recurrence for Language Models</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Latent recurrent LMs reuse a shared block of layers, so one checkpoint can trade inference compute for accuracy by changing loop count.</li>
+              <li>Existing models of this type typically fall well short of non-recurrent models at a single loop.</li>
+              <li>The paper proposes an elastic approach to close that gap.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.12582" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Contextual Correction of Parallel Drafts for Speculative Decoding</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Speculative decoding speeds up inference by having a lightweight drafter propose tokens that the target model verifies in parallel.</li>
+              <li>Diffusion-based drafters make this especially attractive because they draft in parallel.</li>
+              <li>The work adds contextual correction to improve those parallel drafts.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.12570" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AutoIndexer: Flexible-Order Decoding by Training Causal Models on Chains of Edits</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Autoregressive decoding handles non-causally ordered data (cross-references, future dependencies) poorly because output cannot be revised.</li>
+              <li>Diffusion LLMs only partly address this.</li>
+              <li>Trains causal models on chains of edits to get flexible-order decoding.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.12545" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Equal-Budget Monte Carlo Tree Search versus Randomized-Restart List Scheduling for DAG Workflows: A Controlled Equal-Budget Computational Study</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Points out that MCTS is often proposed for DAG workflow scheduling without giving a simpler baseline the same search effort.</li>
+              <li>Runs a controlled equal-budget comparison against randomized-restart list scheduling.</li>
+              <li>A useful reminder to test fancy search methods against simple baselines.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.12542" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Python 3.15.0 added to actions/python-versions</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>SWE-Duel: Towards a Self-Scaling Arena for Coding Agents</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The stable Python 3.15.0 is now in actions/python-versions, so GitHub Actions users can add &quot;3.15&quot; to their test matrices.</li>
-              <li>Willison had been waiting days and had ChatGPT poll the repository hourly for the release.</li>
+              <li>Static coding benchmarks leak into training data and get saturated by stronger agents.</li>
+              <li>Proposes a self-scaling benchmark whose tasks and oracles are created at evaluation time.</li>
+              <li>Aims to keep coding-agent evaluation meaningful as agents improve.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Oct/10/python-actions/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.12569" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Dwarf Fortress uses version control now</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>anthropics/claude-code-action: v1.0.248</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Developer Tarn Adams said in 2013 and 2016 that Dwarf Fortress had no version control.</li>
-              <li>By March 2023 he said he had &quot;version control stuff to use now&quot;, following the Steam release.</li>
+              <li>New patch release v1.0.248 of the Claude Code GitHub Action, published October 9.</li>
+              <li>The release notes only link a changelog against v1.0.247, with no further detail.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Oct/11/dwarf-fortress/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code-action/releases/tag/v1.0.248" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
