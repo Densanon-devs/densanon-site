@@ -17,11 +17,12 @@
   #ctrl, #mapctrl { padding-bottom: max(4px, env(safe-area-inset-bottom)); }
   #setBtn { top: max(6px, env(safe-area-inset-top)); right: max(6px, env(safe-area-inset-right)); }
   input, textarea { user-select: text; -webkit-user-select: text; }
-  /* Display face for HEADLINES ONLY — Stardos Stencil (SIL OFL 1.1, licence beside the file). Shipped
-     locally and unmodified (the app is offline in Tauri/Capacitor; subsetting would be a Modified
-     Version under the OFL's Reserved Font Name clause). Latin-only: any glyph it lacks falls through
-     to --f-head per character, and a locale that sets --f-loc overrides it outright. */
-  @font-face { font-family: "TOW Stencil"; src: url(assets/fonts/stardos-stencil/StardosStencil-Bold.ttf) format("truetype");
+  /* Display face for HEADLINES ONLY — TOW Stencil: Stardos Stencil Bold (SIL OFL 1.1) extended by
+     tools/art/build_tow_stencil.py to every Latin letter the glyph atlas covers, renamed because
+     "Stardos" is a Reserved Font Name (licence beside the file). Shipped locally: the app is offline
+     in Tauri/Capacitor. Any glyph it still lacks falls through to --f-head per character, and a
+     locale that sets --f-loc overrides it outright. */
+  @font-face { font-family: "TOW Stencil"; src: url(assets/fonts/tow-stencil/TOWStencil-Bold.ttf) format("truetype");
     font-weight: 400 900; font-style: normal; font-display: swap; }
   :root {
     --cell: 22px;
@@ -857,6 +858,29 @@
   #ovConfirm .bossconf > div:first-child { display: flex; gap: 16px; align-items: center; text-align: left; }
   #ovConfirm .bossconf .bc-art { flex: 0 0 auto; max-width: 42%; }
   #ovConfirm .bossconf .bc-art img { width: 100% !important; height: auto; display: block; margin: 0 !important; border-radius: 6px; }
+  /* ── controller ── (body.padmode is on while a gamepad is in use) */
+  body.padmode, body.padmode * { cursor: none !important; }
+  body.padmode .padfocus { outline: 3px solid #f0c94a !important; outline-offset: 3px; border-radius: 6px;
+    box-shadow: 0 0 0 5px rgba(240,201,74,.25), 0 0 18px rgba(240,201,74,.55) !important; }
+  #padcur { display: none; position: absolute; z-index: 30; pointer-events: none; box-sizing: border-box;
+    border: 3px solid #f0c94a; border-radius: 5px; box-shadow: 0 0 0 2px rgba(0,0,0,.55), 0 0 14px rgba(240,201,74,.7);
+    animation: padcur-pulse 1.4s ease-in-out infinite; }
+  body.padmode:not(.padpanel) #padcur { display: block; }
+  @keyframes padcur-pulse { 50% { box-shadow: 0 0 0 2px rgba(0,0,0,.55), 0 0 4px rgba(240,201,74,.35); } }
+  #padbar { display: none; position: fixed; left: 50%; transform: translateX(-50%); bottom: 6px; z-index: 60; pointer-events: none;
+    gap: 12px; padding: 5px 12px; border-radius: 16px; background: rgba(12,10,6,.78); box-shadow: 0 2px 8px rgba(0,0,0,.5);
+    font: 600 12px var(--f-ui); color: #e9dfbf; white-space: nowrap; max-width: calc(100vw - 20px); overflow: hidden; }
+  body.padmode #padbar { display: flex; }
+  #padbar.board { bottom: auto; top: calc(var(--pillh, 40px) + 18px); }   /* the hand owns the bottom edge in a battle */
+  .pgi { display: inline-flex; align-items: center; gap: 4px; }
+  .pg { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 4px; box-sizing: border-box;
+    border-radius: 10px; font: 800 11px var(--f-ui); color: #fff; background: #3b3b42; box-shadow: inset 0 -2px 0 rgba(0,0,0,.35); }
+  .pg-xbox.pg-A { background: #3f9b3a; } .pg-xbox.pg-B { background: #c4382c; } .pg-xbox.pg-X { background: #2f6fc4; } .pg-xbox.pg-Y { background: #d6a91c; color: #1b1405; }
+  .pg-ps.pg-A { color: #8fb4ff; } .pg-ps.pg-B { color: #ff7f7f; } .pg-ps.pg-X { color: #f19ad8; } .pg-ps.pg-Y { color: #6fe0b4; }
+  .pg-LB, .pg-RB, .pg-LT, .pg-RT, .pg-L3, .pg-R3 { border-radius: 5px; font-size: 10px; }
+  .padnumval { font: 700 22px var(--f-ui); letter-spacing: 2px; margin: 8px 0; min-height: 28px; color: #f2e6bd; }
+  .padnumgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .padnumgrid .padnum { padding: 10px 0; font: 700 16px var(--f-ui); }
   /* main-menu Quit (desktop shells): the top-left mirror of the settings gear */
   .menuquit { position: fixed; top: max(6px, env(safe-area-inset-top)); left: max(6px, env(safe-area-inset-left)); z-index: 40; }
   #setBtn:active { transform: scale(.92); }
@@ -2943,7 +2967,7 @@
 <script src="./plates.js"></script>          <!-- which UI plates have text-free art (npm run gen:plates) -->
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.106';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.107';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -3860,7 +3884,12 @@ function _gaugeDrag(e){
   }
   let a = Math.atan2(dy, dx) * 180/Math.PI;
   if (a > 150) a -= 360;
-  const v = Math.max(0, Math.min(100, (a - c.rmin) / (c.rmax - c.rmin) * 100));
+  _gaugeSet(g, (a - c.rmin) / (c.rmax - c.rmin) * 100, c);
+}
+// Set a dial to v (0-100): needle, readout, and the volume itself. The drag and the controller share it.
+function _gaugeSet(g, v, c) {
+  c = c || gaugeCfg();
+  v = Math.max(0, Math.min(100, v));
   g.dataset.v = v;
   g.querySelector('.vg-n').style.transform = `rotate(${_gaugeAngle(v, c)}deg)`;
   const lbl = document.getElementById(g.dataset.ch+'Pct'); if (lbl) lbl.textContent = Math.round(v)+'%';
@@ -4281,6 +4310,7 @@ function render(state) {
     fitCell();
     openFogCurtain();
     _prevCpHold = null;                   // don't toast a control-point "change" on battle entry
+    if (typeof padResetCursor === 'function') padResetCursor();   // the controller cursor starts on your HQ
   }
   // control-point feedback: holding a battlefield ◆ point grants +1 max CP — call it out when it flips.
   // Skip it entirely once the battle is decided (S.result) — you don't need a "point dropped" toast as the fight ends.
@@ -5166,20 +5196,32 @@ function bpill(name, val, cls, onclick) { return `<span class="bpill ${cls||''} 
 const GLYPH_PUNCT = {'!':'excl','?':'ques','.':'dot',',':'comma',':':'colon',';':'semi',"'":'apos','"':'quot',
   '+':'plus','-':'minus','=':'eq','_':'under','/':'slash','\\':'bslash','|':'pipe','(':'lparen',')':'rparen',
   '[':'lbrack',']':'rbrack','{':'lbrace','}':'rbrace','<':'lt','>':'gt','*':'star','#':'hash','@':'at',
-  '$':'dollar','%':'pct','&':'amp','^':'caret','~':'tilde'};
+  '$':'dollar','%':'pct','&':'amp','^':'caret','~':'tilde',
+  '¿':'iquest','¡':'iexcl','·':'middot','ʻ':'okina'};
 // The atlas used to hold ONE case of A-Z: glyphText lowercased its input, so the plaques shouted
 // everything in caps, and anything outside a-z0-9 rendered as NOTHING — a translated general's name
 // would have come out blank. It now carries both cases and the Latin-1 accents.
 //
 // Files are ASCII and case-PREFIXED — u_a / l_a, u_eacute / l_eacute — because Windows filesystems
-// are case-insensitive, so A.png and a.png would be the same file.
-const GLYPH_ACCENT = {'ß':'szlig','à':'agrave','á':'aacute','â':'acirc','ã':'atilde','ä':'auml','æ':'aelig','ç':'ccedil','è':'egrave','é':'eacute','ê':'ecirc','ë':'euml','ì':'igrave','í':'iacute','î':'icirc','ï':'iuml','ñ':'ntilde','ò':'ograve','ó':'oacute','ô':'ocirc','õ':'otilde','ö':'ouml','ù':'ugrave','ú':'uacute','û':'ucirc','ü':'uuml','ÿ':'yuml','ĳ':'ijlig','œ':'oelig',};
+// are case-insensitive, so A.png and a.png would be the same file. The second block is the extension
+// sheet (tools/art/import_glyph_sheet_ext.py): Nordic, Central European, Baltic, Turkish and more.
+// Some of its names exist in one case only; glyphFile checks the metrics before answering.
+const GLYPH_ACCENT = {'ß':'szlig','à':'agrave','á':'aacute','â':'acirc','ã':'atilde','ä':'auml','æ':'aelig','ç':'ccedil','è':'egrave','é':'eacute','ê':'ecirc','ë':'euml','ì':'igrave','í':'iacute','î':'icirc','ï':'iuml','ñ':'ntilde','ò':'ograve','ó':'oacute','ô':'ocirc','õ':'otilde','ö':'ouml','ù':'ugrave','ú':'uacute','û':'ucirc','ü':'uuml','ÿ':'yuml','ĳ':'ijlig','œ':'oelig',
+  'ă':'abreve','ā':'amacron','ą':'aogonek','å':'aring','ɓ':'bhook','ć':'cacute','č':'ccaron','ĉ':'ccirc','ċ':'cdot','ď':'dcaron','đ':'dcroat','ɗ':'dhook','ı':'dotlessi','ě':'ecaron','ė':'edot','ē':'emacron','ŋ':'eng','ę':'eogonek','ð':'eth','ğ':'gbreve','ĝ':'gcirc','ģ':'gcomma','ġ':'gdot','ħ':'hbar','ĥ':'hcirc','ī':'imacron','į':'iogonek','ķ':'kcomma','ƙ':'khook','ĺ':'lacute','ľ':'lcaron','ļ':'lcomma','ł':'lslash','ń':'nacute','ň':'ncaron','ņ':'ncomma','ő':'odblacute','ọ':'odotbelow','ō':'omacron','ø':'oslash','ŕ':'racute','ř':'rcaron','ś':'sacute','š':'scaron','ş':'scedil','ə':'schwa','ŝ':'scirc','ŧ':'tbar','ť':'tcaron','þ':'thorn','ŭ':'ubreve','ű':'udblacute','ū':'umacron','ų':'uogonek','ů':'uring','ŵ':'wcirc','ý':'yacute','ŷ':'ycirc','ź':'zacute','ž':'zcaron','ż':'zdot','ĵ':'jcirc','ș':'scomma','ț':'tcomma','ƴ':'yhook','ẹ':'edotbelow','ṣ':'sdotbelow',};
 function glyphFile(ch) {
+  const f = _glyphName(ch);
+  // A name is not a file: the atlas carries some lowercase letters without their capital (the sheet
+  // drew Ɓ as a plain B, so it was left out), and a missing image is worse than the text fallback.
+  const M = window.GLYPH_METRICS;
+  return f && M && !M[f] ? null : f;
+}
+function _glyphName(ch) {
   if (/[0-9]/.test(ch)) return ch;
+  if (ch === 'İ') return 'u_idot';       // Turkish dotted capital: its lowercase is i + a combining dot
   const low = ch.toLowerCase();
   const acc = GLYPH_ACCENT[low];
   if (acc) return (ch === low ? 'l_' : 'u_') + acc;
-  if (/[a-z]/.test(low)) return (ch === low ? 'l_' : 'u_') + low;
+  if (/^[a-z]$/.test(low)) return (ch === low ? 'l_' : 'u_') + low;
   return GLYPH_PUNCT[ch] || null;
 }
 function glyphText(str, cls) {
@@ -6908,6 +6950,7 @@ function renderBoard() {
     }
   }
   renderBoard._cache = { sig, cls: clsArr, inner: innerArr, fog: fogArr };
+  if (typeof padSyncCursor === 'function') padSyncCursor();   // a full rebuild drops the controller cursor
   // No scroll to preserve any more: the view is the camera, and re-rendering cells cannot disturb it.
   drawIntents(showIntent ? intentList : []);
 }
@@ -7431,7 +7474,8 @@ function showEnemyReveal(c) {
     o.innerHTML = `<div style="text-align:center">
       <div class="gold" style="font:700 13px var(--f-head);letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px">${si('skirmish',14)} New enemy card</div>
       ${frameCardHTML(c, 220)}
-      <div class="d" style="margin-top:10px">Added to your Collection · Tap to continue</div></div>`;
+      <div class="d" style="margin-top:10px">Added to your Collection · Tap to continue</div>
+      <div style="margin-top:10px">${ibtn('continue', '')}</div></div>`;
     o.classList.add('show');
     o.onclick = () => { o.classList.remove('show'); o.onclick = null; res(); };
   });
@@ -7491,6 +7535,9 @@ function _renderPrompt() {
     return;
   }
   const card = S.hand[sel];
+  // A card picked while the last one was still resolving can be gone by the time the hand re-renders
+  // (the hand is rebuilt from the server's answer). Drop the stale selection rather than throw.
+  if (!card) { cancelSelState(); $('#prompt').innerHTML = ''; return; }
   const step = card.needs[picked.length];
   const place = card.cat === 'Build' || card.cat === 'Reinforcement';
   const tileLabel = place ? 'tap where to place it (next to base)'
@@ -7541,6 +7588,7 @@ async function tapCell(x, y) {
   if (sel !== null) {
     if (!legal) return;
     const card = S.hand[sel];
+    if (!card) { cancelSelState(); renderBoard(); renderPrompt(); return; }   // stale: see renderPrompt
     const step = card.needs[picked.length];
     let val = null;
     if (step === 'tile') { if (!legal.set.has(x+','+y)) return; val = [x, y]; }
@@ -7676,12 +7724,22 @@ function _cmdTarget() {
 // webview. Persisted, and re-applied on boot — but only from a user gesture, because browsers reject
 // a programmatic request outside one, so the stored preference is re-armed on the first interaction.
 function _isFullscreen() { return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+// Linux desktop (Steam Deck): the HTML Fullscreen API ABORTS the whole process in WebKitGTK's webview, the
+// first time it is asked — the game vanished on the first click of every session. So on Linux the window
+// itself goes fullscreen through Tauri instead, which also needs no user gesture, so it applies at boot.
+// Windows keeps the Fullscreen API, which WebView2 handles fine.
+function _nativeFullscreen() { return _isTauri() && /Linux/.test(navigator.userAgent) && !/Android/.test(navigator.userAgent); }
+function _tauriWindowFullscreen(on) {
+  return window.__TAURI_INTERNALS__.invoke('plugin:window|set_fullscreen', { label: 'main', value: !!on });
+}
 // Default ON: the stored value is only ever '0' when the player has deliberately turned it off.
 function fullscreenWanted() { try { return localStorage.getItem('dc_fullscreen') !== '0'; } catch (e) { return true; } }
 function toggleFullscreen() { setFullscreen(!fullscreenWanted()); }
 async function setFullscreen(on, silent) {
   try {
-    if (on) {
+    if (_nativeFullscreen()) {
+      await _tauriWindowFullscreen(on);
+    } else if (on) {
       const el = document.documentElement;
       await (el.requestFullscreen ? el.requestFullscreen({ navigationUI: 'hide' }) : el.webkitRequestFullscreen());
     } else if (_isFullscreen()) {
@@ -7700,6 +7758,9 @@ async function setFullscreen(on, silent) {
 // Re-arm a stored preference on the first gesture, since a cold request would be rejected.
 (function armFullscreen() {
   if (!fullscreenWanted()) return;
+  // No gesture needed for the window itself, so do not wait for one (the Tauri bridge is injected before
+  // the page's scripts run, so it is already there).
+  if (_nativeFullscreen()) { setFullscreen(true, true); return; }
   // Checked inside the handler, not out here: this IIFE runs while the page is still parsing, and on a
   // native shell window.Capacitor is injected by the bridge — reading it at parse time can miss it.
   const go = () => {
@@ -9739,6 +9800,8 @@ function showHelp() {
       <b>more elite battles</b> and cuts your <b>between-act healing in half</b>. Climb as high as you dare for a higher score.`)}
     </div>
     ${topic('<span class="cyan">Keyboard</span>', keys, 'keyblock')}
+    ${topic('<span class="cyan">Controller</span>', `<div class="keytable">${PAD_HELP
+      .map(([k, what]) => `<div class="keyrow"><kbd>${k}</kbd><span>${what}</span></div>`).join('')}</div>`, 'keyblock')}
     <div class="helpfoot">${pbtn('replay_tutorial','resetTutorial()')}</div>
     </div>
     <div class="ovclose">${ibtn('return', "closeOv('ovHelp')")}</div>`;
@@ -10588,6 +10651,22 @@ function showHoverCard(x, y, cell) {
 //   * never with ctrl/alt/meta — those belong to the browser and the OS.
 //   * while an overlay is open, only Escape does anything. A stray D while reading the deck should
 //     not quietly re-aim the hand behind it.
+// The controller's layout, for How to Play. Xbox names; a PlayStation pad uses the same positions.
+const PAD_HELP = [
+  ['D-pad / left stick', 'Move the cursor on the board, or between buttons'],
+  ['A', 'Select · press'],
+  ['B', 'Cancel · back'],
+  ['LB  RB', 'Move along your hand'],
+  ['RT', 'Play the focused card'],
+  ['LT', 'Open the focused card · Keep (★) or play it'],
+  ['X', 'Aim / Move, on the selected unit'],
+  ['Y', 'End turn'],
+  ['Left stick click', 'Command Power (explains it until it is ready)'],
+  ['Right stick click', 'Danger overlays on / off'],
+  ['Right stick', 'Zoom the board · scroll a list'],
+  ['View', 'Reach the bars and panels around the board'],
+  ['Menu', 'Settings'],
+];
 const HOTKEY_HELP = [
   ['←  →   or  A  D', 'Move along your hand'],
   ['↓  or  S', 'Look at the focused card · again to close'],
@@ -10804,7 +10883,7 @@ function initHotkeys() {
       }
       case 'ArrowUp': case 'w':
         e.preventDefault();
-        if (hand[handFocus]) void tapCard(handFocus);
+        if (hand[handFocus] && !turnBusy) void tapCard(handFocus);
         return;
       case 'Tab': {
         e.preventDefault();
@@ -10849,7 +10928,342 @@ function initZoomKeys() {
   });
 }
 
+
+// ── CONTROLLER ──────────────────────────────────────────────────────────────────────────────────────
+// Full controller support over the standard Gamepad API (XInput on Windows and the Steam Deck, which is
+// what Steam Input presents; DualSense/DualShock map onto the same "standard" layout). Every press picks
+// one of three modes from what is on screen at that moment:
+//
+//   PANEL  An overlay, coach tip or popup is up, the map is showing, or the battle's panel mode is on.
+//          The D-pad moves a focus ring between that surface's visible controls (spatial navigation),
+//          A presses, B backs out. Every screen is covered without wiring each one by hand.
+//   BOARD  A battle with nothing in front of it. The D-pad moves a tile cursor and A taps that tile,
+//          exactly as a click would.
+//   KEYS   The battle actions the keyboard already has are sent AS key presses to the existing handler,
+//          so a shortcut cannot behave differently on a pad than it does on a keyboard.
+//
+// Using a controller turns on `body.padmode` (focus ring, tile cursor, button prompts, mouse pointer
+// hidden). Moving the mouse or clicking turns it off again.
+const PAD = { raf: 0, prev: [], rep: {}, mode: false, style: 'xbox', cur: null, panel: false, focus: null, rsAcc: 0, lastSig: '', mem: new WeakMap(), root: null, rootAt: 0, moved: false };
+const PB = { A: 0, B: 1, X: 2, Y: 3, LB: 4, RB: 5, LT: 6, RT: 7, VIEW: 8, MENU: 9, L3: 10, R3: 11, UP: 12, DOWN: 13, LEFT: 14, RIGHT: 15 };
+const PAD_REPEAT_DELAY = 320, PAD_REPEAT_RATE = 110, PAD_DEAD = 0.5;
+const PAD_SEL = 'button, input, select, [onclick], [role="button"], .vgauge:not(.dis)';
+
+function _padKey(key) { window.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true })); }
+function _padVisible(el) {
+  if (!el || el.disabled || !el.isConnected || !el.getClientRects().length) return false;
+  const r = el.getBoundingClientRect();
+  if (r.width < 6 || r.height < 6) return false;
+  const cs = getComputedStyle(el);
+  return cs.visibility !== 'hidden' && cs.pointerEvents !== 'none' && +cs.opacity !== 0;
+}
+function _padBattle() { return typeof S !== 'undefined' && !!S && !!S.board && S.mode !== 'map' && S.mode !== 'picker'; }
+function _padSetPanel(on) {
+  PAD.panel = !!on;
+  document.body.classList.toggle('padpanel', PAD.panel);
+  if (!on) { _padSetFocus(null); padSyncCursor(); }
+}
+// The surface the focus ring moves over, or null for the board cursor.
+function _padRoot() {
+  const co = document.getElementById('coach'); if (co && co.classList.contains('show')) return co;
+  const ov = _topOverlay(); if (ov) return ov;
+  const mv = document.getElementById('mapview'); if (mv && mv.classList.contains('show')) return mv;
+  if (_padBattle()) return PAD.panel ? document.getElementById('app') : null;
+  return document.body;
+}
+function _padCands(root) {
+  const battlePanel = root.id === 'app';
+  return [...root.querySelectorAll(PAD_SEL)].filter(el => {
+    if (battlePanel && (el.closest('#board') || el.closest('#hand') || el.closest('.overlay'))) return false;
+    if (el.parentElement && el.parentElement.closest('.vgauge')) return false;   // the dial's own parts
+    return _padVisible(el);
+  });
+}
+function _padCenter(r) { return [(r.left + r.right) / 2, (r.top + r.bottom) / 2]; }
+// Nearest control in a direction. It must lie that way. Anything LINED UP with the current one (its box
+// overlaps on the cross axis) wins outright, nearest first, so a row or a column is followed before
+// anything diagonal; only with nothing lined up does the nearest diagonal count, scored by distance
+// along the direction plus a heavier penalty for drifting sideways.
+function _padNear(from, cands, d) {
+  const fr = from.getBoundingClientRect(), [fx, fy] = _padCenter(fr);
+  let best = null, bs = Infinity;
+  for (const el of cands) {
+    if (el === from || el.contains(from) || from.contains(el)) continue;
+    const r = el.getBoundingClientRect(), [x, y] = _padCenter(r);
+    let main, cross;
+    if (d === 'left' || d === 'right') {
+      main = d === 'left' ? fx - x : x - fx;
+      cross = (r.bottom > fr.top && r.top < fr.bottom) ? 0 : Math.min(Math.abs(r.top - fr.bottom), Math.abs(fr.top - r.bottom));
+    } else {
+      main = d === 'up' ? fy - y : y - fy;
+      cross = (r.right > fr.left && r.left < fr.right) ? 0 : Math.min(Math.abs(r.left - fr.right), Math.abs(fr.left - r.right));
+    }
+    // Clearly that way, not a few pixels: a tile whose centre sits a hair lower than a card beside it is
+    // beside it, not below it.
+    const span = (d === 'left' || d === 'right') ? Math.min(fr.width, r.width) : Math.min(fr.height, r.height);
+    if (main <= Math.max(2, span * 0.3)) continue;
+    const sc = cross === 0 ? main : 1e6 + main + cross * 2.5;
+    if (sc < bs) { bs = sc; best = el; }
+  }
+  return best;
+}
+// Where the ring lands when a surface comes up: wherever it was last on that surface, the next node on
+// the map, a commander on the main menu (never the Daily's Play — one stray press would spend the day's
+// run), else the panel's Yes (what Space would press), else its top-left control.
+function _padDefault(cands, root) {
+  const lbl = b => ((b.getAttribute('aria-label') || '') + ' ' + ((b.querySelector('img') || {}).alt || '')).trim();
+  const was = root && PAD.mem.get(root);
+  return (was && cands.includes(was) ? was : null)
+      || cands.find(b => b.matches('.mnode.avail'))
+      || (root && root.id === 'ovGeneral' ? (cands.find(b => b.matches('.gcard.sel')) || cands.find(b => b.matches('.gcard'))) : null)
+      || cands.find(b => b.tagName === 'BUTTON' && AFFIRM_WORDS.test(lbl(b)))
+      || cands.slice().sort((a, b) => { const ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect(); return (ra.top - rb.top) || (ra.left - rb.left); })[0]
+      || null;
+}
+function _padSetFocus(el, root) {
+  if (PAD.focus && PAD.focus !== el) PAD.focus.classList.remove('padfocus');
+  PAD.focus = el;
+  if (!el) return;
+  el.classList.add('padfocus');
+  const r = root || _padRoot(); if (r) PAD.mem.set(r, el);
+  try { el.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } catch (e) {}
+}
+function _padPanelFocus(root) {
+  const cands = _padCands(root);
+  if (!PAD.focus || !root.contains(PAD.focus) || !_padVisible(PAD.focus)) _padSetFocus(_padDefault(cands, root), root);
+  return cands;
+}
+
+// ── board cursor ──
+function _padCell(x, y) { const b = document.getElementById('board'); return b && b.querySelector('.cell[data-x="' + x + '"][data-y="' + y + '"]'); }
+function padSyncCursor() {
+  const board = document.getElementById('board');
+  if (!board || !_padBattle()) return;
+  if (!PAD.cur || PAD.cur.x >= S.board.width || PAD.cur.y >= S.board.height) {
+    const home = S.board.cells.find(c => c.u && c.u.side === 'hq_you') || S.board.cells.find(c => c.u && c.u.side === 'you');
+    PAD.cur = home ? { x: home.x, y: home.y } : { x: Math.floor(S.board.width / 2), y: S.board.height - 1 };
+  }
+  let el = document.getElementById('padcur');
+  if (!el || el.parentElement !== board) { if (el) el.remove(); el = document.createElement('div'); el.id = 'padcur'; board.appendChild(el); }
+  const c = _padCell(PAD.cur.x, PAD.cur.y);
+  if (!c) return;
+  el.style.left = c.offsetLeft + 'px'; el.style.top = c.offsetTop + 'px';
+  el.style.width = c.offsetWidth + 'px'; el.style.height = c.offsetHeight + 'px';
+}
+// A new battle starts the cursor on your HQ again (PAD.cur from the last one means nothing here).
+function padResetCursor() { PAD.cur = null; if (PAD.mode) padSyncCursor(); }
+function _padKeepCursorInView() {
+  const wrap = document.getElementById('boardwrap'), c = PAD.cur && _padCell(PAD.cur.x, PAD.cur.y);
+  if (!wrap || !c) return;
+  const wr = wrap.getBoundingClientRect(), cr = c.getBoundingClientRect(), m = cr.width * 1.2;
+  let dx = 0, dy = 0;
+  if (cr.left < wr.left + m) dx = cr.left - (wr.left + m); else if (cr.right > wr.right - m) dx = cr.right - (wr.right - m);
+  if (cr.top < wr.top + m) dy = cr.top - (wr.top + m); else if (cr.bottom > wr.bottom - HAND_CLEAR - m) dy = cr.bottom - (wr.bottom - HAND_CLEAR - m);
+  if (dx || dy) camPanBy(dx, dy);
+}
+function _padMoveCursor(d) {
+  if (!PAD.cur) padSyncCursor();
+  if (!PAD.cur) return;
+  const nx = PAD.cur.x + (d === 'left' ? -1 : d === 'right' ? 1 : 0), ny = PAD.cur.y + (d === 'up' ? -1 : d === 'down' ? 1 : 0);
+  if (nx < 0 || ny < 0 || nx >= S.board.width || ny >= S.board.height) return;
+  PAD.cur = { x: nx, y: ny };
+  padSyncCursor(); _padKeepCursorInView();
+}
+
+// ── the seed field on a controller: a digit pad instead of a keyboard ──
+function _padNumpad(input) {
+  const o = $('#ovPopup');
+  const k = (v, lbl) => `<button class="setbtn padnum" onclick="_padNum('${v}')">${lbl || v}</button>`;
+  o.innerHTML = `<div class="choice" style="max-width:300px;text-align:center"><b class="gold">Seed</b>
+    <div class="padnumval" id="_padNumVal">${input.value || '<span class="d">random</span>'}</div>
+    <div class="padnumgrid">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => k(n)).join('')}${k('clr', 'Clear')}${k(0)}${k('del', '⌫')}</div>
+    <div style="margin-top:10px">${ibtn('confirm', "closeOv('ovPopup')")}</div></div>`;
+  o.classList.add('show');
+  _padNum._input = input;
+}
+function _padNum(v) {
+  const input = _padNum._input; if (!input) return;
+  let s = input.value || '';
+  const max = +input.maxLength > 0 ? +input.maxLength : 9;
+  if (v === 'del') s = s.slice(0, -1); else if (v === 'clr') s = ''; else if (s.length < max) s += v;
+  input.value = s;
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+  const out = document.getElementById('_padNumVal'); if (out) out.innerHTML = s || '<span class="d">random</span>';
+}
+
+// ── presses ──
+function _padPress(name) {
+  const root = _padRoot();
+  if (root) {
+    const ov = _topOverlay();
+    if (name === 'A') {
+      const f = PAD.focus;
+      if (!f || !root.contains(f) || !_padVisible(f)) { _padPanelFocus(root); return; }
+      if (f.tagName === 'INPUT' && f.inputMode === 'numeric') { _padNumpad(f); return; }
+      if (f.tagName === 'INPUT' && (f.type === 'checkbox' || f.type === 'radio')) { f.click(); return; }
+      if (f.tagName === 'INPUT' || f.tagName === 'SELECT') { f.focus(); return; }
+      if (f.classList.contains('vgauge')) return;                      // a dial turns with left/right
+      f.click();
+      return;
+    }
+    if (name === 'B') {
+      if (!ov && PAD.panel && _padBattle()) { _padSetPanel(false); return; }
+      _padKey('Escape');
+      return;
+    }
+    // In the zoomed-card view the shoulders step through the cards, as Left/Right do on a keyboard.
+    if ((name === 'LB' || name === 'RB') && ov && ov.id === 'ovInspect') { _padKey(name === 'LB' ? 'ArrowLeft' : 'ArrowRight'); return; }
+    if (name === 'VIEW' && PAD.panel && !ov) { _padSetPanel(false); return; }
+    if (name === 'MENU' && (!ov || ov.id === 'ovGeneral' || ov.id === 'ovSettings')) { toggleSettings(); return; }
+    return;
+  }
+  // The enemy replay is playing out. A tap would fight the half-stepped board (the mouse path eats it in
+  // _eatClick for the same reason); instead A or B fast-forwards, as a tap anywhere does with a mouse.
+  if (typeof turnBusy !== 'undefined' && turnBusy) { if (name === 'A' || name === 'B') _skipReplay = true; return; }
+  switch (name) {
+    case 'A': if (PAD.cur) void tapCell(PAD.cur.x, PAD.cur.y); return;
+    case 'B': _padKey('Escape'); return;          // cancel the selection, or open settings
+    case 'X': _padKey('q'); return;               // Aim / Move on the selected unit
+    case 'Y': _padKey('e'); return;               // End turn (the game asks first if anyone can still act)
+    case 'LB': _padKey('a'); return;              // previous card
+    case 'RB': _padKey('d'); return;              // next card
+    case 'RT': _padKey('w'); return;              // play the focused card
+    // LT opens the card's full view rather than the keyboard's quick look: the full view has Keep (★)
+    // as well as Play, and a long-press or right-click is the only other way to keep a card.
+    case 'LT': { const c = (S.hand || [])[handFocus]; if (c) showCardFull(c.i); return; }
+    // Command Power: fire it when it is ready, otherwise explain it — the long-press that shows the
+    // description on touch has no pad equivalent, and an empty gauge has nothing else to say.
+    case 'L3': if (S.power && S.power.ready) _padKey('f'); else if (S.power) showPowerInfo(); return;
+    case 'R3': _padKey('Tab'); return;            // danger overlays
+    case 'VIEW': _padSetPanel(true); _padPanelFocus(document.getElementById('app')); return;   // the bars and panels around the board
+    case 'MENU': toggleSettings(); return;
+  }
+}
+function _padDir(d) {
+  const root = _padRoot();
+  if (!root) { _padMoveCursor(d); return; }
+  const cands = _padPanelFocus(root);
+  const f = PAD.focus;
+  if (!f) return;
+  if (f.classList.contains('vgauge') && (d === 'left' || d === 'right')) { _gaugeSet(f, (+f.dataset.v || 0) + (d === 'right' ? 5 : -5)); return; }
+  if (f.type === 'range' && (d === 'left' || d === 'right')) {
+    if (d === 'right') f.stepUp(); else f.stepDown();
+    f.dispatchEvent(new Event('input', { bubbles: true })); f.dispatchEvent(new Event('change', { bubbles: true }));
+    return;
+  }
+  const n = _padNear(f, cands, d);
+  if (n) { PAD.moved = true; _padSetFocus(n); Sfx.play('ui_tap'); }
+}
+// Right stick: zoom on the board, scroll on a panel.
+function _padStick(y) {
+  if (Math.abs(y) < 0.25) { PAD.rsAcc = 0; return; }
+  const root = _padRoot();
+  if (!root) {
+    PAD.rsAcc += -y * 0.04;
+    if (Math.abs(PAD.rsAcc) >= 0.08) { camZoomAt(camZ * (1 + PAD.rsAcc)); PAD.rsAcc = 0; padSyncCursor(); }
+    return;
+  }
+  const scrolls = e => e.scrollHeight > e.clientHeight + 4 && /(auto|scroll)/.test(getComputedStyle(e).overflowY);
+  let sc = PAD.focus && PAD.focus.parentElement;
+  while (sc && sc !== root.parentElement && !scrolls(sc)) sc = sc.parentElement;
+  if (!sc || !scrolls(sc)) sc = scrolls(root) ? root : [...root.querySelectorAll('*')].find(scrolls);
+  if (sc) sc.scrollBy(0, y * 18);
+}
+
+// ── button prompts ──
+const PAD_GLYPH = {
+  xbox: { A: 'A', B: 'B', X: 'X', Y: 'Y', LB: 'LB', RB: 'RB', LT: 'LT', RT: 'RT', VIEW: '⧉', MENU: '☰', L3: 'LS', R3: 'RS' },
+  ps:   { A: '✕', B: '○', X: '□', Y: '△', LB: 'L1', RB: 'R1', LT: 'L2', RT: 'R2', VIEW: '⧉', MENU: '☰', L3: 'L3', R3: 'R3' },
+};
+function _padGlyph(b) { return `<span class="pg pg-${b} pg-${PAD.style}">${PAD_GLYPH[PAD.style][b]}</span>`; }
+function _padPrompts() {
+  const bar = document.getElementById('padbar'); if (!bar) return;
+  const root = _padRoot(), ov = _topOverlay();
+  let items;
+  if (!root) items = [['A', 'Select'], ['B', 'Cancel'], ['LB', ''], ['RB', 'Cards'], ['RT', 'Play'], ['LT', 'Card'], ['X', 'Aim'], ['Y', 'End turn'], ['L3', 'Power'], ['VIEW', 'Panels']];
+  else if (ov && ov.id === 'ovInspect') items = [['A', 'Select'], ['B', 'Back'], ['LB', ''], ['RB', 'Browse']];
+  else if (PAD.panel && _padBattle() && !ov) items = [['A', 'Select'], ['B', 'Board']];
+  else items = [['A', 'Select'], ['B', 'Back']];
+  const sig = PAD.style + (root ? 'p' : 'b') + JSON.stringify(items);
+  if (sig === PAD.lastSig) return;
+  PAD.lastSig = sig;
+  bar.innerHTML = items.map(([b, t]) => `<span class="pgi">${_padGlyph(b)}${t ? `<span class="pgt">${t}</span>` : ''}</span>`).join('');
+  bar.classList.toggle('board', !root);
+}
+
+// ── mode ──
+function _padEnter(gp) {
+  PAD.style = /054c|dualsense|dualshock|playstation|wireless controller/i.test(gp.id || '') ? 'ps' : 'xbox';
+  PAD.mode = true; PAD.lastSig = '';
+  document.body.classList.add('padmode');
+  if (_padBattle()) padSyncCursor();
+}
+function _padLeave() {
+  if (!PAD.mode) return;
+  PAD.mode = false;
+  _padSetPanel(false);
+  document.body.classList.remove('padmode');
+}
+let _padMouse = null;
+window.addEventListener('mousemove', e => {
+  if (!PAD.mode) { _padMouse = null; return; }
+  if (_padMouse && Math.abs(e.screenX - _padMouse[0]) + Math.abs(e.screenY - _padMouse[1]) > 6) _padLeave();
+  else if (!_padMouse) _padMouse = [e.screenX, e.screenY];
+});
+window.addEventListener('pointerdown', e => { if (e.isTrusted) _padLeave(); }, true);
+
+function padPoll() {
+  PAD.raf = 0;
+  const pads = navigator.getGamepads ? [...navigator.getGamepads()].filter(p => p && p.connected) : [];
+  if (!pads.length) { PAD.prev = []; return; }
+  PAD.raf = requestAnimationFrame(padPoll);
+  const gp = pads.find(p => p.mapping === 'standard') || pads[0];
+  const ax = gp.axes || [];
+  const down = gp.buttons.map(b => !!(b && (b.pressed || b.value > PAD_DEAD)));
+  const any = down.some(Boolean) || ax.some(a => Math.abs(a) > PAD_DEAD);
+  // The press that wakes controller mode only wakes it: it shows the cursor and prompts rather than also
+  // acting on a screen the player has not looked at with a pad in hand yet.
+  if (any && !PAD.mode) { _padEnter(gp); PAD.prev = down; PAD.rep = { up: 1e15, down: 1e15, left: 1e15, right: 1e15 }; const r = _padRoot(); if (r) _padPanelFocus(r); _padPrompts(); return; }
+  if (!PAD.mode) { PAD.prev = down; return; }
+  const now = performance.now();
+  const dirs = { up: down[PB.UP] || ax[1] < -PAD_DEAD, down: down[PB.DOWN] || ax[1] > PAD_DEAD, left: down[PB.LEFT] || ax[0] < -PAD_DEAD, right: down[PB.RIGHT] || ax[0] > PAD_DEAD };
+  for (const d of ['up', 'down', 'left', 'right']) {
+    if (!dirs[d]) { delete PAD.rep[d]; continue; }
+    const r = PAD.rep[d];
+    if (r === undefined) { PAD.rep[d] = now + PAD_REPEAT_DELAY; _padDir(d); }
+    else if (now >= r) { PAD.rep[d] = now + PAD_REPEAT_RATE; _padDir(d); }
+  }
+  for (const [name, i] of Object.entries(PB)) {
+    if (i >= PB.UP) continue;
+    if (down[i] && !PAD.prev[i]) _padPress(name);
+  }
+  _padStick(ax[3] || 0);
+  PAD.prev = down;
+  // A surface that just came up gets its ring now, not on the first press — otherwise that press is
+  // spent finding the ring instead of doing what it was pressed for.
+  const dep = _padBattle() && !!S.deploy;
+  if (PAD.wasDeploy && !dep && PAD.panel && !_topOverlay()) _padSetPanel(false);
+  PAD.wasDeploy = dep;
+  const root = _padRoot();
+  if (root !== PAD.root) { PAD.root = root; PAD.rootAt = now; PAD.moved = false; }
+  if (root && (!PAD.focus || !root.contains(PAD.focus) || !_padVisible(PAD.focus))) _padPanelFocus(root);
+  // Panels animate in, and their buttons can arrive a few frames apart — Deploy's Return is up before
+  // Start Run is. Until the player moves the ring, keep re-picking the default for the first half second.
+  else if (root && !PAD.moved && now - PAD.rootAt < 500) { const d = _padDefault(_padCands(root), root); if (d && d !== PAD.focus) _padSetFocus(d, root); }
+  _padPrompts();
+}
+function initGamepad() {
+  if (window._padInit || !navigator.getGamepads) return;
+  window._padInit = true;
+  const bar = document.createElement('div'); bar.id = 'padbar'; document.body.appendChild(bar);
+  const go = () => { if (!PAD.raf) PAD.raf = requestAnimationFrame(padPoll); };
+  window.addEventListener('gamepadconnected', go);
+  window.addEventListener('gamepaddisconnected', () => { if (![...navigator.getGamepads()].some(p => p && p.connected)) _padLeave(); });
+  go();
+}
+
 $('#end').onclick = endTurn;
+initGamepad();
 initPinch();
 initWheelZoom();
 initDragPan();
