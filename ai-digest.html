@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - October 17, 2026 | Densanon</title>
+  <title>AI Morning Digest - October 18, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">October 17, 2026</div>
+        <div class="digest-date-badge">October 18, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A quiet Saturday dominated by tooling: Reflection&#x27;s Beam lands as a 501B Apache 2.0 open-weight coding model, Claude Code ships v2.1.302, and Simon Willison reframes code review in the age of AI-written changes.</p>
+        <p class="digest-intro">A light Sunday of tooling notes: a neat document.currentScript trick for inline rendering, a new alpha of Simon Willison&#x27;s web-edit, and two quick claude-code-action releases.</p>
       </div>
     </section>
 
@@ -29,49 +29,36 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Welcome Beam: a 501B open model you can own, customize, and scale</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Beam is the first open-weight model from US lab Reflection: a sparse mixture-of-experts with 501B total and about 23B active parameters, a 1M-token context window, and an Apache 2.0 license.</li>
-              <li>It targets coding and agentic work; Reflection reports 81.6% on SWE-bench Verified, 80.1% on Terminal Bench v2.1 and 90.6% on GPQA Diamond for the BF16 checkpoint.</li>
-              <li>Checkpoints come in BF16 (about 1 TB), FP8 and NVFP4 (about 280 GB, native on Blackwell GPUs), with day-0 support in Transformers, vLLM and SGLang.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/reflection-beam" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Quoting Addy Osmani, Morgan Westlee Lunt, and Qing Wang</h3>
+              <h3>Inline rendering with document.currentScript</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The quoted authors argue that &quot;did a human read the code?&quot; is an imprecise proxy for the real question: what could go wrong with this change, and which check, automated or human, is best placed to catch it.</li>
-              <li>Asking that question also changes when review happens: instead of a gate at the end (write code, open a PR, wait), review moves earlier into the process.</li>
+              <li>Lean Rada describes a trick built on the document.currentScript property: a tiny inline script element that replaces itself when the page loads.</li>
+              <li>The example drops in a script that calls document.currentScript.replaceWith(...) so the script tag is swapped for rendered content in place, with no separate container or build step.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Oct/16/code-review/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Oct/17/document-currentscript/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LaTeX renderer</h3>
+              <h3>web-edit 0.1a2</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A new small browser tool from Simon Willison that renders LaTeX.</li>
-              <li>It was inspired by Paul Ford and Aboard Foundry&#x27;s Tiny Little Office, a suite of web app editors including a word processor, outliner, spreadsheet and diagram maker.</li>
+              <li>web-edit is Willison&#x27;s tiny web app for browsing and editing files in a folder, built mainly for editing files on different machines over Tailscale.</li>
+              <li>This alpha adds a copy-to-clipboard option for both text and image data, which he needed while working with pelican prompt output.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Oct/15/latex/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Oct/17/web-edit/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.302</h3>
+              <h3>anthropics/claude-code-action: v1.0.252 and v1.0.251</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds CLAUDE_CODE_AUTO_MODE_MODEL to choose the model for the client-side auto mode classifier, and an Idle compaction toggle in /config.</li>
-              <li>Fork subagents are now on by default in claude -p, the Agent SDK, the desktop app and VS Code; set CLAUDE_CODE_FORK_SUBAGENT=0 to turn them off.</li>
-              <li>Fixes include prompt cache misses for tools added mid-session, errors after switching to Vertex or Bedrock mid-session, and file writes on exFAT/FAT32 drives on Windows; startup is faster with many plugins.</li>
+              <li>Two incremental releases of Anthropic&#x27;s Claude Code GitHub Action landed on Oct 15 (v1.0.251) and Oct 16 (v1.0.252).</li>
+              <li>The release notes only link full changelogs (v1.0.250 to v1.0.251 and v1.0.251 to v1.0.252), so check the compare views for specifics before upgrading; v1.0.251 is at https://github.com/anthropics/claude-code-action/releases/tag/v1.0.251.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.302" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code-action/releases/tag/v1.0.252" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
