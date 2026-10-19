@@ -150,6 +150,20 @@ a:hover {
   display: flex;
 }
 
+/* The menu sits 12px below its toggle. Without something hoverable in that gap, the pointer
+   leaves .nav-dropdown on its way down and the menu closes before it can be reached. */
+@media (min-width: 769px) {
+  .nav-dropdown:hover::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max(100%, 152px);
+    height: 14px;
+  }
+}
+
 .nav-dropdown-menu a {
   padding: 10px 16px;
   color: var(--color-text-muted);
