@@ -1433,6 +1433,12 @@
     gap: 6px; color: #d8b45a; }
   .choice.demo-note b { font: 700 15px var(--f-head); letter-spacing: .06em; color: var(--gold); }
   .choice.demo-note span { font-size: 12px; line-height: 1.55; opacity: .92; }
+  /* With the wishlist button in the notice there is room for one line of copy, not two. */
+  .choice.demo-note.wish .dn-long { display: none; }
+  .choice.demo-note.wish .dn-short { display: inline; }
+  .choice.demo-note .dn-wish { display: flex; justify-content: center; }
+  .choice.demo-note .dn-wish .ibtn { width: auto; height: 4em; }
+  .choice.demo-note .dn-wish .ibtn img { width: auto; height: 100%; }
   .menugrid .ibtn { width: 100%; }
   .menugrid .ibtn img { width: 100%; height: auto; }
   @media (min-width: 720px) {
@@ -2222,6 +2228,11 @@
       :where(body.o-landscape) .oframe.menu .menutop > .choice.demo-note span { line-height: 1.25; }
       .demo-note .dn-long { display: none; }
       .demo-note .dn-short { display: inline; }
+      /* the notice is ~55px tall here: the button replaces the copy rather than squeezing under it */
+      .demo-note.wish > span { display: none; }
+      .choice.demo-note .dn-wish .ibtn { width: auto; height: 62%; }
+      .choice.demo-note .dn-wish .ibtn img { width: auto; height: 100%; }
+      .choice.demo-note .dn-wish { height: 100%; align-items: center; }
     }
     :where(body.o-landscape) .oframe.menu .menutop > .choice .d,
     :where(body.o-landscape) .oframe.menu .menutop > .choice b { font-size: 1em; }
@@ -2874,7 +2885,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-Du0W9dIV.js"></script>
+  <script type="module" crossorigin src="./assets/index-CVoXRENZ.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2967,7 +2978,7 @@
 <script src="./plates.js"></script>          <!-- which UI plates have text-free art (npm run gen:plates) -->
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.107';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.108';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -3161,6 +3172,14 @@ function verNewer(remote, current) {
   const a = p(remote), b = p(current);
   for (let i = 0; i < Math.max(a.length, b.length); i++) { const d = (a[i] || 0) - (b[i] || 0); if (d) return d > 0; }
   return false;
+}
+// ── Wishlist ──
+// The demo's call to action. Shown on the web and Android demos only: the Steam demo already sits on a
+// store page with Steam's own wishlist button, and Steam asks again when the demo closes.
+const STORE_URL = 'https://store.steampowered.com/app/5060350/Table_of_War/';
+function wishlistShown() { return !!(S && S.demo) && !window.__WT_STEAM__; }
+function wishlistBtn(cls) {
+  return wishlistShown() ? ibtn('keep', 'openExternal(STORE_URL)', { cls: cls || 'sm', word: t('demo.wishlist', 'Wishlist on Steam') }) : '';
 }
 async function openExternal(url) {
   // Tauri first. This used to look for window.__TAURI__.opener, which is only present when
@@ -6063,7 +6082,8 @@ function showRunResult() {
   const where = `Act ${rs.act||'?'}${rs.act_title?` · ${rs.act_title}`:''} · Step ${rs.step||'?'}${nodeLabel?` · ${nodeLabel}`:''}`;
   const row = (label, val, cls) => `<div style="display:flex;justify-content:space-between;padding:1px 0">
     <span class="d">${label}</span><span class="${cls||''}" style="font-family:var(--f-num)">${val}</span></div>`;
-  o.innerHTML = oframe(`<p style="margin-top:8px">${win?'You cleared all four acts.':'Your command was destroyed.'}</p>
+  const winLine = S.demo ? t('demo.cleared', 'You cleared Act 1 — that is the whole demo.') : 'You cleared all four acts.';
+  o.innerHTML = oframe(`<p style="margin-top:8px">${win?winLine:'Your command was destroyed.'}</p>
     <div class="d" style="text-align:center;margin:-2px 0 8px">${where}</div>
     <div class="choice" style="text-align:center">
       <div class="d">FINAL SCORE${S.ascension?` · Ascension ${S.ascension}`:''}</div>
@@ -6090,6 +6110,10 @@ function showRunResult() {
       <div class="d" style="margin-top:5px;line-height:1.45">${rs.asc_unlocked === 1
         ? 'Tougher enemies, richer rewards, more Merit. Raise the Ascension dial on the Deploy screen before your next run with this commander — each win opens the next tier, all the way to Ascension 12.'
         : 'Raise the Ascension dial on the Deploy screen to take it on.'}</div>
+    </div>` : ''}
+    ${wishlistShown() ? `<div class="choice" style="text-align:center;border-color:var(--gold)">
+      <div class="d" style="line-height:1.5">${t('demo.wishlist_pitch', 'The full war is three more acts, every commander, achievements and unlockables. Wishlist it and Steam will tell you the day it launches.')}</div>
+      <div style="margin-top:8px">${wishlistBtn('sm')}</div>
     </div>` : ''}
     ${(S.daily && S.daily.date) ? `<div class="choice dboard" id="dboard"><div class="d" style="text-align:center">Daily Commission — ${S.daily.date}</div></div>` : ''}
     `, win?'mission_complete':'mission_failed') + `<div class="ovclose">${ibtn('continue','menu()')}</div>`;   // the same bottom bar every menu has
@@ -9090,7 +9114,7 @@ function showGenerals() {
   o.innerHTML = `<div class="oframe titled menu${S.demo ? ' demo' : ''}"><div class="ofbanner ofhdr tableofwar"><img src="assets/ui/hdr/table_of_war.png" alt="Table of War"></div><h1>TABLE OF WAR</h1>${best ? '<p>Best score ' + best + '</p>' : ''}`
     + `<div class="menucols">`
     +   `<div class="mzone mzone-a">`
-    +     `<div class="menutop">${S.demo ? '<div class="choice demo-note"><b>DEMO</b><span>One commander, Act 1 only.<br><span class="dn-long">The full campaign, every commander, achievements and unlockables are coming to Steam.</span><span class="dn-short">The full game is coming to Steam.</span></span></div>' : dailyPanel}</div>`
+    +     `<div class="menutop">${S.demo ? '<div class="choice demo-note' + (wishlistShown() ? ' wish' : '') + '"><b>DEMO</b><span>One commander, Act 1 only.<br><span class="dn-long">The full campaign, every commander, achievements and unlockables are coming to Steam.</span><span class="dn-short">The full game is coming to Steam.</span></span>' + (wishlistShown() ? `<div class="dn-wish">${wishlistBtn('')}</div>` : '') + '</div>' : dailyPanel}</div>`
     +     `<div class="menumid">${resume}${seedField}</div>`
     +     genCards
     +   `</div>`
@@ -9386,6 +9410,9 @@ function showAchievements() {
   openOv('ovAch');
 }
 async function newGame(id) {
+  // Starting a run replaces the saved one. Ask first: the general's card is the biggest thing on the menu,
+  // and a player coming back to their campaign tapped it and lost the run without a word.
+  if (S && S.has_save && !(await gameConfirm(t('menu.new_run_q', 'Start a new campaign? Your campaign in progress will be lost. Use <b>Resume</b> to pick it back up.'), t('plate.btn.start_run', 'Start Run')))) return;
   // Read the seed field directly at deploy time — don't rely on oninput having fired
   // (a missed keystroke event must never silently fall back to a random seed).
   const seedEl = document.getElementById('seedIn');
