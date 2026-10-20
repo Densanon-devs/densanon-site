@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - October 19, 2026 | Densanon</title>
+  <title>AI Morning Digest - October 20, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">October 19, 2026</div>
+        <div class="digest-date-badge">October 20, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A quiet day: Apertus 1.5 brings open multimodal 8B/70B models with 262k context, while new papers probe tiny frozen vocabularies, MoE prefill pruning, and CLI-agent collaboration benchmarks.</p>
+        <p class="digest-intro">Today&#x27;s digest centers on the practical limits of LLM agents: new research on when agents follow prompt injections and when agentic architectures are the right (or wrong) choice. Alongside it, a reflective take on what coding agents mean for career programmers, fresh Anthropic tooling releases, and papers on benchmarking, translation style, and evidence-grounded explanations.</p>
       </div>
     </section>
 
@@ -29,69 +29,72 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Embeddings Are Overpriced? A Frozen 16 MB Vocabulary for Small and Ternary Language Models</h3>
+              <h3>The Window Is in the Reasoning: When LLM Agents Decide to Follow Prompt Injections</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Replaces Gemma 3 270M&#x27;s 168M-parameter learned embedding table with a frozen 16 MB table of 512-bit codes, derived by PCA projection and sign binarisation.</li>
-              <li>The frozen-table model matches or beats the learned table on LAMBADA, HellaSwag and PIQA; only ARC-Easy favours the learned one.</li>
-              <li>With a ternary BitNet b1.58 body the whole model is 46 MB and generates 615-740 tokens/s on a laptop CPU in 62 MB of memory.</li>
+              <li>LLM agents that read untrusted content can be hijacked by prompt injections.</li>
+              <li>Runtime monitors that try to catch a hijack before the agent acts, and benchmarks that score each task with a single run, share an assumption about whether an agent follows an injection.</li>
+              <li>The title points to the agent&#x27;s reasoning as the window in which the decision to follow an injection is made.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.22428" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.24048" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Where Prefill Expert Reduction Hurts MoE Models: A Few Prompt Tokens Carry Most of the Short-Answer F1 Loss</h3>
+              <h3>Doing Less with More: A First-Principles Exploration of the Suitability of Agentic Computing over Alternative Architectural Choices</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Interest is growing in automating business activities with agentic AI because of its seeming ease of use.</li>
+              <li>The authors note it has never been easier, or costlier, to do less with more.</li>
+              <li>The paper examines from first principles when agents are preferable to alternative architectures.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.23921" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GardenBench: A lightweight, daily evaluation of LLM capabilities</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>GardenBench is a benchmark with 11 test suites evaluating LLM capabilities across a range of tasks.</li>
+              <li>It prompts LLMs with lightweight queries to document day-to-day changes in model behavior.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.23866" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>What Social Media Teaches Us About Accumulative AI Risks</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Position paper arguing that AI safety discussion focuses heavily on existential and catastrophic threats such as AI-enabled nuclear conflict or engineered outbreaks.</li>
+              <li>It argues for another type of AI risk that arises and accumulates gradually, drawing lessons from social media.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.24006" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Translating in style: An open-weight alternative to GPT-4 for culturally aligned machine translation</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Halving routed experts during prefill in MoE models mostly hurts answer form: the model finds the answer but stops answering briefly.</li>
-              <li>The damage concentrates at prompt ends, e.g. the two chat-template tokens in Qwen3-30B-A3B; keeping about 4% of tokens at full experts there holds F1 within one point.</li>
-              <li>Time to first token falls about 14% on 11K-token prompts but not at 2K tokens.</li>
+              <li>Machine translation often preserves meaning but flattens linguistic style, most acutely when translating into non-Western languages.</li>
+              <li>Builds on the RASTA framework of Havaldar et al. (2025a), which addresses this through retrieval-augmented approaches.</li>
+              <li>Offers an open-weight alternative to GPT-4 for culturally aligned translation.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.22454" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.23868" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>RealCLI: Toward a Unified Evaluation of Human-Agent Collaboration for CLI Agents</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>A Controlled LLM Workflow for Evidence-Grounded Diagnosis of Risk Score Differences</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Introduces RealCLI, a paired benchmark (EXEC vs COLLAB) with a five-dimension framework, 22 sub-dimensions and 51 interaction scenario templates.</li>
-              <li>The best frontier-agent configuration scores only 49.2% on average and 37.6% on the joint collaboration score.</li>
-              <li>Agents struggle most with steerability, trust calibration and safety boundary management.</li>
+              <li>Proposes a controlled LLM workflow for explaining risk score differences using similar historical transactions.</li>
+              <li>Combines reference retrieval with contrastive SHAP evidence.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.22507" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AuditKIT: A Unified Evaluation Spine for Benchmarking, Judging, and Comparing Large Language Models and Agentic Systems</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>AuditKIT is a source-available evaluation library that records accuracy, judge scores, runtime, tool use and retrieval quality in one result format.</li>
-              <li>Unobservable evidence is marked unscored rather than counted as failure; agent evals separate parallel from sequential tool calls.</li>
-              <li>Seven case studies show how answer extraction, runtime behavior and metric choice change evaluation outcomes.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2610.22511" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Apertus 1.5 Release Notes</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Apertus 1.5 extends the 8B and 70B models with image and audio understanding, optional thinking mode, a 262,144-token context (4x), and better tool use, under Apache 2.0.</li>
-              <li>Continued pretraining added 4T tokens (8B) and 2T tokens (70B); multimodality is early-fusion via Emu3.5 image and WavTokenizer audio tokens, extending only the vocabulary.</li>
-              <li>Fully open: weights, data and training details; models understand images and audio but generate only text.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/swiss-ai/apertus-v15-release-notes" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.23962" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -101,37 +104,36 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/sandbox-runtime: v0.0.80</h3>
+              <h3>My obituary for programming</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Highlights Jeremy Scheff&#x27;s essay on the key loss coding agents cause for career programmers who enjoyed the puzzle of writing code.</li>
+              <li>Quoted framing: programming was one of the greatest jobs imaginable, paid work on tricky little logic puzzles.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Oct/19/my-obituary-for-programming/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.304</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>0.0.80 tightens defaults: the ask callback allows a connection only when it resolves to exactly true.</li>
-              <li>On Linux, sandboxed commands can no longer create their own user or mount namespaces by default (breaking Chromium/Electron sandboxes, rootless podman); allowNestedUserNamespaces: true lifts it.</li>
-              <li>denyWrite now takes precedence over allowWrite on Linux, and ambiguous request targets under filterRequest get a 400 by default.</li>
+              <li>Adds a transcript line when a plugin that runs first skips one of your mod&#x27;s hooks, naming the event and the plugin.</li>
+              <li>Adds `decider: &quot;person&quot;` to a mod&#x27;s `tool.check` answer, so only the permission dialog or a host&#x27;s callback can approve the ask.</li>
             </ul>
-            <a href="https://github.com/anthropics/sandbox-runtime/releases/tag/v0.0.80" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.304" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>llm-tools-datasette 0.1.1</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>anthropics/sandbox-runtime: v0.0.81</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Fixes breakage from LLM 0.33&#x27;s switch to httpx2: plugins using httpx without declaring it as a dependency stopped working.</li>
-              <li>llm-tools-datasette was one affected plugin; 0.1.1 repairs it.</li>
+              <li>Every change in this release is on Windows; nothing changes on macOS or Linux.</li>
+              <li>The setup version changed, so users must run the install again; a session on an earlier install rejects with `reinstall_required` and the command to run.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Oct/18/llm-tools-datasette/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>llm-echo 0.5</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>llm-echo provides a debug &#x27;model&#x27; that involves no LLM and simply repeats back the prompts it receives.</li>
-              <li>The 0.5 release updates the simulated token handling, in service of testing PRs for an upcoming LLM release.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Oct/18/llm-echo/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/sandbox-runtime/releases/tag/v0.0.81" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
