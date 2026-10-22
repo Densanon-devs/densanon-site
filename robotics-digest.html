@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - October 21, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - October 22, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">October 21, 2026</div>
+        <div class="digest-date-badge">October 22, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s robotics digest pairs fresh arXiv work on dexterous grasping, error-recovery replanning and embodied benchmarks with industry moves: Voxel51&#x27;s physical-AI data platform, Exotec&#x27;s Japan Skypod installs, the RoboBusiness rebrand and a new ag-robotics incubator.</p>
+        <p class="digest-intro">Today&#x27;s robotics digest covers Dream Labs&#x27; $90M raise for a cross-robot AI model, Robotiq&#x27;s tactile 2FC gripper and an AGCO humanoid pilot, alongside arXiv work on LiDAR mapping, calibration and humanoid teleoperation.</p>
       </div>
     </section>
 
@@ -29,47 +29,48 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>DexGraspFlow: Topology-Aware SE(3) Flow Matching for Cross-Embodiment Dexterous Grasp Generation</h3>
+              <h3>Warping the Workspace: Expanding Visual Access with Adjustable Reach Mapping for Humanoid Teleoperation</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets dexterous grasp generation across robot hands that differ in geometry, joint parameterization and kinematic topology.</li>
-              <li>Uses topology-aware SE(3) flow matching, noting that spatial relations among links alone do not fully capture a hand&#x27;s kinematic topology.</li>
+              <li>First-person humanoid teleoperation normally ties access to side and rear targets to the operator&#x27;s own rotation.</li>
+              <li>The paper proposes coupled visual-motor remapping: a panoramic azimuth warp paired with an inverse upper-limb yaw transform.</li>
+              <li>A working prototype implements the approach.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.26962" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.28712" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Replan for Error Recovery: Training Embodied VLMs through Verifiable Interaction with Action-Grouped Turn-GSPO</h3>
+              <h3>VeriCalib: Verifiable Target-Based LiDAR-Camera Calibration</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Addresses embodied VLMs that need to replan after execution errors leave the environment in a state requiring recovery.</li>
-              <li>Trains them through verifiable interaction using an Action-Grouped Turn-GSPO approach, as an alternative to inference-time mechanisms with fixed policies.</li>
+              <li>Target-based extrinsic calibration estimates the rigid transform between sensors from a few observations of a known target.</li>
+              <li>The authors note that the usual RMS residual error is a scalar that does not fully verify calibration quality, and propose a verifiable approach.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.27003" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.28791" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Embodied Playground: A Long-Horizon Agentic Robotics Benchmark for Physical, Strategic, and Spatial Reasoning</h3>
+              <h3>Real-Time Ground Normal Vector Estimation for Spherical Mobile 3D Mapping using LiDAR-Inertial Odometry</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Introduces Embodied Playground, a benchmark for long-horizon agentic robotics tasks.</li>
-              <li>Evaluates foundation models on sustaining coherent reasoning and reliable physical execution across interdependent stages (physical, strategic and spatial reasoning).</li>
+              <li>Ground plane normal estimation is key to odometry in spherical mobile mapping systems, which face rapid rotations and limited ground coverage.</li>
+              <li>The paper proposes two RANSAC-based approaches, including single-scan estimation.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.27039" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.28701" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Towards Interaction State Recognition in Sensorized Gecko-Inspired Adhesive Interfaces for Orbital Servicing</h3>
+              <h3>Human-Robot Interaction via Meta-Learning Based Mode Recognition and Adaptive Control</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Tackles reliable contact establishment for autonomous on-orbit servicing, especially with non-cooperative targets.</li>
-              <li>Focuses on recognizing interaction state in sensorized gecko-inspired dry adhesives, which are lightweight, passive and residue-free.</li>
+              <li>Humans may guide a robot actively or follow it passively, each requiring different control objectives.</li>
+              <li>The work targets recognizing the interaction mode via meta-learning rather than relying on predefined switching rules, and adapting control accordingly.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.27141" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.28761" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -79,47 +80,60 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Voxel51 launches new data platform for robotics and physical AI</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Voxel51 released version 3.0 of its data platform for robotics and physical AI developers.</li>
-              <li>New tools target managing the large volumes of camera, video and sensor data generated by machines operating in the real world.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/10/21/voxel51-launches-new-data-platform-for-robotics-and-physical-ai/106155/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Exotec expands warehouse robotics business in Japan with two major Skypod installations</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Exotec commissioned two new Skypod warehouse systems in Japan.</li>
-              <li>Customers are food distributor Mitsubishi Shokuhin and industrial distributor Trusco Nakayama, deployed in partnership with IHI Logistics Industrial Systems.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/10/20/exotec-expands-warehouse-robotics-business-in-japan-with-two-major-skypod-installations/106138/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>RoboBusiness rebrands as Robotics Summit &amp; Expo West</h3>
+              <h3>Dream Labs raises $90M and launches Dream API</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>RoboBusiness is rebranding as Robotics Summit &amp; Expo West.</li>
-              <li>The event sharpens its focus on deploying robotics and AI in the real world and complements the East Coast flagship event.</li>
+              <li>Dream Labs raised $90M and launched the Dream API.</li>
+              <li>Its Dream-1 AI model is said to work across robots from different manufacturers.</li>
+              <li>The company says the model lets robots transfer what they have learned.</li>
             </ul>
-            <a href="https://www.therobotreport.com/robobusiness-rebrands-as-robotics-summit-expo-west/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/dream-labs-raises-90m-and-launches-dream-api/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Reservoir launches new agricultural robotics incubator for Washington growers</h3>
+              <h3>Robotiq launches the 2FC physical AI gripper</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The 2FC is a production-ready adaptive gripper with tactile sensing and embedded intelligence.</li>
+              <li>It is designed so robots learn from physical interaction and act reliably on what they learn.</li>
+              <li>Pre-orders open now, with shipping in Q1 2027.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/10/22/robotiq-launches-the-2fc-physical-ai-gripper/106191/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>AGCO to deploy Agility Digit humanoid in Kansas factory</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Reservoir launched an agricultural robotics incubator for Washington growers.</li>
-              <li>It aims to put robotics startups to work in orchards, vineyards and berry fields alongside researchers and growers.</li>
+              <li>AGCO will pilot Agility&#x27;s Digit humanoid at an agricultural equipment production facility in Kansas.</li>
+              <li>The pilot is expected to begin in 2027.</li>
             </ul>
-            <a href="https://www.therobotreport.com/reservoir-launches-new-agricultural-robotics-incubator-for-washington-growers/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/agco-to-deploy-agility-digit-humanoid-in-kansas-factory/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Schneider Electric, Nvidia and HPE launch AI agents for industrial operations</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The three companies formed a strategic collaboration on AI agents that monitor and help optimize operations inside factories and process plants.</li>
+              <li>They frame it as a route to physical AI for industries such as energy and chemicals.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/10/22/schneider-electric-nvidia-and-hpe-launch-ai-agents-for-industrial-operations/106195/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intramotev to launch autonomous freight rail service in Missouri</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Intramotev will deploy its TugVolt technology on Missouri&#x27;s Columbia Terminal Railroad.</li>
+              <li>It is the technology partner on a $16.2 million federal grant selected by the Federal Railroad Administration.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/10/22/intramotev-to-launch-autonomous-freight-rail-service-in-missouri/106186/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -129,14 +143,14 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Robot that evolves and 3D prints its own tools</h3>
+              <h3>Fusion 360 CAD to Nav2 in simulation: my holonomic (mecanum) robot workflow, fully documented</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A r/robotics project explores whether a robot can improve at a task by changing its tools.</li>
-              <li>The loop defines a task, generates gripper or attachment designs, and tests them in physics simulation, using the results to iterate.</li>
+              <li>Walks through a workflow for a 4-wheel mecanum robot from CAD to autonomous navigation in simulation.</li>
+              <li>The MIT-licensed repo includes screenshots and an rqt_graph in the README.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1xbj1cl/robot_that_evolves_and_3d_prints_its_own_tools/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1xce7f1/fusion_360_cad_to_nav2_in_simulation_my_holonomic/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
