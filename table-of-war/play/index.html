@@ -911,6 +911,8 @@
       url(assets/ui/frame5/r.png) 100% center/var(--bt) auto repeat-y,
       url(assets/ui/frame5/cs.png) center/150px 150px repeat; }
   #coach.show { display: block; }
+  #coach.top { animation: coachintop .28s ease-out; }
+  @keyframes coachintop { from { opacity:0; transform: translate(-50%, -10px); } to { opacity:1; transform: translate(-50%,0); } }
   /* Card inspect: the zoomed card flanked by step arrows. Chevrons are drawn rather than art, so they
      inherit the "no plate, no border" treatment the other floating controls use. The row is wide enough
      that the arrows sit OFF the card — tapping one must never be mistaken for tapping the card. */
@@ -927,7 +929,10 @@
 
   #coach .ct { font-size: 13px; line-height: 1.5; color: #ede6cd; }
   #coach .ch { font: 700 12px var(--f-head); color: var(--gold); letter-spacing:.5px; text-transform:uppercase; margin-bottom:3px; }
-  #coach .cbtn { text-align: center; margin-top: 11px; }
+  #coach .cbtn { text-align: center; margin-top: 11px; position: relative; }
+  #coach .cskip { position: absolute; right: 0; bottom: 2px; background: none; border: none; cursor: pointer;
+    font: 600 11px inherit; font-family: inherit; color: #b8ad8c; text-decoration: underline; padding: 4px 2px; }
+  #coach .cskip:hover { color: var(--gold); }
   #coach .cbtn .ibtn img { height: 42px; width: auto; }
   @keyframes coachin { from { opacity:0; transform: translate(-50%, 10px); } to { opacity:1; transform: translate(-50%,0); } }
   /* A tip fired ON a decision — a card draft, an outpost, the hand you are about to discard — lifts off
@@ -1011,7 +1016,7 @@
      number the turn actually turns on, so it scales with the cell instead of staying 11px at every zoom. */
   .incdmg { position:absolute; bottom:-2px; right:-1px; z-index:4; pointer-events:none;
     font-family: var(--f-num); font-weight:700; font-size: max(11px, calc(var(--cell)*.27));
-    color:#ffe4d6; background:#7d1f14; border:1px solid #ff6a4a; border-radius:3px;
+    color:#ffe4d6; background:rgba(60,14,8,.82); border:1px dashed #ff6a4a; border-radius:3px;   /* dashed + see-through: a FORECAST, not damage taken */
     padding:0 .28em; line-height:1.28; box-shadow:0 1px 2px rgba(0,0,0,.7); }
   .incdmg.kill { background:#e23c22; color:#fff; border-color:#fff2ec;
     box-shadow:0 1px 3px rgba(0,0,0,.8), 0 0 6px rgba(255,90,55,.8); animation: pulse 1.1s infinite; }
@@ -2285,17 +2290,8 @@
     /* the demo's shorter panel leaves more room, so the lone plaque grows into it — still 600:163 */
     :where(body.o-landscape) .oframe.menu.demo .menumid .seedfield:first-child { left: 18.3%; top: 38.76%; width: 29.34%; height: 13.5%; }
 
-    /* the lone commander sits centred under the left column, and bigger — it is the whole roster here */
-    :where(body.o-landscape) .oframe.menu.demo .gcard:nth-of-type(1) { left: 21.2%; top: 53.8%; width: 23.5%; height: 34.2%; }
-
-    /* two tiles over one, centred, filling the right column rather than hugging its top corner */
-    :where(body.o-landscape) .oframe.menu.demo .menugrid .mtile { width: 16.2%; height: 30%; }
-    :where(body.o-landscape) .oframe.menu.demo .menugrid .mtile:nth-of-type(1) { left: 57%; top: 14%; }
-    :where(body.o-landscape) .oframe.menu.demo .menugrid .mtile:nth-of-type(2) { left: 74.1%; top: 14%; }
-    :where(body.o-landscape) .oframe.menu.demo .menugrid .mtile:nth-of-type(3) { left: 65.55%; top: 53%; }
-
-    /* portrait: the demo's single commander shouldn't sit small next to the full-width bars */
-    .oframe.menu.demo .genwrap .gcard { max-width: 230px; }
+    /* The demo shows the WHOLE menu since 0.0.109 — the full game's commanders and tiles are on it, locked —
+       so it uses the full game's slots. Hiding them made the demo look like a smaller game than it is. */
 
     /* daily panel internals — absolutely placed within the panel (per the tuned layout).
        the panel needs an explicit height so the children's % offsets resolve (abs children give it no height). */
@@ -2374,6 +2370,28 @@
   .gcard .gc-name .gtext { height: 58%; }
   .gcard .gc-desc .gtext { height: 62%; }   /* commander names read too small on a big screen */
   .gcard.sel { filter: drop-shadow(0 0 11px rgba(233,199,82,.85)); }
+  /* Locked (demo): the full game's other commanders, shown so the demo reads as the slice it is. The
+     portraits are paid art and never ship in the demo build, so the card is a silhouette and a lock. */
+  .gcard.locked .gc-av { background: radial-gradient(ellipse at 50% 38%, #3b3a2c 0 26%, #1b1c12 27% 100%); }
+  .gcard.locked .gc-av::after { content: ''; position: absolute; left: 30%; right: 30%; top: 46%; bottom: 0;
+    background: #2a291e; border-radius: 45% 45% 0 0; }
+  .gcard.locked .gc-frame, .gcard.locked .gc-desc { filter: grayscale(1) brightness(.7); }
+  .gcard .gc-lock, .mtile .gc-lock { position: absolute; z-index: 4; left: 50%; top: 40%; transform: translate(-50%, -50%);
+    display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; white-space: nowrap; pointer-events: none;
+    font: 700 11px var(--f-head); letter-spacing: 1px; text-transform: uppercase; color: #e9dcae;
+    background: rgba(15,14,9,.88); border: 1px solid #8a7a48; border-radius: 3px; }
+  .mtile.locked { position: relative; }
+  .mtile.locked > img { filter: grayscale(1) brightness(.55); }
+  .mtile.locked .plbl { filter: grayscale(1) brightness(.7); }
+  .mtile .gc-lock { top: 50%; }
+  /* "Play" on the commander card until the first run: with no Play button on the menu, nothing said the
+     portrait was how you start, and demo players were looking for one. */
+  .gcard .gc-play { position: absolute; z-index: 4; left: 50%; bottom: -6%; transform: translateX(-50%);
+    display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; white-space: nowrap; pointer-events: none;
+    font: 700 13px var(--f-head); letter-spacing: 1.5px; text-transform: uppercase; color: #1d1608;
+    background: linear-gradient(#f2d98a, #c99a3a); border: 1px solid #fff0bf; border-radius: 3px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.7); animation: pulse 1.6s infinite; }
+  @media (prefers-reduced-motion: reduce) { .gcard .gc-play { animation: none; } }
   /* steel glyphs — reuse the existing silver treatment (same as the number-style-B pills) */
   .gtext.steel { filter: grayscale(1) brightness(1.55) contrast(1.05) drop-shadow(0 1px 1px rgba(0,0,0,.5)); }
   /* (legacy ornate-plaque CSS below is no longer emitted by plaqueCard) */
@@ -2885,7 +2903,7 @@
       transform: none; }
   }
 </style>
-  <script type="module" crossorigin src="./assets/index-CVoXRENZ.js"></script>
+  <script type="module" crossorigin src="./assets/index-Czq6HY-5.js"></script>
 </head>
 <body>
 <script>/* set the orientation class before layout paints (PC is landscape-only; mobile follows the viewport) */
@@ -2978,7 +2996,7 @@
 <script src="./plates.js"></script>          <!-- which UI plates have text-free art (npm run gen:plates) -->
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.108';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.109';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -3657,8 +3675,9 @@ function haptic(ms) { try { if (navigator.vibrate) navigator.vibrate(ms); } catc
 // one appears. A tip fired before its concept is on screen is just a wall of text; the same words
 // beside the thing they describe are a tutorial. Fires once ever, per concept, per device.
 const COACH = {
-  battle: {h:t('coach.battle.h', 'How battles work'), t:t('coach.battle.t', 'Your units act on <b>Action Points</b> — tap a unit, then a highlighted tile to <b>move</b> or an enemy to <b>attack</b>, all free. Your <b>cards</b> (bottom) cost <b>Command Points</b> to reinforce and command your army. Tap around — everything on the field explains itself.')},
-  map:    {h:t('coach.map.h', 'The Expedition'), t:t('coach.map.t', 'Pick your path up the act — <b>skirmishes</b>, <b>elites</b>, <b>caches</b>, <b>camps</b>, <b>outposts</b>, and the <b>boss</b> at the top. Your army is <b>permadeath</b>: units that fall are gone for the run. Bank <b>salvage</b> at outposts to buy, upgrade, and thin your deck.')},
+  deploy: {h:t('coach.deploy.h', 'Set out your army'), t:t('coach.deploy.t', 'Tap a soldier, then a lit tile to place it — or press <b>Auto Deploy</b>. Then <b>Deploy</b> to begin.')},
+  battle: {h:t('coach.battle.h', 'How battles work'), t:t('coach.battle.t', 'Tap a unit, then a lit tile to <b>move</b> or a red-ringed enemy to <b>attack</b>. Each costs an <b>Action Point</b>. <b>Cards</b> (bottom) spend <b>Command Points</b> for reinforcements and orders.')},
+  map:    {h:t('coach.map.h', 'The Expedition'), t:t('coach.map.t', 'Climb to the <b>boss</b> at the top, one node at a time. Units that fall are <b>gone for the run</b>.')},
   power:  {h:t('coach.power.h', 'Command Power ready'), t:t('coach.power.t', 'Your gauge is <b>full</b> — tap the glowing <b>Power</b> button to unleash your general\'s signature ability. It costs the whole gauge, so pick your moment.')},
   // Nomad only. Wrath fills on kills and Charge on Power Plants — both are stated on the thing that
   // fills them. Momentum is the one that is genuinely unguessable: it banks a COMPOUNDING amount, halves
@@ -3667,17 +3686,16 @@ const COACH = {
   momentum:{h:t('coach.momentum.h', 'Momentum — keep the column rolling'), t:t('coach.momentum.t', 'Momentum banks at the <b>end of your turn</b>, and what it banks is your <b>Drive</b> — the meter beside the gauge. Move <b>every</b> unit that can move and Drive climbs by one; leave one standing and it <b>halves</b>. The pips are the roll call: one per unit that still owes a move. Momentum has <b>no ceiling</b>, and spending it <b>subtracts</b> the price instead of emptying you — so a column that never stalls discharges again and again.')},
   // mid: centred over a veil rather than pinned to the bottom edge, because the bottom edge is exactly
   // where the thing this tip is about — the hand, and the ★ on each card — is sitting.
-  retain: {h:t('coach.retain.h', 'Keep a card'), t:t('coach.retain.t', 'At end of turn your hand is discarded — but tap the <b>★</b> on a card to <b>keep</b> it for next turn. Save a key card for the right moment.'), mid:true},
 
   // ── first-action tips ──
-  unit:   {h:t('coach.unit.h', 'Your unit is active'), t:t('coach.unit.t', 'The <b>highlighted tiles</b> are everywhere it can walk this turn, and any enemy it can hit is <b>ringed in red</b> with the damage it would take. Its card shows <b>ATK</b>, <b>DEF</b>, <b>range</b> and <b>sight</b> — range is how far it strikes, sight is how far it lifts the fog. Each move or attack spends one <b>Action Point</b>.')},
+  unit:   {h:t('coach.unit.h', 'Your unit is active'), t:t('coach.unit.t', 'Lit tiles are where it can move. Enemies in reach are <b>ringed in red</b> with the damage it would deal.')},
   inspect:{h:t('coach.inspect.h', 'Unit details'), t:t('coach.inspect.t', 'Tapping any unit opens its full card — <b>HP</b>, <b>attack</b>, <b>defense</b>, <b>range</b>, <b>sight</b>, its rank, and what it does. Do it to an <b>enemy</b> before you commit: reading its reach is how you work out whether stepping up gets you hit back.')},
   terrain:{h:t('coach.terrain.h', 'The ground matters'), t:t('coach.terrain.t', 'Tapping bare ground tells you what it is. <b>Cover</b> (forest, rubble) adds <b>defense</b> to whoever stands in it. <b>High ground</b> extends a marksman\'s reach and sees further. Rough ground <b>costs more movement</b> to cross. Fighting from the right tile is often worth more than one more soldier.')},
-  move:   {h:t('coach.move.h', 'Ground taken'), t:t('coach.move.t', 'That cost one <b>Action Point</b> — most units have more than one, so check the unit card before you end your turn. You can only step <b>one tile into the fog</b> at a time: your army will not march blind into ground it has never seen.')},
-  attack: {h:t('coach.attack.h', 'First blood'), t:t('coach.attack.t', 'Damage is <b>attack minus defense</b>, and defense includes whatever cover the target is standing in. Every <b>other unit of yours beside</b> an enemy <b>flanks</b> it: +1 damage to each hit on it. A <b>✕</b> on the damage badge means the blow kills.')},
-  card:   {h:t('coach.card.h', 'Playing a card'), t:t('coach.card.t', 'Cards cost <b>Command Points</b> — the CP counter, top-left — and refresh every turn. A card needing a target will highlight what it can be played on; tap the card again to put it back. Cards you cannot afford are dimmed.')},
+  move:   {h:t('coach.move.h', 'Ground taken'), t:t('coach.move.t', 'That cost one <b>Action Point</b>. Most units have two — move again, or attack.')},
+  attack: {h:t('coach.attack.h', 'First blood'), t:t('coach.attack.t', 'Damage is <b>attack minus defense</b>. A second unit of yours beside the enemy <b>flanks</b> it for extra damage.')},
+  card:   {h:t('coach.card.h', 'Playing a card'), t:t('coach.card.t', 'Cards cost <b>Command Points</b> (top left), refilled every turn. Tap the card again to put it back.')},
   danger: {h:t('coach.danger.h', 'Reading the danger'), t:t('coach.danger.t', 'Shaded tiles are where the enemy can <b>strike next turn</b>. The <b>deeper red</b> is worse: those are tiles they can <b>move onto and fire from</b> — the ground worth taking or blocking first. Ghosts show where each enemy is heading, with arrows to what it will hit. Both layers toggle in <b>Menu</b>.')},
-  endturn:{h:t('coach.endturn.h', 'That was the enemy turn'), t:t('coach.endturn.t', 'You watch every enemy decision play out — tap to skip it. Your hand was discarded and you have drawn a fresh one, with your <b>Command Points</b> refilled. Unspent points do <b>not</b> carry over, so empty your Action Points before ending a turn, and <b>★</b> a card you want to keep.')},
+  endturn:{h:t('coach.endturn.h', 'That was the enemy turn'), t:t('coach.endturn.t', 'Red numbers on your units are the hits <b>coming next turn</b> — move out of reach or strike first. Your hand and Command Points refill each turn; tap <b>★</b> on a card to keep it.')},
 
   // Rules that bite in silence. Each of these was previously either buried in How to Play or nowhere at
   // all: the player just saw something happen and had no way to find out why.
@@ -3698,6 +3716,7 @@ const COACH = {
 let _coachBusy = false;
 let _coachQueue = [];
 let _coachShown = null;
+let _coachShownAt = 0, _coachSwapT = 0;
 const _coachWaiters = {};
 // A tip triggered while another is open is QUEUED, not dropped. Dropping it looked harmless — the tip
 // would fire again next time its trigger came round — but the generic tips retrigger on every render
@@ -3705,9 +3724,15 @@ const _coachWaiters = {};
 // and attached themselves to the wrong moment. Measured before the queue: making your first move showed
 // "How battles work" (the battle intro, still pending), and the tip for inspecting a unit never appeared
 // at all. Marked seen at QUEUE time, so nothing can enqueue twice.
+// A player's FIRST battle teaches only what it takes to win it. Everything else waits for the second one
+// (dc_tut_b2 is set when the first battle's result shows): the demo's first battle used to stack 13 tips in
+// a turn and a half, and its median session was 9 minutes.
+const COACH_FIRST_BATTLE = new Set(['deploy', 'battle', 'map', 'unit', 'move', 'attack', 'card', 'endturn', 'death', 'boss', 'shop', 'camp', 'reward', 'relic']);
+function _coachDeferred(id) { return !localStorage.getItem('dc_tut_b2') && !COACH_FIRST_BATTLE.has(id); }
 function coach(id) {
   const c = COACH[id];
   if (!c || localStorage.getItem('dc_c_' + id) || localStorage.getItem('dc_tut_off')) return;
+  if (_coachDeferred(id)) return;   // NOT marked seen: it fires the next time its trigger comes round
   localStorage.setItem('dc_c_' + id, '1');
   _coachQueue.push(id);
   _coachPump();
@@ -3717,9 +3742,18 @@ function coach(id) {
  * and it is sitting on the very panel the tip is about — the first card draft is exactly when a
  * first-run unlock fires, and the tip stacked straight on top of it. Wait it out.
  */
-function _coachHold() { return !!_unlockBusy; }
+function _coachHold() { return !!_unlockBusy || !!turnBusy; }   // ...and never over the enemy's turn: the board is the show
 /** The only thing that shows a tip. Everything else queues and lets this decide when. */
 function _coachPump() {
+  // A bottom tip blocks nothing, so it does not hold the line either: the next one replaces it at once.
+  // Waiting for a Continue click made every action cost two clicks during the first battle.
+  // Not before it has had a few seconds on screen, though: two tips fired together would otherwise flash the
+  // first one away unread.
+  if (_coachBusy && _coachShown && !$('#coach').classList.contains('mid') && _coachQueue.length && !_coachHold()) {
+    const left = 4000 - (Date.now() - _coachShownAt);
+    if (left <= 0) dismissCoach(true);
+    else { clearTimeout(_coachSwapT); _coachSwapT = setTimeout(_coachPump, left); }
+  }
   if (_coachBusy || _coachHold() || !_coachQueue.length) return;
   _showCoach(_coachQueue.shift());
 }
@@ -3729,7 +3763,7 @@ function _coachPump() {
  * the thing it is about is still there. Resolves immediately when the tip has already been seen.
  */
 function coachWait(id) {
-  if (!COACH[id] || localStorage.getItem('dc_c_' + id) || localStorage.getItem('dc_tut_off')) return Promise.resolve();
+  if (!COACH[id] || localStorage.getItem('dc_c_' + id) || localStorage.getItem('dc_tut_off') || _coachDeferred(id)) return Promise.resolve();
   return new Promise(res => {
     _coachWaiters[id] = res;
     coach(id);
@@ -3743,10 +3777,10 @@ function _coachOverPanel() { try { return !!document.querySelector('.overlay.sho
 function _showCoach(id) {
   const c = COACH[id];
   if (!c) return;
-  _coachBusy = true; _coachShown = id;
+  _coachBusy = true; _coachShown = id; _coachShownAt = Date.now();
   const el = $('#coach');
   el.innerHTML = `<div class="ch">${si('bulb',16)} ${c.h}</div><div class="ct">${c.t}</div>
-    <div class="cbtn">${ibtn('continue','dismissCoach()')}</div>`;
+    <div class="cbtn">${ibtn('continue','dismissCoach()')}<button class="cskip" onclick="skipTips()">${t('coach.skip', 'Skip tips')}</button></div>`;
   // Fired ON an open panel (a card draft, an outpost) or on the hand itself, the tip centres over its own
   // veil instead of lying across the thing it describes. Evaluated at SHOW time, not queue time — a
   // queued tip can surface a beat after the panel that triggered it has changed.
@@ -3754,21 +3788,47 @@ function _showCoach(id) {
   const overPanel = _coachOverPanel();
   const mid = (!!c.mid || overPanel) && !turnBusy;
   el.classList.toggle('mid', mid);
+  // In battle a bottom tip lay across the hand it was describing (measured at 1316x916: it hid the whole
+  // fan), and lifted above the hand it sat on the middle of the board. Under the top bar it covers the
+  // least: the board's top edge, never the cards or the fight. In JS, because #coach carries a desktop
+  // `zoom` that would scale a CSS offset while the bar's height is not scaled.
+  el.style.bottom = ''; el.style.top = ''; el.style.transform = '';
+  el.classList.remove('top');
+  if (!mid) {
+    const app = $('#app'), hud = $('#hud') || document.querySelector('.hud, #topbar');
+    if (app && app.style.display !== 'none') {
+      const z = parseFloat(getComputedStyle(el).zoom) || 1;
+      const top = hud ? hud.getBoundingClientRect().bottom + 6 : 64;
+      el.style.top = Math.round(top / z) + 'px'; el.style.bottom = 'auto';
+      el.classList.add('top');
+    }
+  }
   $('#coachveil').classList.toggle('onpanel', mid && overPanel);
   $('#coachveil').classList.toggle('show', mid);
   el.classList.add('show');
 }
-function dismissCoach() {
+function dismissCoach(swap = false) {
   $('#coach').classList.remove('show');
   $('#coachveil').classList.remove('show');
   const done = _coachShown; _coachShown = null;
+  if (done) _coachRelease(done);
+  // A swap (the next bottom tip replacing this one) shows the next straight away; _coachPump does it.
+  if (swap) { _coachBusy = false; return; }
   // Stay "busy" across the 260ms gap — a beat, so the next card reads as a new card rather than a
   // flicker. Dropping busy there let a tip fired inside the gap show immediately and then be
   // overwritten by the queued one mid-read.
   _coachBusy = _coachQueue.length > 0;
   if (_coachBusy) setTimeout(() => { _coachBusy = false; _coachPump(); }, 260);
-  if (done) _coachRelease(done);
 }
+/** "Skip tips": turn the tutorial off for good (Settings → Replay Tips brings it back). */
+function skipTips() {
+  localStorage.setItem('dc_tut_off', '1');
+  _coachQueue = [];
+  Object.keys(_coachWaiters).forEach(_coachRelease);
+  dismissCoach();
+}
+/** Bottom tips are not modal; get one out of the way before the enemy takes the board. */
+function _coachClearBottom() { if (_coachShown && !$('#coach').classList.contains('mid')) dismissCoach(true); }
 /** Let go of anything awaiting this tip — never leave a caller that awaited it hanging. */
 function _coachRelease(id) {
   const r = _coachWaiters[id];
@@ -3778,7 +3838,7 @@ function resetTutorial() {
   _coachQueue = [];   // anything still waiting is from the old run-through; it would fire out of context
   Object.keys(_coachWaiters).forEach(_coachRelease);   // and nothing may be left awaiting a tip we just dropped
   Object.keys(COACH).forEach(k => localStorage.removeItem('dc_c_' + k));
-  localStorage.removeItem('dc_tut_off'); localStorage.removeItem('dc_seenHelp');
+  localStorage.removeItem('dc_tut_off'); localStorage.removeItem('dc_seenHelp'); localStorage.removeItem('dc_tut_b2');
   toast('Tutorial tips reset — they\'ll show again as you play.');
 }
 function screenShake() { const a = $('#app'); if (a) { a.classList.remove('shaking'); void a.offsetWidth; a.classList.add('shaking'); } }
@@ -4365,7 +4425,8 @@ function render(state) {
   else {
     ['ovResult','ovUpgrade'].forEach(closeOv); maybeShowIntro();
     // The boss briefing is its own overlay, so this queues behind it rather than fighting it.
-    if (S.boss) coach('boss'); else coach('battle');
+    // ...but not during deployment: the hand and End Turn are not on screen yet, and the deployment tip owns it
+    if (S.boss) coach('boss'); else if (!S.deploy) coach('battle');
   }
   if (S.power && S.power.ready) coach('power');   // teach the Command Power when it first charges
 }
@@ -5998,6 +6059,7 @@ function showRoster() {
 }
 
 function showBattleResult() {
+  try { localStorage.setItem('dc_tut_b2', '1'); } catch (e) {}   // first battle over: the deferred tips may come (see COACH_FIRST_BATTLE)
   const win = S.result === 'victory';
   if (_resultCue !== 'battle:' + S.result) {          // once per result, not once per render
     _resultCue = 'battle:' + S.result;
@@ -7886,11 +7948,14 @@ async function _onRevealDone(tok) {
   if (tok !== _revealTok) return;   // a newer battle's curtain has taken over
   _revealDone = true; _rosterSide = null;
   if (!S || !S.board || !S.deploy || S.result) return;
+  // Deployment stays manual (ruling, 0.0.101) — but the opening fight points at the one-tap way through it,
+  // which a first-time player had no reason to notice.
+  if (S.opening) coach('deploy');
   renderPrompt();
 }
 // "Deploy" — close deployment. Anyone still in reserve is set down on their muster tile (or the nearest
 // free starting tile), and arrives through the normal spawn animation.
-async function deployDone() { deselectCmd(); const r = await api('/api/deploy_done', {}); r.muster = true; await afterAction(r); }
+async function deployDone() { if (_coachShown === 'deploy') dismissCoach(); deselectCmd(); const r = await api('/api/deploy_done', {}); r.muster = true; await afterAction(r); }
 // "Auto-deploy" — set every soldier still waiting down the same way, but leave deployment open.
 async function deployAuto() {
   deselectCmd();
@@ -8852,10 +8917,9 @@ async function endTurn() {
       const ok = await gameConfirm(`<b>${n}</b> of your unit${n > 1 ? 's' : ''} can still move or act this turn. End the turn anyway?`, 'End turn');
       if (!ok) { disarmEnd(); return; }       // "keep playing" → drop the highlight, don't end
     }
-    // Teach the keep-a-card ★ once, on an actual end — and WAIT for it to be read before ending, because
-    // the end discards the hand this tip is about. Fired and forgotten it landed as the cards were being
-    // swept away and the enemy replay started under it: advice about a chance the player had just lost.
-    await coachWait('retain');
+    // The ★ is taught by the after-turn tip now (coach.endturn), at the start of the turn where it can
+    // be used. Blocking End Turn on it cost a click at the very moment the player wanted the enemy to move.
+    _coachClearBottom();
     disarmEnd();
     cancelSelState();
     aimModes.clear();                         // next turn every gun opens in Move again
@@ -8868,6 +8932,7 @@ async function endTurn() {
     // overlay is held until those blows finish.
     await afterAction(r);
     coach('endturn');            // after the enemy has actually played, so the tip describes what happened
+    _coachPump();                // anything that queued while the enemy had the board
   } catch (e) {
     // An unhandled throw here is invisible: endTurn() is an onclick handler, so the rejection is
     // swallowed and the game just sits there on the enemy turn. Surface it and resync instead.
@@ -8943,14 +9008,49 @@ function plaqueCard(g) {
     <span class="gc-av" style="${box(R.av)}"><img src="assets/ui/generals/${g.id}.jpg" alt="${g.name}"></span>
     <img class="gc-frame" src="assets/ui/generals/frame.png" alt="">
     <span class="gc-desc" style="${box(R.desc)}">${goldText(g.name)}</span>
+    ${(S && (S.demo || !(S.runs && S.runs.length))) ? `<span class="gc-play">${si('play', 14)} ${t('menu.play', 'Play')}</span>` : ''}
   </button>`;
 }
 const _GENS = ['warlord', 'engineer', 'nomad'];
+// What the demo shows of the full game. Only what the store page already says in public: the two other
+// commanders' names and one line each (store About, "Three commanders"). Their portraits are paid art and
+// are pruned from the demo build, so these cards draw a silhouette (see .gcard.locked).
+const DEMO_LOCKED_GENS = [
+  { id: 'engineer', name: 'Engineer', line: 'The first structure each turn is free; turrets, power plants, Overcharge.' },
+  { id: 'nomad', name: 'Nomad', line: 'The HQ is a vehicle. Movement builds Momentum; Break Camp and the army acts again.' },
+];
+function lockedGenCard(g) {
+  return `<button class="gcard locked" onclick="showLocked('${g.id}')" aria-label="${g.name} — ${t('menu.full_game', 'full game')}">
+    <span class="gc-av" style="${(() => { const R = GEN_FRAME_REGIONS[g.id] || GEN_FRAME_REGIONS.warlord; return `left:${R.av.x}%;top:${R.av.y}%;width:${R.av.w}%;height:${R.av.h}%`; })()}"></span>
+    <img class="gc-frame" src="assets/ui/generals/frame.png" alt="">
+    <span class="gc-desc" style="${(() => { const R = GEN_FRAME_REGIONS[g.id] || GEN_FRAME_REGIONS.warlord; return `left:${R.desc.x}%;top:${R.desc.y}%;width:${R.desc.w}%;height:${R.desc.h}%`; })()}">${goldText(g.name)}</span>
+    <span class="gc-lock">${si('lock', 12)} ${t('menu.full_game', 'Full game')}</span>
+  </button>`;
+}
+function lockedTile(name, label) {
+  return `<button class="ibtn mtile locked" onclick="showLocked('${name}')" aria-label="${I18n.esc(label)} — ${t('menu.full_game', 'full game')}"><img class="mt-w" src="${plateSrc('btn', name)}" alt="${I18n.esc(label)}">${plateLabel('btn', name, 'mtl-w')}<img class="mt-s" src="${plateSrc('btn', name + '_sq')}" alt="">${plateLabel('btn', name + '_sq', 'mtl-s')}<span class="gc-lock">${si('lock', 12)} ${t('menu.full_game', 'Full game')}</span></button>`;
+}
+const DEMO_LOCKED_INFO = {
+  achievements: ['Achievements', 'Fifty-seven achievements across every commander and act.'],
+  medals: ['Medals', 'Thirty-eight relics to collect, eight of them cursed.'],
+  generals: ['Generals', 'Each commander earns its own rewards and Ascension tiers as you clear runs.'],
+};
+function showLocked(id) {
+  Sfx.play('ui_tap');
+  const g = DEMO_LOCKED_GENS.find(x => x.id === id);
+  const [title, body] = g ? [g.name, g.line] : (DEMO_LOCKED_INFO[id] || [t('menu.full_game', 'Full game'), '']);
+  showPopup(`${body}<br><br>${t('menu.locked_body', 'In the full game: three commanders, four acts, nine bosses.')}`
+    + (wishlistShown() ? `<div style="text-align:center;margin-top:10px">${wishlistBtn('')}</div>` : ''),
+    `${si('lock', 15)} ${title} — ${t('menu.full_game', 'Full game')}`);
+}
 const STAGE_LIST = ['bronze', 'silver', 'gold', 'spec'];
 const STAGE_UNL = { bronze: 0, silver: 1, gold: 6, spec: 12 };
 let _plaquePrev = null;   // dev preview override {gid, stage} for tuning plaque regions in the editor
 let _deployAscView = 'auto';   // dev toggle: 'auto' | 'pre' | 'post' — force the deploy modifier-box state
 function selectGeneral(id) {
+  // The demo has one commander and nothing to set up (no Ascension, no Modifiers), so the Deploy popup was
+  // a screen of promises it could not keep. Straight into the run; newGame still confirms over a save.
+  if (S && S.demo) { runCfg.general = id; runCfg.ascension = 0; runCfg.mods.clear(); Sfx.play('ui_tap'); newGame(id); return; }
   runCfg.general = id;
   // Ascension is earned PER COMMANDER, so carrying the last one's tier across reads as a promise the new
   // one may not be able to keep. Start every commander at 0 and let the player step up to their own cap.
@@ -9083,7 +9183,7 @@ function showGenerals() {
   const resume = (S && S.has_save)
     ? `<div class="resumewrap">${pbtn('resume','continueRun()',{cls:'h'})}</div>` : '';
   // general cards — tapping one opens the Deploy popup (run setup); the top slot always shows Daily.
-  const genCards = `<div class="genwrap">${S.generals.map(plaqueCard).join('')}</div>`;
+  const genCards = `<div class="genwrap">${S.generals.map(plaqueCard).join('')}${S.demo ? DEMO_LOCKED_GENS.map(lockedGenCard).join('') : ''}</div>`;
   const dailyArt = S.daily ? [...(S.daily.date || '')].reduce((a, c) => a + c.charCodeAt(0), 0) % 3 : 0;   // swaps each day
   // The twists ARE the day. Named on the panel, with the full text a tap away — a player choosing
   // whether to spend their one Steam attempt has to be able to see what they are walking into.
@@ -9120,11 +9220,11 @@ function showGenerals() {
     +   `</div>`
     +   `<div class="mzone mzone-c"><div class="menugrid">
          ${mtile('history',"showRuns()",'History')}
-         ${S.demo ? '' : mtile('achievements',"showAchievements()",'Achievements')}
-         ${S.demo ? '' : mtile('medals',"showMedals()",'Medals')}
+         ${S.demo ? lockedTile('achievements', 'Achievements') : mtile('achievements',"showAchievements()",'Achievements')}
+         ${S.demo ? lockedTile('medals', 'Medals') : mtile('medals',"showMedals()",'Medals')}
          ${mtile('cards',"showCards()",'Cards')}
          ${mtile('how_to_play',"showHelp()",'How to play')}
-         ${S.demo ? '' : mtile('generals',"showProgression()",'Generals')}
+         ${S.demo ? lockedTile('generals', 'Generals') : mtile('generals',"showProgression()",'Generals')}
        </div></div>`
     + `</div></div>`
     // Desktop only. A phone app is left with the OS's own gesture and a browser tab with its close box,
@@ -9136,9 +9236,13 @@ function showGenerals() {
   // in context (no more up-front text wall). The ? button reopens the full guide.
   if (!localStorage.getItem('dc_seenHelp')) {
     localStorage.setItem('dc_seenHelp', '1');
-    showPopup('Two fronts, one war: maneuver a live army across the grid <b>and</b> draw cards to reinforce it. '
-      + 'Choose a general, deploy, and take the field — tips will guide you as you fight. '
-      + 'Tap <b>?</b> anytime for the full briefing.', `${si('skirmish', 16)} Welcome, Commander`);
+    // COLD OPEN: a brand-new player (no run saved, none ever played) skips the menu and the map and lands
+    // in the opening fight. The menu, the map and its tip are met after the first battle, when they mean
+    // something. The demo's median session was 9 minutes and most of the first ones were spent in menus.
+    if (!S.has_save && !(S.runs && S.runs.length) && (S.generals || []).length) { coldOpen(S.generals[0].id); return; }
+    showPopup('Move a live army across the grid <b>and</b> draw cards to command it. '
+      + 'Pick your commander to start — short tips guide your first battle. '
+      + '<b>How to play</b> on the menu has the full briefing.', `${si('skirmish', 16)} Welcome, Commander`);
   }
 }
 
@@ -9426,6 +9530,20 @@ async function newGame(id) {
   if (seed != null && r && r.seed != null && String(r.seed) !== String(seed))   // surface a seed mismatch instead of hiding it
     toast(`seed applied as ${r.seed}`);
   render(r);
+}
+async function coldOpen(gid) {
+  runCfg.general = gid; runCfg.ascension = 0; runCfg.mods.clear(); runCfg.seed = '';
+  $('#ovGeneral').classList.remove('show');
+  try {
+    const r = await api('/api/new', {general: gid, seed: null, ascension: 0, modifiers: []});
+    const st = (r && r.state) || r;
+    const first = ((st && st.nodes) || []).find(n => n.avail && n.kind === 'skirmish');
+    // Straight to the first fight; the map is rendered only if there is somehow no skirmish to take.
+    render(first ? await api('/api/travel', {node: first.id}) : r);
+  } catch (e) {
+    console.error('[cold open] failed', e);
+    render(await api('/api/state', {}));   // fall back to wherever the game actually is
+  }
 }
 // Leave the desktop app from the main menu. Progress is already in the store after every action; the
 // cloud write is flushed first because it is otherwise on a debounce, and the process is about to end.
@@ -9803,7 +9921,7 @@ function showHelp() {
     ${topic('<span class="cyan">Battle tips</span>', `Turn on <b>Threat range</b> (Settings › This run) to see where enemies can hit you
       next turn · pull spent units back · thin bad cards at an <b>${siEm('shop')} Outpost</b> ·
       tap any unit or tile to inspect it.`)}
-    ${topic('<span class="gold">The Expedition</span>', `You climb an <b>act map</b> of nodes to the boss at the top — four acts in all.
+    ${topic('<span class="gold">The Expedition</span>', `You climb an <b>act map</b> of nodes to the boss at the top — ${S && S.demo ? 'the demo is Act 1; the full game has four' : 'four acts in all'}.
       Choose your path: <b>${si('skirmish',13)} skirmishes</b>, tougher <b>${si('elite',13)} elite</b> battles,
       <b>${si('event',13)} events</b>, <b>${si('shop',13)} outposts</b>, <b>${si('camp',13)} camps</b> and
       <b>${si('cache',13)} caches</b>, then the <b>${si('boss',13)} boss</b>. Your army is
