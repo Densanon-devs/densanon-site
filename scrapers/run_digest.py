@@ -9,7 +9,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
 
 from sources import fetch_all
-from dedup import load_seen, save_seen, prune_old, filter_new
+from dedup import load_seen, save_seen, prune_old, filter_new, mark_seen, cap_round_robin
 
 
 def load_config(digest_id):
@@ -40,7 +40,7 @@ def main():
     seen_db_path = os.path.join(SCRIPT_DIR, config["seen_db_path"])
     seen_db = load_seen(seen_db_path)
     seen_db = prune_old(seen_db)
-    new_articles, seen_db = filter_new(all_articles, seen_db)
+    new_articles = filter_new(all_articles, seen_db)
 
     # Step 3: Save pending digest for Claude Code to process
     print("\n[3/3] Saving pending digest...")
@@ -48,7 +48,9 @@ def main():
 
     # Cap articles and trim summaries to keep pending file manageable for the remote agent
     max_pending = config.get("max_pending_articles", 20)
-    trimmed = new_articles[:max_pending]
+    trimmed = cap_round_robin(new_articles, max_pending)
+    # Only what reaches the pending file is marked seen; the rest stays eligible
+    seen_db = mark_seen(trimmed, seen_db)
     for art in trimmed:
         if art.get("summary") and len(art["summary"]) > 300:
             art["summary"] = art["summary"][:300] + "..."

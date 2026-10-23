@@ -48,18 +48,47 @@ def prune_old(seen_db, days=90):
 
 
 def filter_new(articles, seen_db):
-    """Filter articles to only those not yet seen. Returns (new_articles, updated_seen_db)."""
+    """Filter articles to only those not yet seen (also drops repeats within this
+    batch). Does not modify seen_db; call mark_seen on the articles actually kept."""
     new_articles = []
+    batch = set()
     for article in articles:
         norm_url = normalize_url(article["url"])
-        if norm_url not in seen_db:
+        if norm_url not in seen_db and norm_url not in batch:
+            batch.add(norm_url)
             new_articles.append(article)
-            seen_db[norm_url] = {
-                "title": article["title"],
-                "source": article["source_name"],
-                "first_seen": datetime.now(timezone.utc).isoformat(),
-                "category": article["category"]
-            }
 
     print(f"  {len(new_articles)} new articles (out of {len(articles)} total)")
-    return new_articles, seen_db
+    return new_articles
+
+
+def mark_seen(articles, seen_db):
+    """Record articles as seen. Only articles that reached the pending file should
+    be marked, so ones cut by the pool cap can show up in a later digest."""
+    now = datetime.now(timezone.utc).isoformat()
+    for article in articles:
+        seen_db[normalize_url(article["url"])] = {
+            "title": article["title"],
+            "source": article["source_name"],
+            "first_seen": now,
+            "category": article["category"]
+        }
+    return seen_db
+
+
+def cap_round_robin(articles, limit):
+    """Take up to `limit` articles, one per source in turn, so the sources listed
+    last in the config are not cut every day by a first-N cap."""
+    by_source = {}
+    for article in articles:
+        by_source.setdefault(article["source_name"], []).append(article)
+    queues = list(by_source.values())
+    picked = []
+    while len(picked) < limit and queues:
+        for q in queues:
+            if q and len(picked) < limit:
+                picked.append(q.pop(0))
+        queues = [q for q in queues if q]
+    # Keep the original fetch order in the output
+    order = {id(a): i for i, a in enumerate(articles)}
+    return sorted(picked, key=lambda a: order[id(a)])
