@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - October 24, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - October 25, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,75 +15,41 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">October 24, 2026</div>
+        <div class="digest-date-badge">October 25, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">A lighter day for robotics: Eka Robotics raises $150M for a vision-force-action model, Generative Bionics plans a physical AI data factory in Italy, the FCC&#x27;s robotics restriction draws a buyer-focused webinar, and Canton Fair adds a dedicated service-robot zone. Community picks include a VLM-driven Microduck, a LEGO-housed RGB-D rig and a one-sentence Gazebo model pipeline.</p>
+        <p class="digest-intro">A weekend of open tooling for robot data and planning, plus a benchmark showing multimodal agents still struggle to turn good perception into reliable robot behavior.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Eka Robotics raises $150M to scale its vision-force-action model for robots</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>RobotWorld: Benchmarking Multimodal Agents for Robot Use Across Diverse Tasks and Embodiments</h3>
+              <span class="digest-source">arXiv</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Eka Robotics raised $150M.</li>
-              <li>It is building a vision-force-action (VFA) model aimed at giving robots an intuition of physics.</li>
-              <li>The model is trained through reinforcement learning at scale.</li>
+              <li>RobotWorld is a simulation testbed of 84 tasks with explicit interaction budgets and executable success checks, spanning manipulation, mobile manipulation, locomotion, driving and aerial control.</li>
+              <li>Agents can assemble sophisticated perception and control workflows (segmentation, camera calibration, spatial estimation), but these do not reliably combine into successful behavior. Common failures: losing track of object state, not correcting ineffective actions, recovering too late, and treating unfinished tasks as done.</li>
+              <li>The two models named in the abstract differ in strengths: Astra succeeds more on spatial and constrained-contact goals, Opus 5.5 on continuous-balance and timed-interaction goals.</li>
             </ul>
-            <a href="https://www.therobotreport.com/eka-robotics-raises-150m-scale-vision-force-action-model-robots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.10409" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Generative Bionics to launch Physical AI Data Factory in Italy</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Solving a Giant Rubik&#x27;s Cube with a Quadruped Robot</h3>
+              <span class="digest-source">ETH Zurich Legged Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Generative Bionics plans a Physical AI Data Factory in Italy.</li>
-              <li>The company says the goal is to advance European robotics sovereignty.</li>
-              <li>The aim is for humanoid training data to be generated on the continent.</li>
+              <li>An ANYmal-D solves the cube using only its feet. Perception uses an onboard ZED X Mini RGB-D camera, SAM 3 segmentation, ICP pose refinement and CIE-LAB color classification, with partial cube nets merged across views.</li>
+              <li>Learned whole-body skills (Flip Forward, Flip Backward, Rotate CCW; CW is the mirrored CCW) were trained with RL on privileged observations, then distilled into students that use onboard depth and proprioception.</li>
+              <li>Reported results: three autonomous hardware solves of about 30 steps over 8-9 minutes each; about 2 cm median position error and under 3 degrees rotation error up to 2 m; facelet classification 100% indoors and 98.7% outdoors on 5,819 labeled patches.</li>
             </ul>
-            <a href="https://www.therobotreport.com/generative-bionics-to-launch-physical-ai-data-factory-in-italy/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Webinar to discuss how the FCC robotics ruling affects automation buyers</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Industry leaders will discuss what robotics buyers should know about the recent FCC restriction on certain connected systems.</li>
-              <li>The session is aimed at automation buyers assessing the ruling&#x27;s impact.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/webinar-discuss-how-fcc-robotics-ruling-affects-automation-buyers/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Canton Fair at 70: Service robots get dedicated zone as buyers demand real-world performance</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The 140th Canton Fair has launched a fully dedicated zone for service robots in its Phase 1 &quot;Advanced Manufacturing&quot; programme.</li>
-              <li>The programme spans 520,000 m² with 12,000 exhibitors across 17 emerging-industry zones.</li>
-              <li>The headline notes buyers are demanding real-world performance.</li>
-            </ul>
-            <a href="https://roboticsandautomationnews.com/2026/10/23/canton-fair-at-70-service-robots-get-dedicated-zone-as-buyers-demand-real-world-performance/106263/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Video Friday: Quadruped Robot Solves Giant Rubik&#x27;s Cube by Itself</h3>
-              <span class="digest-source">IEEE Spectrum Robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>IEEE Spectrum&#x27;s weekly selection of robotics videos, led by a quadruped robot solving a giant Rubik&#x27;s Cube on its own.</li>
-              <li>Includes a calendar of upcoming events, including CoRL 2026 (9-12 November, Austin).</li>
-            </ul>
-            <a href="https://spectrum.ieee.org/video-friday-rubiks-cube-robot" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://leggedrobotics.github.io/rubik-skills/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -93,26 +59,66 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Make a Gazebo model in one sentence</h3>
+              <h3>batchplan: Batched Motion Planning in Rust, with a ROS 2 / MoveIt Plugin</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Shares gazebo-pack, a Blender-to-Gazebo asset pipeline built on a manifest contract plus a validating packager and modeling scripts.</li>
-              <li>Targets the usual workflow of modeling, UV mapping, exporting and hand-writing SDF XML.</li>
-              <li>Includes ten examples such as a bus, a Tesla and a Falcon 9.</li>
+              <li>batchplan-ros takes several candidate grasp poses in one request, solves IK and plans to them as a batch, and returns the shortest valid path. It speaks MoveIt&#x27;s MoveGroup and GetPositionIK interfaces, runs on CPU, and targets ROS 2 Jazzy; the author calls it early.</li>
+              <li>The underlying Rust library (Apache-2.0 or MIT, v0.2) loads URDF, MJCF and OpenUSD, uses sphere-based collision geometry, can optionally use wgpu for IK and trajectory optimization, and can export planned reaches, pick-and-place and two-arm handovers as LeRobot v3.0 datasets.</li>
+              <li>The project&#x27;s own benchmarks (different hardware per comparison, so not a controlled ranking) report 93.1% solved at 0.13 ms per problem versus 63.1% at 59.4 ms for MoveIt 2 on meshes, and 90.4% versus 86.1% for VAMP on an M4 Pro.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/make-a-gazebo-model-in-one-sentence/59131" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/batchplan-batched-motion-planning-for-ros-2-with-a-moveit-plugin/59144" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ROS News for the Week of October 19th, 2026</h3>
+              <h3>Marine Radar Plugin for Gazebo Harmonic</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Weekly ROS roundup covering ROSConUK wrapping up in Edinburgh.</li>
-              <li>A sold-out ROSCon Singapore is kicking off the same week.</li>
+              <li>A marine radar sensor plugin for Gazebo Harmonic with ROS 2 integration, meant to be mounted on a USV for testing obstacle detection and avoidance in simulation.</li>
+              <li>It publishes three outputs: a PPI (Plan Position Indicator) radar image, a point cloud of radar returns, and a list of detected targets. Range is configurable so it can be reused across vessels and scenarios.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/ros-news-for-the-week-of-october-19th-2026/59114" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/radar-plugin-for-gazebo/59153" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>How to Build a Robot with NVIDIA</h3>
+              <span class="digest-source">r/robotics</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>An illustrated walkthrough of how NVIDIA&#x27;s robotics pieces fit together: Isaac Sim, Isaac Lab, GR00T, Cosmos and Omniverse.</li>
+              <li>It follows a fictional startup building a warehouse humanoid, which gives the tools an order-of-use context rather than a feature list.</li>
+            </ul>
+            <a href="https://www.reddit.com/r/robotics/comments/1xeaa5n/how_to_build_a_robot_with_nvidia/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ROSCon China 2026 Recap</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Held October 16-18, 2026 in Shanghai, with over 1,000 in-person attendees from more than 300 companies and organizations.</li>
+              <li>The program had about 50 keynotes and technical reports, 3 specialized courses, 1 hands-on workshop and a closed-door session for industry and academic leaders; 30 exhibitors showed hardware, sensors and platforms.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/roscon-china-2026-a-tremendous-success-for-the-ros-community/59154" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Putting a Dollar Figure on Compressed Air Blow-Off</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Worked example: a 50 hp compressor running around the clock at $0.10/kWh uses about 325,900 kWh, roughly $32,600 a year. The article notes this uses nameplate horsepower and real cycling would lower it.</li>
+              <li>Leaks can waste 20 to 30 percent of compressor output (DOE), and air is typically compressed to about 100 psi then throttled even though many blow-off jobs need volume at low pressure.</li>
+              <li>Suggested fixes: repair leaks, add solenoid valves so air flows only when a part is present, use engineered nozzles, and consider blowers or air knives where they fit (not for blind holes or fine passages).</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/10/24/putting-a-dollar-figure-on-compressed-air-blow-off/106283/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -122,36 +128,37 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Training Microduck</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>RoboJev: An Open 27B Model to Grade Robot Task Success</h3>
+              <span class="digest-source">Hacker News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The poster is training Microduck&#x27;s VLM-based brain for consistent target following.</li>
-              <li>They have ordered three Microducks and are awaiting delivery.</li>
+              <li>RoboJev is an open-weights judge fine-tuned with LoRA from JEV-27B-VL on 52,598 robot episodes. Given a task description and about ten sampled frames, it outputs a probability that the task succeeded.</li>
+              <li>Speed and cost: median 0.26 s per answer on one H100 and an estimated $0.19 per 1,000 answers, versus frontier API response times of roughly 5 to 7 seconds. The launch post headlines 48x cheaper and 27x faster than a frontier model (Astra).</li>
+              <li>It reaches 95.2% balanced accuracy over 268 SO-101 runs. Caveats on the page: frontier models were given four front-camera frames while RoboJev got more input, and the confidence interval of its advantage over Astra on SO-101 includes zero. Weights, data and code are on Hugging Face, plus a LeRobot reward plugin.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1xdz1gu/training_microduck/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://robo-jev.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>DIY RGB-D rig in a LEGO housing: live point-cloud display, 2 to 15 fps</h3>
+              <h3>Cubic Doggo Update: Wouf&#x27;s First Steps</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A home-lab vision build using a 320x240 iToF sensor, Pi camera and Pi Zero 2 W in a LEGO housing with a 240x240 TFT.</li>
-              <li>Switching the camera to MJPEG and raising TFT SPI speed brought the colored point cloud display to 15 fps.</li>
+              <li>The builder tracked a slow-servo bug in a hobby quadruped to latency from reading servo position, velocity and effort values, the feedback that makes smart servos smart.</li>
+              <li>A reminder that feedback reads on a shared servo bus can dominate the control loop time budget; the post reports the dog&#x27;s first steps after the fix.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1xe006x/diy_rgbd_rig_in_a_lego_housing_live_pointcloud/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1xey15u/cubic_doggo_update_woufs_first_steps/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Stewy Ving indexed the entire robotics industry into one free interactive resource</h3>
+              <h3>Day 363 of Building Asimov 1: Testing New Grippers</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A free interactive resource with 3D breakdowns of 40+ humanoid robots.</li>
-              <li>Also includes component explainers, comparisons and a supply-chain deep dive from raw materials to finished robots.</li>
+              <li>Asimov 1 is a fully open-source humanoid built from off-the-shelf parts, so others can build one.</li>
+              <li>The builder says the arms have been strong enough for a while and is now adding grippers to move on to manipulation.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1xe76mh/stewy_ving_indexed_the_entire_robotics_industry/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1xeabg7/day_363_of_building_asimov_1_testing_new_grippers/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
