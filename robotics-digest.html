@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - October 25, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - October 26, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">October 25, 2026</div>
+        <div class="digest-date-badge">October 26, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">A weekend of open tooling for robot data and planning, plus a benchmark showing multimodal agents still struggle to turn good perception into reliable robot behavior.</p>
+        <p class="digest-intro">Open tooling for robot data labeling and demonstration segmentation, a new navigation foundation model, and fresh milestones from open-source robots and the ROS community, alongside warehouse automation deals in Europe.</p>
       </div>
     </section>
 
@@ -29,78 +29,49 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>RobotWorld: Benchmarking Multimodal Agents for Robot Use Across Diverse Tasks and Embodiments</h3>
-              <span class="digest-source">arXiv</span>
+              <h3>FLORA: An Open Model Suite for Scaling Robotics Data Engines</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>RobotWorld is a simulation testbed of 84 tasks with explicit interaction budgets and executable success checks, spanning manipulation, mobile manipulation, locomotion, driving and aerial control.</li>
-              <li>Agents can assemble sophisticated perception and control workflows (segmentation, camera calibration, spatial estimation), but these do not reliably combine into successful behavior. Common failures: losing track of object state, not correcting ineffective actions, recovering too late, and treating unfinished tasks as done.</li>
-              <li>The two models named in the abstract differ in strengths: Astra succeeds more on spatial and constrained-contact goals, Opus 5.5 on continuous-balance and timed-interaction goals.</li>
+              <li>Argues the life-cycle of robotics foundation models depends on data labels.</li>
+              <li>Names the label types needed: outcome rewards for monitoring real-world deployments, process rewards for RL post-training, and timestamped captions for filtering data.</li>
+              <li>Presented as an open model suite for scaling robotics data engines.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.10409" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.31779" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Solving a Giant Rubik&#x27;s Cube with a Quadruped Robot</h3>
-              <span class="digest-source">ETH Zurich Legged Robotics</span>
+              <h3>See What I Need, Dream What I Want: A Navigation Foundation Model on a Self-Constructed Representation Space</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An ANYmal-D solves the cube using only its feet. Perception uses an onboard ZED X Mini RGB-D camera, SAM 3 segmentation, ICP pose refinement and CIE-LAB color classification, with partial cube nets merged across views.</li>
-              <li>Learned whole-body skills (Flip Forward, Flip Backward, Rotate CCW; CW is the mirrored CCW) were trained with RL on privileged observations, then distilled into students that use onboard depth and proprioception.</li>
-              <li>Reported results: three autonomous hardware solves of about 30 steps over 8-9 minutes each; about 2 cm median position error and under 3 degrees rotation error up to 2 m; facelet classification 100% indoors and 98.7% outdoors on 5,819 labeled patches.</li>
+              <li>Asks what visual representation a navigation policy should act on, noting current policies built on vision foundation models mostly inherit whatever the encoders&#x27; pretraining objectives provide.</li>
+              <li>Introduces RepresentNav, a navigation foundation model built around a self-constructed representation space.</li>
             </ul>
-            <a href="https://leggedrobotics.github.io/rubik-skills/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>batchplan: Batched Motion Planning in Rust, with a ROS 2 / MoveIt Plugin</h3>
-              <span class="digest-source">ROS Discourse</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>batchplan-ros takes several candidate grasp poses in one request, solves IK and plans to them as a batch, and returns the shortest valid path. It speaks MoveIt&#x27;s MoveGroup and GetPositionIK interfaces, runs on CPU, and targets ROS 2 Jazzy; the author calls it early.</li>
-              <li>The underlying Rust library (Apache-2.0 or MIT, v0.2) loads URDF, MJCF and OpenUSD, uses sphere-based collision geometry, can optionally use wgpu for IK and trajectory optimization, and can export planned reaches, pick-and-place and two-arm handovers as LeRobot v3.0 datasets.</li>
-              <li>The project&#x27;s own benchmarks (different hardware per comparison, so not a controlled ranking) report 93.1% solved at 0.13 ms per problem versus 63.1% at 59.4 ms for MoveIt 2 on meshes, and 90.4% versus 86.1% for VAMP on an M4 Pro.</li>
-            </ul>
-            <a href="https://discourse.openrobotics.org/t/batchplan-batched-motion-planning-for-ros-2-with-a-moveit-plugin/59144" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.31762" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Marine Radar Plugin for Gazebo Harmonic</h3>
-              <span class="digest-source">ROS Discourse</span>
+              <h3>KiRoSe: Using Kinematic Data for Efficient Segmentation of Robot Demonstrations</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A marine radar sensor plugin for Gazebo Harmonic with ROS 2 integration, meant to be mounted on a USV for testing obstacle detection and avoidance in simulation.</li>
-              <li>It publishes three outputs: a PPI (Plan Position Indicator) radar image, a point cloud of radar returns, and a list of detected targets. Range is configurable so it can be reused across vessels and scenarios.</li>
+              <li>Targets segmenting demonstration data into temporal and semantic subsegments, useful for learning, cleaning, retrieval and analysis.</li>
+              <li>Notes this is often done manually, which is tedious and error prone.</li>
+              <li>Uses kinematic data to make the segmentation efficient, in contrast to approaches leaning on multimodal LLMs.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/radar-plugin-for-gazebo/59153" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.31801" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How to Build a Robot with NVIDIA</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>PrefO2O: Zero-Shot Preference-Based Reinforcement Learning via Offline-to-Online Latent Preference Transfer</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An illustrated walkthrough of how NVIDIA&#x27;s robotics pieces fit together: Isaac Sim, Isaac Lab, GR00T, Cosmos and Omniverse.</li>
-              <li>It follows a fictional startup building a warehouse humanoid, which gives the tools an order-of-use context rather than a feature list.</li>
+              <li>Preference-based RL learns robot behaviors aligned with human intent, but scaling is limited by the cost of collecting human preference labels.</li>
+              <li>Proposes zero-shot offline-to-online transfer of latent preferences to reduce that labeling need.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1xeaa5n/how_to_build_a_robot_with_nvidia/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ROSCon China 2026 Recap</h3>
-              <span class="digest-source">ROS Discourse</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Held October 16-18, 2026 in Shanghai, with over 1,000 in-person attendees from more than 300 companies and organizations.</li>
-              <li>The program had about 50 keynotes and technical reports, 3 specialized courses, 1 hands-on workshop and a closed-door session for industry and academic leaders; 30 exhibitors showed hardware, sensors and platforms.</li>
-            </ul>
-            <a href="https://discourse.openrobotics.org/t/roscon-china-2026-a-tremendous-success-for-the-ros-community/59154" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.31812" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -110,15 +81,54 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Putting a Dollar Figure on Compressed Air Blow-Off</h3>
+              <h3>Teradyne Robotics partners with Sereact to scale physical AI in retail and logistics</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Teradyne Robotics and Sereact are partnering to scale physical AI in retail and logistics.</li>
+              <li>The two have already shipped hundreds of Universal Robots (UR) arms in dual-arm systems to live customer sites across Europe.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/teradyne-robotics-partners-sereact-scale-physical-ai-retail-logistics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>advasolutions automates logistics center of drugstore chain Hebe in Poland</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Worked example: a 50 hp compressor running around the clock at $0.10/kWh uses about 325,900 kWh, roughly $32,600 a year. The article notes this uses nameplate horsepower and real cycling would lower it.</li>
-              <li>Leaks can waste 20 to 30 percent of compressor output (DOE), and air is typically compressed to about 100 psi then throttled even though many blow-off jobs need volume at low pressure.</li>
-              <li>Suggested fixes: repair leaks, add solenoid valves so air flows only when a part is present, use engineered nozzles, and consider blowers or air knives where they fit (not for blind holes or fine passages).</li>
+              <li>The system uses 66 advaShuttles and around 20,000 tote storage locations at a height of 10 meters.</li>
+              <li>It is advasolutions&#x27; first facility outside Germany and will be built during ongoing operations by early 2028.</li>
+              <li>The facility will be connected to SAP EWM.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/10/24/putting-a-dollar-figure-on-compressed-air-blow-off/106283/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/10/26/advasolutions-automates-logistics-center-of-drugstore-chain-hebe-in-poland/106322/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>RoboStack moved to a Monorepo</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>All major distros are now managed from one repo.</li>
+              <li>This removes duplication and makes maintaining the distro channels easier, with patches, new packages, testing and rebuilds handled together.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/robostack-moved-to-a-monorepo/59196" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>New Project Lead for ROS PMC!</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The ROS PMC has selected Alejandro Hernandez Cordero (ahcorde) as the new ROS project lead.</li>
+              <li>He thanks outgoing lead Michael Carroll (mjcarroll).</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/new-project-lead-for-ros-pmc/59192" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -128,37 +138,25 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>RoboJev: An Open 27B Model to Grade Robot Task Success</h3>
-              <span class="digest-source">Hacker News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>RoboJev is an open-weights judge fine-tuned with LoRA from JEV-27B-VL on 52,598 robot episodes. Given a task description and about ten sampled frames, it outputs a probability that the task succeeded.</li>
-              <li>Speed and cost: median 0.26 s per answer on one H100 and an estimated $0.19 per 1,000 answers, versus frontier API response times of roughly 5 to 7 seconds. The launch post headlines 48x cheaper and 27x faster than a frontier model (Astra).</li>
-              <li>It reaches 95.2% balanced accuracy over 268 SO-101 runs. Caveats on the page: frontier models were given four front-camera frames while RoboJev got more input, and the confidence interval of its advantage over Astra on SO-101 includes zero. Weights, data and code are on Hugging Face, plus a LeRobot reward plugin.</li>
-            </ul>
-            <a href="https://robo-jev.com/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Cubic Doggo Update: Wouf&#x27;s First Steps</h3>
+              <h3>Meet the star of #NVIDIAGTC Berlin ... Microduck.</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The builder tracked a slow-servo bug in a hobby quadruped to latency from reading servo position, velocity and effort values, the feedback that makes smart servos smart.</li>
-              <li>A reminder that feedback reads on a shared servo bus can dominate the control loop time budget; the post reports the dog&#x27;s first steps after the fix.</li>
+              <li>Microduck is a small robot from Pollen Robotics, described as a tiny biped for reinforcement learning.</li>
+              <li>The poster met the team at NVIDIA GTC Berlin and calls it an impressive development tool.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1xey15u/cubic_doggo_update_woufs_first_steps/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1xfagiq/meet_the_star_of_nvidiagtc_berlin_microduck/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Day 363 of Building Asimov 1: Testing New Grippers</h3>
+              <h3>One year of building an open-source humanoid robot from sketchs to deployments</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Asimov 1 is a fully open-source humanoid built from off-the-shelf parts, so others can build one.</li>
-              <li>The builder says the arms have been strong enough for a while and is now adding grippers to move on to manipulation.</li>
+              <li>Menlo Research marks one year since starting Asimov 1, an open-source humanoid robot.</li>
+              <li>The team put together a retrospective of progress from sketches to deployments.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1xeabg7/day_363_of_building_asimov_1_testing_new_grippers/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1xfl6mi/one_year_of_building_an_opensource_humanoid_robot/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
