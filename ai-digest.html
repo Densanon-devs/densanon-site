@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - October 26, 2026 | Densanon</title>
+  <title>AI Morning Digest - October 27, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">October 26, 2026</div>
+        <div class="digest-date-badge">October 27, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A research-heavy Monday: new arXiv work on agent learning and harnesses, Lean-based paper checking, and evaluation pitfalls in LLM studies, plus a fresh Claude Agent SDK release and a small image tool from Simon Willison.</p>
+        <p class="digest-intro">OpenAI&#x27;s GPT-6.1 Terra puts visual reasoning and computer use front and center, Claude Code ships v2.1.311, and arXiv brings new work on ASR fine-tuning, OCR evaluation, energy-steered language models, and context compression.</p>
       </div>
     </section>
 
@@ -29,82 +29,78 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Don&#x27;t Forget What You Just Learned: Self-Directed Repair Turns Agent Mistakes Into Lasting Lessons</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues that agents only recover from mistakes temporarily today.</li>
-              <li>In-context reflections are easily forgotten across sessions and compete for limited context.</li>
-              <li>Proposes self-directed repair so that experience becomes lasting improvement.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2610.31846" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Phronix: The Capability-Centric Learning Paradigm for Agents</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Targets LLM agents used in scientific computing for performance engineering tasks such as instrumentation, analysis, and workflow porting.</li>
-              <li>Notes that agent effectiveness depends heavily on the surrounding harness.</li>
-              <li>Introduces a capability-centric learning paradigm for agents.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2610.31789" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>PaperFormalizer: Author-in-the-Loop Autoformalization of Research Papers in Lean</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A Lean-based agentic pipeline that helps authors find and close small gaps in their own proofs or stated assumptions.</li>
-              <li>Aims to turn each paper into a Lean-verified version, with the author kept in the loop.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2610.31810" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Validating the Comparison, Not Just the Scorer: Why Overall Accuracy Can Mislead in Interactive LLM Evaluation</h3>
+              <h3>OpenESM: Energy-Steered Models Are Scalable Foundation Learners</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Looks at studies comparing how models respond to different follow-up prompts, such as a neutral reconsider versus insisting an invented film exists.</li>
-              <li>Argues that validating the scorer&#x27;s overall accuracy alone can mislead when the real quantity is the difference between prompts.</li>
+              <li>Designs energy-steered models (ESMs) for foundational language modeling.</li>
+              <li>Starts from the observation that energy-based models work well on domain-specific tasks but struggle with general-purpose scenarios.</li>
+              <li>Positions ESMs as scalable foundation learners.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.31678" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.33005" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>MisconceptDialogue: Evaluation Criteria Shape Measured Success in LLM Math Tutoring</h3>
+              <h3>Linear-Time Context Compression with State-Space Encoding</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Asks whether a single LLM can detect a student&#x27;s error, diagnose the misconception, and remediate it through multi-turn dialogue.</li>
-              <li>Also questions whether the reported success numbers can be trusted, since evaluation criteria shape measured success.</li>
+              <li>Targets the rising compute and memory cost of transformer LLMs as context grows.</li>
+              <li>Proposes compressing a context into a shorter representation with state-space encoding before inference.</li>
+              <li>Aims to improve on existing soft-prompt compression methods.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.31679" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.33006" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Rethinking Structured Generation: Can Graph-Based Reasoning Resolve Ambiguity?</h3>
+              <h3>Whispering Wisely: Smart Subset Selection for ASR Fine-Tuning</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Challenges the framing of structured generation as a deterministic mapping from input to a single output.</li>
-              <li>Notes natural language often admits multiple structurally distinct yet semantically valid outputs, and explores graph-based reasoning for this.</li>
+              <li>Notes that Whisper-class ASR models remain expensive to fine-tune when large amounts of transcribed audio are available.</li>
+              <li>Proposes smart subset selection to choose which data to fine-tune on.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.31681" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.32997" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Schema Coherence Inventory: Measuring Whether an Assigned Belief Organizes a Language Model&#x27;s Cognition</h3>
+              <h3>Entity-Aware Evaluation of OCR Systems for Historical Document Transcription</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Persona-conditioned models are used as simulated patients and affective agents, but there is no validated way to tell if an assigned belief organizes behaviour or the model merely adopted a mood.</li>
-              <li>Presents an inventory to measure that.</li>
+              <li>Argues that Character Error Rate does not necessarily show whether names, dates, and identifiers are transcribed correctly.</li>
+              <li>Proposes entity-aware evaluation of OCR for historical document transcription.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.31683" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2610.33004" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>From Writing Advice to Manuscript Governance: A Constrained-Transformation Framework for Academic Revision</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Frames academic revision as a governance problem when legitimate writing objectives conflict.</li>
+              <li>Proposes a constrained-transformation framework for manuscript revision.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.33001" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GPT-6.1 Terra</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>OpenAI describes GPT-6.1 Terra as a fast, efficient model.</li>
+              <li>The announcement emphasizes detailed visual reasoning and computer use.</li>
+              <li>Simon Willison notes which aspects a release announcement chooses to emphasize.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Oct/26/gpt-61-terra/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -114,26 +110,44 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-agent-sdk-python: v0.2.174</h3>
+              <h3>anthropics/claude-code: v2.1.311</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Release v0.2.174 of the Claude Agent SDK for Python.</li>
-              <li>Updates the bundled Claude CLI to version 2.1.310.</li>
-              <li>Available via pip install claude-agent-sdk==0.2.174.</li>
+              <li>Adds --hold-idle-file and --max-hold-min to self-hosted-runner to keep an idle session while the host reports processes left running.</li>
+              <li>Adds a tip for the Explanatory output style, shown when asking Claude for explanations.</li>
+              <li>Includes a fix for long freezes at startup.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.174" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.311" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Seam Cutter</h3>
+              <h3>webframe: evaluated as a scraper and a sandbox</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A new cropping tool that makes a horizontal or vertical cut across an image and slides the two sides relative to each other.</li>
-              <li>Effectively crops out a section from the middle of an image.</li>
+              <li>webframe, from Jeff Lindsay, runs a web page like a program in a hidden headless web view.</li>
+              <li>It outputs console.log() to standard output along with any exceptions.</li>
+              <li>Simon Willison evaluates it as both a scraper and a sandbox.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Oct/25/seam-cutter/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Oct/26/webframe-evaluation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Quoting Jason Koebler</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Quotes Jason Koebler on big tech platforms having essentially no customer support.</li>
+              <li>Says many people with run-of-the-mill tech problems have turned to ChatGPT instead.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Oct/26/jason-koebler/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
