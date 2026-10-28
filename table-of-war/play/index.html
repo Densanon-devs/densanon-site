@@ -2996,7 +2996,7 @@
 <script src="./plates.js"></script>          <!-- which UI plates have text-free art (npm run gen:plates) -->
 <script src="./cardface.js"></script>   <!-- shared card-face renderer (FRAMES, frameFor, renderFace, preload) -->
 <script>
-const APP_VERSION = '0.0.109';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
+const APP_VERSION = '0.0.110';  // bump on every release; the update check compares against this (keep in lockstep with android versionName + tauri.conf version)
 let S = null;                 // latest state
 let sel = null;               // selected hand index (card mode)
 let picked = [];              // card targets chosen so far
@@ -3505,6 +3505,9 @@ const Sfx = (() => {
     campaign: { freqs: [110, 146.83, 220, 329.63], type: 'sine',     gain: 0.05, cut: 950,  trem: 0.07 },
     battle:   { freqs: [55, 82.41, 110, 164.81],   type: 'sawtooth', gain: 0.05, cut: 480,  trem: 0.16 },
     boss:     { freqs: [55, 110, 138.59, 207.65],  type: 'sawtooth', gain: 0.08, cut: 720,  trem: 0.22 },
+    // elite fights and the risen finale boss got their own songs in the 0.0.110 score
+    elite:    { freqs: [55, 82.41, 116.54, 164.81], type: 'sawtooth', gain: 0.06, cut: 600,  trem: 0.18 },
+    finale:   { freqs: [36.71, 73.42, 110, 146.83], type: 'sawtooth', gain: 0.08, cut: 640,  trem: 0.12 },
     safe:     { freqs: [130.81, 196, 261.63, 392], type: 'triangle', gain: 0.05, cut: 1700, trem: 0.05 },
     // camp and outpost were one 'safe' bed until the score split them: the camp is a low jazz trio, the
     // outpost is brighter and a fifth up. 'safe' stays for the run summary, which is neither place.
@@ -3542,7 +3545,8 @@ const Sfx = (() => {
     if (musicSample) {
       const ms = musicSample;
       // remember how far into the loop we were, so coming back does not restart the track at 0:00
-      if (ms.loopLen > 0) bedPos[ms.key] = (ms.offset - ms.loopStart + Math.max(0, t - ms.startedAt)) % ms.loopLen;
+      // left during the intro (before loopStart) -> resume at the loop's top, not in the intro again
+      if (ms.loopLen > 0) bedPos[ms.key] = Math.max(0, ms.offset - ms.loopStart + Math.max(0, t - ms.startedAt)) % ms.loopLen;
       try {
         ms.bed.gain.cancelScheduledValues(t);
         ms.bed.gain.setValueCurveAtTime(FADE_OUT, t, XFADE);
@@ -3585,7 +3589,9 @@ const Sfx = (() => {
     const loopStart = (meta && meta.loopStart != null) ? meta.loopStart : 0;
     const loopEnd = (meta && meta.loopEnd) ? meta.loopEnd : base.duration;
     const loopLen = Math.max(0, loopEnd - loopStart);
-    const offset = loopStart + (loopLen > 0 ? ((bedPos[key] || 0) % loopLen) : 0);
+    // The first visit plays from 0, so a song's intro (everything before loopStart) is heard once; a
+    // return resumes inside the loop where it was left.
+    const offset = bedPos[key] == null ? 0 : loopStart + (loopLen > 0 ? (bedPos[key] % loopLen) : 0);
     // The whole bed rides one gain so the crossfade cannot fight the per-layer levels underneath it.
     const bed = ctx.createGain();
     bed.gain.setValueAtTime(0.0001, t0);
@@ -4364,7 +4370,8 @@ function render(state) {
   }
   _playCardFx();   // shop and mid-battle workshop changes reveal where they happen, not on the next map
   // ── battle ──
-  Sfx.music(S.boss ? 'boss' : 'battle');
+  // The finale boss rising is a mode change, so the bed crossfades mid-fight to his own song.
+  Sfx.music(S.boss ? (S.boss.risen ? 'finale' : 'boss') : S.battle_kind === 'elite' ? 'elite' : 'battle');
   _updateMusicLayers();
   // Only when a battle OPENS. render() runs after every action, so playing this unconditionally
   // dealt a shuffle on every move and attack.

@@ -20,7 +20,7 @@ app/public/assets/audio/
 | Kind | Filename | Notes |
 |---|---|---|
 | Sound effect | `sfx_<cue>.wav` | `<cue>` must exactly match a cue name below |
-| Music bed | `mus_<mode>.m4a` | mode ∈ `main` `campaign` `battle` `boss` `safe` |
+| Music bed | `mus_<mode>.m4a` | mode ∈ `main` `campaign` `camp` `outpost` `battle` `elite` `boss` `finale` `safe` |
 | Variation | `sfx_<cue>_v2.wav`, `_v3` … | picked at random; `_v1` and the bare name are the same slot |
 | Music **layer** | `mus_<mode>_<layer>.m4a` | plays *on top of* `mus_<mode>`, in sync — see below |
 | Extra **song** | `mus_<mode>_v2.m4a`, `_v3` … | another song for the same mode; one is picked per visit |
