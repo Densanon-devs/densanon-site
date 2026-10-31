@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - October 30, 2026 | Densanon</title>
+  <title>AI Morning Digest - October 31, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">October 30, 2026</div>
+        <div class="digest-date-badge">October 31, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A light pool today: Claude Code adds a guard against writes outside working directories, and OpenAI answers Anthropic&#x27;s subscriber API-credit benefit. Research covers prompt-injection monitors, training-free distillation to small models, and flaws in interpretability scoring.</p>
+        <p class="digest-intro">A thin pool today: Claude Code ships a new gateway budget feature and a switch for the ultrathink keyword, and Drew Breunig bakes a working NES CPU emulator into the weights of a 4B Qwen model.</p>
       </div>
     </section>
 
@@ -29,123 +29,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.314</h3>
+              <h3>anthropics/claude-code: v2.1.316</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds permissions.blockWritesOutsideWorkingDirectories, so Write, Edit and NotebookEdit refuse paths outside the working directories in every permission mode.</li>
-              <li>Adds an optional groups list to Claude apps gateway upstreams, limiting which IdP groups&#x27; developers are routed to them.</li>
+              <li>Adds the CLAUDE_CODE_DISABLE_ULTRATHINK environment variable, which turns the ultrathink keyword off.</li>
+              <li>Adds pooled group budgets to the Claude apps gateway: one monthly budget shared by a group&#x27;s members, on top of each member&#x27;s own limit.</li>
+              <li>The pooled budget is set with pooled_budget on the spend limits admin API.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.314" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.316" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Building a multiplayer game world with autonomous Fable-class models</h3>
+              <h3>dbreunig/nesformer</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon Willison highlights Jacob Sansbury&#x27;s piece on building Spawn, calling it a look at the bleeding edge of agentic engineering against frontier models.</li>
-              <li>He advises not to be put off by the clickbait headline.</li>
+              <li>Drew Breunig baked a working emulator for the NES 6502 CPU into the weights of Qwen3.5-4B.</li>
+              <li>NES ROMs such as Super Mario Bros can be played, very slowly, running inside the model.</li>
+              <li>Inspired by qwenputer by Divyansh Agrawal.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Oct/29/how-i-built-the-most-ai-pilled-company-in-the-world/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Quoting Ben Hylak</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Ben Hylak jokes that every product should be a headless MCP feeding an agent, except his own.</li>
-              <li>Tagged model-context-protocol; a pointed take on where product UIs are heading.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Oct/29/ben-hylak/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>API credits benefit for eligible ChatGPT subscriptions</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Earlier this month Anthropic gave Max and Team subscribers at $100, $200 and $500 per month equivalent expiring API credits.</li>
-              <li>Simon Willison notes OpenAI has now followed with a similar benefit for eligible ChatGPT subscriptions.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Oct/29/api-credits/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Welcome Le Chonk: Mistral Large 4 on Hugging Face</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Hugging Face announces Mistral Large 4 (&#x27;Le Chonk&#x27;) availability on the Hub.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/mistral-large4" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Granite Switch 4.1.1 — Update models like you update software</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>IBM&#x27;s Granite Switch 4.1.1 post pitches updating models the way you update software.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/ibm-granite/granite-switch-4-1-1" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Exposure Is Not Commitment: Double-Stratified Evaluation of Latent Monitors for Tool-Using Agents</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues much of the conflict over latent monitors for catching prompt injection in tool-using agents is an evaluation artifact.</li>
-              <li>Proposes a double-stratified evaluation to separate exposure from commitment.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2610.37679" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Artifact Distillation: Training-Free Transfer from Frontier to Small Language Models</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Proposes training-free transfer from frontier to small language models, as an alternative to fine-tuning on a teacher&#x27;s outputs.</li>
-              <li>Aims to avoid binding transfer to training compute.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2610.37680" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Scoring Explanations Without Reading Them: Structural Shortcuts in Automated-Interpretability Evaluation Data</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Finds structural shortcuts in the evaluation data used to score sparse-autoencoder feature explanations.</li>
-              <li>Suggests explanations can be scored well without actually being read.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2610.37676" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>WebAnything: From the Wild Web to Scalable Agent Environments</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>WebAnything targets scalable, executable and resettable website environments for training and evaluating web agents.</li>
-              <li>Positions itself against per-site human-built mirrors and generative construction that can diverge from real sites.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2610.37786" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Oct/30/nesformer/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
