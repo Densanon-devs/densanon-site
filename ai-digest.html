@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 01, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 02, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 01, 2026</div>
+        <div class="digest-date-badge">November 02, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A quiet AI day with two items from Simon Willison: a detailed account-takeover chain against ChatGPT&#x27;s sandboxed HTML previews, and a small usability release for datasette-llm.</p>
+        <p class="digest-intro">A research-heavy Monday: two Simon Willison notes on Python tooling and the erosion of trust in documentation, plus arXiv papers on self-evolving agents, safety in web world models, computer-use agents, and red-teaming.</p>
       </div>
     </section>
 
@@ -29,27 +29,97 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How We Took Over ChatGPT Accounts</h3>
+              <h3>If in doubt, delete the uv.lock file</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Parameter Labs chained a postMessage handler in the MathLive virtual keyboard (which wrote untrusted input to innerHTML in the parent page) into an unsandboxed iframe, escaping ChatGPT&#x27;s sandboxed HTML previews.</li>
-              <li>ChatGPT&#x27;s CSP allowlisted YouTube, and a YouTube oEmbed endpoint could reflect attacker JavaScript, so script ran on the ChatGPT origin and could read private data through the user&#x27;s own API session.</li>
-              <li>Opening a crafted share link while signed in was enough to exfiltrate data or act as the victim. OpenAI fixed it and paid a $5,000 bounty, which Willison calls a bit cheap.</li>
-              <li>Lesson for anyone building artifact sandboxes: treat every frame&#x27;s messages as hostile, never pass them to innerHTML, and check each CSP allowlist entry for endpoints that reflect content.</li>
+              <li>Since moving to Python 3.15, Willison has hit occasional confusing dependency errors, and his rule of thumb is to delete the uv.lock file first.</li>
+              <li>Most of his projects are libraries that don&#x27;t ship a uv.lock, since locking versions is rude for a library dependency, so a stray local lock file is a likely culprit.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Oct/31/how-we-took-over-chatgpt-accounts/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/1/delete-uv-lock-first/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>datasette-llm 0.1a9</h3>
+              <h3>Quoting Kyle Kingsbury</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>datasette-llm now uses LLM&#x27;s configured default model, so Datasette Agent works without separate model configuration.</li>
-              <li>Willison says bigger Datasette Agent upgrades are in the pipeline.</li>
+              <li>Kingsbury argues that LLM use erodes trust in documentation, in software, and in the organizations that produce them.</li>
+              <li>Signals engineers used to rely on as markers of a mature system are now easier to counterfeit, so people may begin treating any new software project with suspicion.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Oct/31/datasette-llm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/1/kyle-kingsbury/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>More Rules, Longer Lists? Benchmarking Self-Evolving Agents on a Hidden-Rule Curriculum</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Self-evolving agents rewrite a persistent state from feedback, but it is largely untested whether this lets them learn a rule nobody told them.</li>
+              <li>An agent can pass by recording each correction as an exception, so its list grows with every new case rather than capturing the underlying rule; the benchmark uses a hidden-rule curriculum to probe this.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.40758" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Beyond Plausible Prediction: Safety Sufficiency in Web World Models</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Web world models predict the consequences of candidate actions before agents act, but a plausible predicted future does not necessarily support the correct safety decision.</li>
+              <li>The study uses a matched human evaluation of 3,000 predictions from ten frozen models.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.40798" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Mage-VL-Cowork: A Full Training Recipe to Learn Hybrid Computer Use From Evolved Harnesses</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Argues effective computer-use agents should combine visual GUI interaction with code and terminal execution within a single policy.</li>
+              <li>Presents a 4B hybrid computer-use agent trained from a general multimodally aligned checkpoint, with a full training recipe.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.40747" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>CoFiBreak: A Coarse-to-Fine Diversity Reward for Effective Multi-Turn Jailbreak</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Automated red teaming trains an attacker LLM to elicit harmful responses from a victim LLM, but RL can collapse attackers onto a narrow set of prompts when attack success is the only reward.</li>
+              <li>CoFiBreak proposes a coarse-to-fine diversity reward to counter that collapse in multi-turn jailbreaks.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.40926" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>The Generative Gap Between Speculative Drafter and Continuous Diffusion Language Model</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Continuous diffusion language models and speculative drafters both offer efficient generation but are typically evaluated differently.</li>
+              <li>CDLMs generate independently through iterative refinement, whereas drafters propose text for a target model to verify; the paper examines the gap between the two.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.40847" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ChatGPT as a Surveillance Assistant? An Exploratory Case Study of AI-Assisted Surveillance Risks</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>LLMs can generate detailed guidance, functional code, and persuasive text at scale, and ChatGPT is one of the most widely used consumer LLM products as of 2026.</li>
+              <li>That broad public access motivates an exploratory case study of surveillance-related risks.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2610.40890" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
