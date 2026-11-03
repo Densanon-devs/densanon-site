@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 02, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 03, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,111 +15,121 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 02, 2026</div>
+        <div class="digest-date-badge">November 03, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A research-heavy Monday: two Simon Willison notes on Python tooling and the erosion of trust in documentation, plus arXiv papers on self-evolving agents, safety in web world models, computer-use agents, and red-teaming.</p>
+        <p class="digest-intro">Today&#x27;s digest centers on making LLM agents and reasoning models more efficient, with new papers on early stopping and long-context management plus surveys of text-to-SQL and omnimodal embeddings. On the tooling side, Claude Code and Simon Willison&#x27;s LLM CLI ship updates, and a clever OSINT technique and a look at Census Bureau AI-adoption data round out the day.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>If in doubt, delete the uv.lock file</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Since moving to Python 3.15, Willison has hit occasional confusing dependency errors, and his rule of thumb is to delete the uv.lock file first.</li>
-              <li>Most of his projects are libraries that don&#x27;t ship a uv.lock, since locking versions is rude for a library dependency, so a stray local lock file is a likely culprit.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Nov/1/delete-uv-lock-first/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Quoting Kyle Kingsbury</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Kingsbury argues that LLM use erodes trust in documentation, in software, and in the organizations that produce them.</li>
-              <li>Signals engineers used to rely on as markers of a mature system are now easier to counterfeit, so people may begin treating any new software project with suspicion.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Nov/1/kyle-kingsbury/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>More Rules, Longer Lists? Benchmarking Self-Evolving Agents on a Hidden-Rule Curriculum</h3>
+              <h3>Early Stopping in Large Reasoning Models: A Survey and Empirical Audit of Efficiency and Reliability</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Self-evolving agents rewrite a persistent state from feedback, but it is largely untested whether this lets them learn a rule nobody told them.</li>
-              <li>An agent can pass by recording each correction as an exception, so its list grows with every new case rather than capturing the underlying rule; the benchmark uses a hidden-rule curriculum to probe this.</li>
+              <li>Large reasoning models gain accuracy from longer reasoning traces, but some of that computation may be unnecessary.</li>
+              <li>Early-stopping methods aim to halt once enough reasoning is available to answer.</li>
+              <li>The paper surveys these methods and audits both their efficiency and reliability.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.40758" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.00166" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Beyond Plausible Prediction: Safety Sufficiency in Web World Models</h3>
+              <h3>MEMENTO: Learning Context Management for Long Context Processing Agents</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Web world models predict the consequences of candidate actions before agents act, but a plausible predicted future does not necessarily support the correct safety decision.</li>
-              <li>The study uses a matched human evaluation of 3,000 predictions from ten frozen models.</li>
+              <li>LLM agents working over long inputs must decide what to retain in a fixed-size context window.</li>
+              <li>A common approach is compaction, where the model replaces its history with a self-generated note.</li>
+              <li>The paper argues off-the-shelf agents handle this poorly and proposes learning context management.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.40798" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.00244" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Mage-VL-Cowork: A Full Training Recipe to Learn Hybrid Computer Use From Evolved Harnesses</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues effective computer-use agents should combine visual GUI interaction with code and terminal execution within a single policy.</li>
-              <li>Presents a 4B hybrid computer-use agent trained from a general multimodally aligned checkpoint, with a full training recipe.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2610.40747" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>CoFiBreak: A Coarse-to-Fine Diversity Reward for Effective Multi-Turn Jailbreak</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Automated red teaming trains an attacker LLM to elicit harmful responses from a victim LLM, but RL can collapse attackers onto a narrow set of prompts when attack success is the only reward.</li>
-              <li>CoFiBreak proposes a coarse-to-fine diversity reward to counter that collapse in multi-turn jailbreaks.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2610.40926" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>The Generative Gap Between Speculative Drafter and Continuous Diffusion Language Model</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Continuous diffusion language models and speculative drafters both offer efficient generation but are typically evaluated differently.</li>
-              <li>CDLMs generate independently through iterative refinement, whereas drafters propose text for a target model to verify; the paper examines the gap between the two.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2610.40847" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ChatGPT as a Surveillance Assistant? An Exploratory Case Study of AI-Assisted Surveillance Risks</h3>
+              <h3>Reimagining Text-to-SQL: A Survey of Large Language Model Architectures and Strategies</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>LLMs can generate detailed guidance, functional code, and persuasive text at scale, and ChatGPT is one of the most widely used consumer LLM products as of 2026.</li>
-              <li>That broad public access motivates an exploratory case study of surveillance-related risks.</li>
+              <li>Text-to-SQL systems translate natural-language questions into executable SQL, opening relational data to non-experts.</li>
+              <li>The survey traces the progression from handcrafted rules and templates to neural encoder-decoder methods and LLM-based approaches.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2610.40890" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.00171" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>From Fragmentation to Fusion: A Survey and Roadmap for Omnimodal Embeddings</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Embedding models underpin search, recommendation and most modern AI systems.</li>
+              <li>Research on embeddings remains fragmented by modality, with separate communities working largely in isolation.</li>
+              <li>The paper offers a survey and a roadmap toward unified omnimodal embeddings.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.00172" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>The U.S. Census Bureau and &quot;Super Intelligence&quot;</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Revisits an Apollo Global Management chart from September 2025 that appeared to show a slowdown in U.S. corporate AI adoption.</li>
+              <li>The chart was based on numbers collected by the U.S. Census Bureau, and the post re-examines how it should be read.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Nov/2/census-bureau-super-intelligence/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.317</h3>
+              <span class="digest-source">GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Adds a warning to /schedule when a new cloud scheduled task gets connectors you did not ask for, with instructions to remove them.</li>
+              <li>Adds a prompt before a web or shell tool call sends your account email address to the network.</li>
+              <li>Adds an onFailure: &quot;block&quot; option for Agent SDK hooks.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.317" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>llm 0.37</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Release of the LLM CLI tool and Python library covering roughly two months of accumulated features and fixes.</li>
+              <li>Adds gpt-6.1-sol and gpt-6.1-terra models, plus a new llm openai endpoint add command for configuring additional models.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Nov/2/llm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>I discovered a sound that leaks your exact location (and it&#x27;s everywhere) - YouTube</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Highlighted as a clever piece of OSINT by Colsto.</li>
+              <li>The technique extracts nearly imperceptible background aircraft noise from a video soundtrack, derives Doppler curves, and cross-references them against ADS-B data.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Nov/3/a-sound-that-leaks-your-exact-location/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
