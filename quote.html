@@ -129,6 +129,14 @@
               </div>
             </label>
             <label class="solution-card">
+              <input type="radio" name="solution" value="church">
+              <div class="solution-content">
+                <div class="solution-icon">&#9962;</div>
+                <strong>Church &amp; Ministry</strong>
+                <p>Sermon clips, blog &amp; email recaps, podcasts, church websites</p>
+              </div>
+            </label>
+            <label class="solution-card">
               <input type="radio" name="solution" value="customer">
               <div class="solution-content">
                 <div class="solution-icon">&#128101;</div>
@@ -381,6 +389,35 @@
             </div>
           </div>
 
+          <!-- Church & Ministry (shown only for the church solution) -->
+          <div class="calc-group church-set" id="featuresChurch" style="display:none;">
+            <label class="calc-label">Church Setup <span class="calc-hint-inline">(one-time)</span></label>
+            <div class="checkbox-group">
+              <label class="checkbox-option"><input type="checkbox" data-pts="4" class="feat-cb"> <span>Sermon Archive Page, updates itself (4 pts)</span></label>
+              <label class="checkbox-option"><input type="checkbox" data-pts="4" class="feat-cb"> <span>Podcast Setup on Apple &amp; Spotify (4 pts)</span></label>
+              <label class="checkbox-option"><input type="checkbox" data-pts="5" class="feat-cb"> <span>Move Existing Podcast or Archive from Another Host (5 pts)</span></label>
+              <label class="checkbox-option"><input type="checkbox" data-pts="3" class="feat-cb"> <span>Events Calendar (3 pts)</span></label>
+              <label class="checkbox-option"><input type="checkbox" data-pts="2" class="feat-cb"> <span>Online Giving Link (2 pts)</span></label>
+              <label class="checkbox-option"><input type="checkbox" data-pts="6" class="feat-cb"> <span>Planning Center Connection (6 pts)</span></label>
+              <label class="checkbox-option"><input type="checkbox" data-pts="5" class="feat-cb"> <span>Staff-Editable Content Panel (5 pts)</span></label>
+            </div>
+          </div>
+
+          <div class="calc-group church-set" id="serviceChurch" style="display:none;">
+            <label class="calc-label">Weekly Sermon Media <span class="calc-hint-inline">(monthly service, added to any plan)</span></label>
+            <p class="calc-hint">Pick only what your church will use. A person reviews everything before it goes out.</p>
+            <div class="checkbox-group">
+              <label class="checkbox-option"><input type="checkbox" data-monthly="60" class="svc-cb"> <span>Sermon Clips with captions ($60/mo)</span></label>
+              <label class="checkbox-option"><input type="checkbox" data-monthly="30" class="svc-cb"> <span>Blog Post Recap ($30/mo)</span></label>
+              <label class="checkbox-option"><input type="checkbox" data-monthly="20" class="svc-cb"> <span>Email Recap to Congregation ($20/mo)</span></label>
+              <label class="checkbox-option"><input type="checkbox" data-monthly="20" class="svc-cb"> <span>Weekly Podcast Episode ($20/mo)</span></label>
+              <label class="checkbox-option page-count-option">
+                <span>Sermons per week</span>
+                <input type="number" id="sermonCount" min="1" max="7" value="1" class="page-count-input">
+              </label>
+            </div>
+          </div>
+
           <!-- Common add-ons -->
           <div class="calc-group">
             <label class="calc-label">Common Add-ons</label>
@@ -449,6 +486,7 @@
                 <span class="result-per">/mo</span>
               </div>
               <div class="result-note">Includes hosting, updates, and support.</div>
+              <div class="result-note service-note" style="display:none;"></div>
               <button onclick="selectTierAndContinue('Managed')" class="btn btn-primary btn-full">Get Started</button>
             </div>
 
@@ -464,6 +502,7 @@
                 <span class="result-price-secondary" id="hybridMonthly">$22</span>
                 <span class="result-per">/mo</span>
               </div>
+              <div class="result-note service-note" style="display:none;"></div>
               <button onclick="selectTierAndContinue('Hybrid')" class="btn btn-outline btn-full">Get Quote</button>
             </div>
 
@@ -477,6 +516,11 @@
               <div class="result-row" id="ownershipSupportRow" style="display:none;">
                 <span class="result-label">Support</span>
                 <span class="result-price-secondary" id="ownershipSupport">$0</span>
+                <span class="result-per">/mo</span>
+              </div>
+              <div class="result-row" id="ownershipServiceRow" style="display:none;">
+                <span class="result-label">Weekly media</span>
+                <span class="result-price-secondary" id="ownershipService">$0</span>
                 <span class="result-per">/mo</span>
               </div>
               <div class="result-note" id="ownershipNote">No ongoing fees required.</div>
@@ -643,7 +687,8 @@
 
       solutionMultipliers: {
         presence:   { name: 'Business Presence',       mult: 0.7  },
-        customer:   { name: 'Customer Systems',        mult: 1.0  },
+        church:     { name: 'Church & Ministry',       mult: 0.8  },
+        customer:  { name: 'Customer Systems',        mult: 1.0  },
         operations: { name: 'Business Operations',     mult: 1.1  },
         automation: { name: 'Workflow & Automation',    mult: 1.1  },
         data:       { name: 'Data & Reporting',        mult: 1.0  },
@@ -683,6 +728,7 @@
       // safe = full price, partial = "starting at", consultation = contact only
       calcRules: {
         presence:   'safe',
+        church:     'partial',
         customer:   'safe',
         operations: 'safe',
         automation: 'safe',
@@ -766,6 +812,25 @@
       const targetId = fmtData.features;
       const target = document.getElementById(targetId);
       if (target) target.style.display = '';
+
+      // Church setup + weekly media service only apply to the church solution
+      const isChurch = document.querySelector('input[name="solution"]:checked').value === 'church';
+      document.querySelectorAll('.church-set').forEach(el => el.style.display = isChurch ? '' : 'none');
+    }
+
+    /* WEEKLY SERMON MEDIA (church only) — monthly service, outside the points model */
+    function getWeeklyService() {
+      const group = document.getElementById('serviceChurch');
+      if (!group || group.style.display === 'none') return { monthly: 0, items: [] };
+      const sermons = Math.min(7, Math.max(1, parseInt(document.getElementById('sermonCount').value) || 1));
+      let monthly = 0;
+      const items = [];
+      group.querySelectorAll('.svc-cb:checked').forEach(cb => {
+        monthly += (parseInt(cb.dataset.monthly) || 0) * sermons;
+        items.push(cb.parentElement.querySelector('span').textContent);
+      });
+      if (items.length && sermons > 1) items.push(sermons + ' sermons/week');
+      return { monthly, items };
     }
 
     /* CALCULATE QUOTE */
@@ -833,18 +898,32 @@
       }
 
       resultGrid.style.display = '';
-      if (rule === 'partial') {
+      if (solution === 'church') {
+        notice.style.display = '';
+        notice.innerHTML = '<strong>Starting Estimate</strong> — Church pricing is set by quote and need. We confirm the final price after a short conversation about your church.';
+      } else if (rule === 'partial') {
         notice.style.display = '';
         notice.innerHTML = '<strong>Estimate Only</strong> — Starting at prices shown. Final quote required for ' + solData.name + ' projects.';
       } else {
         notice.style.display = 'none';
       }
 
+      // Weekly sermon media is a flat monthly service on top of every plan
+      const service = getWeeklyService();
+      document.querySelectorAll('.service-note').forEach(el => {
+        el.style.display = service.monthly ? '' : 'none';
+        el.textContent = 'Includes $' + service.monthly + '/mo weekly sermon media.';
+      });
+
       // Update tier cards
-      document.getElementById('managedMonthly').textContent = '$' + managedMonthly.toLocaleString();
+      document.getElementById('managedMonthly').textContent = '$' + (managedMonthly + service.monthly).toLocaleString();
       document.getElementById('hybridUpfront').textContent = '$' + hybridUpfront.toLocaleString();
-      document.getElementById('hybridMonthly').textContent = '$' + hybridMonthly.toLocaleString();
+      document.getElementById('hybridMonthly').textContent = '$' + (hybridMonthly + service.monthly).toLocaleString();
       document.getElementById('ownershipPrice').textContent = '$' + totalPrice.toLocaleString();
+
+      const serviceRow = document.getElementById('ownershipServiceRow');
+      serviceRow.style.display = service.monthly ? 'flex' : 'none';
+      document.getElementById('ownershipService').textContent = '$' + service.monthly;
 
       // Ownership support
       const supportRow = document.getElementById('ownershipSupportRow');
@@ -853,6 +932,9 @@
         supportRow.style.display = 'flex';
         document.getElementById('ownershipSupport').textContent = '$' + supportMonthly;
         ownershipNote.textContent = 'Plus optional support retainer.';
+      } else if (service.monthly) {
+        supportRow.style.display = 'none';
+        ownershipNote.textContent = 'You own the site; weekly media is billed monthly.';
       } else {
         supportRow.style.display = 'none';
         ownershipNote.textContent = 'No ongoing fees required.';
@@ -883,10 +965,17 @@
 
       const support = document.querySelector('input[name="support"]:checked').parentElement.querySelector('span').textContent;
 
+      const service = getWeeklyService();
+      service.items.forEach(item => features.push('Weekly: ' + item));
+
+      const ownershipMonthly = [];
+      if (document.getElementById('ownershipSupportRow').style.display !== 'none') ownershipMonthly.push(document.getElementById('ownershipSupport').textContent + '/mo support');
+      if (service.monthly) ownershipMonthly.push('$' + service.monthly + '/mo weekly media');
+
       const pricing = {
         Managed:   { upfront: '$0', monthly: document.getElementById('managedMonthly').textContent + '/mo' },
         Hybrid:    { upfront: document.getElementById('hybridUpfront').textContent, monthly: document.getElementById('hybridMonthly').textContent + '/mo' },
-        Ownership: { upfront: document.getElementById('ownershipPrice').textContent, monthly: document.getElementById('ownershipSupportRow').style.display !== 'none' ? document.getElementById('ownershipSupport').textContent + '/mo support' : 'No monthly' }
+        Ownership: { upfront: document.getElementById('ownershipPrice').textContent, monthly: ownershipMonthly.length ? ownershipMonthly.join(' + ') : 'No monthly' }
       };
 
       return {
@@ -1045,6 +1134,15 @@
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 4000);
     }
+
+    /* PRESELECT SOLUTION FROM URL (e.g. churches.html links to ?solution=church) */
+    (function() {
+      const sol = new URLSearchParams(window.location.search).get('solution');
+      if (sol && PRICING.solutionMultipliers[sol]) {
+        const radio = document.querySelector('input[name="solution"][value="' + sol + '"]');
+        if (radio) radio.checked = true;
+      }
+    })();
 
     /* EVENT LISTENERS */
 
