@@ -59,14 +59,15 @@
           <div class="pricing-card featured">
             <div class="product-badge">Most Popular</div>
             <h3>Managed</h3>
-            <p class="tier-desc">No upfront cost. We build, host, and maintain everything.</p>
+            <p class="tier-desc">No upfront cost. We build, host, and maintain everything. From $150/mo.</p>
             <div class="price">$0 <span>upfront</span></div>
             <ul>
               <li>Full monthly rate</li>
               <li>Hosting included</li>
               <li>Maintenance &amp; updates</li>
               <li>Support included</li>
-              <li>You do not own the system</li>
+              <li>12-month minimum term</li>
+              <li>Websites are yours after 12 months</li>
             </ul>
             <a href="#calculator" class="btn btn-primary">Get Started</a>
           </div>
@@ -407,10 +408,10 @@
             <label class="calc-label">Weekly Sermon Media <span class="calc-hint-inline">(monthly service, added to any plan)</span></label>
             <p class="calc-hint">Pick only what your church will use. A person reviews everything before it goes out.</p>
             <div class="checkbox-group">
-              <label class="checkbox-option"><input type="checkbox" data-monthly="60" class="svc-cb"> <span>Sermon Clips with captions ($60/mo)</span></label>
-              <label class="checkbox-option"><input type="checkbox" data-monthly="30" class="svc-cb"> <span>Blog Post Recap ($30/mo)</span></label>
-              <label class="checkbox-option"><input type="checkbox" data-monthly="20" class="svc-cb"> <span>Email Recap to Congregation ($20/mo)</span></label>
-              <label class="checkbox-option"><input type="checkbox" data-monthly="20" class="svc-cb"> <span>Weekly Podcast Episode ($20/mo)</span></label>
+              <label class="checkbox-option"><input type="checkbox" data-monthly="120" class="svc-cb"> <span>Sermon Clips with captions ($120/mo)</span></label>
+              <label class="checkbox-option"><input type="checkbox" data-monthly="60" class="svc-cb"> <span>Blog Post Recap ($60/mo)</span></label>
+              <label class="checkbox-option"><input type="checkbox" data-monthly="40" class="svc-cb"> <span>Email Recap to Congregation ($40/mo)</span></label>
+              <label class="checkbox-option"><input type="checkbox" data-monthly="40" class="svc-cb"> <span>Weekly Podcast Episode ($40/mo)</span></label>
               <label class="checkbox-option page-count-option">
                 <span>Sermons per week</span>
                 <input type="number" id="sermonCount" min="1" max="7" value="1" class="page-count-input">
@@ -482,7 +483,7 @@
               </div>
               <div class="result-row main-price">
                 <span class="result-label">Monthly</span>
-                <span class="result-price" id="managedMonthly">$36</span>
+                <span class="result-price" id="managedMonthly">$150</span>
                 <span class="result-per">/mo</span>
               </div>
               <div class="result-note">Includes hosting, updates, and support.</div>
@@ -624,7 +625,7 @@
           <div class="faq-item">
             <button class="faq-question">What is the points system?</button>
             <div class="faq-answer">
-              <p>Every feature is measured in points (1 point = ~45-60 minutes of work). Points are priced at $75/point one-time or $4/point monthly, then adjusted by solution type and delivery format.</p>
+              <p>Every feature is measured in points (1 point = ~45-60 minutes of work). Points are priced at $75/point one-time or $4/point monthly, then adjusted by solution type and delivery format. Managed plans start at $150/mo ($75/mo for church websites).</p>
             </div>
           </div>
           <div class="faq-item">
@@ -636,7 +637,13 @@
           <div class="faq-item">
             <button class="faq-question">What happens if I cancel a managed plan?</button>
             <div class="faq-answer">
-              <p>Your system goes offline unless you buy out or transfer. We'll help you transition if needed.</p>
+              <p>Managed plans have a 12-month minimum term. After 12 months of payments, a managed <strong>website</strong> is yours to keep or move. Other managed systems go offline on cancellation unless you buy out or transfer, and we'll help you transition.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">How do automation and AI projects start?</button>
+            <div class="faq-answer">
+              <p>With a paid discovery session ($400). We map your current process, find what's worth automating, and give you a fixed quote. The $400 is credited toward the build if you go ahead. Tool subscriptions like Zapier, Make, n8n or AI usage are paid by you directly, at cost.</p>
             </div>
           </div>
           <div class="faq-item">
@@ -740,6 +747,10 @@
         ai:         'partial',
         specialty:  'consultation'
       },
+
+      // Monthly floor for Managed (Hybrid floor = floor x hybridMonthlyRate).
+      // Church sites are lower: the weekly sermon media carries the monthly value.
+      managedFloor: { default: 150, church: 75 },
 
       hybridUpfrontRate: 0.20,
       hybridMonthlyRate: 0.60,
@@ -876,8 +887,11 @@
       if (monthlyFull < minMonthly) monthlyFull = minMonthly;
       if (managedMonthly < minMonthly) managedMonthly = minMonthly;
 
+      const floor = PRICING.managedFloor[solution] || PRICING.managedFloor.default;
+      if (managedMonthly < floor) managedMonthly = floor;
+
       const hybridUpfront = Math.round(totalPrice * PRICING.hybridUpfrontRate);
-      const hybridMonthly = Math.round(monthlyFull * PRICING.hybridMonthlyRate);
+      const hybridMonthly = Math.max(Math.round(monthlyFull * PRICING.hybridMonthlyRate), Math.round(floor * PRICING.hybridMonthlyRate));
       const supportMonthly = PRICING.support[support] || 0;
 
       // Update summary bar
