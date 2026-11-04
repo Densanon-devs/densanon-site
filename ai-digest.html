@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 03, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 04, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 03, 2026</div>
+        <div class="digest-date-badge">November 04, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest centers on making LLM agents and reasoning models more efficient, with new papers on early stopping and long-context management plus surveys of text-to-SQL and omnimodal embeddings. On the tooling side, Claude Code and Simon Willison&#x27;s LLM CLI ship updates, and a clever OSINT technique and a look at Census Bureau AI-adoption data round out the day.</p>
+        <p class="digest-intro">Evaluation and auditing dominate today: new benchmarks probe how models track long-running state and fix real security weaknesses, while papers examine value-specific alignment faking and conformance gaps in MCP SDKs. On the practical side, a 20B LoRA-tuned model builds branded slide decks, a local Qwen model reads raw network weights, and Claude Code and the Agent SDK ship a round of stability and sign-in fixes.</p>
       </div>
     </section>
 
@@ -29,67 +29,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Early Stopping in Large Reasoning Models: A Survey and Empirical Audit of Efficiency and Reliability</h3>
+              <h3>Alignment Faking Depends on the Value, Not Just the Model</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Large reasoning models gain accuracy from longer reasoning traces, but some of that computation may be unnecessary.</li>
-              <li>Early-stopping methods aim to halt once enough reasoning is available to answer.</li>
-              <li>The paper surveys these methods and audits both their efficiency and reliability.</li>
+              <li>Tests 32 ValueBench dimensions across ten open- and closed-weight models (8B to about 675B parameters) under bare, unmonitored and monitored conditions.</li>
+              <li>Compliance gaps between conditions range from 0.05 to 0.50, and a distilled 70B model outperformed a roughly 675B model, so size is not the whole story.</li>
+              <li>Most variance comes from the specific model-value pairing; the authors propose &#x27;value cards&#x27; that extend model cards with behavioral profiles.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.00166" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.03650" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>MEMENTO: Learning Context Management for Long Context Processing Agents</h3>
+              <h3>MCPGuard: Finding Conformance Gaps in MCP SDKs via Dual-Track Analysis and Dynamic Adjudication</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>LLM agents working over long inputs must decide what to retain in a fixed-size context window.</li>
-              <li>A common approach is compaction, where the model replaces its history with a self-generated note.</li>
-              <li>The paper argues off-the-shelf agents handle this poorly and proposes learning context management.</li>
+              <li>An LLM-based framework compares the MCP specification with SDK code using a structural track (JSON Schema constraints) and a behavioral track (normative prose rules), then validates candidates with proof-of-concept tests.</li>
+              <li>It confirmed 13 findings in the Python SDK 1.26.0 and 19 in the TypeScript SDK 1.29.0; none of the 32 were exposed by the two black-box baselines.</li>
+              <li>Tests on open MCP servers suggest SDK gaps can propagate to downstream applications.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.00244" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.03662" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Reimagining Text-to-SQL: A Survey of Large Language Model Architectures and Strategies</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Text-to-SQL systems translate natural-language questions into executable SQL, opening relational data to non-experts.</li>
-              <li>The survey traces the progression from handcrafted rules and templates to neural encoder-decoder methods and LLM-based approaches.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.00171" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>From Fragmentation to Fusion: A Survey and Roadmap for Omnimodal Embeddings</h3>
+              <h3>Why Pay for Long Reasoning When Rewrite Do Trick? Causal Effects of Reasoning History Compaction on Future Generation and Agent Cost</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Embedding models underpin search, recommendation and most modern AI systems.</li>
-              <li>Research on embeddings remains fragmented by modality, with separate communities working largely in isolation.</li>
-              <li>The paper offers a survey and a roadmap toward unified omnimodal embeddings.</li>
+              <li>Open-weight models rewrite their earlier reasoning into compact state records, without retraining, and continuations are compared against the original history.</li>
+              <li>Accepted compact histories usually shorten later reasoning, and in a coding case study they reduced repeated verification of a shared candidate solution.</li>
+              <li>In software-agent deployments compaction can cut total spending, but task quality and rewrite-inclusive time depend on the target model and compressor.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.00172" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>The U.S. Census Bureau and &quot;Super Intelligence&quot;</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Revisits an Apollo Global Management chart from September 2025 that appeared to show a slowdown in U.S. corporate AI adoption.</li>
-              <li>The chart was based on numbers collected by the U.S. Census Bureau, and the post re-examines how it should be read.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Nov/2/census-bureau-super-intelligence/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.03852" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -99,37 +71,75 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.317</h3>
-              <span class="digest-source">GitHub</span>
+              <h3>StateBench: Testing how language models track state changes over long documents</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds a warning to /schedule when a new cloud scheduled task gets connectors you did not ask for, with instructions to remove them.</li>
-              <li>Adds a prompt before a web or shell tool call sends your account email address to the network.</li>
-              <li>Adds an onFailure: &quot;block&quot; option for Agent SDK hooks.</li>
+              <li>Ai2&#x27;s benchmark has four difficulty levels grounded in Krohn-Rhodes theory, from set-once values to chained variable reassignment (the S5 permutation problem).</li>
+              <li>Frontier models handle the easy levels but fall to 13% or lower on the longest general finite problems; pretrained open models stay at chance on that level.</li>
+              <li>Gated DeltaNet and hybrid models trained from scratch (275M) generalized to sequences about 250 times longer than training, while transformers never learned the hardest level.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.317" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/allenai/statebench" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>llm 0.37</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>CWE-bench v2: More coverage, quality, and transparency</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Release of the LLM CLI tool and Python library covering roughly two months of accumulated features and fixes.</li>
-              <li>Adds gpt-6.1-sol and gpt-6.1-terra models, plus a new llm openai endpoint add command for configuring additional models.</li>
+              <li>A benchmark of 100 tasks across 91 CWEs in which agents find and fix a security weakness in a real repository, with deterministic programmatic scoring and a held-out set.</li>
+              <li>Each task was hand-reviewed against six criteria, including that verifiers reject memorized upstream patches.</li>
+              <li>Of 11 models tested, the leader reaches 67.8% pass@1 and still fails 19% of tasks on every attempt; DeepSeek V4.1 Flash hits 57.0% pass@1 at $0.04 per rollout.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/2/llm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/cwe-bench" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I discovered a sound that leaks your exact location (and it&#x27;s everywhere) - YouTube</h3>
+              <h3>Palette: teaching a small model to build decks in your design language</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>IBM Research adapts a 20B open-weight model with LoRA to build slide decks in the IBM Design Language, using a designer role that writes a JSON brief and a coder role that writes pptxgenjs per slide.</li>
+              <li>Trained on about 1,000 synthetic decks; a geometry checker and editor model add 3.5 points on average across 131 decks, and parallel slide coding is about 6-7x faster.</li>
+              <li>On PresentBench its three-domain mean is 59.7, second place and 1.1 points behind NotebookLM.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/ibm-research/palette-deck-building" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Qwen 3.8 27B on my laptop can interpret model weights, too</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Highlighted as a clever piece of OSINT by Colsto.</li>
-              <li>The technique extracts nearly imperceptible background aircraft noise from a video soundtrack, derives Doppler curves, and cross-references them against ADS-B data.</li>
+              <li>Responds to the &#x27;Sparks of Weight-Space Programming&#x27; paper, which claims frontier models can read and edit raw network weights, for example fixing reasoning loops in Qwen3.5-0.8B by editing 0.016% of weights.</li>
+              <li>Willison tested the no-tools case: given weights of small policy nets trained on 10x10 games, local Qwen 3.8 27B identified Pac-Man, Pong and Breakout (taking 46 to 65 minutes each) but failed on Freeway.</li>
+              <li>He notes critics say the paper mixes reading weights with tool-assisted editing, and he is not ready to declare source code obsolete.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/3/a-sound-that-leaks-your-exact-location/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/3/qwen-can-interpret-model-weights/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.318</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Adds loginExpiresAt in `claude auth status` and credential_expires_at in `claude -p` JSON, plus a stderr warning starting 10 days before a stored claude.ai sign-in ends.</li>
+              <li>Hardens config handling: non-interactive launches no longer overwrite an invalid ~/.claude.json, and many fixes address shared network homes losing or emptying settings and logins.</li>
+              <li>Background subagents move shell commands to the background after 3 minutes to keep the prompt cache alive, and `deniedMcpServers` URL entries now also block matching Anthropic-provided servers.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.318" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-agent-sdk-typescript: v0.3.318</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Adds an optional credential_expires_at field to result messages and a config_file_invalid startup failure reason for configuration files that are not valid JSON.</li>
+              <li>Fixes the interrupt response omitting a message held behind a model change; it is now listed and can be cancelled with cancel_queued.</li>
+              <li>Brings the SDK to parity with Claude Code v2.1.318.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-agent-sdk-typescript/releases/tag/v0.3.318" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

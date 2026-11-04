@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - November 03, 2026 | Densanon</title>
+  <title>Computation Morning Digest - November 04, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,89 +15,46 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 03, 2026</div>
+        <div class="digest-date-badge">November 04, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest spans AI data center infrastructure and the memory squeeze, with China deploying 800-volt DC power and debuting its fourth exascale system. Quantum hardware and post-quantum cryptography preparedness show up in several items, alongside a Linux kernel cleanup and fresh research on KV caches and chip defect detection.</p>
+        <p class="digest-intro">Nvidia trimmed memory and interconnect specs for Rubin as production hardware arrives, while Marvell&#x27;s roughly $115 billion Lumentum deal underscores how scarce optical lasers have become for AI datacenters. Research items focus on making HPC telemetry and multi-tenant LoRA serving more efficient, alongside a photonic quantum award and new GPU pricing and cooling efforts.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Nvidia Updates Rubin GPU Specs as First Production Hardware Arrives</h3>
+              <span class="digest-source">Hacker News Computation</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Nvidia lowered Rubin per-GPU HBM4 bandwidth from 22 TB/s to 19.2 TB/s (per-pin rate 10.75 to 9.375 Gbps); capacity stays at 288GB.</li>
+              <li>NVLink bandwidth per GPU fell from 3.6 to 3.0 TB/s while scale-out networking rose from 0.4 to 0.45 TB/s.</li>
+              <li>HGX Rubin NVL8 took the biggest cut: HBM4 capacity 2.3 to 2.0 TB and bandwidth 176 to 130 TB/s, attributed to using 7 of 8 HBM4 stacks per GPU.</li>
+            </ul>
+            <a href="https://www.servethehome.com/nvidia-updates-rubin-gpu-specs-as-first-production-hardware-arrives/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Hardware &amp; Chips</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>China deploys &#x27;world&#x27;s first&#x27; 800-volt DC power system for massive AI data center — seeks to quench power needs with higher conversion and efficiency inside a smaller footprint</h3>
+              <h3>Open source project renders your Windows 11 desktop using the NPU rather than the GPU — ‘npu-driver’ can only run at 2 to 3 Hz, targets 30 Hz performance</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A firm says it completed the world&#x27;s first commercial data center deployment of an integrated 800-volt DC power system.</li>
-              <li>The system targets higher conversion efficiency in a smaller footprint for a massive AI data center.</li>
+              <li>An open-source prototype driver for Windows 11 renders the desktop on an NPU instead of the GPU or iGPU.</li>
+              <li>It currently manages only about 2 to 3 Hz, versus a stated target of 30 Hz.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/data-centers/china-deploys-worlds-first-800-volt-dc-power-system-for-massive-ai-data-center-seeks-to-quench-power-needs-with-higher-conversion-and-efficiency-inside-a-smaller-footprint" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>The Linux Kernel Preparing To Remove The Last Of Its MMX Optimized Code</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The mainline Linux kernel is preparing to drop its last MMX-optimized code, likely merged for Linux 7.5.</li>
-              <li>This affects very old processors such as Intel Pentium MMX and Pentium II running modern kernels.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Linux-Dropping-Last-MMX-Opt" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Intel Compute Runtime Continues Prepping For GPU D Series, OpenCL LEO for Nova Lake P</h3>
-              <span class="digest-source">Phoronix</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Intel Compute Runtime 26.40.40196.8 was released for its open-source GPU compute stack on Windows and Linux.</li>
-              <li>The release continues preparation for GPU D Series and OpenCL support for Nova Lake P.</li>
-            </ul>
-            <a href="https://www.phoronix.com/news/Intel-Compute-26.40.40196.8" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AnchorKV: Lossless Key-Value Cache Reconstruction from Layer-Sparse Residual Anchors</h3>
-              <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>AnchorKV presents a storage-replay spectrum between per-layer residual caching and full recomputation.</li>
-              <li>It aims to reconstruct transformer key-value caches losslessly, with memory advantage depending on architecture.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.00117" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Chip Industry Technical Paper Roundup: Nov. 3</h3>
-              <span class="digest-source">Semiconductor Engineering</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Topics include meter-scale quantum interconnects and 2.5D/3D GPU integration with embodied emissions.</li>
-              <li>Also covers secure memory-dependent prefetching, routing-aware analog placement, and superposed PCM for neural-network vector storage.</li>
-            </ul>
-            <a href="https://semiengineering.com/chip-industry-technical-paper-roundup-nov-3/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Universal Quantum Combines Ion Trap, Controls and Modular Links in New Chip</h3>
-              <span class="digest-source">The Quantum Insider</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Universal Quantum launched the iQPU, an integrated quantum processing unit aimed at manufacturable, scalable, cost-effective deployment.</li>
-              <li>It combines the largest trapped-ion compute surface with built-in ultra-low noise control technology.</li>
-            </ul>
-            <a href="https://thequantuminsider.com/2026/11/03/universal-quantum-combines-ion-trap-controls-and-modular-links-in-new-chip/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/gpu-drivers/open-source-project-renders-your-windows-11-desktop-using-the-npu-rather-than-the-gpu-npu-driver-can-only-run-at-2-to-3-hz-targets-30-hz-performance" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -107,47 +64,79 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>China Finally Debuts Fourth Exascale System, Sugon 8000</h3>
+              <h3>Marvell Cuts To The Front Of The Datacenter Optics Line With Lumentum Deal</h3>
+              <span class="digest-source">Next Platform</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Marvell is acquiring Lumentum for about $80 billion in stock plus assumed debt, an enterprise value of about $115 billion; close is expected in the first half of 2028.</li>
+              <li>Lumentum is one of two key suppliers of indium phosphide lasers for optical interconnects, with the laser order book reportedly sold out through early 2029.</li>
+              <li>Marvell projects a $400 billion total addressable market for calendar 2030; Chinese antitrust review is flagged as a possible hurdle.</li>
+            </ul>
+            <a href="https://www.nextplatform.com/connect/2026/11/03/marvell-cuts-to-the-front-of-the-datacenter-optics-line-with-lumentum-deal/5307392" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Setara Launches Daily Index of On-Demand GPU List Prices</h3>
               <span class="digest-source">HPCwire</span>
             </div>
             <ul class="digest-takeaways">
-              <li>China debuted its fourth exascale system, the Sugon 8000, following the launch of the long-delayed machine.</li>
-              <li>Earlier this year China&#x27;s all-CPU LineShine at the National Supercomputing Center in Shenzhen took the top TOP500 spot at 2.2 exaflops on Linpack.</li>
+              <li>Setara Financial launched the Setara Index on November 3, 2026, a daily index of on-demand GPU list prices covering seven GPU models from independent providers.</li>
+              <li>It is published in US dollars per GPU-hour and is the first of a planned family of compute pricing, capacity and availability indices.</li>
             </ul>
-            <a href="https://www.hpcwire.com/2026/11/02/china-finally-debuts-fourth-exascale-system-sugon-8000/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.hpcwire.com/off-the-wire/setara-launches-daily-index-of-on-demand-gpu-list-prices/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Apple&#x27;s Mac business is booming, but the memory market has other plans</h3>
-              <span class="digest-source">The Register</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>New CEO John Ternus celebrated record Mac sales.</li>
-              <li>Soaring RAM costs threaten supplies and squeeze margins.</li>
-            </ul>
-            <a href="https://www.theregister.com/personal-tech/2026/11/03/apples-mac-business-is-booming-but-the-memory-market-has-other-plans/5307188" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Britain on notice: AI-powered ransomware attacks to arrive by 2028</h3>
-              <span class="digest-source">The Register</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The UK cyber agency warns AI-powered ransomware attacks are expected by 2028, with critical infrastructure a likely target.</li>
-              <li>The agency&#x27;s chief urged bosses to stop doing &#x27;tech on the cheap&#x27;.</li>
-            </ul>
-            <a href="https://www.theregister.com/security/2026/11/03/britain-on-notice-ai-powered-ransomware-attacks-to-arrive-by-2028/5307200" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>HKMA and HKUST Launch PQC Toolkit to Support Banks’ Quantum Preparedness</h3>
+              <h3>Accelsius Supports NSF Data Center Efficiency Research at Villanova</h3>
               <span class="digest-source">HPCwire</span>
             </div>
             <ul class="digest-takeaways">
-              <li>HKMA and HKUST launched a Post-Quantum Cryptography Toolkit to support banks&#x27; quantum preparedness.</li>
-              <li>The toolkit sets out a structured framework with support from industry participants.</li>
+              <li>Accelsius is providing its NeuCool IR150, a two-phase cooling rack plus CDU, to Villanova for the NSF Center for Energy-Smart Electronic Systems (ES2).</li>
+              <li>ES2 targets a 20-35% improvement in US data center energy efficiency; Google, Microsoft and Meta are named industry partners.</li>
             </ul>
-            <a href="https://www.hpcwire.com/off-the-wire/hkma-and-hkust-launch-pqc-toolkit-to-support-banks-quantum-preparedness/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.hpcwire.com/off-the-wire/accelsius-supports-nsf-data-center-efficiency-research-at-villanova/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>INSIGHT-HPC: An Interpretable System Intelligence for Global HPC Telemetry</h3>
+              <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>INSIGHT-HPC is a multi-plane anomaly-detection system that fuses statistical signals, workload context and physics-based consistency checks into de-duplicated, explained fault episodes.</li>
+              <li>It ingests telemetry from BMCs, job schedulers and facility power distribution units across mixed CPU/GPU clusters.</li>
+              <li>Reported results: precision 0.913, recall 0.817, F1 0.862 and AUROC 0.896, better than the evaluated baselines.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.03875" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>EpiLoRA: Fusing Many LoRA Adapters into Low-Precision GEMMs for Serving and RL</h3>
+              <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>As base models move to FP8 and 4-bit, per-tenant LoRA adapter kernels take a growing share of each decode step.</li>
+              <li>EpiLoRA, a vLLM plugin, fuses the adapter up-projection into the low-precision GEMM output stage, cutting time per token by up to 24% versus vLLM&#x27;s fastest configuration on Hopper GPUs.</li>
+              <li>A LoRA RL trainer working directly on FP8 weights lets a 27B model train on a single 48 GB GPU.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.03899" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>China’s Photonic Quantum Computer Among WIC Award Winners</h3>
+              <span class="digest-source">The Quantum Insider</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>USTC&#x27;s Jiuzhang 4.0 photonic quantum computer won a 2026 World Internet Conference Leading Science and Technology Award, one of 20 honored from over 430 submissions.</li>
+              <li>It used 1,024 squeezed-light beams in an 8,176-mode circuit and detected up to 3,050 photons in a run, versus 255 for Jiuzhang 3.0.</li>
+              <li>The speed claims for boson sampling (over 10^42 years for El Capitan) have been challenged, and the task has no known commercial use.</li>
+            </ul>
+            <a href="https://thequantuminsider.com/2026/11/04/chinas-photonic-quantum-computer-among-wic-award-winners/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
