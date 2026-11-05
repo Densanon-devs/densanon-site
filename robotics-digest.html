@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - November 04, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - November 05, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 04, 2026</div>
+        <div class="digest-date-badge">November 05, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Handheld, robot-free demonstration data was the big research thread today, with two papers built on the open YUBI gripper and a new LiberAI world action model trained on human experience. On the industry side, a new ISO standard targets multi-vendor mobile robot interoperability, and analysts weigh humanoids against AMRs in warehouses. Open-source tooling news includes a Bazel build for ROS 2 Lyrical and a browser-based behavior tree editor.</p>
+        <p class="digest-intro">Research today spans force-controlled humanoid loco-manipulation, a new generalization benchmark for manipulation policies, learning from action-free video, and a language world model that cuts simulated collision rates in autonomous driving. On the industry side, AGIBOT previews its GO-3 foundation model with company-reported benchmark wins, and IEEE Spectrum examines the growing community backlash against delivery-drone hubs. ManyForge, a new behavior-tree manipulation framework, headlines the ROS community news.</p>
       </div>
     </section>
 
@@ -29,39 +29,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AIRoA-0: Long-Horizon, Precise, Cross-Embodiment Manipulation from Handheld Data</h3>
+              <h3>Ctrl-F: Force as an Interface for Humanoid Loco-Manipulation</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A bimanual manipulation system learned from 16,151 hours of handheld YUBI gripper demonstrations, with no robot data collected at any stage.</li>
-              <li>Averaged 78% success across ten tasks, versus 27% for the strongest of four other VLA models post-trained on the same demonstrations.</li>
-              <li>Dataset, pre-trained weights and post-training recipe are being released; it runs on several robots including Franka, OpenArm and UR.</li>
+              <li>Adds an explicit 3-D force command per designated contact body (hand or foot) to a humanoid motion tracker, so it specifies both where contact happens and how hard to push.</li>
+              <li>A hierarchical design pairs a unified motion-force controller with a high-level planner that issues force commands online from object state and proprioception.</li>
+              <li>On hardware it handled boxes up to 20 kg in pushing and kicking tasks where a force-blind baseline fails, and adapted when extra load was added mid-task.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.03815" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.05507" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Robot-Matched Soft Fingers for UMI Data Collection: Lessons from 100 Hours of Pick and Place</h3>
+              <h3>MESA: An Evaluation Framework for Compositional, Semantic, and Spatial Generalization in Robotics</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A battery-powered handheld interface built on YUBI uses soft fingers matched to the robot&#x27;s grippers, whose visible deformation acts as a visual proxy for grip force.</li>
-              <li>A 99.7-hour dataset over 53 objects trained pi0.5 policies; mid-training raised success on unseen objects from 35% to 57%.</li>
-              <li>Finger design, dataset and processing code are released.</li>
+              <li>Five evaluation suites cover in-distribution performance plus generalization over spatial configuration, object instance, object category and subtask composition; accepted to CoRL 2026.</li>
+              <li>Includes MESA-Gen, a task and demonstration generation pipeline improving on MimicGen, and BiMESA, described as the first large-scale bimanual generalization benchmark.</li>
+              <li>Across seven baselines (diffusion policies, VLM-based methods, pretrained VLAs) the best reached 52% on MESA and 49% on BiMESA; rankings broadly track RoboArena scores.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.03779" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.05567" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>RoboScope Kit: Unified Interfaces for Fast and Scalable Embodied-AI Evaluation</h3>
+              <h3>ELA: End-to-End Latent Action Policy Learning from Video Demonstrations</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Profiling shows simulation benchmark evaluation is CPU-bound, with GPU utilization averaging only 14.3%.</li>
-              <li>Separating simulator workers from policy replicas gave 1.5x to 4.5x speedups on LIBERO-Long over existing evaluators, with equivalent success rates.</li>
-              <li>On RoboTwin Easy, four GPUs cut a 360-minute 500-episode run to 14.4 minutes.</li>
+              <li>Trains a latent action model, latent action policy and action decoder jointly, so latent actions are optimized for control rather than learned separately from observation transitions.</li>
+              <li>Lets policies exploit large amounts of action-free video with only a small set of action-labeled robot demonstrations.</li>
+              <li>Consistently beat prior latent-action baselines in simulated and real manipulation; it plugs into existing imitation learning methods through 4M-parameter action decoders.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.03850" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.05571" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Jev with Foresight: Safe Language-Guided Autonomous Driving via a Language World Model</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Jev is a typed decision model that answers predefined questions with probabilities instead of generating text; a language world model predicts nearby vehicles&#x27; motion over the next two seconds for each candidate action.</li>
+              <li>In simulated highway merging (500 car-episodes), foresight cut collision rate from 26.0% to 2.4% at 0.25 s per decision, with passenger intent fulfilled in 93% of free-form command trials.</li>
+              <li>On replayed NGSIM traffic (500 episodes) collisions fell from 48.2% to 2.8%; the world model foresaw 93% of dangerous actions.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.05448" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Contact-Implicit Whole-Body Trajectory Optimization for Dynamic Humanoid Locomotion on Parameterizable Uneven Terrain</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A contact-implicit whole-body planner generates humanoid motion without predefined contact sequences, using the robot&#x27;s full dynamics and kinematics.</li>
+              <li>Ground geometry is approximated by a smooth surface, and new contact constraints extend planning from flat floors to steps, ramps and other arbitrary smooth terrain.</li>
+              <li>Preliminary feasibility tests on non-coplanar terrain ran in simulation and on the real ErgoCub robot.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.05585" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -71,51 +95,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>New ISO interoperability standard covers collaboration among mobile robots from multiple vendors</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>ISO 21423:2026 sets communication and interoperability requirements for AGVs, AMRs and similar robots from different vendors in one facility.</li>
-              <li>Robots share position, status, tasks and availability, and the standard covers links to ERP systems, lifts, automated doors and workers&#x27; mobile devices.</li>
-              <li>A3 calls it its first non-safety robot standard; it costs $373 ($320 for A3 members).</li>
-            </ul>
-            <a href="https://www.therobotreport.com/new-iso-interoperability-standard-covers-collaboration-among-mobile-robots-from-multiple-vendors/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>From human experience to robot action: LiberAI launches Liber-0 world-action model</h3>
+              <h3>AGIBOT unveils GO-3 Preview and takes top spot on three embodied AI benchmarks</h3>
               <span class="digest-source">Robotics &amp; Automation News</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Liber-0 is pretrained on over 2.2 million hours of mostly human activity video, then refined with glove-recorded hand motions and robot demonstrations.</li>
-              <li>In an eight-task test, glove data added to 25% of robot demos scored 75.6 versus 72.8 for the full robot dataset.</li>
-              <li>Zero-shot success across 60 tasks was 36%.</li>
+              <li>AGIBOT says GO-3 Preview ranks first on RoboDojo, RoboTwin and RoboColiseum, but the article gives no scores or margins; it says the model will be fully open-sourced by the end of 2026.</li>
+              <li>Its WRAM architecture unifies task understanding, future-state prediction and action generation, trained on human first-person video and robot trajectories.</li>
+              <li>Post-training pools experience across 100 physical robots plus simulation; in a convenience store the company says a Genie G2 robot adjusted its strategies without human demonstrations. These are company claims without independent measurements.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/11/04/from-human-experience-to-robot-action-liberai-launches-liber-0-world-action-model/106378/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://roboticsandautomationnews.com/2026/11/05/agibot-unveils-go-3-preview-and-takes-top-spot-on-three-embodied-ai-benchmarks/106711/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Humanoid Robots in Warehouses vs AMRs: Which Automation Makes Sense in 2026?</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Are Drone Ports the Next Annoying Tech Neighbor?</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMRs automate movement and are the proven first investment, with payback of roughly two years per the article.</li>
-              <li>Humanoids suit targeted pilots on awkward, hard-to-staff tasks such as moving totes onto a conveyor.</li>
-              <li>Humanoid economics improve with multi-shift operation and rental pricing; both types must integrate with the warehouse management system.</li>
+              <li>Residents near an Amazon MK30 operation in Baton Rouge counted one drone every 48 seconds on a Saturday morning; the MK30 weighs about 36 kg and must fly low to drop packages.</li>
+              <li>On September 28, 15 US states and Harris County, Texas sued the FAA over eased environmental review rules for drone sites; Cobb County, Georgia denied a zoning request for a Wing facility in April.</li>
+              <li>Expansion plans are large: Wing aims for 270 US hubs by end of 2027, and Uber and Zipline target 1 million deliveries a day by end of 2029.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/11/03/humanoid-robots-in-warehouses-vs-amrs-which-automation-makes-sense-in-2026/106685/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Ben Waters on the latest wireless charging strategies</h3>
-              <span class="digest-source">The Robot Report</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Opportunity charging at natural pauses keeps fleets working, and wireless avoids wear on contact connectors.</li>
-              <li>Teams should plan charging power infrastructure early and avoid overbuilding batteries; fast charging trades off against battery lifetime.</li>
-              <li>WiBotic launched an IP65-rated 1 kW charger and plans to push products to 3 kW, with demand growing in AMRs, outdoor inspection and humanoids.</li>
-            </ul>
-            <a href="https://www.therobotreport.com/ben-waters-on-the-latest-wireless-charging-strategies/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://spectrum.ieee.org/drone-delivery-noise" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -125,27 +125,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Build ROS 2 Lyrical with Bazel: new ROS Central Registry release and a call for a working group</h3>
+              <h3>ManyForge: a new manipulation framework</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ROS Central Registry release lyrical.2026-10-05.rcr.0 is a community Bazel build for ROS, positioned as a complement to colcon and pixi, still a proof of concept.</li>
-              <li>Much of rosdistro reportedly builds, including Nav2, MoveIt, rviz2 and Gazebo, on Linux (aarch64, x86_64) and macOS (aarch64).</li>
-              <li>A working group is planned; one reply questions whether a parallel build path would split contributors.</li>
+              <li>An evolution of ManyMove, now in beta, with a ROS-free C++/Python core and ROS as an integration layer to stock ros2_control/JTC and vendor drivers.</li>
+              <li>A Composer GUI builds programs as behavior trees with a 3D scene, collision-checked ghost-robot manual moves and Draft + Apply; Mock, simulation and real-robot modes are meant to behave the same.</li>
+              <li>Uses RoboPlan as the default planner; documentation is limited so far and the post does not state a license.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/build-ros-2-lyrical-with-bazel-new-ros-central-registry-release-and-a-call-for-a-working-group/59532" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Browser-based BehaviorTree.CPP editor with Nav2 import/export (free, open source)</h3>
-              <span class="digest-source">ROS Discourse</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>behaviortrees.com imports and exports BehaviorTree.CPP XML (v4 for Jazzy and Groot2, v3.8 for Humble), including Nav2 navigate-to-pose trees.</li>
-              <li>CI loads exports into the real BT.CPP libraries via Docker; a CLI offers validate and convert commands.</li>
-              <li>An MCP server lets AI assistants draft and validate trees; the author wants Nav2 users to report trees that do not round-trip.</li>
-            </ul>
-            <a href="https://discourse.openrobotics.org/t/browser-based-behaviortree-cpp-editor-with-nav2-import-export-free-open-source/59508" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/manyforge-a-new-manipulation-framework/59559" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
