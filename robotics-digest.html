@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - November 05, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - November 06, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 05, 2026</div>
+        <div class="digest-date-badge">November 06, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Research today spans force-controlled humanoid loco-manipulation, a new generalization benchmark for manipulation policies, learning from action-free video, and a language world model that cuts simulated collision rates in autonomous driving. On the industry side, AGIBOT previews its GO-3 foundation model with company-reported benchmark wins, and IEEE Spectrum examines the growing community backlash against delivery-drone hubs. ManyForge, a new behavior-tree manipulation framework, headlines the ROS community news.</p>
+        <p class="digest-intro">Industry news is dominated by money and geopolitics: Agility Robotics debuts on Nasdaq via a SPAC, and Chinese regulators block SoftBank&#x27;s roughly $5.4B purchase of ABB Robotics. Ambi Robotics shows how a warehouse-robot vendor readies for peak season. On the research side, a world action model for UMI manipulation, a whole-body NMPC for dual-arm humanoids, and a mechanically constrained continuum robot lead the arXiv pool, while a Robotiq ROS 2 package migration is the practical item for ROS users.</p>
       </div>
     </section>
 
@@ -29,63 +29,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Ctrl-F: Force as an Interface for Humanoid Loco-Manipulation</h3>
+              <h3>Spatial-UMI-Dream: Scaling World Action Models with Metric Geometry for UMI Manipulation</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds an explicit 3-D force command per designated contact body (hand or foot) to a humanoid motion tracker, so it specifies both where contact happens and how hard to push.</li>
-              <li>A hierarchical design pairs a unified motion-force controller with a high-level planner that issues force commands online from object state and proprioception.</li>
-              <li>On hardware it handled boxes up to 20 kg in pushing and kicking tasks where a force-blind baseline fails, and adapted when extra load was added mid-task.</li>
+              <li>A 5B-parameter world action model pretrained on 605 hours of RGB-D UMI data that jointly predicts future RGB frames, metric depth and actions.</li>
+              <li>On the new 20-task RoboTwin-UMI benchmark it reaches 79.10% in-domain and 72.15% under combined embodiment and environment shifts, 4.65 and 10.30 points above the strongest baseline.</li>
+              <li>Reports 85.0% average success on six real-world tasks, and RGB-only pretraining cost 5.75 points in-domain versus RGB-D.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.05507" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.07229" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>MESA: An Evaluation Framework for Compositional, Semantic, and Spatial Generalization in Robotics</h3>
+              <h3>CRISP: Constraint-Resolved Interactions between Subsystems for Predictive Whole-Body Cooperation</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Five evaluation suites cover in-distribution performance plus generalization over spatial configuration, object instance, object category and subtask composition; accepted to CoRL 2026.</li>
-              <li>Includes MESA-Gen, a task and demonstration generation pipeline improving on MimicGen, and BiMESA, described as the first large-scale bimanual generalization benchmark.</li>
-              <li>Across seven baselines (diffusion policies, VLM-based methods, pretrained VLAs) the best reached 52% on MESA and 49% on BiMESA; rankings broadly track RoboArena scores.</li>
+              <li>Treats a humanoid as coupled subsystems (rigid torso, floating-base arms and lower body) with arm-torso and hand-to-hand links modeled as holonomic constraints whose multipliers are interaction wrenches.</li>
+              <li>A high-level nonlinear MPC jointly optimizes states, arm torques, ground reaction forces and wrenches online, for dynamic dual-arm manipulation.</li>
+              <li>Validated in simulation and on a G1 humanoid; the abstract gives qualitative results only, no numbers.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.05567" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.07268" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ELA: End-to-End Latent Action Policy Learning from Video Demonstrations</h3>
+              <h3>Curvature by Design: A Support Structure for Continuum Robots</h3>
               <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Trains a latent action model, latent action policy and action decoder jointly, so latent actions are optimized for control rather than learned separately from observation transitions.</li>
-              <li>Lets policies exploit large amounts of action-free video with only a small set of action-labeled robot demonstrations.</li>
-              <li>Consistently beat prior latent-action baselines in simulated and real manipulation; it plugs into existing imitation learning methods through 4M-parameter action decoders.</li>
+              <li>A single-piece, scissor-based compliant structure mechanically forces a tendon-driven continuum robot to follow a prescribed curvature profile.</li>
+              <li>It resists other deformations, such as S-shapes under opposing loads, and shrinks the number of shape variables that must be estimated.</li>
+              <li>The authors say shape precision improves significantly over classical flexible-backbone designs; the abstract does not quantify it.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.05571" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Jev with Foresight: Safe Language-Guided Autonomous Driving via a Language World Model</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Jev is a typed decision model that answers predefined questions with probabilities instead of generating text; a language world model predicts nearby vehicles&#x27; motion over the next two seconds for each candidate action.</li>
-              <li>In simulated highway merging (500 car-episodes), foresight cut collision rate from 26.0% to 2.4% at 0.25 s per decision, with passenger intent fulfilled in 93% of free-form command trials.</li>
-              <li>On replayed NGSIM traffic (500 episodes) collisions fell from 48.2% to 2.8%; the world model foresaw 93% of dangerous actions.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.05448" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Contact-Implicit Whole-Body Trajectory Optimization for Dynamic Humanoid Locomotion on Parameterizable Uneven Terrain</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A contact-implicit whole-body planner generates humanoid motion without predefined contact sequences, using the robot&#x27;s full dynamics and kinematics.</li>
-              <li>Ground geometry is approximated by a smooth surface, and new contact constraints extend planning from flat floors to steps, ramps and other arbitrary smooth terrain.</li>
-              <li>Preliminary feasibility tests on non-coplanar terrain ran in simulation and on the real ErgoCub robot.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.05585" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.07091" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -95,27 +71,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AGIBOT unveils GO-3 Preview and takes top spot on three embodied AI benchmarks</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>How did Agility Robotics perform on its first day on the stock market?</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AGIBOT says GO-3 Preview ranks first on RoboDojo, RoboTwin and RoboColiseum, but the article gives no scores or margins; it says the model will be fully open-sourced by the end of 2026.</li>
-              <li>Its WRAM architecture unifies task understanding, future-state prediction and action generation, trained on human first-person video and robot trajectories.</li>
-              <li>Post-training pools experience across 100 physical robots plus simulation; in a convenience store the company says a Genie G2 robot adjusted its strategies without human demonstrations. These are company claims without independent measurements.</li>
+              <li>Trading as AGLT on Nasdaq after a SPAC deal priced at $10 a share; the company calls itself the first pure-play legged humanoid company to go public.</li>
+              <li>The stock opened at $11.26, ranged from $8.40 to $12.15 and closed at $11.49.</li>
+              <li>The offering was expected to bring in about $465 million in gross proceeds before expenses.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/11/05/agibot-unveils-go-3-preview-and-takes-top-spot-on-three-embodied-ai-benchmarks/106711/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/how-did-agility-robotics-perform-on-its-first-day-on-the-stock-market/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Are Drone Ports the Next Annoying Tech Neighbor?</h3>
-              <span class="digest-source">IEEE Spectrum Robotics</span>
+              <h3>Chinese regulators block SoftBank&#x27;s $5.4B acquisition of ABB Robotics</h3>
+              <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Residents near an Amazon MK30 operation in Baton Rouge counted one drone every 48 seconds on a Saturday morning; the MK30 weighs about 36 kg and must fly low to drop packages.</li>
-              <li>On September 28, 15 US states and Harris County, Texas sued the FAA over eased environmental review rules for drone sites; Cobb County, Georgia denied a zoning request for a Wing facility in April.</li>
-              <li>Expansion plans are large: Wing aims for 270 US hubs by end of 2027, and Uber and Zipline target 1 million deliveries a day by end of 2029.</li>
+              <li>China&#x27;s foreign investment security review office prohibited SoftBank&#x27;s roughly $5.375B purchase of ABB&#x27;s robotics division; ABB confirmed the block and the Financial Times reported it first.</li>
+              <li>Authorities reportedly worried that robotics data could be sent overseas and used to train AI models.</li>
+              <li>ABB says it and SoftBank are in close dialogue and working constructively on the transaction; no timeline was given.</li>
             </ul>
-            <a href="https://spectrum.ieee.org/drone-delivery-noise" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/chinese-regulators-block-softbanks-5-4b-acquisition-of-abb-robotics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>How Ambi Robotics helps its customers prepare for peak season</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Ambi&#x27;s COO says logistics throughput can rise 25% to 40% in a typical peak season, and Ambi expects customer volume up 9% to 10% this year.</li>
+              <li>It is installing systems at eight facilities before peak, mostly the new AmbiSort B Series, and stocking spares at East Coast hubs and customer sites.</li>
+              <li>Its systems do not self-improve; models are retrained on new data and A/B tested in a controlled setting before wider rollout.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/how-ambi-robotics-helps-customers-prepare-peak-season/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -125,15 +113,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ManyForge: a new manipulation framework</h3>
+              <h3>Robotiq_description and robotiq_controllers releases moving from ros2_robotiq_gripper to robotiq-ros</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An evolution of ManyMove, now in beta, with a ROS-free C++/Python core and ROS as an integration layer to stock ros2_control/JTC and vendor drivers.</li>
-              <li>A Composer GUI builds programs as behavior trees with a 3D scene, collision-checked ghost-robot manual moves and Draft + Apply; Mock, simulation and real-robot modes are meant to behave the same.</li>
-              <li>Uses RoboPlan as the default planner; documentation is limited so far and the post does not state a license.</li>
+              <li>The packages on Humble, Jazzy, Lyrical and Rolling move from PickNik&#x27;s repo to Robotiq&#x27;s robotiq-ros, going from 0.0.1 to 1.x; Kilted stays on 0.0.1 until end of life.</li>
+              <li>Package names, macro arguments and joint names are unchanged, but old names like sim_ignition, sim_isaac and connected_to now warn as deprecated, and the Gazebo and Isaac plugin names change.</li>
+              <li>Rosdistro PRs open on 2026-11-18 if no blocker is raised; the workaround is building the 0.0.1 tag from source.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/manyforge-a-new-manipulation-framework/59559" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/robotiq-description-and-robotiq-controllers-releases-moving-from-ros2-robotiq-gripper-to-robotiq-ros/59562" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

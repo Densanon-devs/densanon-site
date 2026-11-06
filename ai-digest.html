@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 05, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 06, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 05, 2026</div>
+        <div class="digest-date-badge">November 06, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Agent reliability leads the research today: papers ask when a reviewer should be allowed to overrule an agent, how host telemetry improves tool choice, and when tiered inference actually pays off. On the practical side, two small open models target on-device speech and document field extraction, and Datasette Agent gains a side panel for building apps from chat.</p>
+        <p class="digest-intro">Inference and training efficiency lead today: BlockLock makes LLM outputs reproducible regardless of batch companions at roughly double the throughput of batch-invariant kernels, and FlexFloor reclaims idle workers in MoE reinforcement-learning rollouts. NVIDIA opens four Cosmos 3 world-simulation checkpoints for driving and robotics, and the Open ASR Leaderboard adds Egyptian and Nigerian English held-out sets.</p>
       </div>
     </section>
 
@@ -29,63 +29,51 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Who May Overrule the Agent? Evidence-Gated Authority in LLM Review Institutions</h3>
+              <h3>BlockLock: Reproducible LLM Inference with Fixed Batch Geometry</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Compares broad reviewer override authority with an evidence gate that allows replacement only after the reviewer records a binding-constraint violation and a compliant repair.</li>
-              <li>Tested with two local open-weight models on 96-task spatial-policy and portfolio-transfer benchmarks; the gate sharply reduces corruption of correct proposals while keeping most repairs.</li>
-              <li>With a retain/replace/escalate choice, Qwen stopped corrupting correct proposals but Mistral still replaced all 48, so interface design is not a model-independent safeguard.</li>
+              <li>Keeps shared batched prefill and pins only the numerical path of the protected request, so its output stays bitwise identical when companion requests in the batch change.</li>
+              <li>Tested on five dense models (Qwen3, Llama-3.1, Gemma-3) across A6000, A100 and H100 GPUs; both modes preserved target sequences and Top-20 logit bits.</li>
+              <li>Versus vLLM batch-invariant kernels at equal delivered work, BlockLock-Rows cut latency 53.5-55.0% and raised throughput 115.2-122.2%, with no custom kernels needed.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.05390" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.06977" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Agent Harness Awareness: Turning Verified Telemetry into Operational Control for Tool-Using Agents</h3>
+              <h3>Resource-Efficient Reinforcement Learning Post-Training through Elastic Expert Parallelism</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes giving the model a small, fresh, host-verified snapshot of tool health before consequential actions, while the host keeps enforcement and final dispatch authority.</li>
-              <li>In a 216-decision ablation across three frontier models, verified tool-health state cut mean policy regret by 96.9% and raised single-dispatch completion from 69.4% to 95.8%.</li>
-              <li>A 27-decision live replication with injected faults completed 9/9 model-by-fault cases versus 5/9 for a neutral control.</li>
+              <li>In MoE RL rollouts, workers that finish early stay occupied serving experts for longer responses; the paper says about one-third of occupied worker time in the baseline is spent this way.</li>
+              <li>FlexFloor releases workers progressively while keeping the expert computation ongoing responses need, guided by historical response lengths and memory limits.</li>
+              <li>Against the verl baseline the authors report 65.40% more response tokens per unit of occupied compute and 52.74% higher generation throughput, with little change in rollout reward.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.05391" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.06984" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Challenge-Aware Knowledge Recruitment with Meta-Agent Supervision for Medical Multi-Agent Reasoning</h3>
+              <h3>The Two-Ledger Model: Transaction-Grain Cost Accounting for Multi-Agent AI Systems Across Clouds, Models, and Systems of Record</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>An external CHALLENGER reviews the evolving reasoning trace and triggers targeted retrieval or mid-discussion specialist recruitment when it finds gaps.</li>
-              <li>On the 862-question MedAgentsBench hard subset, accuracy improves on 8 of 9 datasets; upfront retrieval helps little compared with retrieval during reasoning.</li>
-              <li>Challenger-triggered recruitment lifted GPT-4.1-mini on MedQA from 46% to 54%, but naively combining retrieval and recruitment degraded performance.</li>
+              <li>Billing data reaches finance only at settlement grain, so it cannot answer what a given order or claim cost in AI; the paper proposes linking a settlement ledger with an invocation-level attribution ledger built on OpenTelemetry GenAI telemetry.</li>
+              <li>In simulation with synthetic data, cost coverage stayed above 99% even with no trace propagation, and the reconciliation residual recovered planted unmetered spend within 0.24 percentage points.</li>
+              <li>Mid-flight gating cut p99 transaction cost by up to 61% with a 2-4% false-pause rate; results are simulated, not from production.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.05393" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.06989" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A Feasibility Condition for Confidence-Gated Tiered LLM Inference</h3>
+              <h3>KDASO: Knowledge-Data Dual-Driven Automated Skill Optimization for Liability Adjudication Tasks</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Derives a closed-form condition for when any confidence threshold can make a tiered cascade beat sending every query to the datacenter model.</li>
-              <li>Gives a signal-free floor and a perfect-signal ceiling, and the condition inverts with the local-to-escalation cost ratio: where local compute is billed, cost binds; where it is sunk, feasibility holds.</li>
-              <li>The paper is theoretical: it reports no experiments and only proposes a co-designed architecture for future testing.</li>
+              <li>Targets stale skill libraries, the gap between skill descriptions and execution, and context-budget overflow by continuously evolving the library with induction, trajectory-based refinement and budgeted routing.</li>
+              <li>Evaluated on ride-hailing adjudication, legal liability and logical reasoning judgment; the authors report significant gains over baselines and an 8.96% improvement when transferring skills to concept-similar scenarios.</li>
+              <li>The abstract names no baselines or absolute scores.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.05394" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Uncertainty-Aware Resource Orchestration for Agentic AI Systems</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Agentic pipelines have compute, bandwidth and latency demands that only emerge at runtime, so schedulers that need a known pipeline graph do not fit.</li>
-              <li>Conformal Reservation for Orchestration (CRO) turns a sliding window of past execution traces into dispatch-time allocations with distribution-free coverage guarantees.</li>
-              <li>In simulation, CRO was the only evaluated method to meet target coverage at every risk level, and it roughly halved the resource waste of the Chebyshev-bound baseline.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.05392" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.06972" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -95,39 +83,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A Closer Look at Phonon TTS. Launching High-Quality On-Device Speech That Tops the Benchmarks.</h3>
+              <h3>New NVIDIA Cosmos 3 Open Models for Interactive World Simulation</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Two on-device models of about 65 MB and 75 MB; the English 31M model (30.8M parameters) runs with no server or network connection.</li>
-              <li>On the Open TTS Leaderboard CPU streaming benchmark, Phonon 31m EN had the lowest p95 time to first audio at 28 ms (40m: 38 ms; Pocket TTS: 165 ms).</li>
-              <li>The 31m model is English-only under Apache 2.0; the 40m model covers five languages but is licensed CC BY-NC (non-commercial).</li>
+              <li>Four open-weight checkpoints post-trained from Cosmos 3 Nano: Transfer-Auto for multi-view driving data, Sim-Auto for streaming camera and LiDAR, Sim-Transfer for simulator-to-photoreal video, and Sim-Bimanual for two-arm robots.</li>
+              <li>Transfer-Auto generates up to 11 synchronized camera views including fisheyes; the post says 16B parameters per model while the Hugging Face listings show 15B.</li>
+              <li>Released under OpenMDW1.1, which permits commercial and non-commercial use.</li>
             </ul>
-            <a href="https://huggingface.co/blog/phonon-tts" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Dharma Field Extractor: Any Document In, Structured Fields in JSON Out</h3>
+              <h3>Egyptian and Nigerian English join the Open ASR Leaderboard</h3>
               <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A 2B-parameter model built on DharmaOCR-LITE v1.1 with a LoRA adapter trained on 43,384 examples, supporting open and schema-directed extraction.</li>
-              <li>Scored 0.834 on a 1,638-case benchmark from 546 documents, versus 0.816 for Claude Opus 5 and 0.741 for GPT-5.6 Luna (the vendor&#x27;s own benchmark).</li>
-              <li>The post claims roughly 6x to 147x lower cost than frontier APIs when self-hosted on one L40S at $2.24 per hour; it states no license.</li>
+              <li>Adds two private conversational splits from Liva AI: Egyptian English (1.34 hours) and Nigerian English (1.55 hours), punctuated and cased with disfluencies kept.</li>
+              <li>The Private tab will now break results down as US vs non-US and Inner Circle vs Outer/Expanding Circle accents, an idea credited to Hume AI.</li>
+              <li>The post reports no model scores for the new splits.</li>
             </ul>
-            <a href="https://huggingface.co/blog/Dharma-AI/dharma-field-extractor" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>datasette-agent 0.5a0</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The headline feature is the panel, which keeps the agent chat open beside Datasette pages such as a table or query page.</li>
-              <li>Combined with datasette-apps, you can prompt a database-backed app into existence and keep modifying it from the chat beside it.</li>
-              <li>A demo runs at agent.datasette.io with GitHub sign-in.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Nov/3/datasette-agent/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/open-asr-leaderboard-liva" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
