@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 06, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 07, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,95 +15,53 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 06, 2026</div>
+        <div class="digest-date-badge">November 07, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Inference and training efficiency lead today: BlockLock makes LLM outputs reproducible regardless of batch companions at roughly double the throughput of batch-invariant kernels, and FlexFloor reclaims idle workers in MoE reinforcement-learning rollouts. NVIDIA opens four Cosmos 3 world-simulation checkpoints for driving and robotics, and the Open ASR Leaderboard adds Egyptian and Nigerian English held-out sets.</p>
+        <p class="digest-intro">Today&#x27;s edition covers three items: Ai2&#x27;s ToyBlocks, an open simulated tabletop environment for robot learning and evaluation; a pointed opinion from Nilay Patel on why consumer AI products are struggling to justify their costs; and the v2.1.319 release of Claude Code, which centres on auto mode, permissions and security fixes.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>BlockLock: Reproducible LLM Inference with Fixed Batch Geometry</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Keeps shared batched prefill and pins only the numerical path of the protected request, so its output stays bitwise identical when companion requests in the batch change.</li>
-              <li>Tested on five dense models (Qwen3, Llama-3.1, Gemma-3) across A6000, A100 and H100 GPUs; both modes preserved target sequences and Top-20 logit bits.</li>
-              <li>Versus vLLM batch-invariant kernels at equal delivered work, BlockLock-Rows cut latency 53.5-55.0% and raised throughput 115.2-122.2%, with no custom kernels needed.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.06977" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Resource-Efficient Reinforcement Learning Post-Training through Elastic Expert Parallelism</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>In MoE RL rollouts, workers that finish early stay occupied serving experts for longer responses; the paper says about one-third of occupied worker time in the baseline is spent this way.</li>
-              <li>FlexFloor releases workers progressively while keeping the expert computation ongoing responses need, guided by historical response lengths and memory limits.</li>
-              <li>Against the verl baseline the authors report 65.40% more response tokens per unit of occupied compute and 52.74% higher generation throughput, with little change in rollout reward.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.06984" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>The Two-Ledger Model: Transaction-Grain Cost Accounting for Multi-Agent AI Systems Across Clouds, Models, and Systems of Record</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Billing data reaches finance only at settlement grain, so it cannot answer what a given order or claim cost in AI; the paper proposes linking a settlement ledger with an invocation-level attribution ledger built on OpenTelemetry GenAI telemetry.</li>
-              <li>In simulation with synthetic data, cost coverage stayed above 99% even with no trace propagation, and the reconciliation residual recovered planted unmetered spend within 0.24 percentage points.</li>
-              <li>Mid-flight gating cut p99 transaction cost by up to 61% with a 2-4% false-pause rate; results are simulated, not from production.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.06989" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>KDASO: Knowledge-Data Dual-Driven Automated Skill Optimization for Liability Adjudication Tasks</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Targets stale skill libraries, the gap between skill descriptions and execution, and context-budget overflow by continuously evolving the library with induction, trajectory-based refinement and budgeted routing.</li>
-              <li>Evaluated on ride-hailing adjudication, legal liability and logical reasoning judgment; the authors report significant gains over baselines and an 8.96% improvement when transferring skills to concept-similar scenarios.</li>
-              <li>The abstract names no baselines or absolute scores.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.06972" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>New NVIDIA Cosmos 3 Open Models for Interactive World Simulation</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>ToyBlocks: A controlled world for robot learning and evaluation</h3>
+              <span class="digest-source">Hugging Face Blog (Ai2)</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Four open-weight checkpoints post-trained from Cosmos 3 Nano: Transfer-Auto for multi-view driving data, Sim-Auto for streaming camera and LiDAR, Sim-Transfer for simulator-to-photoreal video, and Sim-Bimanual for two-arm robots.</li>
-              <li>Transfer-Auto generates up to 11 synchronized camera views including fisheyes; the post says 16B parameters per model while the Hugging Face listings show 15B.</li>
-              <li>Released under OpenMDW1.1, which permits commercial and non-commercial use.</li>
+              <li>Ai2 describes ToyBlocks as an open simulation framework and the first &quot;FoundationWorld&quot;: a robot arm and blocks on a tabletop, designed so researchers can change training data or model design, repeat tests and trace why a robot fails.</li>
+              <li>The initial release includes 85,336 long-horizon demonstrations (nearly 1,600 hours), two trained models (Molmo2-4B-tb and maniflow-tb), plus simulation assets, generators, and training and evaluation code.</li>
+              <li>In the authors&#x27; tests, ManiFlow&#x27;s atomic-skill success was 80.0% in simulation and 81.1% on a physical Franka FR3 arm, while the hierarchical Molmo 2 + ManiFlow system scored 55.5% in simulation and 50.0% (15/30) in the real world; the authors say more trials are needed for statistical confidence.</li>
             </ul>
-            <a href="https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/allenai/toyblocks" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Egyptian and Nigerian English join the Open ASR Leaderboard</h3>
-              <span class="digest-source">Hugging Face Blog</span>
+              <h3>Quoting Nilay Patel</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds two private conversational splits from Liva AI: Egyptian English (1.34 hours) and Nigerian English (1.55 hours), punctuated and cased with disfluencies kept.</li>
-              <li>The Private tab will now break results down as US vs non-US and Inner Circle vs Outer/Expanding Circle accents, an idea credited to Hume AI.</li>
-              <li>The post reports no model scores for the new splits.</li>
+              <li>This is an opinion quote, posted by Simon Willison without commentary of his own, from Nilay Patel on The Vergecast (episode &quot;Big Tech lost big in the 2026 election&quot;).</li>
+              <li>Patel argues that AI products aren&#x27;t good enough to sell people on their costs, saying the industry will not get out of its position until it makes better products.</li>
+              <li>In Patel&#x27;s view, the benefits are not real and the value of AI agents is unproven; these are his opinions, not findings.</li>
             </ul>
-            <a href="https://huggingface.co/blog/open-asr-leaderboard-liva" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/6/nilay-patel/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.319</h3>
+              <span class="digest-source">GitHub: anthropics/claude-code</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Auto mode with telemetry or feature flags off (including behind LLM gateways) now asks about or denies calls the server can&#x27;t check instead of falling back to the built-in classifier; setting CLAUDE_CODE_AUTO_MODE_SERVER=0 keeps the classifier.</li>
+              <li>The release adds permissions.denyInsteadOfPrompting and fixes a Bash permission bypass via a crafted environment prefix, a sed permission-check skip, and a sandbox escape when creating a worktree.</li>
+              <li>It also adds MCP task support in the terminal, with tasks running in the background and Claude told the result on completion.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.319" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

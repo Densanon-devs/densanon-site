@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - November 06, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - November 07, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,95 +15,64 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 06, 2026</div>
+        <div class="digest-date-badge">November 07, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Industry news is dominated by money and geopolitics: Agility Robotics debuts on Nasdaq via a SPAC, and Chinese regulators block SoftBank&#x27;s roughly $5.4B purchase of ABB Robotics. Ambi Robotics shows how a warehouse-robot vendor readies for peak season. On the research side, a world action model for UMI manipulation, a whole-body NMPC for dual-arm humanoids, and a mechanically constrained continuum robot lead the arXiv pool, while a Robotiq ROS 2 package migration is the practical item for ROS users.</p>
+        <p class="digest-intro">Today&#x27;s edition covers Boston Dynamics&#x27; Stretch Gen 2, an open-source 56-DOF bimanual robot, and a run of ROS 2 Lyrical updates, including ZED wrapper GPU zero-copy and ros2_control changes. It also carries analyst reaction to China&#x27;s block on SoftBank&#x27;s ABB Robotics purchase and the end of Gazebo support on macOS.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Spatial-UMI-Dream: Scaling World Action Models with Metric Geometry for UMI Manipulation</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A 5B-parameter world action model pretrained on 605 hours of RGB-D UMI data that jointly predicts future RGB frames, metric depth and actions.</li>
-              <li>On the new 20-task RoboTwin-UMI benchmark it reaches 79.10% in-domain and 72.15% under combined embodiment and environment shifts, 4.65 and 10.30 points above the strongest baseline.</li>
-              <li>Reports 85.0% average success on six real-world tasks, and RGB-only pretraining cost 5.75 points in-domain versus RGB-D.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.07229" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>CRISP: Constraint-Resolved Interactions between Subsystems for Predictive Whole-Body Cooperation</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Treats a humanoid as coupled subsystems (rigid torso, floating-base arms and lower body) with arm-torso and hand-to-hand links modeled as holonomic constraints whose multipliers are interaction wrenches.</li>
-              <li>A high-level nonlinear MPC jointly optimizes states, arm torques, ground reaction forces and wrenches online, for dynamic dual-arm manipulation.</li>
-              <li>Validated in simulation and on a G1 humanoid; the abstract gives qualitative results only, no numbers.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.07268" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Curvature by Design: A Support Structure for Continuum Robots</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A single-piece, scissor-based compliant structure mechanically forces a tendon-driven continuum robot to follow a prescribed curvature profile.</li>
-              <li>It resists other deformations, such as S-shapes under opposing loads, and shrinks the number of shape variables that must be estimated.</li>
-              <li>The authors say shape precision improves significantly over classical flexible-backbone designs; the abstract does not quantify it.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.07091" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How did Agility Robotics perform on its first day on the stock market?</h3>
+              <h3>Boston Dynamics built Stretch Gen 2 for reliable, consistent performance</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Trading as AGLT on Nasdaq after a SPAC deal priced at $10 a share; the company calls itself the first pure-play legged humanoid company to go public.</li>
-              <li>The stock opened at $11.26, ranged from $8.40 to $12.15 and closed at $11.49.</li>
-              <li>The offering was expected to bring in about $465 million in gross proceeds before expenses.</li>
+              <li>Boston Dynamics says Stretch Gen 2 took about two and a half years to develop, and that the first generation has logged over 100,000 operating hours.</li>
+              <li>The company says the robot can unload up to 1,000 cases per hour, depending on case weight and stacking, and that it cut 81% of internal cabling and switched to automotive-grade connectors.</li>
+              <li>A full swerve drive swap now takes about an hour instead of up to a day, and the company says its latest software update raised unload rate 24% across the fielded fleet.</li>
             </ul>
-            <a href="https://www.therobotreport.com/how-did-agility-robotics-perform-on-its-first-day-on-the-stock-market/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/boston-dynamics-built-stretch-gen-2-for-reliable-consistent-performance/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Chinese regulators block SoftBank&#x27;s $5.4B acquisition of ABB Robotics</h3>
+              <h3>Industry experts discuss China blocking SoftBank acquisition of ABB Robotics</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>China&#x27;s foreign investment security review office prohibited SoftBank&#x27;s roughly $5.375B purchase of ABB&#x27;s robotics division; ABB confirmed the block and the Financial Times reported it first.</li>
-              <li>Authorities reportedly worried that robotics data could be sent overseas and used to train AI models.</li>
-              <li>ABB says it and SoftBank are in close dialogue and working constructively on the transaction; no timeline was given.</li>
+              <li>ABB Robotics confirmed to The Robot Report that a Chinese foreign-investment review office blocked SoftBank&#x27;s planned acquisition, with regulators reportedly concerned about AI training data moving overseas.</li>
+              <li>Analysts at Interact Analysis said China is a critical market and that separating the Chinese operation from a global deal would be extremely challenging.</li>
             </ul>
-            <a href="https://www.therobotreport.com/chinese-regulators-block-softbanks-5-4b-acquisition-of-abb-robotics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/industry-experts-discuss-china-blocking-softbank-acquisition-abb-robotics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How Ambi Robotics helps its customers prepare for peak season</h3>
+              <h3>How Point One turned GPS accuracy into a robotics platform</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Ambi&#x27;s COO says logistics throughput can rise 25% to 40% in a typical peak season, and Ambi expects customer volume up 9% to 10% this year.</li>
-              <li>It is installing systems at eight facilities before peak, mostly the new AmbiSort B Series, and stocking spares at East Coast hubs and customer sites.</li>
-              <li>Its systems do not self-improve; models are retrained on new data and A/B tested in a controlled setting before wider rollout.</li>
+              <li>Episode 269 of The Robot Report Podcast features Aaron Nathan, co-founder and CEO of Point One Navigation, who works in sensor fusion, navigation and embedded systems.</li>
+              <li>The episode&#x27;s news segment notes that Agility Robotics began trading on Nasdaq.</li>
+              <li>Point One Navigation&#x27;s FUSE 2026 physical AI event is scheduled for Nov. 19 in San Francisco.</li>
             </ul>
-            <a href="https://www.therobotreport.com/how-ambi-robotics-helps-customers-prepare-peak-season/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/how-point-one-turned-gps-accuracy-into-robotics-platform/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Video Friday: Room-Scale Cable-Driven Home Robot Tidies Up</h3>
+              <span class="digest-source">IEEE Spectrum</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Neufangled Robotics&#x27; Stringman is a cable-driven home robot priced at US $795.</li>
+              <li>Other videos include an ETH Zurich drone designed to survive repeated collisions with trees and a HEBI Robotics arm carving pumpkins with a drill.</li>
+              <li>Toyota Research Institute also shares how designers use sounds, gestures and light patterns to signal a robot&#x27;s intent.</li>
+            </ul>
+            <a href="https://spectrum.ieee.org/video-friday-home-cable-robot" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -113,15 +82,63 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Robotiq_description and robotiq_controllers releases moving from ros2_robotiq_gripper to robotiq-ros</h3>
+              <h3>MABEL: an open-source 56-DOF bimanual mobile robot from NYU and the University of Toronto</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The packages on Humble, Jazzy, Lyrical and Rolling move from PickNik&#x27;s repo to Robotiq&#x27;s robotiq-ros, going from 0.0.1 to 1.x; Kilted stays on 0.0.1 until end of life.</li>
-              <li>Package names, macro arguments and joint names are unchanged, but old names like sim_ignition, sim_isaac and connected_to now warn as deprecated, and the Gazebo and Isaac plugin names change.</li>
-              <li>Rosdistro PRs open on 2026-11-18 if no blocker is raised; the workaround is building the 0.0.1 tag from source.</li>
+              <li>The poster shares MABEL, an open-source robot with 56 degrees of freedom, a three-wheel swerve base, a vertical lift, a pitching torso and a stereo-camera head.</li>
+              <li>It uses two 7-DOF arms adapted from OpenArm and two 17-DOF hands adapted from ORCA Hand, and is teleoperated with a single Apple Vision Pro.</li>
+              <li>Hardware is CERN-OHL-S-2.0 and software Apache-2.0; the post lists parts cost at about $8,056 (Essential) to $14,721 (Maximum) at July 2026 prices, with some parts not yet costed.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/robotiq-description-and-robotiq-controllers-releases-moving-from-ros2-robotiq-gripper-to-robotiq-ros/59562" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/mabel-an-open-source-56-dof-bimanual-mobile-robot-from-nyu-and-the-university-of-toronto/59597" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ZED ROS 2 Wrapper 5.6: CUDA zero-copy with rosidl::Buffer for ROS 2 Lyrical and Isaac ROS 5</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>ZED ROS 2 Wrapper v5.6 can publish images, depth, confidence maps and point clouds from GPU memory using the new rosidl::Buffer CUDA backend in ROS 2 Lyrical, avoiding a GPU-to-CPU copy.</li>
+              <li>Subscribers that cannot take CUDA buffers, such as RViz2 or ros2 bag, automatically receive standard CPU data.</li>
+              <li>On a Jetson AGX Thor with a ZED 2i, the poster reports latency reductions of 10% to 61% depending on point cloud size.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/zed-ros-2-wrapper-5-6-cuda-zero-copy-with-rosidl-buffer-for-ros-2-lyrical-and-isaac-ros-5/59608" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Ros2_control in Lyrical Luth: what&#x27;s new</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Lyrical Luth is marked stable in ros2_control, ros2_controllers, control_toolbox and realtime_tools.</li>
+              <li>Behaviour changes include strict switch_controller by default, a failing controller deactivating its whole chain, and removal of deprecated Jazzy handle and export APIs.</li>
+              <li>New additions include trajectory replacement in joint_trajectory_controller and battery_state, state_interfaces and magnetometer broadcasters.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/ros2-control-in-lyrical-luth-whats-new/59593" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Early end of support of Gazebo Harmonic, Fortress on macOS</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The Gazebo PMC announced it will drop macOS support for Gazebo Harmonic and Fortress on 2027-01-10 because Homebrew is disabling the freeimage and qt@5 formulae.</li>
+              <li>Homebrew cited open CVEs in freeimage and Qt5 reaching end-of-life in 2025; freeimage is disabled on 2027-01-10 and qt@5 on 2027-05-19.</li>
+              <li>Harmonic and Fortress remain supported on Ubuntu until their documented end-of-life dates.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/early-end-of-support-of-gazebo-harmonic-fortress-on-macos/59605" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ROS News for the Week of November 2nd, 2026</h3>
+              <span class="digest-source">ROS Discourse</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The first ROSCon in Italy reportedly drew far more attendees than organizers targeted.</li>
+              <li>Intrinsic open sourced Intrinsic Core, which includes real-time control and motion planning and works with standard ROS workspaces.</li>
+              <li>Other items include the ManyForge manipulation framework and a free browser-based BehaviorTree.CPP editor with Nav2 import and export.</li>
+            </ul>
+            <a href="https://discourse.openrobotics.org/t/ros-news-for-the-week-of-november-2nd-2026/59601" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
