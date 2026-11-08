@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 07, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 08, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 07, 2026</div>
+        <div class="digest-date-badge">November 08, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s edition covers three items: Ai2&#x27;s ToyBlocks, an open simulated tabletop environment for robot learning and evaluation; a pointed opinion from Nilay Patel on why consumer AI products are struggling to justify their costs; and the v2.1.319 release of Claude Code, which centres on auto mode, permissions and security fixes.</p>
+        <p class="digest-intro">A quiet day: one new item from Simon Willison on a Datasette pagination header that was triggering unwanted prefetches in Firefox.</p>
       </div>
     </section>
 
@@ -29,39 +29,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ToyBlocks: A controlled world for robot learning and evaluation</h3>
-              <span class="digest-source">Hugging Face Blog (Ai2)</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Ai2 describes ToyBlocks as an open simulation framework and the first &quot;FoundationWorld&quot;: a robot arm and blocks on a tabletop, designed so researchers can change training data or model design, repeat tests and trace why a robot fails.</li>
-              <li>The initial release includes 85,336 long-horizon demonstrations (nearly 1,600 hours), two trained models (Molmo2-4B-tb and maniflow-tb), plus simulation assets, generators, and training and evaluation code.</li>
-              <li>In the authors&#x27; tests, ManiFlow&#x27;s atomic-skill success was 80.0% in simulation and 81.1% on a physical Franka FR3 arm, while the hierarchical Molmo 2 + ManiFlow system scored 55.5% in simulation and 50.0% (15/30) in the real world; the authors say more trials are needed for statistical confidence.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/allenai/toyblocks" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Quoting Nilay Patel</h3>
+              <h3>datasette #3046: Don&#x27;t serve link: rel=next HTTP headers to Firefox for HTML pages</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>This is an opinion quote, posted by Simon Willison without commentary of his own, from Nilay Patel on The Vergecast (episode &quot;Big Tech lost big in the 2026 election&quot;).</li>
-              <li>Patel argues that AI products aren&#x27;t good enough to sell people on their costs, saying the industry will not get out of its position until it makes better products.</li>
-              <li>In Patel&#x27;s view, the benefits are not real and the value of AI agents is unproven; these are his opinions, not findings.</li>
+              <li>Simon Willison noticed in the Firefox network panel that requests to a Datasette table page triggered an HTTP prefetch of the next page of rows.</li>
+              <li>The cause was Datasette&#x27;s pagination serving a link: rel=next HTTP header.</li>
+              <li>Datasette issue #3046 proposes not serving that header to Firefox for HTML pages.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/6/nilay-patel/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.319</h3>
-              <span class="digest-source">GitHub: anthropics/claude-code</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Auto mode with telemetry or feature flags off (including behind LLM gateways) now asks about or denies calls the server can&#x27;t check instead of falling back to the built-in classifier; setting CLAUDE_CODE_AUTO_MODE_SERVER=0 keeps the classifier.</li>
-              <li>The release adds permissions.denyInsteadOfPrompting and fixes a Bash permission bypass via a crafted environment prefix, a sed permission-check skip, and a sandbox escape when creating a worktree.</li>
-              <li>It also adds MCP task support in the terminal, with tasks running in the background and Claude told the result on completion.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.319" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/7/link-rel-next/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
