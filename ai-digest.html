@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 08, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 09, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,29 +15,127 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 08, 2026</div>
+        <div class="digest-date-badge">November 09, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A quiet day: one new item from Simon Willison on a Datasette pagination header that was triggering unwanted prefetches in Firefox.</p>
+        <p class="digest-intro">Monday leans practical: Amazon open-sources HOPE, a way to cut half the experts from big MoE models while keeping their coding scores, and a new agent-memory paper turns user corrections into rules that are injected where they apply. On the safety side, a mechanistic study finds that multiple-choice safety benchmarks mostly measure knowledge, not refusal.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Decision Context: Persistent Behavioral Learning for AI Agents</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>forge_dc compiles human corrections and the agent&#x27;s own failed-tool-call reviews into imperative RULE directives that carry across sessions.</li>
+              <li>Rules are injected at the decision points they govern, not retrieved as general context.</li>
+              <li>On the 71-scenario DC-Bench, compliance rose from 55% (naive retrieval) to 95%, with about 10x fewer injected tokens per query.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.08644" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Forcing a Letter Suppresses Refusal: Mechanistic Evidence from WMDP</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>On Llama-3.1-8B and Qwen3-8B, multiple-choice prompts make the model commit to an answer letter very early, while open-ended prompts build toward refusal gradually.</li>
+              <li>MCQ activations sit about 3x further from the refusal direction than open-ended ones.</li>
+              <li>Ablating the heads that carry the answer letter brings refusal back, so MCQ safety scores mostly measure knowledge, not safety behaviour.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.08639" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Aspect-wise Pairwise Tournaments for Test-Time Selection</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>APT picks the best of n candidates with a single-elimination bracket, where each match is a vote among off-the-shelf verifiers, one per aspect.</li>
+              <li>It beats self-consistency, binary multi-aspect approval and reward-model selection across five domains, with the biggest gains on open-ended tasks.</li>
+              <li>Nothing is trained: aspects are plain-language prompts, so you can move it to a new domain or steer it without regenerating.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.08640" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>NormGym: Evaluating Normative Competence through Social Interaction</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A benchmark for whether agents can infer unwritten social rules from interaction and adjust, rather than being told the rules.</li>
+              <li>It targets agents dropped into unfamiliar communities, a gap in existing static evaluations.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.08613" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>RL-ATTACK: A Generalized Black-Box Adversarial Attack on Language Models via Reinforcement Learning</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Uses reinforcement learning to search for input perturbations that push a model into unintended responses, with only black-box access.</li>
+              <li>Framed as a red-teaming tool: find the weaknesses first, then use them to harden the model.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.08711" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Tools &amp; Practical</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>datasette #3046: Don&#x27;t serve link: rel=next HTTP headers to Firefox for HTML pages</h3>
+              <h3>Your Experts Have Partners. There&#x27;s HOPE for Keeping Them Together</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>HOPE prunes MoE experts by modelling which pairs of experts work together, solved as a quadratic program in seconds per layer.</li>
+              <li>Qwen3.5-35B pruned 50% scored 42.3 on SWE-Bench Pro against 41.8 unpruned; it ranked best on average across Qwen3.5-122B/35B and GLM-4.5-Air.</li>
+              <li>Its lead grows at higher pruning rates and on agentic coding. The code is open at github.com/awslabs/HOPE.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/amazon/higher-order-pruning-experts" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Hide your slop PR descriptions behind &lt;details&gt;&lt;summary&gt;</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon Willison noticed in the Firefox network panel that requests to a Datasette table page triggered an HTTP prefetch of the next page of rows.</li>
-              <li>The cause was Datasette&#x27;s pagination serving a link: rel=next HTTP header.</li>
-              <li>Datasette issue #3046 proposes not serving that header to Firefox for HTML pages.</li>
+              <li>Keep a short, human-written opening paragraph visible, and fold the agent&#x27;s full PR description into a collapsed details block.</li>
+              <li>Label the fold with the model and effort level so readers know where the text came from.</li>
+              <li>Agent descriptions are accurate but long. The human opener tells reviewers whether the PR deserves their attention.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/7/link-rel-next/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/9/details-summary/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>parse_number() as a SQLite extension: C vs Rust</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>An agent-run experiment builds the same SQLite function, which turns strings like -$1,234.56 or 12.5% into numbers, in both C and Rust.</li>
+              <li>A practical comparison of the effort and tooling each language needs for loadable SQLite extensions.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Nov/8/sqlite-parse-number-c-vs-rust/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-agent-sdk-python: v0.2.179</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A new point release of the Python Agent SDK is on PyPI (pip install claude-agent-sdk==0.2.179).</li>
+              <li>Pin the version and read the diff before upgrading production agents.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.179" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

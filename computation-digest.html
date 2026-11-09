@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - November 08, 2026 | Densanon</title>
+  <title>Computation Morning Digest - November 09, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 08, 2026</div>
+        <div class="digest-date-badge">November 09, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Memory costs dominate today&#x27;s computation news, from falling PC RAM capacities and rising GPU prices to a CPU-only trillion-parameter run on Optane. Elsewhere, HPC storage gets a big IOPS jump and quantum firms report commercialization progress.</p>
+        <p class="digest-intro">A thin hardware day with some useful items: Linux 7.5 finally gives Zen 5 a proper AVX-512 ChaCha path, AMD has acknowledged a GPU driver bug that keeps writing to SSDs, and the US push for location-verified AI chips is moving from idea to bill.</p>
       </div>
     </section>
 
@@ -29,36 +29,36 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>PC&#x27;s with 64GB of RAM plummet 18% as memory prices soar</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>AMD admits GPU driver bug is writing data continuously, wearing out SSDs</h3>
+              <span class="digest-source">Reddit r/hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>CPU-Z data shows PC memory capacity dropping for the first time ever.</li>
-              <li>Skyrocketing AI DRAM prices drove 64GB RAM adoption down 18% year over year.</li>
+              <li>AMD has acknowledged a Radeon driver bug that writes to disk continuously, adding wear to SSDs.</li>
+              <li>If you run an AMD GPU, watch disk-write activity and update the driver once a fix ships.</li>
             </ul>
-            <a href="https://www.tomshardware.com/pc-components/ram/pcs-with-64gb-of-ram-plummet-18-percent-as-memory-prices-soar-cpu-z-install-base-data-shows-ddr4-making-a-surprise-comeback" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/hardware/comments/1xrq6bj/amd_admits_gpu_driver_bug_is_writing_data/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Homelabber uses second-gen Optane memory sticks to run a 2.8-trillion-parameter AI model on CPU alone</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A Reddit homelab user ran Moonshot AI&#x27;s 2.8-trillion-parameter Kimi K3 on CPU alone using Optane PMem 200.</li>
-              <li>It ran at 0.85 tokens/s with a 1-bit quant.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/homelabber-uses-second-gen-optane-memory-sticks-to-run-a-2-8-trillion-parameter-ai-model-on-cpu-alone-warns-that-optanes-extreme-heat-can-burn-out-nearby-memory-dram-used-blower-fans-to-prevent-melting-ram" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD PerfOpt Performance Boosting Code Tweaked For Linux 7.4-rc2</h3>
+              <h3>ChaCha AVX-512 Optimization For Linux 7.5 Yields Up To 99% Improvement On AMD Zen 5</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Linux 7.4 adds AMD PerfOpt, an out-of-the-box performance feature for AMD SoCs with integrated Radeon graphics.</li>
-              <li>It can deliver iGPU performance improvements, especially for AI/LLM workloads, and was tweaked for Linux 7.4-rc2.</li>
+              <li>The kernel&#x27;s AVX-512 ChaCha code was tuned for Skylake-era Intel chips that down-clocked under AVX-512.</li>
+              <li>A new path for modern AVX-512 cores lands in Linux 7.5 and gives Zen 5 up to 99% more ChaCha throughput.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-PerfOpt-Tweaks-Linux-7.4" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/ChaCha-AVX-512-Linux-7.5" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Huawei develops &#x27;entirely Chinese&#x27; homegrown desktop PC system</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The desktop pairs a 10-core, 20-thread Kirin X90 CPU with HarmonyOS, and every component is made in China.</li>
+              <li>The chips still depend on fab tools and materials from the US, the Netherlands and Japan.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/huawei-develops-entirely-chinese-homegrown-desktop-pc-system-features-10-core-20-thread-kirin-x90-consumer-cpu-and-huaweis-own-harmonyos-operating-system-but-western-supply-chain-lingers" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -68,25 +68,36 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Pasqal Reports Third-Quarter Revenue Decline as QPU Services Revenue Grows</h3>
-              <span class="digest-source">The Quantum Insider</span>
+              <h3>RoadBlock: Rethinking GPU Tensor Core Microarchitecture for Emerging Microscaling Format Support</h3>
+              <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Pasqal (Nasdaq: PSQL), a neutral-atom quantum computing company, issued a third quarter 2026 business update.</li>
-              <li>Total revenue declined in the quarter while QPU services revenue grew.</li>
+              <li>Custom microscaling (MX) formats keep more model quality than OCP MX, but they have only been tested on standalone MAC units.</li>
+              <li>RoadBlock measures what supporting them costs inside a full tensor-core pipeline.</li>
             </ul>
-            <a href="https://thequantuminsider.com/2026/11/06/pasqal-q3-revenue-decline-services-growth/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.08526" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quantum SuperConnector to Accelerate Commercial Success of UK quantum Research</h3>
+              <h3>SAFTAC: Simulation-Augmented Fine-Tuning of Open-Source LLMs for Analog Circuit Design</h3>
+              <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Open-source LLMs are fine-tuned with feedback from circuit simulation, so topology and device sizing are designed together.</li>
+              <li>The simulator acts as the verifier, which is the same pattern as tool-grounded training in code models.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.08543" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Malaysia Considers Faster Transition to Quantum-Resistant Security</h3>
               <span class="digest-source">The Quantum Insider</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Five top UK universities announced a UK-wide quantum commercialisation programme.</li>
-              <li>It aims to give quantum innovators entrepreneurial skills, networks and support to turn research into high-growth businesses.</li>
+              <li>Malaysia may speed up its move to post-quantum cryptography to protect national data.</li>
+              <li>It is another government shortening its PQC timeline.</li>
             </ul>
-            <a href="https://thequantuminsider.com/2026/11/06/uk-universities-quantum-commercialisation-programme/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://thequantuminsider.com/2026/11/09/malaysia-quantum-resistant-security-transition/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -96,36 +107,46 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AWS Targets Metadata-Intensive HPC Workloads with FSx for Lustre Intelligent-Tiering Update</h3>
-              <span class="digest-source">HPCwire</span>
+              <h3>The Race to Build a &#x27;Find My&#x27; for AI Chips</h3>
+              <span class="digest-source">IEEE Spectrum Computing</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Amazon FSx for Lustre Intelligent-Tiering now supports up to 192,000 metadata IOPS.</li>
-              <li>That is 16x the previous maximum of 12,000 IOPS, targeting metadata-intensive HPC workloads.</li>
+              <li>Ping-based location verification estimates where a chip is from round-trip times to trusted landmark servers, and can be added to existing chips through firmware.</li>
+              <li>Other proposals include Lucid&#x27;s sovereignty certificates, signed by the chip&#x27;s root of trust, and fingerprints of H200 GPUs taken from manufacturing variation.</li>
+              <li>A House committee has passed a bill requiring location verification for advanced AI chips.</li>
             </ul>
-            <a href="https://www.hpcwire.com/off-the-wire/aws-targets-metadata-intensive-hpc-workloads-with-fsx-for-lustre-intelligent-tiering-update/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://spectrum.ieee.org/find-my-ai-chip" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>UChicago Receives $10M Grant to Build Open-Source AI Weather Forecasting Platform</h3>
-              <span class="digest-source">HPCwire</span>
+              <h3>Japanese homeware giant pulls online store after cloud breach puts 7.7M records at risk</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Laude Institute awarded a $10 million grant to a University of Chicago team.</li>
-              <li>The grant funds new AI weather forecasting frameworks as an open-source platform.</li>
+              <li>A cloud breach exposed 7.7M records and took the retailer&#x27;s online store offline with no reopening date.</li>
+              <li>Customers have been told to refuse deliveries to cancel orders, which shows how far a breach reaches into operations.</li>
             </ul>
-            <a href="https://www.hpcwire.com/off-the-wire/uchicago-receives-10m-grant-to-build-open-source-ai-weather-forecasting-platform/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/cyber-crime/2026/11/09/japanese-homeware-giant-pulls-online-store-after-cloud-breach-puts-77m-records-at-risk/5308377" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Physical AI Pushes The Limits Of Hardware</h3>
+              <h3>Europe&#x27;s AI Factories Are Switching On — And Raw Power Won&#x27;t Decide the Race</h3>
+              <span class="digest-source">HPCwire</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Thirteen EU AI Factories have been selected, and Europe is measuring them by output per watt rather than total gigawatts.</li>
+            </ul>
+            <a href="https://www.hpcwire.com/2026/11/09/europes-ai-factories-are-switching-on-and-raw-power-wont-decide-the-race/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Memory In Physical AI</h3>
               <span class="digest-source">Semiconductor Engineering</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Autonomous machines promise to transform industries but face memory bottlenecks, power constraints and safety requirements.</li>
-              <li>Chip designers are being forced to rethink the entire system.</li>
+              <li>LPDDR6 is becoming a key part as inference moves into autonomous and mobile edge devices.</li>
             </ul>
-            <a href="https://semiengineering.com/physical-ai-pushes-the-limits-of-hardware/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://semiengineering.com/memory-in-physical-ai/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -135,25 +156,14 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NVIDIA RTX 5070 Ti prices jump $160 in eight days, now 79% above MSRP in the US</h3>
+              <h3>CPU-Z statistics show 32GB and 64GB RAM configurations declining year over year</h3>
               <span class="digest-source">Reddit r/hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The cheapest RTX 5070 Ti now starts at $1,340 across major US retailers.</li>
-              <li>Prices jumped $160 in eight days, with select custom models near double the $749 MSRP.</li>
+              <li>32GB is still the most common configuration at 37.2% of validations, but its share fell 2.5% this year. 64GB fell 18% to 7.3%.</li>
+              <li>Memory prices are pushing users toward less RAM, so local-AI apps should not assume 32GB or more.</li>
             </ul>
-            <a href="https://www.reddit.com/r/hardware/comments/1xqwbw7/nvidia_rtx_5070_ti_prices_jump_160_in_eight_days/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>TSMC denies exploring 3D DRAM at Nvidia&#x27;s request — advanced memory tech is still years from market viability</h3>
-              <span class="digest-source">Reddit r/hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>TSMC denies exploring 3D DRAM at Nvidia&#x27;s request.</li>
-              <li>The headline notes advanced memory tech is still years from market viability.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/hardware/comments/1xq9amo/tsmc_denies_exploring_3d_dram_at_nvidias_request/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/hardware/comments/1xro4oh/cpuz_statistics_show_32gb_and_64gb_ram/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

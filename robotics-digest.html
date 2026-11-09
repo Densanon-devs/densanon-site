@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - November 08, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - November 09, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 08, 2026</div>
+        <div class="digest-date-badge">November 09, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">A quiet weekend for robotics: lab-grown muscle powers a tiny ETH Zurich jumper, a ROS 2 experiment programs a navigation controller directly into neural-network weights, and a columnist makes the case for robot integration at midmarket manufacturers.</p>
+        <p class="digest-intro">Policies that respect new constraints without retraining lead today: CS-Pi pushes flow-policy samples into safe regions without averaging modes into an obstacle. Meituan enters the VLA race with MR0, and StrataSLAM brings Apache-2.0 multi-floor mapping to ROS 2.</p>
       </div>
     </section>
 
@@ -29,32 +29,47 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A 1.5-centimeter robot jumped a third of its body length with one contraction of lab-grown muscle</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>CS-Pi: Constraint-Satisfying Flow Policy Sampling</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>ETH Zurich researchers got a small robot to jump 5 mm by changing how the muscle attaches to its frame.</li>
-              <li>The muscle and a flexible, 3D-printed scaffold were designed together.</li>
-              <li>Tiny grooves in the scaffold helped the muscle fibers line up and gave them a firm place to pull against.</li>
+              <li>Draw, project to the nearest safe action, re-add noise in proportion to how far the projection moved, and rerun the unmodified policy until a draw is safe.</li>
+              <li>Avoids two known failures: gradient guidance averaging left and right paths into the obstacle, and projection producing actions the policy would rarely take.</li>
+              <li>81% safe success against 55% for projection on a 7-DoF shelf task, and 55% against 40% zero-shot on Franka hardware.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1xpfw34/a_15centimeter_robot_jumped_a_third_of_its_body/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.08654" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Robot integration brings high-precision production to midmarket manufacturers</h3>
-              <span class="digest-source">The Robot Report</span>
+              <h3>Meituan-Robotics-0: A Vision-Language-Action Foundation Model for Desktop Manipulation</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A columnist argues properly integrated industrial and collaborative robots can help midmarket manufacturers.</li>
-              <li>The focus is on high-precision production.</li>
+              <li>Trained on 147M vision-language samples plus 15,060 hours of robot trajectories across 12 embodiments.</li>
+              <li>Three stages: discrete action-token pre-training, then flow-matching mid-training, then real-world post-training.</li>
+              <li>93.6% on RoboTwin 2.0 and beats π0.5 on three real tasks under matched HG-DAgger. The code repo is public; weights are not confirmed.</li>
             </ul>
-            <a href="https://www.therobotreport.com/robot-integration-brings-high-precision-production-to-midmarket-manufacturers/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.08577" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Q-OIL: Optimistic Exploration in Learning from Human Interventions</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Treats human takeovers as learning signal and explores optimistically, so the robot adapts online instead of only copying the correction.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.08576" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ForPC: Force-Aware Whole-Body Control for Precise Humanoid Cart Pushing</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Whole-body humanoid control that senses force, so the robot can push existing wheeled carts precisely without changes to the workplace.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.08664" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -64,24 +79,50 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A robot controller written directly into neural-network weights, in ROS 2 and Gazebo</h3>
+              <h3>StrataSLAM: open-source multi-floor SLAM for ROS 2 (stairs, elevators, ramps, identical floors)</h3>
               <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Inspired by the paper Sparks of Weight-Space Programming, the author tested whether directly authored network weights can produce useful navigation behavior.</li>
-              <li>The setup uses two rooms, a doorway and a lidar-equipped robot in ROS 2 and Gazebo.</li>
+              <li>Builds one submap per floor, detects stairs, ramp and elevator transitions, and blocks loop closures between floors so identical floors are not merged.</li>
+              <li>Works with RGB-D and/or 3D LiDAR; IMU, barometer and wheel odometry are optional. Apache-2.0, ROS 2 Jazzy, github.com/EasyNavigation/StrataSLAM.</li>
             </ul>
-            <a href="https://discourse.openrobotics.org/t/a-robot-controller-written-directly-into-neural-network-weights-in-ros-2-and-gazebo/59616" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/strataslam-open-source-multi-floor-slam-for-ros-2-stairs-elevators-ramps-identical-floors/59649" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ROS and Open Source Robotics News Summary for the Week of November 2nd, 2026</h3>
-              <span class="digest-source">r/robotics</span>
+              <h3>Do you see anything in AMR telemetry before docking/localization failures?</h3>
+              <span class="digest-source">ROS Discourse</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Weekly ROS and open source robotics news roundup is posted on Open Robotics Discourse.</li>
+              <li>An offline monitor for AMR deployment logs: in simulation, multi-sensor signals drift before a failure happens. The author asks whether real fleets show the same early warnings.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1xpmxb3/ros_and_open_source_robotics_news_summary_for_the/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://discourse.openrobotics.org/t/do-you-see-anything-in-amr-telemetry-before-docking-localization-failures/59638" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Precision Spatial Tracking for Autonomous Systems: Training Humanoid Robots and Drones with Optical Motion Capture</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A demonstration that looks right can still hide a wrong position estimate. Optical motion capture supplies the ground truth to check the robot&#x27;s own estimate against.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/11/09/precision-spatial-tracking-for-autonomous-systems-training-humanoid-robots-and-drones-with-optical-motion-capture/106784/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>ARM Institute consortium grows to more than 500 organizations</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The US manufacturing-robotics consortium passes 500 members ahead of its 10th annual meeting in Pittsburgh.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/arm-institute-members-grows-more-than-500-organizations/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -91,48 +132,23 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>I tried making a Tesla Roadster jump and balance with thrusters in a reverse digital twin</h3>
+              <h3>Building MicDuck: Getting a Tiny Bipedal Robot to Walk Is Harder Than It Looks</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The author built a reverse digital twin of the Tesla Roadster with fictional cold-gas thrusters.</li>
-              <li>A trained model controls the car&#x27;s jumps and keeps it balanced in the air.</li>
-              <li>Suction fans were added to help hold the car against the track.</li>
+              <li>Moving the legs is easy; a natural-looking walk is not. A build log on gait tuning for a tiny biped.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1xpuxjb/i_tried_making_a_tesla_roadster_jump_and_balance/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1xrngbg/building_micduck_getting_a_tiny_bipedal_robot_to/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How do robotics teams handle perception failures and training data?</h3>
+              <h3>Rovant — live drone telemetry inside the IDE while you debug (50s demo)</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A robotics engineer asks how teams handle perception failures, difficult edge cases, and collecting new training data.</li>
-              <li>The goal is improving perception models using targeted training data.</li>
+              <li>A solo-built ROS 2 desktop IDE that streams rosbridge telemetry next to the Python node you are debugging.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1xqwtgn/how_do_robotics_teams_handle_perception_failures/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>My tutorials have moved</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Robot arm tutorials are now hosted at marginallyclever.com/guides.</li>
-              <li>The author recommends the Sixi 2 and 3 robot arm guides.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1xqk3y9/my_tutorials_have_moved/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Admitting &quot;we don&#x27;t have ISO 27001 yet&quot; is the right move for a startup selling to enterprises.</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A small team that has onboarded 10 hardware startups shares a pattern from conversations with larger companies.</li>
-              <li>The post argues for being upfront about lacking ISO 27001 certification.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1xq3pmv/admitting_we_dont_have_iso_27001_yet_is_the_right/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1xrl1hj/rovant_live_drone_telemetry_inside_the_ide_while/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
