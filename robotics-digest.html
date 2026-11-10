@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robotics Morning Digest - November 09, 2026 | Densanon</title>
+  <title>Robotics Morning Digest - November 10, 2026 | Densanon</title>
   <meta name="description" content="Daily robotics news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,114 +15,127 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 09, 2026</div>
+        <div class="digest-date-badge">November 10, 2026</div>
         <h1>Robotics Morning <span>Digest</span></h1>
-        <p class="digest-intro">Policies that respect new constraints without retraining lead today: CS-Pi pushes flow-policy samples into safe regions without averaging modes into an obstacle. Meituan enters the VLA race with MR0, and StrataSLAM brings Apache-2.0 multi-floor mapping to ROS 2.</p>
+        <p class="digest-intro">Today&#x27;s robotics news centers on the data question: how to scale training data, with a $100M raise for robot data infrastructure and cross-embodiment transfer research. NVIDIA&#x27;s GR00T 2 and Boston Dynamics&#x27; wheeled Atlas highlight progress in foundation models and whole-body control, while new papers tackle risk-aware navigation and GPU-trained differentiable MPC.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>CS-Pi: Constraint-Satisfying Flow Policy Sampling</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Draw, project to the nearest safe action, re-add noise in proportion to how far the projection moved, and rerun the unmodified policy until a draw is safe.</li>
-              <li>Avoids two known failures: gradient guidance averaging left and right paths into the obstacle, and projection producing actions the policy would rarely take.</li>
-              <li>81% safe success against 55% for projection on a 7-DoF shelf task, and 55% against 40% zero-shot on Franka hardware.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.08654" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Meituan-Robotics-0: A Vision-Language-Action Foundation Model for Desktop Manipulation</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Trained on 147M vision-language samples plus 15,060 hours of robot trajectories across 12 embodiments.</li>
-              <li>Three stages: discrete action-token pre-training, then flow-matching mid-training, then real-world post-training.</li>
-              <li>93.6% on RoboTwin 2.0 and beats π0.5 on three real tasks under matched HG-DAgger. The code repo is public; weights are not confirmed.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.08577" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Q-OIL: Optimistic Exploration in Learning from Human Interventions</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Treats human takeovers as learning signal and explores optimistically, so the robot adapts online instead of only copying the correction.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.08576" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ForPC: Force-Aware Whole-Body Control for Precise Humanoid Cart Pushing</h3>
-              <span class="digest-source">ArXiv cs.RO</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Whole-body humanoid control that senses force, so the robot can push existing wheeled carts precisely without changes to the workplace.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.08664" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Practical</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>StrataSLAM: open-source multi-floor SLAM for ROS 2 (stairs, elevators, ramps, identical floors)</h3>
-              <span class="digest-source">ROS Discourse</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Builds one submap per floor, detects stairs, ramp and elevator transitions, and blocks loop closures between floors so identical floors are not merged.</li>
-              <li>Works with RGB-D and/or 3D LiDAR; IMU, barometer and wheel odometry are optional. Apache-2.0, ROS 2 Jazzy, github.com/EasyNavigation/StrataSLAM.</li>
-            </ul>
-            <a href="https://discourse.openrobotics.org/t/strataslam-open-source-multi-floor-slam-for-ros-2-stairs-elevators-ramps-identical-floors/59649" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Do you see anything in AMR telemetry before docking/localization failures?</h3>
-              <span class="digest-source">ROS Discourse</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>An offline monitor for AMR deployment logs: in simulation, multi-sensor signals drift before a failure happens. The author asks whether real fleets show the same early warnings.</li>
-            </ul>
-            <a href="https://discourse.openrobotics.org/t/do-you-see-anything-in-amr-telemetry-before-docking-localization-failures/59638" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Product &amp; Industry</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Precision Spatial Tracking for Autonomous Systems: Training Humanoid Robots and Drones with Optical Motion Capture</h3>
-              <span class="digest-source">Robotics &amp; Automation News</span>
+              <h3>Can Agentic Robotics Solve Robotics’ Data-Scaling Problem?</h3>
+              <span class="digest-source">IEEE Spectrum Robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A demonstration that looks right can still hide a wrong position estimate. Optical motion capture supplies the ground truth to check the robot&#x27;s own estimate against.</li>
+              <li>Robotics companies are betting heavily that data from human demonstrations will solve the hardest robotics problems.</li>
+              <li>The premise: once AI systems ingest enough demonstrations, robots could perform most manual tasks humans do today.</li>
+              <li>The piece examines whether agentic robotics can address the data-scaling problem.</li>
             </ul>
-            <a href="https://roboticsandautomationnews.com/2026/11/09/precision-spatial-tracking-for-autonomous-systems-training-humanoid-robots-and-drones-with-optical-motion-capture/106784/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://spectrum.ieee.org/agentic-robotics" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>ARM Institute consortium grows to more than 500 organizations</h3>
+              <h3>NVIDIA launches GR00T 2 and Isaac Lab 3.0 at CoRL</h3>
               <span class="digest-source">The Robot Report</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The US manufacturing-robotics consortium passes 500 members ahead of its 10th annual meeting in Pittsburgh.</li>
+              <li>NVIDIA launched GR00T 2 and Isaac Lab 3.0 at CoRL.</li>
+              <li>NVIDIA also showed how partners including Ambi Robotics, FieldAI, Flexion, Skild AI and RLWRLD are using these technologies.</li>
             </ul>
-            <a href="https://www.therobotreport.com/arm-institute-members-grows-more-than-500-organizations/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.therobotreport.com/nvidia-launches-gr00t-2-isaac-lab-3-0-corl/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Boston Dynamics adds wheels to Atlas humanoid to test whole-body control</h3>
+              <span class="digest-source">The Robot Report</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Boston Dynamics added wheels to the Atlas humanoid to test whole-body control.</li>
+              <li>The approach combines classical motor control with whole-body reinforcement learning to power dynamic, wheeled locomotion.</li>
+            </ul>
+            <a href="https://www.therobotreport.com/boston-dynamics-adds-wheels-to-atlas-humanoid-to-test-whole-body-control/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GenRobot AI raises $100 million to expand robot training data infrastructure</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Beijing-based GenRobot AI raised $100 million in a Series A+ round, completed in Q3 2026.</li>
+              <li>The funding reflects continued investment in the data infrastructure needed to train increasingly capable robots.</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/11/10/genrobot-ai-raises-100-million-to-expand-robot-training-data-infrastructure/106905/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Luck Stone builds on autonomous hauling success with Caterpillar</h3>
+              <span class="digest-source">Robotics &amp; Automation News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Luck Stone and Caterpillar are expanding autonomous hauling to two additional Virginia operations.</li>
+              <li>The expansion follows more than 18 months of autonomous hauling at Bull Run Quarry, with autonomous trucks hauling more than 3.5 million (unit truncated in the source summary).</li>
+            </ul>
+            <a href="https://roboticsandautomationnews.com/2026/11/10/luck-stone-builds-on-autonomous-hauling-success-with-caterpillar/106901/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Preference-Augmented Distributional Reinforcement Learning for Risk-Sensitive Navigation</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Addresses safe, reliable navigation under diverse sources of uncertainty in autonomous systems.</li>
+              <li>Builds on distributional reinforcement learning, where Implicit Quantile Networks (IQN) have drawn interest for navigation.</li>
+              <li>Proposes a preference-augmented approach for risk-sensitive navigation.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.09932" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Efficient Learning of Differentiable MPC Policies on the GPU via Smoothed ADMM and First-Order Reinforcement Learning</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Differentiable MPC enables structured, constraint-aware policies to be optimized end-to-end.</li>
+              <li>Targets two bottlenecks: nonsmooth sensitivities at active-set transitions and expensive policy training.</li>
+              <li>Uses smoothed ADMM and first-order reinforcement learning on the GPU.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.09937" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>UniLatent: Cross-Embodiment Transfer via Latent Observation Alignment</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Robot datasets are costly to collect and typically tied to one embodiment, hindering demonstration reuse across robots.</li>
+              <li>UniLatent is a cross-embodiment transfer framework based on latent observation alignment.</li>
+              <li>Aims to reuse demonstrations across robots with different geometry, appearance and kinematics.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.10061" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Beyond Semantic Classes: Online Physical Parameter Estimation via Embedding-Conditioned Gaussian Mixtures</h3>
+              <span class="digest-source">ArXiv cs.RO</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Aims to let robots infer interaction-relevant physical properties from vision before contact.</li>
+              <li>Notes that appearance alone is ambiguous, motivating more than semantic classes.</li>
+              <li>Uses embedding-conditioned Gaussian mixtures for online physical parameter estimation.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.10107" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -132,23 +145,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Building MicDuck: Getting a Tiny Bipedal Robot to Walk Is Harder Than It Looks</h3>
+              <h3>I built an open-source $20 closed-loop stepper driver with dual encoders to compensate for gearbox backlash</h3>
               <span class="digest-source">r/robotics</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Moving the legs is easy; a natural-looking walk is not. A build log on gait tuning for a tiny biped.</li>
+              <li>A maker built an open-source closed-loop stepper driver costing about $20.</li>
+              <li>It uses dual encoders, one on the motor and one on the joint, so joint position is known despite gearbox backlash.</li>
+              <li>Developed for a 3D-printed robotic arm where backlash was a persistent problem.</li>
             </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1xrngbg/building_micduck_getting_a_tiny_bipedal_robot_to/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Rovant — live drone telemetry inside the IDE while you debug (50s demo)</h3>
-              <span class="digest-source">r/robotics</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A solo-built ROS 2 desktop IDE that streams rosbridge telemetry next to the Python node you are debugging.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/robotics/comments/1xrl1hj/rovant_live_drone_telemetry_inside_the_ide_while/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/robotics/comments/1xrw5ob/i_built_an_opensource_20_closedloop_stepper/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

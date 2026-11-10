@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 09, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 10, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,75 +15,95 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 09, 2026</div>
+        <div class="digest-date-badge">November 10, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Monday leans practical: Amazon open-sources HOPE, a way to cut half the experts from big MoE models while keeping their coding scores, and a new agent-memory paper turns user corrections into rules that are injected where they apply. On the safety side, a mechanistic study finds that multiple-choice safety benchmarks mostly measure knowledge, not refusal.</p>
+        <p class="digest-intro">Anthropic&#x27;s Fable 5.2 and Mythos 5.2 launch dominates the day, with tooling updates and prompting guidance following, while Meta AI answers with its small Muse Ember model. Research covers sycophancy in training, jailbreak-resistant alignment, and efficient multi-LoRA serving.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>llm-anthropic 0.31</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Anthropic released Fable 5.2 and Mythos 5.2, and Fable 5.2 is currently ranked first on Artificial Analysis.</li>
+              <li>Anthropic says Fable 5.2 solved two open problems in the physics of black holes.</li>
+              <li>llm-anthropic 0.31 adds support for the new models.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Nov/9/llm-anthropic/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Introducing Our Smallest, Most Efficient Model: Muse Ember</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Meta AI launched Muse Ember, its smallest and most efficient model.</li>
+              <li>It targets complex reasoning execution and the work agents repeat all day, such as tool calls.</li>
+              <li>Simon Willison frames it as Meta&#x27;s entry in the Claude Haiku/GPT Luna category.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Nov/10/muse-ember/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Decision Context: Persistent Behavioral Learning for AI Agents</h3>
+              <h3>Don&#x27;t Blame The Preferences: Examining The Emergence of Sycophancy in LLM Training</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>forge_dc compiles human corrections and the agent&#x27;s own failed-tool-call reviews into imperative RULE directives that carry across sessions.</li>
-              <li>Rules are injected at the decision points they govern, not retrieved as general context.</li>
-              <li>On the 71-scenario DC-Bench, compliance rose from 55% (naive retrieval) to 95%, with about 10x fewer injected tokens per query.</li>
+              <li>Examines how AI sycophancy, the tendency to flatter users and affirm their beliefs, emerges during LLM training.</li>
+              <li>Notes sycophancy can undermine accuracy and contribute to misinformation, dependence, and overconfidence.</li>
+              <li>Prior work mostly benchmarked sycophancy in already-released models.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.08644" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.10045" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Forcing a Letter Suppresses Refusal: Mechanistic Evidence from WMDP</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>On Llama-3.1-8B and Qwen3-8B, multiple-choice prompts make the model commit to an answer letter very early, while open-ended prompts build toward refusal gradually.</li>
-              <li>MCQ activations sit about 3x further from the refusal direction than open-ended ones.</li>
-              <li>Ablating the heads that carry the answer letter brings refusal back, so MCQ safety scores mostly measure knowledge, not safety behaviour.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.08639" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Aspect-wise Pairwise Tournaments for Test-Time Selection</h3>
+              <h3>META-IR: Meta-Introspective Reasoning for Adaptive Safety Alignment in LLM</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>APT picks the best of n candidates with a single-elimination bracket, where each match is a vote among off-the-shelf verifiers, one per aspect.</li>
-              <li>It beats self-consistency, binary multi-aspect approval and reward-model selection across five domains, with the biggest gains on open-ended tasks.</li>
-              <li>Nothing is trained: aspects are plain-language prompts, so you can move it to a new domain or steer it without regenerating.</li>
+              <li>Targets LLM vulnerability to jailbreaks and harmful prompts under adversarial distribution shifts.</li>
+              <li>Argues static alignment pipelines fail to generalize in these conditions.</li>
+              <li>Proposes meta-introspective reasoning for adaptive safety alignment, building on introspective methods like STAIR.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.08640" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.10089" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NormGym: Evaluating Normative Competence through Social Interaction</h3>
+              <h3>LoRazor: Trimming Adapter Execution for Efficient Multi-LoRA Serving</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A benchmark for whether agents can infer unwritten social rules from interaction and adjust, rather than being told the rules.</li>
-              <li>It targets agents dropped into unfamiliar communities, a gap in existing static evaluations.</li>
+              <li>LoRA adapters let many users share one backbone model with customized adapters.</li>
+              <li>Serving concurrent requests with different adapters adds substantial computation and memory-management overhead.</li>
+              <li>LoRazor trims adapter execution to make multi-LoRA serving more efficient.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.08613" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.10049" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>RL-ATTACK: A Generalized Black-Box Adversarial Attack on Language Models via Reinforcement Learning</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>AYO: A Safe and Privacy-Preserving Platform for Studying Children&#x27;s Interaction with LLMs</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Uses reinforcement learning to search for input perturbations that push a model into unintended responses, with only black-box access.</li>
-              <li>Framed as a red-teaming tool: find the weaknesses first, then use them to harden the model.</li>
+              <li>Children and adolescents increasingly interact with generative AI, but little is known about the effect on their development and beliefs.</li>
+              <li>AYO is a platform for studying these interactions safely and in a privacy-preserving way.</li>
+              <li>It addresses limits of existing research approaches in this area.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.08711" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.10054" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -93,49 +113,50 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Your Experts Have Partners. There&#x27;s HOPE for Keeping Them Together</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>HOPE prunes MoE experts by modelling which pairs of experts work together, solved as a quadratic program in seconds per layer.</li>
-              <li>Qwen3.5-35B pruned 50% scored 42.3 on SWE-Bench Pro against 41.8 unpruned; it ranked best on average across Qwen3.5-122B/35B and GLM-4.5-Air.</li>
-              <li>Its lead grows at higher pruning rates and on agentic coding. The code is open at github.com/awslabs/HOPE.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/amazon/higher-order-pruning-experts" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Hide your slop PR descriptions behind &lt;details&gt;&lt;summary&gt;</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Keep a short, human-written opening paragraph visible, and fold the agent&#x27;s full PR description into a collapsed details block.</li>
-              <li>Label the fold with the model and effort level so readers know where the text came from.</li>
-              <li>Agent descriptions are accurate but long. The human opener tells reviewers whether the PR deserves their attention.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Nov/9/details-summary/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>parse_number() as a SQLite extension: C vs Rust</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>An agent-run experiment builds the same SQLite function, which turns strings like -$1,234.56 or 12.5% into numbers, in both C and Rust.</li>
-              <li>A practical comparison of the effort and tooling each language needs for loadable SQLite extensions.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Nov/8/sqlite-parse-number-c-vs-rust/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-agent-sdk-python: v0.2.179</h3>
+              <h3>anthropics/claude-code: v2.1.321</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A new point release of the Python Agent SDK is on PyPI (pip install claude-agent-sdk==0.2.179).</li>
-              <li>Pin the version and read the diff before upgrading production agents.</li>
+              <li>Claude Code v2.1.321 added Claude Fable 5.2 (claude-fable-5-2) as the default Fable model.</li>
+              <li>It offers 1M context at $8/$40 per Mtok, with $0.20/Mtok cache reads.</li>
+              <li>Added a --settings &lt;file&gt; option to claude remote-control that applies a settings file to every session it starts.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.179" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.321" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Quoting Prompting Claude Fable 5.2</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Anthropic&#x27;s guidance says Fable 5.2 responds closely to what the prompt says about who owns the code.</li>
+              <li>When the prompt said nothing about ownership or framed the code as someone else&#x27;s, the model tended to add to the existing structure.</li>
+              <li>This held in Anthropic&#x27;s testing on small coding tasks.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Nov/10/prompting-claude-fable-52/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Yonkers Rises</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Simon Willison used Fable 5.2 Medium to build a three.js animation of Yonkers&#x27; location and shape.</li>
+              <li>It was a test of Fable 5.2&#x27;s 3D modeling and animation skills.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Nov/10/yonkers-rises/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/sandbox-runtime: v0.0.82</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>sandbox-runtime v0.0.82 narrows the Windows profile read grant to a built-in list of tool directories instead of the whole profile.</li>
+              <li>initialize() upgrades an older grant automatically.</li>
+              <li>Tools installed only in scoop, .local, uv folders or elsewhere under .config need to be added explicitly.</li>
+            </ul>
+            <a href="https://github.com/anthropics/sandbox-runtime/releases/tag/v0.0.82" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
