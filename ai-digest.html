@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 10, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 11, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 10, 2026</div>
+        <div class="digest-date-badge">November 11, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Anthropic&#x27;s Fable 5.2 and Mythos 5.2 launch dominates the day, with tooling updates and prompting guidance following, while Meta AI answers with its small Muse Ember model. Research covers sycophancy in training, jailbreak-resistant alignment, and efficient multi-LoRA serving.</p>
+        <p class="digest-intro">Google&#x27;s Gemini 4 Carbon goes generally available at Sonnet-class pricing, and Anthropic&#x27;s SDKs add Fable 5.2 and Mythos 5.2 support. Research focuses on interpretability-based monitoring, verifying context compression, and agents applied to science and Earth observation.</p>
       </div>
     </section>
 
@@ -29,27 +29,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>llm-anthropic 0.31</h3>
+              <h3>llm-gemini 0.36</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Anthropic released Fable 5.2 and Mythos 5.2, and Fable 5.2 is currently ranked first on Artificial Analysis.</li>
-              <li>Anthropic says Fable 5.2 solved two open problems in the physics of black holes.</li>
-              <li>llm-anthropic 0.31 adds support for the new models.</li>
+              <li>Gemini 4 Carbon, first announced two weeks ago for a subset of cyber defenders, is now available to everyone.</li>
+              <li>Launch pricing is $2/million input and $10/million output, matching GPT-6.1 Sol and Claude Sonnet 5.5 prices.</li>
+              <li>llm-gemini 0.36 adds support for the model.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/9/llm-anthropic/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Introducing Our Smallest, Most Efficient Model: Muse Ember</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Meta AI launched Muse Ember, its smallest and most efficient model.</li>
-              <li>It targets complex reasoning execution and the work agents repeat all day, such as tool calls.</li>
-              <li>Simon Willison frames it as Meta&#x27;s entry in the Claude Haiku/GPT Luna category.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Nov/10/muse-ember/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/10/llm-gemini/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -59,51 +47,71 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Don&#x27;t Blame The Preferences: Examining The Emergence of Sycophancy in LLM Training</h3>
+              <h3>Train on prefill, monitor at decode: Using sparse autoencoders for topic monitoring</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Examines how AI sycophancy, the tendency to flatter users and affirm their beliefs, emerges during LLM training.</li>
-              <li>Notes sycophancy can undermine accuracy and contribute to misinformation, dependence, and overconfidence.</li>
-              <li>Prior work mostly benchmarked sycophancy in already-released models.</li>
+              <li>Topic monitoring labels the topic of each token in a response during generation.</li>
+              <li>Prior activation-based monitors were trained mostly for harmful content and limited to two or three classes.</li>
+              <li>This work uses sparse autoencoders, training on prefill and monitoring at decode, to broaden topic monitoring.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.10045" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.12935" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>META-IR: Meta-Introspective Reasoning for Adaptive Safety Alignment in LLM</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>SELD: Detecting Silent Evidence Loss in Context Compression beyond the Answer</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Targets LLM vulnerability to jailbreaks and harmful prompts under adversarial distribution shifts.</li>
-              <li>Argues static alignment pipelines fail to generalize in these conditions.</li>
-              <li>Proposes meta-introspective reasoning for adaptive safety alignment, building on introspective methods like STAIR.</li>
+              <li>Context compression is routine for long inputs, but a compressed context only helps if it keeps the evidence for the answer.</li>
+              <li>Existing checks compare the reader model&#x27;s answer or likely words and miss silent evidence loss.</li>
+              <li>SELD proposes detecting that loss beyond the answer itself.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.10089" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.12903" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LoRazor: Trimming Adapter Execution for Efficient Multi-LoRA Serving</h3>
+              <h3>Tracing Psychometric Inference in Large Language Models</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>LoRA adapters let many users share one backbone model with customized adapters.</li>
-              <li>Serving concurrent requests with different adapters adds substantial computation and memory-management overhead.</li>
-              <li>LoRazor trims adapter execution to make multi-LoRA serving more efficient.</li>
+              <li>Asks whether LLMs internally represent psychological constructs or merely emit psychometric-looking outputs.</li>
+              <li>Uses a cross-persona paradigm across 14 model variants from the Llama 3 family and one other family.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.10049" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.12937" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AYO: A Safe and Privacy-Preserving Platform for Studying Children&#x27;s Interaction with LLMs</h3>
+              <h3>Rethinking in Spikes: Mitigating Hallucinations in MDLMs with Step-Aware Decoding</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Observes that mask uncertainty in multimodal diffusion language models trends downward during iterative denoising.</li>
+              <li>Proposes step-aware decoding to mitigate hallucinations in these models.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.12901" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Auditable Human-Agent Teams for Autonomous X-ray Experimentation</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Children and adolescents increasingly interact with generative AI, but little is known about the effect on their development and beliefs.</li>
-              <li>AYO is a platform for studying these interactions safely and in a privacy-preserving way.</li>
-              <li>It addresses limits of existing research approaches in this area.</li>
+              <li>Studies agentic systems running closed-loop autonomous experimentation on physical X-ray instruments.</li>
+              <li>Targets the implementation effort that limits access to autonomous experimentation, with auditable human-agent teaming.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.10054" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.12933" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>EarthRecord: From Pixels to Land Change with Multimodal Agents over Four Decades of Satellite Imagery</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Introduces a benchmark for multimodal agents doing land-change analysis over four decades of satellite imagery.</li>
+              <li>Notes existing benchmarks fall short of measuring this ability for Earth observation science.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.12934" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -113,50 +121,26 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.321</h3>
+              <h3>anthropics/anthropic-sdk-python: v2.7.0</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Claude Code v2.1.321 added Claude Fable 5.2 (claude-fable-5-2) as the default Fable model.</li>
-              <li>It offers 1M context at $8/$40 per Mtok, with $0.20/Mtok cache reads.</li>
-              <li>Added a --settings &lt;file&gt; option to claude remote-control that applies a settings file to every session it starts.</li>
+              <li>Adds claude-fable-5-2 and claude-mythos-5-2 model support to the Python SDK.</li>
+              <li>Adds parent organization filtering and grouping to usage and cost reports.</li>
+              <li>Accepts user_profile.program_status_updated on organization webhook endpoints.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.321" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.7.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quoting Prompting Claude Fable 5.2</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Anthropic&#x27;s guidance says Fable 5.2 responds closely to what the prompt says about who owns the code.</li>
-              <li>When the prompt said nothing about ownership or framed the code as someone else&#x27;s, the model tended to add to the existing structure.</li>
-              <li>This held in Anthropic&#x27;s testing on small coding tasks.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Nov/10/prompting-claude-fable-52/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Yonkers Rises</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Simon Willison used Fable 5.2 Medium to build a three.js animation of Yonkers&#x27; location and shape.</li>
-              <li>It was a test of Fable 5.2&#x27;s 3D modeling and animation skills.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Nov/10/yonkers-rises/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/sandbox-runtime: v0.0.82</h3>
+              <h3>anthropics/anthropic-sdk-python: v2.8.0</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>sandbox-runtime v0.0.82 narrows the Windows profile read grant to a built-in list of tool directories instead of the whole profile.</li>
-              <li>initialize() upgrades an older grant automatically.</li>
-              <li>Tools installed only in scoop, .local, uv folders or elsewhere under .config need to be added explicitly.</li>
+              <li>Adds Claude Tag metrics to analytics summaries and users reports, and reply_mode to Claude Tag Slack channel settings.</li>
+              <li>Bug fixes harden Bedrock model ID handling for semicolons and empty or dot-only prefixes.</li>
             </ul>
-            <a href="https://github.com/anthropics/sandbox-runtime/releases/tag/v0.0.82" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.8.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
