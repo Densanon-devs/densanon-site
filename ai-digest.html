@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 11, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 12, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 11, 2026</div>
+        <div class="digest-date-badge">November 12, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Google&#x27;s Gemini 4 Carbon goes generally available at Sonnet-class pricing, and Anthropic&#x27;s SDKs add Fable 5.2 and Mythos 5.2 support. Research focuses on interpretability-based monitoring, verifying context compression, and agents applied to science and Earth observation.</p>
+        <p class="digest-intro">A lighter day: Anthropic opens its IPO roadshow with new details on how it approaches compute, and Google joins the emerging decision-model API category. On the tooling side, AWS ships an official local emulator built largely by agents, and the llm CLI patches a security issue.</p>
       </div>
     </section>
 
@@ -29,89 +29,27 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>llm-gemini 0.36</h3>
+              <h3>Anthropic&#x27;s IPO roadshow video</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Gemini 4 Carbon, first announced two weeks ago for a subset of cyber defenders, is now available to everyone.</li>
-              <li>Launch pricing is $2/million input and $10/million output, matching GPT-6.1 Sol and Claude Sonnet 5.5 prices.</li>
-              <li>llm-gemini 0.36 adds support for the model.</li>
+              <li>Anthropic kicked off its IPO roadshow on Nov 10.</li>
+              <li>The roadshow video includes previously unreleased information about how the business works.</li>
+              <li>The &#x27;Approach to compute&#x27; section with co-founder Tom Brown is highlighted as particularly interesting.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/10/llm-gemini/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Train on prefill, monitor at decode: Using sparse autoencoders for topic monitoring</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Topic monitoring labels the topic of each token in a response during generation.</li>
-              <li>Prior activation-based monitors were trained mostly for harmful content and limited to two or three classes.</li>
-              <li>This work uses sparse autoencoders, training on prefill and monitoring at decode, to broaden topic monitoring.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.12935" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/11/anthropic-ipo-roadshow/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SELD: Detecting Silent Evidence Loss in Context Compression beyond the Answer</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>Gemini Decisions API</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Context compression is routine for long inputs, but a compressed context only helps if it keeps the evidence for the answer.</li>
-              <li>Existing checks compare the reader model&#x27;s answer or likely words and miss silent evidence loss.</li>
-              <li>SELD proposes detecting that loss beyond the answer itself.</li>
+              <li>Google joins Jev and OpenAI in the decision-model category with &#x27;Gemini Decision 1&#x27;.</li>
+              <li>The API is almost identical to Jev, supporting yes/no, choice, and rubric-scoring questions.</li>
+              <li>It even reuses Jev&#x27;s term &#x27;Noul&#x27; for a yes/no question.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.12903" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Tracing Psychometric Inference in Large Language Models</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Asks whether LLMs internally represent psychological constructs or merely emit psychometric-looking outputs.</li>
-              <li>Uses a cross-persona paradigm across 14 model variants from the Llama 3 family and one other family.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.12937" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Rethinking in Spikes: Mitigating Hallucinations in MDLMs with Step-Aware Decoding</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Observes that mask uncertainty in multimodal diffusion language models trends downward during iterative denoising.</li>
-              <li>Proposes step-aware decoding to mitigate hallucinations in these models.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.12901" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Auditable Human-Agent Teams for Autonomous X-ray Experimentation</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Studies agentic systems running closed-loop autonomous experimentation on physical X-ray instruments.</li>
-              <li>Targets the implementation effort that limits access to autonomous experimentation, with auditable human-agent teaming.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.12933" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>EarthRecord: From Pixels to Land Change with Multimodal Agents over Four Decades of Satellite Imagery</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Introduces a benchmark for multimodal agents doing land-change analysis over four decades of satellite imagery.</li>
-              <li>Notes existing benchmarks fall short of measuring this ability for Earth observation science.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.12934" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/11/gemini-decisions-api/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -121,26 +59,36 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/anthropic-sdk-python: v2.7.0</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>aws-emulator</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds claude-fable-5-2 and claude-mythos-5-2 model support to the Python SDK.</li>
-              <li>Adds parent organization filtering and grouping to usage and cost reports.</li>
-              <li>Accepts user_profile.program_status_updated on organization webhook endpoints.</li>
+              <li>AWS has released an official emulator to run tests against a local clone of many of its services, with no paid API key needed.</li>
+              <li>It is written in Rust by a large swarm of agents, with 29,684 commits in the first three weeks of the project.</li>
             </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.7.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/11/aws-emulator/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/anthropic-sdk-python: v2.8.0</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>llm 0.37.2</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds Claude Tag metrics to analytics summaries and users reports, and reply_mode to Claude Tag Slack channel settings.</li>
-              <li>Bug fixes harden Bedrock model ID handling for semicolons and empty or dot-only prefixes.</li>
+              <li>llm 0.37.2 fixes a security issue reported by Daniel de Araujo (GHSA-v9h7-jj4g-f862 and GHSA-r639-rr7r-x72w).</li>
+              <li>The issue concerns the extra-openai-models.yaml mechanism for OpenAI-compatible endpoints, now managed by the llm openai endpoint add command introduced in 0.37.</li>
             </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.8.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/11/llm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Browse tools.simonwillison.net by tag</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Simon Willison added tag-based browsing for his collection of vibe-coded tools, now 244 and counting.</li>
+              <li>He used leftover Fable 5.2 credits to have a model analyze the code with tree-sitter for JavaScript APIs and libraries.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Nov/11/tools-tags/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
