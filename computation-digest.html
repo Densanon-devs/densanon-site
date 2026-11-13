@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - November 12, 2026 | Densanon</title>
+  <title>Computation Morning Digest - November 13, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 12, 2026</div>
+        <div class="digest-date-badge">November 13, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">AI inference drives much of today&#x27;s computation news: Google splits its 8th-gen TPU line into agent- and security-focused parts, and engineers rethink memory and cooling for inference workloads. Quantum computing brings a vibration-based memory design and a claimed chemical-accuracy milestone at 80 qubits, while AMD&#x27;s 256-core Venice EPYC and Zen 6 draw community attention.</p>
+        <p class="digest-intro">Nvidia dominates the day&#x27;s computation news, with analyst claims of large-scale AI GPU smuggling into China and a CEO transition rippling through the industry coverage. Memory and data movement are a recurring theme, from High-Bandwidth Flash for GPUs to interconnect IP milestones. Open-source toolchain work from Intel and NVIDIA and SC26 previews round out the day.</p>
       </div>
     </section>
 
@@ -29,25 +29,36 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Google reworks TPU silicon into specialized systems for agents and security</h3>
+              <h3>Mass smuggling of up to 1.5 million Nvidia AI GPUs could be the underlying cause of Jensen Huang&#x27;s departure, analysts claim</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Google&#x27;s TPU 8i Max and TPU 8tx reuse TPU 8i and TPU 8t silicon for specialized roles.</li>
-              <li>TPU 8i Max targets long-context agents; TPU 8tx targets confidential inference and security.</li>
-              <li>Per the URL, TPU 8i Max puts two chips on one package and TPU 8tx swaps Arm hosts for AMD EPYC.</li>
+              <li>SemiAnalysis says it has tracked 1.5 gigawatts of banned AI accelerators flowing into China despite export controls.</li>
+              <li>Analysts suggest the mass smuggling could be the underlying cause of Jensen Huang&#x27;s departure.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/google-adds-two-new-specialized-chips-for-ai-agents-and-security-to-8th-gen-tpu-lineup-tpu-8i-max-puts-two-chips-on-one-package-for-long-context-work-tpu-8tx-swaps-arm-hosts-for-amd-epyc" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/mass-smuggling-of-nvidia-ai-gpus-could-be-the-underlying-cause-of-jensen-huangs-departure-analysts-claim-more-than-1-5-gigawatts-of-banned-chips-tracked-to-china-despite-export-controls" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel Xe Driver Preparing SR-IOV Provisioning For vGPU Profiles</h3>
+              <h3>Intel Posts Initial GCC Compiler Code For Razor Lake &amp; Coral Rapids</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>With the Linux 7.5 kernel cycle, the Intel Xe graphics driver is preparing SR-IOV provisioning for vGPU profiles.</li>
+              <li>Intel has posted initial GCC compiler code for its Razor Lake and Coral Rapids CPU targets.</li>
+              <li>Phoronix notes Intel consistently upstreams new CPU targets into open-source compilers well ahead of product launches.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.5-Intel-Xe-vGPU-Profile" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Intel-GCC-Coral-Rapids-Razor" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>NVIDIA Highlights Their Open-Source vGPU Upstreaming Work Built Atop Nova</h3>
+              <span class="digest-source">Phoronix</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>NVIDIA is highlighting its open-source vGPU upstreaming work built atop Nova.</li>
+              <li>Nova, the Rust-based NVIDIA Linux kernel driver, is set to play an important role in the official driver stack of the future.</li>
+            </ul>
+            <a href="https://www.phoronix.com/news/NVIDIA-Upstream-vGPU-Nova" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -57,27 +68,36 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Inside this quantum computer, memory vibrates like a guitar string</h3>
-              <span class="digest-source">ScienceDaily</span>
+              <h3>Reconstructing Fine-grained Memory Reuse Structure in GPU Kernels</h3>
+              <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Researchers built a quantum computer that stores information in microscopic vibrations.</li>
-              <li>The approach could make quantum machines smaller, more powerful, and better at preserving information.</li>
-              <li>The system successfully demonstrated advanced quantum calculations.</li>
+              <li>The paper targets GPU data-movement optimization, which requires knowing which instructions access the same data and across which execution scopes reuse occurs.</li>
+              <li>Existing profilers attribute memory behavior to individual instructions but do not expose the reuse relations among them.</li>
             </ul>
-            <a href="https://www.sciencedaily.com/releases/2026/11/261109205416.htm" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.14741" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Qunova’s Hybrid Computing Method Matches Classical Benchmark for Iron-Sulfur Cluster</h3>
+              <h3>SlipStream: Enabling HBF for GPU Systems by Mitigating the Latency and SRAM Overheads</h3>
+              <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>High-Bandwidth Flash (HBF) replaces the DRAM dies of HBM with NAND flash, offering up to 16x the capacity at comparable read bandwidth.</li>
+              <li>SlipStream aims to make HBF workable for GPU systems by mitigating its latency and SRAM overheads, motivated by LLM inference&#x27;s growing memory demands.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.14776" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Classical Light Dynamics Could Help Simulate Quantum Interactions</h3>
               <span class="digest-source">The Quantum Insider</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Qunova says its HI-VQE algorithm is the first quantum algorithm to reach chemical accuracy at 80 qubits.</li>
-              <li>The result matches a classical benchmark for an iron-sulfur cluster.</li>
-              <li>This is a company press release, so the claims are Qunova&#x27;s own.</li>
+              <li>Researchers from Saint Louis University and two German institutions showed multimode nonlinear optical platforms can induce effective quantum interactions between photons.</li>
+              <li>The photons subsequently thermalize, suggesting classical light dynamics could help simulate quantum interactions.</li>
             </ul>
-            <a href="https://thequantuminsider.com/2026/11/12/qunovas-hybrid-computing-method-matches-classical-benchmark-for-iron-sulfur-cluster/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://thequantuminsider.com/2026/11/13/classical-light-dynamics-could-help-simulate-quantum-interactions/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -87,73 +107,47 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Rethinking Memory For AI Inference</h3>
+              <h3>Chip Industry Week In Review</h3>
               <span class="digest-source">Semiconductor Engineering</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Processing data closer to memory could reduce power and boost performance for AI inference.</li>
-              <li>Software, thermal, and architectural challenges remain.</li>
+              <li>Topics include Nvidia facing questions about security and oversight, a 300mm SiC breakthrough, and Siemens buying Lauterbach.</li>
+              <li>Also covered: chiplet standards, new memory bets, an imec interposer process flow, TPUs with CPUs, 2D transistors, and anti-smuggling tools for chips.</li>
             </ul>
-            <a href="https://semiengineering.com/rethinking-memory-for-ai-inference/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://semiengineering.com/chip-industry-week-in-review-164/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Beyond Bandwidth: AI Inference Is Reshaping The Memory Wall</h3>
-              <span class="digest-source">Semiconductor Engineering</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Longer contexts, higher concurrency, multimodal models, and AI agents keep changing where memory pressure appears in inference.</li>
-            </ul>
-            <a href="https://semiengineering.com/beyond-bandwidth-ai-inference-is-reshaping-the-memory-wall/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Waterloo Researchers Develop Hybrid Cooling Method for Chip Hotspots</h3>
+              <h3>HyperAccel to Showcase LPU-Based AI Inference System at SC26</h3>
               <span class="digest-source">HPCwire</span>
             </div>
             <ul class="digest-takeaways">
-              <li>University of Waterloo researchers use tiny drops of coolant in a hybrid cooling method for chip hotspots.</li>
-              <li>In simulated hotspots, temperatures fell by up to 17 C in just 15 seconds.</li>
-              <li>Aimed at cooling AI data centers more effectively and economically.</li>
+              <li>South Korean fabless company HyperAccel will showcase its LPU (LLM Processing Unit) AI inference system at SC26.</li>
+              <li>SC26 runs November 17-19 at McCormick Place in Chicago.</li>
             </ul>
-            <a href="https://www.hpcwire.com/off-the-wire/waterloo-researchers-develop-hybrid-cooling-method-for-chip-hotspots/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.hpcwire.com/off-the-wire/hyperaccel-to-showcase-lpu-based-ai-inference-system-at-sc26/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>European tech buyers add digital sovereignty to cyber shopping list</h3>
-              <span class="digest-source">The Register</span>
+              <h3>Torus Launches Foundry AI Infrastructure and Announces $500M in Growth Capital</h3>
+              <span class="digest-source">HPCwire</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Sales from EU-headquartered security vendors have rocketed over two years.</li>
-              <li>Political shifts play a role, but NIS2 and DORA regulation are also factors.</li>
+              <li>Torus, a U.S. maker of distributed power and compute infrastructure, launched Foundry, modular AI infrastructure for inference compute.</li>
+              <li>The company also announced $500M in growth capital; Foundry packages power, storage, cooling, networking, and compute.</li>
             </ul>
-            <a href="https://www.theregister.com/security/2026/11/12/european-tech-buyers-add-digital-sovereignty-to-cyber-shopping-list/5309216" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Community Highlights</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AMD EPYC Venice SP7 Review: 256 Cores Per Socket</h3>
-              <span class="digest-source">Reddit r/hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Reddit r/hardware discussion of a review of the AMD EPYC Venice SP7, with 256 cores per socket.</li>
-            </ul>
-            <a href="https://www.reddit.com/r/hardware/comments/1xu7u0n/amd_epyc_venice_sp7_review_256_cores_per_socket/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.hpcwire.com/off-the-wire/torus-launches-foundry-ai-infrastructure-and-announces-500m-in-growth-capital/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>[Chips and Cheese] Talking Zen 6 with Mike Clark at AMD In-Depth</h3>
-              <span class="digest-source">Reddit r/hardware</span>
+              <h3>What 1,000 Arteris Design Starts Reveal About Semiconductor Innovation</h3>
+              <span class="digest-source">SemiWiki</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Chips and Cheese interviews AMD&#x27;s Mike Clark in depth about Zen 6, shared on r/hardware.</li>
+              <li>Arteris has surpassed 1,000 customer silicon design starts using its interconnect IP.</li>
+              <li>The milestone highlights a shift in chip design where moving data efficiently is becoming as important as processing it.</li>
             </ul>
-            <a href="https://www.reddit.com/r/hardware/comments/1xu4fqj/chips_and_cheese_talking_zen_6_with_mike_clark_at/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://semiwiki.com/ip/arteris/376116-what-1000-arteris-design-starts-reveal-about-semiconductor-innovation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
