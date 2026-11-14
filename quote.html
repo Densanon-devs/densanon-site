@@ -570,10 +570,11 @@
               <label class="form-label" for="contactProject">Tell us about your project <span class="optional">(optional)</span></label>
               <textarea id="contactProject" class="form-input form-textarea" placeholder="What problem are you trying to solve? Any specific features or goals in mind?"></textarea>
             </div>
-            <div id="formError" class="form-error" style="display:none;"></div>
+            <input type="text" id="contactWebsite" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
+            <div id="formError" class="form-error" role="alert" style="display:none;"></div>
             <div class="wizard-nav">
               <button class="btn btn-outline" onclick="goToStep(4)">Back: Adjust Plan</button>
-              <button class="btn btn-primary" onclick="submitContactForm()">Submit Quote Request</button>
+              <button id="contactSubmitBtn" class="btn btn-primary" onclick="submitContactForm()">Submit Quote Request</button>
             </div>
           </div>
 
@@ -625,7 +626,7 @@
           <div class="faq-item">
             <button class="faq-question">What is the points system?</button>
             <div class="faq-answer">
-              <p>Every feature is measured in points (1 point = ~45-60 minutes of work). Points are priced at $75/point one-time or $4/point monthly, then adjusted by solution type and delivery format. Managed plans start at $150/mo ($75/mo for church websites).</p>
+              <p>Every feature is measured in points (1 point = ~45-60 minutes of work). Points are priced at $75/point one-time or $4/point monthly, then adjusted by solution type and delivery format. Managed plans start at $150/mo (church plans start lower). Because a managed website becomes yours after 12 months, its 12 monthly payments always add up to at least the one-time price.</p>
             </div>
           </div>
           <div class="faq-item">
@@ -751,6 +752,11 @@
       // Monthly floor for Managed (Hybrid floor = floor x hybridMonthlyRate).
       // Church sites are lower: the weekly sermon media carries the monthly value.
       managedFloor: { default: 150, church: 75 },
+
+      // Managed websites become the client's after this many months, so those
+      // payments must total at least this multiple of the Ownership price.
+      managedTermMonths: 12,
+      managedTermPremium: 1.2,
 
       hybridUpfrontRate: 0.20,
       hybridMonthlyRate: 0.60,
@@ -890,8 +896,15 @@
       const floor = PRICING.managedFloor[solution] || PRICING.managedFloor.default;
       if (managedMonthly < floor) managedMonthly = floor;
 
+      // A managed website is the client's after the 12-month term, so the term
+      // must never cost less than buying it outright (plus hosting and support).
+      if (format === 'website') {
+        const termCovers = Math.ceil(totalPrice * PRICING.managedTermPremium / PRICING.managedTermMonths);
+        if (managedMonthly < termCovers) managedMonthly = termCovers;
+      }
+
       const hybridUpfront = Math.round(totalPrice * PRICING.hybridUpfrontRate);
-      const hybridMonthly = Math.max(Math.round(monthlyFull * PRICING.hybridMonthlyRate), Math.round(floor * PRICING.hybridMonthlyRate));
+      const hybridMonthly = Math.max(Math.round(managedMonthly * PRICING.hybridMonthlyRate), Math.round(floor * PRICING.hybridMonthlyRate));
       const supportMonthly = PRICING.support[support] || 0;
 
       // Update summary bar
@@ -1103,36 +1116,36 @@
         monthly:             q.monthly
       };
 
-      if (GOOGLE_SHEET_URL) {
-        let iframe = document.getElementById('sheetFrame');
-        if (!iframe) {
-          iframe = document.createElement('iframe');
-          iframe.id = 'sheetFrame';
-          iframe.name = 'sheetFrame';
-          iframe.style.display = 'none';
-          document.body.appendChild(iframe);
-        }
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = GOOGLE_SHEET_URL;
-        form.target = 'sheetFrame';
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'data';
-        input.value = JSON.stringify(payload);
-        form.appendChild(input);
-        document.body.appendChild(form);
-        form.submit();
-        form.remove();
-      }
+      // Honeypot: real people never see or fill this field
+      const honey = document.getElementById('contactWebsite');
+      if (honey && honey.value) { showQuoteConfirm(name, business); return; }
 
+      const btn = document.getElementById('contactSubmitBtn');
+      if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = 'Sending...'; }
+
+      // Apps Script does not send CORS headers, so the response body can't be read.
+      // fetch still rejects on network failure, which the old hidden-iframe post hid.
+      fetch(GOOGLE_SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: new URLSearchParams({ data: JSON.stringify(payload) })
+      }).then(function () {
+        showQuoteConfirm(name, business);
+      }).catch(function () {
+        if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label || 'Send'; }
+        errEl.innerHTML = 'Sorry, your request didn’t go through. Please email <a href="mailto:admin@densanon.com">admin@densanon.com</a> or call <a href="tel:+12086609798">(208) 660-9798</a>.';
+        errEl.style.display = '';
+      });
+    }
+
+    function showQuoteConfirm(name, business) {
       document.getElementById('contactFormWrap').style.display = 'none';
       document.getElementById('tierRecap').style.display = 'none';
       const confirmEl = document.getElementById('contactConfirm');
       document.getElementById('confirmTitle').textContent =
         'Thanks ' + name + '! We\u2019ve received your quote request for ' + business + '.';
       document.getElementById('confirmBody').textContent =
-        'We\u2019ll review your project details and get back to you within 24 hours.';
+        'We\u2019ll review your project details and get back to you within 24 hours. If you don’t hear from us by then, email admin@densanon.com.';
       confirmEl.style.display = 'block';
       document.getElementById('calculator').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
