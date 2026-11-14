@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 13, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 14, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 13, 2026</div>
+        <div class="digest-date-badge">November 14, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s AI news centers on agent reliability and evaluation, with new papers on error-laden agent histories, abstention thresholds and data-agent benchmarks. Google&#x27;s Gemini 4 Hydrogen arrives with confusing pricing, while Claude Code adds an experimental Code Mode.</p>
+        <p class="digest-intro">A light day on the feed, led by llama.cpp and ggml reaching v1.0.0 with formal semantic versioning, and a new Allen AI benchmark showing assistants often miss the misconception behind a request. Anthropic shipped a Claude Code release with a security fix, and NVIDIA published a hands-on robotics simulation walkthrough.</p>
       </div>
     </section>
 
@@ -29,98 +29,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Cleaning an Agent&#x27;s History Hurts When the World Still Holds the Error</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
+              <h3>XYBench: Helping with the problem behind the question</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Tool-using agents accumulate histories of their own mistakes, and systems that compact, repair or hand off that history decide what it says about those errors.</li>
-              <li>The paper argues that cleaning the history can hurt when the error&#x27;s effects still persist in the world.</li>
+              <li>XYBench contains 8,115 questions, mostly programming and everyday tasks, testing whether assistants spot a misconception behind a request.</li>
+              <li>On Stack Overflow questions, models focused mainly on the underlying goal in only 35-41% of responses, less often than human answers.</li>
+              <li>Models chose the goal-focused answer 71-84% of the time when picking between options, so selecting is more reliable than writing.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.14654" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Abstention Is Not Threshold Compliance: Stated Scoring Rules in Open Language Models</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Tests the proposal (Kalai et al.) of stating the scoring rule with an explicit threshold t, so a model answers only when its probability of being correct exceeds t.</li>
-              <li>Probes each requirement of compliance on shared items across 12 open-model checkpoints; the title concludes abstention is not threshold compliance.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.14661" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>SynthCorp: A Platform for Creating Benchmarks for Data Agents</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues current benchmarks for LLM-driven data agents saturate quickly and cannot target specific capabilities.</li>
-              <li>SynthCorp creates customizable data estates and benchmarks by simulating how business events produce and modify corporate data.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.14765" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>When Should Semantic Priors Enter Partially-Identified Causal Discovery?</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Observational causal discovery often leaves causal directions unresolved or unstable.</li>
-              <li>LLMs can supply semantic information to resolve directions, but incorrect proposals can exclude the true causal graph; the paper asks when such priors should enter.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.14736" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>An LLM Is All You Need: Data-Efficient Adaptation to Full-Duplex, Word-Level Spoken Dialogue</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Full-duplex spoken dialogue (listening while speaking, backchanneling, being interrupted) is usually obtained by training on hundreds of thousands to millions of hours of speech.</li>
-              <li>That is costly; the paper presents a data-efficient adaptation of an LLM to full-duplex, word-level dialogue.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.14774" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Zugwise: Domain-Aware Game Reconstruction for Digitizing Handwritten Chess Scoresheets</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Frames chess scoresheet digitization as more than handwriting recognition: an illegal-move misread is loud, but other errors matter more.</li>
-              <li>Zugwise is a domain-aware game reconstruction approach for handwritten scoresheets.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.14544" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Together Compiler: Continual Compilation for AI Inference</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Together AI describes continual compilation for AI inference, aimed at constantly changing workloads.</li>
-              <li>The challenge cited: new models ship more often, architectures are more diverse, and traffic distributions shift frequently.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.14681" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Product &amp; Industry</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>llm-gemini 0.37</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Google launched Gemini 4 Hydrogen, the lowest-cost member of the Gemini 4 family.</li>
-              <li>Its price is not far off that of the larger siblings Carbon and Argon.</li>
-              <li>Willison finds the Gemini 4 pricing scheme confusing; llm-gemini 0.37 is the matching release.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Nov/12/llm-gemini/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/allenai/xybench" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -130,26 +47,48 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.323</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>llama.cpp v1.0.0 : A stronger foundation for the local AI ecosystem</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds Code Mode, an experimental opt-in where Claude writes JavaScript to call its tools; it can be turned off for an organization.</li>
-              <li>Adds an engines[&quot;claude-code&quot;] field to plugin.json so plugins can state which Claude Code versions they support.</li>
+              <li>llama.cpp and ggml both reached v1.0.0; future API and ABI breaks will be signaled by major-version bumps.</li>
+              <li>Semantic versioning: MAJOR for breaking C API changes, MINOR for compatible features, backends or model support, PATCH for fixes.</li>
+              <li>Supports 150+ model architecture variants and ships via Docker, Debian, Homebrew, conda-forge, MacPorts, Winget and XCFramework.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.323" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/ggml-org/llama-cpp-v1" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/anthropic-sdk-java: v3.8.0</h3>
+              <h3>Build a Robot Pick-and-Place Simulation with SimReady Assets</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Builds a pick-and-place simulation in Isaac Sim 6.2 using a UR17G arm, Robotiq 2F-140 gripper and a beverage can from SimReady Central.</li>
+              <li>SimReady assets are OpenUSD files with simulation properties such as collisions, mass, joints and joint drives.</li>
+              <li>The setup is fixed and scripted with no vision, so it does not show robustness to uncertain object positions or real hardware.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/nvidia/simready-assets-robot-pick-and-place" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.325</h3>
               <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds Claude Tag metrics to the analytics summaries and users reports.</li>
-              <li>Adds reply_mode to Claude Tag Slack channel settings.</li>
-              <li>Bug fix: the Bedrock, Vertex or Google Cloud path value is now quoted in full in the dot-segment error.</li>
+              <li>Fixes a security issue in how zstd-compressed responses are decoded.</li>
+              <li>Adds a spinner tip in VS Code and similar terminals about re-running a notebook cell after Claude reads or edits a Jupyter notebook.</li>
             </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-java/releases/tag/v3.8.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.325" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code-action: v1.0.275</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>claude-code-action v1.0.275 makes the git wrappers independent of the session&#x27;s environment.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code-action/releases/tag/v1.0.275" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
