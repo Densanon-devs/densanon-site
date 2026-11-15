@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Dev Morning Digest - November 14, 2026 | Densanon</title>
+  <title>Game Dev Morning Digest - November 15, 2026 | Densanon</title>
   <meta name="description" content="Daily game development news digest - engines, tools, techniques, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,82 +15,70 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 14, 2026</div>
+        <div class="digest-date-badge">November 15, 2026</div>
         <h1>Game Dev Morning <span>Digest</span></h1>
-        <p class="digest-intro">Regulation and generative AI dominate today&#x27;s game development news, from the EU&#x27;s proposed Digital Fairness Act to AI voice work on The Witcher 3 and a flood of AI-assisted Next Fest demos. On the practical side, Unity publishes a guide to defining game rules and win conditions, and an indie hit&#x27;s development story is in the mix.</p>
+        <p class="digest-intro">Today&#x27;s picks range from a puzzle game that teaches GPU design by having you wire up a rasterizer, to a clear explainer on proof number search for solving game trees. Nintendo of America is hiring a digital archivist, and November deal roundups cover Unity, Godot and Unreal asset bundles. Two engineering reads round it out: a config-serialization bug that silently disabled Amass v5 features, and an argument for context engines over piles of MCP connectors.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
+        <h2 class="digest-section-title">Engines &amp; Tools</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Show HN: Hello Triangle, a puzzle game where you build a GPU</h3>
+              <span class="digest-source">Hacker News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Players wire adders, comparators and registers into circuits that draw a target picture; circuits cannot contain loops, so counting requires building a counter from a register and an adder.</li>
+              <li>Parts you finish are reused in later levels, so a slow or large part raises area, delay and cycle count everywhere it appears. Clicking a wrong pixel rewinds to the cycle that drew it so every wire value can be inspected.</li>
+              <li>The free demo (Act 1, 16 levels) ends with drawing a triangle on Steam and itch.io; Act 2 (17 levels, ending in a 3D cube) is planned for Early Access in early 2027.</li>
+            </ul>
+            <a href="https://hellotriangle.icedlatte.ca/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Show HN: IndexFast - see which of your pages search engines actually know about</h3>
+              <span class="digest-source">Hacker News</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>It watches a sitemap and automatically submits new or updated pages to IndexNow engines (Bing, Yandex, Naver, Seznam, Yep), batching up to 1,000 URLs per IndexNow request.</li>
+              <li>On HTTP 429 a circuit breaker pauses a site&#x27;s jobs for 1 hour, doubling up to 24 hours; retries use exponential backoff with plus or minus 20% jitter and honor Retry-After.</li>
+              <li>It ships an MCP server, REST API and CLI (npx indexfast). The page states Google does not accept IndexNow and indexing there cannot be guaranteed; plans are Free, Pro ($19/30 days) and Unlimited ($99/30 days).</li>
+            </ul>
+            <a href="https://indexfast.co" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Humble Fumbles &amp; November GameDev Deals Round-Up</h3>
+              <span class="digest-source">GameFromScratch</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The November 14, 2026 roundup lists a Unity Asset Store Low Poly Mega Bundle, a Synty Fantasy sale of up to 80% off, and Gumroad Black Friday bundles for Godot, Unity and Unreal (code BF100 for $100 off).</li>
+              <li>Humble Bundle entries include a Make 30 Games with Godot, Unreal &amp; Unity bundle, an Unreal Multiverse Bundle and a Tech Book Bundle on Unreal Engine 5 and C++; Bundle Foundry adds Unreal environment and sound effect bundles.</li>
+            </ul>
+            <a href="https://gamefromscratch.com/humble-fumbles-november-gamedev-deals-round-up/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
         <h2 class="digest-section-title">Industry &amp; News</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Newly-proposed EU law could place tight restrictions on free-to-play games</h3>
-              <span class="digest-source">Game Developer</span>
+              <h3>Nintendo of America invests in game preservation</h3>
+              <span class="digest-source">GamesRadar+</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The proposed EU Digital Fairness Act could place tight restrictions on free-to-play games.</li>
-              <li>If adopted, it could change how some games are developed and published in Europe and globally.</li>
+              <li>Nintendo of America is hiring a 12-month contract Digital Archivist, Historical Systems to design a structured framework for organizing technical records, engineering documentation, source materials and knowledge about legacy platforms.</li>
+              <li>Duties include interviewing subject matter experts and long-tenured employees to capture institutional knowledge.</li>
+              <li>GamesRadar notes PlayStation and Blizzard have similar internal archives, which are mostly not public but can inform remasters and bonus features.</li>
             </ul>
-            <a href="https://www.gamedeveloper.com/business/european-union-proposes-digital-fairness-act-which-could-have-major-effects-on-game-development" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>The Digital Fairness Act is a decade-long bill coming due | Opinion</h3>
-              <span class="digest-source">GamesIndustry.biz</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A draft of the European Commission&#x27;s Digital Fairness Act leaked earlier this week, prompting dramatic industry reactions.</li>
-              <li>Official responses from trade bodies after the official draft&#x27;s release are more measured in tone.</li>
-            </ul>
-            <a href="https://www.gamesindustry.biz/the-digital-fairness-act-is-a-decade-long-bill-coming-due-opinion" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Witcher 3 devs use AI to help Polish voice actor reprise role of Geralt after stroke</h3>
-              <span class="digest-source">Game Developer</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Jacek Rozenek, the Polish voice of Geralt, was left unable to perform the role after a stroke.</li>
-              <li>He consented to AI being used for Witcher 3&#x27;s next expansion.</li>
-            </ul>
-            <a href="https://www.gamedeveloper.com/production/polish-voice-actor-for-geralt-returns-for-the-witcher-3-with-ai" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>CD Projekt Red used AI to alter the voice of Geralt&#x27;s original Polish actor in Witcher 3: Songs of the Past</h3>
-              <span class="digest-source">GamesIndustry.biz</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>CD Projekt Red used AI to alter the voice of Geralt&#x27;s original Polish actor, Jacek Rozenek, for the Songs of the Past expansion.</li>
-            </ul>
-            <a href="https://www.gamesindustry.biz/cd-projekt-red-used-ai-to-alter-the-voice-of-geralts-original-polish-actor-in-witcher-3-songs-of-the-past" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>How to protect your IP against the army of AI clones</h3>
-              <span class="digest-source">GamesIndustry.biz</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Generative AI use in game development has increased significantly in recent months.</li>
-              <li>Steam Next Fest featured over 8,000 demos in October 2026, many made partly or entirely with generative AI tools.</li>
-            </ul>
-            <a href="https://www.gamesindustry.biz/how-to-protect-your-ip-against-the-army-of-ai-clones" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Development secrets of Dressmaker, ft. Ruan Rothmann &amp;amp; Sara Laubscher</h3>
-              <span class="digest-source">Game Developer</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Covers the development of Dressmaker, described as the surprise hit of 2026.</li>
-              <li>Interview with Ruan Rothmann and Sara Laubscher on what it took to bring the indie game to life.</li>
-            </ul>
-            <a href="https://www.gamedeveloper.com/pc/development-secrets-of-dressmaker-ft-ruan-rothmann-sara-laubscher" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.gamesradar.com/games/nintendo-of-america-invests-in-game-preservation-as-it-looks-to-hire-an-archivist-to-make-sure-its-history-is-preserved-for-future-generations/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -100,14 +88,45 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Rules, states, and win conditions in video games: a guide</h3>
-              <span class="digest-source">Unity Blog</span>
+              <h3>Proof Number search: exhaustively search a game tree to prove win or lose</h3>
+              <span class="digest-source">minimax.dev</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Explains how rules, game states, and win and lose conditions work in video games, with simple examples.</li>
-              <li>Offers a five-step method to define your game&#x27;s rules before you build.</li>
+              <li>Proof number search is a best-first AND/OR tree search that proves or disproves a position rather than picking the best move; a forced draw counts as a loss for the attacker.</li>
+              <li>Each node tracks proof and disproof numbers: an OR node&#x27;s pn is the minimum of its children&#x27;s and its dpn the sum; an AND node is the reverse. The search descends to the most-proving leaf, expands it and backpropagates until the root is solved or the budget runs out.</li>
+              <li>Results depend heavily on the node initialization heuristic (pn = dpn = 1 is the conservative default), and memory use is the practical limit. The page links a Rust implementation for Ultimate Tic Tac Toe.</li>
             </ul>
-            <a href="https://unity.com/blog/video-game-rules-states-win-conditions" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://minimax.dev/docs/ultimate/pn-search/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>A Pile of MCP Connectors Is Not a Context Engine</h3>
+              <span class="digest-source">Unblocked</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The post argues per-system MCP connectors give agents access but not cross-tool understanding: the agent must assemble sources itself, cannot tell which source is current, and each connector adds its own credentials and permission model.</li>
+              <li>A context engine instead resolves aliases and cross-system links at ingestion, reconciles contradictions with recency and authority signals, enforces permissions server-side, and returns cited answers.</li>
+              <li>Vendor benchmarks claim up to 83% faster and 48% fewer tokens on a Kotlin SDK task; these are the author&#x27;s own and unverified. The post concedes connectors remain right for transactional actions.</li>
+            </ul>
+            <a href="https://getunblocked.com/blog/mcp-connectors-are-not-a-context-engine/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Amass v5 silently ignores -alts and -brute: flags never cross the engine API</h3>
+              <span class="digest-source">Medium</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>In Amass v5 the CLI POSTs its config to a separate engine that unmarshals into a zero-valued struct; the six alteration-technique fields (FlipWords, FlipNumbers, AddWords, AddNumbers, MinForWordFlip, EditDistance) were tagged json:&quot;-&quot;, so they never reached the engine and the tool exited 0 with no alterations.</li>
+              <li>The author&#x27;s fix gives those fields real JSON names (PR #1161). The existing exact-JSON config test had pinned the buggy output, so it could not catch the problem.</li>
+              <li>Separately, v5 has no wordlist brute-force plugin at all (issue #1122), and an engine log filename containing colons fails on Windows (PR #1160).</li>
+            </ul>
+            <a href="https://legitbiz.medium.com/your-amass-v5-results-are-thinner-than-v4s-there-s-a-code-level-reason-6a737350bc97" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
