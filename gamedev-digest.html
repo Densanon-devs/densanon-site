@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Dev Morning Digest - November 15, 2026 | Densanon</title>
+  <title>Game Dev Morning Digest - November 16, 2026 | Densanon</title>
   <meta name="description" content="Daily game development news digest - engines, tools, techniques, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,100 +15,39 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 15, 2026</div>
+        <div class="digest-date-badge">November 16, 2026</div>
         <h1>Game Dev Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s picks range from a puzzle game that teaches GPU design by having you wire up a rasterizer, to a clear explainer on proof number search for solving game trees. Nintendo of America is hiring a digital archivist, and November deal roundups cover Unity, Godot and Unreal asset bundles. Two engineering reads round it out: a config-serialization bug that silently disabled Amass v5 features, and an argument for context engines over piles of MCP connectors.</p>
+        <p class="digest-intro">A light news day dominated by Unity&#x27;s new Unity Fellowship program, which offers indie developers a $50,000 grant. Two fresh itch.io releases round out the day: a physics-driven ragdoll RPG sandbox and a free repair simulation.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Engines &amp; Tools</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Show HN: Hello Triangle, a puzzle game where you build a GPU</h3>
-              <span class="digest-source">Hacker News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Players wire adders, comparators and registers into circuits that draw a target picture; circuits cannot contain loops, so counting requires building a counter from a register and an adder.</li>
-              <li>Parts you finish are reused in later levels, so a slow or large part raises area, delay and cycle count everywhere it appears. Clicking a wrong pixel rewinds to the cycle that drew it so every wire value can be inspected.</li>
-              <li>The free demo (Act 1, 16 levels) ends with drawing a triangle on Steam and itch.io; Act 2 (17 levels, ending in a 3D cube) is planned for Early Access in early 2027.</li>
-            </ul>
-            <a href="https://hellotriangle.icedlatte.ca/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Show HN: IndexFast - see which of your pages search engines actually know about</h3>
-              <span class="digest-source">Hacker News</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>It watches a sitemap and automatically submits new or updated pages to IndexNow engines (Bing, Yandex, Naver, Seznam, Yep), batching up to 1,000 URLs per IndexNow request.</li>
-              <li>On HTTP 429 a circuit breaker pauses a site&#x27;s jobs for 1 hour, doubling up to 24 hours; retries use exponential backoff with plus or minus 20% jitter and honor Retry-After.</li>
-              <li>It ships an MCP server, REST API and CLI (npx indexfast). The page states Google does not accept IndexNow and indexing there cannot be guaranteed; plans are Free, Pro ($19/30 days) and Unlimited ($99/30 days).</li>
-            </ul>
-            <a href="https://indexfast.co" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Humble Fumbles &amp; November GameDev Deals Round-Up</h3>
-              <span class="digest-source">GameFromScratch</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The November 14, 2026 roundup lists a Unity Asset Store Low Poly Mega Bundle, a Synty Fantasy sale of up to 80% off, and Gumroad Black Friday bundles for Godot, Unity and Unreal (code BF100 for $100 off).</li>
-              <li>Humble Bundle entries include a Make 30 Games with Godot, Unreal &amp; Unity bundle, an Unreal Multiverse Bundle and a Tech Book Bundle on Unreal Engine 5 and C++; Bundle Foundry adds Unreal environment and sound effect bundles.</li>
-            </ul>
-            <a href="https://gamefromscratch.com/humble-fumbles-november-gamedev-deals-round-up/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
         <h2 class="digest-section-title">Industry &amp; News</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Nintendo of America invests in game preservation</h3>
-              <span class="digest-source">GamesRadar+</span>
+              <h3>Unity&#x27;s new fellowship program offers cash and dedicated support for indie devs</h3>
+              <span class="digest-source">Game Developer</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Nintendo of America is hiring a 12-month contract Digital Archivist, Historical Systems to design a structured framework for organizing technical records, engineering documentation, source materials and knowledge about legacy platforms.</li>
-              <li>Duties include interviewing subject matter experts and long-tenured employees to capture institutional knowledge.</li>
-              <li>GamesRadar notes PlayStation and Blizzard have similar internal archives, which are mostly not public but can inform remasters and bonus features.</li>
+              <li>Ten selected developers will each receive $50,000.</li>
+              <li>The program also provides resources, support, and networks aimed at the final leg of development.</li>
             </ul>
-            <a href="https://www.gamesradar.com/games/nintendo-of-america-invests-in-game-preservation-as-it-looks-to-hire-an-archivist-to-make-sure-its-history-is-preserved-for-future-generations/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Techniques &amp; Learning</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Proof Number search: exhaustively search a game tree to prove win or lose</h3>
-              <span class="digest-source">minimax.dev</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Proof number search is a best-first AND/OR tree search that proves or disproves a position rather than picking the best move; a forced draw counts as a loss for the attacker.</li>
-              <li>Each node tracks proof and disproof numbers: an OR node&#x27;s pn is the minimum of its children&#x27;s and its dpn the sum; an AND node is the reverse. The search descends to the most-proving leaf, expands it and backpropagates until the root is solved or the budget runs out.</li>
-              <li>Results depend heavily on the node initialization heuristic (pn = dpn = 1 is the conservative default), and memory use is the practical limit. The page links a Rust implementation for Ultimate Tic Tac Toe.</li>
-            </ul>
-            <a href="https://minimax.dev/docs/ultimate/pn-search/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.gamedeveloper.com/business/unity-to-support-indies-with-cash-and-dedicated-support-through-new-fellowship-program" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A Pile of MCP Connectors Is Not a Context Engine</h3>
-              <span class="digest-source">Unblocked</span>
+              <h3>Unity launches $50,000 grant for indie developers with no equity or repayment</h3>
+              <span class="digest-source">GamesIndustry.biz</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The post argues per-system MCP connectors give agents access but not cross-tool understanding: the agent must assemble sources itself, cannot tell which source is current, and each connector adds its own credentials and permission model.</li>
-              <li>A context engine instead resolves aliases and cross-system links at ingestion, reconciles contradictions with recency and authority signals, enforces permissions server-side, and returns cited answers.</li>
-              <li>Vendor benchmarks claim up to 83% faster and 48% fewer tokens on a Kotlin SDK task; these are the author&#x27;s own and unverified. The post concedes connectors remain right for transactional actions.</li>
+              <li>The Unity Fellowship program offers a $50,000 grant with no equity taken and no repayment required.</li>
+              <li>It targets indie developers planning to launch a game within the next 12 months.</li>
             </ul>
-            <a href="https://getunblocked.com/blog/mcp-connectors-are-not-a-context-engine/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.gamesindustry.biz/unity-launches-50000-grant-for-indie-developers-with-no-equity-or-repayment" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -118,15 +57,25 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Amass v5 silently ignores -alts and -brute: flags never cross the engine API</h3>
-              <span class="digest-source">Medium</span>
+              <h3>Juice Galaxy (formerly Juice World) [$5.00] [Role Playing] [Windows] [macOS] [Linux]</h3>
+              <span class="digest-source">itch.io New Games</span>
             </div>
             <ul class="digest-takeaways">
-              <li>In Amass v5 the CLI POSTs its config to a separate engine that unmarshals into a zero-valued struct; the six alteration-technique fields (FlipWords, FlipNumbers, AddWords, AddNumbers, MinForWordFlip, EditDistance) were tagged json:&quot;-&quot;, so they never reached the engine and the tool exited 0 with no alterations.</li>
-              <li>The author&#x27;s fix gives those fields real JSON names (PR #1161). The existing exact-JSON config test had pinned the buggy output, so it could not catch the problem.</li>
-              <li>Separately, v5 has no wordlist brute-force plugin at all (issue #1122), and an engine log filename containing colons fails on Windows (PR #1160).</li>
+              <li>A floppy ragdoll RPG sandbox with physics-based combat.</li>
+              <li>Priced at $5.00 on Windows, macOS, and Linux; formerly titled Juice World.</li>
             </ul>
-            <a href="https://legitbiz.medium.com/your-amass-v5-results-are-thinner-than-v4s-there-s-a-code-level-reason-6a737350bc97" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://fishlicka.itch.io/juice-galaxy" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Broken, Repair! [Free] [Simulation] [Windows] [Linux]</h3>
+              <span class="digest-source">itch.io New Games</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A simulation where you repair old and worn-out GameToys from your local neighborhood.</li>
+              <li>Free on Windows and Linux.</li>
+            </ul>
+            <a href="https://eduardscarpato.itch.io/broken-repair" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

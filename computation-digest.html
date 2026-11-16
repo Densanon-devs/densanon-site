@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - November 15, 2026 | Densanon</title>
+  <title>Computation Morning Digest - November 16, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 15, 2026</div>
+        <div class="digest-date-badge">November 16, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">A forensic analysis of open-weights models suggests several Chinese labs initialized frontier models on export-controlled Nvidia Blackwell GPUs, while a federal court let the DRAM supply-fixing class action against Samsung, SK hynix and Micron proceed. On the hardware side, Brown researchers solved a thin-film dead-layer problem that could enable lower-power magnetic chip memory, and a developer used a plain-HTTP certificate download to take a Coway air purifier off the cloud. Linux virtualization news from KVM Forum covers AMD Root Guest for EPYC Venice and ARM64 guests on IBM s390.</p>
+        <p class="digest-intro">Today&#x27;s computation digest covers new memory-fabric and GPU-less supercomputing efforts in HPC, along with quantum&#x27;s emerging power constraints. Hardware and open-source news includes GCC and Linux kernel progress and a RISC-V Librem 5 revival, plus a local LLM serving paper, Nvidia leadership turmoil and Microsoft&#x27;s Xbox Helix clarification.</p>
       </div>
     </section>
 
@@ -29,58 +29,37 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A breakthrough in magnetism could make AI chips use dramatically less energy</h3>
-              <span class="digest-source">ScienceDaily</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Brown University researchers eliminated the &quot;dead layer&quot; problem that makes multiferroic bismuth ferrite lose its electrical and magnetic behavior when made extremely thin. They grew the film on dysprosium scandate, whose slightly smaller crystal structure compresses it, and added a second metallic layer to counteract unwanted internal electric fields.</li>
-              <li>The films kept ferroelectric and magnetic properties down to a few angstroms and also showed altermagnetism (published in Nature Materials). The technology still needs development before commercial chip use.</li>
-            </ul>
-            <a href="https://www.sciencedaily.com/releases/2026/11/261111005853.htm" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Designing Edge AI SoCs At Near-Threshold: Why Foundation IP Can Help You Break Down The Power Wall</h3>
-              <span class="digest-source">Semiconductor Engineering</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The sponsored Synopsys post says near-threshold design in advanced FinFET nodes targets roughly 0.4-0.5 V, since traditional voltage scaling is no longer enough for edge AI. A dual-rail memory design validated a 38 Mb/mm2 SRAM at 380/540 mV in 3nm FinFET, and single-rail assist features reach about 600 mV Vmin.</li>
-              <li>In one AI networking SoC, tuned low-voltage logic cells, custom level shifters and a dual-rail memory compiler cut power by about 20% with no schedule impact. These are vendor claims and not independently verified.</li>
-            </ul>
-            <a href="https://semiengineering.com/designing-edge-ai-socs-at-near-threshold-why-foundation-ip-can-help-you-break-down-the-power-wall/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>ASUS Ascent QN10 Mini PC Powered By Snapdragon X2 Elite Seeing Linux Support</h3>
+              <h3>GCC 17 Might Land Native AArch64 Darwin/macOS Support</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Qualcomm engineers posted Linux patches to boot the ASUS Ascent QN10, a mini PC built on the Snapdragon X2 Elite (18-core Oryon CPU, Adreno X2-90 GPU, Hexagon NPU). It supports up to 32GB of LPDDR5x, two M.2 NVMe slots, Wi-Fi 7, 2.5Gb Ethernet and HDMI, and the base model starts at $1699.</li>
-              <li>The patch series brings up the key functionality, and Phoronix hopes it lands in time for the Linux v7.5 cycle.</li>
+              <li>Native AArch64 Darwin (Apple Silicon macOS) support might land upstream in GCC 17.</li>
+              <li>The work has been in development since the GCC 10 era (2020).</li>
+              <li>It is already patched into the GCC builds used by Homebrew and MacPorts.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/ASUS-Ascent-QN10-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/GCC-Native-AArch64-Darwin-Patch" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD ARG &quot;AMD Root Guest&quot; Linux Patches Coming In 2027</h3>
+              <h3>Modern NTFS Driver Gaining O_TMPFILE Support With Linux 7.5</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>AMD Root Guest (ARG) is a new feature of EPYC 9006 &quot;Venice&quot; processors, presented by AMD&#x27;s David Kaplan and Tom Lendacky at KVM Forum 2026. It is a signed SEV-SNP VM with elevated privileges and a root of trust, with only one active ARG per system.</li>
-              <li>It aims to improve live migration of SEV-SNP protected guests without changes to the guest image or OS. Linux support is still being prototyped, with initial patches expected in Q1 2027.</li>
+              <li>The modern NTFS Linux driver, introduced with the &#x27;NTFS Resurrection&#x27; in Linux 7.2, keeps gaining features.</li>
+              <li>O_TMPFILE support is being queued for the upcoming Linux 7.5 cycle.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/AMD-Root-Guest-ARG-Linux" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Linux-7.5-NTFS-TMPFILE" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>IBM Talks Up Their New Ability For Handling ARM64 Guest VMs on s390 Hardware</h3>
+              <h3>Purism Aiming To Deliver New Librem 5 Smartphone With RISC-V SoC</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>IBM engineer Steffen Eiden presented hardware-accelerated, cross-architecture VMs at KVM Forum 2026, letting s390 hardware run ARM64 guests as part of IBM&#x27;s &quot;dual architecture&quot; work with Arm. The KVM support has been in patch review for months, with initial code merged for Linux 7.4.</li>
-              <li>The talk also covered possibly extending the functionality to more architectures and enhancing the guest ARM64 capabilities.</li>
+              <li>Purism is trying again with a Librem 5 v2 smartphone, announced to be built on a RISC-V SoC.</li>
+              <li>The effort follows various delays and challenges with the original Librem 5.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/IBM-VMs-ARM64-On-s390" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Librem-5-v2-Announced" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -90,25 +69,25 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Europe&#x27;s Digital Wallets May Be More Traceable Than Intended</h3>
-              <span class="digest-source">IEEE Spectrum</span>
+              <h3>Superfluid: Local AI Server for Distributed LLM Inference</h3>
+              <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
             </div>
             <ul class="digest-takeaways">
-              <li>EU digital identity wallets must be unlinkable under the European Digital Identity Regulation, but verifiers record identifiers and signatures that two verifiers could pool to recognize the same person, as Johannes Schönrich notes. Presenting multiple credential versions fails if the issuer can connect them to one person, per Anna Lysyanskaya.</li>
-              <li>Cryptographers recommend zero-knowledge proofs or anonymous credentials such as the BBS signature scheme, and a Google team showed ECDSA-based zero-knowledge proofs run efficiently on smartphones. The Commission&#x27;s June 2026 GitHub post says they are not yet mandatory.</li>
+              <li>Superfluid is a local AI server for distributed LLM inference, aimed at keeping data private, removing per-token cost and working offline.</li>
+              <li>It targets the strain of several agents sharing a local device&#x27;s model serving.</li>
             </ul>
-            <a href="https://spectrum.ieee.org/europe-digital-id-security-cryptography" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.17753" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Longstanding physics puzzle behind radiation damage in electronics solved</h3>
-              <span class="digest-source">r/hardware</span>
+              <h3>Performance-Portable Exact Gaussian Process Regression in Python via SYCL and oneMath</h3>
+              <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
             </div>
             <ul class="digest-takeaways">
-              <li>NC State researchers (Ramón Collazo, Cristyan Quiñones) explain single-event burnout in aluminum nitride diodes: heavy ions create charge carriers, the applied voltage separates them into a localized field, and at a critical level this triggers an electron avalanche releasing energy in a small area. Burnout thresholds fall as ion linear energy transfer rises.</li>
-              <li>AlN withstood fields close to an order of magnitude higher than other common semiconductors, and the analytical model fit data across several material systems. The paper appeared in IEEE Transactions on Nuclear Science on Nov. 5, 2026.</li>
+              <li>GPRat is an open-source Python library for exact Gaussian process regression, built on the HPX asynchronous many-task runtime with tiled algorithms.</li>
+              <li>The paper uses SYCL and oneMath to get portable code without giving up native performance across multi-vendor GPUs.</li>
             </ul>
-            <a href="https://www.reddit.com/r/hardware/comments/1xwd3tf/longstanding_physics_puzzle_behind_radiation/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.17565" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -118,25 +97,47 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Chinese AI labs are training models on Nvidia&#x27;s Blackwell despite export controls, says ex-OpenAI engineer</h3>
+              <h3>Marvell and Penguin Solutions aim to end the RAMpocalypse with photonic memory fabric</h3>
               <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Former OpenAI engineer Will DePue reports that published weights of six Chinese models, including DeepSeek-V4-Pro, Kimi K3 and MiniMax-M3, carry the initialization fingerprint of Nvidia Blackwell GPUs, four of them matching GB200/GB300 parts. He searched more than six trillion chip-layout and seed combinations and published seed values so others can reproduce it.</li>
-              <li>Blackwell use does not show where the chips were physically located, since labs could have rented them from US cloud providers. The article includes no comment from the named labs or Nvidia.</li>
+              <li>Marvell and Penguin Solutions pitch a photonic memory fabric as a remedy for the RAM shortage.</li>
+              <li>Appliances can share 16 TB of DRAM and half a terabyte of HBM across up to 16 systems.</li>
             </ul>
-            <a href="https://www.theregister.com/ai-and-ml/2026/11/13/chinese-ai-labs-are-training-models-on-nvidias-blackwell-despite-export-controls-says-ex-openai-engineer/5309891" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/systems/2026/11/16/marvell-and-penguin-solutions-aim-to-end-the-rampocalypse-with-photonic-memory-fabric/5309921" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Court denies motion to dismiss DRAM price-fixing class action</h3>
-              <span class="digest-source">r/hardware</span>
+              <h3>Los Alamos boffins to put NextSilicon&#x27;s Maverick-2 through natural selection in Darwin testbed</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Judge Noël Wise of the Northern District of California denied in full the motion by Samsung, Micron and SK hynix to dismiss a class action alleging they conspired to limit DRAM supply. The court found a plausible Sherman Act Section 1 agreement and rejected the argument that the conduct was just a response to AI demand.</li>
-              <li>The complaint alleges the three firms held over 91% of DRAM revenue and that conventional DRAM prices rose 697% over 18 months. These are allegations only, and defendants&#x27; answers are due December 7, 2026.</li>
+              <li>Los Alamos will test NextSilicon&#x27;s Maverick-2 in a small testbed called Darwin.</li>
+              <li>The test system is described as opening the door to a new generation of GPU-less supercomputers.</li>
             </ul>
-            <a href="https://www.reddit.com/r/hardware/comments/1xwj81h/court_denies_motion_to_dismiss_dram_pricefixing/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/systems/2026/11/16/los-alamos-boffins-to-put-nextsilicons-maverick-2-through-natural-selection-in-darwin-testbed/5309862" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Quantum Computing’s Next Scaling Challenge Isn’t Just Qubits. It’s Power.</h3>
+              <span class="digest-source">HPCwire</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>HPCwire argues quantum computing&#x27;s next scaling challenge is power, not just qubit counts.</li>
+              <li>The piece frames it with an HPC lesson: scientific breakthroughs must operate within available infrastructure constraints.</li>
+            </ul>
+            <a href="https://www.hpcwire.com/2026/11/16/quantum-computings-next-scaling-challenge-isnt-just-qubits-its-power/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Jensen Huang could be plotting return as Nvidia CEO, report claims</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A report claims allies of Jensen Huang are pushing for his reinstatement as Nvidia CEO.</li>
+              <li>This comes days after he was ousted over an affair with an alleged Chinese spy.</li>
+            </ul>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/jensen-huang-could-be-plotting-return-as-nvidia-ceo-report-claims-allies-have-formed-a-war-room-to-drive-reinstatement-days-after-resignation-scandal" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -146,14 +147,14 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Dev hacks Coway air purifier to cut it off from the cloud</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>Microsoft Confirms Xbox Project Helix Will Play PC games, But It&#x27;s Not a PC</h3>
+              <span class="digest-source">Reddit r/hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Developer Scott J. Goldman found his Coway Airmega IconS fetches its trusted root certificate (AmazonRootCA1.pem) over plain HTTP, so he used mitmproxy with nftables redirection to substitute his own CA and swap in his own device key. His Home Assistant server now stands in for Coway&#x27;s IoCare+ cloud.</li>
-              <li>The fan&#x27;s commands run over MQTT with TLS on port 8883. He says Claude refused his request for the traffic-interception setup while ChatGPT wrote the firewall rules.</li>
+              <li>Microsoft confirmed that Xbox Project Helix will play PC games, though it is not a PC.</li>
+              <li>Microsoft&#x27;s stated design goal is for Helix to be a console, though the exact shape remains not perfectly clear.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/cyber-security/dev-hacks-coway-air-purifier-to-cut-it-off-from-the-cloud-now-runs-locally-in-home-assistant-fan-downloads-the-certificate-over-plain-http-letting-a-home-server-stand-in-for-coways" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/hardware/comments/1xxnc0i/microsoft_confirms_xbox_project_helix_will_play/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
