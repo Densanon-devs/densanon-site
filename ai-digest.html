@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 16, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 17, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 16, 2026</div>
+        <div class="digest-date-badge">November 17, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Research today focuses on the reliability of LLM agents and small models: memory filtering, hallucination detectors on quantized on-device models, and chain-of-thought monitorability. On the tools side, Simon Willison shipped a burst of Datasette releases, including a security backport and new plugins built with heavy AI assistance.</p>
+        <p class="digest-intro">Research today centers on LLM agents: how well they hand off work between context windows, how they evolve at test time, and how they learn computer use from video. On the tools side, Hugging Face and OpenRouter announced a partnership around open-weight models, LLM 0.37.3 shipped a fix for a SQLite change, and Claude Code v2.1.326 landed.</p>
       </div>
     </section>
 
@@ -29,60 +29,88 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>When Should LLM Agents Forget? Memory Filtering Under Query-Critical Resolver Errors</h3>
-              <span class="digest-source">ArXiv</span>
+              <h3>Agents Cannot Hand Over What They Have Not Yet Understood</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Hard-filtering memory systems delete facts classified as stale, which can reduce downstream accuracy.</li>
-              <li>The harm appears when resolver errors delete query-critical facts.</li>
-              <li>Across three models, a controlled sensitivity intervention was used to show the effect.</li>
+              <li>Agents that work beyond a single context window or in teams hand work to a successor as a short written summary.</li>
+              <li>Evaluation has focused on whether an agent can solve a task, with little known about how much of what it learned survives the handover.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.17338" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.18642" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Does the Ranking Hold? A Practitioner-Facing Audit of Hallucination Detectors on Small, Quantized, On-Device LLMs</h3>
-              <span class="digest-source">ArXiv</span>
+              <h3>Read, Route, Patch: Robust Test-Time Evolution for LLM Agents</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Hallucination detection is mostly evaluated on 7B-70B research models with abundant sampling budgets.</li>
-              <li>This audit asks whether detector rankings hold on small, quantized, on-device models such as Phi-3-mini.</li>
-              <li>Aimed at practitioners who ship small models on-device.</li>
+              <li>Targets test-time evolution for long-horizon interactive decision-making in LLM agents.</li>
+              <li>Names three information bottlenecks in existing methods, starting with memory retrieval that overemphasizes textual similarity.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.17339" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.18585" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>An Operationalization of Opaque Serial Depth</h3>
-              <span class="digest-source">ArXiv</span>
+              <h3>Video-as-Experience: Learning Computer Use via Audio-Visual Understanding</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Chain-of-thought is a valuable tool for overseeing AI models, but some architectural shifts could reduce its monitorability.</li>
-              <li>The paper operationalizes a measure that proxies the amount of unverbalized serial cognition.</li>
+              <li>Concerns multimodal LLM computer-use agents that perceive GUIs and execute actions.</li>
+              <li>Focuses on learning from video demonstrations using audio-visual understanding.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.17495" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.18747" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>LoRAWeaver: Directional Adapter Routing in LoRA Representation Space</h3>
-              <span class="digest-source">ArXiv</span>
+              <h3>&quot;I Am Not a Kiddo!&quot;: Quantifying Epistemic Infantilization in Large Language Models via Multi-Metric Bias Analysis</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Repeated adaptation creates a growing pool of task-specific LoRA adapters, complicating adapter selection.</li>
-              <li>LoRAWeaver proposes directional adapter routing in LoRA representation space.</li>
+              <li>Notes LLMs are increasingly used for tutoring and professional knowledge retrieval.</li>
+              <li>Argues safety evaluations focus on overt harms like toxicity while overlooking benevolent failure modes.</li>
+              <li>Studies epistemic infantilization as one such failure mode.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.17340" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.18583" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Creating Steering Vectors via Input Optimisation</h3>
-              <span class="digest-source">ArXiv</span>
+              <h3>Human vs Machine Translation Detection: A Cross-Model, Cross-Domain, and Low-Resource Analysis</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Activation steering normally requires white-box access to modify hidden states at every generation step.</li>
-              <li>ActGCG is a modification that creates steering vectors via input optimisation.</li>
+              <li>Web-crawled training corpora often treat machine-translated content as human translation.</li>
+              <li>This can degrade data quality and propagate synthetic artifacts.</li>
+              <li>The analysis spans models, domains, and low-resource settings.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.17481" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.18586" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>OmniTag-LLM: Multilingual Multitask Speech Tagging</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Multimodal LLMs could replace cascades of specialist speech models with one system.</li>
+              <li>From one audio clip it jointly transcribes and labels emotion, gender, language, and named entities.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.18589" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Hugging Face and OpenRouter join forces to make open-weight models easy to run</h3>
+              <span class="digest-source">Hugging Face Blog</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Hugging Face and OpenRouter are partnering.</li>
+              <li>The stated goal is making open-weight models easy to run.</li>
+            </ul>
+            <a href="https://huggingface.co/blog/openrouter" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -92,58 +120,25 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>datasette 1.0a43</h3>
+              <h3>llm 0.37.3</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Streaming support for output renderers is the biggest 1.0 item in this release; built-in TSV and CSV export now use it.</li>
-              <li>The author says he has been leaning on Claude Fable 5.2 to knock off 1.0 milestone items, which is now 53% complete.</li>
+              <li>Bug fix release for LLM, mainly covering a problem with the latest Homebrew package.</li>
+              <li>Homebrew now ships SQLite 3.54.1, which includes a fix that had broken LLM&#x27;s logging code.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/15/datasette/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/16/llm/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>datasette 0.65.6</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>anthropics/claude-code: v2.1.326</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Backports a minor security fix from 1.0a43.</li>
-              <li>A database registered via add_database with a route differing from its name could be downloaded from /&lt;route&gt;.db by actors denied access.</li>
+              <li>Added support for turning on Code Mode while agent teams are enabled; sessions with teams on now start in Code Mode if it was already enabled.</li>
+              <li>Added a startup warning when an --allowedTools, --disallowedTools or --tools value has a suspect entry.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/15/datasette-2/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>datasette-maplibre 0.1a0</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>A new Datasette geospatial plugin combining MapLibre GL with OpenFreeMap, the free vector map server run by Zsolt Ero.</li>
-              <li>The author says most of it was built with a single prompt to Claude.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Nov/15/datasette-maplibre/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>datasette-apps 0.4a0</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Datasette Apps are sandboxed HTML and JavaScript apps inside Datasette that can run SQL queries against your data.</li>
-              <li>0.4a0 adds linking to an app using #fragments in the URL.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Nov/15/datasette-apps/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>datasette-agent 0.6a0</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Accumulated small fixes for the Datasette Agent plugin, which lets you ask questions about your data.</li>
-              <li>Adds an agent prompt directly to the Datasette homepage, with hash-mentions of tables and queries.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Nov/15/datasette-agent/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.326" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

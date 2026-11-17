@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - November 16, 2026 | Densanon</title>
+  <title>Computation Morning Digest - November 17, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 16, 2026</div>
+        <div class="digest-date-badge">November 17, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation digest covers new memory-fabric and GPU-less supercomputing efforts in HPC, along with quantum&#x27;s emerging power constraints. Hardware and open-source news includes GCC and Linux kernel progress and a RISC-V Librem 5 revival, plus a local LLM serving paper, Nvidia leadership turmoil and Microsoft&#x27;s Xbox Helix clarification.</p>
+        <p class="digest-intro">Today&#x27;s computation digest pairs next-generation silicon and Linux driver work with research on token-level energy floors and verifying 51-qubit quantum simulations. Industry coverage looks at a slump in supercomputer installs, AWS campus sale-leasebacks and AI power-and-cooling test labs, while the community spotlights Intel&#x27;s D270 GPU ahead of SC26.</p>
       </div>
     </section>
 
@@ -29,37 +29,36 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GCC 17 Might Land Native AArch64 Darwin/macOS Support</h3>
+              <h3>AMD Gets Its Firmware Ready For Upcoming RDNA 4m iGPUs On Linux</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Native AArch64 Darwin (Apple Silicon macOS) support might land upstream in GCC 17.</li>
-              <li>The work has been in development since the GCC 10 era (2020).</li>
-              <li>It is already patched into the GCC builds used by Homebrew and MacPorts.</li>
+              <li>AMD merged the latest open-source graphics driver changes for upcoming RDNA 4m &#x27;GFX17x&#x27; iGPUs on Linux.</li>
+              <li>The firmware is now ready for enabling the next-gen AMD iGPUs on Linux.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/GCC-Native-AArch64-Darwin-Patch" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/AMD-RDNA-4m-Firmware" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Modern NTFS Driver Gaining O_TMPFILE Support With Linux 7.5</h3>
+              <h3>NVIDIA Engineer Works On New User-Space Linux Control For Preferred CPU Cores</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The modern NTFS Linux driver, introduced with the &#x27;NTFS Resurrection&#x27; in Linux 7.2, keeps gaining features.</li>
-              <li>O_TMPFILE support is being queued for the upcoming Linux 7.5 cycle.</li>
+              <li>An NVIDIA engineer posted a request-for-comments patch series adding a new sysfs control for preferred CPU cores.</li>
+              <li>It would let user-space express core preferences, potentially tied into tools like Thermald based on core temperatures.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.5-NTFS-TMPFILE" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/NVIDIA-Linux-Prefer-CPU-Cores" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Purism Aiming To Deliver New Librem 5 Smartphone With RISC-V SoC</h3>
-              <span class="digest-source">Phoronix</span>
+              <h3>How we test enterprise SSDs</h3>
+              <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Purism is trying again with a Librem 5 v2 smartphone, announced to be built on a RISC-V SoC.</li>
-              <li>The effort follows various delays and challenges with the original Librem 5.</li>
+              <li>Tom&#x27;s Hardware is pushing enterprise SSD testing further with a new test suite and lab.</li>
+              <li>The lab stresses server storage with real-world workloads.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Librem-5-v2-Announced" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/pc-components/ssds/how-we-test-enterprise-ssds-our-new-test-suite-pushes-enterprise-and-data-center-ssds-to-their-limits" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -69,25 +68,36 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Superfluid: Local AI Server for Distributed LLM Inference</h3>
+              <h3>Exstill: The Most Efficient Single-Chip Processor for the Next Token</h3>
               <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Superfluid is a local AI server for distributed LLM inference, aimed at keeping data private, removing per-token cost and working offline.</li>
-              <li>It targets the strain of several agents sharing a local device&#x27;s model serving.</li>
+              <li>Generating a token requires a fixed amount of arithmetic, whose energy sets a floor beneath any hardware.</li>
+              <li>For Qwen3-1.7B at a 16K-token context, gate-level measurements at 5 nm put that floor at 0.89 mJ per token.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.17753" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.18859" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Performance-Portable Exact Gaussian Process Regression in Python via SYCL and oneMath</h3>
+              <h3>Quantum computers are getting too powerful to check. Scientists have a solution</h3>
+              <span class="digest-source">ScienceDaily Quantum Computing</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>A new technique determines whether quantum simulations can be trusted as quantum computers outgrow conventional verification.</li>
+              <li>It measures uncertainty and provides verifiable error margins, and was demonstrated on a 51-qubit system.</li>
+            </ul>
+            <a href="https://www.sciencedaily.com/releases/2026/11/261115085557.htm" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Lasso: Towards Sustainable AI-Generated Media Detection with Intel QAT On-Chip Compression</h3>
               <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
             </div>
             <ul class="digest-takeaways">
-              <li>GPRat is an open-source Python library for exact Gaussian process regression, built on the HPX asynchronous many-task runtime with tiled algorithms.</li>
-              <li>The paper uses SYCL and oneMath to get portable code without giving up native performance across multi-vendor GPUs.</li>
+              <li>Argues software-only synthetic-media detectors are power-hungry, slow and costly, and do not scale with demand.</li>
+              <li>Presents the first reverse engineering of Intel QAT on-chip compression as a hardware route to sustainable detection.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.17565" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.18895" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -97,47 +107,46 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Marvell and Penguin Solutions aim to end the RAMpocalypse with photonic memory fabric</h3>
-              <span class="digest-source">The Register</span>
+              <h3>Supercomputer Installs Take A Dive In The Second Half Of 2026</h3>
+              <span class="digest-source">Next Platform</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Marvell and Penguin Solutions pitch a photonic memory fabric as a remedy for the RAM shortage.</li>
-              <li>Appliances can share 16 TB of DRAM and half a terabyte of HBM across up to 16 systems.</li>
+              <li>Next Platform reports that supercomputer installs take a dive in the second half of 2026.</li>
             </ul>
-            <a href="https://www.theregister.com/systems/2026/11/16/marvell-and-penguin-solutions-aim-to-end-the-rampocalypse-with-photonic-memory-fabric/5309921" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.nextplatform.com/hpc/2026/11/16/supercomputer-installs-take-a-dive-in-the-second-half-of-2026/5310221" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Los Alamos boffins to put NextSilicon&#x27;s Maverick-2 through natural selection in Darwin testbed</h3>
+              <h3>REIT move? Blackstone joint venture buys AWS campuses to lease back to the cloud giant</h3>
               <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Los Alamos will test NextSilicon&#x27;s Maverick-2 in a small testbed called Darwin.</li>
-              <li>The test system is described as opening the door to a new generation of GPU-less supercomputers.</li>
+              <li>A Blackstone joint venture is buying AWS campuses and leasing them back to the cloud giant.</li>
+              <li>An Omdia analyst says Amazon&#x27;s move may be about economics, as the AI buildout weighs on hyperscaler finances.</li>
             </ul>
-            <a href="https://www.theregister.com/systems/2026/11/16/los-alamos-boffins-to-put-nextsilicons-maverick-2-through-natural-selection-in-darwin-testbed/5309862" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/on-prem/2026/11/17/reit-move-blackstone-joint-venture-buys-aws-campuses-to-lease-back-to-the-cloud-giant/5310355" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Quantum Computing’s Next Scaling Challenge Isn’t Just Qubits. It’s Power.</h3>
+              <h3>Vertiv Opens ATLAS Lab to Test AI Power and Cooling Infrastructure</h3>
               <span class="digest-source">HPCwire</span>
             </div>
             <ul class="digest-takeaways">
-              <li>HPCwire argues quantum computing&#x27;s next scaling challenge is power, not just qubit counts.</li>
-              <li>The piece frames it with an HPC lesson: scientific breakthroughs must operate within available infrastructure constraints.</li>
+              <li>Vertiv opened its ATLAS Lab for system-level testing and validation of AI power and cooling infrastructure.</li>
+              <li>Testing addresses density, speed, scale, complexity and dynamic load profiles before next-generation compute reaches the market.</li>
             </ul>
-            <a href="https://www.hpcwire.com/2026/11/16/quantum-computings-next-scaling-challenge-isnt-just-qubits-its-power/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.hpcwire.com/off-the-wire/vertiv-opens-atlas-lab-to-test-ai-power-and-cooling-infrastructure/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Jensen Huang could be plotting return as Nvidia CEO, report claims</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
+              <h3>Chip Industry Technical Paper Roundup: Nov. 17</h3>
+              <span class="digest-source">Semiconductor Engineering</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A report claims allies of Jensen Huang are pushing for his reinstatement as Nvidia CEO.</li>
-              <li>This comes days after he was ousted over an affair with an alleged Chinese spy.</li>
+              <li>Roundup topics include HBM4 controller partitioning and single-crystal high-k dielectrics for low-power 2D CFETs.</li>
+              <li>Also covered: hardware-based location checks for AI chip smuggling and embedded ECC for AI weight protection.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/jensen-huang-could-be-plotting-return-as-nvidia-ceo-report-claims-allies-have-formed-a-war-room-to-drive-reinstatement-days-after-resignation-scandal" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://semiengineering.com/chip-industry-technical-paper-roundup-nov-17/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -147,14 +156,14 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Microsoft Confirms Xbox Project Helix Will Play PC games, But It&#x27;s Not a PC</h3>
+              <h3>The case for Intel GPU D270 in high-performance computing</h3>
               <span class="digest-source">Reddit r/hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Microsoft confirmed that Xbox Project Helix will play PC games, though it is not a PC.</li>
-              <li>Microsoft&#x27;s stated design goal is for Helix to be a console, though the exact shape remains not perfectly clear.</li>
+              <li>Intel shared benchmarks for its new D270 GPU in high-performance computing; the poster calls them likely cherry-picked but interesting.</li>
+              <li>More details are expected during SC26.</li>
             </ul>
-            <a href="https://www.reddit.com/r/hardware/comments/1xxnc0i/microsoft_confirms_xbox_project_helix_will_play/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.reddit.com/r/hardware/comments/1xyehd3/the_case_for_intel_gpu_d270_in_highperformance/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
