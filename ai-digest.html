@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 18, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 19, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 18, 2026</div>
+        <div class="digest-date-badge">November 19, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Research today leans on AI safety: chain-of-thought monitorability, auditors failing to catch sabotage in safety-research transcripts, and models rewriting their own weights, plus a refusal-aversion measurement method and a 1B math model. On the tools side, OpenAI launched GPT-6.2 Astra and Sol, Simon Willison covered external agent sandboxes and a service-worker Datasette Lite, and Claude Code v2.1.327 shipped.</p>
+        <p class="digest-intro">Today&#x27;s digest spans AI safety and agent-economics research, practical notes on running large models on modest hardware, and fresh tooling releases. Google&#x27;s new Gemini 4 Neon adds to a confusing pricing lineup, while Claude Code extends auto mode to more cloud platforms.</p>
       </div>
     </section>
 
@@ -29,62 +29,76 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Chain-of-Thought Controllability Can Reduce Chain-of-Thought Monitorability</h3>
+              <h3>Human-AI Mutualism Is Unstable under Capability Asymmetry</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Chain-of-thought monitoring is a promising way to detect hidden goals, off-task behavior, and other agent failures.</li>
-              <li>The paper stress-tests the risk that models could deliberately shape their reasoning to be opaque to monitors.</li>
-              <li>Its title reports that controllability of chain-of-thought can reduce monitorability.</li>
+              <li>The authors argue the hope that humans and AI will stay mutually dependent, and so keep a good relationship, fails as AI capability grows.</li>
+              <li>The argument rests on bargaining dynamics under capability asymmetry.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.21799" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.23322" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Auditors Struggle to Catch Sabotage In End-to-End Transcripts of AI Safety Research</h3>
+              <h3>Training Language Models for Introspective Oversight</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Studies the risk that misaligned AI systems automating AI R&amp;D could sabotage safety and alignment research.</li>
-              <li>Uses a human expert as a proxy saboteur on AI safety research transcripts to stress-test defenses.</li>
-              <li>Per the title, auditors struggle to catch sabotage in end-to-end transcripts.</li>
+              <li>Models can show behaviors that are hard to detect in transcripts, such as reward hacking, deception, and sycophancy.</li>
+              <li>Asking the assistant follow-up questions about its actions is unreliable, since models are generally not trained for it; the paper trains models for introspective oversight.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.21832" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.23365" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Language Models Can Rewrite Their Own Weights</h3>
+              <h3>Where the Tokens Go: Heat, Entropy and Error in Agentic Coding</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Models are normally trained once and frozen; improving one again takes another training run, and prompts or scaffolds vanish when a task ends.</li>
-              <li>The paper builds on a prior result showing a frontier model can edit the weights of a much smaller model.</li>
-              <li>Title claim: language models can rewrite their own weights.</li>
+              <li>Coding agents are billed by the token, yet software engineering offers little account of what a token buys.</li>
+              <li>The paper introduces a theory of software thermodynamics drawing on classical and stochastic thermodynamics.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.21885" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.23375" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>RAW: Refusal Aversion in the Wild, A Causal Measurement Method for Deployed LLMs</h3>
+              <h3>Chorus: Shared N-gram Embeddings with Layer-wise Adaptation</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Deployed LLMs handle hundreds of millions of conversations a day and refuse a non-trivial fraction of requests.</li>
-              <li>The user-side cost of refusal (whether users disengage, and by how much) is unmeasured on any production model.</li>
-              <li>Introduces RAW, a causal measurement method for refusal aversion in deployed LLMs.</li>
+              <li>N-gram embedding tables are large tables of learned vectors for short token sequences, added to a model&#x27;s input or intermediate layers.</li>
+              <li>They can add model capacity at little computational cost; Chorus proposes shared tables with layer-wise adaptation.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.21641" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.23386" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Product &amp; Industry</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>llm-gemini 0.38</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Google introduced Gemini 4 Neon today, and llm-gemini 0.38 was released alongside it.</li>
+              <li>The Gemini 4 lineup was previously Hydrogen, Argon, and Carbon; the author says Neon makes the already confusing pricing worse.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Nov/18/llm-gemini/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Limite 1B - Violetto: Technical Report</h3>
-              <span class="digest-source">ArXiv cs.CL</span>
+              <h3>anthropics/claude-code: v2.1.328</h3>
+              <span class="digest-source">Anthropic GitHub</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Limite 1B - Violetto is a one-billion-parameter model built for high-throughput mathematical reasoning.</li>
-              <li>Trained from scratch on 237 billion tokens of a curated, mathematics-centric corpus.</li>
+              <li>Adds auto mode for Claude Opus 4.6 and Sonnet 4.6 on Amazon Bedrock, Google Cloud&#x27;s Agent Platform, Microsoft Foundry and the Claude apps gateway.</li>
+              <li>Interactive sessions with no permission mode now start in auto mode.</li>
+              <li>Adds an &quot;onFailure&quot;: &quot;block&quot; option for mcp_tool hooks.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.21646" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.328" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -94,48 +108,47 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>GPT‑6.2 Astra and GPT‑6.2 Sol</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>180B Parameters, 32GB of RAM: Pushing MoE Inference to the Limit with Transformers</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>OpenAI introduced GPT-6.2 Astra, a frontier model for the hardest projects, and GPT-6.2 Sol, an efficient model for everyday work.</li>
-              <li>Both are available in the API as gpt-6.2-astra and gpt-6.2-sol.</li>
-              <li>Willison shipped LLM 0.38 with support for the new models.</li>
+              <li>Covers running a 180B-parameter mixture-of-experts model within 32GB of RAM using Transformers.</li>
+              <li>Focuses on pushing MoE inference to its limits on modest hardware.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/17/gpt62-astra-and-sol/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/moe-expert-streaming" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>External sandboxes for coding agents</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Rumble-2-Flash: an open 0.5B speech model for 40+ languages</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Simon Willison is exploring new ways to sandbox code executed by agents.</li>
-              <li>The focus is making it safer to try local models without a mistake or prompt injection causing damaging actions on a machine.</li>
+              <li>Rumble-2-Flash is an open speech model with 0.5B parameters.</li>
+              <li>It supports 40+ languages.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/17/external-sandboxes-for-coding-agents/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/rumble-2-flash" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Running the full server-side Datasette Python app in the browser with service workers and Pyodide</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Why your fine-tuning job takes longer than the FLOPs say</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Datasette Lite, the browser port of Datasette using WebAssembly and Pyodide, has been completely rewritten using service workers.</li>
-              <li>It is now almost indistinguishable from the real server-side application.</li>
+              <li>Examines why fine-tuning jobs take longer than FLOP-based estimates predict.</li>
+              <li>Aims at predicting fine-tuning time more accurately.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/17/datasette-lite/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/Dharma-AI/predicting-fine-tuning-time" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.327</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>Quoting Daniel Stenberg</h3>
+              <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds a confirmation before /install-github-app changes a repository.</li>
-              <li>Adds `claude mcp add-json &lt;name&gt; -` to read the server&#x27;s JSON from stdin, keeping tokens off the command line (not available inside a Claude Code session).</li>
+              <li>Daniel Stenberg notes agents converted 185,000 lines of C into 340,000 lines of Rust over a little more than three weeks.</li>
+              <li>In that period the curl project merged over 300 commits and made a little over 200 bugfixes.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.327" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/18/daniel-stenberg/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
