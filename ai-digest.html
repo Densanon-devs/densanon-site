@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 19, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 20, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 19, 2026</div>
+        <div class="digest-date-badge">November 20, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s digest spans AI safety and agent-economics research, practical notes on running large models on modest hardware, and fresh tooling releases. Google&#x27;s new Gemini 4 Neon adds to a confusing pricing lineup, while Claude Code extends auto mode to more cloud platforms.</p>
+        <p class="digest-intro">Today&#x27;s AI news centers on agents moving into real-world settings, from self-driving labs and industrial maintenance to ML engineering, alongside practical inference work like KV cache eviction. Simon Willison flags token fraud and a delayed PostgreSQL 19 release shaped by AI-reported vulnerabilities, while a new benchmark probes parasocial attachment to chatbots.</p>
       </div>
     </section>
 
@@ -29,47 +29,69 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Human-AI Mutualism Is Unstable under Capability Asymmetry</h3>
+              <h3>Closing the Analyze-to-Design Gap: An Authorization-Bounded Agent for Self-Driving Laboratories</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The authors argue the hope that humans and AI will stay mutually dependent, and so keep a good relationship, fails as AI capability grows.</li>
-              <li>The argument rests on bargaining dynamics under capability asymmetry.</li>
+              <li>AI agents are increasingly used in self-driving laboratories to plan experiments and interpret results.</li>
+              <li>The abstract argues analytical reasoning alone does not make a laboratory autonomous.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.23322" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.25043" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Training Language Models for Introspective Oversight</h3>
+              <h3>BuggyMLE: Scaling Machine Learning Engineering Difficulty with Bug Injection</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Models can show behaviors that are hard to detect in transcripts, such as reward hacking, deception, and sycophancy.</li>
-              <li>Asking the assistant follow-up questions about its actions is unreliable, since models are generally not trained for it; the paper trains models for introspective oversight.</li>
+              <li>Targets agents that autonomously improve AI models by performing machine learning engineering.</li>
+              <li>Focuses on modifying multi-file repositories to reproduce results, with difficulty scaled via bug injection.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.23365" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.25088" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Where the Tokens Go: Heat, Entropy and Error in Agentic Coding</h3>
+              <h3>CoMPASS: A Multi-Turn Benchmark for Measuring LLM Reinforcement of Parasocial Behavior</h3>
               <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Coding agents are billed by the token, yet software engineering offers little account of what a token buys.</li>
-              <li>The paper introduces a theory of software thermodynamics drawing on classical and stochastic thermodynamics.</li>
+              <li>Addresses users anthropomorphizing conversational LLMs, forming emotional attachments and becoming dependent.</li>
+              <li>Notes parasocial attachment has been linked to multiple documented fatalities, motivating a public benchmark.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.23375" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.25109" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Chorus: Shared N-gram Embeddings with Layer-wise Adaptation</h3>
+              <h3>SailSearch: Agent-Assisted Discovery in Combinatorial Optimization</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Presents a human-guided workflow for algorithmic research using two language-model agents.</li>
+              <li>Reports results on Market Split and maximum independent set (MIS).</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.25087" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Global Importance Estimation for KV Cache Eviction</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>N-gram embedding tables are large tables of learned vectors for short token sequences, added to a model&#x27;s input or intermediate layers.</li>
-              <li>They can add model capacity at little computational cost; Chorus proposes shared tables with layer-wise adaptation.</li>
+              <li>KV cache memory remains a central bottleneck for long-context LLM inference.</li>
+              <li>Introduces PRKV, a training-free eviction method using Personalized PageRank to estimate multi-hop global token importance.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.23386" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.24969" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Physics of Language Models: Part 4.2, Canon Layers at Scale where Synthetic Pretraining Resonates in Reality</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Asks whether standard benchmarks capture the architectural differences that matter.</li>
+              <li>Study uses 64 from-scratch pretraining runs of Transformers and three linear-model families at 1.3-8B parameters on 1-2T Nemotron-CC tokens.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.24963" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -79,26 +101,14 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>llm-gemini 0.38</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>An LLM-Agentic Framework for Intelligent Work Order Management in Industrial Maintenance</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Google introduced Gemini 4 Neon today, and llm-gemini 0.38 was released alongside it.</li>
-              <li>The Gemini 4 lineup was previously Hydrogen, Argon, and Carbon; the author says Neon makes the already confusing pricing worse.</li>
+              <li>Presents the CodeReAct agent framework for industrial equipment maintenance.</li>
+              <li>Interprets human instructions through natural language interactions.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/18/llm-gemini/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>anthropics/claude-code: v2.1.328</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Adds auto mode for Claude Opus 4.6 and Sonnet 4.6 on Amazon Bedrock, Google Cloud&#x27;s Agent Platform, Microsoft Foundry and the Claude apps gateway.</li>
-              <li>Interactive sessions with no permission mode now start in auto mode.</li>
-              <li>Adds an &quot;onFailure&quot;: &quot;block&quot; option for mcp_tool hooks.</li>
-            </ul>
-            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.328" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.25070" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -108,47 +118,36 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>180B Parameters, 32GB of RAM: Pushing MoE Inference to the Limit with Transformers</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Covers running a 180B-parameter mixture-of-experts model within 32GB of RAM using Transformers.</li>
-              <li>Focuses on pushing MoE inference to its limits on modest hardware.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/moe-expert-streaming" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Rumble-2-Flash: an open 0.5B speech model for 40+ languages</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Rumble-2-Flash is an open speech model with 0.5B parameters.</li>
-              <li>It supports 40+ languages.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/rumble-2-flash" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Why your fine-tuning job takes longer than the FLOPs say</h3>
-              <span class="digest-source">Hugging Face Blog</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Examines why fine-tuning jobs take longer than FLOP-based estimates predict.</li>
-              <li>Aims at predicting fine-tuning time more accurately.</li>
-            </ul>
-            <a href="https://huggingface.co/blog/Dharma-AI/predicting-fine-tuning-time" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Quoting Daniel Stenberg</h3>
+              <h3>Token fraud is here and it&#x27;s BAD (YouTube)</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Daniel Stenberg notes agents converted 185,000 lines of C into 340,000 lines of Rust over a little more than three weeks.</li>
-              <li>In that period the curl project merged over 300 commits and made a little over 200 bugfixes.</li>
+              <li>Highlights a YouTube video featuring Claire Vo, who runs ChatPRD, an AI platform that helps product managers turn an idea into a spec.</li>
+              <li>ChatPRD has been live since the GPT-4 era and built in public.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/18/daniel-stenberg/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/20/token-fraud-is-here-and-its-bad/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>PostgreSQL 19 Released</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The release landed two months later than the usual September schedule.</li>
+              <li>The delay is attributed mainly to issues the team addressed during the ongoing AI-reported vulnerability flurry.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Nov/19/postgresql-19/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.329</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Adds a trust dialog warning that says where a folder&#x27;s hooks are declared.</li>
+              <li>Adds a conversation warning in Claude Desktop and other non-interactive hosts when hooks in managed settings fail to load.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.329" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
