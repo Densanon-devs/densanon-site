@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 22, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 24, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,50 +15,133 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 22, 2026</div>
+        <div class="digest-date-badge">November 24, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">A quiet weekend for AI news. Graham Dumpleton, who wrote mod_wsgi, released Muru, a Rust server for Python web apps that he built with AI help. Simon Willison fixed the reasoning levels for Gemini 4 in his llm-gemini plugin, and Anthropic put out two point releases of the Claude Agent SDK for Python.</p>
+        <p class="digest-intro">Today&#x27;s digest leans on agent research and practical tooling. New papers look at how agent harnesses shape long-horizon performance and how red-team harm is judged. Z.ai released GLM 5.4, its first looped-transformer model, and Simon Willison shipped a new Datasette charting plugin built with Claude.</p>
       </div>
     </section>
 
     <div class="container digest-content">
 
       <div class="digest-section">
-        <h2 class="digest-section-title">Tools &amp; Releases</h2>
+        <h2 class="digest-section-title">Research &amp; Papers</h2>
         <div class="digest-grid">
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Muru</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>AutoPILOT: A Visual Agent Harness for Real-Time Gameplay</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Graham Dumpleton started mod_wsgi 20 years ago. Muru is his new Rust server for Python web apps, built with AI help.</li>
-              <li>It runs both ASGI and WSGI apps, in development and in production.</li>
+              <li>Multimodal models play games well when the game waits for them but often fail when it keeps running.</li>
+              <li>The authors find much of the gap lies in the harness, which decides what the model sees, remembers, and how its outputs are used.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/21/muru/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.28202" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>llm-gemini 0.38.1</h3>
-              <span class="digest-source">Simon Willison</span>
+              <h3>Language Model Harnesses can be Compositional Generalizers</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Gemini 4 Carbon only offers low, medium and high reasoning levels.</li>
-              <li>Gemini 4 Hydrogen and Gemini 4 Neon also have an xhigh level. This release adds it to the plugin.</li>
+              <li>Standard agent harnesses accumulate context that the neural network must generalize to, making long-horizon training expensive and slow.</li>
+              <li>The paper argues language model harnesses can be compositional generalizers.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/20/llm-gemini/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.28298" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/claude-agent-sdk-python: v0.2.187</h3>
-              <span class="digest-source">GitHub</span>
+              <h3>What Counts as Attack Success? Evaluating Harmfulness in Red Teaming LLMs</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Version 0.2.187 of claude-agent-sdk is on PyPI. It came out right after 0.2.186.</li>
-              <li>If your project pins this SDK, read the release notes before you upgrade.</li>
+              <li>Judging whether a response is harmful involves contextual and normative choices, yet red-teaming studies often hand that judgment to automated evaluators.</li>
+              <li>The study examines how harmfulness criteria are specified in red-teaming research.</li>
             </ul>
-            <a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.187" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.28038" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Benchmarking and Adapting LLMs for English-Swedish Medical Question Answering</h3>
+              <span class="digest-source">ArXiv cs.CL</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>LLMs do well on English medical exams, but less is known about Swedish, which matters for small open models hospitals can run locally.</li>
+              <li>The authors build an item-aligned English-Swedish benchmark from ten medical sources.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.28050" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>torchtsetlin: Fast, Interpretable Tsetlin Machines for PyTorch</h3>
+              <span class="digest-source">ArXiv cs.AI</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The Tsetlin machine learns propositional rules with teams of automata driven by reward and penalty rather than gradients, so models are interpretable by construction and cheap to evaluate.</li>
+              <li>torchtsetlin brings Tsetlin machines to PyTorch, addressing the fact that existing software is written in C and similar low-level code.</li>
+            </ul>
+            <a href="https://arxiv.org/abs/2611.28195" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Tools &amp; Practical</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>GLM-5.4: Toward Generalized Coding with Our First Loop Transformer</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>GLM 5.4 is now available from Chinese AI lab Z.ai.</li>
+              <li>It is the lab&#x27;s first model to use a looped transformer architecture, in which layers are reused across passes rather than run once per forward pass.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Nov/23/glm-54/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>anthropics/claude-code: v2.1.331</h3>
+              <span class="digest-source">Anthropic GitHub</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Adds Code Mode support in terminal sessions on Amazon Bedrock, Google Cloud&#x27;s Agent Platform, Microsoft Foundry and Claude Platform on AWS.</li>
+              <li>Adds oidc.groups_jsonpath to the Claude apps gateway to read groups from matching entries in a list of objects.</li>
+            </ul>
+            <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.331" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>datasette-charts 0.1a0</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Simon Willison built an initial prototype on Sunday with Claude Fable 5.2, and it went well enough to become a full plugin.</li>
+              <li>Datasette Lite can be used to try it out.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Nov/23/datasette-charts/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>datasette-charts 0.2a0</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>datasette-charts 0.2a0 integrates with Datasette Agent, so you can ask chat for a chart.</li>
+              <li>It uses the same underlying chart suggestion and generation tools.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Nov/24/datasette-charts/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Select Styling Specimens</h3>
+              <span class="digest-source">Simon Willison</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Simon Willison was frustrated that HTML select boxes look different across browsers and are, in his view, quite ugly in Chrome.</li>
+              <li>He had Claude Fable 5.2 build a page showing all the ways select elements can be styled.</li>
+            </ul>
+            <a href="https://simonwillison.net/2026/Nov/22/select-styling/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
