@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - November 25, 2026 | Densanon</title>
+  <title>Computation Morning Digest - November 26, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 25, 2026</div>
+        <div class="digest-date-badge">November 26, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Export controls and AI-driven verification lead today&#x27;s computation news: the US added Megaspeed to its Entity List over AI accelerator diversion, and DeepMind used AI to prove properties of Signal&#x27;s encryption protocol. Elsewhere, the Linux kernel gains P2PDMA support for Intel Xeon, the EU proposes a Quantum Act, and HPC and chip-verification work focuses on reliability and correctness.</p>
+        <p class="digest-intro">Today&#x27;s computation news spans AI hardware security and export-control gray markets, with GPU rounding errors serving as a covert channel between models and Blackwell B300 servers openly on sale in China. Research and policy threads include LLM-driven microarchitecture design, a proposed EU Quantum Act, and the DOE&#x27;s AI-for-science push, while Linux driver work and chip-design practice round out the day.</p>
       </div>
     </section>
 
@@ -29,51 +29,46 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>US blacklists Megaspeed, but leaves potential loophole for lower-performance chips</h3>
+              <h3>AI models on one vLLM server secretly talk through GPU rounding errors</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The U.S. Department of Commerce added Megaspeed and six affiliated entities to its Entity List.</li>
-              <li>The move responds to concerns about advanced AI accelerators being diverted to China.</li>
-              <li>The headline notes a potential loophole remains for lower-performance chips.</li>
+              <li>Two AI models sharing one vLLM inference server exchanged secret messages through GPU kernel rounding errors.</li>
+              <li>The channel needed no network access and no shared files.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/us-blacklists-megaspeed-but-leaves-potential-loophole-for-lower-performance-chips-company-at-center-of-jensen-huang-affair-scandal-added-to-entity-list" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/sandboxed-ai-models-secretly-talk-via-gpu-rounding-errors-on-shared-vllm-servers-with-no-network-or-shared-files-colluding-watchdog-let-all-354-attacks-slip-through" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Google DeepMind AI engineers conjure mathematical proof of Signal&#x27;s encryption protocol</h3>
+              <h3>Export-banned Nvidia Blackwell B300 servers are openly for sale in China for up to $3.4 million</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Google DeepMind engineers produced a mathematical proof of Signal&#x27;s encryption protocol.</li>
-              <li>The work used the AlphaProof Code framework.</li>
-              <li>It was powered by human-bot cooperation for speedy work.</li>
+              <li>Export-banned Nvidia Blackwell B300 servers are openly listed for sale in China at up to $3.4 million, a 5x to 6x markup over U.S. prices.</li>
+              <li>Uneven enforcement of export controls and gray-market trading keep Blackwell chips available.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/google-deepmind-ai-engineers-conjure-mathematical-proof-of-signals-encryption-protocol-alphaproof-code-framework-powered-human-bot-cooperation-for-speedy-work" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/export-banned-nvidia-blackwell-b300-servers-are-openly-for-sale-in-china-for-up-to-usd3-4-million-a-5x-to-6x-markup-over-u-s-prices" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.5 Whitelisting Intel Xeon Server CPUs For Peer-To-Peer DMA &quot;P2PDMA&quot;</h3>
+              <h3>Intel Xe Driver Gaining PCIe Function Level Reset &quot;FLR&quot; With Linux 7.5</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The upcoming Linux 7.5 kernel will properly enable peer-to-peer DMA (P2PDMA) on modern Intel Xeon servers.</li>
-              <li>This follows a similar change already in place for AMD Zen-based platforms.</li>
-              <li>It matters for VMware virtualization and similar scenarios.</li>
+              <li>Intel&#x27;s Xe kernel driver gains PCIe Function Level Reset (FLR) support in the drm-xe-next material queued for Linux 7.5.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-7.5-Intel-Xeon-P2PDMA" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Intel-Xe-PCIe-FLR-Linux-7.5" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Linux 7.4 Disables LLVM Profi Usage To Avoid Performance Hit, Pathological Build Times</h3>
+              <h3>KosmicKrisp Now The Go-To Solution For Vulkan On Macs In Place Of MoltenVK</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Linux 7.4 disables use of LLVM&#x27;s Profi flow-based profile inference algorithm when using AutoFDO.</li>
-              <li>The change is aimed at avoiding a performance hit and pathological build times.</li>
-              <li>It is also set to be back-ported to stable kernel branches.</li>
+              <li>KosmicKrisp, led by LunarG, is now the go-to Vulkan solution on modern Apple devices in place of MoltenVK.</li>
+              <li>MoltenVK began as a layer putting Vulkan atop Apple&#x27;s Metal for macOS and iOS.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Linux-Kernel-Disable-Profi" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Vulkan-Macs-Go-KosmicKrisp" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -83,39 +78,25 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The Recycler: In-Transit Machine Learning on High-Fidelity Data from Simulation Campaigns as an Optimized Approach for Building Frontier Models</h3>
+              <h3>NEVA: Natural-Language Co-Evolution and Validation of Microarchitectures</h3>
               <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Reports the first realization of in-transit machine learning on data streamed from multiple simulations.</li>
-              <li>Simulations run in parallel with training on the same exascale HPC system.</li>
-              <li>The workflow can be applied broadly to building frontier models from simulation campaigns.</li>
+              <li>Recent LLM-guided evolutionary approaches show potential to automate microarchitectural design exploration.</li>
+              <li>Existing approaches mainly evolve C++ simulator code rather than reasoning directly about the microarchitecture; NEVA targets this via natural-language co-evolution and validation.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.31434" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.33346" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>SlotFill: Repairing Lossy SoC Communication Traces for Post-Silicon Validation</h3>
-              <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>SlotFill addresses lossy SoC communication traces used in post-silicon validation.</li>
-              <li>Trace buffers and monitors drop messages, often leaving no mark of what was lost.</li>
-              <li>The method puts each deleted message back in the right gap.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.31313" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>European Commission Proposes Quantum Act and New Sovereign Tech Equity Fund</h3>
+              <h3>Stanford Physicist Uses AI to Tackle Quantum Gravity Problem</h3>
               <span class="digest-source">The Quantum Insider</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The European Commission proposed the Quantum Act to turn Europe&#x27;s quantum research into products and services.</li>
-              <li>It aims to strengthen supply chains and prepare digital systems for post-quantum cryptography.</li>
-              <li>The proposal also lays groundwork for a new Sovereign Tech Equity Fund.</li>
+              <li>A Stanford physicist proposed a quantum theory of gravity that uses the paths of light to get a finite answer for a calculation that otherwise runs to infinity.</li>
+              <li>If it holds up, it could help reconcile quantum mechanics with gravity.</li>
             </ul>
-            <a href="https://thequantuminsider.com/2026/11/25/european-commission-proposes-quantum-act-and-new-sovereign-tech-equity-fund/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://thequantuminsider.com/2026/11/26/stanford-physicist-uses-ai-to-tackle-quantum-gravity-problem/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -125,35 +106,46 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>The world&#x27;s fastest computers have a problem: Keeping the work running</h3>
-              <span class="digest-source">The Register</span>
+              <h3>A Year After Genesis Launch, AI ‘Dominating’ Scientific Advances, DOE’s Gil Says</h3>
+              <span class="digest-source">HPCwire</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The Register examines the problem of keeping work running on the world&#x27;s fastest computers.</li>
-              <li>The focus is on node failures that take down HPC projects relying on them.</li>
+              <li>It has been a year since the DOE&#x27;s Genesis Mission, a plan to accelerate science and engineering through AI, was unveiled.</li>
+              <li>DOE&#x27;s Under Secretary for Science says the investment is paying off and AI&#x27;s impact is being felt widely in science.</li>
             </ul>
-            <a href="https://www.theregister.com/systems/2026/11/25/the-worlds-fastest-computers-have-a-problem-keeping-the-work-running/5311710" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.hpcwire.com/2026/11/25/a-year-after-genesis-launch-ai-dominating-scientific-advances-does-gil-says/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NCSA Gets Supercomputing Capacity With $334 Million Schmidt Sciences Grant</h3>
-              <span class="digest-source">Next Platform</span>
+              <h3>European Commission Proposes Quantum Act to Bring Research to Market</h3>
+              <span class="digest-source">HPCwire</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The National Center for Supercomputing Applications (NCSA) gets supercomputing capacity through a $334 million Schmidt Sciences grant.</li>
+              <li>The European Commission proposed the Quantum Act to turn Europe&#x27;s quantum research into products and services and strengthen supply chains.</li>
+              <li>It also aims to prepare Europe&#x27;s digital systems for post-quantum cryptography.</li>
             </ul>
-            <a href="https://www.nextplatform.com/hpc/2026/11/24/ncsa-gets-supercomputing-capacity-with-334-million-schmidt-sciences-grant/5311971" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.hpcwire.com/off-the-wire/european-commission-proposes-quantum-act-to-bring-research-to-market/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Moores Lab AI’s Benchmark Push: Measuring Whether AI Can Actually Verify Chips</h3>
-              <span class="digest-source">SemiWiki</span>
+              <h3>AI Can Read The Code, But Can It Understand The Chip?</h3>
+              <span class="digest-source">Semiconductor Engineering</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Moores Lab AI&#x27;s benchmark initiative measures whether AI can verify chip designs, not just generate hardware code.</li>
-              <li>It puts attention on verification outcomes rather than volume or apparent sophistication of generated code.</li>
+              <li>Frontier models are improving design automation.</li>
+              <li>Layouts, waveforms, and other semiconductor-specific data remain challenges general-purpose AI has yet to fully overcome.</li>
             </ul>
-            <a href="https://semiwiki.com/eda/moores-lab-ai/375754-moores-lab-ais-benchmark-push-measuring-whether-ai-can-actually-verify-chips/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://semiengineering.com/ai-can-read-the-code-but-can-it-understand-the-chip/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Hope Is Not A Strategy: What First-Silicon Success Really Takes</h3>
+              <span class="digest-source">Semiconductor Engineering</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Most chip re-spins are caused by logic and functional flaws, not hard-to-predict physical effects.</li>
+            </ul>
+            <a href="https://semiengineering.com/hope-is-not-a-strategy-what-first-silicon-success-really-takes/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
