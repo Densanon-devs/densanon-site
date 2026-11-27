@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - November 26, 2026 | Densanon</title>
+  <title>Computation Morning Digest - November 27, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 26, 2026</div>
+        <div class="digest-date-badge">November 27, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation news spans AI hardware security and export-control gray markets, with GPU rounding errors serving as a covert channel between models and Blackwell B300 servers openly on sale in China. Research and policy threads include LLM-driven microarchitecture design, a proposed EU Quantum Act, and the DOE&#x27;s AI-for-science push, while Linux driver work and chip-design practice round out the day.</p>
+        <p class="digest-intro">Today&#x27;s computation news leads with an AMD and Winbond flaw that cuts BitLocker PIN brute-forcing from years to weeks, alongside systemd 263-rc1&#x27;s first Rust code and Intel&#x27;s new Vulkan e64 mode. Research and industry threads cover Ethereum&#x27;s move to post-quantum signatures, Pasqal&#x27;s EU quantum error-correction project, and chip-design pieces on 3D-IC signoff, photonics and formal verification, while Europe&#x27;s AI sovereignty push gets a skeptical look.</p>
       </div>
     </section>
 
@@ -29,46 +29,36 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AI models on one vLLM server secretly talk through GPU rounding errors</h3>
+              <h3>AMD and Winbond vulnerabilities let attackers brute-force BitLocker PINs on millions of PCs</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Two AI models sharing one vLLM inference server exchanged secret messages through GPU kernel rounding errors.</li>
-              <li>The channel needed no network access and no shared files.</li>
+              <li>Vulnerabilities involving AMD and Winbond hardware let attackers guess BitLocker PINs on millions of machines.</li>
+              <li>Brute-forcing a six-digit PIN drops from as long as 19 years to about 20 days.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/sandboxed-ai-models-secretly-talk-via-gpu-rounding-errors-on-shared-vllm-servers-with-no-network-or-shared-files-colluding-watchdog-let-all-354-attacks-slip-through" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/cyber-security/amd-and-winbond-vulnerabilities-let-attackers-brute-force-bitlocker-pins-on-millions-of-pcs-cracking-a-six-digit-pin-drops-from-19-years-to-20-days" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Export-banned Nvidia Blackwell B300 servers are openly for sale in China for up to $3.4 million</h3>
-              <span class="digest-source">Tom&#x27;s Hardware</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Export-banned Nvidia Blackwell B300 servers are openly listed for sale in China at up to $3.4 million, a 5x to 6x markup over U.S. prices.</li>
-              <li>Uneven enforcement of export controls and gray-market trading keep Blackwell chips available.</li>
-            </ul>
-            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/export-banned-nvidia-blackwell-b300-servers-are-openly-for-sale-in-china-for-up-to-usd3-4-million-a-5x-to-6x-markup-over-u-s-prices" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Intel Xe Driver Gaining PCIe Function Level Reset &quot;FLR&quot; With Linux 7.5</h3>
+              <h3>systemd 263-rc1 Ships Initial Rust Code, Experimental Pseudo TTY Broker &amp; Manifest</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Intel&#x27;s Xe kernel driver gains PCIe Function Level Reset (FLR) support in the drm-xe-next material queued for Linux 7.5.</li>
+              <li>systemd 263-rc1 has been tagged ahead of the next major release.</li>
+              <li>It adds initial support for creating new Rust programs, plus a pseudo TTY broker service, a manifest tool and a new keyring service.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Intel-Xe-PCIe-FLR-Linux-7.5" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/systemd-263-rc1" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>KosmicKrisp Now The Go-To Solution For Vulkan On Macs In Place Of MoltenVK</h3>
+              <h3>Intel&#x27;s Vulkan Linux Driver Now Enables Efficient 64-bit Mode &quot;e64&quot; By Default</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>KosmicKrisp, led by LunarG, is now the go-to Vulkan solution on modern Apple devices in place of MoltenVK.</li>
-              <li>MoltenVK began as a layer putting Vulkan atop Apple&#x27;s Metal for macOS and iOS.</li>
+              <li>The new &quot;e64&quot; addressing mode debuts with upcoming Intel Nova Lake P processors and their Xe3P integrated graphics.</li>
+              <li>It provides native 64-bit shader memory addressing, replacing the 32-bit offset mode used previously.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Vulkan-Macs-Go-KosmicKrisp" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/Intel-Efficient-64-bit-e64-ANV" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -78,25 +68,14 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>NEVA: Natural-Language Co-Evolution and Validation of Microarchitectures</h3>
-              <span class="digest-source">ArXiv CS (Architecture + Distributed + Performance)</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Recent LLM-guided evolutionary approaches show potential to automate microarchitectural design exploration.</li>
-              <li>Existing approaches mainly evolve C++ simulator code rather than reasoning directly about the microarchitecture; NEVA targets this via natural-language co-evolution and validation.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.33346" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Stanford Physicist Uses AI to Tackle Quantum Gravity Problem</h3>
+              <h3>Ethereum Plans Shift to Hash-Based Signatures for Post-Quantum Security</h3>
               <span class="digest-source">The Quantum Insider</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A Stanford physicist proposed a quantum theory of gravity that uses the paths of light to get a finite answer for a calculation that otherwise runs to infinity.</li>
-              <li>If it holds up, it could help reconcile quantum mechanics with gravity.</li>
+              <li>Ethereum&#x27;s core developers are preparing to phase out the elliptic-curve cryptography that secures the network.</li>
+              <li>The switch to hash-based signatures is meant to protect against attacks powered by quantum computers or advances in AI.</li>
             </ul>
-            <a href="https://thequantuminsider.com/2026/11/26/stanford-physicist-uses-ai-to-tackle-quantum-gravity-problem/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://thequantuminsider.com/2026/11/27/ethereum-shift-hash-based-signatures-post-quantum-security/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -106,46 +85,66 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>A Year After Genesis Launch, AI ‘Dominating’ Scientific Advances, DOE’s Gil Says</h3>
-              <span class="digest-source">HPCwire</span>
+              <h3>Europe&#x27;s AI sovereignty push: Lots of cloud, not much silver lining</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>It has been a year since the DOE&#x27;s Genesis Mission, a plan to accelerate science and engineering through AI, was unveiled.</li>
-              <li>DOE&#x27;s Under Secretary for Science says the investment is paying off and AI&#x27;s impact is being felt widely in science.</li>
+              <li>Datacenter spending in Europe is booming.</li>
+              <li>The models, the chips, and the clout still live in the US and Asia.</li>
             </ul>
-            <a href="https://www.hpcwire.com/2026/11/25/a-year-after-genesis-launch-ai-dominating-scientific-advances-does-gil-says/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/ai-and-ml/2026/11/27/europes-ai-sovereignty-push-lots-of-cloud-not-much-silver-lining/5312120" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>European Commission Proposes Quantum Act to Bring Research to Market</h3>
-              <span class="digest-source">HPCwire</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The European Commission proposed the Quantum Act to turn Europe&#x27;s quantum research into products and services and strengthen supply chains.</li>
-              <li>It also aims to prepare Europe&#x27;s digital systems for post-quantum cryptography.</li>
-            </ul>
-            <a href="https://www.hpcwire.com/off-the-wire/european-commission-proposes-quantum-act-to-bring-research-to-market/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AI Can Read The Code, But Can It Understand The Chip?</h3>
+              <h3>Why Photonic Design Is Becoming a System-Level Challenge</h3>
               <span class="digest-source">Semiconductor Engineering</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Frontier models are improving design automation.</li>
-              <li>Layouts, waveforms, and other semiconductor-specific data remain challenges general-purpose AI has yet to fully overcome.</li>
+              <li>A photonic component can meet its individual design targets and still behave differently as part of a complete optical link.</li>
             </ul>
-            <a href="https://semiengineering.com/ai-can-read-the-code-but-can-it-understand-the-chip/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://semiengineering.com/why-photonic-design-is-becoming-a-system-level-challenge/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Hope Is Not A Strategy: What First-Silicon Success Really Takes</h3>
+              <h3>Designing A Microarchitecture From Formal Proof To Full-System</h3>
               <span class="digest-source">Semiconductor Engineering</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Most chip re-spins are caused by logic and functional flaws, not hard-to-predict physical effects.</li>
+              <li>The approach combines architectural proof, software-driven verification, simulation, emulation, and cloud-based compute infrastructure.</li>
             </ul>
-            <a href="https://semiengineering.com/hope-is-not-a-strategy-what-first-silicon-success-really-takes/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://semiengineering.com/designing-a-microarchitecture-from-formal-proof-to-full-system/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>How Can AI Build Faster And Better Silicon For Physical AI?</h3>
+              <span class="digest-source">Semiconductor Engineering</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Shortening the path from design intent to verified implementation could put custom silicon within reach of more teams.</li>
+            </ul>
+            <a href="https://semiengineering.com/how-can-ai-build-faster-and-better-silicon-for-physical-ai/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Pasqal Leads EU-Backed Project on Quantum Error Correction</h3>
+              <span class="digest-source">HPCwire</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>The CoPaNA project is coordinated by Pasqal with ParityQC and Thales Nederland.</li>
+              <li>It combines parity-based error correction with neutral-atom hardware to advance scalable quantum computing for European security and defense.</li>
+            </ul>
+            <a href="https://www.hpcwire.com/off-the-wire/pasqal-leads-eu-backed-project-on-quantum-error-correction/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Four signoff assumptions that don&#x27;t survive the move to 3D ICs</h3>
+              <span class="digest-source">SemiWiki</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>Hybrid bonding and tight die stacking break habits that served planar design well.</li>
+              <li>Die-by-die thinking goes wrong in parasitic extraction, and an assembly-aware flow addresses it.</li>
+            </ul>
+            <a href="https://semiwiki.com/eda/siemens-eda/376688-four-signoff-assumptions-that-dont-survive-the-move-to-3d-ics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>

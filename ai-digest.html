@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Morning Digest - November 26, 2026 | Densanon</title>
+  <title>AI Morning Digest - November 27, 2026 | Densanon</title>
   <meta name="description" content="Daily AI news digest - research, tools, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 26, 2026</div>
+        <div class="digest-date-badge">November 27, 2026</div>
         <h1>AI Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s AI feed centers on context and memory as bottlenecks for agents, new ways to select and verify model outputs, and growing AI-driven mathematical formalization. On the tooling side, Anthropic&#x27;s TypeScript SDK ships two releases and Simon Willison covers SQLite and Datasette updates.</p>
+        <p class="digest-intro">Today&#x27;s AI feed spans video generation on AWS Trainium3 and a materials-science paper on LLMs that learn from verified experience. Simon Willison adds two commentary pieces on AI&#x27;s cultural footprint, from homogenized writing to the backlash over Photoshop&#x27;s AI features.</p>
       </div>
     </section>
 
@@ -29,58 +29,15 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Context Scaling: A New Frontier of AI Scaling</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Argues many deployed-AI failures come from a mismatch between the state a task depends on and the context available when the system acts, not from weak inference.</li>
-              <li>Relevant context includes user state, repository revisions, tool traces, sensor readings, and environment changes.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.33160" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Constraint-Aware Test-Time Scoring for LLM and VLM Candidate Selection</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Addresses picking the best of several LLM or VLM candidate answers, where confidence, learned judges, and domain checks each have known weaknesses.</li>
-              <li>Notes an answer can be fluent but insecure, or mathematically plausible but wrong.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.33161" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>AutoformBench: A Lean Formalization Benchmark for Advanced Mathematics</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Benchmark for Lean formalization of advanced mathematics.</li>
-              <li>Notes real formalization requires building definitions and intermediate lemmas, not just isolated theorem proving.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.33165" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>MGMem: An Efficient, Deterministic, and Provenance-Preserving Framework for Long-Horizon Agent Memory</h3>
+              <h3>Verified experience improves materials prediction with large language models</h3>
               <span class="digest-source">ArXiv cs.CL</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Proposes MGMem, an efficient, deterministic, provenance-preserving memory framework for long-horizon LLM agents.</li>
-              <li>Targets surfacing the right past interaction across thousands of turns, contrasting with systems that use generative LLMs to rewrite history into summaries.</li>
+              <li>Introduces MatMemBench, a 22-task sequential benchmark that reveals each outcome only after a prediction, testing online learning, memory retention, and transfer.</li>
+              <li>Proposes MatRecall, which lets language models store verified predictions with their evidence, results, and errors and reuse them without retraining.</li>
+              <li>Reports a 62% median improvement over a memory-free model and better results than specialized models on 11 tasks.</li>
             </ul>
-            <a href="https://arxiv.org/abs/2611.33174" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>What, Who, and When: Structured Harm Assessment for Mental Health Safety via Short Reasoning</h3>
-              <span class="digest-source">ArXiv cs.AI</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Targets safety of LLMs used for mental health support, where existing guard models mostly identify categories of harmful content.</li>
-              <li>Argues those models overlook the context needed to determine an appropriate response, and proposes structured assessment (what, who, when) via short reasoning.</li>
-            </ul>
-            <a href="https://arxiv.org/abs/2611.33263" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://arxiv.org/abs/2611.33195" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -90,59 +47,37 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/anthropic-sdk-typescript: sdk-v1.13.0</h3>
-              <span class="digest-source">Anthropic GitHub</span>
+              <h3>Taking Trainium3 to the Track: Generating Videos with LTX-2.5</h3>
+              <span class="digest-source">Hugging Face Blog</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds External Storage to the Admin API beta, plus webhook events for external storage failure and recovery.</li>
-              <li>Adds an error code to Message Batches creation.</li>
-              <li>Bug fix: beta batch request params are now typed as message create params.</li>
+              <li>Runs Lightricks&#x27; LTX-2.5 on an AWS Trainium3 instance using Hugging Face diffusers, chaining shots so subjects stay consistent across cuts.</li>
+              <li>After optimization, a 10-second 2048x1024 clip with sound took 22 to 23 seconds on 32 NeuronCores, versus 5 minutes 20 seconds for a first 960x544 attempt.</li>
+              <li>The authors also tested generating continuations of real robot and car footage, which they suggest could help produce world-model training data.</li>
             </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/sdk-v1.13.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://huggingface.co/blog/video-trainium3" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>anthropics/anthropic-sdk-typescript: sdk-v1.14.0</h3>
-              <span class="digest-source">Anthropic GitHub</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Adds Google-managed data controls for Google Cloud projects and for user profiles.</li>
-              <li>Adds support for compliance review cases, notices, and items.</li>
-            </ul>
-            <a href="https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/sdk-v1.14.0" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>sqlite3_rsync: Database Remote-Copy Tool For SQLite</h3>
+              <h3>Quoting Jack Despain Zhou</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>sqlite3_rsync was added as experimental in SQLite 3.47.0 (October 2024) and enhanced in SQLite 3.50.0 (May 2025).</li>
-              <li>Simon Willison highlights an attractive characteristic of the tool he only grasped today.</li>
+              <li>Quotes a reflection on AI&#x27;s de-individualization of voice: hearing Claude-like writing in YouTube videos, conference talks, and email pitches.</li>
+              <li>The passage frames this homogenization as one of the many existing effects of AI.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/26/sqlite3-rsync/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/26/jack-despain-zhou/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>datasette-charts 0.3a0</h3>
+              <h3>The New York Times warns photographers not to update Photoshop over AI features</h3>
               <span class="digest-source">Simon Willison</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Adds chart annotations: lines, shaded areas, labels, or a combination.</li>
-              <li>Annotated charts can be tried and tweaked in Datasette Lite.</li>
+              <li>Willison&#x27;s Hacker News comment on the NYT advising photographers against updating Photoshop because of its AI features.</li>
+              <li>He recounts a NYT photographer taking his portrait at home earlier this year and being asked whether a stain on his shirt could be fixed up.</li>
             </ul>
-            <a href="https://simonwillison.net/2026/Nov/25/datasette-charts/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Quoting Scott Aaronson</h3>
-              <span class="digest-source">Simon Willison</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Scott Aaronson says we will get not one-off solutions to complexity questions but a whole new continent of mathematical truth.</li>
-              <li>Compares it to van Leeuwenhoek training a microscope on pondwater and Galileo&#x27;s telescope.</li>
-            </ul>
-            <a href="https://simonwillison.net/2026/Nov/25/scott-aaronson/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://simonwillison.net/2026/Nov/26/hn-50651685/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
