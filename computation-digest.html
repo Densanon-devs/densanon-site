@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computation Morning Digest - November 27, 2026 | Densanon</title>
+  <title>Computation Morning Digest - November 28, 2026 | Densanon</title>
   <meta name="description" content="Daily computation news digest - hardware, research, and community highlights curated by Densanon.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/digest.css">
@@ -15,9 +15,9 @@
   <main>
     <section class="digest-hero">
       <div class="container">
-        <div class="digest-date-badge">November 27, 2026</div>
+        <div class="digest-date-badge">November 28, 2026</div>
         <h1>Computation Morning <span>Digest</span></h1>
-        <p class="digest-intro">Today&#x27;s computation news leads with an AMD and Winbond flaw that cuts BitLocker PIN brute-forcing from years to weeks, alongside systemd 263-rc1&#x27;s first Rust code and Intel&#x27;s new Vulkan e64 mode. Research and industry threads cover Ethereum&#x27;s move to post-quantum signatures, Pasqal&#x27;s EU quantum error-correction project, and chip-design pieces on 3D-IC signoff, photonics and formal verification, while Europe&#x27;s AI sovereignty push gets a skeptical look.</p>
+        <p class="digest-intro">Tiny runtimes stole the show: Unkernel and Trynix boot real Debian and NixOS inside a browser tab via Zig-to-Wasm, and a hobbyist swapped Linux for a 24KB assembly OS to run Qwen3. The AI memory crunch is now forecast to keep smartphone shipments down through 2027, and SC26 was sober about quantum timelines.</p>
       </div>
     </section>
 
@@ -29,53 +29,39 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>AMD and Winbond vulnerabilities let attackers brute-force BitLocker PINs on millions of PCs</h3>
+              <h3>AI enthusiast deletes Linux for a 24KB pure assembly OS that boots in 74 milliseconds</h3>
               <span class="digest-source">Tom&#x27;s Hardware</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Vulnerabilities involving AMD and Winbond hardware let attackers guess BitLocker PINs on millions of machines.</li>
-              <li>Brute-forcing a six-digit PIN drops from as long as 19 years to about 20 days.</li>
+              <li>A developer wrote a 24KB bare-metal x86-64 assembly OS whose only job is running Qwen3 LLMs.</li>
+              <li>The report claims a 74 ms boot and up to 54% faster inference than the usual Linux setup.</li>
+              <li>It is a striking demo of how much of an inference stack is overhead rather than model work.</li>
             </ul>
-            <a href="https://www.tomshardware.com/tech-industry/cyber-security/amd-and-winbond-vulnerabilities-let-attackers-brute-force-bitlocker-pins-on-millions-of-pcs-cracking-a-six-digit-pin-drops-from-19-years-to-20-days" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-enthusiast-deletes-linux-to-run-qwen3-on-a-24kb-pure-x86-64-assembly-os-28-000-times-smaller-than-model-system-boots-in-74-milliseconds-runs-llms-up-to-54-percent-faster" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>systemd 263-rc1 Ships Initial Rust Code, Experimental Pseudo TTY Broker &amp; Manifest</h3>
+              <h3>Intel Contributes oneVPL AI Super Resolution Integration To FFmpeg</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>systemd 263-rc1 has been tagged ahead of the next major release.</li>
-              <li>It adds initial support for creating new Rust programs, plus a pseudo TTY broker service, a manifest tool and a new keyring service.</li>
+              <li>Intel upstreamed a new FFmpeg video filter for oneVPL AI Super Resolution.</li>
+              <li>It upscales video on modern Intel graphics hardware.</li>
+              <li>AI upscaling is landing in the standard open-source media toolchain, not just vendor apps.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/systemd-263-rc1" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/FFmpeg-oneVPL-Super-Resolution" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Intel&#x27;s Vulkan Linux Driver Now Enables Efficient 64-bit Mode &quot;e64&quot; By Default</h3>
+              <h3>AI &amp; Reverse Engineering Lead To New Linux Driver For Microsoft&#x27;s ReFS</h3>
               <span class="digest-source">Phoronix</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The new &quot;e64&quot; addressing mode debuts with upcoming Intel Nova Lake P processors and their Xe3P integrated graphics.</li>
-              <li>It provides native 64-bit shader memory addressing, replacing the 32-bit offset mode used previously.</li>
+              <li>Over a decade after ReFS debuted in Windows Server 2012, Linux still lacks broad support for it.</li>
+              <li>A new driver built with reverse engineering and AI assistance now reads ReFS volumes.</li>
+              <li>It is read-only for now.</li>
             </ul>
-            <a href="https://www.phoronix.com/news/Intel-Efficient-64-bit-e64-ANV" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-        </div>
-      </div>
-      <div class="digest-section">
-        <h2 class="digest-section-title">Research &amp; Papers</h2>
-        <div class="digest-grid">
-
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Ethereum Plans Shift to Hash-Based Signatures for Post-Quantum Security</h3>
-              <span class="digest-source">The Quantum Insider</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Ethereum&#x27;s core developers are preparing to phase out the elliptic-curve cryptography that secures the network.</li>
-              <li>The switch to hash-based signatures is meant to protect against attacks powered by quantum computers or advances in AI.</li>
-            </ul>
-            <a href="https://thequantuminsider.com/2026/11/27/ethereum-shift-hash-based-signatures-post-quantum-security/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.phoronix.com/news/New-ReFS-FUSE-Driver-2026" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
@@ -85,66 +71,81 @@
 
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Europe&#x27;s AI sovereignty push: Lots of cloud, not much silver lining</h3>
+              <h3>Unkernel and Trynix just transported computing to 2035</h3>
               <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Datacenter spending in Europe is booming.</li>
-              <li>The models, the chips, and the clout still live in the US and Asia.</li>
+              <li>Unkernel boots a real Linux kernel on a Zig-written Arm64 runtime compiled to Wasm; unkernel.dev runs Debian 13 with a Wayland GUI in a tab.</li>
+              <li>Trynix runs NixOS on top, bringing Nix packages, OpenGL and ALSA audio to the browser; Doom and Firefox both run.</li>
+              <li>A follow-up, tabc, uses browser tabs as a container runtime so macOS can run Linux containers without a VM.</li>
             </ul>
-            <a href="https://www.theregister.com/ai-and-ml/2026/11/27/europes-ai-sovereignty-push-lots-of-cloud-not-much-silver-lining/5312120" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/software/2026/11/28/unkernel-and-trynix-just-transported-computing-to-2035/5313200" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Why Photonic Design Is Becoming a System-Level Challenge</h3>
-              <span class="digest-source">Semiconductor Engineering</span>
+              <h3>Smartphone shipments face another bleak year before modest 2028 comeback</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>A photonic component can meet its individual design targets and still behave differently as part of a complete optical link.</li>
+              <li>Counterpoint forecasts shipments down 14% in 2026 and another 6% in 2027, with a 6% rebound in 2028.</li>
+              <li>The cause is DRAM and NAND output shifting to AI servers; IDC puts memory costs up about 350% year on year.</li>
+              <li>Memory was almost 60% of the bill of materials in sub-$400 phones, and some low-end demand is called permanently lost.</li>
             </ul>
-            <a href="https://semiengineering.com/why-photonic-design-is-becoming-a-system-level-challenge/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/personal-tech/2026/11/27/smartphone-shipments-face-another-bleak-year-before-modest-2028-comeback/5312580" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>Designing A Microarchitecture From Formal Proof To Full-System</h3>
-              <span class="digest-source">Semiconductor Engineering</span>
+              <h3>Quantum: &#x27;Five years, that&#x27;s all we got...&#x27;</h3>
+              <span class="digest-source">The Register</span>
             </div>
             <ul class="digest-takeaways">
-              <li>The approach combines architectural proof, software-driven verification, simulation, emulation, and cloud-based compute infrastructure.</li>
+              <li>Surface codes need roughly 500-2,000 physical qubits per logical qubit, and useful science needs 100-500 logical qubits.</li>
+              <li>QLDPC codes and IBM&#x27;s 2029 Starling promise about a 10x overhead cut, but nothing is proven at scale.</li>
+              <li>SC26 progress was mostly integration, such as Slurm 26.11 scheduling quantum resources next to classical jobs.</li>
             </ul>
-            <a href="https://semiengineering.com/designing-a-microarchitecture-from-formal-proof-to-full-system/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://www.theregister.com/hpc/2026/11/28/quantum-five-years-thats-all-we-got/5312034" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
           <div class="digest-card">
             <div class="digest-card-header">
-              <h3>How Can AI Build Faster And Better Silicon For Physical AI?</h3>
-              <span class="digest-source">Semiconductor Engineering</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>Shortening the path from design intent to verified implementation could put custom silicon within reach of more teams.</li>
-            </ul>
-            <a href="https://semiengineering.com/how-can-ai-build-faster-and-better-silicon-for-physical-ai/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Pasqal Leads EU-Backed Project on Quantum Error Correction</h3>
-              <span class="digest-source">HPCwire</span>
-            </div>
-            <ul class="digest-takeaways">
-              <li>The CoPaNA project is coordinated by Pasqal with ParityQC and Thales Nederland.</li>
-              <li>It combines parity-based error correction with neutral-atom hardware to advance scalable quantum computing for European security and defense.</li>
-            </ul>
-            <a href="https://www.hpcwire.com/off-the-wire/pasqal-leads-eu-backed-project-on-quantum-error-correction/" target="_blank" rel="noopener" class="card-link">Read full article</a>
-          </div>
-          <div class="digest-card">
-            <div class="digest-card-header">
-              <h3>Four signoff assumptions that don&#x27;t survive the move to 3D ICs</h3>
+              <h3>TSMC Reveals Details of A14 Manufacturing Compared to N2P</h3>
               <span class="digest-source">SemiWiki</span>
             </div>
             <ul class="digest-takeaways">
-              <li>Hybrid bonding and tight die stacking break habits that served planar design well.</li>
-              <li>Die-by-die thinking goes wrong in parasitic extraction, and an assembly-aware flow addresses it.</li>
+              <li>TSMC shared new details of its A14 (1.4nm-class) process at the 2026 Europe OIP Ecosystem Workshop.</li>
+              <li>The disclosures compare performance, power and density against N2P.</li>
+              <li>Designers now have a clearer picture of the next node&#x27;s trade-offs.</li>
             </ul>
-            <a href="https://semiwiki.com/eda/siemens-eda/376688-four-signoff-assumptions-that-dont-survive-the-move-to-3d-ics/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+            <a href="https://semiwiki.com/semiconductor-manufacturers/tsmc/376876-tsmc-reveals-details-of-a14-manufacturing-compared-to-n2p/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Intel Foundry: How Better Power Delivery Could Unlock More AI Performance</h3>
+              <span class="digest-source">SemiWiki</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>An Intel Foundry white paper argues power delivery is becoming a limit on AI accelerators.</li>
+              <li>More transistors, memory bandwidth and interconnect can still leave performance unused if the power network cannot keep up.</li>
+              <li>It makes the case for power-delivery innovation in AI data-centre silicon.</li>
+            </ul>
+            <a href="https://semiwiki.com/semiconductor-manufacturers/intel/376763-intel-foundry-how-better-power-delivery-could-unlock-more-ai-performance/" target="_blank" rel="noopener" class="card-link">Read full article</a>
+          </div>
+        </div>
+      </div>
+      <div class="digest-section">
+        <h2 class="digest-section-title">Community Highlights</h2>
+        <div class="digest-grid">
+
+          <div class="digest-card">
+            <div class="digest-card-header">
+              <h3>Nvidia Seeded Pirated Books and Shared Them with Adobe, Authors Allege</h3>
+              <span class="digest-source">TorrentFreak</span>
+            </div>
+            <ul class="digest-takeaways">
+              <li>An amended complaint in Nazemian v. NVIDIA alleges NVIDIA torrented books from shadow libraries without fully disabling seeding.</li>
+              <li>It also alleges books were shared with Adobe in a 250-million-page PDF extraction project, and with Cohere and Imbue.</li>
+              <li>These are allegations made on information and belief; NVIDIA&#x27;s response is due in December.</li>
+            </ul>
+            <a href="https://torrentfreak.com/nvidia-seeded-pirated-books-and-shared-them-with-adobe-authors-allege/" target="_blank" rel="noopener" class="card-link">Read full article</a>
           </div>
         </div>
       </div>
